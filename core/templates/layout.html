@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-EN">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="XXXXXXX" />
+        <meta name="description" content="XXXXXXX" />
+        <meta name="copyright" content="Copyright 2010 Emanuele Bertoldi" />
+        <link rel="stylesheet" href="/media/css/default/style.css" type="text/css" charset="utf-8" />
+        {% block js %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                <div id="logo">
+                    <h1>Prometeo</h1>
+                    <h2>Free your work. Free your business.</h2>
+                </div>
+            </div>
+            <div id="nav">
+                {% block nav %}
+                <ul id="quickmenu">
+                    <li><a class="settings" href="/settings/">Settings</a></li>
+                    <li><a class="help" href="/help/">Help</a></li>
+                </ul>
+                <ul id="menu">
+                    <li><a class="start" href="/">Start</a></li>
+                </ul>
+                <div id="breadcrumb">
+                    {% block breadcrumb %}
+                    {% endblock %}
+                </div>
+                {% endblock %}
+            </div>
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div id="footer">
+                <h6 id="copyright"><a href="mailto:zuck@fastwebnet.it">Emanuele Bertoldi</a> &copy; 2010</h6>
+            </div>
+        </div>
+    </body>
+</html>

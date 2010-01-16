@@ -20,10 +20,9 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
-from django.conf.urls.defaults import *
+from django.shortcuts import render_to_response
 
-urlpatterns = patterns('',
-
-    # Core.
-    (r'^', include('core.urls')),
-)
+def start(request):
+    """Start page.
+    """    
+    return render_to_response('start.html')

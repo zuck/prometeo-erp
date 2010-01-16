@@ -21,9 +21,13 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 urlpatterns = patterns('',
 
-    # Core.
-    (r'^', include('core.urls')),
+    # Start page.
+    (r'^$', 'core.views.start'),
+    
+    # Media files.
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 )
