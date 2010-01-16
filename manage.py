@@ -1,4 +1,12 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""This file is part of the prometeo project.
+"""
+
+__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
+__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
+__version__ = '$Revision$'
+
 from django.core.management import execute_manager
 try:
     import settings # Assumed to be in the same directory.
