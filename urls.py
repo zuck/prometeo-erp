@@ -21,9 +21,10 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 urlpatterns = patterns('',
 
     # Core.
-    (r'^', include('core.urls')),
+    (r'^', include('core.urls'))
 )
