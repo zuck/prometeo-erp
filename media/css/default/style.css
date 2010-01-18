@@ -289,10 +289,11 @@ input[type="submit"]:hover {
     padding: 10px 15px;
     background: url(images/menu.jpg) repeat-x bottom;
     margin-top: -9px;
+    margin-right: 1px;
 }
 
 #menu li.selected {
-    background: #f0f0f0;
+    background: url(images/menu_selected.jpg) repeat-x bottom;
 }
 
 #breadcrumb {
