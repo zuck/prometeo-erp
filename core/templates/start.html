@@ -2,4 +2,8 @@
 
 {% block title %}Start{% endblock %}
 
-{% block breadcrumb %}<h2>Welcome!</h2>{% endblock %}
+{% block breadcrumb %}<h2>Start</h2>{% endblock %}
+
+{% block content %}
+<p>Welcome, <strong>{{ user.username }}</strong>.</p>
+{% endblock %}

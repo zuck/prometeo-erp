@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Accounts{% endblock %}
+
+{% block breadcrumb %}<h2>Accounts > Delete > {{ user }}</h2>{% endblock %}
+
+{% block content %}
+    <form action="/accounts/delete/{{ user.id }}/" method="post">
+        <div class="message">
+            <p class="warning">Are you sure you want to delete this account and all its related informations?</p>
+            <div class="actions">
+                <input class="ok" type="submit" name="yes" value="Yes" />
+                <input class="cancel" type="submit" name="no" value="No" />
+            </div>
+        </div>
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="/accounts/view/{{ user.id }}">View account</a></li>
+        <li><a class="delete" href="/accounts/edit/{{ user.id }}">Edit account</a></li>
+        <li><a class="people" href="/accounts/">Accounts</a></li>
+    </ul>
+{% endblock %}

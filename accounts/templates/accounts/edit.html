@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}Accounts{% endblock %}
+
+{% block breadcrumb %}<h2>Accounts > Edit > {{ user }}</h2>{% endblock %}
+
+{% block content %}
+    <form action="/accounts/edit/{{ user.id }}/" method="post">
+        {{ form.as_p }}
+        <input class="save" type="submit" value="Save" />
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="/accounts/view/{{ user.id }}">View account</a></li>
+        <li><a class="delete" href="/accounts/delete/{{ user.id }}">Delete account</a></li>
+        <li><a class="people" href="/accounts/">Accounts</a></li>
+    </ul>
+{% endblock %}

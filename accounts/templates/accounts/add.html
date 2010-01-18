@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}Accounts{% endblock %}
+
+{% block breadcrumb %}<h2>Accounts > Add</h2>{% endblock %}
+
+{% block content %}
+    <form action="/accounts/add/" method="post">
+        {{ form.as_p }}
+        <input class="save" type="submit" value="Save"/>
+    </form>
+    <ul class="actions">
+        <li><a class="people" href="/accounts/">Accounts</a></li>
+    </ul>
+{% endblock %}

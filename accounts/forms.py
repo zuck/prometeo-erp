@@ -20,14 +20,12 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
-from django.conf.urls.defaults import *
-from django.conf import settings
+from django import forms
+from django.contrib.auth.models import User
+from models import Profile
 
-urlpatterns = patterns('',
-
-    # Core.
-    (r'^', include('core.urls')),
-    
-    # Accounts.
-    (r'^accounts/', include('accounts.urls'))
-)
+class AccountForm(forms.ModelForm):
+    """Form for account data.
+    """
+    class Meta:
+        model = User

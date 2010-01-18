@@ -79,23 +79,27 @@ ul {
 }
 
 dt, dd {
-    padding: 10px 10px;
+    padding: 10px 1%;
     margin: 0;
 	height: 1.4em;
 	overflow: auto;
+}
+
+dt.altrow, dd.altrow {
+    background: #eee;
 }
 
 dt {
     clear: left;
     float: left;
     font-weight: bold;
-    width: 337px;
+    width: 36%;
 }
 
 dd {
     float: right;
     text-align: right;
-    width: 338px;
+    width: 60%;
 }
 
 table {
@@ -119,13 +123,24 @@ table tr td {
 
 /* Form */
 
-input, select, textarea {
-    display: block;
+form {
+    float: left;
+    width: 50%;
+    padding: 1%;
+    margin: 10px 24%;
+    border: 1px solid #ccc;
 }
 
-input[type="text"], select { 
-    width: 45%;
-    padding-top: 0;
+input[type="text"], input[type="password"], select, textarea {
+    display: block;
+    margin-bottom: 10px;
+    background: #f0f0f0;
+}
+
+input[type="text"], input[type="password"], select { 
+    width: 50%;
+    height: 22px;
+    font-size: 18px;
 }
 
 textarea {
@@ -176,7 +191,7 @@ input[type="submit"]:hover {
     float: left;
     width: 100%;
     padding-top: 10px;
-    margin: 10px 0;
+    margin: 5px 0;
     border-top: 1px solid #d6d6d6;
 }
 
@@ -190,10 +205,16 @@ input[type="submit"]:hover {
 .message {
     float: left;
     width: 50%;
-    padding: 2.5%;
-    margin: 10px 22.5%;
-    background: white;
+    padding: 5px 1%;
+    margin: 10px 24%;
     border: 1px solid #ccc;
+}
+
+form .message {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 
 .message p { padding-left: 40px; }
@@ -203,7 +224,7 @@ input[type="submit"]:hover {
 .view, .add, .edit, .delete, .info, .success, .warning,
 .error, .help, .ok, .cancel, .search, .settings, .start, 
 .people, .calendar, .documents, .passwords, .save, .load
-.refresh {
+.refresh, .yes, .no, .enter, .exit, .person {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -230,6 +251,11 @@ input[type="submit"]:hover {
 .save { background-image: url(images/save.png); }
 .load { background-image: url(images/add.png); }
 .refresh { background-image: url(images/refresh.png); }
+.yes { background-image: url(images/success.png); }
+.no { background-image: url(images/error.png); }
+.enter { background-image: url(images/success.png); }
+.exit { background-image: url(images/exit.png); }
+.person { background-image: url(images/person.png); }
 
 /* Wrapper */
 
@@ -260,13 +286,13 @@ input[type="submit"]:hover {
 
 #quickmenu {
     float: right;
-    width: auto;
-    margin-top: -60px;
+    margin-top: -75px;
 }
 
 #quickmenu li { 
     display: inline;
     margin-left: 25px;
+    clear: none;
 }
 
 #menu {

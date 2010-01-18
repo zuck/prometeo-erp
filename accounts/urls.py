@@ -21,13 +21,16 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.conf.urls.defaults import *
-from django.conf import settings
 
 urlpatterns = patterns('',
 
-    # Core.
-    (r'^', include('core.urls')),
+    (r'^$', 'accounts.views.index'),
     
-    # Accounts.
-    (r'^accounts/', include('accounts.urls'))
+    (r'^add/$', 'accounts.views.add'),
+    (r'^view/(?P<id>\d+)/$', 'accounts.views.view'),
+    (r'^edit/(?P<id>\d+)/$', 'accounts.views.edit'),
+    (r'^delete/(?P<id>\d+)/$', 'accounts.views.delete'),
+
+    (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
+    (r'^logout/$', 'django.contrib.auth.views.logout_then_login')
 )

@@ -1,0 +1,11 @@
+<div id="quickmenu">
+    <ul>
+        {% if user.is_authenticated %}
+        <li><a class="exit" href="/accounts/logout/">Logout</a></li>
+        <li><a class="person" href="/accounts/view/{{ user.id }}">Profile ({{ user.username }})</a></li>
+        {% else %}
+        <li><a class="enter" href="/accounts/login/">Login</a></li>
+        {% endif %}
+        <li><a class="help" href="/help/">Help</a></li>
+    </ul>
+</div>

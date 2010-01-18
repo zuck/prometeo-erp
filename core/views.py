@@ -21,8 +21,11 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 
+@login_required
 def start(request):
     """Start page.
-    """    
-    return render_to_response('start.html')
+    """
+    return render_to_response('start.html', RequestContext(request))

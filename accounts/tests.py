@@ -20,14 +20,3 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
-from django.conf.urls.defaults import *
-from django.conf import settings
-
-urlpatterns = patterns('',
-
-    # Core.
-    (r'^', include('core.urls')),
-    
-    # Accounts.
-    (r'^accounts/', include('accounts.urls'))
-)

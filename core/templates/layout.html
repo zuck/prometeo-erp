@@ -22,13 +22,8 @@
             </div>
             <div id="nav">
                 {% block nav %}
-                <ul id="quickmenu">
-                    <li><a class="settings" href="/settings/">Settings</a></li>
-                    <li><a class="help" href="/help/">Help</a></li>
-                </ul>
-                <ul id="menu">
-                    <li><a class="start" href="/">Start</a></li>
-                </ul>
+                {% include "accounts/quickmenu.html" %}
+                {% include "accounts/menu.html" %}
                 <div id="breadcrumb">
                     {% block breadcrumb %}
                     {% endblock %}
