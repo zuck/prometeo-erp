@@ -57,8 +57,6 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join(os.getcwd(), "media/")
@@ -86,7 +84,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware'
 )
 
 ROOT_URLCONF = 'prometeo.urls'
@@ -109,3 +107,6 @@ INSTALLED_APPS = (
 # Default views for login.
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
+
+# User profile model.
+AUTH_PROFILE_MODULE = 'accounts.Profile'
