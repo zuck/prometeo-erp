@@ -286,7 +286,10 @@ form .message {
 
 #quickmenu {
     float: right;
-    margin-top: -75px;
+    width: 52%;
+    margin-top: -80px;
+    text-align: right;
+    line-height: 20px;
 }
 
 #quickmenu li { 
