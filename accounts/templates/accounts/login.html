@@ -1,14 +1,16 @@
 {% extends 'layout.html' %}
 
-{% block title %}Login{% endblock %}
+{% load i18n %}
 
-{% block breadcrumb %}<h2>Accounts > Login</h2>{% endblock %}
+{% block title %}{% trans 'Login' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Accounts' %} > {% trans 'Login' %}</h2>{% endblock %}
 
 {% block content %}
 
 {% if form.errors %}
 <div class="message">
-    <p class="error">Your username and password didn't match. Please try again.</p>
+    <p class="error">{% trans "Your username and password didn't match. Please try again." %}</p>
 </div>
 {% endif %}
 
@@ -21,7 +23,7 @@
     {{ form.password }}
 
     <div class="actions">
-        <input type="submit" class="enter" value="Login" />
+        <input type="submit" class="enter" value="{% trans 'Login' %}" />
     </div>
 </form>
 

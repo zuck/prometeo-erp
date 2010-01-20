@@ -1,22 +1,24 @@
 {% extends 'layout.html' %}
 
-{% block title %}Accounts{% endblock %}
+{% load i18n %}
 
-{% block breadcrumb %}<h2>Accounts > Delete > {{ user }}</h2>{% endblock %}
+{% block title %}{% trans 'Accounts' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Accounts' %} > {% trans 'Delete' %} > {{ user }}</h2>{% endblock %}
 
 {% block content %}
     <form action="/accounts/delete/{{ user.id }}/" method="post">
         <div class="message">
-            <p class="warning">Are you sure you want to delete this account and all its related informations?</p>
+            <p class="warning">{% trans 'Are you sure you want to delete this account and all its related informations?' %}</p>
             <div class="actions">
-                <input class="ok" type="submit" name="yes" value="Yes" />
-                <input class="cancel" type="submit" name="no" value="No" />
+                <input class="ok" type="submit" name="yes" value="{% trans 'Yes' %}" />
+                <input class="cancel" type="submit" name="no" value="{% trans 'No' %}" />
             </div>
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/accounts/view/{{ user.id }}">View account</a></li>
-        <li><a class="delete" href="/accounts/edit/{{ user.id }}">Edit account</a></li>
-        <li><a class="people" href="/accounts/">Accounts</a></li>
+        <li><a class="view" href="/accounts/view/{{ user.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/accounts/edit/{{ user.id }}">{% trans 'Edit' %}</a></li>
+        <li><a class="people" href="/accounts/">{% trans 'Accounts' %}</a></li>
     </ul>
 {% endblock %}

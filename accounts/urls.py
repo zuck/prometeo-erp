@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     (r'^view/(?P<id>\d+)/$', 'accounts.views.view'),
     (r'^edit/(?P<id>\d+)/$', 'accounts.views.edit'),
     (r'^delete/(?P<id>\d+)/$', 'accounts.views.delete'),
+    (r'^logged/$', 'accounts.views.logged'),
 
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
     (r'^logout/$', 'django.contrib.auth.views.logout_then_login')

@@ -1,17 +1,19 @@
 {% extends 'layout.html' %}
 
-{% block title %}Accounts{% endblock %}
+{% load i18n %}
 
-{% block breadcrumb %}<h2>Accounts > Edit > {{ user }}</h2>{% endblock %}
+{% block title %}{% trans 'Accounts' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Accounts' %} > {% trans 'Edit' %} > {{ user }}</h2>{% endblock %}
 
 {% block content %}
     <form action="/accounts/edit/{{ user.id }}/" method="post">
         {{ form.as_p }}
-        <input class="save" type="submit" value="Save" />
+        <input class="save" type="submit" value="{% trans 'Save' %}" />
     </form>
     <ul class="actions">
-        <li><a class="view" href="/accounts/view/{{ user.id }}">View account</a></li>
-        <li><a class="delete" href="/accounts/delete/{{ user.id }}">Delete account</a></li>
-        <li><a class="people" href="/accounts/">Accounts</a></li>
+        <li><a class="view" href="/accounts/view/{{ user.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/accounts/delete/{{ user.id }}">{% trans 'Delete' %}</a></li>
+        <li><a class="people" href="/accounts/">{% trans 'Accounts' %}</a></li>
     </ul>
 {% endblock %}

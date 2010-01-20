@@ -21,8 +21,17 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
 
 class Profile(models.Model):
     """User profile.
     """
-    user = models.OneToOneField('auth.user')
+    user = models.ForeignKey(User, unique=True)
+    language = models.CharField(max_length=5, choices=settings.LANGUAGES)
+
+def user_post_save(sender, instance, **kwargs):
+    profile, new = Profile.objects.get_or_create(user=instance)
+    
+models.signals.post_save.connect(user_post_save, User)
+

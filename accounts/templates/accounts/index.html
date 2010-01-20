@@ -1,13 +1,15 @@
 {% extends 'layout.html' %}
 
-{% block title %}Accounts{% endblock %}
+{% load i18n %}
 
-{% block breadcrumb %}<h2>Accounts</h2>{% endblock %}
+{% block title %}{% trans 'Accounts' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Accounts' %}</h2>{% endblock %}
 
 {% block content %}
     <table>
         <thead>
-            <td>Username</td>
+            <td>{% trans 'Username' %}</td>
         </thead>
         {% for account in accounts %}
         <tr>
@@ -18,10 +20,10 @@
     <div id="search">
         <form action="/accounts/" method="post">
             <input type="text" name="query"/>
-            <input type="submit" name="search" value="Search" class="search"/>
+            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
     <ul class="actions">
-        <li><a class="add" href="/accounts/add/">Add account</a></li>
+        <li><a class="add" href="/accounts/add/">{% trans 'Add' %}</a></li>
     </ul>
 {% endblock %}

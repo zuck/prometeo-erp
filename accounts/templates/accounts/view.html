@@ -1,15 +1,17 @@
 {% extends 'layout.html' %}
 
-{% block title %}Accounts{% endblock %}
+{% load i18n %}
 
-{% block breadcrumb %}<h2>Accounts > View > {{ user }}</h2>{% endblock %}
+{% block title %}{% trans 'Accounts' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Accounts' %} > {% trans 'View' %} > {{ user }}</h2>{% endblock %}
 
 {% block content %}
-    <h3>Details</h3>
+    <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <ul class="actions">
-        <li><a class="edit" href="/accounts/edit/{{ user.id }}/">Edit account</a></li>
-        <li><a class="delete" href="/accounts/delete/{{ user.id }}/">Delete account</a></li>
-        <li><a class="people" href="/accounts/">Accounts</a></li>
+        <li><a class="edit" href="/accounts/edit/{{ user.id }}/">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/accounts/delete/{{ user.id }}/">{% trans 'Delete' %}</a></li>
+        <li><a class="people" href="/accounts/">{% trans 'Accounts' %}</a></li>
     </ul>
 {% endblock %}

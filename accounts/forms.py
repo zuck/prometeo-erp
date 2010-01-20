@@ -21,11 +21,42 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.conf import settings
+
 from models import Profile
 
 class AccountForm(forms.ModelForm):
     """Form for account data.
     """
+    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput)
+    language = forms.ChoiceField(label=_("Language"), choices=settings.LANGUAGES)
+    
     class Meta:
         model = User
+        exclude = ('password', 'is_staff', 'is_active', 'is_superuser', 
+                   'last_login', 'date_joined', 'groups', 'user_permissions')
+        
+    def __init__(self, *args, **kwargs):
+        super(AccountForm, self).__init__(*args, **kwargs)
+        if kwargs.has_key('instance'):
+            self.fields['language'].initial = kwargs['instance'].get_profile().language
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1", "")
+        password2 = self.cleaned_data["password2"]
+        if password1 != password2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+        return password2
+
+    def save(self, commit=True):
+        user = super(AccountForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+            profile = user.get_profile()
+            profile.language = self.cleaned_data["language"]
+            profile.save()
+        return user

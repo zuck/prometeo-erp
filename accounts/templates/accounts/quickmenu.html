@@ -1,11 +1,13 @@
+{% load i18n %}
+
 <div id="quickmenu">
     <ul>
         {% if user.is_authenticated %}
-        <li><a class="exit" href="/accounts/logout/">Logout</a></li>
-        <li><a class="person" href="/accounts/view/{{ user.id }}">Profile ({{ user.username }})</a></li>
+        <li><a class="exit" href="/accounts/logout/">{% trans 'Logout' %}</a></li>
+        <li><a class="person" href="/accounts/view/{{ user.id }}">{% blocktrans with user.username as username %}Profile ({{ username }}){% endblocktrans %}</a></li>
         {% else %}
-        <li><a class="enter" href="/accounts/login/">Login</a></li>
+        <li><a class="enter" href="/accounts/login/">{% trans 'Login' %}</a></li>
         {% endif %}
-        <li><a class="help" href="/help/">Help</a></li>
+        <li><a class="help" href="/help/">{% trans 'Help' %}</a></li>
     </ul>
 </div>
