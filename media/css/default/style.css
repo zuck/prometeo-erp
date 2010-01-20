@@ -217,6 +217,11 @@ form p {
     border: 1px solid #ccc;
 }
 
+.message p {
+    text-align: left;
+    color: black;
+}
+
 form .message {
     width: 100%;
     padding: 0;
