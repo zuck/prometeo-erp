@@ -54,9 +54,9 @@ class Details(StrAndUnicode):
         return value
 
 class ModelDetails(Details):
-    def __init__(self, instance, exclude=['id']):
+    def __init__(self, instance, fields=[], exclude=['id']):
         self.__instance = instance
-        field_list = self.__instance._meta.fields
+        field_list = [f for f in self.__instance._meta.fields if len(fields) == 0 or f.attname in fields]
         fields = [(f.verbose_name, self._value_to_string(f)) for f in field_list if f.attname not in exclude]
         super(ModelDetails, self).__init__(fields)
 
