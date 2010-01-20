@@ -302,7 +302,7 @@ form .message {
     display: block;
     float: left;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: #fff;
 }
 
@@ -326,8 +326,12 @@ form .message {
 }
 
 #breadcrumb {
+    width: 100%;
     float: left;
-    font-size: 0.8em;
+    font-size: 0.6em;
+    border-bottom: 1px solid #bbb;
+    padding-bottom: 10px;
+    color: #555;
 }
 
 /* Content */
@@ -379,5 +383,5 @@ form .message {
 
 #footer h6 {
     font-size: 11px;
-    color: #aaa;
+    color: #555;
 }
