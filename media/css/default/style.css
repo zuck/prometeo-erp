@@ -359,6 +359,12 @@ form .message {
     float: right;
 }
 
+#search form {
+    border: none;
+    margin: 0;
+    width: auto;
+}
+
 #search input {
     clear: none;
     display: inline;
