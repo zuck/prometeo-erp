@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Warehouses' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Warehouses' %}</h2>{% endblock %}
+
+{% block content %}
+    <div id="search">
+        <form action="/warehouses/" method="post">
+            <input type="text" name="query"/>
+            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
+        </form>
+    </div>
+    {% if warehouses %}
+    <table>
+        <thead>
+            <td>{% trans 'Name' %}</td>
+        </thead>
+        {% for warehouse in warehouses %}
+        <tr>
+            <td><a href="/warehouses/view/{{ warehouse.id }}/">{{ warehouse.name }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="disabled">{% trans 'empty' %}.</p>
+    {% endif %}
+    <ul class="actions">
+        <li><a class="add" href="/warehouses/add/">{% trans 'Add' %}</a></li>
+    </ul>
+{% endblock %}

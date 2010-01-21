@@ -239,7 +239,7 @@ form .message {
 .view, .add, .edit, .delete, .info, .success, .warning,
 .error, .help, .ok, .cancel, .search, .settings, .start, .products,
 .people, .calendar, .documents, .passwords, .accounts, .partners,
-.save, .load, .refresh, .yes, .no, .enter, .exit, .person {
+.save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -272,6 +272,7 @@ form .message {
 .exit { background-image: url(images/exit.png); }
 .person { background-image: url(images/person.png); }
 .products { background-image: url(images/product.png); }
+.warehouses { background-image: url(images/warehouse.png); }
 
 /* Wrapper */
 

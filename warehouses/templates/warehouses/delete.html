@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Warehouses' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Warehouses' %} > {% trans 'Delete' %} > {{ warehouse }}</h2>{% endblock %}
+
+{% block content %}
+    <form action="/warehouses/delete/{{ warehouse.id }}/" method="post">
+        <div class="message">
+            <p class="warning">{% trans 'Are you sure you want to delete this warehouse and all its related informations?' %}</p>
+            <div class="actions">
+                <input class="ok" type="submit" name="yes" value="{% trans 'Yes' %}" />
+                <input class="cancel" type="submit" name="no" value="{% trans 'No' %}" />
+            </div>
+        </div>
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="/warehouses/view/{{ warehouse.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/warehouses/edit/{{ warehouse.id }}">{% trans 'Edit' %}</a></li>
+        <li><a class="warehouses" href="/warehouses/">{% trans 'Warehouses' %}</a></li>
+    </ul>
+{% endblock %}
