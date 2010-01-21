@@ -153,7 +153,6 @@ label {
     width: 25%;
     margin-right: 10px;
     text-align: right;
-    margin-top: 0.2em;
     color: black;
 }
 
@@ -185,6 +184,10 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
 	color: #f00;
+}
+
+input[type="checkbox"] {
+    display: block;
 }
 
 form p {
@@ -235,7 +238,7 @@ form .message {
 
 .view, .add, .edit, .delete, .info, .success, .warning,
 .error, .help, .ok, .cancel, .search, .settings, .start, 
-.people, .calendar, .documents, .passwords, .accounts,
+.people, .calendar, .documents, .passwords, .accounts, .partners,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person {
     padding: 5px 0 5px 25px;
     background-position: left center;
@@ -256,7 +259,7 @@ form .message {
 .search { background-image: url(images/view.png); }
 .settings { background-image: url(images/settings.png); }
 .start { background-image: url(images/start.png); }
-.people { background-image: url(images/people.png); }
+.people, .partners { background-image: url(images/people.png); }
 .calendar { background-image: url(images/calendar.png); }
 .documents { background-image: url(images/documents.png); }
 .passwords, .accounts { background-image: url(images/passwords.png); }
@@ -296,7 +299,7 @@ form .message {
 
 /* Navigation */
 
-#quickmenu {
+#userarea {
     float: right;
     width: 52%;
     margin-top: -80px;
@@ -304,7 +307,7 @@ form .message {
     line-height: 20px;
 }
 
-#quickmenu li { 
+#userarea li { 
     display: inline;
     margin-left: 25px;
     clear: none;
@@ -370,7 +373,8 @@ form .message {
 
 #search form {
     border: none;
-    margin: 0;
+    margin: 0 0 -10px;
+    padding: 0;
     width: auto;
 }
 

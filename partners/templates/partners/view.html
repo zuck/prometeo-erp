@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Partners' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Partners' %} > {% trans 'View' %} > {{ partner }}</h2>{% endblock %}
+
+{% block content %}
+    <h3>Details</h3>
+    {{ details.as_dl }}
+    <ul class="actions">
+        <li><a class="edit" href="/partners/edit/{{ partner.id }}/">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/partners/delete/{{ partner.id }}/">{% trans 'Delete' %}</a></li>
+        <li><a class="people" href="/partners/">{% trans 'Partners' %}</a></li>
+    </ul>
+{% endblock %}
