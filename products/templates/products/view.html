@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Products' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Products' %} > {% trans 'View' %} > {{ product }}</h2>{% endblock %}
+
+{% block content %}
+    <h3>Details</h3>
+    {{ details.as_dl }}
+    <ul class="actions">
+        <li><a class="edit" href="/products/edit/{{ product.id }}/">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/products/delete/{{ product.id }}/">{% trans 'Delete' %}</a></li>
+        <li><a class="products" href="/products/">{% trans 'Products' %}</a></li>
+    </ul>
+{% endblock %}

@@ -237,7 +237,7 @@ form .message {
 .message .actions { text-align: right; }
 
 .view, .add, .edit, .delete, .info, .success, .warning,
-.error, .help, .ok, .cancel, .search, .settings, .start, 
+.error, .help, .ok, .cancel, .search, .settings, .start, .products,
 .people, .calendar, .documents, .passwords, .accounts, .partners,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person {
     padding: 5px 0 5px 25px;
@@ -271,6 +271,7 @@ form .message {
 .enter { background-image: url(images/success.png); }
 .exit { background-image: url(images/exit.png); }
 .person { background-image: url(images/person.png); }
+.products { background-image: url(images/product.png); }
 
 /* Wrapper */
 

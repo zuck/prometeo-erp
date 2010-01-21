@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Products' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'Products' %} > {% trans 'Edit' %} > {{ product }}</h2>{% endblock %}
+
+{% block content %}
+    <form action="/products/edit/{{ product.id }}/" method="post">
+        {{ form.as_p }}
+        <input class="save" type="submit" value="{% trans 'Save' %}" />
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="/products/view/{{ product.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/products/delete/{{ product.id }}">{% trans 'Delete' %}</a></li>
+        <li><a class="products" href="/products/">{% trans 'Products' %}</a></li>
+    </ul>
+{% endblock %}
