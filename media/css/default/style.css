@@ -313,18 +313,18 @@ form .message {
 #menu {
     display: block;
     float: left;
-    width: 100%;
+    width: auto;
+    margin-top: 1px;
     margin-bottom: 10px;
     color: #fff;
-    height: 34px
+    height: 34px;
+    border-right: 1px solid #966;
+    border-left: 1px solid #300;
 }
 
 #menu li {
     display: block;
     float: left;
-    margin-top: -9px;
-    border-left: 1px solid #966;
-    border-right: 1px solid #300;
 }
 
 #menu a {
@@ -332,6 +332,8 @@ form .message {
     font-weight: bold;
     padding: 10px 15px;
     color: #fff;
+    border-left: 1px solid #966;
+    border-right: 1px solid #300;
 }
 
 #menu a:hover {
@@ -340,6 +342,8 @@ form .message {
 
 #menu a.active {
     background: url(images/menu_active.jpg) repeat-x bottom;
+    border-right: 1px solid #b88;
+    border-left: 1px solid #000;
 }
 
 #breadcrumb {
