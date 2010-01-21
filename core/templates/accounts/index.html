@@ -13,6 +13,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
+    {% if accounts %}
     <table>
         <thead>
             <td>{% trans 'Username' %}</td>
@@ -23,6 +24,9 @@
         </tr>
         {% endfor %}
     </table>
+    {% else %}
+    <p class="disabled">{% trans 'empty' %}.</p>
+    {% endif %}
     <ul class="actions">
         <li><a class="add" href="/accounts/add/">{% trans 'Add' %}</a></li>
     </ul>
