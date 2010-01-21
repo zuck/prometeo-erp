@@ -235,8 +235,8 @@ form .message {
 
 .view, .add, .edit, .delete, .info, .success, .warning,
 .error, .help, .ok, .cancel, .search, .settings, .start, 
-.people, .accounts, .calendar, .documents, .passwords, .save, .load
-.refresh, .yes, .no, .enter, .exit, .person {
+.people, .calendar, .documents, .passwords, .accounts,
+.save, .load, .refresh, .yes, .no, .enter, .exit, .person {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -256,10 +256,10 @@ form .message {
 .search { background-image: url(images/view.png); }
 .settings { background-image: url(images/settings.png); }
 .start { background-image: url(images/start.png); }
-.people, .accounts { background-image: url(images/people.png); }
+.people { background-image: url(images/people.png); }
 .calendar { background-image: url(images/calendar.png); }
 .documents { background-image: url(images/documents.png); }
-.passwords { background-image: url(images/passwords.png); }
+.passwords, .accounts { background-image: url(images/passwords.png); }
 .save { background-image: url(images/save.png); }
 .load { background-image: url(images/add.png); }
 .refresh { background-image: url(images/refresh.png); }
@@ -323,19 +323,18 @@ form .message {
     display: block;
     float: left;
     margin-top: -9px;
-    border-right: 1px solid #533;
+    border-left: 1px solid #966;
+    border-right: 1px solid #300;
 }
 
 #menu a {
     display: block;
     font-weight: bold;
     padding: 10px 15px;
-    background: url(images/menu.jpg) repeat-x bottom;
-    color: #eaeaea;
+    color: #fff;
 }
 
 #menu a:hover {
-    color: #fff;
     background: url(images/menu_hover.jpg) repeat-x bottom;
 }
 
