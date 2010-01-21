@@ -22,6 +22,7 @@ __version__ = '$Revision$'
 
 from django.conf.urls.defaults import *
 from django.conf import settings
+import imp
 
 urlpatterns = patterns('',
 
@@ -29,5 +30,42 @@ urlpatterns = patterns('',
     (r'^$', 'core.views.start'),
     
     # Media files.
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True})
 )
+    
+urlpatterns += patterns('',
+    
+    (r'^accounts/$', 'core.views.index'),
+    (r'^accounts/add/$', 'core.views.add'),
+    (r'^accounts/view/(?P<id>\d+)/$', 'core.views.view'),
+    (r'^accounts/edit/(?P<id>\d+)/$', 'core.views.edit'),
+    (r'^accounts/delete/(?P<id>\d+)/$', 'core.views.delete'),
+    (r'^accounts/logged/$', 'core.views.logged'),
+
+    (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
+    (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login')
+)
+
+def autodiscover():
+    """ Auto discover urls of installed applications.
+    """    
+    for app in settings.INSTALLED_APPS:
+        if app.startswith('django'):
+            continue
+            
+        # Step 1: find out the app's __path__.
+        try:
+            app_path = __import__(app, {}, {}, [app.split('.')[-1]]).__path__
+        except AttributeError:
+            continue
+
+        # Step 2: use imp.find_module to find the app's urls.py.
+        try:
+            imp.find_module('urls', app_path)
+        except ImportError:
+            continue
+
+        # Step 3: return the app's url patterns.
+        pkg, sep, name = app.rpartition('.')
+        global urlpatterns
+        urlpatterns += patterns("", (r'^%s/' % name, include('%s.urls' % app)))

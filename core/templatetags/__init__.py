@@ -19,19 +19,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
-
-from django.conf.urls.defaults import *
-
-urlpatterns = patterns('',
-
-    (r'^$', 'accounts.views.index'),
-    
-    (r'^add/$', 'accounts.views.add'),
-    (r'^view/(?P<id>\d+)/$', 'accounts.views.view'),
-    (r'^edit/(?P<id>\d+)/$', 'accounts.views.edit'),
-    (r'^delete/(?P<id>\d+)/$', 'accounts.views.delete'),
-    (r'^logged/$', 'accounts.views.logged'),
-
-    (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
-    (r'^logout/$', 'django.contrib.auth.views.logout_then_login')
-)

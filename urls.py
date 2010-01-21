@@ -20,6 +20,10 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
-from prometeo.core import get_url_patterns
+from prometeo.core import urls
+from prometeo.core import menu
 
-urlpatterns = get_url_patterns()
+urls.autodiscover()
+menu.autodiscover()
+
+urlpatterns = urls.urlpatterns

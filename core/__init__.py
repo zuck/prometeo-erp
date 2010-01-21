@@ -21,21 +21,8 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 import os
-from django.conf.urls.defaults import *
 from django.conf import settings
 
 if not hasattr(settings, 'TEMPLATE_DIRS'):
     settings.TEMPLATE_DIRS = []
 settings.TEMPLATE_DIRS += (os.path.join(os.path.dirname(__file__), "templates"),)
-
-def get_url_patterns():
-    """Return URL patterns of all installed apps after 'prometeo.core'.
-    """
-    urlpatterns = patterns("", (r'^', include('prometeo.core.urls')))
-    i = settings.INSTALLED_APPS.index('prometeo.core')
-    for module in settings.INSTALLED_APPS[i+1:]:
-        if not module.startswith('django'):
-            (pkg, sep, name) = module.rpartition('.')
-            urlpatterns += patterns("", (r'^%s/' % name, include('%s.urls' % module)))
-
-    return urlpatterns

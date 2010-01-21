@@ -1,0 +1,10 @@
+{% load menu %}
+
+<ul id="menu">
+    {% if user.is_authenticated %}
+    {% get_menu 'main' as menu_bar %}
+    {% for m in menu_bar %}
+    {{ m }}
+    {% endfor %}
+    {% endif %}
+</ul>

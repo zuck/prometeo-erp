@@ -74,8 +74,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
-    'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request'
 )
 
 # List of middleware classes to use.  Order is important; in the request phase,
@@ -97,13 +96,12 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'prometeo.core',
-    'prometeo.accounts'
+    'prometeo.core'
 )
 
 # Default login redirect.
 LOGIN_REDIRECT_URL = '/accounts/logged'
 
 # User profile model.
-AUTH_PROFILE_MODULE = 'accounts.Profile'
+AUTH_PROFILE_MODULE = 'core.Profile'
 

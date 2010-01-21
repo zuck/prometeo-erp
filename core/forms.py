@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from models import Profile
+from prometeo.core.models import Profile
 
 class AccountForm(forms.ModelForm):
     """Form for account data.
@@ -43,6 +43,8 @@ class AccountForm(forms.ModelForm):
         super(AccountForm, self).__init__(*args, **kwargs)
         if kwargs.has_key('instance'):
             self.fields['language'].initial = kwargs['instance'].get_profile().language
+        else:
+            self.fields['language'].initial = settings.LANGUAGE_CODE
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1", "")

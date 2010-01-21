@@ -235,7 +235,7 @@ form .message {
 
 .view, .add, .edit, .delete, .info, .success, .warning,
 .error, .help, .ok, .cancel, .search, .settings, .start, 
-.people, .calendar, .documents, .passwords, .save, .load
+.people, .accounts, .calendar, .documents, .passwords, .save, .load
 .refresh, .yes, .no, .enter, .exit, .person {
     padding: 5px 0 5px 25px;
     background-position: left center;
@@ -256,7 +256,7 @@ form .message {
 .search { background-image: url(images/view.png); }
 .settings { background-image: url(images/settings.png); }
 .start { background-image: url(images/start.png); }
-.people { background-image: url(images/people.png); }
+.people, .accounts { background-image: url(images/people.png); }
 .calendar { background-image: url(images/calendar.png); }
 .documents { background-image: url(images/documents.png); }
 .passwords { background-image: url(images/passwords.png); }
@@ -316,25 +316,31 @@ form .message {
     width: 100%;
     margin-bottom: 10px;
     color: #fff;
-}
-
-#menu a {
-    color: #fff;
-    padding-left: 25px;
+    height: 34px
 }
 
 #menu li {
     display: block;
     float: left;
+    margin-top: -9px;
+    border-right: 1px solid #533;
+}
+
+#menu a {
+    display: block;
     font-weight: bold;
     padding: 10px 15px;
     background: url(images/menu.jpg) repeat-x bottom;
-    margin-top: -9px;
-    margin-right: 1px;
+    color: #eaeaea;
 }
 
-#menu li.selected {
-    background: url(images/menu_selected.jpg) repeat-x bottom;
+#menu a:hover {
+    color: #fff;
+    background: url(images/menu_hover.jpg) repeat-x bottom;
+}
+
+#menu a.active {
+    background: url(images/menu_active.jpg) repeat-x bottom;
 }
 
 #breadcrumb {
