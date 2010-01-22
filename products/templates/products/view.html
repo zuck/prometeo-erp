@@ -7,7 +7,7 @@
 {% block breadcrumb %}<h2>{% trans 'Products' %} > {% trans 'View' %} > {{ product }}</h2>{% endblock %}
 
 {% block content %}
-    <h3>Details</h3>
+    <h3>{% trans Details %}</h3>
     {{ details.as_dl }}
     <ul class="actions">
         <li><a class="edit" href="/products/edit/{{ product.id }}/">{% trans 'Edit' %}</a></li>
