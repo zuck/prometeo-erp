@@ -22,15 +22,27 @@ __version__ = '$Revision$'
 
 from django.db import models
 
-from prometeo.partners.models import Partner
-
-class Product(models.Model):
-    class Meta:
-        db_table = u'products'
-        
+class UOM(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    suppliers = models.ManyToManyField(Partner)
+        
+    def __unicode__(self):
+        return self.name
+    
+class Category(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    parent = models.ForeignKey('self')
+        
+    def __unicode__(self):
+        return self.name
+
+class Product(models.Model):        
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    purchase_uom = models.ForeignKey(UOM)
+    suppliers = models.ManyToManyField('partners.Partner')
+    categories = models.ManyToManyField(Category)
         
     def __unicode__(self):
         return self.name
