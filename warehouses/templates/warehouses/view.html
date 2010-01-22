@@ -7,34 +7,8 @@
 {% block breadcrumb %}<h2>{% trans 'Warehouses' %} > {% trans 'View' %} > {{ warehouse }}</h2>{% endblock %}
 
 {% block content %}
-    <h3>Details</h3>
+    <h3>{% trans Details %}</h3>
     {{ details.as_dl }}
-    <h3>{% trans 'Movements' %}</h3>
-    {% if movements %}
-    <table>
-        <thead>
-            <td>{% trans 'Quantity' %}</td>
-            <td>{% trans 'UOM' %}</td>
-            <td>{% trans 'Product' %}</td>
-            <td>{% trans 'On' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for movement in movements %}
-        <tr class="{% if movement.quantity >= "0" %}in{% else %}out{% endifequal %}">
-            <td>{{ movement.quantity }}</td>
-            <td>{{ movement.product.uom }}</td>
-            <td><a href="/products/view/{{ movement.product.id }}/">{{ movement.product }}</a></td>
-            <td>{{ movement.timestamp }}</td>
-            <td>
-                <ul class="actions">
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
     <ul class="actions">
         <li><a class="edit" href="/warehouses/edit/{{ warehouse.id }}/">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="/warehouses/delete/{{ warehouse.id }}/">{% trans 'Delete' %}</a></li>
