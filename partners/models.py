@@ -22,14 +22,18 @@ __version__ = '$Revision$'
 
 from django.db import models
 
+class Contact(models.Model):
+    id = models.AutoField(primary_key=True)
+    firstname = models.CharField(max_length=255)
+    lastname = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+
 class Partner(models.Model):
-    class Meta:
-        db_table = u'partners'
-        
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     is_customer = models.BooleanField(default=False)
     is_supplier = models.BooleanField(default=False)
+    contacts = models.ManyToManyField(Contact)
         
     def __unicode__(self):
         return self.name
