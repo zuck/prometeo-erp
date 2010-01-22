@@ -20,6 +20,7 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.utils.translation import ugettext_lazy as _
 from prometeo.core.menu import Menu, menubar
 
-menubar.register(Menu(u'products', '/products/'))
+menubar.register(Menu(_('Products'), '/products/'))

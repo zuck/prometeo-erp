@@ -22,6 +22,7 @@ __version__ = '$Revision$'
 
 # Inspired by http://code.google.com/p/django-nav/
 
+from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 class MenuEntry(object):
@@ -79,8 +80,8 @@ def autodiscover():
     
     # Core links.
     global menubar
-    menubar.register(Menu(u'start', '/'))
-    menubar.register(Menu(u'accounts', '/accounts/'))
+    menubar.register(Menu(_('Start'), '/'))
+    menubar.register(Menu(_('Accounts'), '/accounts/'))
     
     # Other links.
     for app in settings.INSTALLED_APPS:
