@@ -17,10 +17,18 @@
     <table>
         <thead>
             <td>{% trans 'Username' %}</td>
+            <td>{% trans 'Actions' %}</td>
         </thead>
         {% for account in accounts %}
         <tr>
-            <td><a href="/accounts/view/{{ account.id }}/">{{ account.username }}</a></td>
+            <td>{{ account.username }}</td>
+            <td>
+                <ul class="actions">
+                    <li><a class="view" href="/accounts/view/{{ account.id }}/">{% trans 'View' %}</a></li>
+                    <li><a class="edit" href="/accounts/edit/{{ account.id }}/">{% trans 'Edit' %}</a></li>
+                    <li><a class="delete" href="/accounts/delete/{{ account.id }}/">{% trans 'Delete' %}</a></li>
+                </ul>
+            </td>
         </tr>
         {% endfor %}
     </table>

@@ -19,12 +19,20 @@
             <td>{% trans 'Name' %}</td>
             <td>{% trans 'Supplier' %}</td>
             <td>{% trans 'Customer' %}</td>
+            <td>{% trans 'Actions' %}</td>
         </thead>
         {% for partner in partners %}
         <tr>
-            <td><a href="/partners/view/{{ partner.id }}/">{{ partner.name }}</a></td>
+            <td>{{ partner.name }}</td>
             <td>{% if partner.is_supplier %}<span class="yes">{% trans 'Yes' %}</span>{% else %}<span class="no">{% trans 'No' %}</span>{% endif %}</td>
             <td>{% if partner.is_customer %}<span class="yes">{% trans 'Yes' %}</span>{% else %}<span class="no">{% trans 'No' %}</span>{% endif %}</td>
+            <td>
+                <ul class="actions">
+                    <li><a class="view" href="/partners/view/{{ partner.id }}/">{% trans 'View' %}</a></li>
+                    <li><a class="edit" href="/partners/edit/{{ partner.id }}/">{% trans 'Edit' %}</a></li>
+                    <li><a class="delete" href="/partners/delete/{{ partner.id }}/">{% trans 'Delete' %}</a></li>
+                </ul>
+            </td>
         </tr>
         {% endfor %}
     </table>
