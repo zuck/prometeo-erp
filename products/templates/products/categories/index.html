@@ -22,11 +22,19 @@
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
+            <td>{% trans 'Parent' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
         {% for category in categories %}
         <tr>
             <td>{{ category.name }}</td>
+            <td>
+                {% if category.parent %}
+                <a href="/products/categories/view/{{ category.parent.id }}/">{{ category.parent }}</a>
+                {% else %}
+                <span class="disabled">{% trans 'empty.' %}</span>
+                {% endif %}
+            </td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/products/categories/view/{{ category.id }}/">{% trans 'View' %}</a></li>
