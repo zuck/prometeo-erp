@@ -33,7 +33,7 @@ class Partner(models.Model):
     name = models.CharField(max_length=255)
     is_customer = models.BooleanField(default=False)
     is_supplier = models.BooleanField(default=False)
-    contacts = models.ManyToManyField(Contact)
+    contacts = models.ManyToManyField(Contact, blank=True)
         
     def __unicode__(self):
         return self.name
