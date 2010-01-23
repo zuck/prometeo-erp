@@ -21,10 +21,16 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django import forms
-from models import UOM
+from models import UOM, Category
 
 class UOMForm(forms.ModelForm):
     """Form for uom data.
     """
     class Meta:
         model = UOM
+
+class CategoryForm(forms.ModelForm):
+    """Form for category data.
+    """
+    class Meta:
+        model = Category

@@ -4,28 +4,29 @@
 
 {% block title %}{% trans 'UOMs' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'UOMs' %}</h2>{% endblock %}
+{% block breadcrumb %}<h2>{% trans 'UOMs' %} > {% trans 'Categories' %} > {% trans 'View' %} > {{ category }}</h2>{% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <h3>{% trans 'UOMs' %}</h3>
+    {% if category.uom_set.all %}
     <div id="search">
-        <form action="/uoms/" method="post">
+        <form action="/uoms/categories/view/{{ category.id }}" method="post">
             <input type="text" name="query"/>
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if uoms %}
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
             <td>{% trans 'Initials' %}</td>
-            <td>{% trans 'Category' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for uom in uoms %}
+        {% for uom in category.uom_set.all %}
         <tr>
             <td>{{ uom.name }}</td>
             <td>{{ uom.initials }}</td>
-            <td><a href="/uoms/categories/view/{{ uom.category.id }}/">{{ uom.category }}</a></td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/uoms/view/{{ uom.id }}/">{% trans 'View' %}</a></li>
@@ -40,7 +41,8 @@
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}
     <ul class="actions">
-        <li><a class="add" href="/uoms/add/">{% trans 'Add' %}</a></li>
+        <li><a class="edit" href="/uoms/categories/edit/{{ category.id }}/">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/uoms/categories/delete/{{ category.id }}/">{% trans 'Delete' %}</a></li>
         <li><a class="categories" href="/uoms/categories/">{% trans 'Categories' %}</a></li>
     </ul>
 {% endblock %}

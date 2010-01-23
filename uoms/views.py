@@ -29,11 +29,11 @@ from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
 
-from models import UOM
-from forms import UOMForm
+from models import UOM, Category
+from forms import UOMForm, CategoryForm
 
 @login_required 
-def index(request):
+def uom_index(request):
     """Show a uom list.
     """
     uoms = None
@@ -51,7 +51,7 @@ def index(request):
     return render_to_response('uoms/index.html', RequestContext(request, {'uoms': uoms}))
  
 @login_required    
-def add(request):
+def uom_add(request):
     """Add a new uom.
     """
     if request.method == 'POST':
@@ -65,7 +65,7 @@ def add(request):
     return render_to_response('uoms/add.html', RequestContext(request, {'form': form}));
 
 @login_required     
-def view(request, id):
+def uom_view(request, id):
     """Show uom details.
     """
     uom = get_object_or_404(UOM, pk=id)
@@ -73,7 +73,7 @@ def view(request, id):
     return render_to_response('uoms/view.html', RequestContext(request, {'uom': uom, 'details': details}))
 
 @login_required     
-def edit(request, id):
+def uom_edit(request, id):
     """Edit a uom.
     """
     uom = UOM.objects.get(pk=id)
@@ -87,7 +87,7 @@ def edit(request, id):
     return render_to_response('uoms/edit.html', RequestContext(request, {'uom': uom, 'form': form}))
 
 @login_required    
-def delete(request, id):
+def uom_delete(request, id):
     """Delete a uom.
     """
     uom = get_object_or_404(UOM, pk=id)
@@ -97,3 +97,71 @@ def delete(request, id):
             return redirect_to(request, url='/uoms/');
         return redirect_to(request, url='/uoms/view/%s/' % (id))
     return render_to_response('uoms/delete.html', RequestContext(request, {'uom': uom}))
+    
+## Categories.
+
+@login_required 
+def category_index(request):
+    """Show a category list.
+    """
+    categories = None
+    queryset = None
+
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        token = request.POST['query']
+        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+
+    if (queryset is not None):
+        categories = Category.objects.filter(queryset)
+    else:
+        categories = Category.objects.all()
+        
+    return render_to_response('uoms/categories/index.html', RequestContext(request, {'categories': categories}))
+ 
+@login_required    
+def category_add(request):
+    """Add a new category.
+    """
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save()
+            return redirect_to(request, url='/uoms/categories/view/%s/' % (category.pk))
+    else:
+        form = CategoryForm()
+
+    return render_to_response('uoms/categories/add.html', RequestContext(request, {'form': form}));
+
+@login_required     
+def category_view(request, id):
+    """Show category details.
+    """
+    category = get_object_or_404(Category, pk=id)
+    details = ModelDetails(instance=category)
+    return render_to_response('uoms/categories/view.html', RequestContext(request, {'category': category, 'details': details}))
+
+@login_required     
+def category_edit(request, id):
+    """Edit a category.
+    """
+    category = Category.objects.get(pk=id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url='/uoms/categories/view/%s/' % (id))
+    else:
+        form = CategoryForm(instance=category)
+    return render_to_response('uoms/categories/edit.html', RequestContext(request, {'category': category, 'form': form}))
+
+@login_required    
+def category_delete(request, id):
+    """Delete a category.
+    """
+    category = get_object_or_404(Category, pk=id)
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            category.delete()
+            return redirect_to(request, url='/uoms/categories/');
+        return redirect_to(request, url='/uoms/categories/view/%s/' % (id))
+    return render_to_response('uoms/categories/delete.html', RequestContext(request, {'category': category}))

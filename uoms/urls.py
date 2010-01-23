@@ -24,10 +24,17 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('uoms.views',
 
-    (r'^$', 'index'),
+    # UOMs.
+    (r'^$', 'uom_index'),
+    (r'^add/$', 'uom_add'),
+    (r'^view/(?P<id>\d+)/$', 'uom_view'),
+    (r'^edit/(?P<id>\d+)/$', 'uom_edit'),
+    (r'^delete/(?P<id>\d+)/$', 'uom_delete'),
     
-    (r'^add/$', 'add'),
-    (r'^view/(?P<id>\d+)/$', 'view'),
-    (r'^edit/(?P<id>\d+)/$', 'edit'),
-    (r'^delete/(?P<id>\d+)/$', 'delete'),
+    # Categories.
+    (r'^categories/$', 'category_index'),
+    (r'^categories/add/$', 'category_add'),
+    (r'^categories/view/(?P<id>\d+)/$', 'category_view'),
+    (r'^categories/edit/(?P<id>\d+)/$', 'category_edit'),
+    (r'^categories/delete/(?P<id>\d+)/$', 'category_delete'),
 )

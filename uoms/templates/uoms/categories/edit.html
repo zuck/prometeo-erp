@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'UOMs' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'UOMs' %} > {% trans 'Categories' %} > {% trans 'Edit' %} > {{ category }}</h2>{% endblock %}
+
+{% block content %}
+    <form action="/uoms/categories/edit/{{ category.id }}/" method="post">
+        {{ form.as_p }}
+        <input class="save" type="submit" value="{% trans 'Save' %}" />
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="/uoms/categories/view/{{ category.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/uoms/categories/delete/{{ category.id }}">{% trans 'Delete' %}</a></li>
+        <li><a class="categories" href="/uoms/categories/">{% trans 'Categories' %}</a></li>
+    </ul>
+{% endblock %}
