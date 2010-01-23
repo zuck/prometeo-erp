@@ -10,13 +10,13 @@
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <h3>{% trans 'UOMs' %}</h3>
-    {% if category.uom_set.all %}
     <div id="search">
         <form action="/uoms/categories/view/{{ category.id }}" method="post">
             <input type="text" name="query"/>
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
+    {% if category.uom_set.all %}
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
