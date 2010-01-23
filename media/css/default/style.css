@@ -113,6 +113,7 @@ table td {
 table thead td {
     background: #2f2f2f url(images/thead_bg.gif) repeat-x top;
     color: #fff;
+    text-align: center;
 }
 
 table tr td {
@@ -197,6 +198,8 @@ form p {
 
 /* Commons */
 
+.number { text-align: right; }
+
 .actions {
     float: left;
     width: 100%;
@@ -215,6 +218,7 @@ table .actions {
     border: none;
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 .disabled { color: #d6d6d6; }
@@ -282,8 +286,18 @@ form .message {
 .products { background-image: url(images/product.png); }
 .warehouses { background-image: url(images/warehouse.png); }
 
-.in { background: #92d26f; }
-.out { background: #d26f6f; }
+.sign { display: none; }
+.in { background: #dbf6cd; }
+.out { background: #f6cdcd; }
+
+.in .number, .out .number {
+    padding-left: 25px;
+    background-position: 5px center;
+    background-repeat: no-repeat;
+}
+
+.in .number { background-image: url(images/plus.png); }
+.out .number { background-image: url(images/minus.png); }
 
 /* Wrapper */
 

@@ -29,7 +29,7 @@ from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
 
-from models import Warehouse
+from models import Warehouse, Movement
 from forms import WarehouseForm
 
 @login_required 
@@ -70,7 +70,9 @@ def view(request, id):
     """
     warehouse = get_object_or_404(Warehouse, pk=id)
     details = ModelDetails(instance=warehouse)
-    return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details}))
+    movements = Movement.objects.all()
+    
+    return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details, 'movements': movements}))
 
 @login_required     
 def edit(request, id):

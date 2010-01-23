@@ -21,13 +21,27 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
-class Warehouse(models.Model):
-    class Meta:
-        db_table = u'warehouses'
-        
+class Warehouse(models.Model):        
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
+    owner = models.ForeignKey('partners.Partner')
         
     def __unicode__(self):
         return self.name
+        
+class Movement(models.Model):        
+    id = models.AutoField(primary_key=True)
+    warehouse = models.ForeignKey(Warehouse)
+    document = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    product = models.ForeignKey('products.Product')
+    quantity = models.IntegerField()
+    user = models.ForeignKey('auth.User')
+        
+    def __unicode__(self):
+        return _("%d %s of %s") % (self.quantity, self.product.uom, self.product)
+        
+    def verse(self):
+        return (self.quantity >= 0)

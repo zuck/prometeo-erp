@@ -9,6 +9,40 @@
 {% block content %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
+    <h3>{% trans 'Movements' %}</h3>
+    {% if movements %}
+    <div id="search">
+        <form action="/warehouses/view/{{ warehouse.id }}/" method="post">
+            <input type="text" name="query"/>
+            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <td>{% trans 'Quantity' %}</td>
+            <td>{% trans 'UOM' %}</td>
+            <td>{% trans 'Product' %}</td>
+            <td>{% trans 'On' %}</td>
+            <td>{% trans 'Actions' %}</td>
+        </thead>
+        {% for movement in movements %}
+        <tr class="{% if movement.verse %}in{% else %}out{% endif %}">
+            <td class="number"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity|cut:"-" }}</td>
+            <td><a href="/uoms/view/{{ movement.product.purchase_uom.id }}/">{{ movement.product.purchase_uom }}</a></td>
+            <td><a href="/products/view/{{ movement.product.id }}/">{{ movement.product }}</a></td>
+            <td>{{ movement.timestamp }}</td>
+            <td>
+                <ul class="actions">
+                    <li><a class="view" href="/movements/view/{{ movement.id }}/">{% trans 'View' %}</a></li>
+                    <li><a class="delete" href="/movements/delete/{{ movement.id }}/">{% trans 'Delete' %}</a></li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="disabled">{% trans 'empty' %}.</p>
+    {% endif %}
     <ul class="actions">
         <li><a class="edit" href="/warehouses/edit/{{ warehouse.id }}/">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="/warehouses/delete/{{ warehouse.id }}/">{% trans 'Delete' %}</a></li>
