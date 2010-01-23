@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision: 27 $'
+__version__ = '$Revision$'
 
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
