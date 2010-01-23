@@ -210,6 +210,13 @@ form p {
     margin-right: 30px;
 }
 
+table .actions {
+    display: inline;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
 .disabled { color: #d6d6d6; }
 
 .message {
@@ -238,7 +245,7 @@ form .message {
 
 .view, .add, .edit, .delete, .info, .success, .warning,
 .error, .help, .ok, .cancel, .search, .settings, .start, .products,
-.people, .calendar, .documents, .passwords, .accounts, .partners,
+.people, .calendar, .documents, .passwords, .accounts, .partners, .uoms,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses {
     padding: 5px 0 5px 25px;
     background-position: left center;
@@ -260,6 +267,7 @@ form .message {
 .settings { background-image: url(images/settings.png); }
 .start { background-image: url(images/start.png); }
 .people, .partners { background-image: url(images/people.png); }
+.uoms { background-image: url(images/uoms.png); }
 .calendar { background-image: url(images/calendar.png); }
 .documents { background-image: url(images/documents.png); }
 .passwords, .accounts { background-image: url(images/passwords.png); }
@@ -273,6 +281,9 @@ form .message {
 .person { background-image: url(images/person.png); }
 .products { background-image: url(images/product.png); }
 .warehouses { background-image: url(images/warehouse.png); }
+
+.in { background: #92d26f; }
+.out { background: #d26f6f; }
 
 /* Wrapper */
 
