@@ -21,10 +21,16 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django import forms
-from models import Product
+from models import Product, Category
 
 class ProductForm(forms.ModelForm):
     """Form for product data.
     """
     class Meta:
         model = Product
+        
+class CategoryForm(forms.ModelForm):
+    """Form for category data.
+    """
+    class Meta:
+        model = Category

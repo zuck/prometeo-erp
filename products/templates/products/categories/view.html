@@ -4,30 +4,31 @@
 
 {% block title %}{% trans 'Products' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'Products' %}</h2>{% endblock %}
+{% block breadcrumb %}<h2>{% trans 'Products' %} > {% trans 'Categories' %} > {% trans 'View' %} > {{ category }}</h2>{% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <h3>{% trans 'Products' %}</h3>
+    {% if category.product_set.all %}
     <div id="search">
-        <form action="/products/" method="post">
+        <form action="/products/categories/view/{{ category.id }}" method="post">
             <input type="text" name="query"/>
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if products %}
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
             <td>{% trans 'Code' %}</td>
             <td>{% trans 'Type' %}</td>
-            <td>{% trans 'Category' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for product in products %}
+        {% for product in category.product_set.all %}
         <tr>
             <td>{{ product.name }}</td>
             <td>{{ product.code }}</td>
             <td>{% blocktrans with product.type as type %}{{ type }}{% endblocktrans %}</td>
-            <td><a href="/products/categories/view/{{ product.category.id }}/">{{ product.category }}</a></td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/products/view/{{ product.id }}/">{% trans 'View' %}</a></li>
@@ -42,7 +43,8 @@
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}
     <ul class="actions">
-        <li><a class="add" href="/products/add/">{% trans 'Add' %}</a></li>
+        <li><a class="edit" href="/products/categories/edit/{{ category.id }}/">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/products/categories/delete/{{ category.id }}/">{% trans 'Delete' %}</a></li>
         <li><a class="categories" href="/products/categories/">{% trans 'Categories' %}</a></li>
     </ul>
 {% endblock %}

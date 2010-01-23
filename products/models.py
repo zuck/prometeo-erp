@@ -20,6 +20,8 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.db import models
     
 class Category(models.Model):
@@ -28,14 +30,35 @@ class Category(models.Model):
     parent = models.ForeignKey('self', null=True)
         
     def __unicode__(self):
-        return self.name
+        buffer = ugettext(self.name)
+        if (self.parent):
+            buffer = self.parent.__unicode__() + ' / ' + buffer
+            
+        return buffer
+        
+PRODUCT_TYPES = (
+    (0, _('Consumable')),
+    (1, _('Stockable'))
+)
+
+PRODUCT_SUPPLY_METHODS = (
+    (0, _('Purchase')),
+    (1, _('Production'))
+)
 
 class Product(models.Model):        
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    purchase_uom = models.ForeignKey('uoms.UOM')
+    code = models.CharField(max_length=64)
+    ean13 = models.CharField(max_length=11, blank=True)
+    description = models.TextField(blank=True)
+    uom = models.ForeignKey('uoms.UOM')
+    uos = models.ForeignKey('uoms.UOM', related_name='product_uos_set')
+    uom_to_uos = models.FloatField(default=1)
     suppliers = models.ManyToManyField('partners.Partner')
-    categories = models.ManyToManyField(Category)
+    category = models.ForeignKey(Category)
+    type = models.CharField(max_length=1, choices=PRODUCT_TYPES)
+    supply_method = models.CharField(max_length=1, choices=PRODUCT_SUPPLY_METHODS)
         
     def __unicode__(self):
         return self.name

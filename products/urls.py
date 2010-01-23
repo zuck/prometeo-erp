@@ -24,10 +24,17 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('products.views',
 
-    (r'^$', 'index'),
+    # Products.
+    (r'^$', 'product_index'),
+    (r'^add/$', 'product_add'),
+    (r'^view/(?P<id>\d+)/$', 'product_view'),
+    (r'^edit/(?P<id>\d+)/$', 'product_edit'),
+    (r'^delete/(?P<id>\d+)/$', 'product_delete'),
     
-    (r'^add/$', 'add'),
-    (r'^view/(?P<id>\d+)/$', 'view'),
-    (r'^edit/(?P<id>\d+)/$', 'edit'),
-    (r'^delete/(?P<id>\d+)/$', 'delete'),
+    # Categories.
+    (r'^categories/$', 'category_index'),
+    (r'^categories/add/$', 'category_add'),
+    (r'^categories/view/(?P<id>\d+)/$', 'category_view'),
+    (r'^categories/edit/(?P<id>\d+)/$', 'category_edit'),
+    (r'^categories/delete/(?P<id>\d+)/$', 'category_delete')
 )
