@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'UOMs' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'UOMs' %}</h2>{% endblock %}
+
+{% block content %}
+    <div id="search">
+        <form action="/uoms/" method="post">
+            <input type="text" name="query"/>
+            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
+        </form>
+    </div>
+    {% if uoms %}
+    <table>
+        <thead>
+            <td>{% trans 'Name' %}</td>
+        </thead>
+        {% for uom in uoms %}
+        <tr>
+            <td><a href="/uoms/view/{{ uom.id }}/">{{ uom.name }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="disabled">{% trans 'empty' %}.</p>
+    {% endif %}
+    <ul class="actions">
+        <li><a class="add" href="/uoms/add/">{% trans 'Add' %}</a></li>
+    </ul>
+{% endblock %}

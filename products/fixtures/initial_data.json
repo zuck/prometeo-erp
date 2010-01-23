@@ -1,0 +1,10 @@
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "all",
+      "parent": null
+    }
+  }
+]

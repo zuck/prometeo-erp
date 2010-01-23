@@ -18,24 +18,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__version__ = '$Revision: 27 $'
 
-from django.db import models
-    
-class Category(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', null=True)
-        
-    def __unicode__(self):
-        return self.name
-
-class Product(models.Model):        
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    purchase_uom = models.ForeignKey('uoms.UOM')
-    suppliers = models.ManyToManyField('partners.Partner')
-    categories = models.ManyToManyField(Category)
-        
-    def __unicode__(self):
-        return self.name

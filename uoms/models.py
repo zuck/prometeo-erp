@@ -18,24 +18,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__version__ = '$Revision: 32 $'
 
 from django.db import models
     
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', null=True)
+    name = models.CharField(max_length=64)
         
     def __unicode__(self):
         return self.name
 
-class Product(models.Model):        
+class UOM(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    purchase_uom = models.ForeignKey('uoms.UOM')
-    suppliers = models.ManyToManyField('partners.Partner')
-    categories = models.ManyToManyField(Category)
+    initials = models.CharField(max_length=6)
+    name = models.CharField(max_length=64)
+    category = models.ForeignKey(Category)
         
     def __unicode__(self):
-        return self.name
+        return self.initials

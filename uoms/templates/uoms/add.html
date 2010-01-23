@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'UOMs' %}{% endblock %}
+
+{% block breadcrumb %}<h2>{% trans 'UOMs' %} > {% trans 'Add' %}</h2>{% endblock %}
+
+{% block content %}
+    <form action="/uoms/add/" method="post">
+        {{ form.as_p }}
+        <input class="save" type="submit" value="{% trans 'Save' %}"/>
+    </form>
+    <ul class="actions">
+        <li><a class="uoms" href="/uoms/">{% trans 'UOMs' %}</a></li>
+    </ul>
+{% endblock %}
