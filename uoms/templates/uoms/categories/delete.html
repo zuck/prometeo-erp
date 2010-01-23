@@ -1,10 +1,17 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'UOMs' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'UOMs' %} > {% trans 'Categories' %} > {% trans 'Delete' %} > {{ category }}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'UOMs' '/uoms/' %}
+    {% add_crumb 'Categories' '/uoms/categories/' %}
+    {% add_crumb 'Delete' %}
+    {% add_crumb category %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
     <form action="/uoms/categories/delete/{{ category.id }}/" method="post">
@@ -17,8 +24,8 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/uoms/view/{{ category.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/uoms/edit/{{ category.id }}">{% trans 'Edit' %}</a></li>
+        <li><a class="view" href="/uoms/categories/view/{{ category.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/uoms/categories/edit/{{ category.id }}">{% trans 'Edit' %}</a></li>
         <li><a class="categories" href="/uoms/categories/">{% trans 'Categories' %}</a></li>
     </ul>
 {% endblock %}

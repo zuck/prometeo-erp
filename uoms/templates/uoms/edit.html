@@ -1,10 +1,16 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'UOMs' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'UOMs' %} > {% trans 'Edit' %} > {{ uom }}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'UOMs' '/uoms/' %}
+    {% add_crumb 'Edit' %}
+    {% add_crumb uom %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
     <form action="/uoms/edit/{{ uom.id }}/" method="post">

@@ -1,12 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT">
-<head>
-    <title>Error 500</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-    <h1>Internal server error <small>[error 500]</small></h1>
-    <p>The Web server is incapable of performing the request. Please try your request again later. Please contact the Web server's administrator if this problem persists.</p>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Error 500' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Error 500' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+<h1>Internal server error (error 500)</h1>
+<p>The Web server is incapable of performing the request.</p>
+<p>Please try your request again later. Please contact the Web server's administrator if this problem persists.</p>
+{% endblock %}

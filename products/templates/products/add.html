@@ -1,10 +1,15 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'Products' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'Products' %} > {% trans 'Add' %}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'Add' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
     <form action="/products/add/" method="post">

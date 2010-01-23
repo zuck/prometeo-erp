@@ -1,10 +1,17 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'Products' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'Products' %} > {% trans 'Categories' %} > {% trans 'View' %} > {{ category }}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'Categories' '/products/categories/' %}
+    {% add_crumb 'View' %}
+    {% add_crumb category %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
     <h3>{% trans 'Details' %}</h3>

@@ -1,10 +1,16 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'Accounts' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'Accounts' %} > {% trans 'Delete' %} > {{ user }}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'Accounts' '/accounts/' %}
+    {% add_crumb 'Delete' %}
+    {% add_crumb user %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
     <form action="/accounts/delete/{{ user.id }}/" method="post">

@@ -1,14 +1,53 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'Partners' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'Partners' %} > {% trans 'View' %} > {{ partner }}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'View' %}
+    {% add_crumb partner %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
+    <h3>{% trans 'Contacts' %}</h3>
+    <div id="search">
+        <form action="/partners/view/{{ partner.id }}" method="post">
+            <input type="text" name="query"/>
+            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
+        </form>
+    </div>
+    {% if partner.contact_set.all %}
+    <table>
+        <thead>
+            <td>{% trans 'Firstname' %}</td>
+            <td>{% trans 'Lastname' %}</td>
+            <td>{% trans 'Email' %}</td>
+            <td>{% trans 'Actions' %}</td>
+        </thead>
+        {% for contact in partner.contact_set.all %}
+        <tr>
+            <td>{{ contact.firstname }}</td>
+            <td>{{ contact.lastname }}</td>
+            <td>{{ contact.email }}</td>
+            <td>
+                <ul class="actions">
+                    <li><a class="view" href="/partners/contacts/view/{{ contact.id }}/">{% trans 'View' %}</a></li>
+                    <li><a class="edit" href="/partners/contacts/edit/{{ contact.id }}/">{% trans 'Edit' %}</a></li>
+                    <li><a class="delete" href="/partners/contacts/delete/{{ contact.id }}/">{% trans 'Delete' %}</a></li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="disabled">{% trans 'empty' %}.</p>
+    {% endif %}
     <ul class="actions">
         <li><a class="edit" href="/partners/edit/{{ partner.id }}/">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="/partners/delete/{{ partner.id }}/">{% trans 'Delete' %}</a></li>

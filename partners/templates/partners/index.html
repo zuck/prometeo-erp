@@ -1,10 +1,14 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'Partners' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'Partners' %}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
     <div id="search">

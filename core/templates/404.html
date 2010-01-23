@@ -1,9 +1,17 @@
 {% extends 'layout.html' %}
 
-{% block title %}Error 404{% endblock %}
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Error 404' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Error 404' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
-<h1>The page you requested is no longer here <small>[error 404]</small></h1>
+<h1>The page you requested is no longer here (error 404)</h1>
 <p>... but we think we can help you.</p>
 <p>You may not be able to find this page because of:</p>
 <ul>

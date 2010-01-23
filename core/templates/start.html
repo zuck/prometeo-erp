@@ -1,10 +1,14 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block title %}{% trans 'Start' %}{% endblock %}
 
-{% block breadcrumb %}<h2>{% trans 'Start' %}</h2>{% endblock %}
+{% block breadcrumbs %}
+    {% add_crumb 'Start' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
 
 {% block content %}
 <p>{% blocktrans with user.username as username %}Welcome, <strong>{{ username }}</strong>.{% endblocktrans %}</p>
