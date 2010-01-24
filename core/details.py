@@ -63,7 +63,11 @@ class ModelDetails(Details):
 
     def _value_to_string(self, field):
         if isinstance(field, related.RelatedField):
-            return getattr(self.__instance, field.name)
+            relationship = getattr(self.__instance, field.name)
+            try:
+                return '<a href="%s">%s</a>' % (relationship.get_absolute_url(), relationship)
+            except AttributeError:
+                return relationship
         elif field.choices:
             return getattr(self.__instance, 'get_%s_display' % field.name)()
         elif isinstance(field, models.BooleanField):
