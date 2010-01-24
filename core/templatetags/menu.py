@@ -44,7 +44,6 @@ class GetMenuNode(template.Node):
         self.context[self.var_name] = []
 
         for menu in menubar[self.menu_group]:
-            print menu
             menu_info = {
                 'group': menu.group,
                 'name': menu.name,

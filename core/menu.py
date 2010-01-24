@@ -48,8 +48,6 @@ class MenuBar(object):
     def register(self, menu):
         if not isinstance(menu, MenuEntry):
             raise TypeError("You can only register a <Menu> not a %r" % menu)
-            
-        print 'Registered %s in group %s' % (menu.name, menu.group)
 
         if not self._groups.has_key(menu.group):
             self._groups[menu.group] = []
@@ -101,5 +99,4 @@ def autodiscover():
             continue
 
         # Step 3: import the app's 'menu' module.
-        print 'Importing %s.menu...' % app
         __import__("%s.menu" % app)
