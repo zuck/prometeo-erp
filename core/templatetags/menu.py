@@ -44,11 +44,15 @@ class GetMenuNode(template.Node):
         self.context[self.var_name] = []
 
         for menu in menubar[self.menu_group]:
+            url = self.context['request'].path
+            active = (url == menu.link)
+            if (menu.link is not '/'):
+                active = url.startswith(menu.link)
             menu_info = {
                 'group': menu.group,
                 'name': menu.name,
                 'link': menu.link,
-                'active': (self.context['request'].path == menu.link),
+                'active': active,
                 'option_list': self.build_options(menu.options)
             }
 
