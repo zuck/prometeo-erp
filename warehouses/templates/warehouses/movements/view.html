@@ -18,8 +18,10 @@
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <ul class="actions">
+        {% if movement.is_last %}
         <li><a class="edit" href="/warehouses/movements/edit/{{ movement.id }}">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="/warehouses/movements/delete/{{ movement.id }}">{% trans 'Delete' %}</a></li>
+        {% endif %}
         <li><a class="warehouses" href="{{ movement.warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
     </ul>    
 {% endblock %}

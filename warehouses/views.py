@@ -21,7 +21,7 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.contrib.auth.decorators import login_required
@@ -150,6 +150,9 @@ def movement_edit(request, id):
     """Edit a movement.
     """
     movement = Movement.objects.get(pk=id)
+    if not movement.is_last():
+        referer_view = get_referer_view(request, movement.warehouse.get_absolute_url())
+        return HttpResponseRedirect(referer_view)
     if request.method == 'POST':
         movement.last_user=request.user
         form = MovementForm(request.POST, instance=movement)
@@ -165,9 +168,51 @@ def movement_delete(request, id):
     """Delete a movement.
     """
     movement = get_object_or_404(Movement, pk=id)
+    if not movement.is_last():
+        referer_view = get_referer_view(request, movement.warehouse.get_absolute_url())
+        return HttpResponseRedirect(referer_view)
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             movement.delete()
             return redirect_to(request, url='/warehouses/movements/');
         return redirect_to(request, url='/warehouses/movements/view/%s/' % (id))
     return render_to_response('warehouses/movements/delete.html', RequestContext(request, {'movement': movement}))
+
+# Copyright (c) 2009 Arthur Furlan <arthur.furlan@gmail.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# On Debian systems, you can find the full text of the license in
+# /usr/share/common-licenses/GPL-2
+
+import re
+
+def get_referer_view(request, default=None):
+    ''' 
+    Return the referer view of the current request
+
+    Example:
+
+        def some_view(request):
+            ...
+            referer_view = get_referer_view(request)
+            return HttpResponseRedirect(referer_view, '/accounts/login/')
+    '''
+
+    # if the user typed the url directly in the browser's address bar
+    referer = request.META.get('HTTP_REFERER')
+    if not referer:
+        return default
+
+    # remove the protocol and split the url at the slashes
+    referer = re.sub('^https?:\/\/', '', referer).split('/')
+    if referer[0] != request.META.get('SERVER_NAME'):
+        return default
+
+    # add the slash at the relative path's view and finished
+    referer = u'/' + u'/'.join(referer[1:])
+    return referer
+

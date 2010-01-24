@@ -20,9 +20,9 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.db import connection
-from django.utils.translation import ugettext_lazy as _
 
 class Warehouse(models.Model):        
     id = models.AutoField(primary_key=True)
