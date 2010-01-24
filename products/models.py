@@ -27,7 +27,10 @@ from django.db import models
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', null=True)
+    parent = models.ForeignKey('self', null=True, blank=True)
+    
+    def get_absolute_url(self):
+        return '/products/categories/view/%d' % self.id
         
     def __unicode__(self):
         buffer = ugettext(self.name)
@@ -37,13 +40,13 @@ class Category(models.Model):
         return buffer
         
 PRODUCT_TYPES = (
-    (0, _('Consumable')),
-    (1, _('Stockable'))
+    ('0', _('Consumable')),
+    ('1', _('Stockable'))
 )
 
 PRODUCT_SUPPLY_METHODS = (
-    (0, _('Purchase')),
-    (1, _('Production'))
+    ('0', _('Purchase')),
+    ('1', _('Production'))
 )
 
 class Product(models.Model):        
@@ -56,9 +59,12 @@ class Product(models.Model):
     uos = models.ForeignKey('uoms.UOM', related_name='product_uos_set')
     uom_to_uos = models.FloatField(default=1)
     suppliers = models.ManyToManyField('partners.Partner')
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, null=True, blank=True)
     type = models.CharField(max_length=1, choices=PRODUCT_TYPES)
     supply_method = models.CharField(max_length=1, choices=PRODUCT_SUPPLY_METHODS)
+    
+    def get_absolute_url(self):
+        return '/products/view/%d' % self.id
         
     def __unicode__(self):
         return self.name

@@ -27,6 +27,9 @@ class Warehouse(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     owner = models.ForeignKey('partners.Partner')
+    
+    def get_absolute_url(self):
+        return '/warehouses/view/%d' % self.id
         
     def __unicode__(self):
         return self.name
@@ -40,8 +43,11 @@ class Movement(models.Model):
     quantity = models.IntegerField()
     user = models.ForeignKey('auth.User')
         
-    def __unicode__(self):
-        return _("%d %s of %s") % (self.quantity, self.product.uom, self.product)
-        
     def verse(self):
         return (self.quantity >= 0)
+    
+    def get_absolute_url(self):
+        return '/warehouses/movements/view/%d' % self.id
+        
+    def __unicode__(self):
+        return _("%d %s of %s") % (self.quantity, self.product.uom, self.product)

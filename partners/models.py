@@ -27,6 +27,9 @@ class Contact(models.Model):
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
+    
+    def get_absolute_url(self):
+        return '/partners/contacts/view/%d' % self.id
 
 class Partner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -34,6 +37,9 @@ class Partner(models.Model):
     is_customer = models.BooleanField(default=False)
     is_supplier = models.BooleanField(default=False)
     contacts = models.ManyToManyField(Contact, blank=True)
+    
+    def get_absolute_url(self):
+        return '/partners/view/%d' % self.id
         
     def __unicode__(self):
         return self.name

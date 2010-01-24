@@ -25,6 +25,9 @@ from django.db import models
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
+    
+    def get_absolute_url(self):
+        return '/uoms/categories/view/%d' % self.id
         
     def __unicode__(self):
         return self.name
@@ -34,6 +37,9 @@ class UOM(models.Model):
     initials = models.CharField(max_length=6)
     name = models.CharField(max_length=64)
     category = models.ForeignKey(Category)
+    
+    def get_absolute_url(self):
+        return '/uoms/view/%d' % self.id
         
     def __unicode__(self):
         return self.initials
