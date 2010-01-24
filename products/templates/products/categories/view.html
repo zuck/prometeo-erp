@@ -35,7 +35,7 @@
         <tr>
             <td>{{ product.name }}</td>
             <td>{{ product.code }}</td>
-            <td>{% blocktrans with product.type as type %}{{ type }}{% endblocktrans %}</td>
+            <td>{% blocktrans with product.get_type_display as type %}{{ type }}{% endblocktrans %}</td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/products/view/{{ product.id }}/">{% trans 'View' %}</a></li>
