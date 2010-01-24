@@ -108,12 +108,12 @@ table {
 
 table td {
     padding: 5px;
+    text-align: center;
 }
 
 table thead td {
     background: #2f2f2f url(images/thead_bg.gif) repeat-x top;
     color: #fff;
-    text-align: center;
 }
 
 table tr td {
@@ -220,7 +220,6 @@ table .actions {
     border: none;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 .disabled { color: #d6d6d6; }
@@ -228,13 +227,13 @@ table .actions {
 .errorlist {
     float: left;
     color: red;
-    padding-left: 25%;
+    padding-left: 22%;
 }
 
 .errorlist li {
     float: left;
-    margin-left: 5px;
-    padding: 5px 0 5px 25px;
+    width: 50%;
+    padding: 5px 0 5px 30px;
     background: url(images/error.png) no-repeat left center;
 }
 
