@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Warehouses' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Warehouses' '/warehouses/' %}
+    {% add_crumb 'Movements' warehouse.get_absolute_path %}
+    {% add_crumb 'Delete' %}
+    {% add_crumb movement %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form action="/warehouses/movements/delete/{{ movement.id }}/" method="post">
+        <div class="message">
+            <p class="warning">{% trans 'Are you sure you want to delete this movement and all its related informations?' %}</p>
+            <div class="actions">
+                <input class="ok" type="submit" name="yes" value="{% trans 'Yes' %}" />
+                <input class="cancel" type="submit" name="no" value="{% trans 'No' %}" />
+            </div>
+        </div>
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="/warehouses/movements/view/{{ movement.id }}">{% trans 'View' %}</a></li>
+        <li><a class="edit" href="/warehouses/movements/edit/{{ movement.id }}">{% trans 'Edit' %}</a></li>
+        <li><a class="warehouses" href="{{ movement.warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
+    </ul>
+{% endblock %}

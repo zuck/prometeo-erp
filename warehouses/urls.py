@@ -24,10 +24,17 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('warehouses.views',
 
-    (r'^$', 'index'),
+    # Warehouses.
+    (r'^$', 'warehouse_index'),
+    (r'^add/$', 'warehouse_add'),
+    (r'^view/(?P<id>\d+)/$', 'warehouse_view'),
+    (r'^edit/(?P<id>\d+)/$', 'warehouse_edit'),
+    (r'^delete/(?P<id>\d+)/$', 'warehouse_delete'),
     
-    (r'^add/$', 'add'),
-    (r'^view/(?P<id>\d+)/$', 'view'),
-    (r'^edit/(?P<id>\d+)/$', 'edit'),
-    (r'^delete/(?P<id>\d+)/$', 'delete'),
+    # Movements.
+    (r'^movements/$', 'movement_index'),
+    (r'^movements/add/(?P<warehouse_id>\d+)/$', 'movement_add'),
+    (r'^movements/view/(?P<id>\d+)/$', 'movement_view'),
+    (r'^movements/edit/(?P<id>\d+)/$', 'movement_edit'),
+    (r'^movements/delete/(?P<id>\d+)/$', 'movement_delete'),
 )

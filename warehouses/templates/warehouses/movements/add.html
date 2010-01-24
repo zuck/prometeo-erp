@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Warehouses' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Warehouses' '/warehouses/' %}
+    {% add_crumb 'Movements' warehouse.get_absolute_path %}
+    {% add_crumb 'Add' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form action="/warehouses/movements/add/{{ warehouse.id }}/" method="post">
+        {{ form.as_p }}
+        <input class="save" type="submit" value="{% trans 'Save' %}"/>
+    </form>
+    <ul class="actions">
+        <li><a class="warehouses" href="{{ warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
+    </ul>
+{% endblock %}

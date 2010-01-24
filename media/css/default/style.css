@@ -248,7 +248,7 @@ form .message {
 .message .actions { text-align: right; }
 
 .view, .add, .edit, .delete, .info, .success, .warning, .categories,
-.error, .help, .ok, .cancel, .search, .settings, .start, .products,
+.error, .help, .ok, .cancel, .search, .settings, .start, .products, .movements,
 .people, .calendar, .documents, .passwords, .accounts, .partners, .uoms,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses {
     padding: 5px 0 5px 25px;
@@ -286,6 +286,7 @@ form .message {
 .products { background-image: url(images/product.png); }
 .warehouses { background-image: url(images/warehouse.png); }
 .categories { background-image: url(images/tag.png); }
+.movements { background-image: url(images/movement.png); }
 
 .sign { display: none; }
 .in { background: #dbf6cd; }

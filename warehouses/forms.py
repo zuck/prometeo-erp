@@ -21,10 +21,17 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django import forms
-from models import Warehouse
+from models import Warehouse, Movement
 
 class WarehouseForm(forms.ModelForm):
     """Form for warehouse data.
     """
     class Meta:
         model = Warehouse
+        
+class MovementForm(forms.ModelForm):
+    """Form for movement data.
+    """
+    class Meta:
+        model = Movement
+        exclude = ['warehouse', 'last_modified', 'last_user']

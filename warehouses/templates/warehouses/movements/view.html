@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Warehouses' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Warehouses' '/warehouses/' %}
+    {% add_crumb 'View' %}
+    {% add_crumb warehouse %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <ul class="actions">
+        <li><a class="edit" href="/warehouses/movements/edit/{{ movement.id }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/warehouses/movements/delete/{{ movement.id }}">{% trans 'Delete' %}</a></li>
+        <li><a class="warehouses" href="{{ movement.warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
+    </ul>    
+{% endblock %}

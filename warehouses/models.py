@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.db import models
+from django.db import connection
 from django.utils.translation import ugettext_lazy as _
 
 class Warehouse(models.Model):        
@@ -28,21 +29,42 @@ class Warehouse(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey('partners.Partner')
     
+    def value(self):
+        value = 0
+        for movement in self.movement_set.all():
+            value += movement.value()
+        return value
+    
     def get_absolute_url(self):
         return '/warehouses/view/%d' % self.id
         
     def __unicode__(self):
         return self.name
         
-class Movement(models.Model):        
+class Movement(models.Model):
+    MOVEMENT_VERSES = (
+        (0, _('in')),
+        (1, _('out'))
+    )      
     id = models.AutoField(primary_key=True)
     warehouse = models.ForeignKey(Warehouse)
-    document = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    document = models.CharField(max_length=255, blank=True)
+    last_modified = models.DateTimeField(auto_now=True)
     product = models.ForeignKey('products.Product')
-    quantity = models.IntegerField()
-    user = models.ForeignKey('auth.User')
-        
+    quantity = models.FloatField(default=1)
+    price = models.FloatField()
+    discount = models.FloatField(default=0)
+    last_user = models.ForeignKey('auth.User')
+    
+    def is_last(self):
+        return self == Movement.objects.latest('id')
+    
+    def final_price(self):
+        return self.price + (self.price * self.discount / 100)
+    
+    def value(self):
+        return self.quantity * self.final_price()
+       
     def verse(self):
         return (self.quantity >= 0)
     
@@ -50,4 +72,4 @@ class Movement(models.Model):
         return '/warehouses/movements/view/%d' % self.id
         
     def __unicode__(self):
-        return _("%d %s of %s") % (self.quantity, self.product.uom, self.product)
+        return _("%d%s of %s in %s, on %s") % (self.quantity, self.product.uom, self.product, self.warehouse, self.last_modified)
