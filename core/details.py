@@ -32,6 +32,13 @@ class Details(StrAndUnicode):
 
     def _html_output(self, output):
         return mark_safe(output)
+        
+    def add_field(self, name, value):
+        self.__fields.append((name, value))
+        
+    def remove_field(self, index):
+        if len(self.__fields) > index:
+            del self.__fields[index]
 
     def as_dl(self):
         output = "<dl>\n"
