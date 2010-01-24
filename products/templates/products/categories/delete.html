@@ -8,12 +8,12 @@
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
     {% add_crumb 'Categories' '/products/categories/' %}
-    {% add_crumb 'Delete' %}
     {% add_crumb category %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Delete' %}</h3>
     <form action="/products/categories/delete/{{ category.id }}/" method="post">
         <div class="message">
             <p class="warning">{% trans 'Are you sure you want to delete this category and all its related informations?' %}</p>

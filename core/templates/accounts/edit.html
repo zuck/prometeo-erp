@@ -7,12 +7,12 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Accounts' '/accounts/' %}
-    {% add_crumb 'Edit' %}
     {% add_crumb user %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Edit' %}</h3>
     <form action="/accounts/edit/{{ user.id }}/" method="post">
         {{ form.as_p }}
         <input class="save" type="submit" value="{% trans 'Save' %}" />

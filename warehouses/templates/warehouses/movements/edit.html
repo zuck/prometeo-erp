@@ -7,13 +7,15 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
-    {% add_crumb 'Movements' warehouse.get_absolute_path %}
-    {% add_crumb 'Edit' %}
+    {% with movement.warehouse.get_absolute_path as wlink %}
+    {% add_crumb 'Movements' wlink %}
+    {% endwith %}
     {% add_crumb movement %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Edit' %}</h3>
     <form action="/warehouses/movements/edit/{{ movement.id }}/" method="post">
         {{ form.as_p }}
         <input class="save" type="submit" value="{% trans 'Save' %}" />

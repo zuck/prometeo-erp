@@ -131,9 +131,9 @@ def movement_add(request, warehouse_id):
             movement = form.save()
             return redirect_to(request, url='/warehouses/movements/view/%s/' % (movement.pk))
     else:
-        form = MovementForm()
+        form = MovementForm(instance=movement)
 
-    return render_to_response('warehouses/movements/add.html', RequestContext(request, {'form': form, 'warehouse': warehouse}));
+    return render_to_response('warehouses/movements/add.html', RequestContext(request, {'form': form, 'movement': movement}));
 
 @login_required     
 def movement_view(request, id):

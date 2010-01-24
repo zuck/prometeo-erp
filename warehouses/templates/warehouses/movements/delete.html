@@ -7,13 +7,15 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
-    {% add_crumb 'Movements' warehouse.get_absolute_path %}
-    {% add_crumb 'Delete' %}
+    {% with movement.warehouse.get_absolute_path as wlink %}
+    {% add_crumb 'Movements' wlink %}
+    {% endwith %}
     {% add_crumb movement %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Delete' %}</h3>
     <form action="/warehouses/movements/delete/{{ movement.id }}/" method="post">
         <div class="message">
             <p class="warning">{% trans 'Are you sure you want to delete this movement and all its related informations?' %}</p>

@@ -7,12 +7,12 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Partners' '/partners/' %}
-    {% add_crumb 'Edit' %}
     {% add_crumb partner %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Edit' %}</h3>
     <form action="/partners/edit/{{ partner.id }}/" method="post">
         {{ form.as_p }}
         <input class="save" type="submit" value="{% trans 'Save' %}" />

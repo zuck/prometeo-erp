@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block content %}
+    <h3>{% trans 'Add' %}</h3>
     <form action="/warehouses/add/" method="post">
         {{ form.as_p }}
         <input class="save" type="submit" value="{% trans 'Save' %}"/>
