@@ -127,9 +127,10 @@ table tr td {
 form {
     float: left;
     width: 50%;
-    padding: 1%;
+    padding: 40px 1% 10px;
     margin: 10px 24%;
     border: 1px solid #ccc;
+    background: url(images/thead_bg.gif) repeat-x top;
 }
 
 input[type="text"], input[type="password"], select, textarea {
@@ -192,6 +193,7 @@ input[type="checkbox"] {
 }
 
 form p {
+    clear: both;
     text-align: center;
     color: #157017;
 }
@@ -223,17 +225,17 @@ table .actions {
 
 .disabled { color: #d6d6d6; }
 
-.message {
+.errorlist {
     float: left;
-    width: 50%;
-    padding: 5px 1%;
-    margin: 10px 24%;
-    border: 1px solid #ccc;
+    color: red;
+    padding-left: 25%;
 }
 
-.message p {
-    text-align: left;
-    color: black;
+.errorlist li {
+    float: left;
+    margin-left: 5px;
+    padding: 5px 0 5px 25px;
+    background: url(images/error.png) no-repeat left center;
 }
 
 form .message {
@@ -243,7 +245,19 @@ form .message {
     border: none;
 }
 
-.message p { padding-left: 40px; }
+.message {
+    float: left;
+    width: 50%;
+    padding: 5px 1%;
+    margin: 10px 24%;
+    border: 1px solid #ccc;
+}
+
+.message p {
+    padding-left: 40px;
+    text-align: left;
+    color: black;
+}
 
 .message .actions { text-align: right; }
 

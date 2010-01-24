@@ -15,7 +15,9 @@
     <h3>{% trans 'Add' %}</h3>
     <form action="/partners/add/" method="post">
         {{ form.as_p }}
-        <input class="save" type="submit" value="{% trans 'Save' %}"/>
+        <div class="actions">
+            <input class="save" type="submit" value="{% trans 'Save' %}" />
+        </div>
     </form>
     <ul class="actions">
         <li><a class="people" href="/partners/">{% trans 'Partners' %}</a></li>

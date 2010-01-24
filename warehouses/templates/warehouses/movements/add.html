@@ -18,7 +18,9 @@
     <h3>{% trans 'Add' %}</h3>
     <form action="/warehouses/movements/add/{{ movement.warehouse.id }}/" method="post">
         {{ form.as_p }}
-        <input class="save" type="submit" value="{% trans 'Save' %}"/>
+        <div class="actions">
+            <input class="save" type="submit" value="{% trans 'Save' %}" />
+        </div>
     </form>
     <ul class="actions">
         <li><a class="warehouses" href="{{ movement.warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
