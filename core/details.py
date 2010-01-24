@@ -20,10 +20,11 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.utils.translation import ugettext as _
 from django.utils.encoding import StrAndUnicode
 from django.utils.safestring import mark_safe
 from django.db import models
-from django.db.models.fields.related import RelatedField
+from django.db.models.fields import related
 
 class Details(StrAndUnicode):
     def __init__(self, fields=[]):
@@ -61,8 +62,15 @@ class ModelDetails(Details):
         super(ModelDetails, self).__init__(fields)
 
     def _value_to_string(self, field):
-        if isinstance(field, RelatedField):
+        if isinstance(field, related.RelatedField):
             return getattr(self.__instance, field.name)
+        elif field.choices:
+            return getattr(self.__instance, 'get_%s_display' % field.name)()
+        elif isinstance(field, models.BooleanField):
+            flag = field.value_to_string(self.__instance)
+            if flag == '0':
+                return '<span class="no">%s</span>' % _('No')
+            return '<span class="yes">%s</span>' % _('Yes')
         return field.value_to_string(self.__instance)
 
 
