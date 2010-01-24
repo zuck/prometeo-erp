@@ -106,10 +106,11 @@ table {
 	clear: both;
 }
 
+table tr { background: #f2f2f2; }
+
 table td {
     padding: 5px;
     text-align: center;
-    background: #f2f2f2;
 }
 
 table thead td {
