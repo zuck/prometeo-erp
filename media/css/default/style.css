@@ -415,6 +415,7 @@ form .message {
 }
 
 #search form {
+    background: none;
     border: none;
     margin: 0 0 -10px;
     padding: 0;
