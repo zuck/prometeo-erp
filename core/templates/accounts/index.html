@@ -29,8 +29,8 @@
         {% for account in accounts %}
         <tr>
             <td>{{ account.username }}</td>
-            <td>{{ account.firstname|default:'<span class="disabled">empty.</span>' }}</td>
-            <td>{{ account.lastname|default:'<span class="disabled">empty.</span>' }}</td>
+            <td>{{ account.first_name|default:'<span class="disabled">empty.</span>' }}</td>
+            <td>{{ account.last_name|default:'<span class="disabled">empty.</span>' }}</td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/accounts/view/{{ account.id }}/">{% trans 'View' %}</a></li>
