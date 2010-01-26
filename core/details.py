@@ -83,6 +83,3 @@ class ModelDetails(Details):
                 return '<span class="no">%s</span>' % _('No')
             return '<span class="yes">%s</span>' % _('Yes')
         return field.value_to_string(self.__instance)
-
-
-
