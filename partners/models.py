@@ -26,7 +26,7 @@ class Contact(models.Model):
     id = models.AutoField(primary_key=True)
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
     
     def get_absolute_url(self):
         return '/partners/contacts/view/%d' % self.id
@@ -38,7 +38,7 @@ class Partner(models.Model):
     is_customer = models.BooleanField(default=False)
     is_supplier = models.BooleanField(default=False)
     vat_number = models.CharField(max_length=64, unique=True)
-    url = models.CharField(max_length=255, blank=True)
+    url = models.URLField(blank=True)
     email = models.EmailField(blank=True)
     
     def get_absolute_url(self):
