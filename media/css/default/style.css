@@ -224,7 +224,7 @@ table .actions {
     padding: 0;
 }
 
-.disabled { color: #d6d6d6; }
+.disabled { color: #a6a6a6; }
 
 .errorlist {
     float: left;
@@ -262,9 +262,9 @@ form .message {
 
 .message .actions { text-align: right; }
 
-.view, .add, .edit, .delete, .info, .success, .warning, .categories,
+.view, .add, .edit, .delete, .info, .success, .warning, .categories, .contacts,
 .error, .help, .ok, .cancel, .search, .settings, .start, .products, .movements,
-.people, .calendar, .documents, .passwords, .accounts, .partners, .uoms,
+.people, .calendar, .documents, .passwords, .accounts, .partners, .uoms, .roles,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses {
     padding: 5px 0 5px 25px;
     background-position: left center;
@@ -302,6 +302,8 @@ form .message {
 .warehouses { background-image: url(images/warehouse.png); }
 .categories { background-image: url(images/tag.png); }
 .movements { background-image: url(images/movement.png); }
+.contacts { background-image: url(images/contacts.png); }
+.roles { background-image: url(images/role.png); }
 
 .sign { display: none; }
 .in { background: #dbf6cd; }
@@ -315,6 +317,14 @@ form .message {
 
 .in .number { background-image: url(images/plus.png); }
 .out .number { background-image: url(images/minus.png); }
+
+.mine { background: #f6cdcd; }
+.mine .name {
+    padding-left: 25px;
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    background-image: url(images/start.png);
+}
 
 /* Wrapper */
 

@@ -33,10 +33,13 @@ class Contact(models.Model):
 
 class Partner(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
+    is_mine = models.BooleanField(default=False)
     is_customer = models.BooleanField(default=False)
     is_supplier = models.BooleanField(default=False)
-    contacts = models.ManyToManyField(Contact, blank=True)
+    vat_number = models.CharField(max_length=64, unique=True)
+    url = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(blank=True)
     
     def get_absolute_url(self):
         return '/partners/view/%d' % self.id

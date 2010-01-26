@@ -27,7 +27,7 @@ from django.db import connection
 class Warehouse(models.Model):        
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    owner = models.ForeignKey('partners.Partner')
+    owner = models.ForeignKey('partners.Partner', limit_choices_to={'is_mine': True})
     
     def value(self):
         value = 0
