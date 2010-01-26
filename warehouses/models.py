@@ -56,6 +56,9 @@ class Movement(models.Model):
     discount = models.FloatField(default=0)
     last_user = models.ForeignKey('auth.User')
     
+    class Meta:
+        ordering = ['-last_modified']
+    
     def is_last(self):
         return self == Movement.objects.latest('id')
     
