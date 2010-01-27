@@ -31,7 +31,7 @@
         </thead>
         {% for partner in partners %}
         <tr{% if partner.is_mine %} class="mine"{% endif %}>
-            <td class="name">{% if partner.is_mine %}<span class="sign">(*) </span>{% endif %}{{ partner.name }}</td>
+            <td class="name">{% if partner.is_mine %}<strong class="sign">(*)</strong>{% endif %}{{ partner.name }}</td>
             <td>{% if partner.is_supplier %}<span class="yes">{% trans 'Yes' %}</span>{% else %}<span class="no">{% trans 'No' %}</span>{% endif %}</td>
             <td>{% if partner.is_customer %}<span class="yes">{% trans 'Yes' %}</span>{% else %}<span class="no">{% trans 'No' %}</span>{% endif %}</td>
             <td class="number">{{ partner.vat_number }}</td>
