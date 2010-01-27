@@ -64,7 +64,7 @@ class Movement(models.Model):
         ordering = ['-last_modified']
     
     def is_last(self):
-        return self == Movement.objects.latest('id')
+        return self == Movement.objects.filter(warehouse=self.warehouse).latest('id')
     
     def final_price(self):
         return self.price + (self.price * self.discount / 100)
