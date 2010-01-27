@@ -25,6 +25,7 @@
             <td>{% trans 'Quantity' %}</td>
             <td>{% trans 'UOM' %}</td>
             <td>{% trans 'Product' %}</td>
+            <td>{% trans 'Price' %}</td>
             <td>{% trans 'Value' %}</td>
             <td>{% trans 'On' %}</td>
             <td>{% trans 'Warehouse' %}</td>
@@ -32,10 +33,11 @@
         </thead>
         {% for movement in movements %}
         <tr class="{% if movement.verse %}in{% else %}out{% endif %}">
-            <td class="number"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity|cut:"-" }}</td>
+            <td class="number"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity }}</td>
             <td><a href="/uoms/view/{{ movement.product.uom.id }}/">{{ movement.product.uom }}</a></td>
             <td><a href="/products/view/{{ movement.product.id }}/">{{ movement.product }}</a></td>
-            <td class="number">{{ movement.value|cut:"-" }}</td>
+            <td class="number">{{ movement.price }}</td>
+            <td class="number">{{ movement.value }}</td>
             <td>{{ movement.last_modified }}</td>
             <td><a href="{{ movement.warehouse.get_absolute_url }}">{{ movement.warehouse }}</a></td>
             <td>
