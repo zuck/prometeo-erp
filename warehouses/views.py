@@ -30,8 +30,8 @@ from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
 
-from models import Warehouse, Movement
-from forms import WarehouseForm, MovementForm
+from models import *
+from forms import *
 
 @login_required 
 def warehouse_index(request):
@@ -173,8 +173,9 @@ def movement_delete(request, id):
         return HttpResponseRedirect(referer_view)
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
+            warehouse = movement.warehouse
             movement.delete()
-            return redirect_to(request, url='/warehouses/movements/');
+            return redirect_to(request, url=warehouse.get_absolute_url());
         return redirect_to(request, url='/warehouses/movements/view/%s/' % (id))
     return render_to_response('warehouses/movements/delete.html', RequestContext(request, {'movement': movement}))
 

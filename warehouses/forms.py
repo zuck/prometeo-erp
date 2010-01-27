@@ -20,10 +20,13 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 from models import Warehouse, Movement
 from django.db.models import Q
+
+from prometeo.core import wizard
 
 class WarehouseForm(forms.ModelForm):
     """Form for warehouse data.
@@ -41,18 +44,18 @@ class MovementForm(forms.ModelForm):
     def clean_quantity(self):
         quantity = self.cleaned_data['quantity']
         
-        # == 0: invalid value.
-        if quantity == 0:
-            raise forms.ValidationError(_("The quantity must be different from zero."))
+        # <= 0: invalid value.
+        if quantity <= 0:
+            raise forms.ValidationError(_("The quantity must be greater than zero."))
             
-        # < 0: invalid if there are not enough stocks.
-        elif quantity < 0:
-            queryset = Q(product=self.cleaned_data['product'])
+        # out movement: invalid if there are not enough stocks.
+        elif self.cleaned_data['verse'] == False:
+            queryset = Q(product=self.cleaned_data['product'], warehouse=self.instance.warehouse)
             movements = Movement.objects.only('id', 'quantity', 'product').filter(queryset)
             stock = 0
             for movement in movements:
                 stock += movement.quantity
-            if quantity < -stock:
+            if quantity > stock:
                 uom = self.cleaned_data['product'].uom
                 raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%s%s).") % (stock, uom))
         return quantity

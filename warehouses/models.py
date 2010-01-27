@@ -32,7 +32,10 @@ class Warehouse(models.Model):
     def value(self):
         value = 0
         for movement in self.movement_set.all():
-            value += movement.value()
+            if movement.verse:
+                value += movement.value()
+            else:
+                value -= movement.value()
         return value
     
     def get_absolute_url(self):
@@ -43,10 +46,11 @@ class Warehouse(models.Model):
         
 class Movement(models.Model):
     MOVEMENT_VERSES = (
-        (0, _('in')),
-        (1, _('out'))
+        (False, _('out')),
+        (True, _('in'))
     )      
     id = models.AutoField(primary_key=True)
+    verse = models.BooleanField(choices=MOVEMENT_VERSES, default=True)
     warehouse = models.ForeignKey(Warehouse)
     document = models.CharField(max_length=255, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -67,9 +71,6 @@ class Movement(models.Model):
     
     def value(self):
         return self.quantity * self.final_price()
-       
-    def verse(self):
-        return (self.quantity >= 0)
     
     def get_absolute_url(self):
         return '/warehouses/movements/view/%d' % self.id
