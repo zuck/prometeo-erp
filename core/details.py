@@ -57,6 +57,8 @@ class Details(StrAndUnicode):
         return self._html_output(output)
 
     def _value_or_empty(self, value):
+        if isinstance(value, float):
+            return '%.2f' % value
         if not value:
             return "<span class=\"disabled\">empty</span>"
         return value
@@ -75,6 +77,8 @@ class ModelDetails(Details):
                 return '<a href="%s">%s</a>' % (relationship.get_absolute_url(), relationship)
             except AttributeError:
                 return relationship
+        elif isinstance(field, models.fields.FloatField):
+            return '%.2f' % field.value_from_object(self.__instance)
         elif field.choices:
             return getattr(self.__instance, 'get_%s_display' % field.name)()
         elif isinstance(field, models.BooleanField):

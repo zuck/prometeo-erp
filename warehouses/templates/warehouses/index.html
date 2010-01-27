@@ -30,7 +30,7 @@
         <tr>
             <td>{{ warehouse.name }}</td>
             <td><a href="{{ warehouse.owner.get_absolute_url }}">{{ warehouse.owner }}</a></td>
-            <td class="number">{{ warehouse.value }}</td>
+            <td class="number">{{ warehouse.value|floatformat:2 }}</td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/warehouses/view/{{ warehouse.id }}/">{% trans 'View' %}</a></li>

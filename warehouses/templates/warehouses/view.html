@@ -28,17 +28,19 @@
             <td>{% trans 'UOM' %}</td>
             <td>{% trans 'Product' %}</td>
             <td>{% trans 'Price' %}</td>
+            <td>{% trans 'Discount' %}</td>
             <td>{% trans 'Value' %}</td>
             <td>{% trans 'On' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
         {% for movement in warehouse.movement_set.all %}
         <tr class="{% if movement.verse %}in{% else %}out{% endif %}">
-            <td class="number"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity }}</td>
+            <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity|floatformat:2 }}</td>
             <td><a href="/uoms/view/{{ movement.product.uom.id }}/">{{ movement.product.uom }}</a></td>
             <td><a href="/products/view/{{ movement.product.id }}/">{{ movement.product }}</a></td>
-            <td class="number">{{ movement.price }}</td>
-            <td class="number">{{ movement.value }}</td>
+            <td class="number">{{ movement.price|floatformat:2 }}</td>
+            <td class="number">{{ movement.discount|floatformat:2 }}%</td>
+            <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.value|floatformat:2 }}</td>
             <td>{{ movement.last_modified }}</td>
             <td>
                 <ul class="actions">

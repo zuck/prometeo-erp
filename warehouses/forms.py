@@ -41,6 +41,29 @@ class MovementForm(forms.ModelForm):
         model = Movement
         exclude = ['warehouse', 'last_modified', 'last_user']
         
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        
+        # out movement: invalid if there are not enough stocks.
+        if self.cleaned_data['verse'] == False:
+            queryset = Q(product=self.cleaned_data['product'], warehouse=self.instance.warehouse)
+            movements = Movement.objects.only('id', 'quantity', 'product').filter(queryset)
+            total = 0
+            quantity = 0
+            for movement in movements:
+                if movement.verse:
+                    total += movement.value()
+                    quantity += movement.quantity
+                else:
+                    total -= movement.value()
+                    quantity -= movement.quantity
+            if quantity > 0:
+                price = total / quantity
+            else:
+                price = 0
+                
+        return price
+        
     def clean_quantity(self):
         quantity = self.cleaned_data['quantity']
         
@@ -54,8 +77,11 @@ class MovementForm(forms.ModelForm):
             movements = Movement.objects.only('id', 'quantity', 'product').filter(queryset)
             stock = 0
             for movement in movements:
-                stock += movement.quantity
+                if movement.verse:
+                    stock += movement.quantity
+                else:
+                    stock -= movement.quantity
             if quantity > stock:
                 uom = self.cleaned_data['product'].uom
-                raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%s%s).") % (stock, uom))
+                raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%.2f%s).") % (stock, uom))
         return quantity

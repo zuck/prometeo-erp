@@ -71,7 +71,7 @@ def warehouse_view(request, id):
     """
     warehouse = get_object_or_404(Warehouse, pk=id)
     details = ModelDetails(instance=warehouse)
-    details.add_field(_('value'), warehouse.value())
+    details.add_field(_('value'), '%.2f' % warehouse.value())
     
     return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details}))
 

@@ -202,7 +202,7 @@ form p {
 
 /* Commons */
 
-.number { text-align: right; }
+.number, .number-with-sign { text-align: right; }
 
 .actions {
     float: left;
@@ -309,14 +309,14 @@ form .message {
 .in { background: #dbf6cd; }
 .out { background: #f6cdcd; }
 
-.in .number, .out .number {
+.in .number-with-sign, .out .number-with-sign {
     padding-left: 25px;
     background-position: 5px center;
     background-repeat: no-repeat;
 }
 
-.in .number { background-image: url(images/plus.png); }
-.out .number { background-image: url(images/minus.png); }
+.in .number-with-sign { background-image: url(images/plus.png); }
+.out .number-with-sign { background-image: url(images/minus.png); }
 
 .mine { background: #f6cdcd; }
 .mine .name {
