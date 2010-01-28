@@ -39,6 +39,7 @@ the latest step, where the user should see an overview of his input.
 """
 
 from django import forms
+from django.db import models
 from django.conf import settings
 from django.http import Http404
 from django.shortcuts import render_to_response
@@ -65,13 +66,36 @@ class FormWizard(object):
         self.initial = initial or {}
         self.step = 0 # A zero-based counter keeping track of which step we're in.
         self.default_template = template or '/forms/wizard.html'
+        
+        # Pre-fetching of initial data.
+        if isinstance(self.initial, models.Model) \
+        or isinstance(self.initial, models.query.QuerySet):
+            instance = self.initial
+            self.initial = {}
+            for i in range(self.num_steps()):
+                self.initial[i] = instance
 
     def __repr__(self):
         return "step: %d\nform_list: %s\ninitial_data: %s" % (self.step, self.form_list, self.initial)
 
     def get_form(self, step, data=None):
         "Helper method that returns the Form instance for the given step."
-        return self.form_list[step](data, prefix=self.prefix_for_step(step), initial=self.initial.get(step, None))
+        form = self.form_list[step]
+        prefix = self.prefix_for_step(step)
+        initial = self.initial.get(step, None)
+        
+        # ModelForm.
+        if isinstance(initial, models.Model) \
+        and issubclass(form, forms.models.BaseModelForm):
+            return form(data, prefix=prefix, instance=initial)
+          
+        # ModelFormSet.
+        if isinstance(initial, models.query.QuerySet) \
+        and issubclass(form, forms.models.BaseModelFormSet):
+            return form(data, prefix=prefix, queryset=initial)
+        
+        # Normal form or formset.
+        return form(data, prefix=prefix, initial=initial)
 
     def num_steps(self):
         "Helper method that returns the number of steps."
@@ -163,7 +187,11 @@ class FormWizard(object):
                 if i != step:
                     old_form = self.get_form(i, old_data)
                     hash_name = 'hash_%s' % i
-                    prev_fields.extend([bf.as_hidden() for bf in old_form])
+                    form_list = [old_form]
+                    if isinstance(old_form, forms.formsets.BaseFormSet):
+                        form_list = old_form.forms + [old_form.management_form]
+                    for _form in form_list:
+                        prev_fields.extend([bf.as_hidden() for bf in _form])
                     prev_fields.append(hidden.render(hash_name, old_data.get(hash_name, self.security_hash(request, old_form))))
         return self.render_template(request, form, ''.join(prev_fields), step, max_step, context)
 
@@ -202,15 +230,19 @@ class FormWizard(object):
         such as the IP address.
         """
         data = []
-        for bf in form:
-            value = bf.data
-            if not value:
-                # for not commited False values of checkboxes
-                if isinstance(bf.field, forms.BooleanField):
-                    value = u'False'
-                else:
-                    value = ''
-            data.append((bf.name, force_unicode(value)))
+        form_list = [form]
+        if isinstance(form, forms.formsets.BaseFormSet):
+            form_list = form.forms + [form.management_form]
+        for _form in form_list:
+            for bf in _form:
+                value = bf.data
+                if not value:
+                    # for not commited False values of checkboxes
+                    if isinstance(bf.field, forms.BooleanField):
+                        value = u'False'
+                    else:
+                        value = ''
+                data.append((bf.name, force_unicode(value)))
         data.append(settings.SECRET_KEY)
 
         hash = md5_constructor(u'%s' % data).hexdigest()
@@ -309,6 +341,7 @@ class FormWizard(object):
             step=step + 1,
             step_count=self.num_steps(),
             form=form,
+            is_formset=isinstance(form, forms.formsets.BaseFormSet),
             previous_fields=previous_fields
         ), context_instance=RequestContext(request))
 
