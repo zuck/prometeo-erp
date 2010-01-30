@@ -21,16 +21,42 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django import forms
-from models import Product, Category
+from django.forms.models import inlineformset_factory
+from django.views.generic.simple import redirect_to
+
+from prometeo.core import wizard
+
+from models import *
 
 class ProductForm(forms.ModelForm):
     """Form for product data.
     """
     class Meta:
         model = Product
+        exclude = ['suppliers']
         
-class CategoryForm(forms.ModelForm):
-    """Form for category data.
+SupplyFormset = inlineformset_factory(Product, Supply, exclude=['product'], extra=1, can_delete=True)
+        
+class ProductWizard(wizard.FormWizard):
+    """Form wizard for product data.
     """
-    class Meta:
-        model = Category
+    def __init__(self, initial=None, template=None):
+        form_list = [ProductForm, SupplyFormset]
+        super(ProductWizard, self).__init__(form_list, initial, template)
+        
+    def done(self, request, form_list):
+        # 1) Save product.
+        product = form_list[0].save(commit=False)
+        try:
+            product.pk = self.initial[0].pk
+        except KeyError:
+            pass
+        product.save()
+        
+        # 2) Save supplies.
+        supplies = form_list[1].save(commit=False)
+        for supply in supplies:
+            supply.product = product
+            supply.save()
+        
+        return redirect_to(request, url='/products/view/%s/' % (product.pk))

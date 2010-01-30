@@ -24,7 +24,7 @@
             <td>{% trans 'Name' %}</td>
             <td>{% trans 'Code' %}</td>
             <td>{% trans 'Type' %}</td>
-            <td>{% trans 'Category' %}</td>
+            <td>{% trans 'Supply method' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
         {% for product in products %}
@@ -32,7 +32,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.code }}</td>
             <td>{% blocktrans with product.get_type_display as type %}{{ type }}{% endblocktrans %}</td>
-            <td><a href="/products/categories/view/{{ product.category.id }}/">{{ product.category }}</a></td>
+            <td>{% blocktrans with product.get_supply_method_display as method %}{{ method }}{% endblocktrans %}</td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/products/view/{{ product.id }}/">{% trans 'View' %}</a></li>
@@ -48,6 +48,5 @@
     {% endif %}
     <ul class="actions">
         <li><a class="add" href="/products/add/">{% trans 'Add' %}</a></li>
-        <li><a class="categories" href="/products/categories/">{% trans 'Categories' %}</a></li>
     </ul>
 {% endblock %}

@@ -14,6 +14,47 @@
 {% block content %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
+    <h3>{% trans 'Suppliers' %}</h3>
+    <div id="search">
+        <form action="/products/view/{{ product.id }}/" method="post">
+            <input type="text" name="supplier_query"/>
+            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
+        </form>
+    </div>
+    {% if product.supply_set.select_related %}
+    <table>
+        <thead>
+            <td>{% trans 'Name' %}</td>
+            <td>{% trans 'VAT Number' %}</td>
+            <td>{% trans 'Price' %}</td>
+            <td>{% trans 'Discount' %}</td>
+            <td>{% trans 'Minimal quantity' %}</td>
+            <td>{% trans 'Delivery delay' %}</td>
+            <td>{% trans 'Payment delay' %}</td>
+            <td>{% trans 'Actions' %}</td>
+        </thead>
+        {% for supply in product.supply_set.select_related %}
+        <tr>
+            <td>{{ supply.supplier.name }}</td>
+            <td class="number">{{ supply.supplier.vat_number }}</td>
+            <td class="number">{{ supply.price|floatformat:2 }}</td>
+            <td class="number">{{ supply.discount|floatformat:2 }}%</td>
+            <td class="number">{{ supply.minimal_quantity|floatformat:2 }}</td>
+            <td class="number">{{ supply.delivery_delay }}</td>
+            <td class="number">{{ supply.payment_delay }}</td>
+            <td>
+                <ul class="actions">
+                    <li><a class="view" href="/partners/view/{{ supply.supplier.id }}/">{% trans 'View' %}</a></li>
+                    <li><a class="edit" href="/partners/edit/{{ supply.supplier.id }}/">{% trans 'Edit' %}</a></li>
+                    <li><a class="delete" href="/partners/delete/{{ supply.supplier.id }}/">{% trans 'Delete' %}</a></li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="disabled">{% trans 'empty' %}.</p>
+    {% endif %}
     <ul class="actions">
         <li><a class="edit" href="/products/edit/{{ product.id }}/">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="/products/delete/{{ product.id }}/">{% trans 'Delete' %}</a></li>

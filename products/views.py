@@ -29,8 +29,8 @@ from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
 
-from models import Product, Category
-from forms import ProductForm, CategoryForm
+from models import *
+from forms import *
 
 @login_required 
 def product_index(request):
@@ -54,15 +54,8 @@ def product_index(request):
 def product_add(request):
     """Add a new product.
     """
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            product = form.save()
-            return redirect_to(request, url='/products/view/%s/' % (product.pk))
-    else:
-        form = ProductForm()
-
-    return render_to_response('products/add.html', RequestContext(request, {'form': form}));
+    wizard = ProductWizard(template="products/add.html")
+    return wizard(request)
 
 @login_required     
 def product_view(request, id):
@@ -76,7 +69,10 @@ def product_view(request, id):
 def product_edit(request, id):
     """Edit a product.
     """
-    product = Product.objects.get(pk=id)
+    product = get_object_or_404(Product, pk=id)
+    wizard = ProductWizard(initial=product, template="products/edit.html")
+    return wizard(request)
+    
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
@@ -97,71 +93,3 @@ def product_delete(request, id):
             return redirect_to(request, url='/products/');
         return redirect_to(request, url='/products/view/%s/' % (id))
     return render_to_response('products/delete.html', RequestContext(request, {'product': product}))
-    
-## Categories.
-
-@login_required 
-def category_index(request):
-    """Show a category list.
-    """
-    categories = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
-
-    if (queryset is not None):
-        categories = Category.objects.filter(queryset)
-    else:
-        categories = Category.objects.all()
-        
-    return render_to_response('products/categories/index.html', RequestContext(request, {'categories': categories}))
- 
-@login_required    
-def category_add(request):
-    """Add a new category.
-    """
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            category = form.save()
-            return redirect_to(request, url='/products/categories/view/%s/' % (category.pk))
-    else:
-        form = CategoryForm()
-
-    return render_to_response('products/categories/add.html', RequestContext(request, {'form': form}));
-
-@login_required     
-def category_view(request, id):
-    """Show category details.
-    """
-    category = get_object_or_404(Category, pk=id)
-    details = ModelDetails(instance=category)
-    return render_to_response('products/categories/view.html', RequestContext(request, {'category': category, 'details': details}))
-
-@login_required     
-def category_edit(request, id):
-    """Edit a category.
-    """
-    category = Category.objects.get(pk=id)
-    if request.method == 'POST':
-        form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            form.save()
-            return redirect_to(request, url='/products/categories/view/%s/' % (id))
-    else:
-        form = CategoryForm(instance=category)
-    return render_to_response('products/categories/edit.html', RequestContext(request, {'category': category, 'form': form}))
-
-@login_required    
-def category_delete(request, id):
-    """Delete a category.
-    """
-    category = get_object_or_404(Category, pk=id)
-    if request.method == 'POST':
-        if (request.POST.has_key(u'yes')):
-            category.delete()
-            return redirect_to(request, url='/products/categories/');
-        return redirect_to(request, url='/products/categories/view/%s/' % (id))
-    return render_to_response('products/categories/delete.html', RequestContext(request, {'category': category}))

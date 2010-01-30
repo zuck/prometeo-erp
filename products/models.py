@@ -21,47 +21,41 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from django.db import models
-    
-class Category(models.Model):
+        
+class Supply(models.Model):
+    id = models.AutoField(primary_key=True)
+    product = models.ForeignKey('products.Product')
+    supplier = models.ForeignKey('partners.Partner')
+    name = models.CharField(max_length=255, blank=True)
+    code = models.CharField(max_length=255, blank=True)
+    price = models.FloatField()
+    discount = models.FloatField(default=0)
+    delivery_delay = models.PositiveIntegerField(default=1)
+    minimal_quantity = models.FloatField(default=1)
+    payment_delay = models.PositiveIntegerField()
+
+class Product(models.Model):   
+    PRODUCT_TYPES = (
+        ('0', _('Consumable')),
+        ('1', _('Stockable'))
+    )
+
+    PRODUCT_SUPPLY_METHODS = (
+        ('0', _('Purchase')),
+        ('1', _('Production'))
+    )        
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', null=True, blank=True)
-    
-    def get_absolute_url(self):
-        return '/products/categories/view/%d' % self.id
-        
-    def __unicode__(self):
-        buffer = ugettext(self.name)
-        if (self.parent):
-            buffer = self.parent.__unicode__() + ' / ' + buffer
-            
-        return buffer
-        
-PRODUCT_TYPES = (
-    ('0', _('Consumable')),
-    ('1', _('Stockable'))
-)
-
-PRODUCT_SUPPLY_METHODS = (
-    ('0', _('Purchase')),
-    ('1', _('Production'))
-)
-
-class Product(models.Model):        
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    code = models.CharField(max_length=64)
-    ean13 = models.CharField(max_length=11, blank=True)
+    code = models.CharField(max_length=255)
+    ean13 = models.CharField(max_length=13, blank=True)
     description = models.TextField(blank=True)
     uom = models.ForeignKey('uoms.UOM')
     uos = models.ForeignKey('uoms.UOM', related_name='product_uos_set')
     uom_to_uos = models.FloatField(default=1)
-    suppliers = models.ManyToManyField('partners.Partner')
-    category = models.ForeignKey(Category, null=True, blank=True)
     type = models.CharField(max_length=1, choices=PRODUCT_TYPES)
     supply_method = models.CharField(max_length=1, choices=PRODUCT_SUPPLY_METHODS)
+    suppliers = models.ManyToManyField('partners.Partner', through=Supply)
     
     def get_absolute_url(self):
         return '/products/view/%d' % self.id
