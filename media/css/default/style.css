@@ -141,14 +141,14 @@ input[type="text"], input[type="password"], select, textarea {
     background: #f0f0f0;
 }
 
-input[type="text"], input[type="password"], select { 
+input[type="text"], input[type="password"], select {
     width: 50%;
     height: 20px;
     font-size: 14px;
 }
 
 textarea {
-    width: 73%;
+    width: 65%;
     height: 15em;
 }
 
