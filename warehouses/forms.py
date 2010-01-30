@@ -22,7 +22,6 @@ __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.simple import redirect_to
-from django.db.models import Q
 from django import forms
 
 from prometeo.core import wizard
@@ -59,16 +58,7 @@ class SupplyForm(forms.ModelForm):
         # out movement: invalid if there are not enough stocks.
         elif self.instance.verse == False:
             supply = self.instance.supply
-            queryset = Q(supply__product=supply.product, warehouse=self.instance.warehouse)
-            movements = Movement.objects.filter(queryset)
-            stock = 0
-            for movement in movements:
-                if movement == self.instance:
-                    continue
-                if movement.verse:
-                    stock += movement.quantity
-                else:
-                    stock -= movement.quantity
+            stock = self.instance.warehouse.stock(supply.product, exclude=[self.instance])
             if quantity > stock:
                 uom = supply.product.uom
                 raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%.2f%s).") % (stock, uom))
@@ -81,23 +71,8 @@ class SupplyForm(forms.ModelForm):
         
         if self.instance.verse == False:
             supply = self.instance.supply
-            queryset = Q(supply__product=supply.product, warehouse=self.instance.warehouse)
-            movements = Movement.objects.filter(queryset)
-            price = 0
-            total = 0
-            quantity = 0
-            for m in movements:
-                if m == self.instance:
-                    continue
-                if m.verse:
-                    total += m.value()
-                    quantity += m.quantity
-                else:
-                    total -= m.value()
-                    quantity -= m.quantity
-            if quantity > 0:
-                price = total / quantity
-                
+            price = self.instance.warehouse.average_price(supply.product, exclude=[self.instance])
+
         return price
         
     def clean_discount(self):
@@ -131,11 +106,13 @@ class MovementWizard(wizard.FormWizard):
             instance.verse = form.cleaned_data['verse']
             supply = form.cleaned_data['supply']
             instance.supply = supply
+            instance.quantity = supply.minimal_quantity
             instance.price = supply.price
             instance.discount = supply.discount
             instance.payment_delay = supply.payment_delay
-            self.initial[1] = instance
+            
             if form.cleaned_data['verse'] == False:
+                instance.quantity = instance.warehouse.stock(supply.product)
                 self.form_list[1].base_fields['price'].widget = forms.widgets.HiddenInput()
                 self.form_list[1].base_fields['discount'].widget = forms.widgets.HiddenInput()
                 self.form_list[1].base_fields['payment_delay'].widget = forms.widgets.HiddenInput()
@@ -143,6 +120,8 @@ class MovementWizard(wizard.FormWizard):
                 self.form_list[1].base_fields['price'].widget = forms.widgets.TextInput()
                 self.form_list[1].base_fields['discount'].widget = forms.widgets.TextInput()
                 self.form_list[1].base_fields['payment_delay'].widget = forms.widgets.TextInput()
+                
+            self.initial[1] = instance
                 
     def done(self, request, form_list):
         movement = form_list[0].save(commit=False)

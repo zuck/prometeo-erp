@@ -23,6 +23,7 @@ __version__ = '$Revision$'
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.db import connection
+from django.db.models import Q
 
 class Warehouse(models.Model):        
     id = models.AutoField(primary_key=True)
@@ -37,7 +38,41 @@ class Warehouse(models.Model):
             else:
                 value -= movement.value()
         return value
-    
+        
+    def stock(self, product, exclude=[]):
+        queryset = Q(supply__product=product, warehouse=self)
+        movements = Movement.objects.filter(queryset)
+        stock = 0
+        for movement in movements:
+            if movement in exclude:
+                continue
+            if movement.verse:
+                stock += movement.quantity
+            else:
+                stock -= movement.quantity
+                
+        return stock
+        
+    def average_price(self, product, exclude=[]):
+        queryset = Q(supply__product=product, warehouse=self)
+        movements = Movement.objects.filter(queryset)
+        price = 0
+        total = 0
+        quantity = 0
+        for m in movements:
+            if m in exclude:
+                continue
+            if m.verse:
+                total += m.value()
+                quantity += m.quantity
+            else:
+                total -= m.value()
+                quantity -= m.quantity
+        if quantity > 0:
+            price = total / quantity
+            
+        return price
+
     def get_absolute_url(self):
         return '/warehouses/view/%d' % self.id
         
