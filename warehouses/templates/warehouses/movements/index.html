@@ -35,8 +35,8 @@
         {% for movement in movements %}
         <tr class="{% if movement.verse %}in{% else %}out{% endif %}">
             <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity|floatformat:2 }}</td>
-            <td><a href="/uoms/view/{{ movement.product.uom.id }}/">{{ movement.product.uom }}</a></td>
-            <td><a href="/products/view/{{ movement.product.id }}/">{{ movement.product }}</a></td>
+            <td><a href="/uoms/view/{{ movement.supply.product.uom.id }}/">{{ movement.supply.product.uom }}</a></td>
+            <td><a href="/products/view/{{ movement.supply.product.id }}/">{{ movement.supply.product }}</a></td>
             <td class="number">{{ movement.price|floatformat:2 }}</td>
             <td class="number">{{ movement.discount|floatformat:2 }}%</td>
             <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.value|floatformat:2 }}</td>

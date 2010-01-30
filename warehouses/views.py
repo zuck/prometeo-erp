@@ -125,15 +125,8 @@ def movement_add(request, warehouse_id):
     """
     warehouse = get_object_or_404(Warehouse, pk=warehouse_id)
     movement = Movement(warehouse=warehouse, last_user=request.user)
-    if request.method == 'POST':
-        form = MovementForm(request.POST, instance=movement)
-        if form.is_valid():
-            movement = form.save()
-            return redirect_to(request, url='/warehouses/movements/view/%s/' % (movement.pk))
-    else:
-        form = MovementForm(instance=movement)
-
-    return render_to_response('warehouses/movements/add.html', RequestContext(request, {'form': form, 'movement': movement}));
+    wizard = MovementWizard(initial=movement, template="warehouses/movements/add.html")
+    return wizard(request)
 
 @login_required     
 def movement_view(request, id):
@@ -149,19 +142,9 @@ def movement_view(request, id):
 def movement_edit(request, id):
     """Edit a movement.
     """
-    movement = Movement.objects.get(pk=id)
-    if not movement.is_last():
-        referer_view = get_referer_view(request, movement.warehouse.get_absolute_url())
-        return HttpResponseRedirect(referer_view)
-    if request.method == 'POST':
-        movement.last_user=request.user
-        form = MovementForm(request.POST, instance=movement)
-        if form.is_valid():
-            form.save()
-            return redirect_to(request, url='/warehouses/movements/view/%s/' % (id))
-    else:
-        form = MovementForm(instance=movement)
-    return render_to_response('warehouses/movements/edit.html', RequestContext(request, {'movement': movement, 'form': form}))
+    movement = get_object_or_404(Movement, pk=id)
+    wizard = MovementWizard(initial=movement, template="warehouses/movements/edit.html")
+    return wizard(request)
 
 @login_required    
 def movement_delete(request, id):

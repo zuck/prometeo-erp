@@ -54,10 +54,11 @@ class Movement(models.Model):
     warehouse = models.ForeignKey(Warehouse)
     document = models.CharField(max_length=255, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
-    product = models.ForeignKey('products.Product')
+    supply = models.ForeignKey('products.Supply')
     quantity = models.FloatField(default=1)
     price = models.FloatField()
     discount = models.FloatField(default=0)
+    payment_delay = models.PositiveIntegerField()
     last_user = models.ForeignKey('auth.User')
     
     class Meta:
@@ -76,4 +77,4 @@ class Movement(models.Model):
         return '/warehouses/movements/view/%d' % self.id
         
     def __unicode__(self):
-        return _("%d%s of %s in %s, on %s") % (self.quantity, self.product.uom, self.product, self.warehouse, self.last_modified)
+        return _("%d%s of %s in %s, on %s") % (self.quantity, self.supply.product.uom, self.supply, self.warehouse, self.last_modified)

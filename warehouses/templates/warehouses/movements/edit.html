@@ -16,8 +16,11 @@
 
 {% block content %}
     <h3>{% trans 'Edit' %}</h3>
-    <form action="/warehouses/movements/edit/{{ movement.id }}/" method="post">
+    <h4>Step {{ step }} of {{ step_count }}</h4>
+    <form action="." method="post">
         {{ form.as_p }}
+        <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
+        {{ previous_fields|safe }}
         <div class="actions">
             <input class="save" type="submit" value="{% trans 'Save' %}" />
         </div>

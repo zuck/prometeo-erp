@@ -20,49 +20,34 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
-from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
-from django import forms
-from models import Warehouse, Movement
+from django.views.generic.simple import redirect_to
 from django.db.models import Q
+from django import forms
 
 from prometeo.core import wizard
+
+from models import Warehouse, Movement
 
 class WarehouseForm(forms.ModelForm):
     """Form for warehouse data.
     """
     class Meta:
         model = Warehouse
-        
+
 class MovementForm(forms.ModelForm):
     """Form for movement data.
     """
     class Meta:
         model = Movement
-        exclude = ['warehouse', 'last_modified', 'last_user']
+        exclude = ['warehouse', 'last_modified', 'last_user', 'quantity', 'price', 'discount', 'payment_delay']
         
-    def clean_price(self):
-        price = self.cleaned_data['price']
-        
-        # out movement: invalid if there are not enough stocks.
-        if self.cleaned_data['verse'] == False:
-            queryset = Q(product=self.cleaned_data['product'], warehouse=self.instance.warehouse)
-            movements = Movement.objects.only('id', 'quantity', 'product').filter(queryset)
-            total = 0
-            quantity = 0
-            for movement in movements:
-                if movement.verse:
-                    total += movement.value()
-                    quantity += movement.quantity
-                else:
-                    total -= movement.value()
-                    quantity -= movement.quantity
-            if quantity > 0:
-                price = total / quantity
-            else:
-                price = 0
-                
-        return price
+class SupplyForm(forms.ModelForm):
+    """Form for supply data.
+    """
+    class Meta:
+        model = Movement
+        fields = ['quantity', 'price', 'discount', 'payment_delay']
         
     def clean_quantity(self):
         quantity = self.cleaned_data['quantity']
@@ -72,16 +57,99 @@ class MovementForm(forms.ModelForm):
             raise forms.ValidationError(_("The quantity must be greater than zero."))
             
         # out movement: invalid if there are not enough stocks.
-        elif self.cleaned_data['verse'] == False:
-            queryset = Q(product=self.cleaned_data['product'], warehouse=self.instance.warehouse)
-            movements = Movement.objects.only('id', 'quantity', 'product').filter(queryset)
+        elif self.instance.verse == False:
+            supply = self.instance.supply
+            queryset = Q(supply__product=supply.product, warehouse=self.instance.warehouse)
+            movements = Movement.objects.filter(queryset)
             stock = 0
             for movement in movements:
+                if movement == self.instance:
+                    continue
                 if movement.verse:
                     stock += movement.quantity
                 else:
                     stock -= movement.quantity
             if quantity > stock:
-                uom = self.cleaned_data['product'].uom
+                uom = supply.product.uom
                 raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%.2f%s).") % (stock, uom))
+                
         return quantity
+        
+    def clean_price(self):
+        # Out movement.
+        price = self.cleaned_data['price']
+        
+        if self.instance.verse == False:
+            supply = self.instance.supply
+            queryset = Q(supply__product=supply.product, warehouse=self.instance.warehouse)
+            movements = Movement.objects.filter(queryset)
+            price = 0
+            total = 0
+            quantity = 0
+            for m in movements:
+                if m == self.instance:
+                    continue
+                if m.verse:
+                    total += m.value()
+                    quantity += m.quantity
+                else:
+                    total -= m.value()
+                    quantity -= m.quantity
+            if quantity > 0:
+                price = total / quantity
+                
+        return price
+        
+    def clean_discount(self):
+        # Out movement.
+        discount = self.cleaned_data['discount']
+        
+        if self.instance.verse == False:
+            discount = 0
+            
+        return discount
+        
+    def clean_payment_delay(self):
+        # Out movement.
+        payment_delay = self.cleaned_data['payment_delay']
+        
+        if self.instance.verse == False:
+            payment_delay = 0
+            
+        return payment_delay
+        
+class MovementWizard(wizard.FormWizard):
+    """Form wizard for movement data.
+    """
+    def __init__(self, initial=None, template=None):
+        form_list = [MovementForm, SupplyForm]
+        super(MovementWizard, self).__init__(form_list, initial, template)
+        
+    def process_step(self, request, form, step):
+        if step == 0:
+            instance = form.instance
+            instance.verse = form.cleaned_data['verse']
+            supply = form.cleaned_data['supply']
+            instance.supply = supply
+            instance.price = supply.price
+            instance.discount = supply.discount
+            instance.payment_delay = supply.payment_delay
+            self.initial[1] = instance
+            if form.cleaned_data['verse'] == False:
+                self.form_list[1].base_fields['price'].widget = forms.widgets.HiddenInput()
+                self.form_list[1].base_fields['discount'].widget = forms.widgets.HiddenInput()
+                self.form_list[1].base_fields['payment_delay'].widget = forms.widgets.HiddenInput()
+            else:
+                self.form_list[1].base_fields['price'].widget = forms.widgets.TextInput()
+                self.form_list[1].base_fields['discount'].widget = forms.widgets.TextInput()
+                self.form_list[1].base_fields['payment_delay'].widget = forms.widgets.TextInput()
+                
+    def done(self, request, form_list):
+        movement = form_list[0].save(commit=False)
+        movement.quantity = form_list[1].cleaned_data['quantity']
+        movement.price = form_list[1].cleaned_data['price']
+        movement.discount = form_list[1].cleaned_data['discount']
+        movement.payment_delay = form_list[1].cleaned_data['payment_delay']
+        movement.save()
+
+        return redirect_to(request, url=movement.warehouse.get_absolute_url())
