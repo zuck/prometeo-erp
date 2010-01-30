@@ -84,17 +84,15 @@ class FormWizard(object):
         prefix = self.prefix_for_step(step)
         initial = self.initial.get(step, None)
         
-        # ModelForm.
-        if isinstance(initial, models.Model) \
-        and issubclass(form, forms.models.BaseModelForm):
+        if isinstance(initial, models.Model)\
+        and (issubclass(form, forms.models.BaseModelForm)\
+            or issubclass(form, forms.models.BaseInlineFormSet)):
             return form(data, prefix=prefix, instance=initial)
-          
-        # ModelFormSet.
-        if isinstance(initial, models.query.QuerySet) \
-        and issubclass(form, forms.models.BaseModelFormSet):
-            return form(data, prefix=prefix, queryset=initial)
-        
-        # Normal form or formset.
+
+        elif issubclass(form, forms.models.BaseModelFormSet)\
+        and isinstance(initial, models.query.QuerySet):
+                return form(data, prefix=prefix, queryset=initial)
+                
         return form(data, prefix=prefix, initial=initial)
 
     def num_steps(self):
