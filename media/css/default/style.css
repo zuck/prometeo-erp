@@ -318,8 +318,8 @@ form .message {
 .in .number-with-sign { background-image: url(images/plus.png); }
 .out .number-with-sign { background-image: url(images/minus.png); }
 
-.mine { background: #f6cdcd; }
-.mine .name {
+.managed { background: #f6cdcd; }
+.managed .name {
     padding-left: 25px;
     background-position: 5px center;
     background-repeat: no-repeat;
