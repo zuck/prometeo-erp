@@ -85,7 +85,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'prometeo.core.middleware.RequireLoginMiddleware'
+    'prometeo.core.middleware.RequireLoginMiddleware',
+    #'prometeo.core.middleware.RequirePermissionMiddleware'
 )
 
 # Roor for URL dispatcher.
