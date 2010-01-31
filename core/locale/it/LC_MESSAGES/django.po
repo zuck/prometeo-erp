@@ -119,11 +119,11 @@ msgstr ""
 
 #: templates/accounts/index.html:25
 msgid "Firstname"
-msgstr ""
+msgstr "Nome"
 
 #: templates/accounts/index.html:26
 msgid "Lastname"
-msgstr ""
+msgstr "Cognome"
 
 #: templates/accounts/index.html:27
 msgid "Actions"
