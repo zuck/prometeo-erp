@@ -34,6 +34,12 @@ class Supply(models.Model):
     delivery_delay = models.PositiveIntegerField(default=1)
     minimal_quantity = models.FloatField(default=1)
     payment_delay = models.PositiveIntegerField()
+        
+    def __unicode__(self):
+        return '%s (%s)' % (self.product, self.supplier)
+        
+    def get_absolute_url(self):
+        return self.product.get_absolute_url()
 
 class Product(models.Model):   
     PRODUCT_TYPES = (
