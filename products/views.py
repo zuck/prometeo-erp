@@ -72,15 +72,6 @@ def product_edit(request, id):
     product = get_object_or_404(Product, pk=id)
     wizard = ProductWizard(initial=product, template="products/edit.html")
     return wizard(request)
-    
-    if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
-        if form.is_valid():
-            form.save()
-            return redirect_to(request, url='/products/view/%s/' % (id))
-    else:
-        form = ProductForm(instance=product)
-    return render_to_response('products/edit.html', RequestContext(request, {'product': product, 'form': form}))
 
 @login_required    
 def product_delete(request, id):
