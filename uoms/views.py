@@ -23,7 +23,6 @@ __version__ = '$Revision$'
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -31,8 +30,7 @@ from prometeo.core.details import ModelDetails
 
 from models import UOM, Category
 from forms import UOMForm, CategoryForm
-
-@login_required 
+ 
 def uom_index(request):
     """Show a uom list.
     """
@@ -49,8 +47,7 @@ def uom_index(request):
         uoms = UOM.objects.all()
         
     return render_to_response('uoms/index.html', RequestContext(request, {'uoms': uoms}))
- 
-@login_required    
+     
 def uom_add(request):
     """Add a new uom.
     """
@@ -63,16 +60,14 @@ def uom_add(request):
         form = UOMForm()
 
     return render_to_response('uoms/add.html', RequestContext(request, {'form': form}));
-
-@login_required     
+     
 def uom_view(request, id):
     """Show uom details.
     """
     uom = get_object_or_404(UOM, pk=id)
     details = ModelDetails(instance=uom)
     return render_to_response('uoms/view.html', RequestContext(request, {'uom': uom, 'details': details}))
-
-@login_required     
+     
 def uom_edit(request, id):
     """Edit a uom.
     """
@@ -85,8 +80,7 @@ def uom_edit(request, id):
     else:
         form = UOMForm(instance=uom)
     return render_to_response('uoms/edit.html', RequestContext(request, {'uom': uom, 'form': form}))
-
-@login_required    
+    
 def uom_delete(request, id):
     """Delete a uom.
     """
@@ -99,8 +93,7 @@ def uom_delete(request, id):
     return render_to_response('uoms/delete.html', RequestContext(request, {'uom': uom}))
     
 ## Categories.
-
-@login_required 
+ 
 def category_index(request):
     """Show a category list.
     """
@@ -117,8 +110,7 @@ def category_index(request):
         categories = Category.objects.all()
         
     return render_to_response('uoms/categories/index.html', RequestContext(request, {'categories': categories}))
- 
-@login_required    
+     
 def category_add(request):
     """Add a new category.
     """
@@ -131,16 +123,14 @@ def category_add(request):
         form = CategoryForm()
 
     return render_to_response('uoms/categories/add.html', RequestContext(request, {'form': form}));
-
-@login_required     
+     
 def category_view(request, id):
     """Show category details.
     """
     category = get_object_or_404(Category, pk=id)
     details = ModelDetails(instance=category)
     return render_to_response('uoms/categories/view.html', RequestContext(request, {'category': category, 'details': details}))
-
-@login_required     
+     
 def category_edit(request, id):
     """Edit a category.
     """
@@ -153,8 +143,7 @@ def category_edit(request, id):
     else:
         form = CategoryForm(instance=category)
     return render_to_response('uoms/categories/edit.html', RequestContext(request, {'category': category, 'form': form}))
-
-@login_required    
+    
 def category_delete(request, id):
     """Delete a category.
     """

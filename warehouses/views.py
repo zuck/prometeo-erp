@@ -24,7 +24,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -32,8 +31,7 @@ from prometeo.core.details import ModelDetails
 
 from models import *
 from forms import *
-
-@login_required 
+ 
 def warehouse_index(request):
     """Show a warehouse list.
     """
@@ -50,8 +48,7 @@ def warehouse_index(request):
         warehouses = Warehouse.objects.all()
         
     return render_to_response('warehouses/index.html', RequestContext(request, {'warehouses': warehouses}))
- 
-@login_required    
+     
 def warehouse_add(request):
     """Add a new warehouse.
     """
@@ -64,8 +61,7 @@ def warehouse_add(request):
         form = WarehouseForm()
 
     return render_to_response('warehouses/add.html', RequestContext(request, {'form': form}));
-
-@login_required     
+     
 def warehouse_view(request, id):
     """Show warehouse details.
     """
@@ -74,8 +70,7 @@ def warehouse_view(request, id):
     details.add_field(_('value'), '%.2f' % warehouse.value())
     
     return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details}))
-
-@login_required     
+     
 def warehouse_edit(request, id):
     """Edit a warehouse.
     """
@@ -88,8 +83,7 @@ def warehouse_edit(request, id):
     else:
         form = WarehouseForm(instance=warehouse)
     return render_to_response('warehouses/edit.html', RequestContext(request, {'warehouse': warehouse, 'form': form}))
-
-@login_required    
+    
 def warehouse_delete(request, id):
     """Delete a warehouse.
     """
@@ -100,8 +94,7 @@ def warehouse_delete(request, id):
             return redirect_to(request, url='/warehouses/');
         return redirect_to(request, url='/warehouses/view/%s/' % (id))
     return render_to_response('warehouses/delete.html', RequestContext(request, {'warehouse': warehouse}))
-    
-@login_required 
+     
 def movement_index(request):
     """Show a movement list.
     """
@@ -118,8 +111,7 @@ def movement_index(request):
         movements = Movement.objects.all()
         
     return render_to_response('warehouses/movements/index.html', RequestContext(request, {'movements': movements}))
- 
-@login_required    
+     
 def movement_add(request, warehouse_id):
     """Add a new movement.
     """
@@ -127,8 +119,7 @@ def movement_add(request, warehouse_id):
     movement = Movement(warehouse=warehouse, last_user=request.user)
     wizard = MovementWizard(initial=movement, template="warehouses/movements/add.html")
     return wizard(request)
-
-@login_required     
+     
 def movement_view(request, id):
     """Show movement details.
     """
@@ -137,16 +128,14 @@ def movement_view(request, id):
     details.add_field(_('value'), movement.value())
     
     return render_to_response('warehouses/movements/view.html', RequestContext(request, {'movement': movement, 'details': details}))
-
-@login_required     
+     
 def movement_edit(request, id):
     """Edit a movement.
     """
     movement = get_object_or_404(Movement, pk=id)
     wizard = MovementWizard(initial=movement, template="warehouses/movements/edit.html")
     return wizard(request)
-
-@login_required    
+    
 def movement_delete(request, id):
     """Delete a movement.
     """

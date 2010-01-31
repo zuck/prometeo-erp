@@ -23,7 +23,6 @@ __version__ = '$Revision$'
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -31,8 +30,7 @@ from prometeo.core.details import ModelDetails
 
 from models import *
 from forms import *
-
-@login_required 
+ 
 def product_index(request):
     """Show a product list.
     """
@@ -49,31 +47,27 @@ def product_index(request):
         products = Product.objects.all()
         
     return render_to_response('products/index.html', RequestContext(request, {'products': products}))
- 
-@login_required    
+     
 def product_add(request):
     """Add a new product.
     """
     wizard = ProductWizard(template="products/add.html")
     return wizard(request)
-
-@login_required     
+     
 def product_view(request, id):
     """Show product details.
     """
     product = get_object_or_404(Product, pk=id)
     details = ModelDetails(instance=product)
     return render_to_response('products/view.html', RequestContext(request, {'product': product, 'details': details}))
-
-@login_required     
+     
 def product_edit(request, id):
     """Edit a product.
     """
     product = get_object_or_404(Product, pk=id)
     wizard = ProductWizard(initial=product, template="products/edit.html")
     return wizard(request)
-
-@login_required    
+    
 def product_delete(request, id):
     """Delete a product.
     """

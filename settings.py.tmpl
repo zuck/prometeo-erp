@@ -81,10 +81,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # this middleware classes will be applied in the order given, and in the
 # response phase the middleware will be applied in reverse order.
 MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware'
+    'prometeo.core.middleware.RequireLoginMiddleware'
 )
 
 # Roor for URL dispatcher.
@@ -99,8 +100,17 @@ INSTALLED_APPS = (
     'prometeo.core'
 )
 
-# Default login redirect.
+# Login options.
 LOGIN_REDIRECT_URL = '/accounts/logged'
+
+LOGIN_REQUIRED_URLS = (
+    r'/(.*)$',
+)
+
+LOGIN_REQUIRED_URLS_EXCEPTIONS = (
+    r'/media/(.*)$',
+    r'/accounts/login/$',
+)
 
 # User profile model.
 AUTH_PROFILE_MODULE = 'core.Profile'

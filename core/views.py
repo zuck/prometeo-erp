@@ -25,7 +25,6 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.utils.translation import check_for_language
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -39,13 +38,11 @@ def set_language(request):
     if lang_code and check_for_language(lang_code):
         request.session['django_language'] = lang_code
 
-@login_required
 def logged(request):
     response = HttpResponseRedirect('/')
     set_language(request)
     return response
 
-@login_required
 def index(request):
     """Show an account list.
     """
@@ -62,8 +59,7 @@ def index(request):
         accounts = User.objects.all()
         
     return render_to_response('accounts/index.html', RequestContext(request, {'accounts': accounts}))
-
-@login_required    
+    
 def add(request):
     """Add a new account.
     """
@@ -76,16 +72,14 @@ def add(request):
         form = AccountForm()
 
     return render_to_response('accounts/add.html', RequestContext(request, {'form': form}))
-
-@login_required    
+    
 def view(request, id):
     """Show account details.
     """
     account = get_object_or_404(User, pk=id)
     details = ModelDetails(instance=account, exclude=['id', 'password', 'is_active'])
     return render_to_response('accounts/view.html', RequestContext(request, {'account': account, 'details': details}))
-    
-@login_required 
+     
 def edit(request, id):
     """Edit an account.
     """
@@ -99,8 +93,7 @@ def edit(request, id):
     else:
         form = AccountForm(instance=account)
     return render_to_response('accounts/edit.html', RequestContext(request, {'account': account, 'form': form}))
- 
-@login_required   
+    
 def delete(request, id):
     """Delete an account.
     """
@@ -112,7 +105,6 @@ def delete(request, id):
         return redirect_to(request, url='/accounts/view/%s/' % (id))
     return render_to_response('accounts/delete.html', RequestContext(request, {'account': account}))
 
-@login_required
 def start(request):
     """Start page.
     """
