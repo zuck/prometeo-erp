@@ -28,10 +28,10 @@ from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
 
-from models import Partner
-from forms import PartnerForm
+from models import *
+from forms import *
  
-def index(request):
+def partner_index(request):
     """Show a partner list.
     """
     partners = None
@@ -48,7 +48,7 @@ def index(request):
         
     return render_to_response('partners/index.html', RequestContext(request, {'partners': partners}))
      
-def add(request):
+def partner_add(request):
     """Add a new partner.
     """
     if request.method == 'POST':
@@ -61,14 +61,14 @@ def add(request):
 
     return render_to_response('partners/add.html', RequestContext(request, {'form': form}));
      
-def view(request, id):
+def partner_view(request, id):
     """Show partner details.
     """
     partner = get_object_or_404(Partner, pk=id)
     details = ModelDetails(instance=partner)
     return render_to_response('partners/view.html', RequestContext(request, {'partner': partner, 'details': details}))
      
-def edit(request, id):
+def partner_edit(request, id):
     """Edit a partner.
     """
     partner = Partner.objects.get(pk=id)
@@ -81,7 +81,7 @@ def edit(request, id):
         form = PartnerForm(instance=partner)
     return render_to_response('partners/edit.html', RequestContext(request, {'partner': partner, 'form': form}))
     
-def delete(request, id):
+def partner_delete(request, id):
     """Delete a partner.
     """
     partner = get_object_or_404(Partner, pk=id)

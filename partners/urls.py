@@ -24,10 +24,18 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('partners.views',
 
-    (r'^$', 'index'),
+    # Partners.
+    (r'^$', 'partner_index'),
+    (r'^add/$', 'partner_add'),
+    (r'^view/(?P<id>\d+)/$', 'partner_view'),
+    (r'^edit/(?P<id>\d+)/$', 'partner_edit'),
+    (r'^delete/(?P<id>\d+)/$', 'partner_delete'),
     
-    (r'^add/$', 'add'),
-    (r'^view/(?P<id>\d+)/$', 'view'),
-    (r'^edit/(?P<id>\d+)/$', 'edit'),
-    (r'^delete/(?P<id>\d+)/$', 'delete'),
+    # Contacts.
+    """(r'^contacts/$', 'contact_index'),
+    (r'^contacts/add/$', 'contact_add'),
+    (r'^contacts/view/(?P<id>\d+)/$', 'contact_view'),
+    (r'^contacts/edit/(?P<id>\d+)/$', 'contact_edit'),
+    (r'^contacts/delete/(?P<id>\d+)/$', 'contact_delete'),
+    """
 )
