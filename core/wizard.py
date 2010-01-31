@@ -92,8 +92,11 @@ class FormWizard(object):
         elif issubclass(form, forms.models.BaseModelFormSet)\
         and isinstance(initial, models.query.QuerySet):
                 return form(data, prefix=prefix, queryset=initial)
-                
-        return form(data, prefix=prefix, initial=initial)
+        
+        if initial is not None:
+            return form(data, prefix=prefix, initial=initial)
+            
+        return form(data, prefix=prefix)
 
     def num_steps(self):
         "Helper method that returns the number of steps."
