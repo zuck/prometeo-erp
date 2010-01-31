@@ -3,11 +3,12 @@
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block title %}{% trans 'UOMs' %}{% endblock %}
+{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
-    {% add_crumb 'UOMs' '/uoms/' %}
-    {% add_crumb 'Categories' '/uoms/categories/' %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'UOMs' '/products/uoms/' %}
+    {% add_crumb 'Categories' '/products/uoms/categories/' %}
     {% add_crumb category %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
@@ -17,7 +18,7 @@
     {{ details.as_dl }}
     <h3>{% trans 'UOMs' %}</h3>
     <div id="search">
-        <form action="/uoms/categories/view/{{ category.id }}" method="post">
+        <form action="/products/uoms/categories/view/{{ category.id }}" method="post">
             <input type="text" name="query"/>
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
@@ -35,9 +36,9 @@
             <td>{{ uom.initials }}</td>
             <td>
                 <ul class="actions">
-                    <li><a class="view" href="/uoms/view/{{ uom.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/uoms/edit/{{ uom.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/uoms/delete/{{ uom.id }}/">{% trans 'Delete' %}</a></li>
+                    <li><a class="view" href="/products/uoms/view/{{ uom.id }}/">{% trans 'View' %}</a></li>
+                    <li><a class="edit" href="/products/uoms/edit/{{ uom.id }}/">{% trans 'Edit' %}</a></li>
+                    <li><a class="delete" href="/products/uoms/delete/{{ uom.id }}/">{% trans 'Delete' %}</a></li>
                 </ul>
             </td>
         </tr>
@@ -47,8 +48,8 @@
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}
     <ul class="actions">
-        <li><a class="edit" href="/uoms/categories/edit/{{ category.id }}/">{% trans 'Edit' %}</a></li>
-        <li><a class="delete" href="/uoms/categories/delete/{{ category.id }}/">{% trans 'Delete' %}</a></li>
-        <li><a class="categories" href="/uoms/categories/">{% trans 'Categories' %}</a></li>
+        <li><a class="edit" href="/products/uoms/categories/edit/{{ category.id }}/">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/products/uoms/categories/delete/{{ category.id }}/">{% trans 'Delete' %}</a></li>
+        <li><a class="categories" href="/products/uoms/categories/">{% trans 'Categories' %}</a></li>
     </ul>
 {% endblock %}

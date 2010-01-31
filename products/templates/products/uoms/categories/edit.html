@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Products' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'UOMs' '/products/uoms/' %}
+    {% add_crumb 'Categories' '/products/uoms/categories/' %}
+    {% add_crumb category %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Edit' %}</h3>
+    <form action="/products/uoms/categories/edit/{{ category.id }}/" method="post">
+        {{ form.as_p }}
+        <div class="actions">
+            <input class="save" type="submit" value="{% trans 'Save' %}" />
+        </div>
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="/products/uoms/categories/view/{{ category.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/products/uoms/categories/delete/{{ category.id }}">{% trans 'Delete' %}</a></li>
+        <li><a class="categories" href="/products/uoms/categories/">{% trans 'Categories' %}</a></li>
+    </ul>
+{% endblock %}

@@ -28,6 +28,18 @@ from prometeo.core import wizard
 
 from models import *
 
+class UOMForm(forms.ModelForm):
+    """Form for uom data.
+    """
+    class Meta:
+        model = UOM
+
+class UOMCategoryForm(forms.ModelForm):
+    """Form for uom category data.
+    """
+    class Meta:
+        model = UOMCategory
+
 class ProductForm(forms.ModelForm):
     """Form for product data.
     """

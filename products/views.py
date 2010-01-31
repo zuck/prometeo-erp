@@ -30,6 +30,128 @@ from prometeo.core.details import ModelDetails
 
 from models import *
 from forms import *
+
+def uom_index(request):
+    """Show a UOM list.
+    """
+    uoms = None
+    queryset = None
+
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        token = request.POST['query']
+        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+
+    if (queryset is not None):
+        uoms = UOM.objects.filter(queryset)
+    else:
+        uoms = UOM.objects.all()
+        
+    return render_to_response('products/uoms/index.html', RequestContext(request, {'uoms': uoms}))
+     
+def uom_add(request):
+    """Add a new UOM.
+    """
+    if request.method == 'POST':
+        form = UOMForm(request.POST)
+        if form.is_valid():
+            uom = form.save()
+            return redirect_to(request, url='/products/uoms/view/%s/' % (uom.pk))
+    else:
+        form = UOMForm()
+
+    return render_to_response('products/uoms/add.html', RequestContext(request, {'form': form}));
+     
+def uom_view(request, id):
+    """Show UOM details.
+    """
+    uom = get_object_or_404(UOM, pk=id)
+    details = ModelDetails(instance=uom)
+    return render_to_response('products/uoms/view.html', RequestContext(request, {'uom': uom, 'details': details}))
+     
+def uom_edit(request, id):
+    """Edit a UOM.
+    """
+    uom = get_object_or_404(UOM, pk=id)
+    if request.method == 'POST':
+        form = UOMForm(request.POST, instance=uom)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url='/products/uoms/view/%s/' % (id))
+    else:
+        form = UOMForm(instance=uom)
+    return render_to_response('products/uoms/edit.html', RequestContext(request, {'uom': uom, 'form': form}))
+    
+def uom_delete(request, id):
+    """Delete a UOM.
+    """
+    uom = get_object_or_404(UOM, pk=id)
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            uom.delete()
+            return redirect_to(request, url='/products/uoms/');
+        return redirect_to(request, url='/products/uoms/view/%s/' % (id))
+    return render_to_response('products/uoms/delete.html', RequestContext(request, {'uom': uom}))
+ 
+def uom_category_index(request):
+    """Show a UOM category list.
+    """
+    categories = None
+    queryset = None
+
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        token = request.POST['query']
+        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+
+    if (queryset is not None):
+        categories = UOMCategory.objects.filter(queryset)
+    else:
+        categories = UOMCategory.objects.all()
+        
+    return render_to_response('products/uoms/categories/index.html', RequestContext(request, {'categories': categories}))
+     
+def uom_category_add(request):
+    """Add a new UOM category.
+    """
+    if request.method == 'POST':
+        form = UOMCategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save()
+            return redirect_to(request, url='/products/uoms/categories/view/%s/' % (category.pk))
+    else:
+        form = UOMCategoryForm()
+
+    return render_to_response('products/uoms/categories/add.html', RequestContext(request, {'form': form}));
+     
+def uom_category_view(request, id):
+    """Show UOM category details.
+    """
+    category = get_object_or_404(UOMCategory, pk=id)
+    details = ModelDetails(instance=category)
+    return render_to_response('products/uoms/categories/view.html', RequestContext(request, {'category': category, 'details': details}))
+     
+def uom_category_edit(request, id):
+    """Edit a UOM category.
+    """
+    category = get_object_or_404(UOMCategory, pk=id)
+    if request.method == 'POST':
+        form = UOMCategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url='/products/uoms/categories/view/%s/' % (id))
+    else:
+        form = CategoryForm(instance=category)
+    return render_to_response('products/uoms/categories/edit.html', RequestContext(request, {'category': category, 'form': form}))
+    
+def uom_category_delete(request, id):
+    """Delete a UOM category.
+    """
+    category = get_object_or_404(UOMCategory, pk=id)
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            category.delete()
+            return redirect_to(request, url='/products/uoms/categories/');
+        return redirect_to(request, url='/products/uoms/categories/view/%s/' % (id))
+    return render_to_response('products/uoms/categories/delete.html', RequestContext(request, {'category': category}))
  
 def product_index(request):
     """Show a product list.

@@ -3,17 +3,18 @@
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block title %}{% trans 'UOMs' %}{% endblock %}
+{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
-    {% add_crumb 'UOMs' '/uoms/' %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'UOMs' '/products/uoms/' %}
     {% add_crumb uom %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
     <h3>{% trans 'Delete' %}</h3>
-    <form action="/uoms/delete/{{ uom.id }}/" method="post">
+    <form action="/products/uoms/delete/{{ uom.id }}/" method="post">
         <div class="message">
             <p class="warning">{% trans 'Are you sure you want to delete this uom and all its related informations?' %}</p>
             <div class="actions">
@@ -23,8 +24,8 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/uoms/view/{{ uom.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/uoms/edit/{{ uom.id }}">{% trans 'Edit' %}</a></li>
-        <li><a class="uoms" href="/uoms/">{% trans 'UOMs' %}</a></li>
+        <li><a class="view" href="/products/uoms/view/{{ uom.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/products/uoms/edit/{{ uom.id }}">{% trans 'Edit' %}</a></li>
+        <li><a class="uoms" href="/products/uoms/">{% trans 'UOMs' %}</a></li>
     </ul>
 {% endblock %}

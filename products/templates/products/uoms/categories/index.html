@@ -3,10 +3,11 @@
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block title %}{% trans 'UOMs' %}{% endblock %}
+{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
-    {% add_crumb 'UOMs' '/uoms/' %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'UOMs' '/products/uoms/' %}
     {% add_crumb 'Categories' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
@@ -14,7 +15,7 @@
 {% block content %}
     <h3>{% trans 'Categories' %}</h3>
     <div id="search">
-        <form action="/uoms/categories/" method="post">
+        <form action="/products/uoms/categories/" method="post">
             <input type="text" name="query"/>
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
@@ -30,9 +31,9 @@
             <td>{{ category.name }}</td>
             <td>
                 <ul class="actions">
-                    <li><a class="view" href="/uoms/categories/view/{{ category.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/uoms/categories/edit/{{ category.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/uoms/categories/delete/{{ category.id }}/">{% trans 'Delete' %}</a></li>
+                    <li><a class="view" href="/products/uoms/categories/view/{{ category.id }}/">{% trans 'View' %}</a></li>
+                    <li><a class="edit" href="/products/uoms/categories/edit/{{ category.id }}/">{% trans 'Edit' %}</a></li>
+                    <li><a class="delete" href="/products/uoms/categories/delete/{{ category.id }}/">{% trans 'Delete' %}</a></li>
                 </ul>
             </td>
         </tr>
@@ -42,7 +43,8 @@
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}
     <ul class="actions">
-        <li><a class="add" href="/uoms/categories/add/">{% trans 'Add' %}</a></li>
-        <li><a class="uoms" href="/uoms/">{% trans 'UOMs' %}</a></li>
+        <li><a class="add" href="/products/uoms/categories/add/">{% trans 'Add' %}</a></li>
+        <li><a class="uoms" href="/products/uoms/">{% trans 'UOMs' %}</a></li>
+        <li><a class="products" href="/products/">{% trans 'Products' %}</a></li>
     </ul>
 {% endblock %}

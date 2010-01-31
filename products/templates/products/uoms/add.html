@@ -3,24 +3,24 @@
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block title %}{% trans 'UOMs' %}{% endblock %}
+{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
-    {% add_crumb 'UOMs' '/uoms/' %}
-    {% add_crumb 'Categories' '/uoms/categories/' %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'UOMs' '/products/uoms/' %}
     {% add_crumb 'Add' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
     <h3>{% trans 'Add' %}</h3>
-    <form action="/uoms/categories/add/" method="post">
+    <form action="/products/uoms/add/" method="post">
         {{ form.as_p }}
         <div class="actions">
             <input class="save" type="submit" value="{% trans 'Save' %}" />
         </div>
     </form>
     <ul class="actions">
-        <li><a class="categories" href="/uoms/categories">{% trans 'Categories' %}</a></li>
+        <li><a class="uoms" href="/products/uoms/">{% trans 'UOMs' %}</a></li>
     </ul>
 {% endblock %}

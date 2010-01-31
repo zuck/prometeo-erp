@@ -22,6 +22,28 @@ __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+
+class UOMCategory(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=64)
+    
+    def get_absolute_url(self):
+        return '/products/uoms/categories/view/%d' % self.id
+        
+    def __unicode__(self):
+        return self.name
+
+class UOM(models.Model):
+    id = models.AutoField(primary_key=True)
+    initials = models.CharField(max_length=6)
+    name = models.CharField(max_length=64)
+    category = models.ForeignKey(UOMCategory)
+    
+    def get_absolute_url(self):
+        return '/products/uoms/view/%d' % self.id
+        
+    def __unicode__(self):
+        return self.initials
         
 class Supply(models.Model):
     id = models.AutoField(primary_key=True)
@@ -56,8 +78,8 @@ class Product(models.Model):
     code = models.CharField(max_length=255)
     ean13 = models.CharField(max_length=13, blank=True)
     description = models.TextField(blank=True)
-    uom = models.ForeignKey('uoms.UOM')
-    uos = models.ForeignKey('uoms.UOM', related_name='product_uos_set')
+    uom = models.ForeignKey(UOM)
+    uos = models.ForeignKey(UOM, related_name='product_uos_set')
     uom_to_uos = models.FloatField(default=1)
     type = models.CharField(max_length=1, choices=PRODUCT_TYPES)
     supply_method = models.CharField(max_length=1, choices=PRODUCT_SUPPLY_METHODS)
