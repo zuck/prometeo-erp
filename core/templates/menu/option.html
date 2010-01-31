@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <li>
-    <a href="{{ option.link }}"><span class="{{ option.name|lower }}">{% blocktrans with option.name as name %}{{ name }}{% endblocktrans %}</span></a>
+    <a href="{{ option.link }}"><span class="{{ option.css|lower }}">{% blocktrans with option.name as name %}{{ name }}{% endblocktrans %}</span></a>
     {% if option.option_list %}
     <ul class="options">
         {% for opt in option.option_list %}

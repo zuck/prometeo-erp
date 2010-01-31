@@ -20,26 +20,27 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 class Contact(models.Model):
     id = models.AutoField(primary_key=True)
-    firstname = models.CharField(max_length=255)
-    lastname = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
+    firstname = models.CharField(max_length=255, verbose_name=_('firstname'))
+    lastname = models.CharField(max_length=255, verbose_name=_('lastname'))
+    email = models.EmailField(max_length=255, verbose_name=_('email'))
     
     def get_absolute_url(self):
         return '/partners/contacts/view/%d' % self.id
 
 class Partner(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
-    is_mine = models.BooleanField(default=False)
-    is_customer = models.BooleanField(default=False)
-    is_supplier = models.BooleanField(default=False)
-    vat_number = models.CharField(max_length=64, unique=True)
-    url = models.URLField(blank=True)
-    email = models.EmailField(blank=True)
+    name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
+    managed = models.BooleanField(default=False, verbose_name=_('managed'))
+    customer = models.BooleanField(default=False, verbose_name=_('customer'))
+    supplier = models.BooleanField(default=False, verbose_name=_('supplier'))
+    vat_number = models.CharField(max_length=64, unique=True, verbose_name=_('VAT number'))
+    url = models.URLField(blank=True, verbose_name=_('url'))
+    email = models.EmailField(blank=True, verbose_name=_('email'))
     
     def get_absolute_url(self):
         return '/partners/view/%d' % self.id

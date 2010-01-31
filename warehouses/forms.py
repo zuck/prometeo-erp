@@ -39,7 +39,7 @@ class MovementForm(forms.ModelForm):
     """
     class Meta:
         model = Movement
-        exclude = ['warehouse', 'last_modified', 'last_user', 'quantity', 'price', 'discount', 'payment_delay']
+        exclude = ['warehouse', 'on', 'account', 'quantity', 'price', 'discount', 'payment_delay']
         
 class SupplyForm(forms.ModelForm):
     """Form for supply data.
@@ -61,7 +61,7 @@ class SupplyForm(forms.ModelForm):
             stock = self.instance.warehouse.stock(supply.product, exclude=[self.instance])
             if quantity > stock:
                 uom = supply.product.uom
-                raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%.2f%s).") % (stock, uom))
+                raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%(stock).2f%(uom)s).") % {'stock': stock, 'uom': uom})
                 
         return quantity
         

@@ -25,7 +25,7 @@ from django.db import models
 
 class UOMCategory(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, verbose_name=_('name'))
     
     def get_absolute_url(self):
         return '/products/uoms/categories/view/%d' % self.id
@@ -35,9 +35,9 @@ class UOMCategory(models.Model):
 
 class UOM(models.Model):
     id = models.AutoField(primary_key=True)
-    initials = models.CharField(max_length=6)
-    name = models.CharField(max_length=64)
-    category = models.ForeignKey(UOMCategory)
+    initials = models.CharField(max_length=6, verbose_name=_('initials'))
+    name = models.CharField(max_length=64, verbose_name=_('name'))
+    category = models.ForeignKey(UOMCategory, verbose_name=_('category'))
     
     def get_absolute_url(self):
         return '/products/uoms/view/%d' % self.id
@@ -48,14 +48,14 @@ class UOM(models.Model):
 class Supply(models.Model):
     id = models.AutoField(primary_key=True)
     product = models.ForeignKey('products.Product')
-    supplier = models.ForeignKey('partners.Partner')
-    name = models.CharField(max_length=255, blank=True)
-    code = models.CharField(max_length=255, blank=True)
-    price = models.FloatField()
-    discount = models.FloatField(default=0)
-    delivery_delay = models.PositiveIntegerField(default=1)
-    minimal_quantity = models.FloatField(default=1)
-    payment_delay = models.PositiveIntegerField()
+    supplier = models.ForeignKey('partners.Partner', verbose_name=_('supplier'))
+    name = models.CharField(max_length=255, blank=True, verbose_name=_('name'))
+    code = models.CharField(max_length=255, blank=True, verbose_name=_('code'))
+    price = models.FloatField(verbose_name=_('price'))
+    discount = models.FloatField(default=0, verbose_name=_('discount'))
+    delivery_delay = models.PositiveIntegerField(default=1, verbose_name=_('delivery delay'))
+    minimal_quantity = models.FloatField(default=1, verbose_name=_('minimal quantity'))
+    payment_delay = models.PositiveIntegerField(verbose_name=_('payment delay'))
         
     def __unicode__(self):
         return '%s (%s)' % (self.product, self.supplier)
@@ -74,16 +74,16 @@ class Product(models.Model):
         ('1', _('Production'))
     )        
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255)
-    ean13 = models.CharField(max_length=13, blank=True)
-    description = models.TextField(blank=True)
-    uom = models.ForeignKey(UOM)
-    uos = models.ForeignKey(UOM, related_name='product_uos_set')
-    uom_to_uos = models.FloatField(default=1)
-    type = models.CharField(max_length=1, choices=PRODUCT_TYPES)
-    supply_method = models.CharField(max_length=1, choices=PRODUCT_SUPPLY_METHODS)
-    suppliers = models.ManyToManyField('partners.Partner', through=Supply)
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    code = models.CharField(max_length=255, verbose_name=_('code'))
+    ean13 = models.CharField(max_length=13, blank=True, verbose_name=_('EAN13'))
+    description = models.TextField(blank=True, verbose_name=_('description'))
+    uom = models.ForeignKey(UOM, verbose_name=_('UOM'))
+    uos = models.ForeignKey(UOM, related_name='product_uos_set', verbose_name=_('UOS'))
+    uom_to_uos = models.FloatField(default=1, verbose_name=_('UOM to UOS'))
+    type = models.CharField(max_length=1, choices=PRODUCT_TYPES, verbose_name=_('type'))
+    supply_method = models.CharField(max_length=1, choices=PRODUCT_SUPPLY_METHODS, verbose_name=_('supply method'))
+    suppliers = models.ManyToManyField('partners.Partner', through=Supply, verbose_name=_('suppliers'))
     
     def get_absolute_url(self):
         return '/products/view/%d' % self.id

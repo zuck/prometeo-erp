@@ -1,0 +1,252 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-31 19:02+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: forms.py:56
+msgid "The quantity must be greater than zero."
+msgstr "La quantità deve essere maggiore di zero."
+
+#: forms.py:64
+#, python-format
+msgid ""
+"You're trying to send out a quantity greater than the current stock (%"
+"(stock).2f%(uom)s)."
+msgstr "Stai cercando di spedire una quantità maggiore di quella presente in "
+"magazzino (%(stock).2f%(uom)s)."
+
+#: menu.py:26 templates/warehouses/add.html:6
+#: templates/warehouses/add.html.py:23 templates/warehouses/delete.html:6
+#: templates/warehouses/delete.html:28 templates/warehouses/edit.html:6
+#: templates/warehouses/edit.html.py:25 templates/warehouses/index.html:6
+#: templates/warehouses/index.html.py:14 templates/warehouses/view.html:6
+#: templates/warehouses/view.html.py:64
+#: templates/warehouses/movements/add.html:6
+#: templates/warehouses/movements/delete.html:6
+#: templates/warehouses/movements/edit.html:6
+#: templates/warehouses/movements/index.html:6
+#: templates/warehouses/movements/index.html:61
+#: templates/warehouses/movements/view.html:6
+msgid "Warehouses"
+msgstr "Magazzini"
+
+#: models.py:30
+msgid "name"
+msgstr ""
+
+#: models.py:31
+msgid "owner"
+msgstr "proprietario"
+
+#: models.py:84
+msgid "out"
+msgstr "uscita"
+
+#: models.py:85
+msgid "in"
+msgstr "ingresso"
+
+#: models.py:88
+msgid "verse"
+msgstr "verso"
+
+#: models.py:89
+msgid "warehouse"
+msgstr "magazzino"
+
+#: models.py:90
+msgid "document"
+msgstr "documento"
+
+#: models.py:91
+msgid "on"
+msgstr "del"
+
+#: models.py:92
+msgid "supply"
+msgstr "fornitura"
+
+#: models.py:93
+msgid "quantity"
+msgstr "quantità"
+
+#: models.py:94
+msgid "price"
+msgstr "prezzo"
+
+#: models.py:95
+msgid "discount"
+msgstr "sconto"
+
+#: models.py:96
+msgid "payment delay"
+msgstr "tempo di pagamento"
+
+#: models.py:97
+msgid "account"
+msgstr "account"
+
+#: models.py:115
+#, python-format
+msgid "%(quantity)d%(uom)s of %(supply)s in %(warehouse)s, on %(date)s"
+msgstr ""
+
+#: views.py:70 views.py:128
+msgid "value"
+msgstr "valore"
+
+#: templates/warehouses/add.html:15 templates/warehouses/index.html:48
+#: templates/warehouses/movements/add.html:18
+msgid "Add"
+msgstr ""
+
+#: templates/warehouses/add.html:19 templates/warehouses/edit.html:19
+#: templates/warehouses/movements/add.html:25
+#: templates/warehouses/movements/edit.html:25
+msgid "Save"
+msgstr ""
+
+#: templates/warehouses/delete.html:15 templates/warehouses/edit.html:24
+#: templates/warehouses/index.html:38 templates/warehouses/view.html:50
+#: templates/warehouses/view.html.py:62
+#: templates/warehouses/movements/delete.html:18
+#: templates/warehouses/movements/edit.html:30
+#: templates/warehouses/movements/index.html:50
+#: templates/warehouses/movements/view.html:23
+msgid "Delete"
+msgstr ""
+
+#: templates/warehouses/delete.html:18
+msgid ""
+"Are you sure you want to delete this warehouse and all its related "
+"informations?"
+msgstr "Sei sicuro di voler cancellare i dati di questo magazzino e di tutte "
+"le informazioni associate?"
+
+#: templates/warehouses/delete.html:20
+#: templates/warehouses/movements/delete.html:23
+msgid "Yes"
+msgstr ""
+
+#: templates/warehouses/delete.html:21
+#: templates/warehouses/movements/delete.html:24
+msgid "No"
+msgstr ""
+
+#: templates/warehouses/delete.html:26 templates/warehouses/edit.html:23
+#: templates/warehouses/index.html:36 templates/warehouses/view.html:47
+#: templates/warehouses/movements/delete.html:29
+#: templates/warehouses/movements/edit.html:29
+#: templates/warehouses/movements/index.html:47
+msgid "View"
+msgstr ""
+
+#: templates/warehouses/delete.html:27 templates/warehouses/edit.html:15
+#: templates/warehouses/index.html:37 templates/warehouses/view.html:49
+#: templates/warehouses/view.html.py:61
+#: templates/warehouses/movements/delete.html:30
+#: templates/warehouses/movements/edit.html:18
+#: templates/warehouses/movements/index.html:49
+#: templates/warehouses/movements/view.html:22
+msgid "Edit"
+msgstr ""
+
+#: templates/warehouses/index.html:18 templates/warehouses/view.html:21
+#: templates/warehouses/movements/index.html:19
+msgid "Search"
+msgstr ""
+
+#: templates/warehouses/index.html:24
+msgid "Name"
+msgstr ""
+
+#: templates/warehouses/index.html:25
+msgid "Owner"
+msgstr "Proprietario"
+
+#: templates/warehouses/index.html:26 templates/warehouses/view.html:32
+#: templates/warehouses/movements/index.html:30
+msgid "Value"
+msgstr "Valore"
+
+#: templates/warehouses/index.html:27 templates/warehouses/view.html:34
+#: templates/warehouses/movements/index.html:33
+msgid "Actions"
+msgstr ""
+
+#: templates/warehouses/index.html:45 templates/warehouses/view.html:58
+#: templates/warehouses/movements/index.html:58
+msgid "empty"
+msgstr ""
+
+#: templates/warehouses/index.html:49 templates/warehouses/view.html:17
+#: templates/warehouses/movements/index.html:15
+msgid "Movements"
+msgstr "Movimenti"
+
+#: templates/warehouses/view.html:15
+#: templates/warehouses/movements/view.html:18
+msgid "Details"
+msgstr ""
+
+#: templates/warehouses/view.html:27
+#: templates/warehouses/movements/index.html:25
+msgid "Quantity"
+msgstr "Quantità"
+
+#: templates/warehouses/view.html:28
+#: templates/warehouses/movements/index.html:26
+msgid "UOM"
+msgstr "Unità di misura (UOM)"
+
+#: templates/warehouses/view.html:29
+#: templates/warehouses/movements/index.html:27
+msgid "Product"
+msgstr "Prodotto"
+
+#: templates/warehouses/view.html:30
+#: templates/warehouses/movements/index.html:28
+msgid "Price"
+msgstr "Prezzo"
+
+#: templates/warehouses/view.html:31
+#: templates/warehouses/movements/index.html:29
+msgid "Discount"
+msgstr "Sconto"
+
+#: templates/warehouses/view.html:33
+#: templates/warehouses/movements/index.html:31
+msgid "On"
+msgstr "del"
+
+#: templates/warehouses/view.html:63
+msgid "New movement"
+msgstr "Nuovo movimento"
+
+#: templates/warehouses/movements/add.html:29
+#: templates/warehouses/movements/delete.html:31
+#: templates/warehouses/movements/edit.html:31
+#: templates/warehouses/movements/index.html:32
+#: templates/warehouses/movements/view.html:25
+msgid "Warehouse"
+msgstr "Magazzino"
+
+#: templates/warehouses/movements/delete.html:21
+msgid ""
+"Are you sure you want to delete this movement and all its related "
+"informations?"
+msgstr "Sei sicuro di voler cancellare i dati di questo movimento e di tutte "
+"le informazioni associate?"

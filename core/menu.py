@@ -26,8 +26,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 class MenuEntry(object):
-    def __init__(self, name=u'', link=None, options=[]):
+    def __init__(self, name=u'', link=None, css=None, options=[]):
         self.name = name
+        self.css = css or 'menu_entry'
         self.link = link
         self.options = options
 
@@ -37,8 +38,8 @@ class MenuOption(MenuEntry):
 class Menu(MenuEntry):
     template = 'menu/menu.html'
     
-    def __init__(self, name=u'', link=None, group='main', options=[]):
-        super(Menu, self).__init__(name, link, options)
+    def __init__(self, name=u'', link=None, css=None, group='main', options=[]):
+        super(Menu, self).__init__(name, link, css, options)
         self.group = group
 
 class MenuBar(object):
@@ -78,8 +79,8 @@ def autodiscover():
     
     # Core links.
     global menubar
-    menubar.register(Menu(_('Start'), '/'))
-    menubar.register(Menu(_('Accounts'), '/accounts/'))
+    menubar.register(Menu(_('Start'), '/', 'start'))
+    menubar.register(Menu(_('Accounts'), '/accounts/', 'accounts'))
     
     # Other links.
     for app in settings.INSTALLED_APPS:

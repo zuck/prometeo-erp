@@ -41,7 +41,7 @@
             <td class="number">{{ movement.price|floatformat:2 }}</td>
             <td class="number">{{ movement.discount|floatformat:2 }}%</td>
             <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.value|floatformat:2 }}</td>
-            <td>{{ movement.last_modified }}</td>
+            <td>{{ movement.on }}</td>
             <td>
                 <ul class="actions">
                     <li><a class="view" href="/warehouses/movements/view/{{ movement.id }}/">{% trans 'View' %}</a></li>

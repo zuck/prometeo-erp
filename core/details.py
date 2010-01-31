@@ -43,16 +43,16 @@ class Details(StrAndUnicode):
     def as_dl(self):
         output = "<dl>\n"
         for (f, v) in self.__fields:
-            output += "\t<dt>%s</dt><dd>%s</dd>\n" % (f.capitalize(), self._value_or_empty(v))
+            output += "\t<dt>%s</dt><dd>%s</dd>\n" % (_(f.capitalize()), self._value_or_empty(v))
         output += "</dl>\n"
         return self._html_output(output)
 
     def as_table(self, header=("field", "value")):
         output = u"<table>\n"
         if header is not None:
-            output += u"<thead><td>%s</td><td>%s</td></thead>" % (header[0].capitalize(), header[1].capitalize())
+            output += u"<thead><td>%s</td><td>%s</td></thead>" % (_(header[0].capitalize()), _(header[1].capitalize()))
         for (f, v) in self.__fields:
-            output += u"\t<tr><td>%s</td><td>%s</td></tr>\n" % (f.capitalize(), self._value_or_empty(v))
+            output += u"\t<tr><td>%s</td><td>%s</td></tr>\n" % (_(f.capitalize()), self._value_or_empty(v))
         output += u"</table>\n"
         return self._html_output(output)
 
@@ -60,7 +60,7 @@ class Details(StrAndUnicode):
         if isinstance(value, float):
             return '%.2f' % value
         if not value:
-            return "<span class=\"disabled\">empty</span>"
+            return "<span class=\"disabled\">%s</span>" % _('empty')
         return value
 
 class ModelDetails(Details):

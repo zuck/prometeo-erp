@@ -40,7 +40,7 @@
             <td class="number">{{ movement.price|floatformat:2 }}</td>
             <td class="number">{{ movement.discount|floatformat:2 }}%</td>
             <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.value|floatformat:2 }}</td>
-            <td>{{ movement.last_modified }}</td>
+            <td>{{ movement.on }}</td>
             <td><a href="{{ movement.warehouse.get_absolute_url }}">{{ movement.warehouse }}</a></td>
             <td>
                 <ul class="actions">

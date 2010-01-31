@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <li>
-    <a{% if menu.active %} class="active"{% endif %} href="{{ menu.link }}"><span class="{{ menu.name|lower }}">{% blocktrans with menu.name as name %}{{ name }}{% endblocktrans %}</span></a>
+    <a{% if menu.active %} class="active"{% endif %} href="{{ menu.link }}"><span class="{{ menu.css|lower }}">{% blocktrans with menu.name as name %}{{ name }}{% endblocktrans %}</span></a>
     {% if menu.option_list %}
     <ul class="options">
         {% for option in menu.option_list %}

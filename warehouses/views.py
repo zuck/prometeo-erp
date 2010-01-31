@@ -116,7 +116,7 @@ def movement_add(request, warehouse_id):
     """Add a new movement.
     """
     warehouse = get_object_or_404(Warehouse, pk=warehouse_id)
-    movement = Movement(warehouse=warehouse, last_user=request.user)
+    movement = Movement(warehouse=warehouse, account=request.user)
     wizard = MovementWizard(initial=movement, template="warehouses/movements/add.html")
     return wizard(request)
      

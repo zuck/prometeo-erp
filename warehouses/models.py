@@ -27,8 +27,8 @@ from django.db.models import Q
 
 class Warehouse(models.Model):        
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    owner = models.ForeignKey('partners.Partner', limit_choices_to={'is_mine': True})
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    owner = models.ForeignKey('partners.Partner', limit_choices_to={'managed': True}, verbose_name=_('owner'))
     
     def value(self):
         value = 0
@@ -85,19 +85,19 @@ class Movement(models.Model):
         (True, _('in'))
     )      
     id = models.AutoField(primary_key=True)
-    verse = models.BooleanField(choices=MOVEMENT_VERSES, default=True)
-    warehouse = models.ForeignKey(Warehouse)
-    document = models.CharField(max_length=255, blank=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    supply = models.ForeignKey('products.Supply')
-    quantity = models.FloatField(default=1)
-    price = models.FloatField()
-    discount = models.FloatField(default=0)
-    payment_delay = models.PositiveIntegerField()
-    last_user = models.ForeignKey('auth.User')
+    verse = models.BooleanField(choices=MOVEMENT_VERSES, default=True, verbose_name=_('verse'))
+    warehouse = models.ForeignKey(Warehouse, verbose_name=_('warehouse'))
+    document = models.CharField(max_length=255, blank=True, verbose_name=_('document'))
+    on = models.DateTimeField(auto_now=True, verbose_name=_('on'))
+    supply = models.ForeignKey('products.Supply', verbose_name=_('supply'))
+    quantity = models.FloatField(default=1, verbose_name=_('quantity'))
+    price = models.FloatField(verbose_name=_('price'))
+    discount = models.FloatField(default=0, verbose_name=_('discount'))
+    payment_delay = models.PositiveIntegerField(verbose_name=_('payment delay'))
+    account = models.ForeignKey('auth.User', verbose_name=_('account'))
     
     class Meta:
-        ordering = ['-last_modified']
+        ordering = ['-on']
     
     def is_last(self):
         return self == Movement.objects.filter(warehouse=self.warehouse).latest('id')
@@ -112,4 +112,4 @@ class Movement(models.Model):
         return '/warehouses/movements/view/%d' % self.id
         
     def __unicode__(self):
-        return _("%d%s of %s in %s, on %s") % (self.quantity, self.supply.product.uom, self.supply, self.warehouse, self.last_modified)
+        return _("%(quantity)d%(uom)s of %(supply)s in %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.supply.product.uom, 'supply': self.supply, 'warehouse': self.warehouse, 'date': self.on}

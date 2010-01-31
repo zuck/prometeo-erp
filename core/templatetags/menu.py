@@ -52,6 +52,7 @@ class GetMenuNode(template.Node):
                 'group': menu.group,
                 'name': menu.name,
                 'link': menu.link,
+                'css': menu.css,
                 'active': active,
                 'option_list': self.build_options(menu.options)
             }
