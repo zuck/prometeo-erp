@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-01 23:16+0100\n"
+"POT-Creation-Date: 2010-02-01 23:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,10 +100,13 @@ msgstr "tempo di pagamento"
 msgid "account"
 msgstr "account"
 
-#: models.py:115
-#, python-format
-msgid "%(quantity)d%(uom)s of %(supply)s in %(warehouse)s, on %(date)s"
-msgstr "%(quantity)d%(uom)s di %(supply)s in %(warehouse)s, del %(date)s"
+#: models.py:116
+msgid "%(quantity)d%(uom)s of %(supply)s to %(warehouse)s, on %(date)s"
+msgstr "%(quantity)d%(uom)s di %(supply)s a %(warehouse)s, del %(date)s"
+
+#: models.py:117
+msgid "%(quantity)d%(uom)s of %(supply)s from %(warehouse)s, on %(date)s"
+msgstr "%(quantity)d%(uom)s di %(supply)s da %(warehouse)s, del %(date)s"
 
 #: views.py:70 views.py:128
 msgid "value"

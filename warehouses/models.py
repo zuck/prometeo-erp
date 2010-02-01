@@ -112,4 +112,6 @@ class Movement(models.Model):
         return '/warehouses/movements/view/%d' % self.id
         
     def __unicode__(self):
-        return _("%(quantity)d%(uom)s of %(supply)s in %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.supply.product.uom, 'supply': self.supply, 'warehouse': self.warehouse, 'date': self.on}
+        if self.verse:
+            return _("%(quantity)d%(uom)s of %(supply)s to %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.supply.product.uom, 'supply': self.supply, 'warehouse': self.warehouse, 'date': self.on}
+        return _("%(quantity)d%(uom)s of %(supply)s from %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.supply.product.uom, 'supply': self.supply, 'warehouse': self.warehouse, 'date': self.on}
