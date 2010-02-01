@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-31 19:02+0100\n"
+"POT-Creation-Date: 2010-02-01 23:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,8 @@ msgstr "La quantità deve essere maggiore di zero."
 msgid ""
 "You're trying to send out a quantity greater than the current stock (%"
 "(stock).2f%(uom)s)."
-msgstr "Stai cercando di spedire una quantità maggiore di quella presente in "
+msgstr ""
+"Stai cercando di spedire una quantità maggiore di quella presente in "
 "magazzino (%(stock).2f%(uom)s)."
 
 #: menu.py:26 templates/warehouses/add.html:6
@@ -102,7 +103,7 @@ msgstr "account"
 #: models.py:115
 #, python-format
 msgid "%(quantity)d%(uom)s of %(supply)s in %(warehouse)s, on %(date)s"
-msgstr ""
+msgstr "%(quantity)d%(uom)s di %(supply)s in %(warehouse)s, del %(date)s"
 
 #: views.py:70 views.py:128
 msgid "value"
@@ -133,8 +134,9 @@ msgstr ""
 msgid ""
 "Are you sure you want to delete this warehouse and all its related "
 "informations?"
-msgstr "Sei sicuro di voler cancellare i dati di questo magazzino e di tutte "
-"le informazioni associate?"
+msgstr ""
+"Sei sicuro di voler cancellare i dati di questo magazzino e di tutte le "
+"informazioni associate?"
 
 #: templates/warehouses/delete.html:20
 #: templates/warehouses/movements/delete.html:23
@@ -236,6 +238,12 @@ msgstr "del"
 msgid "New movement"
 msgstr "Nuovo movimento"
 
+#: templates/warehouses/movements/add.html:19
+#: templates/warehouses/movements/edit.html:19
+#, python-format
+msgid "Step %(step)s of %(step_count)s"
+msgstr "Passo %(step)s di %(step_count)s"
+
 #: templates/warehouses/movements/add.html:29
 #: templates/warehouses/movements/delete.html:31
 #: templates/warehouses/movements/edit.html:31
@@ -248,5 +256,6 @@ msgstr "Magazzino"
 msgid ""
 "Are you sure you want to delete this movement and all its related "
 "informations?"
-msgstr "Sei sicuro di voler cancellare i dati di questo movimento e di tutte "
-"le informazioni associate?"
+msgstr ""
+"Sei sicuro di voler cancellare i dati di questo movimento e di tutte le "
+"informazioni associate?"
