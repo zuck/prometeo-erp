@@ -326,6 +326,24 @@ form .message {
     background-image: url(images/start.png);
 }
 
+.paginator {
+    float: left;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.paginator .previous, .paginator .next, .paginator .current {
+    float: left;
+    padding: 2px 5px;
+}
+
+.paginator .previous, .paginator .next {
+    background: #2f2f2f url(images/thead_bg.gif) repeat-x top;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+}
+
 /* Wrapper */
 
 #wrapper {
