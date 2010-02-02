@@ -71,4 +71,4 @@ class ProductWizard(wizard.FormWizard):
             supply.product = product
             supply.save()
         
-        return redirect_to(request, url='/products/view/%s/' % (product.pk))
+        return redirect_to(request, url=product.get_absolute_url())
