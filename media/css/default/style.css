@@ -334,15 +334,28 @@ form .message {
 
 .paginator .previous, .paginator .next, .paginator .current {
     float: left;
-    padding: 2px 5px;
+    margin-right: 10px;
 }
 
-.paginator .previous, .paginator .next {
-    background: #2f2f2f url(images/thead_bg.gif) repeat-x top;
-    font-weight: bold;
-    text-align: center;
-    color: #fff;
+.paginator .previous span, .paginator .next span {
+    display: block;
+    visibility: hidden;
+    width: 22px;
+    height: 22px;
 }
+
+.paginator .previous a, .paginator .next a {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.paginator .previous { background: url(images/backward_disabled.png) no-repeat left center; }
+.paginator .next { background: url(images/forward_disabled.png) no-repeat left center; }
+.paginator .previous a { background: url(images/backward.png) no-repeat left center; }
+.paginator .next a { background: url(images/forward.png) no-repeat left center; }
+
+.paginator .current { padding-top: 4px; }
 
 /* Wrapper */
 

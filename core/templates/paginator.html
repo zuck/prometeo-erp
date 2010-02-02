@@ -3,7 +3,7 @@
 <div class="paginator">
     <span class="previous">
     {% if pages.has_previous %}
-    <a href="?page={{ pages.previous_page_number }}">&laquo;</a>
+    <a href="?page={{ pages.previous_page_number }}"><span>&laquo;</span></a>
     {% else %}
     <span class="disabled">&laquo;</span>
     {% endif %}
@@ -19,7 +19,7 @@
     
     <span class="next">
     {% if pages.has_next %}
-    <a href="?page={{ pages.next_page_number }}">&raquo;</a>
+    <a href="?page={{ pages.next_page_number }}"><span>&raquo;</span></a>
     {% else %}
     <span class="disabled">&raquo;</span>
     {% endif %}
