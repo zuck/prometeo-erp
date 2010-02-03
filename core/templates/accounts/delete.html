@@ -7,13 +7,13 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Accounts' '/accounts/' %}
-    {% add_crumb user %}
+    {% add_crumb account %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
     <h3>{% trans 'Delete' %}</h3>
-    <form action="/accounts/delete/{{ user.id }}/" method="post">
+    <form action="." method="post">
         <div class="message">
             <p class="warning">{% trans 'Are you sure you want to delete this account and all its related informations?' %}</p>
             <div class="actions">
@@ -23,8 +23,8 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/accounts/view/{{ user.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/accounts/edit/{{ user.id }}">{% trans 'Edit' %}</a></li>
+        <li><a class="view" href="/accounts/view/{{ account.id }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="/accounts/edit/{{ account.id }}">{% trans 'Edit' %}</a></li>
         <li><a class="accounts" href="/accounts/">{% trans 'Accounts' %}</a></li>
     </ul>
 {% endblock %}

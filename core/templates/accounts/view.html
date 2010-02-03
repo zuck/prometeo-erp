@@ -7,7 +7,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Accounts' '/accounts/' %}
-    {% add_crumb user %}
+    {% add_crumb account %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
@@ -15,8 +15,8 @@
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <ul class="actions">
-        <li><a class="edit" href="/accounts/edit/{{ user.id }}/">{% trans 'Edit' %}</a></li>
-        <li><a class="delete" href="/accounts/delete/{{ user.id }}/">{% trans 'Delete' %}</a></li>
+        <li><a class="edit" href="/accounts/edit/{{ account.id }}/">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="/accounts/delete/{{ account.id }}/">{% trans 'Delete' %}</a></li>
         <li><a class="accounts" href="/accounts/">{% trans 'Accounts' %}</a></li>
     </ul>
 {% endblock %}
