@@ -28,6 +28,7 @@ from django.template import RequestContext
 from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
+from prometeo.core.paginator import paginate
 
 from models import *
 from forms import *
@@ -47,7 +48,7 @@ def warehouse_index(request):
     else:
         warehouses = Warehouse.objects.all()
         
-    return render_to_response('warehouses/index.html', RequestContext(request, {'warehouses': warehouses}))
+    return render_to_response('warehouses/index.html', RequestContext(request, {'warehouses': paginate(request, warehouses)}))
      
 def warehouse_add(request):
     """Add a new warehouse.
@@ -110,7 +111,7 @@ def movement_index(request):
     else:
         movements = Movement.objects.all()
         
-    return render_to_response('warehouses/movements/index.html', RequestContext(request, {'movements': movements}))
+    return render_to_response('warehouses/movements/index.html', RequestContext(request, {'movements': paginate(request, movements)}))
      
 def movement_add(request, warehouse_id):
     """Add a new movement.

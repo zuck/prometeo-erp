@@ -18,7 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if products %}
+    {% if products.object_list %}
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
@@ -27,7 +27,7 @@
             <td>{% trans 'Supply method' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for product in products %}
+        {% for product in products.object_list %}
         <tr>
             <td>{{ product.name }}</td>
             <td>{{ product.code }}</td>
@@ -43,6 +43,7 @@
         </tr>
         {% endfor %}
     </table>
+    {% with products as pages %}{% include 'paginator.html' %}{% endwith %}
     {% else %}
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}

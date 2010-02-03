@@ -19,7 +19,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if movements %}
+    {% if movements.object_list %}
     <table>
         <thead>
             <td>{% trans 'Quantity' %}</td>
@@ -32,7 +32,7 @@
             <td>{% trans 'Warehouse' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for movement in movements %}
+        {% for movement in movements.object_list %}
         <tr class="{% if movement.verse %}in{% else %}out{% endif %}">
             <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity|floatformat:2 }}</td>
             <td><a href="/uoms/view/{{ movement.supply.product.uom.id }}/">{{ movement.supply.product.uom }}</a></td>
@@ -54,6 +54,7 @@
         </tr>
         {% endfor %}
     </table>
+    {% with movements as pages %}{% include 'paginator.html' %}{% endwith %}
     {% else %}
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}

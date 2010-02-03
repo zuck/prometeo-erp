@@ -27,6 +27,7 @@ from django.template import RequestContext
 from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
+from prometeo.core.paginator import paginate
 
 from models import *
 from forms import *
@@ -46,7 +47,7 @@ def uom_index(request):
     else:
         uoms = UOM.objects.all()
         
-    return render_to_response('products/uoms/index.html', RequestContext(request, {'uoms': uoms}))
+    return render_to_response('products/uoms/index.html', RequestContext(request, {'uoms': paginate(request, uoms)}))
      
 def uom_add(request):
     """Add a new UOM.
@@ -107,7 +108,7 @@ def uom_category_index(request):
     else:
         categories = UOMCategory.objects.all()
         
-    return render_to_response('products/uoms/categories/index.html', RequestContext(request, {'categories': categories}))
+    return render_to_response('products/uoms/categories/index.html', RequestContext(request, {'categories': paginate(request, categories)}))
      
 def uom_category_add(request):
     """Add a new UOM category.
@@ -168,7 +169,7 @@ def product_index(request):
     else:
         products = Product.objects.all()
         
-    return render_to_response('products/index.html', RequestContext(request, {'products': products}))
+    return render_to_response('products/index.html', RequestContext(request, {'products': paginate(request, products)}))
      
 def product_add(request):
     """Add a new product.

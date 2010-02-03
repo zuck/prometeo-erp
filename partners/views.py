@@ -27,6 +27,7 @@ from django.template import RequestContext
 from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
+from prometeo.core.paginator import paginate
 
 from models import *
 from forms import *
@@ -46,7 +47,7 @@ def partner_index(request):
     else:
         partners = Partner.objects.all()
         
-    return render_to_response('partners/index.html', RequestContext(request, {'partners': partners}))
+    return render_to_response('partners/index.html', RequestContext(request, {'partners': paginate(request, partners)}))
      
 def partner_add(request):
     """Add a new partner.

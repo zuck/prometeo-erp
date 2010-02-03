@@ -9,13 +9,11 @@
     {% endif %}
     </span>
     
-    <span class="current">
     {% with pages.number as number %}
-    {% blocktrans with pages.paginator.num_pages as num_pages %}
-    Page {{ number }} of {{ num_pages }}
-    {% endblocktrans %}
+    {% with pages.paginator.num_pages as num_pages %}
+    <span class="current">{% blocktrans %}Page {{ number }} of {{ num_pages }}{% endblocktrans %}</span>
     {% endwith %}
-    </span>
+    {% endwith %}
     
     <span class="next">
     {% if pages.has_next %}

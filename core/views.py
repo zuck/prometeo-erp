@@ -29,7 +29,8 @@ from django.template import RequestContext
 from django.db.models import Q
 
 from prometeo.core.details import ModelDetails
-from prometeo.core.forms import AccountForm
+from prometeo.core.paginator import paginate
+from prometeo.core.forms import *
 
 def set_language(request):
     """Set the current language.
@@ -58,7 +59,7 @@ def index(request):
     else:
         accounts = User.objects.all()
         
-    return render_to_response('accounts/index.html', RequestContext(request, {'accounts': accounts}))
+    return render_to_response('accounts/index.html', RequestContext(request, {'accounts': paginate(request, accounts)}))
     
 def add(request):
     """Add a new account.

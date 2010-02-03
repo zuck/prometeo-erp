@@ -18,7 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if partners %}
+    {% if partners.object_list %}
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
@@ -29,7 +29,7 @@
             <td>{% trans 'URL' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for partner in partners %}
+        {% for partner in partners.object_list %}
         <tr{% if partner.managed %} class="managed"{% endif %}>
             <td class="name">{% if partner.managed %}<strong class="sign">(*)</strong>{% endif %}{{ partner.name }}</td>
             <td>{% if partner.supplier %}<span class="yes">{% trans 'Yes' %}</span>{% else %}<span class="no">{% trans 'No' %}</span>{% endif %}</td>
@@ -47,6 +47,7 @@
         </tr>
         {% endfor %}
     </table>
+    {% with partners as pages %}{% include 'paginator.html' %}{% endwith %}
     {% else %}
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}

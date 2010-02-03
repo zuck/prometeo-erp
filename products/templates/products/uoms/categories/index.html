@@ -20,13 +20,13 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if categories %}
+    {% if categories.object_list %}
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for category in categories %}
+        {% for category in categories.object_list %}
         <tr>
             <td>{{ category.name }}</td>
             <td>
@@ -39,6 +39,7 @@
         </tr>
         {% endfor %}
     </table>
+    {% with categories as pages %}{% include 'paginator.html' %}{% endwith %}
     {% else %}
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}

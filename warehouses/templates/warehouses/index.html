@@ -18,7 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if warehouses %}
+    {% if warehouses.object_list %}
     <table>
         <thead>
             <td>{% trans 'Name' %}</td>
@@ -26,7 +26,7 @@
             <td>{% trans 'Value' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for warehouse in warehouses %}
+        {% for warehouse in warehouses.object_list %}
         <tr>
             <td>{{ warehouse.name }}</td>
             <td><a href="{{ warehouse.owner.get_absolute_url }}">{{ warehouse.owner }}</a></td>
@@ -41,6 +41,7 @@
         </tr>
         {% endfor %}
     </table>
+    {% with warehouses as pages %}{% include 'paginator.html' %}{% endwith %}
     {% else %}
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}

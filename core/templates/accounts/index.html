@@ -18,7 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if accounts %}
+    {% if accounts.object_list %}
     <table>
         <thead>
             <td>{% trans 'Username' %}</td>
@@ -26,7 +26,7 @@
             <td>{% trans 'Lastname' %}</td>
             <td>{% trans 'Actions' %}</td>
         </thead>
-        {% for account in accounts %}
+        {% for account in accounts.object_list %}
         <tr>
             <td>{{ account.username }}</td>
             <td>{{ account.first_name|default:'<span class="disabled">empty.</span>' }}</td>
@@ -41,6 +41,7 @@
         </tr>
         {% endfor %}
     </table>
+    {% with accounts as pages %}{% include 'paginator.html' %}{% endwith %}
     {% else %}
     <p class="disabled">{% trans 'empty' %}.</p>
     {% endif %}
