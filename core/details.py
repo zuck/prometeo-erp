@@ -50,13 +50,13 @@ def field_to_value(field, instance):
         email = field.value_from_object(instance)
         if email:
             return '<a href="mailto:%s">%s</a>' % (email, email)
+    elif field.choices:
+        return getattr(instance, 'get_%s_display' % field.name)()
     elif isinstance(field, fields.BooleanField):
         flag = field.value_from_object(instance)
         if flag == '0' or not flag:
             return False
         return True
-    elif field.choices:
-        return getattr(instance, 'get_%s_display' % field.name)()
     return field.value_from_object(instance)
 
 class Details(StrAndUnicode):
@@ -157,13 +157,13 @@ class ModelListDetails(ListDetails):
                         pattern += '\t<li><a class="delete" href="%s">%s</a></li>\n' % (i.get_delete_url(), _('Delete'))
                     pattern += '</ul>'
                     rows.append(pattern)
-                data.append((_('Actions'), rows))
+                data.append((_('actions'), rows))
         super(ModelListDetails, self).__init__(data)
         
 class ModelPaginatedListDetails(ModelListDetails):
-    def __init__(self, request, queryset=[], fields=[], exclude=['id']):
+    def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
         self.__pages = paginate(request, queryset)
-        super(ModelPaginatedListDetails, self).__init__(self.__pages.object_list, fields, exclude)
+        super(ModelPaginatedListDetails, self).__init__(self.__pages.object_list, fields, exclude, with_actions)
         
     def as_table(self):
         output = super(ModelPaginatedListDetails, self).as_table()
