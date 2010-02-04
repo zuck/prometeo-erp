@@ -455,12 +455,21 @@ form .message {
     padding-bottom: 10px;
 }
 
-#search {
-    clear: left;
-    float: right;
+#content h3 {
+    float: left;
+    margin-top: 15px;
 }
 
-#search form {
+#content p {
+    clear: both;
+}
+
+#content .search_box {
+    float: right;
+    margin-top: 10px;
+}
+
+#content .search_box form {
     background: none;
     border: none;
     margin: 0 0 -10px;
@@ -468,17 +477,21 @@ form .message {
     width: auto;
 }
 
-#search input {
+#content .search_box input {
     clear: none;
     display: inline;
 }
 
-#search input[type="text"] {
+#content .search_box input[type="text"] {
     width: 190px;
 }
 
-#search input[type="submit"] {
+#content .search_box input[type="submit"] {
     left: 0;
+}
+
+.paginator {
+    margin-bottom: 10px;
 }
 
 /* Footer */

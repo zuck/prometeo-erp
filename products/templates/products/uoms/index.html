@@ -13,13 +13,7 @@
 
 {% block content %}
     <h3>{% trans 'UOMs' %}</h3>
-    <div id="search">
-        <form action="/products/uoms/" method="post">
-            <input type="text" name="query"/>
-            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
-        </form>
-    </div>
-    
+    {% include 'search_box.html' %}
     {{ uoms.as_table }}
     <ul class="actions">
         <li><a class="add" href="/products/uoms/add/">{% trans 'Add' %}</a></li>

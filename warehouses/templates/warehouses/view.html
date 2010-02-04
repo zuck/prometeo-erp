@@ -15,12 +15,7 @@
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <h3>{% trans 'Movements' %}</h3>
-    <div id="search">
-        <form action="{{ warehouse.get_absolute_url }}/" method="post">
-            <input type="text" name="query"/>
-            <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
-        </form>
-    </div>
+    {% include 'search_box.html' %}
     {{ movements.as_table }}
     <ul class="actions">
         <li><a class="edit" href="/warehouses/edit/{{ warehouse.id }}/">{% trans 'Edit' %}</a></li>
