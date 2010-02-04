@@ -18,33 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if warehouses.object_list %}
-    <table>
-        <thead>
-            <td>{% trans 'Name' %}</td>
-            <td>{% trans 'Owner' %}</td>
-            <td>{% trans 'Value' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for warehouse in warehouses.object_list %}
-        <tr>
-            <td>{{ warehouse.name }}</td>
-            <td><a href="{{ warehouse.owner.get_absolute_url }}">{{ warehouse.owner }}</a></td>
-            <td class="number">{{ warehouse.value|floatformat:2 }}</td>
-            <td>
-                <ul class="actions">
-                    <li><a class="view" href="/warehouses/view/{{ warehouse.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/warehouses/edit/{{ warehouse.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/warehouses/delete/{{ warehouse.id }}/">{% trans 'Delete' %}</a></li>
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% with warehouses as pages %}{% include 'paginator.html' %}{% endwith %}
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
+    {{ warehouses.as_table }}
     <ul class="actions">
         <li><a class="add" href="/warehouses/add/">{% trans 'Add' %}</a></li>
         <li><a class="movements" href="/warehouses/movements/">{% trans 'Movements' %}</a></li>

@@ -31,6 +31,7 @@ from prometeo.core.paginator import paginate
 
 from models import *
 from forms import *
+from details import PartnerListDetails
  
 def partner_index(request):
     """Show a partner list.
@@ -47,7 +48,9 @@ def partner_index(request):
     else:
         partners = Partner.objects.all()
         
-    return render_to_response('partners/index.html', RequestContext(request, {'partners': paginate(request, partners)}))
+    partners = PartnerListDetails(request, partners)
+        
+    return render_to_response('partners/index.html', RequestContext(request, {'partners': partners}))
      
 def partner_add(request):
     """Add a new partner.

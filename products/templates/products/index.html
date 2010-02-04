@@ -18,35 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if products.object_list %}
-    <table>
-        <thead>
-            <td>{% trans 'Name' %}</td>
-            <td>{% trans 'Code' %}</td>
-            <td>{% trans 'Type' %}</td>
-            <td>{% trans 'Supply method' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for product in products.object_list %}
-        <tr>
-            <td>{{ product.name }}</td>
-            <td>{{ product.code }}</td>
-            <td>{% blocktrans with product.get_type_display as type %}{{ type }}{% endblocktrans %}</td>
-            <td>{% blocktrans with product.get_supply_method_display as method %}{{ method }}{% endblocktrans %}</td>
-            <td>
-                <ul class="actions">
-                    <li><a class="view" href="/products/view/{{ product.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/products/edit/{{ product.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/products/delete/{{ product.id }}/">{% trans 'Delete' %}</a></li>
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% with products as pages %}{% include 'paginator.html' %}{% endwith %}
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
+    {{ products.as_table }}
     <ul class="actions">
         <li><a class="add" href="/products/add/">{% trans 'Add' %}</a></li>
         <li><a class="uoms" href="/products/uoms/">{% trans 'UOMs' %}</a></li>

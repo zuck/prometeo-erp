@@ -21,42 +21,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if warehouse.movement_set.all %}
-    <table>
-        <thead>
-            <td>{% trans 'Quantity' %}</td>
-            <td>{% trans 'UOM' %}</td>
-            <td>{% trans 'Product' %}</td>
-            <td>{% trans 'Price' %}</td>
-            <td>{% trans 'Discount' %}</td>
-            <td>{% trans 'Value' %}</td>
-            <td>{% trans 'On' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for movement in warehouse.movement_set.all %}
-        <tr class="{% if movement.verse %}in{% else %}out{% endif %}">
-            <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.quantity|floatformat:2 }}</td>
-            <td><a href="/uoms/view/{{ movement.supply.product.uom.id }}/">{{ movement.supply.product.uom }}</a></td>
-            <td><a href="/products/view/{{ movement.supply.product.id }}/">{{ movement.supply.product }}</a></td>
-            <td class="number">{{ movement.price|floatformat:2 }}</td>
-            <td class="number">{{ movement.discount|floatformat:2 }}%</td>
-            <td class="number-with-sign"><strong class="sign">{% if movement.verse %}+{% else %}-{% endif %}</strong>{{ movement.value|floatformat:2 }}</td>
-            <td>{{ movement.on }}</td>
-            <td>
-                <ul class="actions">
-                    <li><a class="view" href="/warehouses/movements/view/{{ movement.id }}/">{% trans 'View' %}</a></li>
-                    {% if movement.is_last %}
-                    <li><a class="edit" href="/warehouses/movements/edit/{{ movement.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/warehouses/movements/delete/{{ movement.id }}/">{% trans 'Delete' %}</a></li>
-                    {% endif %}
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
+    {{ movements.as_table }}
     <ul class="actions">
         <li><a class="edit" href="/warehouses/edit/{{ warehouse.id }}/">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="/warehouses/delete/{{ warehouse.id }}/">{% trans 'Delete' %}</a></li>

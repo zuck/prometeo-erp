@@ -31,6 +31,12 @@ class Contact(models.Model):
     
     def get_absolute_url(self):
         return '/partners/contacts/view/%d' % self.id
+    
+    def get_edit_url(self):
+        return '/partners/contacts/edit/%d/' % self.id
+    
+    def get_delete_url(self):
+        return '/partners/contacts/delete/%d/' % self.id
 
 class Partner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -43,7 +49,13 @@ class Partner(models.Model):
     email = models.EmailField(blank=True, verbose_name=_('email'))
     
     def get_absolute_url(self):
-        return '/partners/view/%d' % self.id
+        return '/partners/view/%d/' % self.id
+    
+    def get_edit_url(self):
+        return '/partners/edit/%d/' % self.id
+    
+    def get_delete_url(self):
+        return '/partners/delete/%d/' % self.id
         
     def __unicode__(self):
         return self.name

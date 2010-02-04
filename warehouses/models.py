@@ -75,6 +75,12 @@ class Warehouse(models.Model):
 
     def get_absolute_url(self):
         return '/warehouses/view/%d' % self.id
+
+    def get_edit_url(self):
+        return '/warehouses/edit/%d' % self.id
+
+    def get_delete_url(self):
+        return '/warehouses/delete/%d' % self.id
         
     def __unicode__(self):
         return self.name
@@ -110,6 +116,16 @@ class Movement(models.Model):
     
     def get_absolute_url(self):
         return '/warehouses/movements/view/%d' % self.id
+    
+    def get_edit_url(self):
+        if self.is_last():
+            return '/warehouses/movements/edit/%d' % self.id
+        return None
+    
+    def get_delete_url(self):
+        if self.is_last():
+            return '/warehouses/movements/delete/%d' % self.id
+        return None
         
     def __unicode__(self):
         if self.verse:

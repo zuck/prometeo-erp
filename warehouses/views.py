@@ -27,11 +27,12 @@ from django.views.generic.simple import redirect_to
 from django.template import RequestContext
 from django.db.models import Q
 
-from prometeo.core.details import ModelDetails
+from prometeo.core.details import ModelDetails, ModelPaginatedListDetails
 from prometeo.core.paginator import paginate
 
 from models import *
 from forms import *
+from details import *
  
 def warehouse_index(request):
     """Show a warehouse list.
@@ -48,7 +49,9 @@ def warehouse_index(request):
     else:
         warehouses = Warehouse.objects.all()
         
-    return render_to_response('warehouses/index.html', RequestContext(request, {'warehouses': paginate(request, warehouses)}))
+    warehouses = WarehouseListDetails(request, warehouses)
+        
+    return render_to_response('warehouses/index.html', RequestContext(request, {'warehouses': warehouses}))
      
 def warehouse_add(request):
     """Add a new warehouse.
@@ -69,8 +72,8 @@ def warehouse_view(request, id):
     warehouse = get_object_or_404(Warehouse, pk=id)
     details = ModelDetails(instance=warehouse)
     details.add_field(_('value'), '%.2f' % warehouse.value())
-    
-    return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details}))
+    movements = MovementListDetails(request, warehouse.movement_set.all(), exclude=['id', 'warehouse_id', 'account_id', 'payment_delay'])
+    return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details, 'movements': movements}))
      
 def warehouse_edit(request, id):
     """Edit a warehouse.
@@ -111,7 +114,9 @@ def movement_index(request):
     else:
         movements = Movement.objects.all()
         
-    return render_to_response('warehouses/movements/index.html', RequestContext(request, {'movements': paginate(request, movements)}))
+    movements = MovementListDetails(request, movements, exclude=['id', 'account_id', 'payment_delay'])
+        
+    return render_to_response('warehouses/movements/index.html', RequestContext(request, {'movements': movements}))
      
 def movement_add(request, warehouse_id):
     """Add a new movement.
@@ -151,7 +156,9 @@ def movement_delete(request, id):
             return redirect_to(request, url=warehouse.get_absolute_url());
         return redirect_to(request, url='/warehouses/movements/view/%s/' % (id))
     return render_to_response('warehouses/movements/delete.html', RequestContext(request, {'movement': movement}))
-
+    
+# -*- coding: utf-8 -*-
+#
 # Copyright (c) 2009 Arthur Furlan <arthur.furlan@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify

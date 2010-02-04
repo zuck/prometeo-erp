@@ -147,6 +147,10 @@ input[type="text"], input[type="password"], select {
     font-size: 14px;
 }
 
+select[multiple] {
+    height: auto;
+}
+
 textarea {
     width: 65%;
     height: 15em;
@@ -202,7 +206,7 @@ form p {
 
 /* Commons */
 
-.number, .number-with-sign { text-align: right; }
+.number { text-align: right; }
 
 .actions {
     float: left;
@@ -309,14 +313,14 @@ form .message {
 .in { background: #dbf6cd; }
 .out { background: #f6cdcd; }
 
-.in .number-with-sign, .out .number-with-sign {
+.in .verse, .out .verse {
     padding-left: 25px;
     background-position: 5px center;
     background-repeat: no-repeat;
 }
 
-.in .number-with-sign { background-image: url(images/plus.png); }
-.out .number-with-sign { background-image: url(images/minus.png); }
+.in .verse { background-image: url(images/plus.png); }
+.out .verse { background-image: url(images/minus.png); }
 
 .managed { background: #f6cdcd; }
 .managed .name {

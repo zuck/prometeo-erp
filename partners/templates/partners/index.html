@@ -18,39 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if partners.object_list %}
-    <table>
-        <thead>
-            <td>{% trans 'Name' %}</td>
-            <td>{% trans 'Supplier' %}</td>
-            <td>{% trans 'Customer' %}</td>
-            <td>{% trans 'VAT number' %}</td>
-            <td>{% trans 'Email' %}</td>
-            <td>{% trans 'URL' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for partner in partners.object_list %}
-        <tr{% if partner.managed %} class="managed"{% endif %}>
-            <td class="name">{% if partner.managed %}<strong class="sign">(*)</strong>{% endif %}{{ partner.name }}</td>
-            <td>{% if partner.supplier %}<span class="yes">{% trans 'Yes' %}</span>{% else %}<span class="no">{% trans 'No' %}</span>{% endif %}</td>
-            <td>{% if partner.customer %}<span class="yes">{% trans 'Yes' %}</span>{% else %}<span class="no">{% trans 'No' %}</span>{% endif %}</td>
-            <td class="number">{{ partner.vat_number }}</td>
-            <td>{{ partner.email|default:'<span class="disabled">empty</span>' }}</td>
-            <td>{{ partner.url|default:'<span class="disabled">empty</span>' }}</td>
-            <td>
-                <ul class="actions">
-                    <li><a class="view" href="/partners/view/{{ partner.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/partners/edit/{{ partner.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/partners/delete/{{ partner.id }}/">{% trans 'Delete' %}</a></li>
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% with partners as pages %}{% include 'paginator.html' %}{% endwith %}
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
+    {{ partners.as_table }}
     <ul class="actions">
         <li><a class="add" href="/partners/add/">{% trans 'Add' %}</a></li>
     </ul>

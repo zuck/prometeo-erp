@@ -18,33 +18,7 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if accounts.object_list %}
-    <table>
-        <thead>
-            <td>{% trans 'Username' %}</td>
-            <td>{% trans 'Firstname' %}</td>
-            <td>{% trans 'Lastname' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for account in accounts.object_list %}
-        <tr>
-            <td>{{ account.username }}</td>
-            <td>{{ account.first_name|default:'<span class="disabled">empty.</span>' }}</td>
-            <td>{{ account.last_name|default:'<span class="disabled">empty.</span>' }}</td>
-            <td>
-                <ul class="actions">
-                    <li><a class="view" href="/accounts/view/{{ account.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/accounts/edit/{{ account.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/accounts/delete/{{ account.id }}/">{% trans 'Delete' %}</a></li>
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% with accounts as pages %}{% include 'paginator.html' %}{% endwith %}
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
+    {{ accounts.as_table }}
     <ul class="actions">
         <li><a class="add" href="/accounts/add/">{% trans 'Add' %}</a></li>
     </ul>

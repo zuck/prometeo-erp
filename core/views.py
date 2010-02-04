@@ -28,8 +28,7 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.db.models import Q
 
-from prometeo.core.details import ModelDetails
-from prometeo.core.paginator import paginate
+from prometeo.core.details import ModelDetails, ModelPaginatedListDetails
 from prometeo.core.forms import *
 
 def set_language(request):
@@ -59,7 +58,9 @@ def index(request):
     else:
         accounts = User.objects.all()
         
-    return render_to_response('accounts/index.html', RequestContext(request, {'accounts': paginate(request, accounts)}))
+    accounts = ModelPaginatedListDetails(request, accounts, exclude=['id', 'is_active', 'password', 'date_joined'])
+        
+    return render_to_response('accounts/index.html', RequestContext(request, {'accounts': accounts}))
     
 def add(request):
     """Add a new account.

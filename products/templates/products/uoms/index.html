@@ -19,33 +19,8 @@
             <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
         </form>
     </div>
-    {% if uoms.object_list %}
-    <table>
-        <thead>
-            <td>{% trans 'Name' %}</td>
-            <td>{% trans 'Initials' %}</td>
-            <td>{% trans 'Category' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for uom in uoms.object_list %}
-        <tr>
-            <td>{{ uom.name }}</td>
-            <td>{{ uom.initials }}</td>
-            <td><a href="/products/uoms/categories/view/{{ uom.category.id }}/">{{ uom.category }}</a></td>
-            <td>
-                <ul class="actions">
-                    <li><a class="view" href="/products/uoms/view/{{ uom.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/products/uoms/edit/{{ uom.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/products/uoms/delete/{{ uom.id }}/">{% trans 'Delete' %}</a></li>
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% with uoms as pages %}{% include 'paginator.html' %}{% endwith %}
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
+    
+    {{ uoms.as_table }}
     <ul class="actions">
         <li><a class="add" href="/products/uoms/add/">{% trans 'Add' %}</a></li>
         <li><a class="categories" href="/products/uoms/categories/">{% trans 'Categories' %}</a></li>
