@@ -62,9 +62,6 @@ def field_to_value(field, instance):
 class Details(StrAndUnicode):
     def __init__(self, fields=[]):
         self.__fields = fields
-
-    def _html_output(self, output):
-        return mark_safe(output)
         
     def add_field(self, name, value):
         self.__fields.append((name, value))
@@ -89,6 +86,9 @@ class Details(StrAndUnicode):
         output += u"</table>\n"
         return self._html_output(output)
 
+    def _html_output(self, output):
+        return mark_safe(output)
+
 class ModelDetails(Details):
     def __init__(self, instance, fields=[], exclude=['id']):
         field_list = [f for f in instance._meta.fields if len(fields) == 0 or f.attname in fields]
@@ -105,26 +105,34 @@ class ListDetails(StrAndUnicode):
                 if i >= len(self._rows):
                     self._rows.append([])
                 self._rows[i].append(value)
-        print self._rows
-
-    def _html_output(self, output):
-        return mark_safe(output)
         
     def as_table(self):
         output = '<p class="disabled">%s</p>' % _('empty')
         if len(self._rows) > 0:
-            output = u"<table>\n"
-            output += u"\t<thead>\n"
+            output = u'<table>\n'
+            output += u'\t<thead>\n'
             for field in self._header:
-                output += u"\t\t<td>%s</td>\n" % (_(field.capitalize()))
-            output += u"\t</thead>\n"
+                output += u'\t\t<td>%s</td>\n' % (_(field.capitalize()))
+            output += u'\t</thead>\n'
             for row in self._rows:
-                output += u"\t<tr>\n"
+                output += self.row_template(row)
                 for i, field in enumerate(self._header):
-                    output += u"\t\t<td>%s</td>\n" % (value_to_string(row[i]))
-                output += u"\t</tr>\n"
-            output += u"</table>\n"
+                    output += self.column_template(row, i)
+                output += u'\t</tr>\n'
+            output += u'</table>\n'
         return self._html_output(output)
+        
+    def row_template(self, row):
+        return u'\t<tr>\n'
+        
+    def column_template(self, row, index):
+        value = row[index]
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            return u'\t\t<td class="number">%s</td>\n' % value_to_string(value)
+        return u'\t\t<td>%s</td>\n' % value_to_string(value)
+
+    def _html_output(self, output):
+        return mark_safe(output)
         
 class ModelListDetails(ListDetails):
     def __init__(self, queryset=[], fields=[], exclude=['id'], with_actions=True):
