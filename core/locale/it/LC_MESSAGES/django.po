@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-03 12:47+0100\n"
+"POT-Creation-Date: 2010-02-04 12:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,17 +16,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: details.py:63 templates/accounts/index.html:46
-msgid "empty"
-msgstr "vuoto"
-
-#: details.py:87 templates/accounts/delete.html:21
+#: details.py:36 templates/accounts/delete.html:21
 msgid "No"
 msgstr ""
 
-#: details.py:88 templates/accounts/delete.html:20
+#: details.py:37 templates/accounts/delete.html:20
 msgid "Yes"
 msgstr ""
+
+#: details.py:39 details.py:110
+msgid "empty"
+msgstr "vuoto"
+
+#: details.py:153 templates/accounts/delete.html:26
+#: templates/accounts/edit.html:23
+msgid "View"
+msgstr "Visualizza"
+
+#: details.py:155 templates/accounts/delete.html:27
+#: templates/accounts/edit.html:15 templates/accounts/view.html:18
+msgid "Edit"
+msgstr "Modifica"
+
+#: details.py:157 templates/accounts/delete.html:15
+#: templates/accounts/edit.html:24 templates/accounts/view.html:19
+msgid "Delete"
+msgstr ""
+
+#: details.py:160
+msgid "actions"
+msgstr "azioni"
+
+#: details.py:182
+msgid "Page %(number)d of %(num_pages)d"
+msgstr "Pagina %(number)d di %(num_pages)d"
 
 #: forms.py:33
 msgid "Password"
@@ -84,17 +107,12 @@ msgstr "Pagina %(number)s di %(num_pages)s"
 msgid "Welcome, <strong>%(username)s</strong>."
 msgstr "Benvenuto, <strong>%(username)s</strong>."
 
-#: templates/accounts/add.html:15 templates/accounts/index.html:49
+#: templates/accounts/add.html:15 templates/accounts/index.html:23
 msgid "Add"
 msgstr ""
 
 #: templates/accounts/add.html:19 templates/accounts/edit.html:19
 msgid "Save"
-msgstr ""
-
-#: templates/accounts/delete.html:15 templates/accounts/edit.html:24
-#: templates/accounts/index.html:38 templates/accounts/view.html:19
-msgid "Delete"
 msgstr ""
 
 #: templates/accounts/delete.html:18
@@ -105,35 +123,9 @@ msgstr ""
 "Sei sicuro di voler cancellare i dati di questo account e di tutte le "
 "informazioni associate?"
 
-#: templates/accounts/delete.html:26 templates/accounts/edit.html:23
-#: templates/accounts/index.html:36
-msgid "View"
-msgstr "Visualizza"
-
-#: templates/accounts/delete.html:27 templates/accounts/edit.html:15
-#: templates/accounts/index.html:37 templates/accounts/view.html:18
-msgid "Edit"
-msgstr "Modifica"
-
 #: templates/accounts/index.html:18
 msgid "Search"
 msgstr "Cerca"
-
-#: templates/accounts/index.html:24
-msgid "Username"
-msgstr ""
-
-#: templates/accounts/index.html:25
-msgid "Firstname"
-msgstr "Nome"
-
-#: templates/accounts/index.html:26
-msgid "Lastname"
-msgstr "Cognome"
-
-#: templates/accounts/index.html:27
-msgid "Actions"
-msgstr "Azioni"
 
 #: templates/accounts/login.html:6 templates/accounts/login.html.py:30
 #: templates/accounts/userarea.html:9
