@@ -26,7 +26,6 @@ from prometeo.core import details
 
 class PartnerListDetails(details.ModelPaginatedListDetails):
     def row_template(self, row):
-        print self._header
         i = self._header.index(_('managed'))
         if row[i]:
             return u'\t<tr class="managed">\n'
