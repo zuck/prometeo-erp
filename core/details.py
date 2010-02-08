@@ -109,7 +109,7 @@ class ListDetails(StrAndUnicode):
     def as_table(self):
         output = '<p class="disabled">%s</p>' % _('empty')
         if len(self._rows) > 0:
-            output = u'<table>\n'
+            output = self.table_template()
             output += u'\t<thead>\n'
             for field in self._header:
                 output += u'\t\t<td>%s</td>\n' % (_(field.capitalize()))
@@ -121,6 +121,9 @@ class ListDetails(StrAndUnicode):
                 output += u'\t</tr>\n'
             output += u'</table>\n'
         return self._html_output(output)
+        
+    def table_template(self):
+        return u'<table>\n'
         
     def row_template(self, row):
         return u'\t<tr>\n'
