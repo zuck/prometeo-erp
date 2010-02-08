@@ -30,11 +30,12 @@ urlpatterns = patterns('',
     (r'^$', 'core.views.start'),
     
     # Media files.
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True})
-)
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     
-urlpatterns += patterns('',
+    # Comments framework.
+    (r'^comments/', include('django.contrib.comments.urls')),
     
+    # Accounts.
     (r'^accounts/$', 'core.views.index'),
     (r'^accounts/add/$', 'core.views.add'),
     (r'^accounts/view/(?P<id>\d+)/$', 'core.views.view'),
