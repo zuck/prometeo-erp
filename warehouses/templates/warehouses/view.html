@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'warehouses/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Warehouses' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
@@ -12,15 +10,16 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        <li class="view"><a href="{{ warehouse.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li class="movements"><a href="{{ warehouse.get_movements_url }}">{% trans 'Movements' %}</a></li>
+    </ul>
+    {% block page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
-    <h3>{% trans 'Movements' %}</h3>
-    {% include 'search_box.html' %}
-    {{ movements.as_table }}
     <ul class="actions">
-        <li><a class="edit" href="/warehouses/edit/{{ warehouse.id }}/">{% trans 'Edit' %}</a></li>
-        <li><a class="delete" href="/warehouses/delete/{{ warehouse.id }}/">{% trans 'Delete' %}</a></li>
-        <li><a class="movements" href="/warehouses/movements/add/{{ warehouse.id }}/">{% trans 'New movement' %}</a></li>
-        <li><a class="warehouses" href="/warehouses/">{% trans 'Warehouses' %}</a></li>
-    </ul>    
+        <li><a class="edit" href="{{ warehouse.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ warehouse.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>
+    {% endblock %}
 {% endblock %}

@@ -1,15 +1,12 @@
-{% extends 'layout.html' %}
+{% extends 'warehouses/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block title %}{% trans 'Warehouses' %}{% endblock %}
-
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
-    {% with movement.warehouse.get_absolute_path as wlink %}
-    {% add_crumb 'Movements' wlink %}
-    {% endwith %}
+    {% add_crumb movement.warehouse movement.warehouse.get_absolute_url %}
+    {% add_crumb 'Movements' movement.warehouse.get_movements_url %}
     {% add_crumb 'Add' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
@@ -25,7 +22,4 @@
             <input class="save" type="submit" value="{% trans 'Save' %}" />
         </div>
     </form>
-    <ul class="actions">
-        <li><a class="warehouses" href="{{ movement.warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
-    </ul>
 {% endblock %}

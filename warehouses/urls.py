@@ -27,14 +27,14 @@ urlpatterns = patterns('warehouses.views',
     # Warehouses.
     (r'^$', 'warehouse_index'),
     (r'^add/$', 'warehouse_add'),
-    (r'^view/(?P<id>\d+)/$', 'warehouse_view'),
+    (r'^view/(?P<id>\d+)/(?P<page>\w*)/*$', 'warehouse_view'),
     (r'^edit/(?P<id>\d+)/$', 'warehouse_edit'),
     (r'^delete/(?P<id>\d+)/$', 'warehouse_delete'),
     
     # Movements.
     (r'^movements/$', 'movement_index'),
-    (r'^movements/add/(?P<warehouse_id>\d+)/$', 'movement_add'),
-    (r'^movements/view/(?P<id>\d+)/$', 'movement_view'),
-    (r'^movements/edit/(?P<id>\d+)/$', 'movement_edit'),
-    (r'^movements/delete/(?P<id>\d+)/$', 'movement_delete'),
+    (r'^(?P<warehouse_id>\d+)/movements/add/$', 'movement_add'),
+    (r'^(?P<warehouse_id>\d+)/movements/view/(?P<id>\d+)/$', 'movement_view'),
+    (r'^(?P<warehouse_id>\d+)/movements/edit/(?P<id>\d+)/$', 'movement_edit'),
+    (r'^(?P<warehouse_id>\d+)/movements/delete/(?P<id>\d+)/$', 'movement_delete'),
 )

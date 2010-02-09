@@ -21,7 +21,7 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.template import RequestContext
@@ -66,14 +66,21 @@ def warehouse_add(request):
 
     return render_to_response('warehouses/add.html', RequestContext(request, {'form': form}));
      
-def warehouse_view(request, id):
+def warehouse_view(request, id, page=None):
     """Show warehouse details.
     """
     warehouse = get_object_or_404(Warehouse, pk=id)
+    
+    # Movements.
+    if page == 'movements':
+        movements = MovementListDetails(request, warehouse.movement_set.all(), exclude=['id', 'warehouse_id', 'account_id', 'payment_delay'])
+        return render_to_response('warehouses/movements.html', RequestContext(request, {'warehouse': warehouse, 'movements': movements}))
+        
+    
+    # Details.
     details = ModelDetails(instance=warehouse)
     details.add_field(_('value'), '%.2f' % warehouse.value())
-    movements = MovementListDetails(request, warehouse.movement_set.all(), exclude=['id', 'warehouse_id', 'account_id', 'payment_delay'])
-    return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details, 'movements': movements}))
+    return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details}))
      
 def warehouse_edit(request, id):
     """Edit a warehouse.
@@ -126,26 +133,38 @@ def movement_add(request, warehouse_id):
     wizard = MovementWizard(initial=movement, template="warehouses/movements/add.html")
     return wizard(request)
      
-def movement_view(request, id):
+def movement_view(request, warehouse_id, id):
     """Show movement details.
     """
+    warehouse = get_object_or_404(Warehouse, pk=warehouse_id)
     movement = get_object_or_404(Movement, pk=id)
+    if movement.warehouse != warehouse:
+        raise Http404
+    
     details = ModelDetails(instance=movement)
     details.add_field(_('value'), movement.value())
     
     return render_to_response('warehouses/movements/view.html', RequestContext(request, {'movement': movement, 'details': details}))
      
-def movement_edit(request, id):
+def movement_edit(request, warehouse_id, id):
     """Edit a movement.
     """
+    warehouse = get_object_or_404(Warehouse, pk=warehouse_id)
     movement = get_object_or_404(Movement, pk=id)
+    if movement.warehouse != warehouse:
+        raise Http404
+    
     wizard = MovementWizard(initial=movement, template="warehouses/movements/edit.html")
     return wizard(request)
     
-def movement_delete(request, id):
+def movement_delete(request, warehouse_id, id):
     """Delete a movement.
     """
+    warehouse = get_object_or_404(Warehouse, pk=warehouse_id)
     movement = get_object_or_404(Movement, pk=id)
+    if movement.warehouse != warehouse:
+        raise Http404
+    
     if not movement.is_last():
         referer_view = get_referer_view(request, movement.warehouse.get_absolute_url())
         return HttpResponseRedirect(referer_view)

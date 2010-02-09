@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'warehouses/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Warehouses' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
@@ -13,7 +11,7 @@
 
 {% block content %}
     <h3>{% trans 'Delete' %}</h3>
-    <form action="/warehouses/delete/{{ warehouse.id }}/" method="post">
+    <form action="." method="post">
         <div class="message">
             <p class="warning">{% trans 'Are you sure you want to delete this warehouse and all its related informations?' %}</p>
             <div class="actions">
@@ -23,8 +21,7 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/warehouses/view/{{ warehouse.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/warehouses/edit/{{ warehouse.id }}">{% trans 'Edit' %}</a></li>
-        <li><a class="warehouses" href="/warehouses/">{% trans 'Warehouses' %}</a></li>
+        <li><a class="view" href="{{ warehouse.get_absolute_url }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="{{ warehouse.get_edit_url }}">{% trans 'Edit' %}</a></li>
     </ul>
 {% endblock %}

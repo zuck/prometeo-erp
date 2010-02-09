@@ -1,15 +1,12 @@
-{% extends 'layout.html' %}
+{% extends 'warehouses/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block title %}{% trans 'Warehouses' %}{% endblock %}
-
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
-    {% with movement.warehouse.get_absolute_path as wlink %}
-    {% add_crumb 'Movements' wlink %}
-    {% endwith %}
+    {% add_crumb movement.warehouse movement.warehouse.get_absolute_url %}
+    {% add_crumb 'Movements' movement.warehouse.get_movements_url %}
     {% add_crumb movement %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
@@ -26,8 +23,9 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/warehouses/movements/view/{{ movement.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/warehouses/movements/delete/{{ movement.id }}">{% trans 'Delete' %}</a></li>
-        <li><a class="warehouses" href="{{ movement.warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
+        <li><a class="view" href="{{ movement.get_absolute_url }}">{% trans 'View' %}</a></li>
+        {% if movement.is_last %}
+        <li><a class="delete" href="{{ movement.get_delete_url }}">{% trans 'Delete' %}</a></li>
+        {% endif %}
     </ul>
 {% endblock %}

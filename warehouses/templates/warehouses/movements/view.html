@@ -1,15 +1,12 @@
-{% extends 'layout.html' %}
+{% extends 'warehouses/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block title %}{% trans 'Warehouses' %}{% endblock %}
-
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
-    {% with movement.warehouse.get_absolute_path as wlink %}
-    {% add_crumb 'Movements' wlink %}
-    {% endwith %}
+    {% add_crumb movement.warehouse movement.warehouse.get_absolute_url %}
+    {% add_crumb 'Movements' movement.warehouse.get_movements_url %}
     {% add_crumb movement %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
@@ -17,11 +14,10 @@
 {% block content %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
+    {% if movement.is_last %}
     <ul class="actions">
-        {% if movement.is_last %}
-        <li><a class="edit" href="/warehouses/movements/edit/{{ movement.id }}">{% trans 'Edit' %}</a></li>
-        <li><a class="delete" href="/warehouses/movements/delete/{{ movement.id }}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        <li><a class="warehouses" href="{{ movement.warehouse.get_absolute_url }}">{% trans 'Warehouse' %}</a></li>
-    </ul>    
+        <li><a class="edit" href="{{ movement.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ movement.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>   
+    {% endif %} 
 {% endblock %}

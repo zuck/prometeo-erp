@@ -74,13 +74,19 @@ class Warehouse(models.Model):
         return price
 
     def get_absolute_url(self):
-        return '/warehouses/view/%d' % self.id
+        return '/warehouses/view/%d/' % self.pk
 
     def get_edit_url(self):
-        return '/warehouses/edit/%d' % self.id
+        return '/warehouses/edit/%d/' % self.pk
 
     def get_delete_url(self):
-        return '/warehouses/delete/%d' % self.id
+        return '/warehouses/delete/%d/' % self.pk
+
+    def get_movements_url(self):
+        return self.get_absolute_url() + 'movements/'
+
+    def get_add_movement_url(self):
+        return '/warehouses/%d/movements/add' % self.pk
         
     def __unicode__(self):
         return self.name
@@ -115,16 +121,16 @@ class Movement(models.Model):
         return self.quantity * self.final_price()
     
     def get_absolute_url(self):
-        return '/warehouses/movements/view/%d' % self.id
+        return '/warehouses/%d/movements/view/%d/' % (self.warehouse.pk, self.pk)
     
     def get_edit_url(self):
         if self.is_last():
-            return '/warehouses/movements/edit/%d' % self.id
+            return '/warehouses/%d/movements/edit/%d/' % (self.warehouse.pk, self.pk)
         return None
     
     def get_delete_url(self):
         if self.is_last():
-            return '/warehouses/movements/delete/%d' % self.id
+            return '/warehouses/%d/movements/delete/%d/' % (self.warehouse.pk, self.pk)
         return None
         
     def __unicode__(self):

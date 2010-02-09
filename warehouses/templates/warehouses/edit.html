@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'warehouses/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Warehouses' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
@@ -13,15 +11,14 @@
 
 {% block content %}
     <h3>{% trans 'Edit' %}</h3>
-    <form action="/warehouses/edit/{{ warehouse.id }}/" method="post">
+    <form action="." method="post">
         {{ form.as_p }}
         <div class="actions">
             <input class="save" type="submit" value="{% trans 'Save' %}" />
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/warehouses/view/{{ warehouse.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/warehouses/delete/{{ warehouse.id }}">{% trans 'Delete' %}</a></li>
-        <li><a class="warehouses" href="/warehouses/">{% trans 'Warehouses' %}</a></li>
+        <li><a class="view" href="{{ warehouse.get_absolute_url }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="{{ warehouse.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
 {% endblock %}
