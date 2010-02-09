@@ -22,10 +22,10 @@ __version__ = '$Revision$'
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+from django.contrib.auth.models import *
 from django.conf import settings
 
-from prometeo.core.models import Profile
+from models import *
 
 class AccountForm(forms.ModelForm):
     """Form for account data.
@@ -37,7 +37,7 @@ class AccountForm(forms.ModelForm):
     class Meta:
         model = User
         exclude = ('password', 'is_staff', 'is_active', 'is_superuser', 
-                   'last_login', 'date_joined', 'groups', 'user_permissions')
+                   'last_login', 'date_joined')
         
     def __init__(self, *args, **kwargs):
         super(AccountForm, self).__init__(*args, **kwargs)
@@ -51,14 +51,23 @@ class AccountForm(forms.ModelForm):
         password2 = self.cleaned_data["password2"]
         if password1 != password2:
             raise forms.ValidationError(_("The two password fields didn't match."))
+            
         return password2
 
     def save(self, commit=True):
         user = super(AccountForm, self).save(commit=False)
+        self.save_m2m()
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
             profile = user.get_profile()
             profile.language = self.cleaned_data["language"]
             profile.save()
+            
         return user
+        
+class AccountGroupForm(forms.ModelForm):
+    """Form for account group data.
+    """
+    class Meta:
+        model = AccountGroup

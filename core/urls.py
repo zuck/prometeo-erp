@@ -36,15 +36,22 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     
     # Accounts.
-    (r'^accounts/$', 'core.views.index'),
-    (r'^accounts/add/$', 'core.views.add'),
-    (r'^accounts/view/(?P<id>\d+)/$', 'core.views.view'),
-    (r'^accounts/edit/(?P<id>\d+)/$', 'core.views.edit'),
-    (r'^accounts/delete/(?P<id>\d+)/$', 'core.views.delete'),
-    (r'^accounts/logged/$', 'core.views.logged'),
+    (r'^accounts/$', 'core.views.account_index'),
+    (r'^accounts/add/$', 'core.views.account_add'),
+    (r'^accounts/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'core.views.account_view'),
+    (r'^accounts/edit/(?P<id>\d+)/$', 'core.views.account_edit'),
+    (r'^accounts/delete/(?P<id>\d+)/$', 'core.views.account_delete'),
+    (r'^accounts/logged/$', 'core.views.account_logged'),
 
     (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
-    (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login')
+    (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
+    
+    # Groups.
+    (r'^accounts/groups/$', 'core.views.group_index'),
+    (r'^accounts/groups/add/$', 'core.views.group_add'),
+    (r'^accounts/groups/view/(?P<id>\d+)/$', 'core.views.group_view'),
+    (r'^accounts/groups/edit/(?P<id>\d+)/$', 'core.views.group_edit'),
+    (r'^accounts/groups/delete/(?P<id>\d+)/$', 'core.views.group_delete'),
 )
 
 def autodiscover():

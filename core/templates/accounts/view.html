@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'accounts/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Accounts' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Accounts' '/accounts/' %}
@@ -12,11 +10,17 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        <li><a class="view" href="{{ account.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="people" href="{{ account.get_groups_url }}">{% trans 'Groups' %}</a></li>
+        <li><a class="accounts" href="{{ account.get_permissions_url }}">{% trans 'Permissions' %}</a></li>
+    </ul>
+    {% block page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
+    {% endblock %}
     <ul class="actions">
-        <li><a class="edit" href="/accounts/edit/{{ account.id }}/">{% trans 'Edit' %}</a></li>
-        <li><a class="delete" href="/accounts/delete/{{ account.id }}/">{% trans 'Delete' %}</a></li>
-        <li><a class="accounts" href="/accounts/">{% trans 'Accounts' %}</a></li>
+        <li><a class="edit" href="{{ account.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ account.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
 {% endblock %}

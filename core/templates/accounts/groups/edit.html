@@ -5,7 +5,8 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Accounts' '/accounts/' %}
-    {% add_crumb account %}
+    {% add_crumb 'Groups' '/accounts/groups/' %}
+    {% add_crumb group %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
@@ -18,7 +19,7 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="{{ account.get_absolute_url }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="{{ account.get_delete_url }}">{% trans 'Delete' %}</a></li>
+        <li><a class="view" href="{{ group.get_absolute_url }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="{{ group.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
 {% endblock %}

@@ -24,12 +24,25 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.utils.translation import check_for_language
+from django.contrib.auth.models import Group, Permission
 from django.template import RequestContext
 from django.db.models import Q
 
 from details import ModelDetails, ModelPaginatedListDetails, field_to_value
 from models import *
 from forms import *
+
+def start(request):
+    """Start page.
+    """
+    return render_to_response('start.html', RequestContext(request))
+
+def set_language(request):
+    """Set the current language.
+    """
+    lang_code = request.user.get_profile().language
+    if lang_code and check_for_language(lang_code):
+        request.session['django_language'] = lang_code
 
 class AccountDetails(ModelDetails):
     def __init__(self, instance, fields=[], exclude=['id']):
@@ -39,19 +52,12 @@ class AccountDetails(ModelDetails):
         fields.extend([(f.verbose_name, field_to_value(f, instance.get_profile())) for f in field_list_profile if f.attname not in exclude])
         super(ModelDetails, self).__init__(fields)
 
-def set_language(request):
-    """Set the current language.
-    """
-    lang_code = request.user.get_profile().language
-    if lang_code and check_for_language(lang_code):
-        request.session['django_language'] = lang_code
-
-def logged(request):
+def account_logged(request):
     response = HttpResponseRedirect('/')
     set_language(request)
     return response
 
-def index(request):
+def account_index(request):
     """Show an account list.
     """
     accounts = None
@@ -70,7 +76,7 @@ def index(request):
         
     return render_to_response('accounts/index.html', RequestContext(request, {'accounts': accounts}))
     
-def add(request):
+def account_add(request):
     """Add a new account.
     """
     if request.method == 'POST':
@@ -83,14 +89,26 @@ def add(request):
 
     return render_to_response('accounts/add.html', RequestContext(request, {'form': form}))
     
-def view(request, id):
+def account_view(request, id, page=None):
     """Show account details.
     """
     account = get_object_or_404(Account, pk=id)
+    
+    # Groups.  
+    if page == 'groups':
+        groups = ModelPaginatedListDetails(request, account.groups.all(), with_actions=False)
+        return render_to_response('accounts/groups.html', RequestContext(request, {'account': account, 'groups': groups}))
+    
+    # Permissions.  
+    elif page == 'permissions':
+        permissions = ModelPaginatedListDetails(request, account.user_permissions.all(), with_actions=False)
+        return render_to_response('accounts/permissions.html', RequestContext(request, {'account': account, 'permissions': permissions}))
+        
+    # Details.
     details = AccountDetails(instance=account, exclude=['id', 'password', 'is_active', 'user_id'])
     return render_to_response('accounts/view.html', RequestContext(request, {'account': account, 'details': details}))
      
-def edit(request, id):
+def account_edit(request, id):
     """Edit an account.
     """
     account = get_object_or_404(Account, pk=id)
@@ -99,12 +117,12 @@ def edit(request, id):
         if form.is_valid():
             form.save()
             set_language(request)
-            return redirect_to(request, url='/accounts/view/%s/' % (id))
+            return redirect_to(request, url=account.get_absolute_url())
     else:
         form = AccountForm(instance=account)
     return render_to_response('accounts/edit.html', RequestContext(request, {'account': account, 'form': form}))
     
-def delete(request, id):
+def account_delete(request, id):
     """Delete an account.
     """
     account = get_object_or_404(Account, pk=id)
@@ -112,10 +130,68 @@ def delete(request, id):
         if (request.POST.has_key(u'yes')):
             account.delete()
             return redirect_to(request, url='/accounts/');
-        return redirect_to(request, url='/accounts/view/%s/' % (id))
+        return redirect_to(request, url=account.get_absolute_url())
     return render_to_response('accounts/delete.html', RequestContext(request, {'account': account}))
-
-def start(request):
-    """Start page.
+    
+def group_index(request):
+    """Show a group list.
     """
-    return render_to_response('start.html', RequestContext(request))
+    groups = None
+    queryset = None
+
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        token = request.POST['query']
+        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+
+    if (queryset is not None):
+        groups = AccountGroup.objects.filter(queryset)
+    else:
+        groups = AccountGroup.objects.all()
+        
+    groups = ModelPaginatedListDetails(request, groups)
+        
+    return render_to_response('accounts/groups/index.html', RequestContext(request, {'groups': groups}))
+    
+def group_add(request):
+    """Add a new group.
+    """
+    if request.method == 'POST':
+        form = AccountGroupForm(request.POST)
+        if form.is_valid():
+            group = form.save()
+            return redirect_to(request, url=group.get_absolute_url())
+    else:
+        form = AccountGroupForm()
+
+    return render_to_response('accounts/groups/add.html', RequestContext(request, {'form': form}))
+    
+def group_view(request, id):
+    """Show group details.
+    """
+    group = get_object_or_404(AccountGroup, pk=id)
+    details = ModelDetails(instance=group)
+    return render_to_response('accounts/groups/view.html', RequestContext(request, {'group': group, 'details': details}))
+    
+def group_edit(request, id):
+    """Edit a group.
+    """
+    group = get_object_or_404(AccountGroup, pk=id)
+    if request.method == 'POST':
+        form = AccountGroupForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url=group.get_absolute_url())
+    else:
+        form = AccountGroupForm(instance=group)
+    return render_to_response('accounts/groups/edit.html', RequestContext(request, {'group': group, 'form': form}))
+    
+def group_delete(request, id):
+    """Delete a group.
+    """
+    group = get_object_or_404(AccountGroup, pk=id)
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            group.delete()
+            return redirect_to(request, url='/accounts/groups/');
+        return redirect_to(request, url=group.get_absolute_url())
+    return render_to_response('accounts/groups/delete.html', RequestContext(request, {'group': group}))

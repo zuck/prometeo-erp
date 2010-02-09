@@ -1,0 +1,20 @@
+{% extends 'accounts/layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Accounts' '/accounts/' %}
+    {% add_crumb 'Groups' '/accounts/groups/' %}
+    {% add_crumb group %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <ul class="actions">
+        <li><a class="edit" href="{{ group.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ group.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>
+{% endblock %}

@@ -4,15 +4,16 @@
 {% load breadcrumbs %}
 
 {% block breadcrumbs %}
-    {% add_crumb 'Accounts' %}
+    {% add_crumb 'Accounts' '/accounts/' %}
+    {% add_crumb 'Groups' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
-    <h3>{% trans 'Accounts' %}</h3>
+    <h3>{% trans 'Groups' %}</h3>
     {% include 'search_box.html' %}
-    {{ accounts.as_table }}
+    {{ groups.as_table }}
     <ul class="actions">
-        <li><a class="add" href="/accounts/add/">{% trans 'Add' %}</a></li>
+        <li><a class="add" href="/accounts/groups/add/">{% trans 'Add' %}</a></li>
     </ul>
 {% endblock %}

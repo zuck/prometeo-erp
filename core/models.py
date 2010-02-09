@@ -22,8 +22,23 @@ __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.conf import settings
+
+class AccountGroup(Group):
+    """Group model proxy.
+    """
+    class Meta:
+        proxy = True
+
+    def get_absolute_url(self):
+        return '/accounts/groups/view/%d/' % self.pk
+        
+    def get_edit_url(self):
+        return '/accounts/groups/edit/%d/' % self.pk
+        
+    def get_delete_url(self):
+        return '/accounts/groups/delete/%d/' % self.pk
 
 class Account(User):
     """User model proxy.
@@ -39,6 +54,12 @@ class Account(User):
         
     def get_delete_url(self):
         return '/accounts/delete/%d/' % self.pk
+        
+    def get_permissions_url(self):
+        return self.get_absolute_url() + 'permissions/'
+        
+    def get_groups_url(self):
+        return self.get_absolute_url() + 'groups/'
 
 class Profile(models.Model):
     """User profile.
