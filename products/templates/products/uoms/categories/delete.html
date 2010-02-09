@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'products/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
@@ -15,7 +13,7 @@
 
 {% block content %}
     <h3>{% trans 'Delete' %}</h3>
-    <form action="/products/uoms/categories/delete/{{ category.id }}/" method="post">
+    <form action="." method="post">
         <div class="message">
             <p class="warning">{% trans 'Are you sure you want to delete this category and all its related informations?' %}</p>
             <div class="actions">
@@ -25,8 +23,7 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/products/uoms/categories/view/{{ category.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/products/uoms/categories/edit/{{ category.id }}">{% trans 'Edit' %}</a></li>
-        <li><a class="categories" href="/products/uoms/categories/">{% trans 'Categories' %}</a></li>
+        <li><a class="view" href="{{ category.get_absolute_url }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="{{ category.get_edit_url }}">{% trans 'Edit' %}</a></li>
     </ul>
 {% endblock %}

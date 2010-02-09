@@ -1,19 +1,19 @@
-{% extends 'products/layout.html' %}
+{% extends 'products/uoms/categories/view.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'UOMs' '/products/uoms/' %}
+    {% add_crumb 'Categories' '/products/uoms/categories/' %}
+    {% add_crumb category category.get_absolute_url %}
     {% add_crumb 'UOMs' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
-{% block content %}
+{% block page %}
     <h3>{% trans 'UOMs' %}</h3>
     {% include 'search_box.html' %}
     {{ uoms.as_table }}
-    <ul class="actions">
-        <li><a class="add" href="/products/uoms/add/">{% trans 'Add' %}</a></li>
-    </ul>
 {% endblock %}

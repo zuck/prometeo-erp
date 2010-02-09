@@ -27,9 +27,16 @@ urlpatterns = patterns('products.views',
     # Products.
     (r'^$', 'product_index'),
     (r'^add/$', 'product_add'),
-    (r'^view/(?P<id>\d+)/$', 'product_view'),
+    (r'^view/(?P<id>\d+)/(?P<page>\w*)/*$', 'product_view'),
     (r'^edit/(?P<id>\d+)/$', 'product_edit'),
     (r'^delete/(?P<id>\d+)/$', 'product_delete'),
+    
+    # Categories.
+    (r'^categories/$', 'category_index'),
+    (r'^categories/add/$', 'category_add'),
+    (r'^categories/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'category_view'),
+    (r'^categories/edit/(?P<id>\d+)/$', 'category_edit'),
+    (r'^categories/delete/(?P<id>\d+)/$', 'category_delete'),
 
     # UOMs.
     (r'^uoms/$', 'uom_index'),
@@ -41,7 +48,7 @@ urlpatterns = patterns('products.views',
     # UOM Categories.
     (r'^uoms/categories/$', 'uom_category_index'),
     (r'^uoms/categories/add/$', 'uom_category_add'),
-    (r'^uoms/categories/view/(?P<id>\d+)/$', 'uom_category_view'),
+    (r'^uoms/categories/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'uom_category_view'),
     (r'^uoms/categories/edit/(?P<id>\d+)/$', 'uom_category_edit'),
     (r'^uoms/categories/delete/(?P<id>\d+)/$', 'uom_category_delete'),
 )

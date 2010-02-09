@@ -1,0 +1,17 @@
+{% extends 'products/view.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb product product.get_absolute_url %}
+    {% add_crumb 'Suppliers' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block page %}
+    <h3>{% trans 'Suppliers' %}</h3>
+    {% include 'search_box.html' %}
+    {{ suppliers.as_table }}
+{% endblock %}

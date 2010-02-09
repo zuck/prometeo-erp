@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'products/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
@@ -30,8 +28,7 @@
         </div>
     </form>
     <ul class="actions">
-        <li><a class="view" href="/products/view/{{ product.id }}">{% trans 'View' %}</a></li>
-        <li><a class="delete" href="/products/delete/{{ product.id }}">{% trans 'Delete' %}</a></li>
-        <li><a class="products" href="/products/">{% trans 'Products' %}</a></li>
+        <li><a class="view" href="{{ product.get_absolute_url }}">{% trans 'View' %}</a></li>
+        <li><a class="delete" href="{{ product.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
 {% endblock %}

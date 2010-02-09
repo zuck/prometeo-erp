@@ -28,14 +28,17 @@ class UOMCategory(models.Model):
     name = models.CharField(max_length=64, verbose_name=_('name'))
     
     def get_absolute_url(self):
-        return '/products/uoms/categories/view/%d/' % self.id
+        return '/products/uoms/categories/view/%d/' % self.pk
     
     def get_edit_url(self):
-        return '/products/uoms/categories/edit/%d/' % self.id
+        return '/products/uoms/categories/edit/%d/' % self.pk
     
     def get_delete_url(self):
-        return '/products/uoms/categories/delete/%d/' % self.id
-        
+        return '/products/uoms/categories/delete/%d/' % self.pk
+    
+    def get_uoms_url(self):
+        return self.get_absolute_url() + 'uoms/'
+                
     def __unicode__(self):
         return self.name
 
@@ -46,13 +49,13 @@ class UOM(models.Model):
     category = models.ForeignKey(UOMCategory, verbose_name=_('category'))
     
     def get_absolute_url(self):
-        return '/products/uoms/view/%d/' % self.id
+        return '/products/uoms/view/%d/' % self.pk
     
     def get_edit_url(self):
-        return '/products/uoms/edit/%d/' % self.id
+        return '/products/uoms/edit/%d/' % self.pk
     
     def get_delete_url(self):
-        return '/products/uoms/delete/%d/' % self.id
+        return '/products/uoms/delete/%d/' % self.pk
         
     def __unicode__(self):
         return self.initials
@@ -98,13 +101,16 @@ class Product(models.Model):
     suppliers = models.ManyToManyField('partners.Partner', through=Supply, verbose_name=_('suppliers'))
     
     def get_absolute_url(self):
-        return '/products/view/%d/' % self.id
+        return '/products/view/%d/' % self.pk
     
     def get_edit_url(self):
-        return '/products/edit/%d/' % self.id
+        return '/products/edit/%d/' % self.pk
     
     def get_delete_url(self):
-        return '/products/delete/%d/' % self.id
+        return '/products/delete/%d/' % self.pk
+    
+    def get_suppliers_url(self):
+        return self.get_absolute_url() + 'suppliers/'
         
     def __unicode__(self):
         return self.name

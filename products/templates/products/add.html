@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'products/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
@@ -29,7 +27,4 @@
             <input class="save" type="submit" value="{% trans 'Save' %}" />
         </div>
     </form>
-    <ul class="actions">
-        <li><a class="products" href="/products/">{% trans 'Products' %}</a></li>
-    </ul>
 {% endblock %}

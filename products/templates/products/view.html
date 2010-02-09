@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'products/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
@@ -12,47 +10,16 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        <li class="view"><a href="{{ product.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li class="suppliers"><a href="{{ product.get_suppliers_url }}">{% trans 'Suppliers' %}</a></li>
+    </ul>
+    {% block page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
-    <h3>{% trans 'Suppliers' %}</h3>
-    {% include 'search_box.html' %}
-    {% if product.supply_set.select_related %}
-    <table>
-        <thead>
-            <td>{% trans 'Name' %}</td>
-            <td>{% trans 'VAT number' %}</td>
-            <td>{% trans 'Price' %}</td>
-            <td>{% trans 'Discount' %}</td>
-            <td>{% trans 'Minimal quantity' %}</td>
-            <td>{% trans 'Delivery delay' %}</td>
-            <td>{% trans 'Payment delay' %}</td>
-            <td>{% trans 'Actions' %}</td>
-        </thead>
-        {% for supply in product.supply_set.select_related %}
-        <tr>
-            <td>{{ supply.supplier.name }}</td>
-            <td class="number">{{ supply.supplier.vat_number }}</td>
-            <td class="number">{{ supply.price|floatformat:2 }}</td>
-            <td class="number">{{ supply.discount|floatformat:2 }}%</td>
-            <td class="number">{{ supply.minimal_quantity|floatformat:2 }}</td>
-            <td class="number">{{ supply.delivery_delay }}</td>
-            <td class="number">{{ supply.payment_delay }}</td>
-            <td>
-                <ul class="actions">
-                    <li><a class="view" href="/partners/view/{{ supply.supplier.id }}/">{% trans 'View' %}</a></li>
-                    <li><a class="edit" href="/partners/edit/{{ supply.supplier.id }}/">{% trans 'Edit' %}</a></li>
-                    <li><a class="delete" href="/partners/delete/{{ supply.supplier.id }}/">{% trans 'Delete' %}</a></li>
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p class="disabled">{% trans 'empty' %}.</p>
-    {% endif %}
+    {% endblock %}
     <ul class="actions">
-        <li><a class="edit" href="/products/edit/{{ product.id }}/">{% trans 'Edit' %}</a></li>
-        <li><a class="delete" href="/products/delete/{{ product.id }}/">{% trans 'Delete' %}</a></li>
-        <li><a class="products" href="/products/">{% trans 'Products' %}</a></li>
+        <li><a class="edit" href="{{ product.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ product.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'products/index.html' %}
+{% extends 'products/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -10,7 +10,7 @@
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
-{% block current_page %}
+{% block content %}
     <h3>{% trans 'Categories' %}</h3>
     {% include 'search_box.html' %}
     {{ categories.as_table }}

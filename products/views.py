@@ -27,7 +27,6 @@ from django.template import RequestContext
 from django.db.models import Q
 
 from prometeo.core.details import ModelDetails, ModelPaginatedListDetails
-from prometeo.core.paginator import paginate
 
 from models import *
 from forms import *
@@ -58,7 +57,7 @@ def uom_add(request):
         form = UOMForm(request.POST)
         if form.is_valid():
             uom = form.save()
-            return redirect_to(request, url='/products/uoms/view/%s/' % (uom.pk))
+            return redirect_to(request, url=uom.get_absolute_url())
     else:
         form = UOMForm()
 
@@ -79,7 +78,7 @@ def uom_edit(request, id):
         form = UOMForm(request.POST, instance=uom)
         if form.is_valid():
             form.save()
-            return redirect_to(request, url='/products/uoms/view/%s/' % (id))
+            return redirect_to(request, url=uom.get_absolute_url())
     else:
         form = UOMForm(instance=uom)
     return render_to_response('products/uoms/edit.html', RequestContext(request, {'uom': uom, 'form': form}))
@@ -92,7 +91,7 @@ def uom_delete(request, id):
         if (request.POST.has_key(u'yes')):
             uom.delete()
             return redirect_to(request, url='/products/uoms/');
-        return redirect_to(request, url='/products/uoms/view/%s/' % (id))
+        return redirect_to(request, url=uom.get_absolute_url())
     return render_to_response('products/uoms/delete.html', RequestContext(request, {'uom': uom}))
  
 def uom_category_index(request):
@@ -121,16 +120,23 @@ def uom_category_add(request):
         form = UOMCategoryForm(request.POST)
         if form.is_valid():
             category = form.save()
-            return redirect_to(request, url='/products/uoms/categories/view/%s/' % (category.pk))
+            return redirect_to(request, url=category.get_absolute_url())
     else:
         form = UOMCategoryForm()
 
     return render_to_response('products/uoms/categories/add.html', RequestContext(request, {'form': form}));
      
-def uom_category_view(request, id):
+def uom_category_view(request, id, page=None):
     """Show UOM category details.
     """
     category = get_object_or_404(UOMCategory, pk=id)
+    
+    # UOMs.
+    if page == 'uoms':
+        uoms = ModelPaginatedListDetails(request, category.uom_set.all(), exclude=['id', 'category_id'])
+        return render_to_response('products/uoms/categories/uoms.html', RequestContext(request, {'category': category, 'uoms': uoms}))
+        
+    # Details.
     details = ModelDetails(instance=category)
     return render_to_response('products/uoms/categories/view.html', RequestContext(request, {'category': category, 'details': details}))
      
@@ -142,9 +148,9 @@ def uom_category_edit(request, id):
         form = UOMCategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            return redirect_to(request, url='/products/uoms/categories/view/%s/' % (id))
+            return redirect_to(request, url=category.get_absolute_url())
     else:
-        form = CategoryForm(instance=category)
+        form = UOMCategoryForm(instance=category)
     return render_to_response('products/uoms/categories/edit.html', RequestContext(request, {'category': category, 'form': form}))
     
 def uom_category_delete(request, id):
@@ -155,7 +161,7 @@ def uom_category_delete(request, id):
         if (request.POST.has_key(u'yes')):
             category.delete()
             return redirect_to(request, url='/products/uoms/categories/');
-        return redirect_to(request, url='/products/uoms/categories/view/%s/' % (id))
+        return redirect_to(request, url=category.get_absolute_url())
     return render_to_response('products/uoms/categories/delete.html', RequestContext(request, {'category': category}))
  
 def product_index(request):
@@ -183,10 +189,17 @@ def product_add(request):
     wizard = ProductWizard(template="products/add.html")
     return wizard(request)
      
-def product_view(request, id):
+def product_view(request, id, page=None):
     """Show product details.
     """
     product = get_object_or_404(Product, pk=id)
+    
+    # Suppliers.
+    if page == 'suppliers':
+        suppliers = ModelPaginatedListDetails(request, product.supply_set.all(), exclude=['id', 'product_id'], with_actions=False)
+        return render_to_response('products/suppliers.html', RequestContext(request, {'product': product, 'suppliers': suppliers}))
+        
+    # Details.
     details = ModelDetails(instance=product)
     return render_to_response('products/view.html', RequestContext(request, {'product': product, 'details': details}))
      
@@ -195,6 +208,7 @@ def product_edit(request, id):
     """
     product = get_object_or_404(Product, pk=id)
     wizard = ProductWizard(initial=product, template="products/edit.html")
+    wizard.extra_context['product'] = product
     return wizard(request)
     
 def product_delete(request, id):
@@ -205,5 +219,5 @@ def product_delete(request, id):
         if (request.POST.has_key(u'yes')):
             product.delete()
             return redirect_to(request, url='/products/');
-        return redirect_to(request, url='/products/view/%s/' % (id))
+        return redirect_to(request, url=product.get_absolute_url())
     return render_to_response('products/delete.html', RequestContext(request, {'product': product}))
