@@ -25,6 +25,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 
+class Account(User):
+    """User model proxy.
+    """
+    class Meta:
+        proxy = True
+
+    def get_absolute_url(self):
+        return '/accounts/view/%d/' % self.pk
+        
+    def get_edit_url(self):
+        return '/accounts/edit/%d/' % self.pk
+        
+    def get_delete_url(self):
+        return '/accounts/delete/%d/' % self.pk
+
 class Profile(models.Model):
     """User profile.
     """

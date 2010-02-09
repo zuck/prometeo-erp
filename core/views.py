@@ -24,12 +24,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.utils.translation import check_for_language
-from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.db.models import Q
 
-from prometeo.core.details import ModelDetails, ModelPaginatedListDetails
-from prometeo.core.forms import *
+from details import ModelDetails, ModelPaginatedListDetails, field_to_value
+from models import *
+from forms import *
+
+class AccountDetails(ModelDetails):
+    def __init__(self, instance, fields=[], exclude=['id']):
+        field_list_user = [f for f in instance._meta.fields if len(fields) == 0 or f.attname in fields]
+        field_list_profile = [f for f in instance.get_profile()._meta.fields if len(fields) == 0 or f.attname in fields]
+        fields = [(f.verbose_name, field_to_value(f, instance)) for f in field_list_user if f.attname not in exclude]
+        fields.extend([(f.verbose_name, field_to_value(f, instance.get_profile())) for f in field_list_profile if f.attname not in exclude])
+        super(ModelDetails, self).__init__(fields)
 
 def set_language(request):
     """Set the current language.
@@ -54,9 +62,9 @@ def index(request):
         queryset = Q(username__startswith=token) | Q(username__endswith=token)
 
     if (queryset is not None):
-        accounts = User.objects.filter(queryset)
+        accounts = Account.objects.filter(queryset)
     else:
-        accounts = User.objects.all()
+        accounts = Account.objects.all()
         
     accounts = ModelPaginatedListDetails(request, accounts, exclude=['id', 'is_active', 'password', 'date_joined'])
         
@@ -69,7 +77,7 @@ def add(request):
         form = AccountForm(request.POST)
         if form.is_valid():
             account = form.save()
-            return redirect_to(request, url='/accounts/view/%s/' % (account.pk))
+            return redirect_to(request, url=account.get_absolute_url())
     else:
         form = AccountForm()
 
@@ -78,14 +86,14 @@ def add(request):
 def view(request, id):
     """Show account details.
     """
-    account = get_object_or_404(User, pk=id)
-    details = ModelDetails(instance=account, exclude=['id', 'password', 'is_active'])
+    account = get_object_or_404(Account, pk=id)
+    details = AccountDetails(instance=account, exclude=['id', 'password', 'is_active', 'user_id'])
     return render_to_response('accounts/view.html', RequestContext(request, {'account': account, 'details': details}))
      
 def edit(request, id):
     """Edit an account.
     """
-    account = User.objects.get(pk=id)
+    account = get_object_or_404(Account, pk=id)
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=account)
         if form.is_valid():
@@ -99,7 +107,7 @@ def edit(request, id):
 def delete(request, id):
     """Delete an account.
     """
-    account = get_object_or_404(User, pk=id)
+    account = get_object_or_404(Account, pk=id)
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             account.delete()
