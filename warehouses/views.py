@@ -131,6 +131,7 @@ def movement_add(request, warehouse_id):
     warehouse = get_object_or_404(Warehouse, pk=warehouse_id)
     movement = Movement(warehouse=warehouse, account=request.user)
     wizard = MovementWizard(initial=movement, template="warehouses/movements/add.html")
+    wizard.extra_context['movement'] = movement
     return wizard(request)
      
 def movement_view(request, warehouse_id, id):
@@ -155,6 +156,7 @@ def movement_edit(request, warehouse_id, id):
         raise Http404
     
     wizard = MovementWizard(initial=movement, template="warehouses/movements/edit.html")
+    wizard.extra_context['movement'] = movement
     return wizard(request)
     
 def movement_delete(request, warehouse_id, id):
