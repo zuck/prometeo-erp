@@ -12,5 +12,6 @@
 
 {% block page %}
     <h3>{% trans 'Groups' %}</h3>
+    {% include 'search_box.html' %}
     {{ groups.as_table }}
 {% endblock %}
