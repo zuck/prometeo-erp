@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'products/index.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
@@ -12,13 +10,11 @@
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
-{% block content %}
+{% block current_page %}
     <h3>{% trans 'Categories' %}</h3>
     {% include 'search_box.html' %}
     {{ categories.as_table }}
     <ul class="actions">
         <li><a class="add" href="/products/uoms/categories/add/">{% trans 'Add' %}</a></li>
-        <li><a class="uoms" href="/products/uoms/">{% trans 'UOMs' %}</a></li>
-        <li><a class="products" href="/products/">{% trans 'Products' %}</a></li>
     </ul>
 {% endblock %}

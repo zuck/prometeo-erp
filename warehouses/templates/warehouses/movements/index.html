@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'warehouses/index.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Warehouses' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Warehouses' '/warehouses/' %}
@@ -11,11 +9,8 @@
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
-{% block content %}
+{% block current_page %}
     <h3>{% trans 'Movements' %}</h3>
     {% include 'search_box.html' %}
     {{ movements.as_table }}
-    <ul class="actions">
-        <li><a class="warehouses" href="/warehouses/">{% trans 'Warehouses' %}</a></li>
-    </ul>
 {% endblock %}

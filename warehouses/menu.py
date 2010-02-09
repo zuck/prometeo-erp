@@ -24,3 +24,6 @@ from django.utils.translation import ugettext_lazy as _
 from prometeo.core.menu import Menu, menubar
 
 menubar.register(Menu(_('Warehouses'), '/warehouses/', 'warehouses'))
+
+menubar.register(Menu(_('Warehouses'), '/warehouses/', 'warehouses', 'warehouses'))
+menubar.register(Menu(_('Movements'), '/warehouses/movements/', 'movements', 'warehouses'))

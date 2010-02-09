@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% load i18n %}
+{% load menu %}
 {% load breadcrumbs %}
 
 {% block title %}{% trans 'Warehouses' %}{% endblock %}
@@ -11,11 +12,18 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        {% get_menu 'warehouses' as menu_bar %}
+        {% for m in menu_bar %}
+        {{ m }}
+        {% endfor %}
+    </ul>
+    {% block current_page %}
     <h3>{% trans 'Warehouses' %}</h3>
     {% include 'search_box.html' %}
     {{ warehouses.as_table }}
     <ul class="actions">
         <li><a class="add" href="/warehouses/add/">{% trans 'Add' %}</a></li>
-        <li><a class="movements" href="/warehouses/movements/">{% trans 'Movements' %}</a></li>
     </ul>
+    {% endblock %}
 {% endblock %}

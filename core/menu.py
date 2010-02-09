@@ -42,6 +42,12 @@ class Menu(MenuEntry):
         super(Menu, self).__init__(name, link, css, options)
         self.group = group
 
+    def register(self, option):
+        if not isinstance(option, MenuOption):
+            raise TypeError("You can only register a <MenuOption> not a %r" % menu)
+
+        self.options.append(option)
+
 class MenuBar(object):
     def __init__(self, *args, **kwargs):
         self._groups = {}

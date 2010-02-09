@@ -212,13 +212,27 @@ form p {
     float: left;
     width: 100%;
     padding-top: 10px;
-    margin: 5px 0 35px;
+    margin: 5px 0 10px;
     border-top: 1px solid #d6d6d6;
 }
 
 .actions li, .actions input { 
     display: inline;
     margin-right: 30px;
+}
+
+.menu {
+    float: right;
+    padding: 10px 0;
+    margin: 0 0 5px;
+    border-bottom: 1px solid #d6d6d6;
+    background: #fff url(images/submenu.png) repeat-x bottom;
+    text-align: right;
+}
+
+.menu li {
+    display: inline;
+    margin: 0 15px;
 }
 
 table .actions {
@@ -269,7 +283,8 @@ form .message {
 .view, .add, .edit, .delete, .info, .success, .warning, .categories, .contacts,
 .error, .help, .ok, .cancel, .search, .settings, .start, .products, .movements,
 .people, .calendar, .documents, .passwords, .accounts, .partners, .uoms, .roles,
-.save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses {
+.save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses,
+.projects, .areas, .milestones, .tickets, .timelines {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -308,10 +323,15 @@ form .message {
 .movements { background-image: url(images/movement.png); }
 .contacts { background-image: url(images/contacts.png); }
 .roles { background-image: url(images/role.png); }
+.projects { background-image: url(images/project.png); }
+.areas { background-image: url(images/area.png); }
+.milestones { background-image: url(images/milestone.png); }
+.tickets { background-image: url(images/ticket.png); }
+.timelines { background-image: url(images/timeline.png); }
 
 .sign { display: none; }
-.in { background: #dbf6cd; }
-.out { background: #f6cdcd; }
+.in { background-color: #dbf6cd; }
+.out { background-color: #f6cdcd; }
 
 .in .verse, .out .verse {
     padding-left: 25px;
@@ -321,6 +341,14 @@ form .message {
 
 .in .verse { background-image: url(images/plus.png); }
 .out .verse { background-image: url(images/minus.png); }
+
+.low { background-color: #dbf6cd; }
+.medium { background-color: #fff7c0; }
+.high { background-color: #f6cdcd; }
+.critical { background-color: #f97878; }
+
+.completed { background-color: #dbf6cd; }
+.expired { background-color: #f6cdcd; }
 
 .managed { background: #f6cdcd; }
 .managed .name {
@@ -360,6 +388,8 @@ form .message {
 .paginator .next a { background: url(images/forward.png) no-repeat left center; }
 
 .paginator .current { padding-top: 4px; }
+
+table.list td { text-align: left; }
 
 /* Wrapper */
 
@@ -451,22 +481,20 @@ form .message {
 
 #content {
     background: url(images/content_bg.gif) repeat-y center top;
-    padding-top: 10px;
+    padding-top: 0px;
     padding-bottom: 10px;
 }
 
-#content h3 {
+#content h3 { 
     float: left;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
-#content p {
-    clear: both;
-}
+#content p { clear: both; }
 
 #content .search_box {
     float: right;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 #content .search_box form {
