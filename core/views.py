@@ -51,6 +51,10 @@ class AccountDetails(ModelDetails):
         fields = [(f.verbose_name, field_to_value(f, instance)) for f in field_list_user if f.attname not in exclude]
         fields.extend([(f.verbose_name, field_to_value(f, instance.get_profile())) for f in field_list_profile if f.attname not in exclude])
         super(ModelDetails, self).__init__(fields)
+        
+class PermissionListDetails(ModelPaginatedListDetails):
+    def table_template(self):
+        return u'<table class="list">\n'
 
 def account_logged(request):
     response = HttpResponseRedirect('/')
@@ -101,7 +105,7 @@ def account_view(request, id, page=None):
     
     # Permissions.  
     elif page == 'permissions':
-        permissions = ModelPaginatedListDetails(request, account.user_permissions.all(), with_actions=False)
+        permissions = PermissionListDetails(request, account.user_permissions.all(), exclude=['id', 'content_type_id', 'codename'], with_actions=False)
         return render_to_response('accounts/permissions.html', RequestContext(request, {'account': account, 'permissions': permissions}))
         
     # Details.
