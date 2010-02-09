@@ -169,10 +169,17 @@ def group_add(request):
 
     return render_to_response('accounts/groups/add.html', RequestContext(request, {'form': form}))
     
-def group_view(request, id):
+def group_view(request, id, page=None):
     """Show group details.
     """
     group = get_object_or_404(AccountGroup, pk=id)
+    
+    # Permissions.  
+    if page == 'permissions':
+        permissions = PermissionListDetails(request, group.permissions.all(), exclude=['id', 'content_type_id', 'codename'], with_actions=False)
+        return render_to_response('accounts/groups/permissions.html', RequestContext(request, {'group': group, 'permissions': permissions}))
+        
+    # Details.
     details = ModelDetails(instance=group)
     return render_to_response('accounts/groups/view.html', RequestContext(request, {'group': group, 'details': details}))
     

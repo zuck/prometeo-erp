@@ -49,7 +49,7 @@ urlpatterns = patterns('',
     # Groups.
     (r'^accounts/groups/$', 'core.views.group_index'),
     (r'^accounts/groups/add/$', 'core.views.group_add'),
-    (r'^accounts/groups/view/(?P<id>\d+)/$', 'core.views.group_view'),
+    (r'^accounts/groups/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'core.views.group_view'),
     (r'^accounts/groups/edit/(?P<id>\d+)/$', 'core.views.group_edit'),
     (r'^accounts/groups/delete/(?P<id>\d+)/$', 'core.views.group_delete'),
 )

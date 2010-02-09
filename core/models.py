@@ -39,6 +39,9 @@ class AccountGroup(Group):
         
     def get_delete_url(self):
         return '/accounts/groups/delete/%d/' % self.pk
+        
+    def get_permissions_url(self):
+        return self.get_absolute_url() + 'permissions/'
 
 class Account(User):
     """User model proxy.

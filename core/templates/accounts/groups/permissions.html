@@ -1,0 +1,17 @@
+{% extends 'accounts/groups/view.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Accounts' '/accounts/' %}
+    {% add_crumb 'Groups' '/groups/' %}
+    {% add_crumb group group.get_absolute_url %}
+    {% add_crumb 'Permissions' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block page %}
+    <h3>{% trans 'Permissions' %}</h3>
+    {{ permissions.as_table }}
+{% endblock %}

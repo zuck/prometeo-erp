@@ -11,8 +11,14 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        <li><a class="view" href="{{ group.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="accounts" href="{{ group.get_permissions_url }}">{% trans 'Permissions' %}</a></li>
+    </ul>
+    {% block page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
+    {% endblock %}
     <ul class="actions">
         <li><a class="edit" href="{{ group.get_edit_url }}">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="{{ group.get_delete_url }}">{% trans 'Delete' %}</a></li>
