@@ -284,7 +284,7 @@ form .message {
 .error, .help, .ok, .cancel, .search, .settings, .start, .products, .movements,
 .people, .calendar, .documents, .passwords, .accounts, .partners, .uoms, .roles,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses,
-.projects, .areas, .milestones, .tickets, .timelines {
+.projects, .areas, .milestones, .tickets, .timelines, .suppliers {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -328,6 +328,7 @@ form .message {
 .milestones { background-image: url(images/milestone.png); }
 .tickets { background-image: url(images/ticket.png); }
 .timelines { background-image: url(images/timeline.png); }
+.suppliers { background-image: url(images/warehouse.png); }
 
 .sign { display: none; }
 .in { background-color: #dbf6cd; }
@@ -468,27 +469,43 @@ table.list td { text-align: left; }
     border-left: 1px solid #000;
 }
 
-#menu .options, #menu menu_entry:hover menu_entry .options { display: none; }
+#menu .options, #menu .menu_entry:hover .options .options { display: none; }
 
-#menu .menu_entry:hover .options {
-    position: relative;
+#menu .menu_entry:hover .options, #menu .menu_entry:hover .menu_entry:hover .options {
     display: block;
     margin: 0;
     padding: 0;
 }
 
-#menu .options {
-    float: left;
-    border-bottom: 1px solid #000;
+#menu .menu_entry:hover .options {
+    position: absolute;
+    width: auto;
+    min-width: 160px;
+    border-right: 1px solid #666;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #999;
+    border-top: none;
+}
+
+#menu .menu_entry:hover .options a { float: left; }
+
+#menu .menu_entry:hover .menu_entry:hover .options {
+    left: 160px;
 }
 
 #menu .options li {
-    clear: both;
     width: 100%;
+    border: none;
+    clear: left;
     background: #fff url(images/submenu.png) repeat-x bottom;
 }
 
-#menu .options li a { color: #333; }
+#menu .options li a {
+    width: 90%;
+    color: #333;
+    border: none;
+    padding: 5%;
+}
 
 #menu .options li a:hover { color: #fff; }
 
@@ -518,7 +535,7 @@ table.list td { text-align: left; }
 
 #content .search_box {
     float: right;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 #content .search_box form {
