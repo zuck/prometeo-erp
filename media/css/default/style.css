@@ -223,8 +223,8 @@ form p {
 
 .menu {
     float: right;
-    padding: 10px 0;
-    margin: 0 0 5px;
+    padding: 8px 0 10px;
+    margin: 0;
     border-bottom: 1px solid #d6d6d6;
     background: #fff url(images/submenu.png) repeat-x bottom;
     text-align: right;
@@ -458,15 +458,39 @@ table.list td { text-align: left; }
     border-right: 1px solid #300;
 }
 
-#menu a:hover {
+#menu a:hover, #menu a.active:hover {
     background: url(images/menu_hover.jpg) repeat-x bottom;
 }
 
 #menu a.active {
-    background: url(images/menu_active.jpg) repeat-x bottom;
+    background: #212121 url(images/menu_active.jpg) repeat-x bottom;
     border-right: 1px solid #b88;
     border-left: 1px solid #000;
 }
+
+#menu .options, #menu menu_entry:hover menu_entry .options { display: none; }
+
+#menu .menu_entry:hover .options {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+#menu .options {
+    float: left;
+    border-bottom: 1px solid #000;
+}
+
+#menu .options li {
+    clear: both;
+    width: 100%;
+    background: #fff url(images/submenu.png) repeat-x bottom;
+}
+
+#menu .options li a { color: #333; }
+
+#menu .options li a:hover { color: #fff; }
 
 #breadcrumbs {
     width: 100%;

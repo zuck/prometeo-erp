@@ -86,7 +86,7 @@ def autodiscover():
     # Core links.
     global menubar
     menubar.register(Menu(_('Start'), '/', 'start'))
-    menubar.register(Menu(_('Accounts'), '/accounts/', 'accounts'))
+    menubar.register(Menu(_('Accounts'), '/accounts/', 'accounts', options=[MenuOption(_('Groups'), '/accounts/groups/', 'people')]))
     
     # Other links.
     for app in settings.INSTALLED_APPS:

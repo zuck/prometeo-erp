@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<li>
+<li class="menu_entry">
     <a href="{{ option.link }}"><span class="{{ option.css|lower }}">{% blocktrans with option.name as name %}{{ name }}{% endblocktrans %}</span></a>
     {% if option.option_list %}
     <ul class="options">

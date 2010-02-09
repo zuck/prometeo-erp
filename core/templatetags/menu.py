@@ -62,8 +62,13 @@ class GetMenuNode(template.Node):
     def build_options(self, tab_options):
         options = []
         for option in tab_options:
-            option.option_list = self.build_options(option.options)
-            options.append(template.loader.render_to_string(option.template, {'option': option}))
+            option_info = {
+                'name': option.name,
+                'link': option.link,
+                'css': option.css,
+                'option_list': self.build_options(option.options)
+            }
+            options.append(template.loader.render_to_string(option.template, {'option': option_info}))
 
         return options
 
