@@ -93,37 +93,40 @@ dt, dd {
 	overflow: auto;
 }
 
-dt.altrow, dd.altrow {
-    background: #eee;
-}
-
 dt {
     clear: left;
     float: left;
     font-weight: bold;
     text-align: right;
     width: 20%;
-	background: #e6e6e6 url(images/dt_bg.png) repeat-x bottom;
+	background: #eaeaea url(images/dt_bg.png) repeat-x bottom;
 }
+
+dt.altrow { background: #dadada url(images/dt_alt_bg.png) repeat-x bottom; }
 
 dd {
     float: right;
     width: 75%;
-	background: #f2f2f2 url(images/tr_bg.png) repeat-x bottom;
+	background: #f5f5f5 url(images/tr_bg.png) repeat-x bottom;
 }
+
+dd.altrow { background: #e7e7e7 url(images/tr_alt_bg.png) repeat-x bottom; }
 
 table {
 	clear: both;
 }
 
-table tr { background: #f2f2f2 url(images/tr_bg.png) repeat-x bottom; }
+table tr { background: #f5f5f5 url(images/tr_bg.png) repeat-x bottom; }
+
+table tr.altrow { background: #e7e7e7 url(images/tr_alt_bg.png) repeat-x bottom; }
 
 table td {
-    padding: 5px;
+    padding: 10px 5px;
     text-align: center;
 }
 
 table thead td {
+    padding: 5px;
     background: #2f2f2f url(images/thead_bg.gif) repeat-x top;
     color: #fff;
 }
@@ -131,8 +134,6 @@ table thead td {
 table tr td {
 	vertical-align: middle;
 }
-
-.altrow, .altrow td { background-color: #f7f7f7; }
 
 /* Form */
 
@@ -258,7 +259,7 @@ table .actions {
     padding: 0;
 }
 
-.disabled { color: #a6a6a6; }
+.disabled { color: #767676; }
 
 .errorlist {
     float: left;
@@ -347,8 +348,8 @@ form .message {
 .suppliers { background-image: url(images/warehouse.png); }
 
 .sign { display: none; }
-.in { background-color: #dbf6cd; }
-.out { background-color: #f6cdcd; }
+.in { background: #dbf6cd; }
+.out { background: #f6cdcd; }
 
 .in .verse, .out .verse {
     padding-left: 25px;

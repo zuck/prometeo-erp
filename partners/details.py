@@ -25,11 +25,11 @@ from django.utils.translation import ugettext_lazy as _
 from prometeo.core import details
 
 class PartnerListDetails(details.ModelPaginatedListDetails):
-    def row_template(self, row):
+    def row_template(self, row, index):
         i = self._header.index(_('managed'))
         if row[i]:
             return u'\t<tr class="managed">\n'
-        return super(PartnerListDetails, self).row_template(row)
+        return super(PartnerListDetails, self).row_template(row, index)
         
     def column_template(self, row, index):
         i = self._header.index(_('managed'))

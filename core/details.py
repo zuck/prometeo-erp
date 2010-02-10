@@ -72,8 +72,11 @@ class Details(StrAndUnicode):
 
     def as_dl(self):
         output = "<dl>\n"
-        for (f, v) in self.__fields:
-            output += "\t<dt>%s</dt><dd>%s</dd>\n" % (_(f.capitalize()), value_to_string(v))
+        for i, (f, v) in enumerate(self.__fields):
+            css = ''
+            if (i % 2) == 1:
+                css = ' class="altrow"'
+            output += "\t<dt%s>%s</dt><dd%s>%s</dd>\n" % (css, _(f.capitalize()), css, value_to_string(v))
         output += "</dl>\n"
         return self._html_output(output)
 
@@ -81,8 +84,11 @@ class Details(StrAndUnicode):
         output = u"<table>\n"
         if header is not None:
             output += u"<thead><td>%s</td><td>%s</td></thead>" % (_(header[0].capitalize()), _(header[1].capitalize()))
-        for (f, v) in self.__fields:
-            output += u"\t<tr><td>%s</td><td>%s</td></tr>\n" % (_(f.capitalize()), value_to_string(v))
+        for i, (f, v) in enumerate(self.__fields):
+            css = ''
+            if (i % 2) == 1:
+                css = ' class="altrow"'
+            output += u"\t<tr%s><td>%s</td><td>%s</td></tr>\n" % (css, _(f.capitalize()), value_to_string(v))
         output += u"</table>\n"
         return self._html_output(output)
 
@@ -114,10 +120,10 @@ class ListDetails(StrAndUnicode):
             for field in self._header:
                 output += u'\t\t<td>%s</td>\n' % (_(field.capitalize()))
             output += u'\t</thead>\n'
-            for row in self._rows:
-                output += self.row_template(row)
-                for i, field in enumerate(self._header):
-                    output += self.column_template(row, i)
+            for i, row in enumerate(self._rows):
+                output += self.row_template(row, i)
+                for j, field in enumerate(self._header):
+                    output += self.column_template(row, j)
                 output += u'\t</tr>\n'
             output += u'</table>\n'
         return self._html_output(output)
@@ -125,7 +131,9 @@ class ListDetails(StrAndUnicode):
     def table_template(self):
         return u'<table>\n'
         
-    def row_template(self, row):
+    def row_template(self, row, index):
+        if (index % 2) == 1:
+            return u'\t<tr class="altrow">\n'
         return u'\t<tr>\n'
         
     def column_template(self, row, index):

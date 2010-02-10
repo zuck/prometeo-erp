@@ -40,7 +40,7 @@ class MovementListDetails(details.ModelPaginatedListDetails):
             for i, instance in enumerate(queryset):
                 self._rows[i].insert(-1, instance.value())
             
-    def row_template(self, row):
+    def row_template(self, row, index):
         i = self._header.index(_('verse'))
         value = details.value_to_string(row[i])
         if value == _('in'):
