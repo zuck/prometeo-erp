@@ -96,7 +96,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'prometeo.core.middleware.RequireLoginMiddleware',
-    'prometeo.core.middleware.RequirePermissionMiddleware'
 )
 
 # Roor for URL dispatcher.
@@ -125,18 +124,6 @@ LOGIN_REQUIRED_URLS = (
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/media/(.*)$',
     r'/accounts/login/$',
-)
-
-# Permissions options.
-RESTRICTED_URLS = (
-    r'/(.*)$',
-)
-
-RESTRICTED_URLS_EXCEPTIONS = (
-    r'/media/(.*)$',
-    r'/accounts/login/$', 
-    r'/accounts/logout/$',
-    r'/$',
 )
 
 # User profile model.

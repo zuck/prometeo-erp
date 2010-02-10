@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
+from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -33,7 +34,8 @@ from prometeo.core.paginator import paginate
 from models import *
 from forms import *
 from details import *
- 
+
+@permission_required('auth.change_warehouse')
 def warehouse_index(request):
     """Show a warehouse list.
     """
@@ -52,7 +54,8 @@ def warehouse_index(request):
     warehouses = WarehouseListDetails(request, warehouses)
         
     return render_to_response('warehouses/index.html', RequestContext(request, {'warehouses': warehouses}))
-     
+
+@permission_required('auth.add_warehouse') 
 def warehouse_add(request):
     """Add a new warehouse.
     """
@@ -65,7 +68,8 @@ def warehouse_add(request):
         form = WarehouseForm()
 
     return render_to_response('warehouses/add.html', RequestContext(request, {'form': form}));
-     
+
+@permission_required('auth.change_warehouse')     
 def warehouse_view(request, id, page=None):
     """Show warehouse details.
     """
@@ -81,7 +85,8 @@ def warehouse_view(request, id, page=None):
     details = ModelDetails(instance=warehouse)
     details.add_field(_('value'), '%.2f' % warehouse.value())
     return render_to_response('warehouses/view.html', RequestContext(request, {'warehouse': warehouse, 'details': details}))
-     
+
+@permission_required('auth.change_warehouse')
 def warehouse_edit(request, id):
     """Edit a warehouse.
     """
@@ -94,7 +99,8 @@ def warehouse_edit(request, id):
     else:
         form = WarehouseForm(instance=warehouse)
     return render_to_response('warehouses/edit.html', RequestContext(request, {'warehouse': warehouse, 'form': form}))
-    
+
+@permission_required('auth.delete_warehouse')    
 def warehouse_delete(request, id):
     """Delete a warehouse.
     """
@@ -105,7 +111,8 @@ def warehouse_delete(request, id):
             return redirect_to(request, url='/warehouses/');
         return redirect_to(request, url='/warehouses/view/%s/' % (id))
     return render_to_response('warehouses/delete.html', RequestContext(request, {'warehouse': warehouse}))
-     
+
+@permission_required('auth.change_movement')     
 def movement_index(request):
     """Show a movement list.
     """
@@ -124,7 +131,8 @@ def movement_index(request):
     movements = MovementListDetails(request, movements, exclude=['id', 'account_id', 'payment_delay'])
         
     return render_to_response('warehouses/movements/index.html', RequestContext(request, {'movements': movements}))
-     
+
+@permission_required('auth.add_movement')     
 def movement_add(request, warehouse_id):
     """Add a new movement.
     """
@@ -133,7 +141,8 @@ def movement_add(request, warehouse_id):
     wizard = MovementWizard(initial=movement, template="warehouses/movements/add.html")
     wizard.extra_context['movement'] = movement
     return wizard(request)
-     
+
+@permission_required('auth.change_movement')     
 def movement_view(request, warehouse_id, id):
     """Show movement details.
     """
@@ -146,7 +155,8 @@ def movement_view(request, warehouse_id, id):
     details.add_field(_('value'), movement.value())
     
     return render_to_response('warehouses/movements/view.html', RequestContext(request, {'movement': movement, 'details': details}))
-     
+
+@permission_required('auth.change_movement')     
 def movement_edit(request, warehouse_id, id):
     """Edit a movement.
     """
@@ -158,7 +168,8 @@ def movement_edit(request, warehouse_id, id):
     wizard = MovementWizard(initial=movement, template="warehouses/movements/edit.html")
     wizard.extra_context['movement'] = movement
     return wizard(request)
-    
+
+@permission_required('auth.delete_movement')    
 def movement_delete(request, warehouse_id, id):
     """Delete a movement.
     """

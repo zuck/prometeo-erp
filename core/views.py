@@ -25,6 +25,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.utils.translation import check_for_language
 from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -61,6 +62,7 @@ def account_logged(request):
     set_language(request)
     return response
 
+@permission_required('auth.change_account')
 def account_index(request):
     """Show an account list.
     """
@@ -80,6 +82,7 @@ def account_index(request):
         
     return render_to_response('accounts/index.html', RequestContext(request, {'accounts': accounts}))
     
+@permission_required('auth.add_user')
 def account_add(request):
     """Add a new account.
     """
@@ -93,6 +96,7 @@ def account_add(request):
 
     return render_to_response('accounts/add.html', RequestContext(request, {'form': form}))
     
+@permission_required('auth.change_account')
 def account_view(request, id, page=None):
     """Show account details.
     """
@@ -105,13 +109,14 @@ def account_view(request, id, page=None):
     
     # Permissions.  
     elif page == 'permissions':
-        permissions = PermissionListDetails(request, account.user_permissions.all(), exclude=['id', 'content_type_id', 'codename'], with_actions=False)
+        permissions = PermissionListDetails(request, account.user_permissions.all(), exclude=['id', 'content_type_id'], with_actions=False)
         return render_to_response('accounts/permissions.html', RequestContext(request, {'account': account, 'permissions': permissions}))
         
     # Details.
     details = AccountDetails(instance=account, exclude=['id', 'password', 'is_active', 'user_id'])
     return render_to_response('accounts/view.html', RequestContext(request, {'account': account, 'details': details}))
-     
+    
+@permission_required('auth.change_account')
 def account_edit(request, id):
     """Edit an account.
     """
@@ -126,6 +131,7 @@ def account_edit(request, id):
         form = AccountForm(instance=account)
     return render_to_response('accounts/edit.html', RequestContext(request, {'account': account, 'form': form}))
     
+@permission_required('auth.delete_account')
 def account_delete(request, id):
     """Delete an account.
     """
@@ -137,6 +143,7 @@ def account_delete(request, id):
         return redirect_to(request, url=account.get_absolute_url())
     return render_to_response('accounts/delete.html', RequestContext(request, {'account': account}))
     
+@permission_required('auth.change_group')
 def group_index(request):
     """Show a group list.
     """
@@ -156,6 +163,7 @@ def group_index(request):
         
     return render_to_response('accounts/groups/index.html', RequestContext(request, {'groups': groups}))
     
+@permission_required('auth.add_group')
 def group_add(request):
     """Add a new group.
     """
@@ -168,7 +176,8 @@ def group_add(request):
         form = AccountGroupForm()
 
     return render_to_response('accounts/groups/add.html', RequestContext(request, {'form': form}))
-    
+
+@permission_required('auth.change_group')   
 def group_view(request, id, page=None):
     """Show group details.
     """
@@ -176,13 +185,14 @@ def group_view(request, id, page=None):
     
     # Permissions.  
     if page == 'permissions':
-        permissions = PermissionListDetails(request, group.permissions.all(), exclude=['id', 'content_type_id', 'codename'], with_actions=False)
+        permissions = PermissionListDetails(request, group.permissions.all(), exclude=['id', 'content_type_id'], with_actions=False)
         return render_to_response('accounts/groups/permissions.html', RequestContext(request, {'group': group, 'permissions': permissions}))
         
     # Details.
     details = ModelDetails(instance=group)
     return render_to_response('accounts/groups/view.html', RequestContext(request, {'group': group, 'details': details}))
     
+@permission_required('auth.change_group')
 def group_edit(request, id):
     """Edit a group.
     """
@@ -195,7 +205,8 @@ def group_edit(request, id):
     else:
         form = AccountGroupForm(instance=group)
     return render_to_response('accounts/groups/edit.html', RequestContext(request, {'group': group, 'form': form}))
-    
+  
+@permission_required('auth.delete_group')
 def group_delete(request, id):
     """Delete a group.
     """

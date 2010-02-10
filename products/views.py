@@ -23,6 +23,7 @@ __version__ = '$Revision$'
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
+from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -31,6 +32,7 @@ from prometeo.core.details import ModelDetails, ModelPaginatedListDetails
 from models import *
 from forms import *
 
+@permission_required('auth.change_uom')
 def uom_index(request):
     """Show a UOM list.
     """
@@ -49,7 +51,8 @@ def uom_index(request):
     uoms = ModelPaginatedListDetails(request, uoms)
         
     return render_to_response('products/uoms/index.html', RequestContext(request, {'uoms': uoms}))
-     
+ 
+@permission_required('auth.add_uom')    
 def uom_add(request):
     """Add a new UOM.
     """
@@ -62,14 +65,16 @@ def uom_add(request):
         form = UOMForm()
 
     return render_to_response('products/uoms/add.html', RequestContext(request, {'form': form}));
-     
+
+@permission_required('auth.change_uom')   
 def uom_view(request, id):
     """Show UOM details.
     """
     uom = get_object_or_404(UOM, pk=id)
     details = ModelDetails(instance=uom)
     return render_to_response('products/uoms/view.html', RequestContext(request, {'uom': uom, 'details': details}))
-     
+
+@permission_required('auth.change_uom')     
 def uom_edit(request, id):
     """Edit a UOM.
     """
@@ -82,7 +87,8 @@ def uom_edit(request, id):
     else:
         form = UOMForm(instance=uom)
     return render_to_response('products/uoms/edit.html', RequestContext(request, {'uom': uom, 'form': form}))
-    
+
+@permission_required('auth.delete_uom')    
 def uom_delete(request, id):
     """Delete a UOM.
     """
@@ -93,7 +99,8 @@ def uom_delete(request, id):
             return redirect_to(request, url='/products/uoms/');
         return redirect_to(request, url=uom.get_absolute_url())
     return render_to_response('products/uoms/delete.html', RequestContext(request, {'uom': uom}))
- 
+
+@permission_required('auth.change_uom_category') 
 def uom_category_index(request):
     """Show a UOM category list.
     """
@@ -112,7 +119,8 @@ def uom_category_index(request):
     categories = ModelPaginatedListDetails(request, categories)
         
     return render_to_response('products/uoms/categories/index.html', RequestContext(request, {'categories': categories}))
-     
+
+@permission_required('auth.add_uom_category')     
 def uom_category_add(request):
     """Add a new UOM category.
     """
@@ -125,7 +133,8 @@ def uom_category_add(request):
         form = UOMCategoryForm()
 
     return render_to_response('products/uoms/categories/add.html', RequestContext(request, {'form': form}));
-     
+
+@permission_required('auth.change_uom_category')      
 def uom_category_view(request, id, page=None):
     """Show UOM category details.
     """
@@ -139,7 +148,8 @@ def uom_category_view(request, id, page=None):
     # Details.
     details = ModelDetails(instance=category)
     return render_to_response('products/uoms/categories/view.html', RequestContext(request, {'category': category, 'details': details}))
-     
+
+@permission_required('auth.change_uom_category')      
 def uom_category_edit(request, id):
     """Edit a UOM category.
     """
@@ -152,7 +162,8 @@ def uom_category_edit(request, id):
     else:
         form = UOMCategoryForm(instance=category)
     return render_to_response('products/uoms/categories/edit.html', RequestContext(request, {'category': category, 'form': form}))
-    
+
+@permission_required('auth.delete_uom_category')     
 def uom_category_delete(request, id):
     """Delete a UOM category.
     """
@@ -163,7 +174,8 @@ def uom_category_delete(request, id):
             return redirect_to(request, url='/products/uoms/categories/');
         return redirect_to(request, url=category.get_absolute_url())
     return render_to_response('products/uoms/categories/delete.html', RequestContext(request, {'category': category}))
- 
+
+@permission_required('auth.change_product')  
 def product_index(request):
     """Show a product list.
     """
@@ -182,13 +194,15 @@ def product_index(request):
     products = ModelPaginatedListDetails(request, products, exclude=['id', 'description', 'uos', 'uom_to_uos'])
         
     return render_to_response('products/index.html', RequestContext(request, {'products': products}))
-     
+
+@permission_required('auth.add_product')      
 def product_add(request):
     """Add a new product.
     """
     wizard = ProductWizard(template="products/add.html")
     return wizard(request)
-     
+
+@permission_required('auth.change_product')      
 def product_view(request, id, page=None):
     """Show product details.
     """
@@ -202,7 +216,8 @@ def product_view(request, id, page=None):
     # Details.
     details = ModelDetails(instance=product)
     return render_to_response('products/view.html', RequestContext(request, {'product': product, 'details': details}))
-     
+
+@permission_required('auth.change_product')      
 def product_edit(request, id):
     """Edit a product.
     """
@@ -210,7 +225,8 @@ def product_edit(request, id):
     wizard = ProductWizard(initial=product, template="products/edit.html")
     wizard.extra_context['product'] = product
     return wizard(request)
-    
+
+@permission_required('auth.delete_product')     
 def product_delete(request, id):
     """Delete a product.
     """

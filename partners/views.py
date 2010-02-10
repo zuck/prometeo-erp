@@ -23,6 +23,7 @@ __version__ = '$Revision$'
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
+from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
 from django.db.models import Q
 
@@ -32,7 +33,8 @@ from prometeo.core.paginator import paginate
 from models import *
 from forms import *
 from details import PartnerListDetails
- 
+
+@permission_required('auth.change_partner')
 def partner_index(request):
     """Show a partner list.
     """
@@ -51,7 +53,8 @@ def partner_index(request):
     partners = PartnerListDetails(request, partners)
         
     return render_to_response('partners/index.html', RequestContext(request, {'partners': partners}))
-     
+
+@permission_required('auth.add_partner')     
 def partner_add(request):
     """Add a new partner.
     """
@@ -64,14 +67,16 @@ def partner_add(request):
         form = PartnerForm()
 
     return render_to_response('partners/add.html', RequestContext(request, {'form': form}));
-     
+
+@permission_required('auth.change_partner')     
 def partner_view(request, id):
     """Show partner details.
     """
     partner = get_object_or_404(Partner, pk=id)
     details = ModelDetails(instance=partner)
     return render_to_response('partners/view.html', RequestContext(request, {'partner': partner, 'details': details}))
-     
+
+@permission_required('auth.change_partner')     
 def partner_edit(request, id):
     """Edit a partner.
     """
@@ -84,7 +89,8 @@ def partner_edit(request, id):
     else:
         form = PartnerForm(instance=partner)
     return render_to_response('partners/edit.html', RequestContext(request, {'partner': partner, 'form': form}))
-    
+
+@permission_required('auth.delete_partner')    
 def partner_delete(request, id):
     """Delete a partner.
     """
