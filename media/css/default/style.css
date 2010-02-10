@@ -222,6 +222,17 @@ form p {
 
 .number { text-align: right; }
 
+.comment {
+    clear: both;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #666;
+    border-left: 1px solid #bbb;
+    background: #ffe;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
 .actions {
     float: left;
     width: 100%;
@@ -602,6 +613,6 @@ table.list td { text-align: left; }
 }
 
 #footer h6 {
-    font-size: 11px;
-    color: #555;
+    font-size: 10px;
+    color: #bbb;
 }

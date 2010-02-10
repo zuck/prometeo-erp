@@ -29,15 +29,17 @@ from django.db.models import fields
 from paginator import paginate
 
 def value_to_string(value):
+    output = value
     if isinstance(value, float):
-        return '%.2f' % value
+        output = '%.2f' % value
     elif isinstance(value, bool):
         if not value:
-            return '<span class="no">%s</span>' % _('No')
-        return '<span class="yes">%s</span>' % _('Yes')
+            output = '<span class="no">%s</span>' % _('No')
+        else:
+            output = '<span class="yes">%s</span>' % _('Yes')
     if not value:
-        return '<span class="disabled">%s</span>' % _('empty')
-    return value
+        output = '<span class="disabled">%s</span>' % _('empty')
+    return mark_safe(output)
 
 def field_to_value(field, instance):
     if isinstance(field, fields.related.RelatedField):
