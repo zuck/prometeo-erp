@@ -49,10 +49,13 @@ p { padding: 10px 0; }
 /* Base links */
 
 a {
-	color: #333;
 	font-weight: bold;
 	text-decoration: none;
 	padding: 5px 0;
+}
+
+a:link, a:visited {
+	color: #2278ba;
 }
 
 a:hover {
@@ -81,9 +84,11 @@ ul {
     list-style: none;
 }
 
+dl { padding: 2px 2px 0; }
+
 dt, dd {
-    padding: 10px 1%;
-    margin: 0;
+    padding: 10px 1.2%;
+    margin: 0 0 2px;
 	height: 1.4em;
 	overflow: auto;
 }
@@ -96,20 +101,22 @@ dt {
     clear: left;
     float: left;
     font-weight: bold;
-    width: 36%;
+    text-align: right;
+    width: 20%;
+	background: #e6e6e6 url(images/dt_bg.png) repeat-x bottom;
 }
 
 dd {
     float: right;
-    text-align: right;
-    width: 60%;
+    width: 75%;
+	background: #f2f2f2 url(images/tr_bg.png) repeat-x bottom;
 }
 
 table {
 	clear: both;
 }
 
-table tr { background: #f2f2f2; }
+table tr { background: #f2f2f2 url(images/tr_bg.png) repeat-x bottom; }
 
 table td {
     padding: 5px;
@@ -132,13 +139,13 @@ table tr td {
 form {
     float: left;
     width: 50%;
-    padding: 40px 1% 10px;
+    padding: 20px 1% 10px;
     margin: 10px 24%;
     border-top: 1px solid #ddd;
     border-right: 1px solid #999;
     border-bottom: 1px solid #666;
     border-left: 1px solid #bbb;
-    background: url(images/thead_bg.gif) repeat-x top;
+    background: #fff url(images/submenu.png) repeat-x bottom;
 }
 
 input[type="text"], input[type="password"], select, textarea {
@@ -191,7 +198,7 @@ input[type="submit"] {
     display: inline;
     background-color: transparent;
     border: none;
-	color: #333;
+	color: #2278ba;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -229,9 +236,12 @@ form p {
 
 .menu {
     float: right;
-    padding: 8px 0 10px;
+    padding: 10px 0;
     margin: 0;
-    border-bottom: 1px solid #d6d6d6;
+    border-top: none;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #666;
+    border-left: 1px solid #bbb;
     background: #fff url(images/submenu.png) repeat-x bottom;
     text-align: right;
 }
