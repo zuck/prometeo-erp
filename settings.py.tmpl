@@ -73,7 +73,7 @@ LANGUAGE_CODE = 'en'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+#    'django.template.loaders.eggs.load_template_source',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -109,7 +109,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.comments',
-    'prometeo.core'
+    'prometeo.core',
+#    'prometeo.partners',
+#    'prometeo.products',
+#    'prometeo.warehouses',
 )
 
 # Login options.
