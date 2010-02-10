@@ -68,7 +68,10 @@ table, dl, ul, ol {
 }
 
 table, dl {
-	border: 1px solid #ccc;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #666;
+    border-left: 1px solid #bbb;
     background: #fff;
 }
 
@@ -131,7 +134,10 @@ form {
     width: 50%;
     padding: 40px 1% 10px;
     margin: 10px 24%;
-    border: 1px solid #ccc;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #666;
+    border-left: 1px solid #bbb;
     background: url(images/thead_bg.gif) repeat-x top;
 }
 
@@ -481,10 +487,10 @@ table.list td { text-align: left; }
     position: absolute;
     width: auto;
     min-width: 160px;
-    border-right: 1px solid #666;
-    border-bottom: 1px solid #333;
+    border-top: 1px solid #bbb;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #444;
     border-left: 1px solid #999;
-    border-top: none;
 }
 
 #menu .menu_entry:hover .options a { float: left; }
