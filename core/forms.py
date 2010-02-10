@@ -56,10 +56,10 @@ class AccountForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super(AccountForm, self).save(commit=False)
-        self.save_m2m()
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
+            self.save_m2m()
             profile = user.get_profile()
             profile.language = self.cleaned_data["language"]
             profile.save()
