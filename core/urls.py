@@ -62,8 +62,6 @@ def autodiscover():
     if LOADING:
         return
     
-    print 'urls.autodiscover'
-    
     LOADING = True
 
     import imp

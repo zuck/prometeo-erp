@@ -86,8 +86,6 @@ def autodiscover():
     if LOADING:
         return
         
-    print 'menu.autodiscover'
-        
     LOADING = True
     
     import imp
