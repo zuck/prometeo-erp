@@ -22,7 +22,6 @@ __version__ = '$Revision$'
 
 from django.conf.urls.defaults import *
 from django.conf import settings
-import imp
 
 urlpatterns = patterns('',
 
@@ -54,11 +53,24 @@ urlpatterns = patterns('',
     (r'^accounts/groups/delete/(?P<id>\d+)/$', 'core.views.group_delete'),
 )
 
+LOADING = False
+
 def autodiscover():
     """ Auto discover urls of installed applications.
-    """    
+    """
+    global LOADING
+    if LOADING:
+        return
+    
+    print 'urls.autodiscover'
+    
+    LOADING = True
+
+    import imp
+    
     for app in settings.INSTALLED_APPS:
-        if app.startswith('django'):
+        if app.startswith('django')\
+        or app.startswith('prometeo.core'):
             continue
             
         # Step 1: find out the app's __path__.
@@ -77,3 +89,5 @@ def autodiscover():
         pkg, sep, name = app.rpartition('.')
         global urlpatterns
         urlpatterns += patterns("", (r'^%s/' % name, include('%s.urls' % app)))
+        
+    LOADING = False

@@ -76,10 +76,20 @@ class MenuBar(object):
 
 menubar = MenuBar()
 
+LOADING = False
+
 def autodiscover():
     """
     Auto-discover INSTALLED_APPS 'menu.py' files.
     """
+    global LOADING
+    if LOADING:
+        return
+        
+    print 'menu.autodiscover'
+        
+    LOADING = True
+    
     import imp
     from django.conf import settings
     
@@ -107,3 +117,5 @@ def autodiscover():
 
         # Step 3: import the app's 'menu' module.
         __import__("%s.menu" % app)
+        
+    LOADING = False
