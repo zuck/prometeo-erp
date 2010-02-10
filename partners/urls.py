@@ -30,12 +30,4 @@ urlpatterns = patterns('partners.views',
     (r'^view/(?P<id>\d+)/$', 'partner_view'),
     (r'^edit/(?P<id>\d+)/$', 'partner_edit'),
     (r'^delete/(?P<id>\d+)/$', 'partner_delete'),
-    
-    # Contacts.
-    """(r'^contacts/$', 'contact_index'),
-    (r'^contacts/add/$', 'contact_add'),
-    (r'^contacts/view/(?P<id>\d+)/$', 'contact_view'),
-    (r'^contacts/edit/(?P<id>\d+)/$', 'contact_edit'),
-    (r'^contacts/delete/(?P<id>\d+)/$', 'contact_delete'),
-    """
 )
