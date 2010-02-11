@@ -371,13 +371,13 @@ form .message {
 .in .verse { background-image: url(images/plus.png); }
 .out .verse { background-image: url(images/minus.png); }
 
-.low { background-color: #dbf6cd; }
-.medium { background-color: #fff7c0; }
-.high { background-color: #f6cdcd; }
-.critical { background-color: #f97878; }
+.low { background: #dbf6cd; }
+.medium { background: #fff7c0; }
+.high { background: #f6cdcd; }
+.critical { background: #f97878; }
 
-.completed { background-color: #dbf6cd; }
-.expired { background-color: #f6cdcd; }
+.completed { background: #dbf6cd; }
+.expired { background: #f6cdcd; }
 
 .managed { background: #f6cdcd; }
 .managed .name {
