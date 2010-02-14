@@ -1,0 +1,29 @@
+{% extends 'partners/layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb partner partner.get_absolute_url %}
+    {% add_crumb 'Contacts' partner.get_contacts_url %}
+    {% add_crumb job.contact %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Delete' %}</h3>
+    <form action="." method="post">
+        <div class="message">
+            <p class="warning">{% trans 'Are you sure you want to delete this contact and all its related informations?' %}</p>
+            <div class="actions">
+                <input class="ok" type="submit" name="yes" value="{% trans 'Yes' %}" />
+                <input class="cancel" type="submit" name="no" value="{% trans 'No' %}" />
+            </div>
+        </div>
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="{{ job.contact.get_absolute_url }}">{% trans 'View' %}</a></li>
+        <li><a class="edit" href="/partners/{{ partner.pk}}/contacts/edit/{{ job.pk }}/">{% trans 'Edit' %}</a></li>
+    </ul>
+{% endblock %}

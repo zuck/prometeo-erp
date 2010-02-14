@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from prometeo.core import details
 
@@ -69,18 +70,46 @@ class PartnerListDetails(details.ModelPaginatedListDetails):
         
 class PartnerJobListDetails(PartnerListDetails):
     def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        self._original_qs = queryset
         super(PartnerJobListDetails, self).__init__(request, [j.partner for j in queryset], fields, exclude, with_actions)
         if details.is_visible('role'):
             self._header.insert(-1, _('Role'))
             for i, instance in enumerate(queryset):
                 role = details.value_to_string(details.field_to_value(instance._meta.fields[3], instance))
                 self._rows[i].insert(-1, role)
+                
+    def actions_template(self, index, instance):
+        orig = self._original_qs[index]
+        
+        pattern = '<ul class="actions">\n'
+        
+        pattern += '\t<li><a class="view" href="%s">%s</a></li>\n' % (instance.get_absolute_url(), ugettext('View'))
+        pattern += '\t<li><a class="edit" href="/partners/contacts/%d/jobs/edit/%d/">%s</a></li>\n' % (orig.contact.pk, orig.pk, ugettext('Edit'))
+        pattern += '\t<li><a class="delete" href="/partners/contacts/%d/jobs/delete/%d/">%s</a></li>\n' % (orig.contact.pk, orig.pk, ugettext('Delete'))
+            
+        pattern += '</ul>'
+        
+        return pattern
 
 class ContactJobListDetails(ContactListDetails):
     def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        self._original_qs = queryset
         super(ContactJobListDetails, self).__init__(request, [j.contact for j in queryset], fields, exclude, with_actions)
         if details.is_visible('role'):
             self._header.insert(-1, _('Role'))
             for i, instance in enumerate(queryset):
                 role = details.value_to_string(details.field_to_value(instance._meta.fields[3], instance))
                 self._rows[i].insert(-1, role)
+                
+    def actions_template(self, index, instance):
+        orig = self._original_qs[index]
+        
+        pattern = '<ul class="actions">\n'
+        
+        pattern += '\t<li><a class="view" href="%s">%s</a></li>\n' % (instance.get_absolute_url(), ugettext('View'))
+        pattern += '\t<li><a class="edit" href="/partners/%d/contacts/edit/%d/">%s</a></li>\n' % (orig.partner.pk, orig.pk, ugettext('Edit'))
+        pattern += '\t<li><a class="delete" href="/partners/%d/contacts/delete/%d/">%s</a></li>\n' % (orig.partner.pk, orig.pk, ugettext('Delete'))
+            
+        pattern += '</ul>'
+        
+        return pattern

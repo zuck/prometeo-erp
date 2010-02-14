@@ -21,7 +21,7 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.contrib.auth.decorators import permission_required
@@ -125,7 +125,41 @@ def partner_add_contact(request, id):
     else:
         form = PartnerJobForm(instance=job)
 
-    return render_to_response('partners/add_contact.html', RequestContext(request, {'partner': partner, 'form': form}));    
+    return render_to_response('partners/add_contact.html', RequestContext(request, {'partner': partner, 'form': form}));
+    
+@permission_required('auth.change_partner')
+def partner_edit_contact(request, id, job_id):
+    """Edit a contact of the partner.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    job = get_object_or_404(Job, pk=job_id)
+    if job.partner != partner:
+        raise Http404
+    
+    if request.method == 'POST':
+        form = PartnerJobForm(request.POST, instance=job)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url=partner.get_contacts_url())
+    else:
+        form = PartnerJobForm(instance=job)
+
+    return render_to_response('partners/edit_contact.html', RequestContext(request, {'partner': partner, 'job': job, 'form': form}));
+    
+@permission_required('auth.change_partner')    
+def partner_delete_contact(request, id, job_id):
+    """Delete a partner's contact.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    job = get_object_or_404(Job, pk=job_id)
+    if job.partner != partner:
+        raise Http404
+
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            job.delete()
+        return redirect_to(request, url=partner.get_contacts_url())
+    return render_to_response('partners/delete_contact.html', RequestContext(request, {'partner': partner, 'job': job}))
 
 @permission_required('auth.change_contact')
 def contact_index(request):
@@ -218,6 +252,40 @@ def contact_add_job(request, id):
         form = ContactJobForm(instance=job)
 
     return render_to_response('partners/contacts/add_job.html', RequestContext(request, {'contact': contact, 'form': form}));
+    
+@permission_required('auth.change_contact')
+def contact_edit_job(request, id, job_id):
+    """Edit a job of the contact.
+    """
+    contact = get_object_or_404(Contact, pk=id)
+    job = get_object_or_404(Job, pk=job_id)
+    if job.contact != contact:
+        raise Http404
+    
+    if request.method == 'POST':
+        form = ContactJobForm(request.POST, instance=job)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url=contact.get_jobs_url())
+    else:
+        form = ContactJobForm(instance=job)
+
+    return render_to_response('partners/contacts/edit_job.html', RequestContext(request, {'contact': contact, 'job': job, 'form': form}));
+    
+@permission_required('auth.change_contact')    
+def contact_delete_job(request, id, job_id):
+    """Delete a contact's job.
+    """
+    contact = get_object_or_404(Contact, pk=id)
+    job = get_object_or_404(Job, pk=job_id)
+    if job.contact != contact:
+        raise Http404
+
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            job.delete()
+        return redirect_to(request, url=contact.get_jobs_url())
+    return render_to_response('partners/contacts/delete_job.html', RequestContext(request, {'contact': contact, 'job': job}))
     
 @permission_required('auth.change_role')
 def role_index(request):

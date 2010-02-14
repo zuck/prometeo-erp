@@ -31,6 +31,8 @@ urlpatterns = patterns('partners.views',
     (r'^edit/(?P<id>\d+)/$', 'partner_edit'),
     (r'^delete/(?P<id>\d+)/$', 'partner_delete'),
     (r'^(?P<id>\d+)/contacts/add/$', 'partner_add_contact'),
+    (r'^(?P<id>\d+)/contacts/edit/(?P<job_id>\d+)/$', 'partner_edit_contact'),
+    (r'^(?P<id>\d+)/contacts/delete/(?P<job_id>\d+)/$', 'partner_delete_contact'),
 
     # Contacts.
     (r'^contacts/$', 'contact_index'),
@@ -39,6 +41,8 @@ urlpatterns = patterns('partners.views',
     (r'^contacts/edit/(?P<id>\d+)/$', 'contact_edit'),
     (r'^contacts/delete/(?P<id>\d+)/$', 'contact_delete'),
     (r'^contacts/(?P<id>\d+)/jobs/add/$', 'contact_add_job'),
+    (r'^contacts/(?P<id>\d+)/jobs/edit/(?P<job_id>\d+)/$', 'contact_edit_job'),
+    (r'^contacts/(?P<id>\d+)/jobs/delete/(?P<job_id>\d+)/$', 'contact_delete_job'),
 
     # Roles.
     (r'^contacts/roles/$', 'role_index'),
