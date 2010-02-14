@@ -23,20 +23,84 @@ __version__ = '$Revision$'
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-class Contact(models.Model):
+class Address(models.Model):
+    ADDRESS_TYPES = (
+        ('0', _('preferred')),
+        ('1', _('invoice')),
+        ('2', _('delivery')),
+        ('3', _('other'))
+    )
     id = models.AutoField(primary_key=True)
-    firstname = models.CharField(max_length=255, verbose_name=_('firstname'))
-    lastname = models.CharField(max_length=255, verbose_name=_('lastname'))
-    email = models.EmailField(max_length=255, verbose_name=_('email'))
+    type = models.CharField(max_length=1, choices=ADDRESS_TYPES, default='0')
+    street = models.CharField(max_length=255, verbose_name=_('street'))
+    number = models.CharField(max_length=15, verbose_name=_('number'))
+    city = models.CharField(max_length=255, verbose_name=_('city'))
+    zip = models.CharField(max_length=255, verbose_name=_('zip'))
+    state = models.CharField(max_length=64, verbose_name=_('state/province'))
+    country = models.CharField(max_length=64, verbose_name=_('country'))
+        
+    def __unicode__(self):
+        return _('%(number)s, %(street)s - %(city)s, %(state)s %(zip)s - %(country)s') % {'number': self.number, 'street': self.street, 'city': self.city, 'state': self.state, 'zip': self.zip, 'country': self.country}
+
+class Telephone(models.Model):
+    PHONE_TYPES = (
+        ('0', _('land Line')),
+        ('1', _('mobile')),
+        ('2', _('fax'))
+    )
+    id = models.AutoField(primary_key=True)
+    number = models.CharField(max_length=30, verbose_name=_('number'))
+    type = models.CharField(max_length=1, choices=PHONE_TYPES, default='0', verbose_name=_('type'))
+        
+    def __unicode__(self):
+        return self.number
+    
+class Role(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, verbose_name=_('name'))
     
     def get_absolute_url(self):
-        return '/partners/contacts/view/%d' % self.id
+        return '/partners/contacts/roles/view/%d/' % self.pk
     
     def get_edit_url(self):
-        return '/partners/contacts/edit/%d/' % self.id
+        return '/partners/contacts/roles/edit/%d/' % self.pk
     
     def get_delete_url(self):
-        return '/partners/contacts/delete/%d/' % self.id
+        return '/partners/contacts/roles/delete/%d/' % self.pk
+        
+    def __unicode__(self):
+        return self.name
+
+class Contact(models.Model):
+    id = models.AutoField(primary_key=True)
+    nickname = models.SlugField(null=True, blank=True, verbose_name=_('nickname'))
+    firstname = models.CharField(max_length=255, verbose_name=_('firstname'))
+    lastname = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('lastname'))
+    ssn = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('SSN'))
+    email = models.EmailField(max_length=255, null=True, blank=True, verbose_name=_('email'))
+    url = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('url'))
+    addresses = models.ManyToManyField(Address, blank=True, verbose_name=_('addresses'))
+    telephones = models.ManyToManyField(Telephone, blank=True, verbose_name=_('telephone numbers'))
+    
+    def get_absolute_url(self):
+        return '/partners/contacts/view/%d/' % self.pk
+    
+    def get_edit_url(self):
+        return '/partners/contacts/edit/%d/' % self.pk
+    
+    def get_delete_url(self):
+        return '/partners/contacts/delete/%d/' % self.pk
+    
+    def get_jobs_url(self):
+        return self.get_absolute_url() + 'jobs/'
+    
+    def get_add_job_url(self):
+        return '/partners/contacts/%d/jobs/add/' % self.pk
+        
+    def __unicode__(self):
+        if self.nickname:
+            return self.nickname
+        return ' '.join([self.firstname, self.lastname])
 
 class Partner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -47,15 +111,30 @@ class Partner(models.Model):
     vat_number = models.CharField(max_length=64, unique=True, verbose_name=_('VAT number'))
     url = models.URLField(blank=True, verbose_name=_('url'))
     email = models.EmailField(blank=True, verbose_name=_('email'))
+    addresses = models.ManyToManyField(Address, blank=True, verbose_name=_('addresses'))
+    telephones = models.ManyToManyField(Telephone, blank=True, verbose_name=_('telephone numbers'))
+    contacts = models.ManyToManyField(Contact, through='partners.Job', blank=True, verbose_name=_('contacts'))
     
     def get_absolute_url(self):
-        return '/partners/view/%d/' % self.id
+        return '/partners/view/%d/' % self.pk
     
     def get_edit_url(self):
-        return '/partners/edit/%d/' % self.id
+        return '/partners/edit/%d/' % self.pk
     
     def get_delete_url(self):
-        return '/partners/delete/%d/' % self.id
+        return '/partners/delete/%d/' % self.pk
+        
+    def get_contacts_url(self):
+        return self.get_absolute_url() + 'contacts/'
         
     def __unicode__(self):
         return self.name
+        
+class Job(models.Model):
+    id = models.AutoField(primary_key=True)
+    contact = models.ForeignKey(Contact)
+    partner = models.ForeignKey(Partner)
+    role = models.ForeignKey(Role)
+        
+    def __unicode__(self):
+        return _("%s as %s for %s") % (self.contact, self.role, self.partner)

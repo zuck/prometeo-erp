@@ -1,0 +1,21 @@
+{% extends 'partners/layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'Contacts' '/partners/contacts/' %}
+    {% add_crumb 'Roles' '/partners/contacts/roles/' %}
+    {% add_crumb role %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <ul class="actions">
+        <li><a class="edit" href="{{ role.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ role.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>
+{% endblock %}

@@ -21,6 +21,12 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
-from prometeo.core.menu import Menu, menubar
+from prometeo.core.menu import Menu, MenuOption, menubar
 
-menubar.register(Menu(_('Partners'), '/partners/', 'partners'))
+menubar.register(
+    Menu(_('Partners'), '/partners/', 'partners', options=[
+        MenuOption(_('Contacts'), '/partners/contacts/', 'contacts', options=[
+            MenuOption(_('Roles'), '/partners/contacts/roles/', 'roles')
+        ]),
+    ])
+)

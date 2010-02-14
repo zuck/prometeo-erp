@@ -4,15 +4,16 @@
 {% load breadcrumbs %}
 
 {% block breadcrumbs %}
-    {% add_crumb 'Partners' %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'Contacts' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
-    <h3>{% trans 'Partners' %}</h3>
+    <h3>{% trans 'Contacts' %}</h3>
     {% include 'search_box.html' %}
-    {{ partners.as_table }}
+    {{ contacts.as_table }}
     <ul class="actions">
-        <li><a class="add" href="/partners/add/">{% trans 'Add' %}</a></li>
+        <li><a class="add" href="/partners/contacts/add/">{% trans 'Add' %}</a></li>
     </ul>
 {% endblock %}

@@ -21,10 +21,38 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django import forms
-from models import Partner
+from models import *
+        
+class RoleForm(forms.ModelForm):
+    """Form for role data.
+    """
+    class Meta:
+        model = Role
+
+class ContactForm(forms.ModelForm):
+    """Form for contact data.
+    """
+    class Meta:
+        model = Contact
+        exclude = ['id', 'addresses', 'telephones']
+
+class ContactJobForm(forms.ModelForm):
+    """Form for job data from a contact point of view.
+    """
+    class Meta:
+        model = Job
+        exclude = ['contact']
+        
+class PartnerJobForm(forms.ModelForm):
+    """Form for job data from a partner point of view.
+    """
+    class Meta:
+        model = Job
+        exclude = ['partner']
 
 class PartnerForm(forms.ModelForm):
     """Form for partner data.
     """
     class Meta:
         model = Partner
+        exclude = ['id', 'addresses', 'telephones', 'contacts']

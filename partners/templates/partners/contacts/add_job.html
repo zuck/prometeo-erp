@@ -5,6 +5,9 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'Contacts' '/partners/contacts/' %}
+    {% add_crumb contact contact.get_absolute_url %}
+    {% add_crumb 'Jobs' contact.get_jobs_url %}
     {% add_crumb 'Add' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}

@@ -1,9 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'partners/layout.html' %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block title %}{% trans 'Partners' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Partners' '/partners/' %}
@@ -12,11 +10,16 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        <li><a class="view" href="{{ partner.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="contacts" href="{{ partner.get_contacts_url }}">{% trans 'Contacts' %}</a></li>
+    </ul>
+    {% block page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <ul class="actions">
-        <li><a class="edit" href="/partners/edit/{{ partner.id }}/">{% trans 'Edit' %}</a></li>
-        <li><a class="delete" href="/partners/delete/{{ partner.id }}/">{% trans 'Delete' %}</a></li>
-        <li><a class="people" href="/partners/">{% trans 'Partners' %}</a></li>
+        <li><a class="edit" href="{{ partner.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ partner.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
+    {% endblock %}
 {% endblock %}

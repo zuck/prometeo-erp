@@ -24,6 +24,34 @@ from django.utils.translation import ugettext_lazy as _
 
 from prometeo.core import details
 
+class ExtendedModelDetails(details.ModelDetails):
+    def __init__(self, instance, fields=[], exclude=['id']):
+        super(ExtendedModelDetails, self).__init__(instance, fields, exclude)
+        
+        # Add addresses as field instances.
+        if details.is_visible('addresses', fields, exclude):
+            for i, address in enumerate(instance.addresses.all()):
+                type = address.get_type_display()
+                addr = details.value_to_string(address)
+                self.add_field(_('Address #%(num)s (%(type)s)') % {'num': i+1, 'type': type}, addr)
+        
+        # Add telephones as field instances.
+        if details.is_visible('telephones', fields, exclude):
+            for i, telephone in enumerate(instance.telephones.all()):
+                type = telephone.get_type_display()
+                tel = details.value_to_string(telephone)
+                self.add_field(_('Telephone #%(num)s (%(type)s)') % {'num': i+1, 'type': type}, tel)
+    
+
+class ContactDetails(ExtendedModelDetails):
+    pass
+
+class PartnerDetails(ExtendedModelDetails):
+    pass
+    
+class ContactListDetails(details.ModelPaginatedListDetails):
+    pass
+
 class PartnerListDetails(details.ModelPaginatedListDetails):
     def row_template(self, row, index):
         i = self._header.index(_('managed'))
@@ -38,3 +66,21 @@ class PartnerListDetails(details.ModelPaginatedListDetails):
             value = row[index]
             return u'\t\t<td class="name"><span class="sign">(*)</span>%s</td>\n' % details.value_to_string(value)
         return super(PartnerListDetails, self).column_template(row, index)
+        
+class PartnerJobListDetails(PartnerListDetails):
+    def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        super(PartnerJobListDetails, self).__init__(request, [j.partner for j in queryset], fields, exclude, with_actions)
+        if details.is_visible('role'):
+            self._header.insert(-1, _('Role'))
+            for i, instance in enumerate(queryset):
+                role = details.value_to_string(details.field_to_value(instance._meta.fields[3], instance))
+                self._rows[i].insert(-1, role)
+
+class ContactJobListDetails(ContactListDetails):
+    def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        super(ContactJobListDetails, self).__init__(request, [j.contact for j in queryset], fields, exclude, with_actions)
+        if details.is_visible('role'):
+            self._header.insert(-1, _('Role'))
+            for i, instance in enumerate(queryset):
+                role = details.value_to_string(details.field_to_value(instance._meta.fields[3], instance))
+                self._rows[i].insert(-1, role)

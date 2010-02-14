@@ -27,7 +27,23 @@ urlpatterns = patterns('partners.views',
     # Partners.
     (r'^$', 'partner_index'),
     (r'^add/$', 'partner_add'),
-    (r'^view/(?P<id>\d+)/$', 'partner_view'),
+    (r'^view/(?P<id>\d+)/(?P<page>\w*)/*$', 'partner_view'),
     (r'^edit/(?P<id>\d+)/$', 'partner_edit'),
     (r'^delete/(?P<id>\d+)/$', 'partner_delete'),
+    (r'^(?P<id>\d+)/contacts/add/$', 'partner_add_contact'),
+
+    # Contacts.
+    (r'^contacts/$', 'contact_index'),
+    (r'^contacts/add/$', 'contact_add'),
+    (r'^contacts/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'contact_view'),
+    (r'^contacts/edit/(?P<id>\d+)/$', 'contact_edit'),
+    (r'^contacts/delete/(?P<id>\d+)/$', 'contact_delete'),
+    (r'^contacts/(?P<id>\d+)/jobs/add/$', 'contact_add_job'),
+
+    # Roles.
+    (r'^contacts/roles/$', 'role_index'),
+    (r'^contacts/roles/add/$', 'role_add'),
+    (r'^contacts/roles/view/(?P<id>\d+)/$', 'role_view'),
+    (r'^contacts/roles/edit/(?P<id>\d+)/$', 'role_edit'),
+    (r'^contacts/roles/delete/(?P<id>\d+)/$', 'role_delete'),
 )

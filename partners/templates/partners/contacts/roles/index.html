@@ -1,0 +1,20 @@
+{% extends 'partners/layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'Contacts' '/partners/contacts/' %}
+    {% add_crumb 'Roles' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Roles' %}</h3>
+    {% include 'search_box.html' %}
+    {{ roles.as_table }}
+    <ul class="actions">
+        <li><a class="add" href="/partners/contacts/roles/add/">{% trans 'Add' %}</a></li>
+    </ul>
+{% endblock %}

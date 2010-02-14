@@ -1,0 +1,26 @@
+{% extends 'partners/layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'Contacts' '/partners/contacts/' %}
+    {% add_crumb contact %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <ul class="menu">
+        <li><a class="view" href="{{ contact.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="jobs" href="{{ contact.get_jobs_url }}">{% trans 'Jobs' %}</a></li>
+    </ul>
+    {% block page %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <ul class="actions">
+        <li><a class="edit" href="{{ contact.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ contact.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>
+    {% endblock %}
+{% endblock %}

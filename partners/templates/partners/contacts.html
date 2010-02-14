@@ -1,0 +1,19 @@
+{% extends 'partners/view.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb partner partner.get_absolute_url %}
+    {% add_crumb 'Contacts' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block page %}
+    <h3>{% trans 'Contacts' %}</h3>
+    {{ contacts.as_table }}
+    <ul class="actions">
+        <li><a class="add" href="{{ partner.get_add_contact_url }}">{% trans 'Add' %}</a></li>
+    </ul>
+{% endblock %}
