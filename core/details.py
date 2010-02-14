@@ -163,12 +163,12 @@ class ModelListDetails(ListDetails):
                 data.append((f.verbose_name, rows))
             if with_actions:
                 rows = []
-                for i in queryset:
-                    rows.append(self.actions_template(i))
+                for i, instance in enumerate(queryset):
+                    rows.append(self.actions_template(i, instance))
                 data.append((_('actions'), rows))
         super(ModelListDetails, self).__init__(data)
         
-    def actions_template(self, instance):
+    def actions_template(self, index, instance):
         pattern = '<ul class="actions">\n'
         if hasattr(instance, 'get_absolute_url') and instance.get_absolute_url():
             pattern += '\t<li><a class="view" href="%s">%s</a></li>\n' % (instance.get_absolute_url(), _('View'))
