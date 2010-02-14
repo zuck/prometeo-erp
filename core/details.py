@@ -164,17 +164,21 @@ class ModelListDetails(ListDetails):
             if with_actions:
                 rows = []
                 for i in queryset:
-                    pattern = '<ul class="actions">\n'
-                    if hasattr(i, 'get_absolute_url') and i.get_absolute_url():
-                        pattern += '\t<li><a class="view" href="%s">%s</a></li>\n' % (i.get_absolute_url(), _('View'))
-                    if hasattr(i, 'get_edit_url') and i.get_edit_url():
-                        pattern += '\t<li><a class="edit" href="%s">%s</a></li>\n' % (i.get_edit_url(), _('Edit'))
-                    if hasattr(i, 'get_delete_url') and i.get_delete_url():
-                        pattern += '\t<li><a class="delete" href="%s">%s</a></li>\n' % (i.get_delete_url(), _('Delete'))
-                    pattern += '</ul>'
-                    rows.append(pattern)
+                    rows.append(self.actions_template(i))
                 data.append((_('actions'), rows))
         super(ModelListDetails, self).__init__(data)
+        
+    def actions_template(self, instance):
+        pattern = '<ul class="actions">\n'
+        if hasattr(instance, 'get_absolute_url') and instance.get_absolute_url():
+            pattern += '\t<li><a class="view" href="%s">%s</a></li>\n' % (instance.get_absolute_url(), _('View'))
+        if hasattr(instance, 'get_edit_url') and instance.get_edit_url():
+            pattern += '\t<li><a class="edit" href="%s">%s</a></li>\n' % (instance.get_edit_url(), _('Edit'))
+        if hasattr(instance, 'get_delete_url') and instance.get_delete_url():
+            pattern += '\t<li><a class="delete" href="%s">%s</a></li>\n' % (instance.get_delete_url(), _('Delete'))
+        pattern += '</ul>'
+        
+        return pattern
         
 class ModelPaginatedListDetails(ModelListDetails):
     def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
