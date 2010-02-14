@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-14 18:11+0100\n"
+"POT-Creation-Date: 2010-02-14 19:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,27 +16,67 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: details.py:36
+#: details.py:37
 #, python-format
 msgid "Address #%(num)s (%(type)s)"
 msgstr "Indirizzo #%(num)s (%(type)s)"
 
-#: details.py:43
+#: details.py:44
 #, python-format
 msgid "Telephone #%(num)s (%(type)s)"
 msgstr "Telefono #%(num)s (%(type)s)"
 
-#: details.py:57 details.py:63 models.py:108
+#: details.py:58 details.py:64 models.py:108
 msgid "managed"
 msgstr "gestita"
 
-#: details.py:64 models.py:60 models.py:107
+#: details.py:65 models.py:60 models.py:107
 msgid "name"
 msgstr "nome"
 
-#: details.py:74 details.py:83
+#: details.py:76 details.py:99
 msgid "Role"
 msgstr "Ruolo"
+
+#: details.py:86 details.py:109 templates/partners/delete.html:24
+#: templates/partners/delete_contact.html:26 templates/partners/edit.html:21
+#: templates/partners/edit_contact.html:23
+#: templates/partners/contacts/delete.html:25
+#: templates/partners/contacts/delete_job.html:27
+#: templates/partners/contacts/edit.html:22
+#: templates/partners/contacts/edit_job.html:24
+#: templates/partners/contacts/roles/delete.html:26
+#: templates/partners/contacts/roles/edit.html:23
+msgid "View"
+msgstr ""
+
+#: details.py:87 details.py:110 templates/partners/delete.html:25
+#: templates/partners/delete_contact.html:27 templates/partners/edit.html:13
+#: templates/partners/edit_contact.html:15 templates/partners/view.html:21
+#: templates/partners/contacts/delete.html:26
+#: templates/partners/contacts/delete_job.html:28
+#: templates/partners/contacts/edit.html:14
+#: templates/partners/contacts/edit_job.html:16
+#: templates/partners/contacts/view.html:22
+#: templates/partners/contacts/roles/delete.html:27
+#: templates/partners/contacts/roles/edit.html:15
+#: templates/partners/contacts/roles/view.html:18
+msgid "Edit"
+msgstr ""
+
+#: details.py:88 details.py:111 templates/partners/delete.html:13
+#: templates/partners/delete_contact.html:15 templates/partners/edit.html:22
+#: templates/partners/edit_contact.html:24 templates/partners/view.html:22
+#: templates/partners/contacts/delete.html:14
+#: templates/partners/contacts/delete_job.html:16
+#: templates/partners/contacts/edit.html:23
+#: templates/partners/contacts/edit_job.html:25
+#: templates/partners/contacts/view.html:23
+#: templates/partners/contacts/roles/delete.html:15
+#: templates/partners/contacts/roles/edit.html:24
+#: templates/partners/contacts/roles/view.html:19
+msgid "Delete"
+msgstr ""
 
 #: menu.py:27 templates/partners/index.html:12
 #: templates/partners/layout.html:5
@@ -73,7 +113,6 @@ msgid "street"
 msgstr "via"
 
 #: models.py:36 models.py:52
-#, fuzzy
 msgid "number"
 msgstr "numero"
 
@@ -179,22 +218,14 @@ msgid "Add"
 msgstr ""
 
 #: templates/partners/add.html:17 templates/partners/add_contact.html:19
-#: templates/partners/edit.html:17 templates/partners/contacts/add.html:18
+#: templates/partners/edit.html:17 templates/partners/edit_contact.html:19
+#: templates/partners/contacts/add.html:18
 #: templates/partners/contacts/add_job.html:20
 #: templates/partners/contacts/edit.html:18
+#: templates/partners/contacts/edit_job.html:20
 #: templates/partners/contacts/roles/add.html:19
 #: templates/partners/contacts/roles/edit.html:19
 msgid "Save"
-msgstr ""
-
-#: templates/partners/delete.html:13 templates/partners/edit.html:22
-#: templates/partners/view.html:22 templates/partners/contacts/delete.html:14
-#: templates/partners/contacts/edit.html:23
-#: templates/partners/contacts/view.html:23
-#: templates/partners/contacts/roles/delete.html:15
-#: templates/partners/contacts/roles/edit.html:24
-#: templates/partners/contacts/roles/view.html:19
-msgid "Delete"
 msgstr ""
 
 #: templates/partners/delete.html:16
@@ -205,35 +236,28 @@ msgstr ""
 "Sei sicuro di voler cancellare i dati di questo partner e di tutte le "
 "informazioni associate?"
 
-#: templates/partners/delete.html:18
+#: templates/partners/delete.html:18 templates/partners/delete_contact.html:20
 #: templates/partners/contacts/delete.html:19
+#: templates/partners/contacts/delete_job.html:21
 #: templates/partners/contacts/roles/delete.html:20
 msgid "Yes"
 msgstr ""
 
-#: templates/partners/delete.html:19
+#: templates/partners/delete.html:19 templates/partners/delete_contact.html:21
 #: templates/partners/contacts/delete.html:20
+#: templates/partners/contacts/delete_job.html:22
 #: templates/partners/contacts/roles/delete.html:21
 msgid "No"
 msgstr ""
 
-#: templates/partners/delete.html:24 templates/partners/edit.html:21
-#: templates/partners/contacts/delete.html:25
-#: templates/partners/contacts/edit.html:22
-#: templates/partners/contacts/roles/delete.html:26
-#: templates/partners/contacts/roles/edit.html:23
-msgid "View"
+#: templates/partners/delete_contact.html:18
+#: templates/partners/contacts/delete.html:17
+msgid ""
+"Are you sure you want to delete this contact and all its related "
+"informations?"
 msgstr ""
-
-#: templates/partners/delete.html:25 templates/partners/edit.html:13
-#: templates/partners/view.html:21 templates/partners/contacts/delete.html:26
-#: templates/partners/contacts/edit.html:14
-#: templates/partners/contacts/view.html:22
-#: templates/partners/contacts/roles/delete.html:27
-#: templates/partners/contacts/roles/edit.html:15
-#: templates/partners/contacts/roles/view.html:18
-msgid "Edit"
-msgstr ""
+"Sei sicuro di voler cancellare i dati di questo contatto e di tutte le "
+"informazioni associate?"
 
 #: templates/partners/view.html:14 templates/partners/view.html.py:18
 #: templates/partners/contacts/view.html:15
@@ -242,12 +266,11 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: templates/partners/contacts/delete.html:17
+#: templates/partners/contacts/delete_job.html:19
 msgid ""
-"Are you sure you want to delete this contact and all its related "
-"informations?"
+"Are you sure you want to delete this job and all its related informations?"
 msgstr ""
-"Sei sicuro di voler cancellare i dati di questo contatto e di tutte le "
+"Sei sicuro di voler cancellare i dati di questo impiego e di tutte le "
 "informazioni associate?"
 
 #: templates/partners/contacts/jobs.html:15
