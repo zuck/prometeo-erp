@@ -60,6 +60,9 @@ def field_to_value(field, instance):
             return False
         return True
     return field.value_from_object(instance)
+    
+def is_visible(field, fields=[], exclude=[]):
+    return (len(fields) == 0 or field in fields) and field not in exclude
 
 class Details(StrAndUnicode):
     def __init__(self, fields=[]):
@@ -99,8 +102,8 @@ class Details(StrAndUnicode):
 
 class ModelDetails(Details):
     def __init__(self, instance, fields=[], exclude=['id']):
-        field_list = [f for f in instance._meta.fields if len(fields) == 0 or f.attname in fields]
-        fields = [(f.verbose_name, field_to_value(f, instance)) for f in field_list if f.attname not in exclude]
+        field_list = [f for f in instance._meta.fields if is_visible(f.attname, fields, exclude)]
+        fields = [(f.verbose_name, field_to_value(f, instance)) for f in field_list]
         super(ModelDetails, self).__init__(fields)
         
 class ListDetails(StrAndUnicode):
@@ -152,7 +155,7 @@ class ModelListDetails(ListDetails):
         data = []
         if len(queryset) > 0:
             meta = queryset[0]._meta
-            field_list = [f for f in meta.fields if (len(fields) == 0 or f.attname in fields) and f.attname not in exclude]
+            field_list = [f for f in meta.fields if is_visible(f.attname, fields, exclude)]
             for f in field_list:
                 rows = []
                 for instance in queryset:
