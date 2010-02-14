@@ -37,7 +37,7 @@ def value_to_string(value):
             output = '<span class="no">%s</span>' % _('No')
         else:
             output = '<span class="yes">%s</span>' % _('Yes')
-    if not value:
+    elif not value:
         output = '<span class="disabled">%s</span>' % _('empty')
     return mark_safe(output)
 
