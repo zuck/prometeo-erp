@@ -137,4 +137,4 @@ class Job(models.Model):
     role = models.ForeignKey(Role)
         
     def __unicode__(self):
-        return _("%s as %s for %s") % (self.contact, self.role, self.partner)
+        return _("%(contact)s as %(role)s for %(partner)s") % {'contact': self.contact, 'role': self.role, 'partner': self.partner}
