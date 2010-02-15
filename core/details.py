@@ -48,6 +48,10 @@ def field_to_value(field, instance):
             return '<a href="%s">%s</a>' % (relationship.get_absolute_url(), relationship)
         except AttributeError:
             return relationship
+    elif isinstance(field, fields.URLField):
+        url = field.value_from_object(instance)
+        if url:
+            return '<a href="%s">%s</a>' % (url, url)
     elif isinstance(field, fields.EmailField):
         email = field.value_from_object(instance)
         if email:

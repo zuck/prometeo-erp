@@ -78,7 +78,7 @@ class Contact(models.Model):
     lastname = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('lastname'))
     ssn = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('SSN'))
     email = models.EmailField(max_length=255, null=True, blank=True, verbose_name=_('email'))
-    url = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('url'))
+    url = models.URLField(max_length=255, null=True, blank=True, verbose_name=_('url'))
     addresses = models.ManyToManyField(Address, blank=True, verbose_name=_('addresses'))
     telephones = models.ManyToManyField(Telephone, blank=True, verbose_name=_('telephone numbers'))
     
