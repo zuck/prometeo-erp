@@ -35,7 +35,7 @@ from models import *
 from forms import *
 from details import *
 
-@permission_required('auth.change_partner')
+@permission_required('partners.change_partner')
 def partner_index(request):
     """Show a partner list.
     """
@@ -55,7 +55,7 @@ def partner_index(request):
         
     return render_to_response('partners/index.html', RequestContext(request, {'partners': partners}))
 
-@permission_required('auth.add_partner')     
+@permission_required('partners.add_partner')     
 def partner_add(request):
     """Add a new partner.
     """
@@ -69,7 +69,7 @@ def partner_add(request):
 
     return render_to_response('partners/add.html', RequestContext(request, {'form': form}));
 
-@permission_required('auth.change_partner')     
+@permission_required('partners.change_partner')     
 def partner_view(request, id, page=None):
     """Show partner details.
     """
@@ -84,7 +84,7 @@ def partner_view(request, id, page=None):
     details = PartnerDetails(instance=partner)
     return render_to_response('partners/view.html', RequestContext(request, {'partner': partner, 'details': details}))
 
-@permission_required('auth.change_partner')     
+@permission_required('partners.change_partner')     
 def partner_edit(request, id):
     """Edit a partner.
     """
@@ -98,7 +98,7 @@ def partner_edit(request, id):
         form = PartnerForm(instance=partner)
     return render_to_response('partners/edit.html', RequestContext(request, {'partner': partner, 'form': form}))
 
-@permission_required('auth.delete_partner')    
+@permission_required('partners.delete_partner')    
 def partner_delete(request, id):
     """Delete a partner.
     """
@@ -110,7 +110,7 @@ def partner_delete(request, id):
         return redirect_to(request, url=partner.get_absolute_url())
     return render_to_response('partners/delete.html', RequestContext(request, {'partner': partner}))
     
-@permission_required('auth.change_partner')
+@permission_required('partners.change_partner')
 def partner_add_contact(request, id):
     """Add a new contact for the partner.
     """
@@ -127,7 +127,7 @@ def partner_add_contact(request, id):
 
     return render_to_response('partners/add_contact.html', RequestContext(request, {'partner': partner, 'form': form}));
     
-@permission_required('auth.change_partner')
+@permission_required('partners.change_partner')
 def partner_edit_contact(request, id, job_id):
     """Edit a contact of the partner.
     """
@@ -146,7 +146,7 @@ def partner_edit_contact(request, id, job_id):
 
     return render_to_response('partners/edit_contact.html', RequestContext(request, {'partner': partner, 'job': job, 'form': form}));
     
-@permission_required('auth.change_partner')    
+@permission_required('partners.change_partner')    
 def partner_delete_contact(request, id, job_id):
     """Delete a partner's contact.
     """
@@ -161,7 +161,7 @@ def partner_delete_contact(request, id, job_id):
         return redirect_to(request, url=partner.get_contacts_url())
     return render_to_response('partners/delete_contact.html', RequestContext(request, {'partner': partner, 'job': job}))
 
-@permission_required('auth.change_contact')
+@permission_required('partners.change_contact')
 def contact_index(request):
     """Show a contact list.
     """
@@ -181,7 +181,7 @@ def contact_index(request):
         
     return render_to_response('partners/contacts/index.html', RequestContext(request, {'contacts': contacts}))
 
-@permission_required('auth.add_contact')     
+@permission_required('partners.add_contact')     
 def contact_add(request):
     """Add a new contact.
     """
@@ -195,7 +195,7 @@ def contact_add(request):
 
     return render_to_response('partners/contacts/add.html', RequestContext(request, {'form': form}));
 
-@permission_required('auth.change_contact')     
+@permission_required('partners.change_contact')     
 def contact_view(request, id, page=None):
     """Show contact details.
     """
@@ -210,7 +210,7 @@ def contact_view(request, id, page=None):
     details = ContactDetails(instance=contact)
     return render_to_response('partners/contacts/view.html', RequestContext(request, {'contact': contact, 'details': details}))
 
-@permission_required('auth.change_contact')     
+@permission_required('partners.change_contact')     
 def contact_edit(request, id):
     """Edit a contact.
     """
@@ -224,7 +224,7 @@ def contact_edit(request, id):
         form = ContactForm(instance=contact)
     return render_to_response('partners/contacts/edit.html', RequestContext(request, {'contact': contact, 'form': form}))
 
-@permission_required('auth.delete_contact')    
+@permission_required('partners.delete_contact')    
 def contact_delete(request, id):
     """Delete a contact.
     """
@@ -236,7 +236,7 @@ def contact_delete(request, id):
         return redirect_to(request, url=contact.get_absolute_url())
     return render_to_response('partners/contacts/delete.html', RequestContext(request, {'contact': contact}))
     
-@permission_required('auth.change_contact')
+@permission_required('partners.change_contact')
 def contact_add_job(request, id):
     """Add a new job for the contact.
     """
@@ -253,7 +253,7 @@ def contact_add_job(request, id):
 
     return render_to_response('partners/contacts/add_job.html', RequestContext(request, {'contact': contact, 'form': form}));
     
-@permission_required('auth.change_contact')
+@permission_required('partners.change_contact')
 def contact_edit_job(request, id, job_id):
     """Edit a job of the contact.
     """
@@ -272,7 +272,7 @@ def contact_edit_job(request, id, job_id):
 
     return render_to_response('partners/contacts/edit_job.html', RequestContext(request, {'contact': contact, 'job': job, 'form': form}));
     
-@permission_required('auth.change_contact')    
+@permission_required('partners.change_contact')    
 def contact_delete_job(request, id, job_id):
     """Delete a contact's job.
     """
@@ -287,7 +287,7 @@ def contact_delete_job(request, id, job_id):
         return redirect_to(request, url=contact.get_jobs_url())
     return render_to_response('partners/contacts/delete_job.html', RequestContext(request, {'contact': contact, 'job': job}))
     
-@permission_required('auth.change_role')
+@permission_required('partners.change_role')
 def role_index(request):
     """Show a role list.
     """
@@ -307,7 +307,7 @@ def role_index(request):
         
     return render_to_response('partners/contacts/roles/index.html', RequestContext(request, {'roles': roles}))
 
-@permission_required('auth.add_role')     
+@permission_required('partners.add_role')     
 def role_add(request):
     """Add a new role.
     """
@@ -321,7 +321,7 @@ def role_add(request):
 
     return render_to_response('partners/contacts/roles/add.html', RequestContext(request, {'form': form}));
 
-@permission_required('auth.change_role')     
+@permission_required('partners.change_role')     
 def role_view(request, id, page=None):
     """Show role details.
     """
@@ -329,7 +329,7 @@ def role_view(request, id, page=None):
     details = ModelDetails(instance=role)
     return render_to_response('partners/contacts/roles/view.html', RequestContext(request, {'role': role, 'details': details}))
 
-@permission_required('auth.change_role')     
+@permission_required('partners.change_role')     
 def role_edit(request, id):
     """Edit a role.
     """
@@ -343,7 +343,7 @@ def role_edit(request, id):
         form = RoleForm(instance=role)
     return render_to_response('partners/contacts/roles/edit.html', RequestContext(request, {'role': role, 'form': form}))
 
-@permission_required('auth.delete_role')    
+@permission_required('partners.delete_role')    
 def role_delete(request, id):
     """Delete a role.
     """
