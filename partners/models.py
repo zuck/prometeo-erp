@@ -127,6 +127,9 @@ class Partner(models.Model):
     def get_contacts_url(self):
         return self.get_absolute_url() + 'contacts/'
         
+    def get_add_contact_url(self):
+        return '/partners/%d/contacts/add/' % self.pk
+        
     def __unicode__(self):
         return self.name
         

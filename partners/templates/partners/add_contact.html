@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Partners' '/partners/' %}
-    {% add_crumb partner partners.get_absolute_url %}
+    {% add_crumb partner partner.get_absolute_url %}
     {% add_crumb 'Contacts' partner.get_contacts_url %}
     {% add_crumb 'Add' %}
     <h2>{% render_breadcrumbs %}</h2>
