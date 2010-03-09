@@ -199,7 +199,7 @@ def product_index(request):
 def product_add(request):
     """Add a new product.
     """
-    wizard = ProductWizard(template="products/add.html")
+    wizard = ProductWizard(template='products/add.html')
     return wizard(request)
 
 @permission_required('products.change_product')      
@@ -222,7 +222,7 @@ def product_edit(request, id):
     """Edit a product.
     """
     product = get_object_or_404(Product, pk=id)
-    wizard = ProductWizard(initial=product, template="products/edit.html")
+    wizard = ProductWizard(initial=product, template='products/edit.html')
     wizard.extra_context['product'] = product
     return wizard(request)
 
