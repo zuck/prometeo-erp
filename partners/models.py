@@ -31,7 +31,7 @@ class Address(models.Model):
         ('3', _('other'))
     )
     id = models.AutoField(primary_key=True)
-    type = models.CharField(max_length=1, choices=ADDRESS_TYPES, default='0')
+    type = models.CharField(max_length=1, choices=ADDRESS_TYPES, default='0', verbose_name=_('type'))
     street = models.CharField(max_length=255, verbose_name=_('street'))
     number = models.CharField(max_length=15, verbose_name=_('number'))
     city = models.CharField(max_length=255, verbose_name=_('city'))
