@@ -100,7 +100,7 @@ def uom_delete(request, id):
         return redirect_to(request, url=uom.get_absolute_url())
     return render_to_response('products/uoms/delete.html', RequestContext(request, {'uom': uom}))
 
-@permission_required('products.change_uom_category') 
+@permission_required('products.change_uomcategory') 
 def uom_category_index(request):
     """Show a UOM category list.
     """
@@ -120,7 +120,7 @@ def uom_category_index(request):
         
     return render_to_response('products/uoms/categories/index.html', RequestContext(request, {'categories': categories}))
 
-@permission_required('products.add_uom_category')     
+@permission_required('products.add_uomcategory')     
 def uom_category_add(request):
     """Add a new UOM category.
     """
@@ -134,7 +134,7 @@ def uom_category_add(request):
 
     return render_to_response('products/uoms/categories/add.html', RequestContext(request, {'form': form}));
 
-@permission_required('products.change_uom_category')      
+@permission_required('products.change_uomcategory')      
 def uom_category_view(request, id, page=None):
     """Show UOM category details.
     """
@@ -149,7 +149,7 @@ def uom_category_view(request, id, page=None):
     details = ModelDetails(instance=category)
     return render_to_response('products/uoms/categories/view.html', RequestContext(request, {'category': category, 'details': details}))
 
-@permission_required('products.change_uom_category')      
+@permission_required('products.change_uomcategory')      
 def uom_category_edit(request, id):
     """Edit a UOM category.
     """
@@ -163,7 +163,7 @@ def uom_category_edit(request, id):
         form = UOMCategoryForm(instance=category)
     return render_to_response('products/uoms/categories/edit.html', RequestContext(request, {'category': category, 'form': form}))
 
-@permission_required('products.delete_uom_category')     
+@permission_required('products.delete_uomcategory')     
 def uom_category_delete(request, id):
     """Delete a UOM category.
     """
