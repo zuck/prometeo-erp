@@ -88,7 +88,7 @@ def partner_view(request, id, page=None):
 def partner_edit(request, id):
     """Edit a partner.
     """
-    partner = Partner.objects.get(pk=id)
+    partner = get_object_or_404(Partner, pk=id)
     if request.method == 'POST':
         form = PartnerForm(request.POST, instance=partner)
         if form.is_valid():
@@ -214,7 +214,7 @@ def contact_view(request, id, page=None):
 def contact_edit(request, id):
     """Edit a contact.
     """
-    contact = Contact.objects.get(pk=id)
+    contact = get_object_or_404(Contact, pk=id)
     if request.method == 'POST':
         form = ContactForm(request.POST, instance=contact)
         if form.is_valid():
@@ -333,7 +333,7 @@ def role_view(request, id, page=None):
 def role_edit(request, id):
     """Edit a role.
     """
-    role = Role.objects.get(pk=id)
+    role = get_object_or_404(Role, pk=id)
     if request.method == 'POST':
         form = RoleForm(request.POST, instance=role)
         if form.is_valid():
