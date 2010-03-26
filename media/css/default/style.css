@@ -553,7 +553,6 @@ table.list td { text-align: left; }
 /* Content */
 
 #content {
-    background: url(images/content_bg.gif) repeat-y center top;
     padding-top: 0px;
     padding-bottom: 10px;
 }
@@ -598,7 +597,6 @@ table.list td { text-align: left; }
 /* Footer */
 
 #footer {
-    background: url(images/footer_bg.gif) no-repeat center top;
     padding-top: 20px;
     padding-bottom: 20px;
 }
