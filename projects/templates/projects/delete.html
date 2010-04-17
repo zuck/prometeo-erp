@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Projects' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb project %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Delete' %}</h3>
+    <form action="/projects/delete/{{ project.id }}/" method="post">
+        <div class="message">
+            <p class="warning">{% trans 'Are you sure you want to delete this project and all its related informations?' %}</p>
+            <div class="actions">
+                <input class="ok" type="submit" name="yes" value="{% trans 'Yes' %}" />
+                <input class="cancel" type="submit" name="no" value="{% trans 'No' %}" />
+            </div>
+        </div>
+    </form>
+    <ul class="actions">
+        <li><a class="view" href="{{ project.get_absolute_url }}">{% trans 'View' %}</a></li>
+        <li><a class="edit" href="{{ project.get_edit_url }}">{% trans 'Edit' %}</a></li>
+    </ul>
+{% endblock %}

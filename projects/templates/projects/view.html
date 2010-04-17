@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Projects' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb project %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <ul class="menu">
+        <li><a class="view" href="{{ project.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="areas" href="{{ project.get_areas_url }}">{% trans 'Areas' %}</a></li>
+        <li><a class="milestones" href="{{ project.get_milestones_url }}">{% trans 'Milestones' %}</a></li>
+        <li><a class="tickets" href="{{ project.get_tickets_url }}">{% trans 'Tickets' %}</a></li>
+        <li><a class="people" href="{{ project.get_members_url }}">{% trans 'Members' %}</a></li>
+        <li><a class="timelines" href="{{ project.get_timeline_url }}">{% trans 'Timeline' %}</a></li>
+    </ul>
+    {% block current_page %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <h3>{% trans 'Description' %}</h3>
+    <p>{{ description }}</p>
+    <ul class="actions">
+        <li><a class="edit" href="{{ project.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ project.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>
+    {% endblock %}
+{% endblock %}

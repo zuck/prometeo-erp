@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Projects' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb area.project area.project.get_absolute_url %}
+    {% add_crumb 'Areas' area.project.get_areas_url %}
+    {% add_crumb area %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <h3>{% trans 'Description' %}</h3>
+    <p>{{ description }}</p>
+    <h3>{% trans 'Sub-areas' %}</h3>
+    {% include 'search_box.html' %}
+    {{ children.as_table }}
+    <ul class="actions">
+        <li><a class="edit" href="{{ area.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ area.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>
+{% endblock %}

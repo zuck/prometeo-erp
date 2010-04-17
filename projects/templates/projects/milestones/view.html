@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Projects' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb milestone.project milestone.project.get_absolute_url %}
+    {% add_crumb 'Milestones' milestone.project.get_milestones_url %}
+    {% add_crumb milestone %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Details' %}</h3>
+    {{ details.as_dl }}
+    <h3>{% trans 'Description' %}</h3>
+    <p>{{ description }}</p>
+    <h3>{% trans 'Sub-milestones' %}</h3>
+    {% include 'search_box.html' %}
+    {{ children.as_table }}
+    <ul class="actions">
+        <li><a class="edit" href="{{ milestone.get_edit_url }}">{% trans 'Edit' %}</a></li>
+        <li><a class="delete" href="{{ milestone.get_delete_url }}">{% trans 'Delete' %}</a></li>
+    </ul>
+{% endblock %}

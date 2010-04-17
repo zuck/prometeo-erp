@@ -1,0 +1,20 @@
+{% extends 'projects/view.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb project project.get_absolute_url %}
+    {% add_crumb 'Areas' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block current_page %}
+    <h3>{% trans 'Areas' %}</h3>
+    {% include 'search_box.html' %}
+    {{ areas.as_table }}
+    <ul class="actions">
+        <li><a class="add" href="{{ project.add_area_url }}">{% trans 'Add' %}</a></li>
+    </ul>
+{% endblock %}

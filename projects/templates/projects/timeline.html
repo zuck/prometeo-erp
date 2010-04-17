@@ -1,0 +1,17 @@
+{% extends 'projects/view.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb project project.get_absolute_url %}
+    {% add_crumb 'Timeline' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block current_page %}
+    <h3>{% trans 'Timeline' %}</h3>
+    {% include 'search_box.html' %}
+    {{ timeline.as_table }}
+{% endblock %}
