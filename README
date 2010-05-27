@@ -1,0 +1,52 @@
+************************************************
+
+PROMETEO
+Free your work. Free your business.
+
+************************************************
+(c) 2010, Emanuele Bertoldi <zuck@fastwebnet.it>
+************************************************
+
+
+INTRODUCTION
+============
+
+Prometeo is an open-source, user-oriented, ERP system based on Django framework.
+
+http://code.google.com/p/prometeo-erp/
+
+
+PRE-REQUISITES
+==============
+
+Make sure you have the following pre-requisites installed:
+
+ * python 2.6 (required)
+   http://www.python.org
+
+ * django 1.2.1 (required)
+   http://www.djangoproject.com/
+
+ * apache2 (optional)
+   http://httpd.apache.org/
+
+ * mod_wsgi (optional)
+   http://code.google.com/p/modwsgi/
+
+
+INSTALLATION
+============
+
+ 1. cp settings.py.tmpl settings.py
+ 
+ 2. Edit the settings.py content.
+ 
+ 3. python manage.py syncdb
+   
+ 4. To test the installation, run:
+ 
+   python manage.py runserver
+   
+   Then open the <127.0.0.1:8000> address in your browser.
+ 
+ 5. To use Apache + mod_wsgi, follow the instructions in <core/apache/README>.
