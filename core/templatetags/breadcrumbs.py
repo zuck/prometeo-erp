@@ -85,7 +85,7 @@ class AddCrumbNode(CaktNode):
                 href = reverse(url, args=args)
         if not hasattr(context['request'], 'breadcrumbs'):
             context['request'].breadcrumbs = []
-        context['request'].breadcrumbs.append((crumb, href))
+        context['request'].breadcrumbs.append((str(crumb), href))
         return ''
 
 @register.tag

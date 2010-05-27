@@ -19,6 +19,7 @@
 </div>
 {% endif %}
 <form method="post" action="/accounts/login/">
+    {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}" />
     
     {{ form.username.label_tag }}
