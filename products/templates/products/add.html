@@ -13,6 +13,7 @@
     <h3>{% trans 'Add' %}</h3>
     <h4>{% blocktrans %}Step {{ step }} of {{ step_count }}{% endblocktrans %}</h4>
     <form action="." method="post">
+        {% csrf_token %}
         {% if is_formset %}
         {{ form.management_form }}
         {% for f in form.forms %}
