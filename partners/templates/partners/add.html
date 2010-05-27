@@ -12,6 +12,7 @@
 {% block content %}
     <h3>{% trans 'Add' %}</h3>
     <form action="." method="post">
+        {% csrf_token %}
         {{ form.as_p }}
         <div class="actions">
             <input class="save" type="submit" value="{% trans 'Save' %}" />
