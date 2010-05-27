@@ -1,0 +1,5 @@
+INSTRUCTIONS
+============
+
+Remember to replace, in "apache_django_cong.wsgi" file, the <PROMETEO_PATH>
+token with your local prometeo installation path.
