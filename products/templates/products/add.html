@@ -11,19 +11,9 @@
 
 {% block content %}
     <h3>{% trans 'Add' %}</h3>
-    <h4>{% blocktrans %}Step {{ step }} of {{ step_count }}{% endblocktrans %}</h4>
     <form action="." method="post">
         {% csrf_token %}
-        {% if is_formset %}
-        {{ form.management_form }}
-        {% for f in form.forms %}
-        {{ f.as_p }}
-        {% endfor %}
-        {% else %}
         {{ form.as_p }}
-        {% endif %}
-        <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
-        {{ previous_fields|safe }}
         <div class="actions">
             <input class="save" type="submit" value="{% trans 'Save' %}" />
         </div>

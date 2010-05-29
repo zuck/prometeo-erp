@@ -71,12 +71,18 @@ class Supply(models.Model):
     delivery_delay = models.PositiveIntegerField(default=1, verbose_name=_('delivery delay'))
     minimal_quantity = models.FloatField(default=1, verbose_name=_('minimal quantity'))
     payment_delay = models.PositiveIntegerField(verbose_name=_('payment delay'))
+    
+    def final_price(self):
+        return self.price * (1 + self.discount / 100)
+        
+    def get_edit_url(self):
+        return '/products/%d/supplies/edit/%d/' % (self.product.pk, self.pk)
+    
+    def get_delete_url(self):
+        return '/products/%d/supplies/delete/%d/' % (self.product.pk, self.pk)
         
     def __unicode__(self):
-        return '%s (%s)' % (self.product, self.supplier)
-        
-    def get_absolute_url(self):
-        return self.product.get_absolute_url()
+        return '%s (%s) (%s %s%%)' % (self.product, self.supplier, self.price, self.discount)
 
 class Product(models.Model):   
     PRODUCT_TYPES = (
@@ -109,8 +115,11 @@ class Product(models.Model):
     def get_delete_url(self):
         return '/products/delete/%d/' % self.pk
     
-    def get_suppliers_url(self):
-        return self.get_absolute_url() + 'suppliers/'
+    def get_supplies_url(self):
+        return self.get_absolute_url() + 'supplies/'
+    
+    def get_add_supply_url(self):
+        return '/products/%d/supplies/add' % self.pk
         
     def __unicode__(self):
         return self.name

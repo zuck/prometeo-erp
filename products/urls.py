@@ -30,6 +30,9 @@ urlpatterns = patterns('products.views',
     (r'^view/(?P<id>\d+)/(?P<page>\w*)/*$', 'product_view'),
     (r'^edit/(?P<id>\d+)/$', 'product_edit'),
     (r'^delete/(?P<id>\d+)/$', 'product_delete'),
+    (r'^(?P<id>\d+)/supplies/add/$', 'product_add_supply'),
+    (r'^(?P<id>\d+)/supplies/edit/(?P<supply_id>\d+)/$', 'product_edit_supply'),
+    (r'^(?P<id>\d+)/supplies/delete/(?P<supply_id>\d+)/$', 'product_delete_supply'),
 
     # UOMs.
     (r'^uoms/$', 'uom_index'),

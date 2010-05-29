@@ -6,12 +6,14 @@
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
     {% add_crumb product product.get_absolute_url %}
-    {% add_crumb 'Suppliers' %}
+    {% add_crumb 'Supplies' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block page %}
-    <h3>{% trans 'Suppliers' %}</h3>
-    {% include 'search_box.html' %}
-    {{ suppliers.as_table }}
+    <h3>{% trans 'Supplies' %}</h3>
+    {{ supplies.as_table }}
+    <ul class="actions">
+        <li><a class="add" href="{{ product.get_add_supply_url }}">{% trans 'Add' %}</a></li>
+    </ul>
 {% endblock %}

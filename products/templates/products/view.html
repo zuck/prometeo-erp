@@ -12,14 +12,14 @@
 {% block content %}
     <ul class="menu">
         <li class="view"><a href="{{ product.get_absolute_url }}">{% trans 'Details' %}</a></li>
-        <li class="suppliers"><a href="{{ product.get_suppliers_url }}">{% trans 'Suppliers' %}</a></li>
+        <li class="supplies"><a href="{{ product.get_supplies_url }}">{% trans 'Supplies' %}</a></li>
     </ul>
     {% block page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
-    {% endblock %}
     <ul class="actions">
         <li><a class="edit" href="{{ product.get_edit_url }}">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="{{ product.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
+    {% endblock %}
 {% endblock %}

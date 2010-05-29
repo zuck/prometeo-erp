@@ -5,7 +5,9 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
-    {% add_crumb product %}
+    {% add_crumb product product.get_absolute_url %}
+    {% add_crumb 'Supplies' product.get_supplies_url %}
+    {% add_crumb supply %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
@@ -18,4 +20,7 @@
             <input class="save" type="submit" value="{% trans 'Save' %}" />
         </div>
     </form>
+    <ul class="actions">
+        <li><a class="delete" href="/products/{{ product.pk}}/supplies/delete/{{ supply.pk }}/">{% trans 'Delete' %}</a></li>
+    </ul>
 {% endblock %}

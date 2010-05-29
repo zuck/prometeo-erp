@@ -199,8 +199,15 @@ def product_index(request):
 def product_add(request):
     """Add a new product.
     """
-    wizard = ProductWizard(template='products/add.html')
-    return wizard(request)
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save()
+            return redirect_to(request, url=product.get_absolute_url())
+    else:
+        form = ProductForm()
+
+    return render_to_response('products/add.html', RequestContext(request, {'form': form}));
 
 @permission_required('products.change_product')      
 def product_view(request, id, page=None):
@@ -208,10 +215,10 @@ def product_view(request, id, page=None):
     """
     product = get_object_or_404(Product, pk=id)
     
-    # Suppliers.
-    if page == 'suppliers':
-        suppliers = ModelPaginatedListDetails(request, product.supply_set.all(), exclude=['id', 'product_id'], with_actions=False)
-        return render_to_response('products/suppliers.html', RequestContext(request, {'product': product, 'suppliers': suppliers}))
+    # Supplies.
+    if page == 'supplies':
+        supplies = ModelPaginatedListDetails(request, product.supply_set.all(), exclude=['id', 'name', 'product_id'])
+        return render_to_response('products/supplies.html', RequestContext(request, {'product': product, 'supplies': supplies}))
         
     # Details.
     details = ModelDetails(instance=product)
@@ -222,9 +229,14 @@ def product_edit(request, id):
     """Edit a product.
     """
     product = get_object_or_404(Product, pk=id)
-    wizard = ProductWizard(initial=product, template='products/edit.html')
-    wizard.extra_context['product'] = product
-    return wizard(request)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url=product.get_absolute_url())
+    else:
+        form = ProductForm(instance=product)
+    return render_to_response('products/edit.html', RequestContext(request, {'product': product, 'form': form}))
 
 @permission_required('products.delete_product')     
 def product_delete(request, id):
@@ -237,3 +249,54 @@ def product_delete(request, id):
             return redirect_to(request, url='/products/');
         return redirect_to(request, url=product.get_absolute_url())
     return render_to_response('products/delete.html', RequestContext(request, {'product': product}))
+    
+@permission_required('products.change_product')
+def product_add_supply(request, id):
+    """Add a new supply for the product.
+    """
+    product = get_object_or_404(Product, pk=id)
+    
+    if request.method == 'POST':
+        form = SupplyForm(request.POST)
+        if form.is_valid():
+            supply = form.save()
+            product.supplies.add(supply)
+            return redirect_to(request, url=partner.get_supplies_url())
+    else:
+        form = SupplyForm()
+
+    return render_to_response('products/add_supply.html', RequestContext(request, {'product': product, 'form': form}));
+    
+@permission_required('products.change_product')      
+def product_edit_supply(request, id, supply_id):
+    """Edit a supply.
+    """
+    product = get_object_or_404(Product, pk=id)
+    supply = get_object_or_404(Supply, pk=supply_id)
+    if supply.product != product:
+        raise Http404
+    
+    if request.method == 'POST':
+        form = SupplyForm(request.POST, instance=supply)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url=product.get_supplies_url())
+    else:
+        form = SupplyForm(instance=supply)
+
+    return render_to_response('products/edit_supply.html', RequestContext(request, {'product': product, 'supply': supply, 'form': form}));
+
+@permission_required('products.change_product')     
+def product_delete_supply(request, id, supply_id):
+    """Delete a supply.
+    """
+    product = get_object_or_404(Product, pk=id)
+    supply = get_object_or_404(Supply, pk=supply_id)
+    if supply.product != product:
+        raise Http404
+
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            supply.delete()
+        return redirect_to(request, url=product.get_supplies_url())
+    return render_to_response('products/delete_supply.html', RequestContext(request, {'product': product, 'supply': supply})) 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-01 23:15+0100\n"
+"POT-Creation-Date: 2010-05-29 20:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,144 +16,146 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:26 templates/products/add.html:6 templates/products/add.html.py:33
-#: templates/products/delete.html:6 templates/products/delete.html.py:28
-#: templates/products/edit.html:6 templates/products/edit.html.py:35
-#: templates/products/index.html:6 templates/products/index.html.py:14
-#: templates/products/view.html:6 templates/products/view.html.py:61
-#: templates/products/uoms/add.html:6 templates/products/uoms/delete.html:6
-#: templates/products/uoms/edit.html:6 templates/products/uoms/index.html:6
-#: templates/products/uoms/index.html:51 templates/products/uoms/view.html:6
-#: templates/products/uoms/categories/add.html:6
-#: templates/products/uoms/categories/delete.html:6
-#: templates/products/uoms/categories/edit.html:6
-#: templates/products/uoms/categories/index.html:6
-#: templates/products/uoms/categories/index.html:48
-#: templates/products/uoms/categories/view.html:6
+#: menu.py:26 templates/products/index.html:13
+#: templates/products/layout.html:5
 msgid "Products"
 msgstr "Prodotti"
 
-#: models.py:28 models.py:39 models.py:52 models.py:77
+#: menu.py:26 templates/products/categories/products.html:16
+#: templates/products/categories/view.html:17
+#: templates/products/uoms/index.html:13
+#: templates/products/uoms/categories/uoms.html:16
+#: templates/products/uoms/categories/view.html:17
+msgid "UOMs"
+msgstr "Unità di misura"
+
+#: menu.py:26 templates/products/categories/index.html:14
+#: templates/products/uoms/categories/index.html:14
+msgid "Categories"
+msgstr "Categorie"
+
+#: models.py:28 models.py:48 models.py:67 models.py:98
 msgid "name"
 msgstr "nome"
 
-#: models.py:38
+#: models.py:47
 msgid "initials"
 msgstr "iniziali"
 
-#: models.py:40
+#: models.py:49
 msgid "category"
 msgstr "categoria"
 
-#: models.py:51
+#: models.py:66
 msgid "supplier"
 msgstr "fornitore"
 
-#: models.py:53 models.py:78
+#: models.py:68 models.py:99
 msgid "code"
 msgstr "codice"
 
-#: models.py:54
+#: models.py:69
 msgid "price"
 msgstr "prezzo"
 
-#: models.py:55
+#: models.py:70
 msgid "discount"
 msgstr "sconto"
 
-#: models.py:56
+#: models.py:71
 msgid "delivery delay"
 msgstr "tempo di consegna"
 
-#: models.py:57
+#: models.py:72
 msgid "minimal quantity"
 msgstr "quantità minima"
 
-#: models.py:58
+#: models.py:73
 msgid "payment delay"
 msgstr "tempo di pagamento"
 
-#: models.py:68
+#: models.py:89
 msgid "Consumable"
 msgstr "Consumabile"
 
-#: models.py:69
+#: models.py:90
 msgid "Stockable"
 msgstr "Immagazzinabile"
 
-#: models.py:73
+#: models.py:94
 msgid "Purchase"
 msgstr "Acquisto"
 
-#: models.py:74
+#: models.py:95
 msgid "Production"
 msgstr "Produzione"
 
-#: models.py:79
+#: models.py:100
 msgid "EAN13"
 msgstr ""
 
-#: models.py:80
+#: models.py:101
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:81
+#: models.py:102
 msgid "UOM"
 msgstr "unità di misura (UOM)"
 
-#: models.py:82
+#: models.py:103
 msgid "UOS"
 msgstr "unità di vendita (UOS)"
 
-#: models.py:83
+#: models.py:104
 msgid "UOM to UOS"
 msgstr "da UOM a UOS"
 
-#: models.py:84
+#: models.py:105
 msgid "type"
 msgstr "tipo"
 
-#: models.py:85
+#: models.py:106
 msgid "supply method"
 msgstr "metodo di fornitura"
 
-#: models.py:86
+#: models.py:107
 msgid "suppliers"
-msgstr "fornitori"
+msgstr "forniture"
 
-#: templates/products/add.html:15 templates/products/index.html:50
-#: templates/products/uoms/add.html:16 templates/products/uoms/index.html:49
-#: templates/products/uoms/categories/add.html:17
-#: templates/products/uoms/categories/index.html:46
+#: templates/products/add.html:13 templates/products/add_supply.html:15
+#: templates/products/index.html:17 templates/products/supplies.html:17
+#: templates/products/categories/add.html:15
+#: templates/products/categories/index.html:18
+#: templates/products/uoms/add.html:14 templates/products/uoms/index.html:17
+#: templates/products/uoms/categories/add.html:15
+#: templates/products/uoms/categories/index.html:18
 msgid "Add"
 msgstr ""
 
-#: templates/products/add.html:16 templates/products/edit.html:16
-#, python-format
-msgid "Step %(step)s of %(step_count)s"
-msgstr "Passo %(step)s di %(step_count)s"
-
-#: templates/products/add.html:29 templates/products/edit.html:29
-#: templates/products/uoms/add.html:20 templates/products/uoms/edit.html:20
-#: templates/products/uoms/categories/add.html:21
-#: templates/products/uoms/categories/edit.html:21
+#: templates/products/add.html:18 templates/products/add_supply.html:20
+#: templates/products/edit.html:18 templates/products/edit_supply.html:20
+#: templates/products/categories/add.html:20
+#: templates/products/categories/edit.html:20
+#: templates/products/uoms/add.html:19 templates/products/uoms/edit.html:19
+#: templates/products/uoms/categories/add.html:20
+#: templates/products/uoms/categories/edit.html:20
 msgid "Save"
 msgstr ""
 
-#: templates/products/delete.html:15 templates/products/edit.html:34
-#: templates/products/index.html:40 templates/products/view.html:49
-#: templates/products/view.html.py:60 templates/products/uoms/delete.html:16
-#: templates/products/uoms/edit.html:25 templates/products/uoms/index.html:39
-#: templates/products/uoms/view.html:20
-#: templates/products/uoms/categories/delete.html:17
-#: templates/products/uoms/categories/edit.html:26
-#: templates/products/uoms/categories/index.html:36
-#: templates/products/uoms/categories/view.html:41
-#: templates/products/uoms/categories/view.html:52
+#: templates/products/delete.html:13 templates/products/delete_supply.html:15
+#: templates/products/edit_supply.html:24 templates/products/view.html:22
+#: templates/products/categories/delete.html:15
+#: templates/products/categories/edit.html:25
+#: templates/products/categories/view.html:24
+#: templates/products/uoms/delete.html:14 templates/products/uoms/edit.html:24
+#: templates/products/uoms/view.html:18
+#: templates/products/uoms/categories/delete.html:15
+#: templates/products/uoms/categories/edit.html:25
+#: templates/products/uoms/categories/view.html:24
 msgid "Delete"
 msgstr ""
 
-#: templates/products/delete.html:18
+#: templates/products/delete.html:17
 msgid ""
 "Are you sure you want to delete this product and all its related "
 "informations?"
@@ -161,160 +163,75 @@ msgstr ""
 "Sei sicuro di voler cancellare i dati di questo prodotto e di tutte le "
 "informazioni associate?"
 
-#: templates/products/delete.html:20 templates/products/uoms/delete.html:21
-#: templates/products/uoms/categories/delete.html:22
+#: templates/products/delete.html:19 templates/products/delete_supply.html:21
+#: templates/products/categories/delete.html:21
+#: templates/products/uoms/delete.html:20
+#: templates/products/uoms/categories/delete.html:21
 msgid "Yes"
 msgstr ""
 
-#: templates/products/delete.html:21 templates/products/uoms/delete.html:22
-#: templates/products/uoms/categories/delete.html:23
+#: templates/products/delete.html:20 templates/products/delete_supply.html:22
+#: templates/products/categories/delete.html:22
+#: templates/products/uoms/delete.html:21
+#: templates/products/uoms/categories/delete.html:22
 msgid "No"
 msgstr ""
 
-#: templates/products/delete.html:26 templates/products/edit.html:33
-#: templates/products/index.html:38 templates/products/view.html:47
-#: templates/products/uoms/delete.html:27 templates/products/uoms/edit.html:24
-#: templates/products/uoms/index.html:37
-#: templates/products/uoms/categories/delete.html:28
-#: templates/products/uoms/categories/edit.html:25
-#: templates/products/uoms/categories/index.html:34
-#: templates/products/uoms/categories/view.html:39
+#: templates/products/delete.html:25
+#: templates/products/categories/delete.html:27
+#: templates/products/categories/edit.html:24
+#: templates/products/uoms/delete.html:26 templates/products/uoms/edit.html:23
+#: templates/products/uoms/categories/delete.html:27
+#: templates/products/uoms/categories/edit.html:24
 msgid "View"
 msgstr ""
 
-#: templates/products/delete.html:27 templates/products/edit.html:15
-#: templates/products/index.html:39 templates/products/view.html:48
-#: templates/products/view.html.py:59 templates/products/uoms/delete.html:28
-#: templates/products/uoms/edit.html:16 templates/products/uoms/index.html:38
-#: templates/products/uoms/view.html:19
-#: templates/products/uoms/categories/delete.html:29
-#: templates/products/uoms/categories/edit.html:17
-#: templates/products/uoms/categories/index.html:35
-#: templates/products/uoms/categories/view.html:40
-#: templates/products/uoms/categories/view.html:51
+#: templates/products/delete.html:26 templates/products/delete_supply.html:27
+#: templates/products/edit.html:13 templates/products/edit_supply.html:15
+#: templates/products/view.html:21
+#: templates/products/categories/delete.html:28
+#: templates/products/categories/edit.html:15
+#: templates/products/categories/view.html:23
+#: templates/products/uoms/delete.html:27 templates/products/uoms/edit.html:14
+#: templates/products/uoms/view.html:17
+#: templates/products/uoms/categories/delete.html:28
+#: templates/products/uoms/categories/edit.html:15
+#: templates/products/uoms/categories/view.html:23
 msgid "Edit"
 msgstr ""
 
-#: templates/products/index.html:18 templates/products/view.html:21
-#: templates/products/uoms/index.html:19
-#: templates/products/uoms/categories/index.html:20
-#: templates/products/uoms/categories/view.html:23
-msgid "Search"
+#: templates/products/delete_supply.html:19
+msgid ""
+"Are you sure you want to delete this supply and all its related informations?"
 msgstr ""
+"Sei sicuro di voler cancellare i dati di questa fornitura e di tutte le "
+"informazioni associate?"
 
-#: templates/products/index.html:24 templates/products/view.html:27
-#: templates/products/uoms/index.html:25
-#: templates/products/uoms/categories/index.html:26
-#: templates/products/uoms/categories/view.html:29
-msgid "Name"
-msgstr ""
+#: templates/products/supplies.html:14 templates/products/view.html:15
+msgid "Supplies"
+msgstr "Forniture"
 
-#: templates/products/index.html:25
-msgid "Code"
-msgstr "Codice"
-
-#: templates/products/index.html:26
-msgid "Type"
-msgstr "Tipo"
-
-#: templates/products/index.html:27
-msgid "Supply method"
-msgstr "Metodo di fornitura"
-
-#: templates/products/index.html:28 templates/products/view.html:34
-#: templates/products/uoms/index.html:28
-#: templates/products/uoms/categories/index.html:27
-#: templates/products/uoms/categories/view.html:31
-msgid "Actions"
-msgstr ""
-
-#: templates/products/index.html:34
-#, python-format
-msgid "%(type)s"
-msgstr ""
-
-#: templates/products/index.html:35
-#, python-format
-msgid "%(method)s"
-msgstr ""
-
-#: templates/products/index.html:47 templates/products/view.html:56
-#: templates/products/uoms/index.html:46
-#: templates/products/uoms/categories/index.html:43
-#: templates/products/uoms/categories/view.html:48
-msgid "empty"
-msgstr ""
-
-#: templates/products/index.html:51 templates/products/uoms/add.html:24
-#: templates/products/uoms/delete.html:29 templates/products/uoms/edit.html:26
-#: templates/products/uoms/index.html:15 templates/products/uoms/view.html:21
-#: templates/products/uoms/categories/index.html:47
-#: templates/products/uoms/categories/view.html:19
-msgid "UOMs"
-msgstr "Unità di misura"
-
-#: templates/products/view.html:15 templates/products/uoms/view.html:16
-#: templates/products/uoms/categories/view.html:17
+#: templates/products/view.html:14 templates/products/view.html.py:18
+#: templates/products/categories/view.html:16
+#: templates/products/categories/view.html:20
+#: templates/products/uoms/view.html:14
+#: templates/products/uoms/categories/view.html:16
+#: templates/products/uoms/categories/view.html:20
 msgid "Details"
 msgstr ""
 
-#: templates/products/view.html:17
-msgid "Suppliers"
-msgstr "Fornitori"
-
-#: templates/products/view.html:28
-msgid "VAT number"
-msgstr "P.IVA"
-
-#: templates/products/view.html:29
-msgid "Price"
-msgstr "Prezzo"
-
-#: templates/products/view.html:30
-msgid "Discount"
-msgstr "Sconto"
-
-#: templates/products/view.html:31
-msgid "Minimal quantity"
-msgstr "Quantità minima"
-
-#: templates/products/view.html:32
-msgid "Delivery delay"
-msgstr "Tempo di consegna"
-
-#: templates/products/view.html:33
-msgid "Payment delay"
-msgstr "Tempo di pagamento"
-
-#: templates/products/uoms/delete.html:19
-msgid ""
-"Are you sure you want to delete this uom and all its related informations?"
-msgstr ""
-"Sei sicuro di voler cancellare i dati di questa unità di misura e di tutte "
-"le informazioni associate?"
-
-#: templates/products/uoms/index.html:26
-#: templates/products/uoms/categories/view.html:30
-msgid "Initials"
-msgstr "Iniziali"
-
-#: templates/products/uoms/index.html:27
-msgid "Category"
-msgstr "Categoria"
-
-#: templates/products/uoms/index.html:50
-#: templates/products/uoms/categories/add.html:25
-#: templates/products/uoms/categories/delete.html:30
-#: templates/products/uoms/categories/edit.html:27
-#: templates/products/uoms/categories/index.html:16
-#: templates/products/uoms/categories/view.html:53
-msgid "Categories"
-msgstr "Categorie"
-
-#: templates/products/uoms/categories/delete.html:20
+#: templates/products/categories/delete.html:19
+#: templates/products/uoms/categories/delete.html:19
 msgid ""
 "Are you sure you want to delete this category and all its related "
 "informations?"
 msgstr ""
 "Sei sicuro di voler cancellare i dati di questo categoria e di tutte le "
 "informazioni associate?"
+
+#: templates/products/uoms/delete.html:18
+msgid ""
+"Are you sure you want to delete this uom and all its related informations?"
+msgstr ""
+"Sei sicuro di voler cancellare i dati di questa unità di misura e di tutte "
+"le informazioni associate?"

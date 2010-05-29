@@ -5,12 +5,14 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Products' '/products/' %}
-    {% add_crumb product %}
+    {% add_crumb product product.get_absolute_url %}
+    {% add_crumb 'Supplies' product.get_supplies_url %}
+    {% add_crumb 'Add' %}
     <h2>{% render_breadcrumbs %}</h2>
 {% endblock %}
 
 {% block content %}
-    <h3>{% trans 'Edit' %}</h3>
+    <h3>{% trans 'Add' %}</h3>
     <form action="." method="post">
         {% csrf_token %}
         {{ form.as_p }}

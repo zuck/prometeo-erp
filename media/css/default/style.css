@@ -312,9 +312,9 @@ form .message {
 .view, .add, .edit, .delete, .info, .success, .warning, .categories, .contacts,
 .error, .help, .ok, .cancel, .search, .settings, .start, .products, .movements,
 .people, .calendar, .documents, .passwords, .accounts, .partners, .uoms, .roles,
-.save, .load, .refresh, .yes, .no, .enter, .exit, .person, .jobs, .warehouses,
+.save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses,
 .projects, .areas, .milestones, .tickets, .timelines, .suppliers, .customers,
-.telephones, .addresses {
+.telephones, .addresses, .supplies, .jobs {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -362,6 +362,7 @@ form .message {
 .customers { background-image: url(images/wallet.png); }
 .telephones { background-image: url(images/telephone.png); }
 .addresses { background-image: url(images/address.png); }
+.supplies { background-image: url(images/warehouse.png); }
 .jobs { background-image: url(images/job.png); }
 
 .sign { display: none; }

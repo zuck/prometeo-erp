@@ -24,8 +24,6 @@ from django import forms
 from django.forms.models import inlineformset_factory
 from django.views.generic.simple import redirect_to
 
-from prometeo.core import wizard
-
 from models import *
 
 class UOMForm(forms.ModelForm):
@@ -39,6 +37,13 @@ class UOMCategoryForm(forms.ModelForm):
     """
     class Meta:
         model = UOMCategory
+        
+class SupplyForm(forms.ModelForm):
+    """Form for supply data.
+    """
+    class Meta:
+        model = Supply
+        exclude = ['product']
 
 class ProductForm(forms.ModelForm):
     """Form for product data.
@@ -46,29 +51,3 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ['suppliers']
-        
-SupplyFormset = inlineformset_factory(Product, Supply, exclude=['product'], extra=1, can_delete=True)
-        
-class ProductWizard(wizard.FormWizard):
-    """Form wizard for product data.
-    """
-    def __init__(self, initial=None, template=None):
-        form_list = [ProductForm, SupplyFormset]
-        super(ProductWizard, self).__init__(form_list, initial, template)
-        
-    def done(self, request, form_list):
-        # 1) Save product.
-        product = form_list[0].save(commit=False)
-        try:
-            product.pk = self.initial[0].pk
-        except KeyError:
-            pass
-        product.save()
-        
-        # 2) Save supplies.
-        supplies = form_list[1].save(commit=False)
-        for supply in supplies:
-            supply.product = product
-            supply.save()
-        
-        return redirect_to(request, url=product.get_absolute_url())
