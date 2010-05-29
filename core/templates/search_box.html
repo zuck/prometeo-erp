@@ -2,6 +2,7 @@
 
 <div class="search_box">
     <form action="." method="post">
+        {% csrf_token %}
         <input type="text" name="query"/>
         <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
     </form>
