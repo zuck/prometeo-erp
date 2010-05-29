@@ -49,8 +49,8 @@ class Telephone(models.Model):
         ('2', _('fax'))
     )
     id = models.AutoField(primary_key=True)
-    number = models.CharField(max_length=30, verbose_name=_('number'))
     type = models.CharField(max_length=1, choices=PHONE_TYPES, default='0', verbose_name=_('type'))
+    number = models.CharField(max_length=30, verbose_name=_('number'))
         
     def __unicode__(self):
         return self.number
@@ -90,6 +90,18 @@ class Contact(models.Model):
     
     def get_delete_url(self):
         return '/partners/contacts/delete/%d/' % self.pk
+        
+    def get_telephones_url(self):
+        return self.get_absolute_url() + 'telephones/'
+        
+    def get_add_telephone_url(self):
+        return '/partners/contacts/%d/telephones/add/' % self.pk
+        
+    def get_addresses_url(self):
+        return self.get_absolute_url() + 'addresses/'
+        
+    def get_add_address_url(self):
+        return '/partners/contacts/%d/addresses/add/' % self.pk
     
     def get_jobs_url(self):
         return self.get_absolute_url() + 'jobs/'

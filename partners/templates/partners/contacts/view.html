@@ -13,6 +13,8 @@
 {% block content %}
     <ul class="menu">
         <li><a class="view" href="{{ contact.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="telephones" href="{{ contact.get_telephones_url }}">{% trans 'Telephone numbers' %}</a></li>
+        <li><a class="addresses" href="{{ contact.get_addresses_url }}">{% trans 'Addresses' %}</a></li>
         <li><a class="jobs" href="{{ contact.get_jobs_url }}">{% trans 'Jobs' %}</a></li>
     </ul>
     {% block page %}

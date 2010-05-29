@@ -23,6 +23,18 @@ __version__ = '$Revision$'
 from django import forms
 from models import *
         
+class TelephoneForm(forms.ModelForm):
+    """Form for a telephone number data.
+    """
+    class Meta:
+        model = Telephone
+        
+class AddressForm(forms.ModelForm):
+    """Form for a address data.
+    """
+    class Meta:
+        model = Address
+        
 class RoleForm(forms.ModelForm):
     """Form for role data.
     """
@@ -49,18 +61,6 @@ class PartnerForm(forms.ModelForm):
     class Meta:
         model = Partner
         exclude = ['id', 'addresses', 'telephones', 'contacts']
-        
-class PartnerTelephoneForm(forms.ModelForm):
-    """Form for a telephone number data.
-    """
-    class Meta:
-        model = Telephone
-        
-class PartnerAddressForm(forms.ModelForm):
-    """Form for a address data.
-    """
-    class Meta:
-        model = Address
         
 class PartnerJobForm(forms.ModelForm):
     """Form for job data from a partner point of view.

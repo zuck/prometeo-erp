@@ -1,0 +1,24 @@
+{% extends 'partners/layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'Contacts' '/partners/contacts/' %}
+    {% add_crumb contact contact.get_absolute_url %}
+    {% add_crumb 'Telephone numbers' contact.get_telephones_url %}
+    {% add_crumb 'Add' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Add' %}</h3>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <input class="save" type="submit" value="{% trans 'Save' %}" />
+        </div>
+    </form>
+{% endblock %}

@@ -120,6 +120,36 @@ class PartnerJobListDetails(PartnerListDetails):
         pattern += '</ul>'
         
         return pattern
+        
+class ContactTelephoneListDetails(details.ModelPaginatedListDetails):
+    def __init__(self, contact_id, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        self._contact_id = contact_id
+        super(ContactTelephoneListDetails, self).__init__(request, queryset, fields, exclude, with_actions)
+        
+    def actions_template(self, index, instance):        
+        pattern = '<ul class="actions">\n'
+        
+        pattern += '\t<li><a class="edit" href="/partners/contacts/%d/telephones/edit/%d/">%s</a></li>\n' % (self._contact_id, instance.pk, ugettext('Edit'))
+        pattern += '\t<li><a class="delete" href="/partners/contacts/%d/telephones/delete/%d/">%s</a></li>\n' % (self._contact_id, instance.pk, ugettext('Delete'))
+            
+        pattern += '</ul>'
+        
+        return pattern
+        
+class ContactAddressListDetails(details.ModelPaginatedListDetails):
+    def __init__(self, contact_id, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        self._contact_id = contact_id
+        super(ContactAddressListDetails, self).__init__(request, queryset, fields, exclude, with_actions)
+        
+    def actions_template(self, index, instance):        
+        pattern = '<ul class="actions">\n'
+        
+        pattern += '\t<li><a class="edit" href="/partners/contacts/%d/addresses/edit/%d/">%s</a></li>\n' % (self._contact_id, instance.pk, ugettext('Edit'))
+        pattern += '\t<li><a class="delete" href="/partners/contacts/%d/addresses/delete/%d/">%s</a></li>\n' % (self._contact_id, instance.pk, ugettext('Delete'))
+            
+        pattern += '</ul>'
+        
+        return pattern
 
 class ContactJobListDetails(ContactListDetails):
     def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
