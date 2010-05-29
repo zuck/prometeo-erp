@@ -25,6 +25,8 @@ from prometeo.core.menu import Menu, MenuOption, menubar
 
 menubar.register(
     Menu(_('Partners'), '/partners/', 'partners', options=[
+        MenuOption(_('Suppliers'), '/partners/suppliers/', 'suppliers'),
+        MenuOption(_('Customers'), '/partners/customers/', 'customers'),
         MenuOption(_('Contacts'), '/partners/contacts/', 'contacts', options=[
             MenuOption(_('Roles'), '/partners/contacts/roles/', 'roles')
         ]),

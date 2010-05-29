@@ -121,6 +121,46 @@ def partner_delete(request, id):
     return render_to_response('partners/delete.html', RequestContext(request, {'partner': partner}))
     
 @permission_required('partners.change_partner')
+def partner_suppliers(request):
+    """Show a supplier list.
+    """
+    partners = None
+    queryset = None
+
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        token = request.POST['query']
+        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+        
+    partners = Partner.objects.filter(supplier=True)
+
+    if (queryset is not None):
+        partners = partners.filter(queryset)
+        
+    partners = PartnerListDetails(request, partners, exclude=['id', 'customer', 'supplier'])
+        
+    return render_to_response('partners/suppliers.html', RequestContext(request, {'partners': partners}))
+    
+@permission_required('partners.change_partner')
+def partner_customers(request):
+    """Show a customer list.
+    """
+    partners = None
+    queryset = None
+
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        token = request.POST['query']
+        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+        
+    partners = Partner.objects.filter(customer=True)
+
+    if (queryset is not None):
+        partners = partners.filter(queryset)
+        
+    partners = PartnerListDetails(request, partners, exclude=['id', 'customer', 'supplier'])
+        
+    return render_to_response('partners/customers.html', RequestContext(request, {'partners': partners}))
+    
+@permission_required('partners.change_partner')
 def partner_add_telephone(request, id):
     """Add a new telephone number for the partner.
     """
