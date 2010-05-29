@@ -97,6 +97,13 @@ class FormWizard(object):
             return form(data, prefix=prefix, initial=initial)
             
         return form(data, prefix=prefix)
+        
+    def get_disabled_form(self, step, data=None):
+        "Helper method that returns a disabled form for the given step."
+        form = self.get_form(step, data)
+        for f in form:
+            f.field.widget.attrs['disabled'] = True
+        return form
 
     def num_steps(self):
         "Helper method that returns the number of steps."
@@ -333,6 +340,7 @@ class FormWizard(object):
         context = context or {}
         context.update({self.wizard_data_name:request.POST})
         context.update(self.extra_context)
+        form_list = [self.get_disabled_form(i, request.POST) for i in range(0, step)]
         return render_to_response(self.get_template(step), dict(context,
             next_step_field=self.next_step_field_name,
             max_step_field=self.max_step_field_name,
@@ -343,7 +351,8 @@ class FormWizard(object):
             step_count=self.num_steps(),
             form=form,
             is_formset=isinstance(form, forms.formsets.BaseFormSet),
-            previous_fields=previous_fields
+            previous_fields=previous_fields,
+            form_list=form_list
         ), context_instance=RequestContext(request))
 
     def process_step(self, request, form, step):
