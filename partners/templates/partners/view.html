@@ -12,6 +12,8 @@
 {% block content %}
     <ul class="menu">
         <li><a class="view" href="{{ partner.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="telephones" href="{{ partner.get_telephones_url }}">{% trans 'Telephone numbers' %}</a></li>
+        <li><a class="addresses" href="{{ partner.get_addresses_url }}">{% trans 'Addresses' %}</a></li>
         <li><a class="contacts" href="{{ partner.get_contacts_url }}">{% trans 'Contacts' %}</a></li>
     </ul>
     {% block page %}

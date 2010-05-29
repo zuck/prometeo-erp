@@ -42,13 +42,6 @@ class ContactJobForm(forms.ModelForm):
     class Meta:
         model = Job
         exclude = ['contact']
-        
-class PartnerJobForm(forms.ModelForm):
-    """Form for job data from a partner point of view.
-    """
-    class Meta:
-        model = Job
-        exclude = ['partner']
 
 class PartnerForm(forms.ModelForm):
     """Form for partner data.
@@ -56,3 +49,22 @@ class PartnerForm(forms.ModelForm):
     class Meta:
         model = Partner
         exclude = ['id', 'addresses', 'telephones', 'contacts']
+        
+class PartnerTelephoneForm(forms.ModelForm):
+    """Form for a telephone number data.
+    """
+    class Meta:
+        model = Telephone
+        
+class PartnerAddressForm(forms.ModelForm):
+    """Form for a address data.
+    """
+    class Meta:
+        model = Address
+        
+class PartnerJobForm(forms.ModelForm):
+    """Form for job data from a partner point of view.
+    """
+    class Meta:
+        model = Job
+        exclude = ['partner']

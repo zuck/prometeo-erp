@@ -80,6 +80,16 @@ def partner_view(request, id, page=None):
         contacts = ContactJobListDetails(request, partner.job_set.select_related(), exclude=['id', 'url', 'email'])
         return render_to_response('partners/contacts.html', RequestContext(request, {'partner': partner, 'contacts': contacts}))
     
+    # Addresses.
+    if page == 'addresses':
+        addresses = PartnerAddressListDetails(partner.pk, request, partner.addresses.select_related(), exclude=['id'])
+        return render_to_response('partners/addresses.html', RequestContext(request, {'partner': partner, 'addresses': addresses}))
+    
+    # Telephones.
+    if page == 'telephones':
+        telephones = PartnerTelephoneListDetails(partner.pk, request, partner.telephones.select_related(), exclude=['id'])
+        return render_to_response('partners/telephones.html', RequestContext(request, {'partner': partner, 'telephones': telephones}))
+    
     # Details.
     details = PartnerDetails(instance=partner)
     return render_to_response('partners/view.html', RequestContext(request, {'partner': partner, 'details': details}))
@@ -109,6 +119,108 @@ def partner_delete(request, id):
             return redirect_to(request, url='/partners/');
         return redirect_to(request, url=partner.get_absolute_url())
     return render_to_response('partners/delete.html', RequestContext(request, {'partner': partner}))
+    
+@permission_required('partners.change_partner')
+def partner_add_telephone(request, id):
+    """Add a new telephone number for the partner.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    
+    if request.method == 'POST':
+        form = PartnerTelephoneForm(request.POST)
+        if form.is_valid():
+            telephone = form.save()
+            partner.telephones.add(telephone)
+            return redirect_to(request, url=partner.get_telephones_url())
+    else:
+        form = PartnerTelephoneForm()
+
+    return render_to_response('partners/add_telephone.html', RequestContext(request, {'partner': partner, 'form': form}));
+    
+@permission_required('partners.change_partner')
+def partner_edit_telephone(request, id, telephone_id):
+    """Edit a telephone number of the partner.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    telephone = get_object_or_404(Telephone, pk=telephone_id)
+    if telephone.partner_set.get(id=partner.pk) is None:
+        raise Http404
+    
+    if request.method == 'POST':
+        form = PartnerTelephoneForm(request.POST, instance=telephone)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url=partner.get_telephones_url())
+    else:
+        form = PartnerTelephoneForm(instance=telephone)
+
+    return render_to_response('partners/edit_telephone.html', RequestContext(request, {'partner': partner, 'telephone': telephone, 'form': form}));
+    
+@permission_required('partners.change_partner')    
+def partner_delete_telephone(request, id, telephone_id):
+    """Delete a partner's telephone number.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    telephone = get_object_or_404(Telephone, pk=telephone_id)
+    if telephone.partner_set.get(id=partner.pk) is None:
+        raise Http404
+
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            telephone.delete()
+        return redirect_to(request, url=partner.get_telephones_url())
+    return render_to_response('partners/delete_telephone.html', RequestContext(request, {'partner': partner, 'telephone': telephone})) 
+    
+@permission_required('partners.change_partner')
+def partner_add_address(request, id):
+    """Add a new address for the partner.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    
+    if request.method == 'POST':
+        form = PartnerAddressForm(request.POST)
+        if form.is_valid():
+            address = form.save()
+            partner.addresses.add(address)
+            return redirect_to(request, url=partner.get_addresses_url())
+    else:
+        form = PartnerAddressForm()
+
+    return render_to_response('partners/add_address.html', RequestContext(request, {'partner': partner, 'form': form}));
+    
+@permission_required('partners.change_partner')
+def partner_edit_address(request, id, address_id):
+    """Edit a address of the partner.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    address = get_object_or_404(Address, pk=address_id)
+    if address.partner_set.get(id=partner.pk) is None:
+        raise Http404
+    
+    if request.method == 'POST':
+        form = PartnerAddressForm(request.POST, instance=address)
+        if form.is_valid():
+            form.save()
+            return redirect_to(request, url=partner.get_addresses_url())
+    else:
+        form = PartnerAddressForm(instance=address)
+
+    return render_to_response('partners/edit_address.html', RequestContext(request, {'partner': partner, 'address': address, 'form': form}));
+    
+@permission_required('partners.change_partner')    
+def partner_delete_address(request, id, address_id):
+    """Delete a partner's address.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    address = get_object_or_404(Address, pk=address_id)
+    if address.partner_set.get(id=partner.pk) is None:
+        raise Http404
+
+    if request.method == 'POST':
+        if (request.POST.has_key(u'yes')):
+            address.delete()
+        return redirect_to(request, url=partner.get_addresses_url())
+    return render_to_response('partners/delete_address.html', RequestContext(request, {'partner': partner, 'address': address})) 
     
 @permission_required('partners.change_partner')
 def partner_add_contact(request, id):

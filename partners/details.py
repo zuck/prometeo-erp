@@ -68,6 +68,36 @@ class PartnerListDetails(details.ModelPaginatedListDetails):
             return u'\t\t<td class="name"><span class="sign">(*)</span>%s</td>\n' % details.value_to_string(value)
         return super(PartnerListDetails, self).column_template(row, index)
         
+class PartnerTelephoneListDetails(details.ModelPaginatedListDetails):
+    def __init__(self, partner_id, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        self._partner_id = partner_id
+        super(PartnerTelephoneListDetails, self).__init__(request, queryset, fields, exclude, with_actions)
+        
+    def actions_template(self, index, instance):        
+        pattern = '<ul class="actions">\n'
+        
+        pattern += '\t<li><a class="edit" href="/partners/%d/telephones/edit/%d/">%s</a></li>\n' % (self._partner_id, instance.pk, ugettext('Edit'))
+        pattern += '\t<li><a class="delete" href="/partners/%d/telephones/delete/%d/">%s</a></li>\n' % (self._partner_id, instance.pk, ugettext('Delete'))
+            
+        pattern += '</ul>'
+        
+        return pattern
+        
+class PartnerAddressListDetails(details.ModelPaginatedListDetails):
+    def __init__(self, partner_id, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
+        self._partner_id = partner_id
+        super(PartnerAddressListDetails, self).__init__(request, queryset, fields, exclude, with_actions)
+        
+    def actions_template(self, index, instance):        
+        pattern = '<ul class="actions">\n'
+        
+        pattern += '\t<li><a class="edit" href="/partners/%d/addresses/edit/%d/">%s</a></li>\n' % (self._partner_id, instance.pk, ugettext('Edit'))
+        pattern += '\t<li><a class="delete" href="/partners/%d/addresses/delete/%d/">%s</a></li>\n' % (self._partner_id, instance.pk, ugettext('Delete'))
+            
+        pattern += '</ul>'
+        
+        return pattern
+        
 class PartnerJobListDetails(PartnerListDetails):
     def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
         self._original_qs = queryset

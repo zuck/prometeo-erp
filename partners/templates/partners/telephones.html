@@ -1,0 +1,19 @@
+{% extends 'partners/view.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb partner partner.get_absolute_url %}
+    {% add_crumb 'Telephone numbers' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block page %}
+    <h3>{% trans 'Telephone numbers' %}</h3>
+    {{ telephones.as_table }}
+    <ul class="actions">
+        <li><a class="add" href="{{ partner.get_add_telephone_url }}">{% trans 'Add' %}</a></li>
+    </ul>
+{% endblock %}

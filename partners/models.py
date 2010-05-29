@@ -124,6 +124,18 @@ class Partner(models.Model):
     def get_delete_url(self):
         return '/partners/delete/%d/' % self.pk
         
+    def get_telephones_url(self):
+        return self.get_absolute_url() + 'telephones/'
+        
+    def get_add_telephone_url(self):
+        return '/partners/%d/telephones/add/' % self.pk
+        
+    def get_addresses_url(self):
+        return self.get_absolute_url() + 'addresses/'
+        
+    def get_add_address_url(self):
+        return '/partners/%d/addresses/add/' % self.pk
+        
     def get_contacts_url(self):
         return self.get_absolute_url() + 'contacts/'
         
@@ -132,6 +144,18 @@ class Partner(models.Model):
         
     def __unicode__(self):
         return self.name
+        
+class PartnerAddress(models.Model):
+    id = models.AutoField(primary_key=True)
+    address = models.ForeignKey(Address)
+    partner = models.ForeignKey(Partner)
+    note = models.TextField()
+        
+class PartnerTelephoneNumber(models.Model):
+    id = models.AutoField(primary_key=True)
+    telephone = models.ForeignKey(Telephone)
+    partner = models.ForeignKey(Partner)
+    note = models.TextField()
         
 class Job(models.Model):
     id = models.AutoField(primary_key=True)
