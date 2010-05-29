@@ -138,6 +138,7 @@ table tr td {
 /* Form */
 
 form {
+    clear: both;
     float: left;
     width: 50%;
     padding: 20px 1% 10px;
