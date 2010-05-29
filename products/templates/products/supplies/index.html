@@ -1,0 +1,16 @@
+{% extends 'products/layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb 'Supplies' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Supplies' %}</h3>
+    {% include 'search_box.html' %}
+    {{ supplies.as_table }}
+{% endblock %}

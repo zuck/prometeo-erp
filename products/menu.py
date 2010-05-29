@@ -23,4 +23,11 @@ __version__ = '$Revision$'
 from django.utils.translation import ugettext_lazy as _
 from prometeo.core.menu import Menu, MenuOption, MenuBar, menubar
 
-menubar.register(Menu(_('Products'), '/products/', 'products', options=[MenuOption(_('UOMs'), '/products/uoms/', 'uoms', options=[MenuOption(_('Categories'), '/products/uoms/categories/', 'categories')])]))
+menubar.register(
+    Menu(_('Products'), '/products/', 'products', options=[
+        MenuOption(_('Supplies'), '/products/supplies/', 'supplies'),
+        MenuOption(_('UOMs'), '/products/uoms/', 'uoms', options=[
+            MenuOption(_('Categories'), '/products/uoms/categories/', 'categories')
+        ])
+    ])
+)

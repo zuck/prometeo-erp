@@ -174,6 +174,26 @@ def uom_category_delete(request, id):
             return redirect_to(request, url='/products/uoms/categories/');
         return redirect_to(request, url=category.get_absolute_url())
     return render_to_response('products/uoms/categories/delete.html', RequestContext(request, {'category': category}))
+    
+@permission_required('products.change_product')  
+def supply_index(request):
+    """Show a supply list.
+    """
+    supplies = None
+    queryset = None
+
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        token = request.POST['query']
+        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+
+    if (queryset is not None):
+        supplies = Supply.objects.filter(queryset)
+    else:
+        supplies = Supply.objects.all()
+        
+    supplies = ModelPaginatedListDetails(request, supplies, exclude=['id', 'name'])
+        
+    return render_to_response('products/supplies/index.html', RequestContext(request, {'supplies': supplies}))
 
 @permission_required('products.change_product')  
 def product_index(request):
