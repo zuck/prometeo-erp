@@ -38,6 +38,7 @@ class Address(models.Model):
     zip = models.CharField(max_length=255, verbose_name=_('zip'))
     state = models.CharField(max_length=64, verbose_name=_('state/province'))
     country = models.CharField(max_length=64, verbose_name=_('country'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
         
     def __unicode__(self):
         return _('%(number)s, %(street)s - %(city)s, %(state)s %(zip)s - %(country)s') % {'number': self.number, 'street': self.street, 'city': self.city, 'state': self.state, 'zip': self.zip, 'country': self.country}
@@ -51,6 +52,7 @@ class Telephone(models.Model):
     id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=1, choices=PHONE_TYPES, default='0', verbose_name=_('type'))
     number = models.CharField(max_length=30, verbose_name=_('number'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
         
     def __unicode__(self):
         return self.number
@@ -81,6 +83,7 @@ class Contact(models.Model):
     url = models.URLField(max_length=255, null=True, blank=True, verbose_name=_('url'))
     addresses = models.ManyToManyField(Address, blank=True, verbose_name=_('addresses'))
     telephones = models.ManyToManyField(Telephone, blank=True, verbose_name=_('telephone numbers'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
     
     def get_absolute_url(self):
         return '/partners/contacts/view/%d/' % self.pk
@@ -126,6 +129,7 @@ class Partner(models.Model):
     addresses = models.ManyToManyField(Address, blank=True, verbose_name=_('addresses'))
     telephones = models.ManyToManyField(Telephone, blank=True, verbose_name=_('telephone numbers'))
     contacts = models.ManyToManyField(Contact, through='partners.Job', blank=True, verbose_name=_('contacts'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
     
     def get_absolute_url(self):
         return '/partners/view/%d/' % self.pk
@@ -157,23 +161,12 @@ class Partner(models.Model):
     def __unicode__(self):
         return self.name
         
-class PartnerAddress(models.Model):
-    id = models.AutoField(primary_key=True)
-    address = models.ForeignKey(Address)
-    partner = models.ForeignKey(Partner)
-    note = models.TextField()
-        
-class PartnerTelephoneNumber(models.Model):
-    id = models.AutoField(primary_key=True)
-    telephone = models.ForeignKey(Telephone)
-    partner = models.ForeignKey(Partner)
-    note = models.TextField()
-        
 class Job(models.Model):
     id = models.AutoField(primary_key=True)
     contact = models.ForeignKey(Contact)
     partner = models.ForeignKey(Partner)
     role = models.ForeignKey(Role)
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
         
     def __unicode__(self):
         return _("%(contact)s as %(role)s for %(partner)s") % {'contact': self.contact, 'role': self.role, 'partner': self.partner}

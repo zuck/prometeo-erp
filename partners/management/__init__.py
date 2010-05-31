@@ -27,7 +27,7 @@ def create_managed_partner(app, created_models, verbosity, **kwargs):
     from prometeo.partners.models import Partner
     if Partner in created_models and kwargs.get('interactive', True):
         msg = "\nYou just installed Prometeo's partners system, which means you don't have " \
-                "a default managed\ncompany defined.\nWould you like to create one now? (yes/no): "
+                "a default managed company defined.\nWould you like to create one now? (yes/no): "
         confirm = raw_input(msg)
         while 1:
             if confirm not in ('yes', 'no'):
@@ -38,7 +38,8 @@ def create_managed_partner(app, created_models, verbosity, **kwargs):
                 vat = raw_input("Insert the VAT number (optional): ")
                 email = raw_input("Insert the main email address (optional): ")
                 url = raw_input("Insert the main URL address (optional): ")
-                if Partner.objects.create(name=name, vat_number=vat, email=email, url=url, managed=True):
+                notes = raw_input("Insert additional notes (optional): ")
+                if Partner.objects.create(name=name, vat_number=vat, email=email, url=url, notes=notes, managed=True):
                     print "Default managed company created successfully.\n"
             break
 
