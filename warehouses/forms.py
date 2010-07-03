@@ -136,4 +136,4 @@ class MovementWizard(wizard.FormWizard):
         movement.unit_value = form_list[2].cleaned_data['unit_value']
         movement.save()
 
-        return redirect_to(request, url=movement.warehouse.get_absolute_url())
+        return redirect_to(request, url=movement.warehouse.get_movements_url())
