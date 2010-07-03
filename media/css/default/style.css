@@ -590,9 +590,14 @@ table.list td { text-align: left; }
     width: auto;
 }
 
-#content .search_box input {
-    clear: none;
-    display: inline;
+#content .search_box input, #content .search_box select {
+    float: left;
+    margin-right: 5px;
+}
+
+#content .search_box select {
+    height: 22px;
+    width: 100px;
 }
 
 #content .search_box input[type="text"] {
@@ -600,7 +605,7 @@ table.list td { text-align: left; }
 }
 
 #content .search_box input[type="submit"] {
-    left: 0;
+    height: 20px;
 }
 
 .paginator {
