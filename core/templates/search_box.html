@@ -3,7 +3,14 @@
 <div class="search_box">
     <form action="." method="post">
         {% csrf_token %}
-        <input type="text" name="query"/>
-        <input type="submit" name="search" class="search" value="{% trans 'Search' %}"/>
+        {% if search_fields %}
+        <select class="search_field" name="search_field">
+            {% for label, value in search_fields %}
+            <option value="{{ value }}">{% trans label %}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+        <input class="query" type="text" name="query"/>
+        <input class="search" type="submit" name="search" value="{% trans 'Search' %}"/>
     </form>
 </div>
