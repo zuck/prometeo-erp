@@ -25,6 +25,7 @@ from django.views.generic.simple import redirect_to
 from django import forms
 
 from prometeo.core import wizard
+from prometeo.products.models import Supply
 
 from models import Warehouse, Movement
 
@@ -33,102 +34,106 @@ class WarehouseForm(forms.ModelForm):
     """
     class Meta:
         model = Warehouse
+        
+class MovementVerseForm(forms.ModelForm):
+    """Form for movement verse choice.
+    """
+    class Meta:
+        model = Movement
+        fields = ['verse']
+        
+class MovementProductForm(forms.ModelForm):
+    """Form for outcome movement product choice.
+    """
+    class Meta:
+        model = Movement
+        fields = ['product']
+        
+    def __init__(self, *args, **kwargs):
+        super(MovementProductForm, self).__init__(*args, **kwargs)
+        if self.instance.verse == True:
+            self.fields['supply'] = forms.ModelChoiceField(label=_('Product'), queryset=Supply.objects.all())
+            del self.fields['product']
 
-class MovementForm(forms.ModelForm):
+    def clean_product(self):
+        product = self.cleaned_data['product']
+        stock = self.instance.warehouse.stock(product)
+        if stock == 0:
+            raise forms.ValidationError(_("You're trying to send out a product which is not in the warehouse."))
+        return product
+            
+    def clean_supply(self):
+        supply = self.cleaned_data['supply']
+        self.cleaned_data['product'] = supply.product
+        return supply
+        
+
+class MovementDetailsForm(forms.ModelForm):
     """Form for movement data.
     """
     class Meta:
         model = Movement
-        exclude = ['warehouse', 'on', 'account', 'quantity', 'price', 'discount', 'payment_delay']
+        fields = ['quantity', 'unit_value']
         
-class SupplyForm(forms.ModelForm):
-    """Form for supply data.
-    """
-    class Meta:
-        model = Movement
-        fields = ['quantity', 'price', 'discount', 'payment_delay']
+    def __init__(self, *args, **kwargs):
+        super(MovementDetailsForm, self).__init__(*args, **kwargs)
+        if self.instance.verse == False:
+            del self.fields['unit_value']
         
     def clean_quantity(self):
         quantity = self.cleaned_data['quantity']
         
-        # <= 0: invalid value.
+        # Quantity <= 0: invalid value.
         if quantity <= 0:
             raise forms.ValidationError(_("The quantity must be greater than zero."))
             
-        # out movement: invalid if there are not enough stocks.
+        # Outcome movement: invalid if there are not enough stocks.
         elif self.instance.verse == False:
-            supply = self.instance.supply
-            stock = self.instance.warehouse.stock(supply.product, exclude=[self.instance])
+            product = self.instance.product
+            stock = self.instance.warehouse.stock(product, exclude=[self.instance])
             if quantity > stock:
-                uom = supply.product.uom
+                uom = product.uom
                 raise forms.ValidationError(_("You're trying to send out a quantity greater than the current stock (%(stock).2f%(uom)s).") % {'stock': stock, 'uom': uom})
+            self.cleaned_data['unit_value'] = self.instance.warehouse.average_value(product, exclude=[self.instance])
                 
         return quantity
-        
-    def clean_price(self):
-        # Out movement.
-        price = self.cleaned_data['price']
-        
-        if self.instance.verse == False:
-            supply = self.instance.supply
-            price = self.instance.warehouse.average_price(supply.product, exclude=[self.instance])
-
-        return price
-        
-    def clean_discount(self):
-        # Out movement.
-        discount = self.cleaned_data['discount']
-        
-        if self.instance.verse == False:
-            discount = 0
-            
-        return discount
-        
-    def clean_payment_delay(self):
-        # Out movement.
-        payment_delay = self.cleaned_data['payment_delay']
-        
-        if self.instance.verse == False:
-            payment_delay = 0
-            
-        return payment_delay
         
 class MovementWizard(wizard.FormWizard):
     """Form wizard for movement data.
     """
     def __init__(self, initial=None, template=None):
-        form_list = [MovementForm, SupplyForm]
+        form_list = [MovementVerseForm, MovementProductForm, MovementDetailsForm]
         super(MovementWizard, self).__init__(form_list, initial, template)
         
     def process_step(self, request, form, step):
+        instance = form.instance
+
+        # Step 0: verse choice.
         if step == 0:
-            instance = form.instance
-            instance.verse = form.cleaned_data['verse']
-            supply = form.cleaned_data['supply']
-            instance.supply = supply
-            instance.quantity = supply.minimal_quantity
-            instance.price = supply.price
-            instance.discount = supply.discount
-            instance.payment_delay = supply.payment_delay
-            
-            if form.cleaned_data['verse'] == False:
-                instance.quantity = instance.warehouse.stock(supply.product)
-                self.form_list[1].base_fields['price'].widget = forms.widgets.HiddenInput()
-                self.form_list[1].base_fields['discount'].widget = forms.widgets.HiddenInput()
-                self.form_list[1].base_fields['payment_delay'].widget = forms.widgets.HiddenInput()
-            else:
-                self.form_list[1].base_fields['price'].widget = forms.widgets.TextInput()
-                self.form_list[1].base_fields['discount'].widget = forms.widgets.TextInput()
-                self.form_list[1].base_fields['payment_delay'].widget = forms.widgets.TextInput()
+            pass
+        
+        # Step 1: product choice.    
+        elif step == 1:
+        
+            # Income movement.
+            if instance.verse is True:
+                supply = form.cleaned_data['supply']
+                instance.product = supply.product
+                instance.quantity = supply.minimal_quantity
+                instance.unit_value = supply.final_price()
                 
-            self.initial[1] = instance
+            # Outcome movement.
+            else:
+                product = form.cleaned_data['product']
+                instance.product = product
+                instance.quantity = instance.warehouse.stock(product)
+                instance.unit_value = instance.warehouse.average_value(product, exclude=[instance])
                 
     def done(self, request, form_list):
         movement = form_list[0].save(commit=False)
-        movement.quantity = form_list[1].cleaned_data['quantity']
-        movement.price = form_list[1].cleaned_data['price']
-        movement.discount = form_list[1].cleaned_data['discount']
-        movement.payment_delay = form_list[1].cleaned_data['payment_delay']
+        movement.product = form_list[1].cleaned_data['product']
+        movement.quantity = form_list[2].cleaned_data['quantity']
+        movement.unit_value = form_list[2].cleaned_data['unit_value']
         movement.save()
 
         return redirect_to(request, url=movement.warehouse.get_absolute_url())

@@ -40,7 +40,7 @@ class Warehouse(models.Model):
         return value
         
     def stock(self, product, exclude=[]):
-        queryset = Q(supply__product=product, warehouse=self)
+        queryset = Q(product=product, warehouse=self)
         movements = Movement.objects.filter(queryset)
         stock = 0
         for movement in movements:
@@ -53,10 +53,10 @@ class Warehouse(models.Model):
                 
         return stock
         
-    def average_price(self, product, exclude=[]):
-        queryset = Q(supply__product=product, warehouse=self)
+    def average_value(self, product, exclude=[]):
+        queryset = Q(product=product, warehouse=self)
         movements = Movement.objects.filter(queryset)
-        price = 0
+        value = 0
         total = 0
         quantity = 0
         for m in movements:
@@ -69,9 +69,9 @@ class Warehouse(models.Model):
                 total -= m.value()
                 quantity -= m.quantity
         if quantity > 0:
-            price = total / quantity
+            value = total / quantity
             
-        return price
+        return value
 
     def get_absolute_url(self):
         return '/warehouses/view/%d/' % self.pk
@@ -93,20 +93,16 @@ class Warehouse(models.Model):
         
 class Movement(models.Model):
     MOVEMENT_VERSES = (
-        (False, _('out')),
-        (True, _('in'))
+        (False, _('outcome')),
+        (True, _('income'))
     )      
     id = models.AutoField(primary_key=True)
     verse = models.BooleanField(choices=MOVEMENT_VERSES, default=True, verbose_name=_('verse'))
     warehouse = models.ForeignKey(Warehouse, verbose_name=_('warehouse'))
-    document = models.CharField(max_length=255, blank=True, verbose_name=_('document'))
-    on = models.DateTimeField(auto_now=True, verbose_name=_('on'))
-    supply = models.ForeignKey('products.Supply', verbose_name=_('supply'))
+    product = models.ForeignKey('products.Product', verbose_name=_('product'))
     quantity = models.FloatField(default=1, verbose_name=_('quantity'))
-    price = models.FloatField(verbose_name=_('price'))
-    discount = models.FloatField(default=0, verbose_name=_('discount'))
-    payment_delay = models.PositiveIntegerField(verbose_name=_('payment delay'))
-    account = models.ForeignKey('auth.User', verbose_name=_('account'))
+    unit_value = models.FloatField(verbose_name=_('unit value'))
+    on = models.DateTimeField(auto_now=True, verbose_name=_('on'))
     
     class Meta:
         ordering = ['-on']
@@ -114,11 +110,8 @@ class Movement(models.Model):
     def is_last(self):
         return self == Movement.objects.filter(warehouse=self.warehouse).latest('id')
     
-    def final_price(self):
-        return self.price + (self.price * self.discount / 100)
-    
     def value(self):
-        return self.quantity * self.final_price()
+        return self.quantity * self.unit_value
     
     def get_absolute_url(self):
         return '/warehouses/%d/movements/view/%d/' % (self.warehouse.pk, self.pk)
@@ -135,5 +128,5 @@ class Movement(models.Model):
         
     def __unicode__(self):
         if self.verse:
-            return _("%(quantity)d%(uom)s of %(supply)s to %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.supply.product.uom, 'supply': self.supply, 'warehouse': self.warehouse, 'date': self.on}
-        return _("%(quantity)d%(uom)s of %(supply)s from %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.supply.product.uom, 'supply': self.supply, 'warehouse': self.warehouse, 'date': self.on}
+            return _("%(quantity)d%(uom)s of %(product)s to %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.product.uom, 'product': self.product, 'warehouse': self.warehouse, 'date': self.on}
+        return _("%(quantity)d%(uom)s of %(product)s from %(warehouse)s, on %(date)s") % {'quantity': self.quantity, 'uom': self.product.uom, 'product': self.product, 'warehouse': self.warehouse, 'date': self.on}

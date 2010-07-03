@@ -314,7 +314,7 @@ form .message {
 .people, .calendar, .documents, .passwords, .accounts, .partners, .uoms, .roles,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses,
 .projects, .areas, .milestones, .tickets, .timelines, .suppliers, .customers,
-.telephones, .addresses, .supplies, .jobs {
+.telephones, .addresses, .supplies, .jobs, .next, .back {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -364,6 +364,15 @@ form .message {
 .addresses { background-image: url(images/address.png); }
 .supplies { background-image: url(images/warehouse.png); }
 .jobs { background-image: url(images/job.png); }
+.next { background-image: url(images/forward.png); }
+.previous { background-image: url(images/backward.png); }
+
+input.save, input.next {
+    float: right;
+    margin-right: 0;
+}
+
+.back { float: left; }
 
 .sign { display: none; }
 .in { background: #dbf6cd; }
@@ -402,6 +411,7 @@ form .message {
 
 .paginator .previous, .paginator .next, .paginator .current {
     float: left;
+    padding: 0;
     margin-right: 10px;
 }
 

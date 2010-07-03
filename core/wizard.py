@@ -117,12 +117,13 @@ class FormWizard(object):
         Main method that does all the hard work, conforming to the Django view
         interface.
         """
+        self.parse_params(request, *args, **kwargs)
+        
         if 'extra_context' in kwargs:
             self.extra_context.update(kwargs['extra_context'])
         current_step = self.determine_step(request, *args, **kwargs)
         next_step = self.determine_next_step(request, *args, **kwargs)
         max_step = self.determine_max_step(request, *args, **kwargs)
-        self.parse_params(request, *args, **kwargs)
         
         # Sanity check.
         if current_step >= self.num_steps():

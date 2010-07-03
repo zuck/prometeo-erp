@@ -36,14 +36,14 @@ class MovementListDetails(details.ModelPaginatedListDetails):
     def __init__(self, request, queryset=[], fields=[], exclude=['id'], with_actions=True):
         super(MovementListDetails, self).__init__(request, queryset, fields, exclude, with_actions)
         if 'value' not in exclude:
-            self._header.insert(-1, _('value'))
+            self._header.insert(-2, _('value'))
             for i, instance in enumerate(queryset):
-                self._rows[i].insert(-1, instance.value())
+                self._rows[i].insert(-2, instance.value())
             
     def row_template(self, row, index):
         i = self._header.index(_('verse'))
         value = details.value_to_string(row[i])
-        if value == _('in'):
+        if value == _('income'):
             return u'\t<tr class="in">\n'
         return u'\t<tr class="out">\n'
         

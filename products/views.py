@@ -275,15 +275,15 @@ def product_add_supply(request, id):
     """Add a new supply for the product.
     """
     product = get_object_or_404(Product, pk=id)
+    supply = Supply(product=product)
     
     if request.method == 'POST':
-        form = SupplyForm(request.POST)
+        form = SupplyForm(request.POST, instance=supply)
         if form.is_valid():
-            supply = form.save()
-            product.supplies.add(supply)
-            return redirect_to(request, url=partner.get_supplies_url())
+            form.save()
+            return redirect_to(request, url=product.get_supplies_url())
     else:
-        form = SupplyForm()
+        form = SupplyForm(instance=supply)
 
     return render_to_response('products/add_supply.html', RequestContext(request, {'product': product, 'form': form}));
     
