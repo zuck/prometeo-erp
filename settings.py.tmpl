@@ -84,7 +84,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
-    'django.core.context_processors.request'
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages'
 )
 
 # List of middleware classes to use.  Order is important; in the request phase,
@@ -95,6 +96,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'prometeo.core.middleware.RequireLoginMiddleware',
 )
@@ -109,6 +111,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.comments',
+    'django.contrib.messages',
     'prometeo.core',
 #    'prometeo.partners',
 #    'prometeo.products',
@@ -130,4 +133,7 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
 
 # User profile model.
 AUTH_PROFILE_MODULE = 'core.Profile'
+
+# The messages storage.
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
