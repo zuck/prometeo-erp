@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-08 17:14+0100\n"
+"POT-Creation-Date: 2010-07-04 01:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,31 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: details.py:18
-msgid "date completed"
-msgstr "data di completamento"
-
-#: details.py:24
-msgid "date due"
-msgstr ""
-
-#: details.py:33
-msgid "urgency"
-msgstr "urgenza"
-
-#: details.py:36 models.py:137
+#: details.py:36 models.py:149
 msgid "low"
 msgstr "bassa"
 
-#: details.py:39 models.py:138
+#: details.py:39 models.py:150
 msgid "medium"
 msgstr "media"
 
-#: details.py:42 models.py:139
+#: details.py:42 models.py:151
 msgid "high"
 msgstr "alta"
 
-#: details.py:45 models.py:140
+#: details.py:45 models.py:152
 msgid "critical"
 msgstr "critica"
 
@@ -50,16 +38,17 @@ msgstr "evento"
 
 #: forms.py:40
 msgid "The date due is greater than the parent's one."
-msgstr ""
+msgstr "La data di termine è più recente di quella superiore."
 
-#: menu.py:13 templates/projects/add.html:6 templates/projects/add.html.py:23
-#: templates/projects/delete.html:6 templates/projects/delete.html.py:28
-#: templates/projects/edit.html:6 templates/projects/edit.html.py:25
-#: templates/projects/index.html:6 templates/projects/index.html.py:14
-#: templates/projects/view.html:6 templates/projects/areas/add.html:6
+#: menu.py:13 templates/projects/add.html:6 templates/projects/delete.html:6
+#: templates/projects/edit.html:6 templates/projects/index.html:6
+#: templates/projects/index.html.py:14 templates/projects/view.html:6
+#: templates/projects/areas/add.html:6
+#: templates/projects/areas/add_ticket.html:6
 #: templates/projects/areas/delete.html:6 templates/projects/areas/edit.html:6
 #: templates/projects/areas/view.html:6
 #: templates/projects/milestones/add.html:6
+#: templates/projects/milestones/add_ticket.html:6
 #: templates/projects/milestones/delete.html:6
 #: templates/projects/milestones/edit.html:6
 #: templates/projects/milestones/view.html:6
@@ -73,94 +62,102 @@ msgstr "Progetti"
 #: models.py:25
 #, python-format
 msgid "(<a href=\"%(link)s\">%(object)s</a>) %(description)s on %(date)s"
-msgstr ""
+msgstr "(<a href=\"%(link)s\">%(object)s</a>) %(description)s il %(date)s"
 
-#: models.py:59
-msgid "Project Manager"
-msgstr ""
+#: models.py:65
+msgid "Project manager"
+msgstr "Project manager"
 
-#: models.py:119
+#: models.py:125
 #, python-format
 msgid "%(name)s of %(project)s"
-msgstr ""
+msgstr "%(name)s di %(project)s"
 
-#: models.py:144
+#: models.py:156
 msgid "defect"
 msgstr "difetto"
 
-#: models.py:145
+#: models.py:157
 msgid "task"
 msgstr "attività"
 
-#: models.py:146
+#: models.py:158
 msgid "enhancement"
 msgstr "aggiunta"
 
-#: models.py:150
+#: models.py:162
 msgid "new"
 msgstr "nuovo"
 
-#: models.py:151
+#: models.py:163
 msgid "won't fix"
-msgstr ""
+msgstr "da non correggere"
 
-#: models.py:152
+#: models.py:164
 msgid "duplicated"
 msgstr "duplicato"
 
-#: models.py:153
+#: models.py:165
 msgid "accepted"
 msgstr "accettato"
 
-#: models.py:154
+#: models.py:166
 msgid "in progress"
 msgstr "in lavorazione"
 
-#: models.py:155
+#: models.py:167
 msgid "resolved"
 msgstr "risolto"
 
-#: models.py:156
+#: models.py:168
 msgid "awaiting review"
 msgstr "in attesa di revisione"
 
-#: models.py:190
+#: models.py:206
 msgid "current"
 msgstr "corrente"
 
-#: models.py:191
-msgid "superseded"
-msgstr ""
-
-#: models.py:192
-msgid "no longer relevant"
-msgstr ""
-
 #: models.py:207
+msgid "superseded"
+msgstr "sostiuito"
+
+#: models.py:208
+msgid "no longer relevant"
+msgstr "obsoleto"
+
+#: models.py:224
 #, python-format
 msgid "Updated %(object)s"
-msgstr ""
+msgstr "Aggiornato %(object)s"
 
-#: models.py:209
+#: models.py:226
 #, python-format
 msgid "Created %(object)s"
-msgstr ""
+msgstr "Creato %(object)s"
 
 #: templates/projects/add.html:15 templates/projects/areas.html:18
 #: templates/projects/index.html:18 templates/projects/members.html:18
 #: templates/projects/milestones.html:18 templates/projects/tickets.html:18
 #: templates/projects/areas/add.html:17
+#: templates/projects/areas/add_ticket.html:19
+#: templates/projects/areas/tickets.html:20
 #: templates/projects/milestones/add.html:17
+#: templates/projects/milestones/add_ticket.html:19
+#: templates/projects/milestones/tickets.html:20
 #: templates/projects/tickets/add.html:17
 msgid "Add"
 msgstr ""
 
-#: templates/projects/add.html:19 templates/projects/edit.html:19
-#: templates/projects/areas/add.html:21 templates/projects/areas/edit.html:21
-#: templates/projects/milestones/add.html:21
-#: templates/projects/milestones/edit.html:21
-#: templates/projects/tickets/add.html:21
-#: templates/projects/tickets/edit.html:21
+#: templates/projects/add.html:20 templates/projects/edit.html:20
+#: templates/projects/areas/add.html:22
+#: templates/projects/areas/add_ticket.html:24
+#: templates/projects/areas/edit.html:22
+#: templates/projects/milestones/add.html:22
+#: templates/projects/milestones/add_ticket.html:24
+#: templates/projects/milestones/edit.html:22
+#: templates/projects/tickets/add.html:22
+#: templates/projects/tickets/edit.html:22
+#: templates/projects/tickets/view.html:57
 msgid "Save"
 msgstr ""
 
@@ -168,55 +165,55 @@ msgstr ""
 msgid "Areas"
 msgstr "Aree"
 
-#: templates/projects/delete.html:15 templates/projects/edit.html:24
+#: templates/projects/delete.html:15 templates/projects/edit.html:25
 #: templates/projects/view.html:30 templates/projects/areas/delete.html:17
-#: templates/projects/areas/edit.html:26 templates/projects/areas/view.html:24
+#: templates/projects/areas/edit.html:27 templates/projects/areas/view.html:31
 #: templates/projects/milestones/delete.html:17
-#: templates/projects/milestones/edit.html:26
-#: templates/projects/milestones/view.html:24
+#: templates/projects/milestones/edit.html:27
+#: templates/projects/milestones/view.html:31
 #: templates/projects/tickets/delete.html:17
-#: templates/projects/tickets/edit.html:26
-#: templates/projects/tickets/view.html:32
+#: templates/projects/tickets/edit.html:27
+#: templates/projects/tickets/view.html:62
 msgid "Delete"
 msgstr ""
 
-#: templates/projects/delete.html:18
+#: templates/projects/delete.html:19
 msgid ""
 "Are you sure you want to delete this project and all its related "
 "informations?"
 msgstr ""
 
-#: templates/projects/delete.html:20 templates/projects/areas/delete.html:22
-#: templates/projects/milestones/delete.html:22
-#: templates/projects/tickets/delete.html:22
-msgid "Yes"
-msgstr ""
-
 #: templates/projects/delete.html:21 templates/projects/areas/delete.html:23
 #: templates/projects/milestones/delete.html:23
 #: templates/projects/tickets/delete.html:23
+msgid "Yes"
+msgstr ""
+
+#: templates/projects/delete.html:22 templates/projects/areas/delete.html:24
+#: templates/projects/milestones/delete.html:24
+#: templates/projects/tickets/delete.html:24
 msgid "No"
 msgstr ""
 
-#: templates/projects/delete.html:26 templates/projects/edit.html:23
-#: templates/projects/areas/delete.html:28
-#: templates/projects/areas/edit.html:25
-#: templates/projects/milestones/delete.html:28
-#: templates/projects/milestones/edit.html:25
-#: templates/projects/tickets/delete.html:28
-#: templates/projects/tickets/edit.html:25
+#: templates/projects/delete.html:27 templates/projects/edit.html:24
+#: templates/projects/areas/delete.html:29
+#: templates/projects/areas/edit.html:26
+#: templates/projects/milestones/delete.html:29
+#: templates/projects/milestones/edit.html:26
+#: templates/projects/tickets/delete.html:29
+#: templates/projects/tickets/edit.html:26
 msgid "View"
 msgstr ""
 
-#: templates/projects/delete.html:27 templates/projects/edit.html:15
-#: templates/projects/view.html:29 templates/projects/areas/delete.html:29
-#: templates/projects/areas/edit.html:17 templates/projects/areas/view.html:23
-#: templates/projects/milestones/delete.html:29
+#: templates/projects/delete.html:28 templates/projects/edit.html:15
+#: templates/projects/view.html:29 templates/projects/areas/delete.html:30
+#: templates/projects/areas/edit.html:17 templates/projects/areas/view.html:30
+#: templates/projects/milestones/delete.html:30
 #: templates/projects/milestones/edit.html:17
-#: templates/projects/milestones/view.html:23
-#: templates/projects/tickets/delete.html:29
+#: templates/projects/milestones/view.html:30
+#: templates/projects/tickets/delete.html:30
 #: templates/projects/tickets/edit.html:17
-#: templates/projects/tickets/view.html:31
+#: templates/projects/tickets/view.html:61
 msgid "Edit"
 msgstr ""
 
@@ -226,51 +223,69 @@ msgstr "Membri"
 
 #: templates/projects/milestones.html:14 templates/projects/view.html:18
 msgid "Milestones"
-msgstr ""
+msgstr "Milestone"
 
 #: templates/projects/tickets.html:14 templates/projects/view.html:19
+#: templates/projects/areas/tickets.html:16
+#: templates/projects/areas/view.html:19
+#: templates/projects/milestones/tickets.html:16
+#: templates/projects/milestones/view.html:19
 msgid "Tickets"
-msgstr ""
+msgstr "Ticket"
 
 #: templates/projects/timeline.html:14 templates/projects/view.html:21
 msgid "Timeline"
-msgstr ""
+msgstr "Timeline"
 
 #: templates/projects/view.html:16 templates/projects/view.html.py:24
-#: templates/projects/areas/view.html:17
-#: templates/projects/milestones/view.html:17
+#: templates/projects/areas/view.html:18 templates/projects/areas/view.html:22
+#: templates/projects/milestones/view.html:18
+#: templates/projects/milestones/view.html:22
 #: templates/projects/tickets/view.html:18
 msgid "Details"
 msgstr ""
 
-#: templates/projects/view.html:26
+#: templates/projects/view.html:26 templates/projects/areas/view.html:24
+#: templates/projects/milestones/view.html:24
+#: templates/projects/tickets/view.html:20
 msgid "Description"
 msgstr "Descrizione"
 
-#: templates/projects/areas/delete.html:20
+#: templates/projects/areas/delete.html:21
 msgid ""
 "Are you sure you want to delete this area and all its related informations?"
 msgstr ""
 
-#: templates/projects/areas/view.html:19
+#: templates/projects/areas/view.html:26
 msgid "Sub-areas"
 msgstr "Sotto-aree"
 
-#: templates/projects/milestones/delete.html:20
+#: templates/projects/milestones/delete.html:21
 msgid ""
 "Are you sure you want to delete this milestone and all its related "
 "informations?"
 msgstr ""
 
-#: templates/projects/milestones/view.html:19
+#: templates/projects/milestones/view.html:26
 msgid "Sub-milestones"
 msgstr "Sotto-milestones"
 
-#: templates/projects/tickets/delete.html:20
+#: templates/projects/tickets/delete.html:21
 msgid ""
 "Are you sure you want to delete this ticket and all its related informations?"
 msgstr ""
 
-#: templates/projects/tickets/view.html:20
+#: templates/projects/tickets/view.html:22
 msgid "Comments"
 msgstr "Commenti"
+
+#: templates/projects/tickets/view.html:31
+#, python-format
+msgid ""
+"Posted by <a href=\"%(user_link)s\">%(user_name)s</a> on %(submit_date)s."
+msgstr ""
+
+#: templates/projects/tickets/view.html:41
+#, python-format
+msgid "<strong>%(comment_count)s</strong> comments have been posted."
+msgstr ""
