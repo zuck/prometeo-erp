@@ -25,6 +25,9 @@
         <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
         {{ previous_fields|safe }}
         <div class="actions">
+            {% if step > 1 %}
+            <input class="previous" type="submit" name="previous" value="{% trans 'Back' %}" />
+            {% endif %}
             {% if step == step_count %}
             <input class="save" type="submit" value="{% trans 'Save' %}" />
             {% else %}

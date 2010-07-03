@@ -53,15 +53,16 @@ class FormWizard(object):
     extra_context = {}
 
     # The HTML (and POST data) field name for the "step" variable.
-    step_field_name="wizard_step"
-    next_step_field_name="wizard_next_step"
-    max_step_field_name="wizard_max_step"
-    wizard_data_name="wizard_data"
+    previous_step_input_name=u"previous"
+    step_field_name=u"wizard_step"
+    next_step_field_name=u"wizard_next_step"
+    max_step_field_name=u"wizard_max_step"
+    wizard_data_name=u"wizard_data"
 
     # METHODS SUBCLASSES SHOULDN'T OVERRIDE ###################################
 
     def __init__(self, form_list, initial=None, template=None):
-        "form_list should be a list of Form classes (not instances)."
+        "Form_list should be a list of Form classes (not instances)."
         self.form_list = form_list[:]
         self.initial = initial or {}
         self.step = 0 # A zero-based counter keeping track of which step we're in.
@@ -292,12 +293,15 @@ class FormWizard(object):
         """
         current_step = self.determine_step(request, *args, **kwargs)
         next_step = current_step
+        if request.POST.has_key(self.previous_step_input_name):
+            next_step = current_step - 1
+        else:
+            next_step = current_step + 1
         try:
             next_step = int(request.POST.get(self.next_step_field_name, None))
         except:
             pass
-        if next_step == current_step: return next_step + 1
-        else: return next_step        
+        return next_step        
 
     def parse_params(self, request, *args, **kwargs):
         """

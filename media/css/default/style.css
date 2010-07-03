@@ -314,7 +314,7 @@ form .message {
 .people, .calendar, .documents, .passwords, .accounts, .partners, .uoms, .roles,
 .save, .load, .refresh, .yes, .no, .enter, .exit, .person, .warehouses,
 .projects, .areas, .milestones, .tickets, .timelines, .suppliers, .customers,
-.telephones, .addresses, .supplies, .jobs, .next, .back {
+.telephones, .addresses, .supplies, .jobs, .next, .previous {
     padding: 5px 0 5px 25px;
     background-position: left center;
     background-repeat: no-repeat;

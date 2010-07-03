@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-03 17:12+0200\n"
+"POT-Creation-Date: 2010-07-03 23:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,10 +93,12 @@ msgid "on"
 msgstr "del"
 
 #: models.py:131
+#, python-format
 msgid "%(quantity)d%(uom)s of %(product)s to %(warehouse)s, on %(date)s"
 msgstr "%(quantity)d%(uom)s di %(product)s a %(warehouse)s, del %(date)s"
 
 #: models.py:132
+#, python-format
 msgid "%(quantity)d%(uom)s of %(product)s from %(warehouse)s, on %(date)s"
 msgstr "%(quantity)d%(uom)s di %(product)s da %(warehouse)s, del %(date)s"
 
@@ -107,15 +109,14 @@ msgid "Add"
 msgstr ""
 
 #: templates/warehouses/add.html:18 templates/warehouses/edit.html:18
-#: templates/warehouses/movements/add.html:29
-#: templates/warehouses/movements/edit.html:23
+#: templates/warehouses/movements/add.html:32
+#: templates/warehouses/movements/edit.html:32
 msgid "Save"
 msgstr ""
 
 #: templates/warehouses/delete.html:13 templates/warehouses/edit.html:23
 #: templates/warehouses/view.html:22
 #: templates/warehouses/movements/delete.html:15
-#: templates/warehouses/movements/edit.html:29
 #: templates/warehouses/movements/view.html:20
 msgid "Delete"
 msgstr ""
@@ -140,7 +141,6 @@ msgstr ""
 
 #: templates/warehouses/delete.html:25 templates/warehouses/edit.html:22
 #: templates/warehouses/movements/delete.html:27
-#: templates/warehouses/movements/edit.html:27
 msgid "View"
 msgstr ""
 
@@ -163,7 +163,13 @@ msgstr ""
 msgid "Step %(step)s of %(step_count)s"
 msgstr "Passo %(step)s di %(step_count)s"
 
-#: templates/warehouses/movements/add.html:31
+#: templates/warehouses/movements/add.html:29
+#: templates/warehouses/movements/edit.html:29
+msgid "Back"
+msgstr "Indietro"
+
+#: templates/warehouses/movements/add.html:34
+#: templates/warehouses/movements/edit.html:34
 msgid "Next"
 msgstr "Avanti"
 
