@@ -20,15 +20,17 @@ urlpatterns = patterns('projects.views',
 
     # Areas.
     (r'^(?P<project_id>\d+)/areas/add/$', 'area_add'),
-    (r'^(?P<project_id>\d+)/areas/view/(?P<id>\d+)/$', 'area_view'),
+    (r'^(?P<project_id>\d+)/areas/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'area_view'),
     (r'^(?P<project_id>\d+)/areas/edit/(?P<id>\d+)/$', 'area_edit'),
     (r'^(?P<project_id>\d+)/areas/delete/(?P<id>\d+)/$', 'area_delete'),
+    (r'^(?P<project_id>\d+)/areas/(?P<id>\d+)/tickets/add/$', 'area_ticket_add'),
 
     # Milestones.
     (r'^(?P<project_id>\d+)/milestones/add/$', 'milestone_add'),
-    (r'^(?P<project_id>\d+)/milestones/view/(?P<id>\d+)/$', 'milestone_view'),
+    (r'^(?P<project_id>\d+)/milestones/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'milestone_view'),
     (r'^(?P<project_id>\d+)/milestones/edit/(?P<id>\d+)/$', 'milestone_edit'),
     (r'^(?P<project_id>\d+)/milestones/delete/(?P<id>\d+)/$', 'milestone_delete'),
+    (r'^(?P<project_id>\d+)/milestones/(?P<id>\d+)/tickets/add/$', 'milestone_ticket_add'),
 
     # Tickets.
     (r'^(?P<project_id>\d+)/tickets/add/$', 'ticket_add'),

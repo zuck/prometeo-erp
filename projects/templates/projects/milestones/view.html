@@ -14,6 +14,11 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        <li><a class="view" href="{{ milestone.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="tickets" href="{{ milestone.get_tickets_url }}">{% trans 'Tickets' %}</a></li>
+    </ul>
+    {% block current_page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <h3>{% trans 'Description' %}</h3>
@@ -25,4 +30,5 @@
         <li><a class="edit" href="{{ milestone.get_edit_url }}">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="{{ milestone.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
+    {% endblock %}
 {% endblock %}

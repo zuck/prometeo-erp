@@ -14,6 +14,11 @@
 {% endblock %}
 
 {% block content %}
+    <ul class="menu">
+        <li><a class="view" href="{{ area.get_absolute_url }}">{% trans 'Details' %}</a></li>
+        <li><a class="tickets" href="{{ area.get_tickets_url }}">{% trans 'Tickets' %}</a></li>
+    </ul>
+    {% block current_page %}
     <h3>{% trans 'Details' %}</h3>
     {{ details.as_dl }}
     <h3>{% trans 'Description' %}</h3>
@@ -25,4 +30,5 @@
         <li><a class="edit" href="{{ area.get_edit_url }}">{% trans 'Edit' %}</a></li>
         <li><a class="delete" href="{{ area.get_delete_url }}">{% trans 'Delete' %}</a></li>
     </ul>
+    {% endblock %}
 {% endblock %}

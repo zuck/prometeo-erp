@@ -1,0 +1,22 @@
+{% extends 'projects/milestones/view.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb milestone.project milestone.project.get_absolute_url %}
+    {% add_crumb 'Milestones' milestone.project.get_milestones_url %}
+    {% add_crumb milestone milestone.get_absolute_url %}
+    {% add_crumb 'Tickets' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block current_page %}
+    <h3>{% trans 'Tickets' %}</h3>
+    {% include 'search_box.html' %}
+    {{ tickets.as_table }}
+    <ul class="actions">
+        <li><a class="add" href="{{ milestone.add_ticket_url }}">{% trans 'Add' %}</a></li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block title %}{% trans 'Projects' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb area.project area.project.get_absolute_url %}
+    {% add_crumb 'Areas' area.project.get_areas_url %}
+    {% add_crumb area area.get_absolute_url %}
+    {% add_crumb 'Tickets' area.get_tickets_url %}
+    {% add_crumb 'Add' %}
+    <h2>{% render_breadcrumbs %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans 'Add' %}</h3>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <input class="save" type="submit" value="{% trans 'Save' %}" />
+        </div>
+    </form>
+{% endblock %}

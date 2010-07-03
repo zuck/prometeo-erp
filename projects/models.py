@@ -52,6 +52,12 @@ class Milestone(models.Model):
     def get_delete_url(self):
         return '/projects/%d/milestones/delete/%d/' % (self.project.id, self.pk)
 
+    def get_tickets_url(self):
+        return self.get_absolute_url() + 'tickets/'
+        
+    def add_ticket_url(self):
+        return '/projects/%d/milestones/%d/tickets/add' % (self.project.id, self.pk)
+
 class Project(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
@@ -126,6 +132,12 @@ class Area(models.Model):
 
     def get_delete_url(self):
         return '/projects/%d/areas/delete/%d/' % (self.project.pk, self.pk)
+
+    def get_tickets_url(self):
+        return self.get_absolute_url() + 'tickets/'
+        
+    def add_ticket_url(self):
+        return '/projects/%d/areas/%d/tickets/add' % (self.project.id, self.pk)
 
 class Membership(models.Model):
     user = models.ForeignKey('auth.User')

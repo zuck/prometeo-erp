@@ -45,3 +45,17 @@ class TicketForm(forms.ModelForm):
     """
     class Meta:
         model = Ticket
+        
+class AreaTicketForm(forms.ModelForm):
+    """Form for area ticket data.
+    """
+    class Meta:
+        model = Ticket
+        exclude = ('area')
+        
+class MilestoneTicketForm(forms.ModelForm):
+    """Form for milestone ticket data.
+    """
+    class Meta:
+        model = Ticket
+        exclude = ('milestone')

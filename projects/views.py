@@ -135,16 +135,24 @@ def area_add(request, project_id):
     return render_to_response('projects/areas/add.html', RequestContext(request, {'form': form, 'area': area}));
 
 @permission_required('projects.change_area')
-def area_view(request, project_id, id):
+def area_view(request, project_id, id, page=None):
     """Show area details.
     """
     project = get_object_or_404(Project, pk=project_id)
     area = get_object_or_404(Area, pk=id)
     if area.project != project:
         raise Http404
-    details = ModelDetails(instance=area, exclude=['id', 'description'])
-    children = ModelPaginatedListDetails(request, area.area_set.all(), exclude=['id', 'description', 'project_id'])
-    return render_to_response('projects/areas/view.html', RequestContext(request, {'area': area, 'details': details, 'children': children, 'description': value_to_string(area.description)}))
+        
+    # Tickets.
+    if page == 'tickets':
+        tickets = TicketListDetails(request, area.ticket_set.all(), exclude=['id', 'description', 'date_modified', 'project_id'])
+        return render_to_response('projects/areas/tickets.html', RequestContext(request, {'area': area, 'tickets': tickets}))
+      
+    # Details.
+    else:
+        details = ModelDetails(instance=area, exclude=['id', 'description'])
+        children = ModelPaginatedListDetails(request, area.area_set.all(), exclude=['id', 'description', 'project_id'])
+        return render_to_response('projects/areas/view.html', RequestContext(request, {'area': area, 'details': details, 'children': children, 'description': value_to_string(area.description)}))
 
 @permission_required('projects.change_area')
 def area_edit(request, project_id, id):
@@ -178,6 +186,26 @@ def area_delete(request, project_id, id):
             return redirect_to(request, url=project.get_absolute_url());
         return redirect_to(request, url=area.get_absolute_url())
     return render_to_response('projects/areas/delete.html', RequestContext(request, {'area': area}))
+    
+@permission_required('projects.add_ticket')    
+def area_ticket_add(request, project_id, id):
+    """Add a new ticket to the area.
+    """
+    project = get_object_or_404(Project, pk=project_id)
+    area = get_object_or_404(Area, pk=id)
+    if area.project != project:
+        raise Http404
+        
+    ticket = Ticket(project=project, creator=request.user, area=area)
+    if request.method == 'POST':
+        form = AreaTicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            ticket = form.save()
+            return redirect_to(request, url=area.get_tickets_url())
+    else:
+        form = AreaTicketForm(instance=ticket)
+
+    return render_to_response('projects/areas/add_ticket.html', RequestContext(request, {'area': area, 'form': form, 'ticket': ticket}));
 
 @permission_required('projects.add_milestone')
 def milestone_add(request, project_id):
@@ -196,16 +224,24 @@ def milestone_add(request, project_id):
     return render_to_response('projects/milestones/add.html', RequestContext(request, {'form': form, 'milestone': milestone}));
 
 @permission_required('projects.change_milestone')
-def milestone_view(request, project_id, id):
+def milestone_view(request, project_id, id, page=None):
     """Show milestone details.
     """
     project = get_object_or_404(Project, pk=project_id)
     milestone = get_object_or_404(Milestone, pk=id)
     if milestone.project != project:
         raise Http404
-    details = ModelDetails(instance=milestone, exclude=['id', 'description'])
-    children = MilestoneListDetails(request, milestone.milestone_set.all(), exclude=['id', 'description', 'project_id'])
-    return render_to_response('projects/milestones/view.html', RequestContext(request, {'milestone': milestone, 'details': details, 'children': children, 'description': value_to_string(milestone.description)}))
+        
+    # Tickets.
+    if page == 'tickets':
+        tickets = TicketListDetails(request, milestone.ticket_set.all(), exclude=['id', 'description', 'date_modified', 'project_id'])
+        return render_to_response('projects/milestones/tickets.html', RequestContext(request, {'milestone': milestone, 'tickets': tickets}))
+      
+    # Details.
+    else:
+        details = ModelDetails(instance=milestone, exclude=['id', 'description'])
+        children = MilestoneListDetails(request, milestone.milestone_set.all(), exclude=['id', 'description', 'project_id'])
+        return render_to_response('projects/milestones/view.html', RequestContext(request, {'milestone': milestone, 'details': details, 'children': children, 'description': value_to_string(milestone.description)}))
 
 @permission_required('projects.change_milestone')     
 def milestone_edit(request, project_id, id):
@@ -239,6 +275,26 @@ def milestone_delete(request, project_id, id):
             return redirect_to(request, url=project.get_absolute_url());
         return redirect_to(request, url=milestone.get_absolute_url())
     return render_to_response('projects/milestones/delete.html', RequestContext(request, {'milestone': milestone}))
+    
+@permission_required('projects.add_ticket')    
+def milestone_ticket_add(request, project_id, id):
+    """Add a new ticket to the milestone.
+    """
+    project = get_object_or_404(Project, pk=project_id)
+    milestone = get_object_or_404(Milestone, pk=id)
+    if milestone.project != project:
+        raise Http404
+        
+    ticket = Ticket(project=project, creator=request.user, milestone=milestone)
+    if request.method == 'POST':
+        form = MilestoneTicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            ticket = form.save()
+            return redirect_to(request, url=milestone.get_tickets_url())
+    else:
+        form = MilestoneTicketForm(instance=ticket)
+
+    return render_to_response('projects/milestones/add_ticket.html', RequestContext(request, {'milestone': milestone, 'form': form, 'ticket': ticket}));
 
 @permission_required('projects.add_ticket')    
 def ticket_add(request, project_id):
