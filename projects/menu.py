@@ -8,6 +8,10 @@ __copyright__ = 'Copyright (c) 2010 Card Tech srl'
 __version__ = '$Revision: 4 $'
 
 from django.utils.translation import ugettext_lazy as _
-from prometeo.core.menu import Menu, menubar
+from prometeo.core.menu import Menu, MenuOption, menubar
 
-menubar.register(Menu(_('Projects'), '/projects/', 'projects'))
+from models import Project
+
+menubar.register(
+    Menu(_('Projects'), '/projects/', 'projects')
+)

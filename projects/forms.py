@@ -17,7 +17,7 @@ class ProjectForm(forms.ModelForm):
     """
     class Meta:
         model = Project
-        exclude = ('members',)
+        exclude = ('members', 'date_closed')
         
 class AreaForm(forms.ModelForm):
     """Form for area data.
@@ -45,17 +45,25 @@ class TicketForm(forms.ModelForm):
     """
     class Meta:
         model = Ticket
+        exclude = ('project', 'date_closed',)
         
 class AreaTicketForm(forms.ModelForm):
     """Form for area ticket data.
     """
     class Meta:
         model = Ticket
-        exclude = ('area')
+        exclude = ('project', 'area', 'date_closed',)
         
 class MilestoneTicketForm(forms.ModelForm):
     """Form for milestone ticket data.
     """
     class Meta:
         model = Ticket
-        exclude = ('milestone')
+        exclude = ('project', 'milestone', 'date_closed',)
+        
+class MembershipForm(forms.ModelForm):
+    """Form for membership data.
+    """
+    class Meta:
+        model = Membership
+        exclude = ('project')

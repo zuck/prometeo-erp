@@ -9,33 +9,17 @@ __version__ = '$Revision: 4 $'
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from django.db.models import signals
-from django.contrib.contenttypes import generic
-from django.contrib.contenttypes.models import ContentType
-
-class TimeLine(models.Model):
-    project = models.ForeignKey('Project', editable=False)
-    description = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey()
-
-    def __unicode__(self):
-        return _(u'(<a href="%(link)s">%(object)s</a>) %(description)s on %(date)s') % {'link':self.content_object.get_absolute_url, 'object':self.content_object, 'description':self.description, 'date':self.date}
-
-    class Meta:
-        ordering = ('-date',)
 
 class Milestone(models.Model):
-    project = models.ForeignKey('Project', editable=False)
-    name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    parent = models.ForeignKey('self', null=True, blank=True)
-    creator = models.ForeignKey('auth.User', related_name='created_milestones', editable=False)
-    manager = models.ForeignKey('auth.User', related_name='managed_milestones', null=True, blank=True)
-    date_due = models.DateTimeField(null=True, blank=True)
-    date_completed = models.DateTimeField(null=True, blank=True)
+    project = models.ForeignKey('Project', editable=False, verbose_name=_('project'))
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'))
+    author = models.ForeignKey('auth.User', related_name='created_milestones', editable=False, verbose_name=_('author'))
+    manager = models.ForeignKey('auth.User', related_name='managed_milestones', null=True, blank=True, verbose_name=_('manager'))
+    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    date_completed = models.DateTimeField(null=True, blank=True, verbose_name=_('completed on'))
 
     class Meta:
         ordering = ['-date_due',]
@@ -59,14 +43,13 @@ class Milestone(models.Model):
         return '/projects/%d/milestones/%d/tickets/add' % (self.project.id, self.pk)
 
 class Project(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField(null=True, blank=True)
-    creator = models.ForeignKey('auth.User', related_name='created_projects', editable=False)
-    pm = models.ForeignKey('auth.User', related_name='managed_projects', verbose_name=_('Project manager'), null=True, blank=True)
-    members = models.ManyToManyField('auth.User', through='Membership', blank=True)
-    events = generic.GenericRelation(TimeLine, related_name='projects')
-    date_added = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=50, verbose_name=_('name'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    author = models.ForeignKey('auth.User', related_name='created_projects', editable=False, verbose_name=_('author'))
+    pm = models.ForeignKey('auth.User', related_name='managed_projects', null=True, blank=True, verbose_name=_('project manager'))
+    members = models.ManyToManyField('auth.User', through='Membership', blank=True, verbose_name=_('members'))
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    date_closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
 
     def __unicode__(self):
         return self.name
@@ -112,14 +95,13 @@ class Project(models.Model):
         return self
         
 class Area(models.Model):
-    project = models.ForeignKey(Project)
-    name = models.CharField(max_length=50)
-    description = models.TextField(null=True, blank=True)
-    parent = models.ForeignKey('self', null=True, blank=True)
-    creator = models.ForeignKey('auth.User', related_name='created_areas', editable=False)
-    manager = models.ForeignKey('auth.User', related_name='managed_areas', null=True, blank=True)
-    date_added = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    project = models.ForeignKey(Project, verbose_name=_('project'))
+    name = models.CharField(max_length=50, verbose_name=_('name'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'))
+    author = models.ForeignKey('auth.User', related_name='created_areas', editable=False, verbose_name=_('author'))
+    manager = models.ForeignKey('auth.User', related_name='managed_areas', null=True, blank=True, verbose_name=_('manager'))
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     
     def __unicode__(self):
         return _('%(name)s of %(project)s') % {'name': self.name, 'project': self.project}
@@ -140,9 +122,15 @@ class Area(models.Model):
         return '/projects/%d/areas/%d/tickets/add' % (self.project.id, self.pk)
 
 class Membership(models.Model):
-    user = models.ForeignKey('auth.User')
-    project = models.ForeignKey(Project)
-    joined_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey('auth.User', verbose_name=_('user'))
+    project = models.ForeignKey(Project, verbose_name=_('project'))
+    date_joined = models.DateTimeField(auto_now_add=True, verbose_name=_('joined at'))
+    
+    def __unicode__(self):
+        return "%s" % self.user
+
+    def get_delete_url(self):
+        return '/projects/%d/members/delete/%d/' % (self.project.pk, self.pk)
 
 class Ticket(models.Model):
     TICKET_URGENCY_CHOICES = (
@@ -168,19 +156,19 @@ class Ticket(models.Model):
         ('review', _('awaiting review')),
     )
     
-    project = models.ForeignKey(Project, editable=False)
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    date_added = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
-    date_due = models.DateTimeField(null=True, blank=True)
-    area = models.ForeignKey(Area, null=True, blank=True)
-    milestone = models.ForeignKey(Milestone, null=True, blank=True)
-    creator = models.ForeignKey('auth.User', related_name="created_tickets", editable=False)
-    owners = models.ManyToManyField('auth.User', related_name="assigned_tickets", null=True, blank=True)
-    status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default='new')
-    urgency = models.CharField(max_length=10, choices=TICKET_URGENCY_CHOICES, default='medium')
-    type = models.CharField(max_length=11, choices=TICKET_TYPE_CHOICES, default='defect')
+    project = models.ForeignKey(Project, editable=False, verbose_name=_('project'))
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    description = models.TextField(verbose_name=_('description'))
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    date_closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
+    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
+    area = models.ForeignKey(Area, null=True, blank=True, verbose_name=_('area'))
+    milestone = models.ForeignKey(Milestone, null=True, blank=True, verbose_name=_('milestone'))
+    author = models.ForeignKey('auth.User', related_name="created_tickets", editable=False, verbose_name=_('author'))
+    owners = models.ManyToManyField('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('owners'))
+    status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
+    urgency = models.CharField(max_length=10, choices=TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
+    type = models.CharField(max_length=11, choices=TICKET_TYPE_CHOICES, default='defect', verbose_name=_('type'))
 
     class Meta:
         ordering = ['-date_due', 'id']
@@ -200,34 +188,3 @@ class Ticket(models.Model):
                 return u'#%d %s' % (i+1, self.name)
                 
         return u''
-
-class Attachment(models.Model):
-    ATTACHMENT_STATUS_CHOICES= (
-        ('current', _('current')),
-        ('superseded', _('superseded')),
-        ('irrelevant', _('no longer relevant')),
-    )
-    
-    creator = models.ForeignKey('auth.User')
-    date_added = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=10, choices=ATTACHMENT_STATUS_CHOICES, default='current')
-    attachment = models.FileField(upload_to='attachments/%Y/%m/%d')
-    ticket = models.ForeignKey(Ticket, related_name="attachments")
-
-    def __unicode__(self):
-        return u'Attachment: %s' % self.attachment.name
-
-def timeline_updater(sender, **kwargs):
-    print kwargs
-    instance = kwargs['instance']
-    project = instance.project
-    msg = _('Updated %(object)s') % {'object': sender.__name__}
-    if kwargs.has_key('created') and kwargs['created']:
-        msg = _('Created %(object)s') % {'object': sender.__name__}
-    TimeLine.objects.create(project=project, description=msg, content_object=instance)
-
-# Signals
-signals.post_save.connect(timeline_updater, sender=Project)
-signals.post_save.connect(timeline_updater, sender=Area)
-signals.post_save.connect(timeline_updater, sender=Milestone)
-signals.post_save.connect(timeline_updater, sender=Ticket)

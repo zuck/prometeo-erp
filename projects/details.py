@@ -15,13 +15,13 @@ from prometeo.core import details
 
 class MilestoneListDetails(details.ModelPaginatedListDetails):
     def row_template(self, row, index):
-        i = self._header.index('date completed')
+        i = self._header.index(_('completed on'))
         dc = row[i]
         
         if dc != None:
             return u'\t<tr class="completed">\n'
             
-        j = self._header.index('date due')
+        j = self._header.index(_('date due'))
         dd = row[j]
         if dd is not None and dd < datetime.now():
             return u'\t<tr class="expired">\n'
@@ -30,7 +30,7 @@ class MilestoneListDetails(details.ModelPaginatedListDetails):
                 
 class TicketListDetails(details.ModelPaginatedListDetails):  
     def row_template(self, row, index):
-        i = self._header.index('urgency')
+        i = self._header.index(_('urgency'))
         value = details.value_to_string(row[i])
         
         if value == _('low'):
@@ -44,15 +44,3 @@ class TicketListDetails(details.ModelPaginatedListDetails):
             
         elif value == _('critical'):
             return u'\t<tr class="critical">\n'
-            
-class TimelineListDetails(details.ModelPaginatedListDetails):
-    def __init__(self, request, queryset=[]):
-        super(TimelineListDetails, self).__init__(request, queryset, fields=[], with_actions=False)
-        self._header = []
-        self._rows = []
-        self._header.append(_('event'))
-        for i, instance in enumerate(queryset):
-            self._rows.append(['%s' % instance,])
-            
-    def table_template(self):
-        return u'<table class="list">\n'

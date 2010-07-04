@@ -37,4 +37,8 @@ urlpatterns = patterns('projects.views',
     (r'^(?P<project_id>\d+)/tickets/view/(?P<id>\d+)/$', 'ticket_view'),
     (r'^(?P<project_id>\d+)/tickets/edit/(?P<id>\d+)/$', 'ticket_edit'),
     (r'^(?P<project_id>\d+)/tickets/delete/(?P<id>\d+)/$', 'ticket_delete'),
+
+    # Members.
+    (r'^(?P<project_id>\d+)/members/add/$', 'member_add'),
+    (r'^(?P<project_id>\d+)/members/delete/(?P<id>\d+)/$', 'member_delete'),
 )

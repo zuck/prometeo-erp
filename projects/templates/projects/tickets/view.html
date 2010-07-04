@@ -38,9 +38,10 @@
     </ul>
     {% endif %}
     {% get_comment_count for ticket as comment_count %}
-    <p>{% blocktrans %}<strong>{{ comment_count }}</strong> comments have been posted.{% endblocktrans %}</p>
+    <p>{% blocktrans %}<strong>{{ comment_count }}</strong> comments.{% endblocktrans %}</p>
     {% get_comment_form for ticket as form %}
     <form action="{% comment_form_target %}" method="post">
+        {% csrf_token %}
         <input type="hidden" name="next" value="{{ ticket.get_absolute_url }}" />
         {% for field in form %}
         {% if field.is_hidden %}
