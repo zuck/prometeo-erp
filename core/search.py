@@ -20,11 +20,11 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
-def search(request, model, exclude=['id']):
+def search(request, model, fields=[], exclude=['id']):
     matches = []
     queryset = None
     
-    search_fields = get_search_fields(request, model, exclude)
+    search_fields = get_search_fields(request, model, fields, exclude)
     
     if request.method == 'POST':
         if request.POST.has_key(u'search'):
@@ -40,9 +40,12 @@ def search(request, model, exclude=['id']):
         
     return search_fields, matches
     
-def get_search_fields(request, model, exclude):
-    search_fields = [(f, search_field_value(request, f)) for f in model._meta.fields if f.attname not in exclude]
+def get_search_fields(request, model, fields, exclude):
+    search_fields = [(f, search_field_value(request, f)) for f in model._meta.fields if is_visible(f.attname, fields, exclude)]
     return search_fields
+
+def is_visible(field, fields=[], exclude=[]):
+    return (len(fields) == 0 or field in fields) and field not in exclude
 
 def search_field_value(request, field):
     name = field.attname
