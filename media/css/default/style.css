@@ -196,7 +196,7 @@ fieldset fieldset legend {
     color: #000;
 }
 
-input[type="submit"] {
+input[type="submit"], button {
     display: inline;
     background-color: transparent;
     border: none;
@@ -205,7 +205,7 @@ input[type="submit"] {
 	cursor: pointer;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, button:hover {
 	color: #f00;
 }
 
@@ -402,11 +402,53 @@ input.save, input.next {
     background-repeat: no-repeat;
     background-image: url(images/start.png);
 }
+.search_box form {
+    background: none;
+    border: none;
+    margin: 0 0 -10px;
+    padding: 0;
+    width: auto;
+}
+
+.search_box label, .search_box select, .search_box input {
+    float: left;
+    margin-right: 5px;
+}
+
+.search_box label, .search_box select {
+    clear: left;
+}
+
+.search_box select {
+    height: 22px;
+    width: 100px;
+}
+
+.search_box input[type="text"] {
+    width: 190px;
+}
+
+.search_box input[type="submit"], .search_box button {
+    float: left;
+    height: 20px;
+}
+
+.search_box .add {
+    background-image: url(images/plus.png); 
+}
+
+.search_box .delete {
+    background-image: url(images/minus.png);
+}
+
+.search_box .add span, .search_box .delete span {
+    display: none;
+}
 
 .paginator {
     float: left;
     width: 100%;
-    margin: 5px 0;
+    margin: 5px 0 10px;
 }
 
 .paginator .previous, .paginator .next, .paginator .current {
@@ -580,36 +622,6 @@ table.list td { text-align: left; }
 #content .search_box {
     float: right;
     margin-top: 10px;
-}
-
-#content .search_box form {
-    background: none;
-    border: none;
-    margin: 0 0 -10px;
-    padding: 0;
-    width: auto;
-}
-
-#content .search_box input, #content .search_box select {
-    float: left;
-    margin-right: 5px;
-}
-
-#content .search_box select {
-    height: 22px;
-    width: 100px;
-}
-
-#content .search_box input[type="text"] {
-    width: 190px;
-}
-
-#content .search_box input[type="submit"] {
-    height: 20px;
-}
-
-.paginator {
-    margin-bottom: 10px;
 }
 
 /* Footer */

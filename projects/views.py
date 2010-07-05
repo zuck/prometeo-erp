@@ -8,14 +8,15 @@ __copyright__ = 'Copyright (c) 2010 Card Tech srl'
 __version__ = '$Revision: 4 $'
 
 from django.http import HttpResponse
+from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
-from django.db.models import Q
 
 from prometeo.core.details import ModelDetails, ModelPaginatedListDetails, value_to_string
 from prometeo.core.paginator import paginate
+from prometeo.core.search import search
 
 from models import *
 from forms import *
@@ -25,21 +26,11 @@ from details import *
 def project_index(request):
     """Show a project list.
     """
-    projects = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
-
-    if (queryset is not None):
-        projects = Project.objects.filter(queryset)
-    else:
-        projects = Project.objects.all()
+    search_fields, projects = search(request, Project)
         
     projects = ModelPaginatedListDetails(request, projects, exclude=['id', 'description'])
         
-    return render_to_response('projects/index.html', RequestContext(request, {'projects': projects}))
+    return render_to_response('projects/index.html', RequestContext(request, {'projects': projects, 'search_fields': search_fields}))
 
 @permission_required('projects.add_project')     
 def project_add(request):
