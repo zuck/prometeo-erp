@@ -175,11 +175,11 @@ class ModelListDetails(ListDetails):
     def actions_template(self, index, instance):
         pattern = '<ul class="actions">\n'
         if hasattr(instance, 'get_absolute_url') and instance.get_absolute_url():
-            pattern += '\t<li><a class="view" href="%s">%s</a></li>\n' % (instance.get_absolute_url(), _('View'))
+            pattern += '\t<li><a class="view" href="%s"><span>%s</span></a></li>\n' % (instance.get_absolute_url(), _('View'))
         if hasattr(instance, 'get_edit_url') and instance.get_edit_url():
-            pattern += '\t<li><a class="edit" href="%s">%s</a></li>\n' % (instance.get_edit_url(), _('Edit'))
+            pattern += '\t<li><a class="edit" href="%s"><span>%s</span></a></li>\n' % (instance.get_edit_url(), _('Edit'))
         if hasattr(instance, 'get_delete_url') and instance.get_delete_url():
-            pattern += '\t<li><a class="delete" href="%s">%s</a></li>\n' % (instance.get_delete_url(), _('Delete'))
+            pattern += '\t<li><a class="delete" href="%s"><span>%s</span></a></li>\n' % (instance.get_delete_url(), _('Delete'))
         pattern += '</ul>'
         
         return pattern

@@ -271,6 +271,14 @@ table .actions {
     padding: 0;
 }
 
+table .actions li {
+    margin-right: 10px;
+}
+
+table .actions span {
+    display: none;
+}
+
 .disabled { color: #767676; }
 
 .errorlist {
