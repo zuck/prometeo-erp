@@ -20,21 +20,22 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.db.models import Q
+
 def search(request, model, fields=[], exclude=['id']):
     matches = []
     queryset = None
     
     search_fields = get_search_fields(request, model, fields, exclude)
     
-    if request.method == 'POST':
-        if request.POST.has_key(u'search'):
-            queryset = {}
-            for f, value in search_fields:
-                if value is not None:
-                    queryset["%s__startswith" % f.attname] = value
+    if request.method == 'POST' and request.POST.has_key(u'search'):
+        queryset = []
+        for f, value in search_fields:
+            if value is not None:
+                queryset.append(Q(**{"%s__startswith" % f.attname: value}) | Q(**{"%s__endswith" % f.attname: value}))
 
     if (queryset is not None):
-        matches = model.objects.filter(**queryset)
+        matches = model.objects.filter(*queryset)
     else:
         matches = model.objects.all()
         
