@@ -26,7 +26,7 @@ from details import *
 def project_index(request):
     """Show a project list.
     """
-    search_fields, projects = search(request, Project)
+    search_fields, projects = search(request, Project, exclude=['id', 'description'])
         
     projects = ModelPaginatedListDetails(request, projects, exclude=['id', 'description'])
         
@@ -55,23 +55,27 @@ def project_view(request, id, page=None):
     
     # Areas.
     if page == 'areas':
-        areas = ModelPaginatedListDetails(request, project.area_set.all(), exclude=['id', 'description', 'project_id'])
-        return render_to_response('projects/areas.html', RequestContext(request, {'project': project, 'areas': areas}))
+        search_fields, matches = search(request, Area, exclude=['id', 'description', 'project_id'])
+        areas = ModelPaginatedListDetails(request, matches, exclude=['id', 'description', 'project_id'])
+        return render_to_response('projects/areas.html', RequestContext(request, {'project': project, 'areas': areas, 'search_fields': search_fields}))
         
     # Milestones.
     elif page == 'milestones':
-        milestones = MilestoneListDetails(request, project.milestone_set.all(), exclude=['id', 'description', 'project_id'])
-        return render_to_response('projects/milestones.html', RequestContext(request, {'project': project, 'milestones': milestones}))
+        search_fields, matches = search(request, Milestone, exclude=['id', 'description', 'project_id'])
+        milestones = MilestoneListDetails(request, matches, exclude=['id', 'description', 'project_id'])
+        return render_to_response('projects/milestones.html', RequestContext(request, {'project': project, 'milestones': milestones, 'search_fields': search_fields}))
         
     # Tickets.
     elif page == 'tickets':
-        tickets = TicketListDetails(request, project.ticket_set.all(), exclude=['id', 'description', 'date_modified', 'project_id'])
-        return render_to_response('projects/tickets.html', RequestContext(request, {'project': project, 'tickets': tickets}))
+        search_fields, matches = search(request, Ticket, exclude=['id', 'description', 'project_id'])
+        tickets = TicketListDetails(request, matches, exclude=['id', 'description', 'project_id'])
+        return render_to_response('projects/tickets.html', RequestContext(request, {'project': project, 'tickets': tickets, 'search_fields': search_fields}))
       
     # Members.  
     elif page == 'members':
-        members = ModelPaginatedListDetails(request, project.membership_set.all(), exclude=['id', 'project_id'])
-        return render_to_response('projects/members.html', RequestContext(request, {'project': project, 'members': members}))
+        search_fields, matches = search(request, Membership, exclude=['id', 'project_id'])
+        members = ModelPaginatedListDetails(request, matches, exclude=['id', 'project_id'])
+        return render_to_response('projects/members.html', RequestContext(request, {'project': project, 'members': members, 'search_fields': search_fields}))
         
     # Details.
     details = ModelDetails(instance=project, exclude=['id', 'description'])
