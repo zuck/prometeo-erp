@@ -5,7 +5,7 @@
 
 __author__ = 'Emanuele Bertoldi <e.bertoldi@card-tech.it>'
 __copyright__ = 'Copyright (c) 2010 Card Tech srl'
-__version__ = '$Revision: 4 $'
+__version__ = '$Revision$'
 
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
