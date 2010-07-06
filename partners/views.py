@@ -54,6 +54,7 @@ def partner_add(request):
         form = PartnerForm(request.POST)
         if form.is_valid():
             partner = form.save()
+            messages.success(request, _("Partner added"))
             return redirect_to(request, url=partner.get_absolute_url())
     else:
         form = PartnerForm()
@@ -94,6 +95,7 @@ def partner_edit(request, id):
         form = PartnerForm(request.POST, instance=partner)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Partner updated"))
             return redirect_to(request, url=partner.get_absolute_url())
     else:
         form = PartnerForm(instance=partner)
@@ -107,6 +109,7 @@ def partner_delete(request, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             partner.delete()
+            messages.success(request, _("Partner deleted"))
             return redirect_to(request, url='/partners/');
         return redirect_to(request, url=partner.get_absolute_url())
     return render_to_response('partners/delete.html', RequestContext(request, {'partner': partner}))
@@ -142,6 +145,7 @@ def partner_add_telephone(request, id):
         if form.is_valid():
             telephone = form.save()
             partner.telephones.add(telephone)
+            messages.success(request, _("Telephone number added"))
             return redirect_to(request, url=partner.get_telephones_url())
     else:
         form = TelephoneForm()
@@ -161,6 +165,7 @@ def partner_edit_telephone(request, id, telephone_id):
         form = TelephoneForm(request.POST, instance=telephone)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Telephone number updated"))
             return redirect_to(request, url=partner.get_telephones_url())
     else:
         form = TelephoneForm(instance=telephone)
@@ -179,6 +184,7 @@ def partner_delete_telephone(request, id, telephone_id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             telephone.delete()
+            messages.success(request, _("Telephone number deleted"))
         return redirect_to(request, url=partner.get_telephones_url())
     return render_to_response('partners/delete_telephone.html', RequestContext(request, {'partner': partner, 'telephone': telephone})) 
     
@@ -193,6 +199,7 @@ def partner_add_address(request, id):
         if form.is_valid():
             address = form.save()
             partner.addresses.add(address)
+            messages.success(request, _("Address added"))
             return redirect_to(request, url=partner.get_addresses_url())
     else:
         form = AddressForm()
@@ -212,6 +219,7 @@ def partner_edit_address(request, id, address_id):
         form = AddressForm(request.POST, instance=address)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Address updated"))
             return redirect_to(request, url=partner.get_addresses_url())
     else:
         form = AddressForm(instance=address)
@@ -230,6 +238,7 @@ def partner_delete_address(request, id, address_id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             address.delete()
+            messages.success(request, _("Address deleted"))
         return redirect_to(request, url=partner.get_addresses_url())
     return render_to_response('partners/delete_address.html', RequestContext(request, {'partner': partner, 'address': address})) 
     
@@ -244,6 +253,7 @@ def partner_add_contact(request, id):
         form = PartnerJobForm(request.POST, instance=job)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Contact added"))
             return redirect_to(request, url=partner.get_contacts_url())
     else:
         form = PartnerJobForm(instance=job)
@@ -263,6 +273,7 @@ def partner_edit_contact(request, id, job_id):
         form = PartnerJobForm(request.POST, instance=job)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Contact updated"))
             return redirect_to(request, url=partner.get_contacts_url())
     else:
         form = PartnerJobForm(instance=job)
@@ -281,6 +292,7 @@ def partner_delete_contact(request, id, job_id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             job.delete()
+            messages.success(request, _("Contact removed"))
         return redirect_to(request, url=partner.get_contacts_url())
     return render_to_response('partners/delete_contact.html', RequestContext(request, {'partner': partner, 'job': job}))
 
@@ -302,6 +314,7 @@ def contact_add(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             contact = form.save()
+            messages.success(request, _("Contact added"))
             return redirect_to(request, url=contact.get_absolute_url())
     else:
         form = ContactForm()
@@ -342,6 +355,7 @@ def contact_edit(request, id):
         form = ContactForm(request.POST, instance=contact)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Contact updated"))
             return redirect_to(request, url=contact.get_absolute_url())
     else:
         form = ContactForm(instance=contact)
@@ -355,6 +369,7 @@ def contact_delete(request, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             contact.delete()
+            messages.success(request, _("Contact deleted"))
             return redirect_to(request, url='/partners/contacts/');
         return redirect_to(request, url=contact.get_absolute_url())
     return render_to_response('partners/contacts/delete.html', RequestContext(request, {'contact': contact}))
@@ -370,6 +385,7 @@ def contact_add_telephone(request, id):
         if form.is_valid():
             telephone = form.save()
             contact.telephones.add(telephone)
+            messages.success(request, _("Telephone number added"))
             return redirect_to(request, url=contact.get_telephones_url())
     else:
         form = TelephoneForm()
@@ -389,6 +405,7 @@ def contact_edit_telephone(request, id, telephone_id):
         form = TelephoneForm(request.POST, instance=telephone)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Telephone number updated"))
             return redirect_to(request, url=contact.get_telephones_url())
     else:
         form = TelephoneForm(instance=telephone)
@@ -407,6 +424,7 @@ def contact_delete_telephone(request, id, telephone_id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             telephone.delete()
+            messages.success(request, _("Telephone number deleted"))
         return redirect_to(request, url=contact.get_telephones_url())
     return render_to_response('partners/contacts/delete_telephone.html', RequestContext(request, {'contact': contact, 'telephone': telephone})) 
     
@@ -421,6 +439,7 @@ def contact_add_address(request, id):
         if form.is_valid():
             address = form.save()
             contact.addresses.add(address)
+            messages.success(request, _("Address added"))
             return redirect_to(request, url=contact.get_addresses_url())
     else:
         form = AddressForm()
@@ -440,6 +459,7 @@ def contact_edit_address(request, id, address_id):
         form = AddressForm(request.POST, instance=address)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Address updated"))
             return redirect_to(request, url=contact.get_addresses_url())
     else:
         form = AddressForm(instance=address)
@@ -458,6 +478,7 @@ def contact_delete_address(request, id, address_id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             address.delete()
+            messages.success(request, _("Address deleted"))
         return redirect_to(request, url=contact.get_addresses_url())
     return render_to_response('partners/contacts/delete_address.html', RequestContext(request, {'contact': contact, 'address': address})) 
     
@@ -472,6 +493,7 @@ def contact_add_job(request, id):
         form = ContactJobForm(request.POST, instance=job)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Job added"))
             return redirect_to(request, url=contact.get_jobs_url())
     else:
         form = ContactJobForm(instance=job)
@@ -491,6 +513,7 @@ def contact_edit_job(request, id, job_id):
         form = ContactJobForm(request.POST, instance=job)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Job updated"))
             return redirect_to(request, url=contact.get_jobs_url())
     else:
         form = ContactJobForm(instance=job)
@@ -509,6 +532,7 @@ def contact_delete_job(request, id, job_id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             job.delete()
+            messages.success(request, _("Job deleted"))
         return redirect_to(request, url=contact.get_jobs_url())
     return render_to_response('partners/contacts/delete_job.html', RequestContext(request, {'contact': contact, 'job': job}))
     
@@ -530,6 +554,7 @@ def role_add(request):
         form = RoleForm(request.POST)
         if form.is_valid():
             role = form.save()
+            messages.success(request, _("Role added"))
             return redirect_to(request, url=role.get_absolute_url())
     else:
         form = RoleForm()
@@ -553,6 +578,7 @@ def role_edit(request, id):
         form = RoleForm(request.POST, instance=role)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Role updated"))
             return redirect_to(request, url=role.get_absolute_url())
     else:
         form = RoleForm(instance=role)
@@ -566,6 +592,7 @@ def role_delete(request, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             role.delete()
+            messages.success(request, _("Role deleted"))
             return redirect_to(request, url='/partners/contacts/roles/');
         return redirect_to(request, url=role.get_absolute_url())
     return render_to_response('partners/contacts/roles/delete.html', RequestContext(request, {'role': role}))

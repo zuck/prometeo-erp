@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-31 12:14+0200\n"
+"POT-Creation-Date: 2010-07-06 13:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,6 +243,82 @@ msgstr "contatti"
 #, python-format
 msgid "%(contact)s as %(role)s for %(partner)s"
 msgstr "%(contact)s come %(role)s presso %(partner)s"
+
+#: views.py:57
+msgid "Partner added"
+msgstr "Partner aggiunto"
+
+#: views.py:98
+msgid "Partner updated"
+msgstr "Partner aggiornato"
+
+#: views.py:112
+msgid "Partner deleted"
+msgstr "Partner cancellato"
+
+#: views.py:148 views.py:388
+msgid "Telephone number added"
+msgstr "Numero di telefono aggiunto"
+
+#: views.py:168 views.py:408
+msgid "Telephone number updated"
+msgstr "Numero di telefono aggiornato"
+
+#: views.py:187 views.py:427
+msgid "Telephone number deleted"
+msgstr "Numero di telefono cancellato"
+
+#: views.py:202 views.py:442
+msgid "Address added"
+msgstr "Indirizzo aggiunto"
+
+#: views.py:222 views.py:462
+msgid "Address updated"
+msgstr "Indirizzo aggiornato"
+
+#: views.py:241 views.py:481
+msgid "Address deleted"
+msgstr "Indirizzo cancellato"
+
+#: views.py:256 views.py:317
+msgid "Contact added"
+msgstr "Contatto aggiunto"
+
+#: views.py:276 views.py:358
+msgid "Contact updated"
+msgstr "Contatto aggiornato"
+
+#: views.py:295
+msgid "Contact removed"
+msgstr "Contatto rimosso"
+
+#: views.py:372
+msgid "Contact deleted"
+msgstr "Contatto cancellato"
+
+#: views.py:496
+msgid "Job added"
+msgstr "Impiego aggiunto"
+
+#: views.py:516
+msgid "Job updated"
+msgstr "Impiego aggiornato"
+
+#: views.py:535
+msgid "Job deleted"
+msgstr "Impiego cancellato"
+
+#: views.py:557
+msgid "Role added"
+msgstr "Ruolo aggiunto"
+
+#: views.py:581
+msgid "Role updated"
+msgstr "Ruolo aggiornato"
+
+#: views.py:595
+msgid "Role deleted"
+msgstr "Ruolo cancellato"
 
 #: templates/partners/add.html:13 templates/partners/add_address.html:15
 #: templates/partners/add_contact.html:15
