@@ -107,18 +107,18 @@ dt.altrow { background: #dadada url(images/dt_alt_bg.png) repeat-x bottom; }
 dd {
     float: right;
     width: 75%;
-	background: #f5f5f5 url(images/tr_bg.png) repeat-x bottom;
+	background: #f7f7f7 url(images/tr_bg.png) repeat-x bottom;
 }
 
-dd.altrow { background: #e7e7e7 url(images/tr_alt_bg.png) repeat-x bottom; }
+dd.altrow { background: #ececec url(images/tr_alt_bg.png) repeat-x bottom; }
 
 table {
 	clear: both;
 }
 
-table tr { background: #f5f5f5 url(images/tr_bg.png) repeat-x bottom; }
+table tr { background: #f7f7f7 url(images/tr_bg.png) repeat-x bottom; }
 
-table tr.altrow { background: #e7e7e7 url(images/tr_alt_bg.png) repeat-x bottom; }
+table tr.altrow { background: #ececec url(images/tr_alt_bg.png) repeat-x bottom; }
 
 table td {
     padding: 10px 5px;
