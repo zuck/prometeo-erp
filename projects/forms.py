@@ -8,7 +8,10 @@ __copyright__ = 'Copyright (c) 2010 Card Tech srl'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.simple import redirect_to
 from django import forms
+
+from prometeo.core import wizard
 
 from models import *
 
@@ -45,16 +48,21 @@ class TicketForm(forms.ModelForm):
     """
     class Meta:
         model = Ticket
-        exclude = ('project', 'date_closed',)
+        exclude = ('project', 'date_closed')
         
-class AreaTicketForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(TicketForm, self).__init__(*args, **kwargs)
+        if self.instance is None or self.instance.pk is None:
+            del self.fields['status']
+        
+class AreaTicketForm(TicketForm):
     """Form for area ticket data.
     """
     class Meta:
         model = Ticket
         exclude = ('project', 'area', 'date_closed',)
         
-class MilestoneTicketForm(forms.ModelForm):
+class MilestoneTicketForm(TicketForm):
     """Form for milestone ticket data.
     """
     class Meta:

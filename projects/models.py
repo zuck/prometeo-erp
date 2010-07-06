@@ -10,38 +10,6 @@ __version__ = '$Revision$'
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-class Milestone(models.Model):
-    project = models.ForeignKey('Project', editable=False, verbose_name=_('project'))
-    name = models.CharField(max_length=255, verbose_name=_('name'))
-    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'))
-    author = models.ForeignKey('auth.User', related_name='created_milestones', editable=False, verbose_name=_('author'))
-    manager = models.ForeignKey('auth.User', related_name='managed_milestones', null=True, blank=True, verbose_name=_('manager'))
-    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    date_completed = models.DateTimeField(null=True, blank=True, verbose_name=_('completed on'))
-
-    class Meta:
-        ordering = ['-date_due',]
-
-    def __unicode__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return '/projects/%d/milestones/view/%d/' % (self.project.id, self.pk)
-
-    def get_edit_url(self):
-        return '/projects/%d/milestones/edit/%d/' % (self.project.id, self.pk)
-
-    def get_delete_url(self):
-        return '/projects/%d/milestones/delete/%d/' % (self.project.id, self.pk)
-
-    def get_tickets_url(self):
-        return self.get_absolute_url() + 'tickets/'
-        
-    def add_ticket_url(self):
-        return '/projects/%d/milestones/%d/tickets/add' % (self.project.id, self.pk)
-
 class Project(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('name'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
@@ -121,16 +89,37 @@ class Area(models.Model):
     def add_ticket_url(self):
         return '/projects/%d/areas/%d/tickets/add' % (self.project.id, self.pk)
 
-class Membership(models.Model):
-    user = models.ForeignKey('auth.User', verbose_name=_('user'))
-    project = models.ForeignKey(Project, verbose_name=_('project'))
-    date_joined = models.DateTimeField(auto_now_add=True, verbose_name=_('joined at'))
-    
+class Milestone(models.Model):
+    project = models.ForeignKey(Project, editable=False, verbose_name=_('project'))
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'))
+    author = models.ForeignKey('auth.User', related_name='created_milestones', editable=False, verbose_name=_('author'))
+    manager = models.ForeignKey('auth.User', related_name='managed_milestones', null=True, blank=True, verbose_name=_('manager'))
+    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    date_completed = models.DateTimeField(null=True, blank=True, verbose_name=_('completed on'))
+
+    class Meta:
+        ordering = ['-date_due',]
+
     def __unicode__(self):
-        return "%s" % self.user
+        return self.name
+
+    def get_absolute_url(self):
+        return '/projects/%d/milestones/view/%d/' % (self.project.id, self.pk)
+
+    def get_edit_url(self):
+        return '/projects/%d/milestones/edit/%d/' % (self.project.id, self.pk)
 
     def get_delete_url(self):
-        return '/projects/%d/members/delete/%d/' % (self.project.pk, self.pk)
+        return '/projects/%d/milestones/delete/%d/' % (self.project.id, self.pk)
+
+    def get_tickets_url(self):
+        return self.get_absolute_url() + 'tickets/'
+        
+    def add_ticket_url(self):
+        return '/projects/%d/milestones/%d/tickets/add' % (self.project.id, self.pk)       
 
 class Ticket(models.Model):
     TICKET_URGENCY_CHOICES = (
@@ -141,9 +130,9 @@ class Ticket(models.Model):
     )
     
     TICKET_TYPE_CHOICES = (
-        ('defect', _('defect')),
+        ('problem', _('problem')),
         ('task', _('task')),
-        ('enhancement', _('enhancement')),
+        ('idea', _('idea')),
     )
     
     TICKET_STATUS_CHOICES = (
@@ -157,7 +146,7 @@ class Ticket(models.Model):
     )
     
     project = models.ForeignKey(Project, editable=False, verbose_name=_('project'))
-    name = models.CharField(max_length=255, verbose_name=_('name'))
+    title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(verbose_name=_('description'))
     date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     date_closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
@@ -168,7 +157,7 @@ class Ticket(models.Model):
     owners = models.ManyToManyField('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('owners'))
     status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
     urgency = models.CharField(max_length=10, choices=TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
-    type = models.CharField(max_length=11, choices=TICKET_TYPE_CHOICES, default='defect', verbose_name=_('type'))
+    type = models.CharField(max_length=11, choices=TICKET_TYPE_CHOICES, default='problem', verbose_name=_('type'))
 
     class Meta:
         ordering = ['-date_due', 'id']
@@ -185,6 +174,17 @@ class Ticket(models.Model):
     def __unicode__(self):
         for i, t in enumerate(self.project.ticket_set.all()):
             if t == self:
-                return u'#%d %s' % (i+1, self.name)
+                return u'#%d %s' % (i+1, self.title)
                 
         return u''
+              
+class Membership(models.Model):
+    user = models.ForeignKey('auth.User', verbose_name=_('user'))
+    project = models.ForeignKey(Project, verbose_name=_('project'))
+    date_joined = models.DateTimeField(auto_now_add=True, verbose_name=_('joined at'))
+    
+    def __unicode__(self):
+        return "%s" % self.user
+
+    def get_delete_url(self):
+        return '/projects/%d/members/delete/%d/' % (self.project.pk, self.pk)

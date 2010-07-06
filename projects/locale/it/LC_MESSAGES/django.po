@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-04 20:47+0200\n"
+"POT-Creation-Date: 2010-07-06 10:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,35 +16,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: details.py:18 models.py:22
+#: details.py:18 models.py:101
 msgid "completed on"
 msgstr "completato il"
 
-#: details.py:24 models.py:20 models.py:164
+#: details.py:24 models.py:99 models.py:153
 msgid "date due"
 msgstr "scadenza"
 
-#: details.py:33 models.py:170
+#: details.py:33 models.py:159
 msgid "urgency"
 msgstr "priorità"
 
-#: details.py:36 models.py:137
+#: details.py:36 models.py:126
 msgid "low"
 msgstr "bassa"
 
-#: details.py:39 models.py:138
+#: details.py:39 models.py:127
 msgid "medium"
 msgstr "media"
 
-#: details.py:42 models.py:139
+#: details.py:42 models.py:128
 msgid "high"
 msgstr "alta"
 
-#: details.py:45 models.py:140
+#: details.py:45 models.py:129
 msgid "critical"
 msgstr "critica"
 
-#: forms.py:40
+#: forms.py:43
 msgid "The date due is greater than the parent's one."
 msgstr "La data di termine è più recente di quella del genitore."
 
@@ -68,118 +68,122 @@ msgstr "La data di termine è più recente di quella del genitore."
 msgid "Projects"
 msgstr "Progetti"
 
-#: models.py:14 models.py:98 models.py:126 models.py:159
-msgid "project"
-msgstr "progetto"
-
-#: models.py:15 models.py:46 models.py:99 models.py:160
+#: models.py:14 models.py:67 models.py:94
 msgid "name"
 msgstr "nome"
 
-#: models.py:16 models.py:47 models.py:100 models.py:161
+#: models.py:15 models.py:68 models.py:95 models.py:150
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:17 models.py:101
-msgid "parent"
-msgstr "genitore"
-
-#: models.py:18 models.py:48 models.py:102 models.py:167
+#: models.py:16 models.py:70 models.py:97 models.py:156
 msgid "author"
 msgstr "autore"
 
-#: models.py:19 models.py:103
-msgid "manager"
-msgstr "manager"
-
-#: models.py:21 models.py:51 models.py:104 models.py:162
-msgid "created on"
-msgstr "creato il"
-
-#: models.py:49
+#: models.py:17
 msgid "project manager"
 msgstr "project manager"
 
-#: models.py:50
+#: models.py:18
 msgid "members"
 msgstr "membri"
 
-#: models.py:52 models.py:163
+#: models.py:19 models.py:72 models.py:100 models.py:151
+msgid "created on"
+msgstr "creato il"
+
+#: models.py:20 models.py:152
 msgid "closed on"
 msgstr "chiuso il"
 
-#: models.py:107
+#: models.py:66 models.py:93 models.py:148 models.py:183
+msgid "project"
+msgstr "progetto"
+
+#: models.py:69 models.py:96
+msgid "parent"
+msgstr "genitore"
+
+#: models.py:71 models.py:98
+msgid "manager"
+msgstr "manager"
+
+#: models.py:75
 #, python-format
 msgid "%(name)s of %(project)s"
 msgstr "%(name)s di %(project)s"
 
-#: models.py:125
-msgid "user"
-msgstr ""
+#: models.py:133
+msgid "problem"
+msgstr "problema"
 
-#: models.py:127
-msgid "joined at"
-msgstr "unito il"
-
-#: models.py:144
-msgid "defect"
-msgstr "difetto"
-
-#: models.py:145
+#: models.py:134
 msgid "task"
 msgstr "attività"
 
-#: models.py:146
-msgid "enhancement"
-msgstr "aggiunta"
+#: models.py:135
+msgid "idea"
+msgstr "idea"
 
-#: models.py:150
+#: models.py:139
 msgid "new"
 msgstr "nuovo"
 
-#: models.py:151
+#: models.py:140
 msgid "won't fix"
 msgstr "da non correggere"
 
-#: models.py:152
+#: models.py:141
 msgid "duplicated"
 msgstr "duplicato"
 
-#: models.py:153
+#: models.py:142
 msgid "accepted"
 msgstr "accettato"
 
-#: models.py:154
+#: models.py:143
 msgid "in progress"
 msgstr "in lavorazione"
 
-#: models.py:155
+#: models.py:144
 msgid "resolved"
 msgstr "risolto"
 
-#: models.py:156
+#: models.py:145
 msgid "awaiting review"
 msgstr "in attesa di revisione"
 
-#: models.py:165
+#: models.py:149
+msgid "title"
+msgstr "titolo"
+
+#: models.py:154
 msgid "area"
 msgstr "area"
 
-#: models.py:166
+#: models.py:155
 msgid "milestone"
 msgstr "milestone"
 
-#: models.py:168
+#: models.py:157
 msgid "owners"
 msgstr "proprietari"
 
-#: models.py:169
+#: models.py:158
 msgid "status"
 msgstr "stato"
 
-#: models.py:171
+#: models.py:160
 msgid "type"
 msgstr "tipologia"
+
+#: models.py:182
+msgid "user"
+msgstr ""
+
+#: models.py:184
+msgid "joined at"
+msgstr "unito il"
 
 #: templates/projects/add.html:15 templates/projects/areas.html:18
 #: templates/projects/index.html:18 templates/projects/members.html:18

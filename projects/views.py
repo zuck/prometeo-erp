@@ -135,7 +135,7 @@ def area_view(request, project_id, id, page=None):
         
     # Tickets.
     if page == 'tickets':
-        tickets = TicketListDetails(request, area.ticket_set.all(), exclude=['id', 'description', 'date_modified', 'project_id'])
+        tickets = TicketListDetails(request, area.ticket_set.all(), exclude=['id', 'description', 'area_id', 'date_modified', 'project_id'])
         return render_to_response('projects/areas/tickets.html', RequestContext(request, {'area': area, 'tickets': tickets}))
       
     # Details.
@@ -224,7 +224,7 @@ def milestone_view(request, project_id, id, page=None):
         
     # Tickets.
     if page == 'tickets':
-        tickets = TicketListDetails(request, milestone.ticket_set.all(), exclude=['id', 'description', 'date_modified', 'project_id'])
+        tickets = TicketListDetails(request, milestone.ticket_set.all(), exclude=['id', 'description', 'milestone_id', 'date_modified', 'project_id'])
         return render_to_response('projects/milestones/tickets.html', RequestContext(request, {'milestone': milestone, 'tickets': tickets}))
       
     # Details.
