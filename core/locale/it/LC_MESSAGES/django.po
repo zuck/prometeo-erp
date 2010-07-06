@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-06 11:53+0200\n"
+"POT-Creation-Date: 2010-07-06 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr "Modifica"
 #: templates/accounts/groups/edit.html:24
 #: templates/accounts/groups/view.html:24
 msgid "Delete"
-msgstr ""
+msgstr "Cancella"
 
 #: details.py:206
 #, python-format
@@ -63,7 +63,7 @@ msgstr "Pagina %(number)d di %(num_pages)d"
 
 #: forms.py:33
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: forms.py:34
 msgid "Password confirmation"
@@ -84,42 +84,42 @@ msgstr "Inizio"
 #: menu.py:97 templates/accounts/index.html:12
 #: templates/accounts/layout.html:6
 msgid "Accounts"
-msgstr ""
+msgstr "Accounts"
 
 #: menu.py:97 templates/accounts/groups.html:14
 #: templates/accounts/view.html:15 templates/accounts/groups/index.html:13
 msgid "Groups"
-msgstr ""
+msgstr "Gruppi"
 
 #: models.py:71
 msgid "language"
 msgstr "lingua"
 
-#: views.py:64
+#: views.py:66
 msgid "Your are now logged"
 msgstr "Ora sei autenticato"
 
-#: views.py:95
+#: views.py:87
 msgid "Account added"
 msgstr "Account aggiunto"
 
-#: views.py:132
+#: views.py:124
 msgid "Account updated"
 msgstr "Account aggiornato"
 
-#: views.py:146
+#: views.py:138
 msgid "Account deleted"
 msgstr "Account cancellato"
 
-#: views.py:179
+#: views.py:161
 msgid "Group added"
 msgstr "Gruppo aggiunto"
 
-#: views.py:210
+#: views.py:192
 msgid "Group updated"
 msgstr "Gruppo aggiornato"
 
-#: views.py:224
+#: views.py:206
 msgid "Group deleted"
 msgstr "Gruppo cancellato"
 
@@ -200,7 +200,7 @@ msgstr ""
 
 #: templates/accounts/userarea.html:6
 msgid "Logout"
-msgstr ""
+msgstr "Logout"
 
 #: templates/accounts/userarea.html:7
 #, python-format

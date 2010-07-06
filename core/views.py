@@ -30,7 +30,9 @@ from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
 from django.contrib import messages
 
-from details import ModelDetails, ModelPaginatedListDetails, field_to_value
+from prometeo.core.details import ModelDetails, ModelPaginatedListDetails, field_to_value
+from prometeo.core.search import search
+
 from models import *
 from forms import *
 
@@ -67,22 +69,12 @@ def account_logged(request):
 @permission_required('auth.change_account')
 def account_index(request):
     """Show an account list.
-    """
-    accounts = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(username__startswith=token) | Q(username__endswith=token)
-
-    if (queryset is not None):
-        accounts = Account.objects.filter(queryset)
-    else:
-        accounts = Account.objects.all()
+    """    
+    search_fields, accounts = search(request, Account, exclude=['id', 'is_active', 'is_staff', 'is_superuser', 'password', 'date_joined'])
         
-    accounts = ModelPaginatedListDetails(request, accounts, exclude=['id', 'is_active', 'password', 'date_joined'])
+    accounts = ModelPaginatedListDetails(request, accounts, exclude=['id', 'is_active', 'is_staff', 'is_superuser', 'password', 'date_joined'])
         
-    return render_to_response('accounts/index.html', RequestContext(request, {'accounts': accounts}))
+    return render_to_response('accounts/index.html', RequestContext(request, {'accounts': accounts, 'search_fields': search_fields}))
     
 @permission_required('auth.add_user')
 def account_add(request):
@@ -116,7 +108,7 @@ def account_view(request, id, page=None):
         return render_to_response('accounts/permissions.html', RequestContext(request, {'account': account, 'permissions': permissions}))
         
     # Details.
-    details = AccountDetails(instance=account, exclude=['id', 'password', 'is_active', 'user_id'])
+    details = AccountDetails(instance=account, exclude=['id', 'password', 'is_active', 'is_staff', 'is_superuser', 'user_id'])
     return render_to_response('accounts/view.html', RequestContext(request, {'account': account, 'details': details}))
     
 @permission_required('auth.change_account')
@@ -151,22 +143,12 @@ def account_delete(request, id):
 @permission_required('auth.change_group')
 def group_index(request):
     """Show a group list.
-    """
-    groups = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
-
-    if (queryset is not None):
-        groups = AccountGroup.objects.filter(queryset)
-    else:
-        groups = AccountGroup.objects.all()
+    """    
+    search_fields, groups = search(request, Group)
         
     groups = ModelPaginatedListDetails(request, groups)
         
-    return render_to_response('accounts/groups/index.html', RequestContext(request, {'groups': groups}))
+    return render_to_response('accounts/groups/index.html', RequestContext(request, {'groups': groups, 'search_fields': search_fields}))
     
 @permission_required('auth.add_group')
 def group_add(request):
