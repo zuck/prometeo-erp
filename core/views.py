@@ -20,6 +20,7 @@ __author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
 __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
+from django.utils.translation import ugettext as _
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
@@ -27,7 +28,7 @@ from django.utils.translation import check_for_language
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
-from django.db.models import Q
+from django.contrib import messages
 
 from details import ModelDetails, ModelPaginatedListDetails, field_to_value
 from models import *
@@ -60,6 +61,7 @@ class PermissionListDetails(ModelPaginatedListDetails):
 def account_logged(request):
     response = HttpResponseRedirect('/')
     set_language(request)
+    messages.success(request, _("Your are now logged"))
     return response
 
 @permission_required('auth.change_account')
@@ -90,6 +92,7 @@ def account_add(request):
         form = AccountForm(request.POST)
         if form.is_valid():
             account = form.save()
+            messages.success(request, _("Account added"))
             return redirect_to(request, url=account.get_absolute_url())
     else:
         form = AccountForm()
@@ -126,6 +129,7 @@ def account_edit(request, id):
         if form.is_valid():
             form.save()
             set_language(request)
+            messages.success(request, _("Account updated"))
             return redirect_to(request, url=account.get_absolute_url())
     else:
         form = AccountForm(instance=account)
@@ -139,6 +143,7 @@ def account_delete(request, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             account.delete()
+            messages.success(request, _("Account deleted"))
             return redirect_to(request, url='/accounts/');
         return redirect_to(request, url=account.get_absolute_url())
     return render_to_response('accounts/delete.html', RequestContext(request, {'account': account}))
@@ -171,6 +176,7 @@ def group_add(request):
         form = AccountGroupForm(request.POST)
         if form.is_valid():
             group = form.save()
+            messages.success(request, _("Group added"))
             return redirect_to(request, url=group.get_absolute_url())
     else:
         form = AccountGroupForm()
@@ -201,6 +207,7 @@ def group_edit(request, id):
         form = AccountGroupForm(request.POST, instance=group)
         if form.is_valid():
             form.save()
+            messages.success(request, _("Group updated"))
             return redirect_to(request, url=group.get_absolute_url())
     else:
         form = AccountGroupForm(instance=group)
@@ -214,6 +221,7 @@ def group_delete(request, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             group.delete()
+            messages.success(request, _("Group deleted"))
             return redirect_to(request, url='/accounts/groups/');
         return redirect_to(request, url=group.get_absolute_url())
     return render_to_response('accounts/groups/delete.html', RequestContext(request, {'group': group}))

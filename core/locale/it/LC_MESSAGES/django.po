@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-04 12:34+0100\n"
+"POT-Creation-Date: 2010-07-06 11:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,38 +16,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: details.py:36 templates/accounts/delete.html:21
+#: details.py:37 templates/accounts/delete.html:20
+#: templates/accounts/groups/delete.html:21
 msgid "No"
 msgstr ""
 
-#: details.py:37 templates/accounts/delete.html:20
+#: details.py:39 templates/accounts/delete.html:19
+#: templates/accounts/groups/delete.html:20
 msgid "Yes"
 msgstr ""
 
-#: details.py:39 details.py:110
+#: details.py:41 details.py:125
 msgid "empty"
 msgstr "vuoto"
 
-#: details.py:153 templates/accounts/delete.html:26
-#: templates/accounts/edit.html:23
-msgid "View"
-msgstr "Visualizza"
-
-#: details.py:155 templates/accounts/delete.html:27
-#: templates/accounts/edit.html:15 templates/accounts/view.html:18
-msgid "Edit"
-msgstr "Modifica"
-
-#: details.py:157 templates/accounts/delete.html:15
-#: templates/accounts/edit.html:24 templates/accounts/view.html:19
-msgid "Delete"
-msgstr ""
-
-#: details.py:160
+#: details.py:172
 msgid "actions"
 msgstr "azioni"
 
-#: details.py:182
+#: details.py:178 templates/accounts/delete.html:25
+#: templates/accounts/edit.html:22 templates/accounts/groups/delete.html:26
+#: templates/accounts/groups/edit.html:23
+msgid "View"
+msgstr "Visualizza"
+
+#: details.py:180 templates/accounts/delete.html:26
+#: templates/accounts/edit.html:13 templates/accounts/view.html:23
+#: templates/accounts/groups/delete.html:27
+#: templates/accounts/groups/edit.html:14
+#: templates/accounts/groups/view.html:23
+msgid "Edit"
+msgstr "Modifica"
+
+#: details.py:182 templates/accounts/delete.html:13
+#: templates/accounts/edit.html:23 templates/accounts/view.html:24
+#: templates/accounts/groups/delete.html:14
+#: templates/accounts/groups/edit.html:24
+#: templates/accounts/groups/view.html:24
+msgid "Delete"
+msgstr ""
+
+#: details.py:206
+#, python-format
 msgid "Page %(number)d of %(num_pages)d"
 msgstr "Pagina %(number)d di %(num_pages)d"
 
@@ -67,23 +77,53 @@ msgstr "Lingua"
 msgid "The two password fields didn't match."
 msgstr "Le due password non combaciano."
 
-#: menu.py:82 templates/start.html:6
+#: menu.py:96 templates/start.html:6
 msgid "Start"
 msgstr "Inizio"
 
-#: menu.py:83 templates/accounts/add.html:6 templates/accounts/add.html.py:23
-#: templates/accounts/delete.html:6 templates/accounts/delete.html.py:28
-#: templates/accounts/edit.html:6 templates/accounts/edit.html.py:25
-#: templates/accounts/index.html:6 templates/accounts/index.html.py:14
-#: templates/accounts/view.html:6 templates/accounts/view.html.py:20
+#: menu.py:97 templates/accounts/index.html:12
+#: templates/accounts/layout.html:6
 msgid "Accounts"
 msgstr ""
 
-#: models.py:32
+#: menu.py:97 templates/accounts/groups.html:14
+#: templates/accounts/view.html:15 templates/accounts/groups/index.html:13
+msgid "Groups"
+msgstr ""
+
+#: models.py:71
 msgid "language"
 msgstr "lingua"
 
-#: wizard.py:215
+#: views.py:64
+msgid "Your are now logged"
+msgstr "Ora sei autenticato"
+
+#: views.py:95
+msgid "Account added"
+msgstr "Account aggiunto"
+
+#: views.py:132
+msgid "Account updated"
+msgstr "Account aggiornato"
+
+#: views.py:146
+msgid "Account deleted"
+msgstr "Account cancellato"
+
+#: views.py:179
+msgid "Group added"
+msgstr "Gruppo aggiunto"
+
+#: views.py:210
+msgid "Group updated"
+msgstr "Gruppo aggiornato"
+
+#: views.py:224
+msgid "Group deleted"
+msgstr "Gruppo cancellato"
+
+#: wizard.py:224
 msgid ""
 "We apologize, but your form has expired. Please continue filling out the "
 "form from this page."
@@ -97,25 +137,45 @@ msgstr "Errore 404"
 msgid "Error 500"
 msgstr "Errore 500"
 
+#: templates/layout.html:49
+msgid "unless otherwise noted"
+msgstr "eccetto dove altrimenti specificato"
+
+#: templates/layout.html:49
+msgid ""
+"<em>Prometeo</em> is powered by <a href=\"http://www.djangoproject.com/"
+"\">Django</a>"
+msgstr ""
+"<em>Prometeo</em> è basato su <a href=\"http://www.djangoproject.com/"
+"\">Django</a>"
+
 #: templates/paginator.html:14
 #, python-format
 msgid "Page %(number)s of %(num_pages)s"
 msgstr "Pagina %(number)s di %(num_pages)s"
+
+#: templates/search_box.html:27
+msgid "Search"
+msgstr "Cerca"
 
 #: templates/start.html:14
 #, python-format
 msgid "Welcome, <strong>%(username)s</strong>."
 msgstr "Benvenuto, <strong>%(username)s</strong>."
 
-#: templates/accounts/add.html:15 templates/accounts/index.html:23
+#: templates/accounts/add.html:13 templates/accounts/index.html:16
+#: templates/accounts/groups/add.html:14
+#: templates/accounts/groups/index.html:17
 msgid "Add"
 msgstr ""
 
-#: templates/accounts/add.html:19 templates/accounts/edit.html:19
+#: templates/accounts/add.html:18 templates/accounts/edit.html:18
+#: templates/accounts/groups/add.html:19
+#: templates/accounts/groups/edit.html:19
 msgid "Save"
 msgstr ""
 
-#: templates/accounts/delete.html:18
+#: templates/accounts/delete.html:17
 msgid ""
 "Are you sure you want to delete this account and all its related "
 "informations?"
@@ -123,17 +183,19 @@ msgstr ""
 "Sei sicuro di voler cancellare i dati di questo account e di tutte le "
 "informazioni associate?"
 
-#: templates/accounts/index.html:18
-msgid "Search"
-msgstr "Cerca"
-
-#: templates/accounts/login.html:6 templates/accounts/login.html.py:30
+#: templates/accounts/login.html:6 templates/accounts/login.html.py:26
 #: templates/accounts/userarea.html:9
 msgid "Login"
 msgstr ""
 
 #: templates/accounts/login.html:18
 msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: templates/accounts/permissions.html:14 templates/accounts/view.html:16
+#: templates/accounts/groups/permissions.html:15
+#: templates/accounts/groups/view.html:16
+msgid "Permissions"
 msgstr ""
 
 #: templates/accounts/userarea.html:6
@@ -149,11 +211,20 @@ msgstr "Profilo (%(username)s)"
 msgid "Help"
 msgstr "Aiuto"
 
-#: templates/accounts/view.html:15
+#: templates/accounts/view.html:14 templates/accounts/view.html.py:19
+#: templates/accounts/groups/view.html:15
+#: templates/accounts/groups/view.html:19
 msgid "Details"
 msgstr "Dettagli"
+
+#: templates/accounts/groups/delete.html:18
+msgid ""
+"Are you sure you want to delete this group and all its related informations?"
+msgstr ""
+"Sei sicuro di voler cancellare i dati di questo gruppo e di tutte le "
+"informazioni associate?"
 
 #: templates/menu/menu.html:4 templates/menu/option.html:4
 #, python-format
 msgid "%(name)s"
-msgstr ""
+msgstr "%(name)s"
