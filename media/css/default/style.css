@@ -512,6 +512,38 @@ table.list td { text-align: left; }
     visibility: hidden;
 }
 
+#messages {
+    position: absolute;
+    top: 10px;
+    width: 30%;
+    margin: 0 35%;
+}
+
+#messages li {
+    margin: 0;
+    padding: 10px;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: bold;
+    text-align: center;
+    background-image: none;
+}
+
+#messages li.info {
+    border-color: #677c98;
+    background-color: #d6dee8;
+}
+
+#messages li.success {
+    border-color: #90bf54;
+    background-color: #c8ea9b;
+}
+
+#messages li.error {
+    border-color: #c43932;
+    background-color: #eaafac;
+}
+
 /* Navigation */
 
 #userarea {

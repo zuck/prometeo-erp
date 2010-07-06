@@ -13,6 +13,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
+from django.contrib import messages
 
 from prometeo.core.details import ModelDetails, ModelPaginatedListDetails, value_to_string
 from prometeo.core.paginator import paginate
@@ -41,6 +42,7 @@ def project_add(request):
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             project = form.save()
+            messages.success(request, _("Project added"))
             return redirect_to(request, url=project.get_absolute_url())
     else:
         form = ProjectForm(instance=project)
@@ -90,6 +92,7 @@ def project_edit(request, id):
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             project = form.save()
+            messages.success(request, _("Project updated"))
             return redirect_to(request, url=project.get_absolute_url())
     else:
         form = ProjectForm(instance=project)
@@ -104,6 +107,7 @@ def project_delete(request, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             project.delete()
+            messages.success(request, _("Project deleted"))
             return redirect_to(request, url='/projects/');
         return redirect_to(request, url=project.get_absolute_url())
     return render_to_response('projects/delete.html', RequestContext(request, {'project': project}))
@@ -118,6 +122,7 @@ def area_add(request, project_id):
         form = AreaForm(request.POST, instance=area)
         if form.is_valid():
             area = form.save()
+            messages.success(request, _("Area added"))
             return redirect_to(request, url=area.get_absolute_url())
     else:
         form = AreaForm(instance=area)
@@ -156,6 +161,7 @@ def area_edit(request, project_id, id):
         form = AreaForm(request.POST, instance=area)
         if form.is_valid():
             area = form.save()
+            messages.success(request, _("Area updated"))
             return redirect_to(request, url=area.get_absolute_url())
     else:
         form = AreaForm(instance=area)
@@ -173,6 +179,7 @@ def area_delete(request, project_id, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             area.delete()
+            messages.success(request, _("Area deleted"))
             return redirect_to(request, url=project.get_areas_url());
         return redirect_to(request, url=area.get_absolute_url())
     return render_to_response('projects/areas/delete.html', RequestContext(request, {'area': area}))
@@ -191,6 +198,7 @@ def area_ticket_add(request, project_id, id):
         form = AreaTicketForm(request.POST, instance=ticket)
         if form.is_valid():
             ticket = form.save()
+            messages.success(request, _("Ticket added"))
             return redirect_to(request, url=area.get_tickets_url())
     else:
         form = AreaTicketForm(instance=ticket)
@@ -207,6 +215,7 @@ def milestone_add(request, project_id):
         form = MilestoneForm(request.POST, instance=milestone)
         if form.is_valid():
             milestone = form.save()
+            messages.success(request, _("Milestone added"))
             return redirect_to(request, url=milestone.get_absolute_url())
     else:
         form = MilestoneForm(instance=milestone)
@@ -245,6 +254,7 @@ def milestone_edit(request, project_id, id):
         form = MilestoneForm(request.POST, instance=milestone)
         if form.is_valid():
             milestone = form.save()
+            messages.success(request, _("Milestone updated"))
             return redirect_to(request, url=milestone.get_absolute_url())
     else:
         form = MilestoneForm(instance=milestone)
@@ -262,6 +272,7 @@ def milestone_delete(request, project_id, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             milestone.delete()
+            messages.success(request, _("Milestone deleted"))
             return redirect_to(request, url=project.get_milestones_url());
         return redirect_to(request, url=milestone.get_absolute_url())
     return render_to_response('projects/milestones/delete.html', RequestContext(request, {'milestone': milestone}))
@@ -280,6 +291,7 @@ def milestone_ticket_add(request, project_id, id):
         form = MilestoneTicketForm(request.POST, instance=ticket)
         if form.is_valid():
             ticket = form.save()
+            messages.success(request, _("Ticket added"))
             return redirect_to(request, url=milestone.get_tickets_url())
     else:
         form = MilestoneTicketForm(instance=ticket)
@@ -296,6 +308,7 @@ def ticket_add(request, project_id):
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
             ticket = form.save()
+            messages.success(request, _("Ticket added"))
             return redirect_to(request, url=ticket.get_absolute_url())
     else:
         form = TicketForm(instance=ticket)
@@ -325,6 +338,7 @@ def ticket_edit(request, project_id, id):
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
             ticket = form.save()
+            messages.success(request, _("Ticket updated"))
             return redirect_to(request, url=ticket.get_absolute_url())
     else:
         form = TicketForm(instance=ticket)
@@ -342,6 +356,7 @@ def ticket_delete(request, project_id, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             ticket.delete()
+            messages.success(request, _("Ticket deleted"))
             return redirect_to(request, url=project.get_tickets_url());
         return redirect_to(request, url=ticket.get_absolute_url())
     return render_to_response('projects/tickets/delete.html', RequestContext(request, {'ticket': ticket}))
@@ -356,6 +371,7 @@ def member_add(request, project_id):
         form = MembershipForm(request.POST, instance=member)
         if form.is_valid():
             member = form.save()
+            messages.success(request, _("Member joined"))
             return redirect_to(request, url=project.get_members_url())
     else:
         form = MembershipForm(instance=member)
@@ -373,6 +389,7 @@ def member_delete(request, project_id, id):
     if request.method == 'POST':
         if (request.POST.has_key(u'yes')):
             member.delete()
+            messages.success(request, _("Member removed"))
             return redirect_to(request, url=project.get_members_url());
         return redirect_to(request, url=member.get_absolute_url())
     return render_to_response('projects/members/delete.html', RequestContext(request, {'member': member}))

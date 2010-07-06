@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-06 10:58+0200\n"
+"POT-Creation-Date: 2010-07-06 11:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -184,6 +184,62 @@ msgstr ""
 #: models.py:184
 msgid "joined at"
 msgstr "unito il"
+
+#: views.py:45
+msgid "Project added"
+msgstr "Progetto aggiunto"
+
+#: views.py:95
+msgid "Project updated"
+msgstr "Progetto aggiornato"
+
+#: views.py:110
+msgid "Project deleted"
+msgstr "Progetto cancellato"
+
+#: views.py:125
+msgid "Area added"
+msgstr "Area aggiunta"
+
+#: views.py:164
+msgid "Area updated"
+msgstr "Area aggiornata"
+
+#: views.py:182
+msgid "Area deleted"
+msgstr "Area cancellata"
+
+#: views.py:201 views.py:294 views.py:311
+msgid "Ticket added"
+msgstr "Ticket aggiunto"
+
+#: views.py:218
+msgid "Milestone added"
+msgstr "Milestone aggiunta"
+
+#: views.py:257
+msgid "Milestone updated"
+msgstr "Milestone aggiornata"
+
+#: views.py:275
+msgid "Milestone deleted"
+msgstr "Milestone cancellata"
+
+#: views.py:341
+msgid "Ticket updated"
+msgstr "Ticket aggiornato"
+
+#: views.py:359
+msgid "Ticket deleted"
+msgstr "Ticket cancellato"
+
+#: views.py:374
+msgid "Member joined"
+msgstr "Membro aggiunto"
+
+#: views.py:392
+msgid "Member removed"
+msgstr "Membro cancellato"
 
 #: templates/projects/add.html:15 templates/projects/areas.html:18
 #: templates/projects/index.html:18 templates/projects/members.html:18

@@ -21,6 +21,15 @@
                     <h1>Prometeo</h1>
                     <h2>Free your work. Free your business.</h2>
                 </div>
+                <div id="messages">
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
             </div>
             <div id="nav">
                 {% block nav %}
