@@ -39,7 +39,7 @@ def create_managed_partner(app, created_models, verbosity, **kwargs):
                 email = raw_input("Insert the main email address (optional): ")
                 url = raw_input("Insert the main URL address (optional): ")
                 notes = raw_input("Insert additional notes (optional): ")
-                if Partner.objects.create(name=name, vat_number=vat, email=email, url=url, notes=notes, managed=True):
+                if Partner.objects.create(name=name, vat_number=vat, email=email, url=url, notes=notes, is_managed=True):
                     print "Default managed company created successfully.\n"
             break
 

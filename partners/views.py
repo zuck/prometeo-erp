@@ -26,10 +26,11 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.simple import redirect_to
 from django.contrib.auth.decorators import permission_required
 from django.template import RequestContext
-from django.db.models import Q
+from django.contrib import messages
 
 from prometeo.core.details import ModelDetails, ModelPaginatedListDetails, value_to_string
 from prometeo.core.paginator import paginate
+from prometeo.core.search import search
 
 from models import *
 from forms import *
@@ -39,21 +40,11 @@ from details import *
 def partner_index(request):
     """Show a partner list.
     """
-    partners = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
-
-    if (queryset is not None):
-        partners = Partner.objects.filter(queryset)
-    else:
-        partners = Partner.objects.all()
+    search_fields, partners = search(request, Partner, exclude=['id', 'is_managed', 'is_customer', 'is_supplier', 'notes'])
         
-    partners = PartnerListDetails(request, partners)
+    partners = PartnerListDetails(request, partners, exclude=['id', 'notes'])
         
-    return render_to_response('partners/index.html', RequestContext(request, {'partners': partners}))
+    return render_to_response('partners/index.html', RequestContext(request, {'partners': partners, 'search_fields': search_fields}))
 
 @permission_required('partners.add_partner')     
 def partner_add(request):
@@ -124,41 +115,21 @@ def partner_delete(request, id):
 def partner_suppliers(request):
     """Show a supplier list.
     """
-    partners = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+    search_fields, partners = search(request, Partner, exclude=['id', 'is_managed', 'is_customer', 'is_supplier', 'notes'])
         
-    partners = Partner.objects.filter(supplier=True)
-
-    if (queryset is not None):
-        partners = partners.filter(queryset)
+    partners = PartnerListDetails(request, partners.filter(is_supplier=True), exclude=['id', 'is_customer', 'is_supplier', 'notes'])
         
-    partners = PartnerListDetails(request, partners, exclude=['id', 'customer', 'supplier'])
-        
-    return render_to_response('partners/suppliers.html', RequestContext(request, {'partners': partners}))
+    return render_to_response('partners/suppliers.html', RequestContext(request, {'partners': partners, 'search_fields': search_fields}))
     
 @permission_required('partners.change_partner')
 def partner_customers(request):
     """Show a customer list.
     """
-    partners = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
+    search_fields, partners = search(request, Partner, exclude=['id', 'is_managed', 'is_customer', 'is_supplier', 'notes'])
         
-    partners = Partner.objects.filter(customer=True)
-
-    if (queryset is not None):
-        partners = partners.filter(queryset)
+    partners = PartnerListDetails(request, partners.filter(is_customer=True), exclude=['id', 'is_customer', 'is_supplier', 'notes'])
         
-    partners = PartnerListDetails(request, partners, exclude=['id', 'customer', 'supplier'])
-        
-    return render_to_response('partners/customers.html', RequestContext(request, {'partners': partners}))
+    return render_to_response('partners/customers.html', RequestContext(request, {'partners': partners, 'search_fields': search_fields}))
     
 @permission_required('partners.change_partner')
 def partner_add_telephone(request, id):
@@ -317,21 +288,11 @@ def partner_delete_contact(request, id, job_id):
 def contact_index(request):
     """Show a contact list.
     """
-    contacts = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
-
-    if (queryset is not None):
-        contacts = Contact.objects.filter(queryset)
-    else:
-        contacts = Contact.objects.all()
+    search_fields, contacts = search(request, Contact, exclude=['id', 'notes'])
         
-    contacts = ModelPaginatedListDetails(request, contacts)
+    contacts = ModelPaginatedListDetails(request, contacts, exclude=['id', 'notes'])
         
-    return render_to_response('partners/contacts/index.html', RequestContext(request, {'contacts': contacts}))
+    return render_to_response('partners/contacts/index.html', RequestContext(request, {'contacts': contacts, 'search_fields': search_fields}))
 
 @permission_required('partners.add_contact')     
 def contact_add(request):
@@ -555,21 +516,11 @@ def contact_delete_job(request, id, job_id):
 def role_index(request):
     """Show a role list.
     """
-    roles = None
-    queryset = None
-
-    if request.method == 'POST' and request.POST.has_key(u'search'):
-        token = request.POST['query']
-        queryset = Q(name__startswith=token) | Q(name__endswith=token)
-
-    if (queryset is not None):
-        roles = Role.objects.filter(queryset)
-    else:
-        roles = Role.objects.all()
+    search_fields, roles = search(request, Role)
         
     roles = ModelPaginatedListDetails(request, roles)
         
-    return render_to_response('partners/contacts/roles/index.html', RequestContext(request, {'roles': roles}))
+    return render_to_response('partners/contacts/roles/index.html', RequestContext(request, {'roles': roles, 'search_fields': search_fields}))
 
 @permission_required('partners.add_role')     
 def role_add(request):

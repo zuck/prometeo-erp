@@ -120,9 +120,9 @@ class Contact(models.Model):
 class Partner(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
-    managed = models.BooleanField(default=False, verbose_name=_('managed'))
-    customer = models.BooleanField(default=False, verbose_name=_('customer'))
-    supplier = models.BooleanField(default=False, verbose_name=_('supplier'))
+    is_managed = models.BooleanField(default=False, verbose_name=_('managed'))
+    is_customer = models.BooleanField(default=False, verbose_name=_('customer'))
+    is_supplier = models.BooleanField(default=False, verbose_name=_('supplier'))
     vat_number = models.CharField(max_length=64, unique=True, verbose_name=_('VAT number'))
     url = models.URLField(blank=True, verbose_name=_('url'))
     email = models.EmailField(blank=True, verbose_name=_('email'))
