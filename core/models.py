@@ -21,8 +21,9 @@ __copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
 __version__ = '$Revision$'
 
 from django.utils.translation import ugettext_lazy as _
-from django.db import models
 from django.contrib.auth.models import User, Group
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.conf import settings
 
 class AccountGroup(Group):
@@ -69,6 +70,16 @@ class Profile(models.Model):
     """
     user = models.ForeignKey(User, unique=True)
     language = models.CharField(max_length=5, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
+
+class ObjectPermission(models.Model):
+    """A generic object/row-level permission.
+    """
+    account = models.ForeignKey(Account)
+    can_view = models.BooleanField()
+    can_change = models.BooleanField()
+    can_delete = models.BooleanField()
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
 
 def user_post_save(sender, instance, **kwargs):
     profile, new = Profile.objects.get_or_create(user=instance)

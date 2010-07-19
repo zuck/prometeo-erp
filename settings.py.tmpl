@@ -119,7 +119,14 @@ INSTALLED_APPS = (
 #    'prometeo.projects'
 )
 
-# Login options.
+# Authorization and login options.
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'prometeo.core.auth.backends.ObjectPermBackend',
+)
+
+AUTH_PROFILE_MODULE = 'core.Profile'
+
 LOGIN_REDIRECT_URL = '/accounts/logged/'
 
 LOGIN_REQUIRED_URLS = (
@@ -130,9 +137,6 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/media/(.*)$',
     r'/accounts/login/$',
 )
-
-# User profile model.
-AUTH_PROFILE_MODULE = 'core.Profile'
 
 # The messages storage.
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
