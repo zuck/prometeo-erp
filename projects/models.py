@@ -137,7 +137,7 @@ class Ticket(models.Model):
     
     TICKET_STATUS_CHOICES = (
         ('new', _('new')),
-        ('wontfix', _("won't fix")),
+        ('invalid', _("invalid")),
         ('duplicate', _('duplicated')),
         ('accepted', _('accepted')),
         ('inprogress', _('in progress')),
