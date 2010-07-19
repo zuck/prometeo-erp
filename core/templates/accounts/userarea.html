@@ -3,8 +3,8 @@
 <div id="userarea">
     <ul>
         {% if user.is_authenticated %}
-        <li><a class="exit" href="/accounts/logout/">{% trans 'Logout' %}</a></li>
         <li><a class="person" href="/accounts/view/{{ user.id }}/">{% blocktrans with user.username as username %}Profile ({{ username }}){% endblocktrans %}</a></li>
+        <li><a class="exit" href="/accounts/logout/">{% trans 'Logout' %}</a></li>
         {% else %}
         <li><a class="enter" href="/accounts/login/">{% trans 'Login' %}</a></li>
         {% endif %}
