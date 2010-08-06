@@ -28,7 +28,7 @@ from django.db.models import Q
 class Warehouse(models.Model):        
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, verbose_name=_('name'))
-    owner = models.ForeignKey('partners.Partner', limit_choices_to={'managed': True}, verbose_name=_('owner'))
+    owner = models.ForeignKey('partners.Partner', limit_choices_to={'is_managed': True}, verbose_name=_('owner'))
     
     def value(self):
         value = 0
