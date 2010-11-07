@@ -28,7 +28,7 @@ def search(request, model, fields=[], exclude=['id']):
     
     search_fields = get_search_fields(request, model, fields, exclude)
     
-    if request.method == 'POST' and request.POST.has_key(u'search'):
+    if request.method == 'POST':
         queryset = []
         for f, value in search_fields:
             if value is not None:
