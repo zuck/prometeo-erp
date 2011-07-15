@@ -16,9 +16,9 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.2'
 
 from django.conf.urls.defaults import *
 from django.conf import settings
@@ -26,7 +26,7 @@ from django.conf import settings
 urlpatterns = patterns('',
 
     # Start page.
-    (r'^$', 'core.views.start'),
+    (r'^$', 'prometeo.core.auth.views.user_dashboard'),
     
     # Media files.
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
@@ -34,23 +34,8 @@ urlpatterns = patterns('',
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
     
-    # Accounts.
-    (r'^accounts/$', 'core.views.account_index'),
-    (r'^accounts/add/$', 'core.views.account_add'),
-    (r'^accounts/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'core.views.account_view'),
-    (r'^accounts/edit/(?P<id>\d+)/$', 'core.views.account_edit'),
-    (r'^accounts/delete/(?P<id>\d+)/$', 'core.views.account_delete'),
-    (r'^accounts/logged/$', 'core.views.account_logged'),
-
-    (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
-    (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
-    
-    # Groups.
-    (r'^accounts/groups/$', 'core.views.group_index'),
-    (r'^accounts/groups/add/$', 'core.views.group_add'),
-    (r'^accounts/groups/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'core.views.group_view'),
-    (r'^accounts/groups/edit/(?P<id>\d+)/$', 'core.views.group_edit'),
-    (r'^accounts/groups/delete/(?P<id>\d+)/$', 'core.views.group_delete'),
+    # Authentication.
+    (r'^users/', include('prometeo.core.auth.urls')),
 )
 
 LOADING = False

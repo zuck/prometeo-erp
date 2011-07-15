@@ -20,22 +20,5 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.core.paginator import Paginator
-
-def paginate(request, object_list, paginate_by=10):
-    """
-    This is a convenience wrapper to eliminate duplication
-    in views that require pagination.
-    """
-    paginator = Paginator(object_list, paginate_by)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    
-    try:
-        objects = paginator.page(page)
-    except:
-        objects = paginator.page(paginator.num_pages)
-        
-    return objects
+def dummy(context):
+    return context

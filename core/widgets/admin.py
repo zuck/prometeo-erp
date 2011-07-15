@@ -20,22 +20,21 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.core.paginator import Paginator
+from django.contrib import admin
 
-def paginate(request, object_list, paginate_by=10):
-    """
-    This is a convenience wrapper to eliminate duplication
-    in views that require pagination.
-    """
-    paginator = Paginator(object_list, paginate_by)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
+from models import *
     
-    try:
-        objects = paginator.page(page)
-    except:
-        objects = paginator.page(paginator.num_pages)
-        
-    return objects
+class WidgetInlineAdmin(admin.StackedInline):
+    model = Widget
+
+class RegionAdmin(admin.ModelAdmin):
+    list_display  = ('slug', 'description')
+    inlines = [WidgetInlineAdmin,]
+
+class WidgetAdmin(admin.ModelAdmin):
+    search_fields = ('title',)
+    list_display  = ('title', 'description')
+    prepopulated_fields = {'slug': ('title',)}
+    
+admin.site.register(Region, RegionAdmin)
+admin.site.register(Widget, WidgetAdmin)

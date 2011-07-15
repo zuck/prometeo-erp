@@ -20,22 +20,16 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.core.paginator import Paginator
+from django.conf.urls.defaults import *
 
-def paginate(request, object_list, paginate_by=10):
-    """
-    This is a convenience wrapper to eliminate duplication
-    in views that require pagination.
-    """
-    paginator = Paginator(object_list, paginate_by)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    
-    try:
-        objects = paginator.page(page)
-    except:
-        objects = paginator.page(paginator.num_pages)
-        
-    return objects
+urlpatterns = patterns('',
+
+    url(r'^$', view='users.views.user_list', name='users_list'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'users/login.html'}, name='users_login'),
+    url(r'^logout/$', view='django.contrib.auth.views.logout_then_login', name='users_logout'),
+    url(r'^register/$', view='users.views.register', name='users_register'),
+    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/$', view='users.views.user_detail', name='users_detail'),
+    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='users.views.user_edit', name='users_edit'),
+    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='users.views.user_delete', name='users_delete'),
+    url(r'^activate/(?P<activation_key>[\w\d]+)/$', view='users.views.activate', name='users_activate'),
+)

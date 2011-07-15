@@ -16,14 +16,13 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.2'
 
 from django.db.models.loading import cache
 
 from prometeo.core import urls
-from prometeo.core import menu
 
 # Workaround for Django's ticket #10405.
 # See http://code.djangoproject.com/ticket/10405#comment:10 for more info.
@@ -31,6 +30,5 @@ if not cache.loaded:
     cache.get_models()
 
 urls.autodiscover()
-menu.autodiscover()
 
 urlpatterns = urls.urlpatterns
