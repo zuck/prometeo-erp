@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load avatar %}
+
+{% block meta_title %}{% trans "Users" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}<div class="widget"><span class="title"><h1>{% trans "Users" %}</h1></span></div>{% endblock %}
+
+{% block main %}
+<ul class="result-list">
+    {% for object in object_list %}
+    <li class="result">
+        {% avatar object %}
+        <span class="user-info">
+            <h3><a href="{{ object.get_absolute_url }}">{{ object.username }}</a></h3>
+            <span class="joined">{% blocktrans with object.date_joined as joined %}Joined on {{ joined }}{% endblocktrans %}</span>
+        </span>
+    </li>
+    {% empty %}
+    <li class="result"><span class="disabled">{% trans "No results found." %}</span></li>
+    {% endfor %}
+</ul>
+
+{% include "elements/paginator.html" %}
+{% endblock %}

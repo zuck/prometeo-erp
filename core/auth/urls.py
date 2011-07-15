@@ -24,12 +24,12 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
 
-    url(r'^$', view='users.views.user_list', name='users_list'),
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'users/login.html'}, name='users_login'),
+    url(r'^$', view='prometeo.core.auth.views.user_list', name='users_list'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='users_login'),
     url(r'^logout/$', view='django.contrib.auth.views.logout_then_login', name='users_logout'),
-    url(r'^register/$', view='users.views.register', name='users_register'),
-    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/$', view='users.views.user_detail', name='users_detail'),
-    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='users.views.user_edit', name='users_edit'),
-    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='users.views.user_delete', name='users_delete'),
-    url(r'^activate/(?P<activation_key>[\w\d]+)/$', view='users.views.activate', name='users_activate'),
+    url(r'^register/$', view='prometeo.core.auth.views.register', name='users_register'),
+    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/$', view='prometeo.core.auth.views.user_detail', name='users_detail'),
+    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='prometeo.core.auth.views.user_edit', name='users_edit'),
+    url(r'^(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='prometeo.core.auth.views.user_delete', name='users_delete'),
+    url(r'^activate/(?P<activation_key>[\w\d]+)/$', view='prometeo.core.auth.views.activate', name='users_activate'),
 )

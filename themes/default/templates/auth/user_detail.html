@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load avatar %}
+
+{% block meta_title %}{{ object }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' '/users/' %}
+    {% add_crumb object %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+{% avatar object 90 %}
+<dl class="user-info">
+    {% comment %}
+    <dt class="fullname">{% trans 'Fullname' %}</dt>
+    <dd>{% if object.get_full_name %}{{ object.get_full_name }}{% else %}<span class="disabled">{% trans 'Not specified.' %}</span>{% endif %}</dd>
+    {% endcomment %}
+    <dt class="joined">{% trans 'Joined on' %}</dt>
+    <dd>{{ object.date_joined }}</dd>
+</dl>
+<div class="actions">
+    {% if request.user == object %}
+    <ul>
+        <li><a href="{% url users_edit  object.username %}">{% trans 'Edit' %}</a></li>
+        <li><a href="{% url users_delete  object.username %}">{% trans 'Delete' %}</a></li>
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

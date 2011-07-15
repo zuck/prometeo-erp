@@ -1,0 +1,391 @@
+html { background: #3c3c3c; }
+
+body {
+    font-family: 'Helvetica', arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.5em;
+    color: #1a171b;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    float: none;
+    margin: 0 0 12px;
+    padding: 0;
+    background: none;
+    border: none;
+    text-align: left;
+}
+ 
+h1 { font-size: 2.2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.2em; }
+h5 { font-size: 1.0em; }
+h6 { font-size: 0.9em; }
+
+a, a:link, a:visited {
+    text-decoration: none;
+    font-weight: bold;
+    color: #ce0600;
+}
+
+a:hover { color: #000; }
+
+p, ol, ul, dl, pre { margin-bottom: 18px; }
+
+ol, ul, dl { text-align: left; }
+
+ol { margin-left: 35px; }
+
+ul, dl { margin-left: 10px; }
+
+ol ol, ul ul, dl dl {
+    margin-left: 5px;
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+li, dt {
+    padding: 4px 0;
+}
+
+ul li, dl dt {
+    clear: left;
+    padding-left: 20px;
+}
+
+dl dd {
+    margin-left: 20px;
+}
+
+pre {
+    clear: both;
+    padding: 15px;
+    border: 1px solid #dfdfdf;
+    background: #efefef;
+    overflow: auto;
+}
+
+hr {
+    display: none;
+}
+
+/**
+ * Form
+ */
+
+form {
+    clear: both;
+    overflow: hidden;
+    padding: 15px;
+    border: 1px solid #dfdfdf;
+    background: #f6f6f6;
+}
+
+form p { font-style: italic; }
+
+form label {
+    clear: left;
+    display: block;
+    font-weight: bold;
+    font-style: normal;
+}
+
+form input, form select {
+    clear: left;
+    padding: 3px;
+    width: 270px;
+    margin-right: 600px;
+    font-style: normal;
+}
+
+form textarea {
+    clear: left;
+    width: 100%;
+    height: 270px;
+    font-style: normal;
+}
+
+form .submit {
+    float: left;
+    margin-right: 12px;
+}
+
+form .submit input {
+    display: block;
+    width: auto;
+    padding: 6px 16px;
+    margin: 0;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    background: #ce0600;
+}
+
+form .submit input:hover {
+    background: #3c3c3c;
+}
+
+/**
+ * Tables.
+ */
+ 
+table {
+    clear: both;
+    float: left;
+    width: 100%;
+    border: 1px solid #dfdfdf;
+    margin-bottom: 12px;
+}
+
+td, th {
+    padding: 5px;
+    background: #f6f6f6;
+}
+
+thead td, th { background: #dfdfdf; }
+
+th { text-align: right; }
+
+/**
+ * Commons.
+ */
+
+.disabled { color: #60625d; }
+
+.paginator {
+    clear: both;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #dfdfdf;
+    padding-top: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.paginator .first, .paginator .previous, .paginator .next, .paginator .last,
+.paginator .page_number, .paginator .current { 
+    float: left;
+    margin-right: 12px;
+    text-align: center;
+}
+
+.paginator .disabled, .paginator a {
+    display: block;   
+    padding: 0 5px;
+}
+
+.paginator .disabled {
+    border: 1px solid #dfdfdf;
+    background: #f6f6f6;
+}
+
+.paginator a, .paginator a:link, .paginator a:visited {
+    color: #fff;
+    background: #ce0600;
+    border: 1px solid #60625d;
+}
+
+.paginator a:hover {
+    color: #000;
+}
+
+.page-navigation {
+    clear: both;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #dfdfdf;
+    padding-top: 12px;
+    margin-bottom: 12px;
+}
+
+.page-navigation a { display: inline; }
+
+.page-navigation .previous {
+    float: left;
+    text-align: left;
+}
+
+.page-navigation .next {
+    float: right;
+    text-align: right;
+}
+
+.actions {
+    clear: both;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #dfdfdf;
+    padding-top: 12px;
+    margin-top: 12px;
+    text-align: right;
+}
+
+.actions ul {
+    float: right;
+}
+
+.actions li {
+    clear: none;
+    float: left;
+    padding: 0;
+    margin-left: 12px;
+}
+
+.actions li a {
+    float: left;
+    padding: 6px 16px;
+    background: #ce0600;
+    color: #fff;
+}
+
+.actions li a:hover {
+    background: #3c3c3c;
+}
+
+.avatar {
+    float: left;
+    margin-right: 12px;
+    margin-bottom: 12px;
+}
+
+.messages {
+    position: absolute;
+    top: 12px;
+    width: 60%;
+    margin: 0 20%;
+    background: #fffcaa;
+    border: 1px solid #ec7672;
+    z-index: 99999;
+}
+
+.messages ul {
+    margin: 0;
+    padding: 5px;
+}
+
+.messages li.error { background-image: url(images/error.png); }
+
+.messages li.info { background-image: url(images/info.png); }
+
+.messages li.warning { background-image: url(images/warning.png); }
+
+.messages li.success { background-image: url(images/success.png); }
+
+ul.errorlist {
+    padding: 5px;
+    border: 1px solid #d21717;
+    background: #ffe0e0;
+    margin-left: 0;
+}
+
+ul.errorlist li { background-image: url(images/error.png); }
+
+/**
+ * Layout.
+ */
+
+#logo, #nav, #breadcrumbs, #content, #footer {
+    clear: both;
+    float: left;
+    padding: 0;
+    width: 100%;
+}
+
+#logo {
+    height: 60px;
+    margin-top: 28px;
+    background: #ce0600;
+    border-top: 1px solid #ec7672;
+    border-bottom: 1px solid #7d0400;
+}
+
+#nav {
+    position: absolute;
+    top: 0;
+    padding: 6px 0;
+    height: 16px;
+    background: #1f1f1f;
+    color: #e6e6e6;
+}
+
+#nav ul, #nav li {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+#nav li { padding: 0 10px; }
+
+#nav a:hover { color: #fff; }
+
+#bookmarks {
+    float: left;
+    width: 85%;
+}
+
+#userarea {
+    float: right;
+    width: 15%;
+    text-align: right;
+}
+
+#userarea li { text-align: right; }
+
+#breadcrumbs {
+    padding: 6px 0;
+    background: #f6f6f6;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+#breadcrumbs span.list { padding: 0 10px; }
+
+#content { background: #fff url(images/menu.jpg) repeat-y left; }
+
+#menu {
+    position: absolute;
+    left: 0;
+    width: 200px;
+}
+
+#menu ul {
+    margin: 0;
+    padding: 0;
+}
+
+#menu li {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#menu li a {
+    float: left;
+    width: 180px;
+    padding: 8px 10px;
+    background: #f6f6f6;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+#menu li a:hover {
+    float: left;
+    width: 179px;
+    padding: 8px 10px;
+    color: #fff;
+    background: #3c3c3c;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #000;
+}
+
+#main {
+    margin-left: 200px;
+    padding: 20px 10px;
+}
+
+#footer {
+    height: 200px;
+    border-top: 1px solid #000;
+    background: url(images/footer.jpg) repeat-x top;
+}

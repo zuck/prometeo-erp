@@ -51,7 +51,7 @@ def register(request):
     else:
         form = UserRegistrationForm()
 
-    return render_to_response('users/register.html', RequestContext(request, {'form': form}))        
+    return render_to_response('auth/register.html', RequestContext(request, {'form': form}))        
     
 def activate(request, activation_key):
     """Activates a pending user account.
@@ -86,14 +86,14 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
         queryset=User.objects.filter(is_active=True),
         paginate_by=paginate_by,
         page=page,
-        template_name='users/user_list.html',
+        template_name='auth/user_list.html',
         **kwargs
     )
     
 def user_dashboard(request, **kwargs):
     """Displays the user's dashboard.
     """
-    return render_to_response('users/dashboard.html', RequestContext(request))
+    return render_to_response('auth/dashboard.html', RequestContext(request))
     
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.
@@ -103,7 +103,7 @@ def user_detail(request, username, **kwargs):
         slug=username,
         slug_field='username',
         queryset=User.objects.filter(is_active=True),
-        template_name='users/user_detail.html',
+        template_name='auth/user_detail.html',
         **kwargs
     )
     
@@ -125,7 +125,7 @@ def user_edit(request, username):
     else:
         form = UserEditForm(instance=user)
 
-    return render_to_response('users/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
+    return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
     
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.
@@ -145,7 +145,7 @@ def user_delete(request, username, **kwargs):
             slug=user.username,
             slug_field='username',
             post_delete_redirect='/',
-            template_name='users/user_delete.html',
+            template_name='auth/user_delete.html',
             **kwargs
         )
 

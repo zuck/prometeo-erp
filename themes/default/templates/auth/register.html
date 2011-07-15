@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% trans 'Register' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' '/users/' %}
+    {% add_crumb 'Register' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans 'Register' %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" action="{% url users_register %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <span class="submit"><input type="submit" value="{% trans 'Sign up' %}" /></span>
+</form>
+{% endblock %}

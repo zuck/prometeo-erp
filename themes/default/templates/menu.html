@@ -1,0 +1,7 @@
+{% load i18n %}
+
+<ul>
+{% if user.is_staff %}
+    <li><a href="/admin">{% trans 'Administration' %}</a></li>
+{% endif %}
+</ul>

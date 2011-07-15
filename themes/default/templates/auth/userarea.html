@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<ul>
+{% if user.is_authenticated %}
+    <li class="profile"><a href="{% url users_detail user.username %}"><strong>{{ user }}</strong></a></li>
+    <li class="logout"><a href="{% url users_logout %}">{% trans 'Logout' %}</a></li>
+{% else %}
+    <li class="register"><a href="{% url users_register %}">{% trans 'Register' %}</a></li>
+    <li class="login"><a href="{% url users_login %}">{% trans 'Login' %}</a></li>
+{% endif %}
+</ul>

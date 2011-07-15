@@ -23,9 +23,10 @@ __version__ = '0.0.2'
 # Inspired by http://djangoadvent.com/1.2/object-permissions/
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
-from ..models import Account, ObjectPermission
+from models import ObjectPermission
 
 class ObjectPermBackend(object):
     supports_object_permissions = True
@@ -34,9 +35,9 @@ class ObjectPermBackend(object):
     def authenticate(self, username, password):
         return None
 
-    def has_perm(self, account_obj, perm, obj=None):
-        if not account_obj.is_authenticated():
-            account_obj = Account.objects.get(pk=settings.ANONYMOUS_USER_ID)
+    def has_perm(self, user_obj, perm, obj=None):
+        if not user_obj.is_authenticated():
+            user_obj = User.objects.get(pk=settings.ANONYMOUS_USER_ID)
 
         if obj is None:
             return False
@@ -48,7 +49,7 @@ class ObjectPermBackend(object):
         except IndexError:
             return False
 
-        p = ObjectPermission.objects.filter(content_type=ct, object_id=obj.id, account=account_obj)
+        p = ObjectPermission.objects.filter(content_type=ct, object_id=obj.id, user=user_obj)
 
         return p.filter(**{'can_%s' % perm: True}).exists()
 

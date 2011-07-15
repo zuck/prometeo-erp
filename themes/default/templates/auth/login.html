@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% trans 'Login' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' '/users/' %}
+    {% add_crumb 'Login' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans 'Login' %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<p>{% blocktrans %}Login using your <strong>username</strong> and <strong>password</strong>.{% endblocktrans %}</p>
+<p>{% blocktrans %}Are you not already registered? <a href="/users/register">Register now</a>.{% endblocktrans %}</p>
+<form method="post" action=".">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+    {{ form.as_p }}
+    <span class="submit"><input type="submit" value="{% trans 'Login' %}" /></span>
+</form>
+{% endblock %}
+
