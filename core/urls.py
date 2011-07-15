@@ -22,6 +22,9 @@ __version__ = '0.0.2'
 
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.contrib import admin
+
+admin.autodiscover()
 
 urlpatterns = patterns('',
 
@@ -30,6 +33,10 @@ urlpatterns = patterns('',
     
     # Media files.
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    
+    # Admin.
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^admin/', include(admin.site.urls)),
     
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
