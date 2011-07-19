@@ -28,8 +28,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    # Start page.
-    (r'^$', 'prometeo.core.auth.views.user_dashboard'),
+    # Home page.
+    (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
     
     # Media files.
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
@@ -43,9 +43,12 @@ urlpatterns = patterns('',
     
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
+
+    # Registration.
+    (r'^', include('prometeo.core.registration.urls')),
     
     # Authentication.
-    (r'^users/', include('prometeo.core.auth.urls')),
+    (r'^', include('prometeo.core.auth.urls')),
 
     # Taxonomy.
     (r'^', include('prometeo.core.taxonomy.urls')),
@@ -84,6 +87,6 @@ def autodiscover():
         # Step 3: return the app's url patterns.
         pkg, sep, name = app.rpartition('.')
         global urlpatterns
-        urlpatterns += patterns("", (r'^%s/' % name, include('%s.urls' % app)))
+        urlpatterns += patterns("", (r'^', include('%s.urls' % app)))
         
     LOADING = False

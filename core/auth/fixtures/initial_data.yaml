@@ -1,12 +1,46 @@
+- model: menus.menu
+  pk: 2
+  fields:
+    slug: "user_area_not_logged"
+    description: "User area for anonymous users."
+- model: menus.menu
+  pk: 3
+  fields:
+    slug: "user_area_logged"
+    description: "User area for logged users."
 - model: menus.link
   pk: 2
   fields:
     menu: 1
-    title: "Users & Groups"
-    slug: "users-groups"
-    description: "Users and groups management."
-    url: "/users"
+    title: "Users"
+    slug: "users"
+    description: "Users management."
+    url: "/users/"
     sort_order: 0
     only_authenticated: True
     only_staff: True
+    only_with_perms: []
+- model: menus.link
+  pk: 3
+  fields:
+    menu: 2
+    title: "Login"
+    slug: "login"
+    description: "Login."
+    url: "/users/login/"
+    sort_order: 0
+    only_authenticated: False
+    only_staff: False
+    only_with_perms: []
+- model: menus.link
+  pk: 4
+  fields:
+    menu: 3
+    title: "Logout"
+    slug: "Logout"
+    description: "Logout."
+    url: "/users/logout/"
+    sort_order: 0
+    only_authenticated: True
+    only_staff: False
     only_with_perms: []

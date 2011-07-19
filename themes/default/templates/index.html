@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load region %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' %}
@@ -10,9 +11,10 @@
 
 {% block title %}
 <div class="title">
-    <h1>{% trans "Dashboard" %}</h1>
+    <h1>{% trans "My dashboard" %}</h1>
 </div>
 {% endblock %}
 
 {% block main %}
+    {% region "dashboard" %}
 {% endblock %}

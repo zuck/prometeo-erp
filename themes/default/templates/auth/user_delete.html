@@ -7,7 +7,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Users' '/users/' %}
+    {% add_crumb 'Users' 'users_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Delete' %}
     {% render_breadcrumbs %}

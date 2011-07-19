@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'prometeo.core.menus',
     'prometeo.core.widgets',
     'prometeo.core.auth',
+    'prometeo.core.registration',
     'prometeo.core.taxonomy',
 )
 
@@ -168,6 +169,7 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/media/(.*)$',
     r'/users/login/$',
     r'/users/register/$',
+    r'/users/activate/(.*)$',
 )
 
 if DEBUG:

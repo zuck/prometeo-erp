@@ -29,47 +29,10 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.conf import settings
 
 from models import *
 from forms import *
-
-def register(request):
-    """Registers a new user account.
-    """
-    if request.user.is_authenticated():
-        messages.info(request, _("You are already registered."))
-        return redirect_to(request, url="/")
-        
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            messages.success(request, _("An email has been sent with an activation key. Please check your mail to complete the registration."))
-            return redirect_to(request, url="/")
-    else:
-        form = UserRegistrationForm()
-
-    return render_to_response('auth/register.html', RequestContext(request, {'form': form}))        
-    
-def activate(request, activation_key):
-    """Activates a pending user account.
-    """
-    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
-    user_account = user_profile.user
-    if user_account.is_active:
-        messages.info(request, _("This account is already active."))
-        if request.user.is_authenticated():
-            return redirect_to(request, url="/")
-        return redirect_to(request, reverse('users_login'))
-    if user_profile.key_expires < datetime.datetime.today():
-        messages.error(request, _("Sorry, your account is expired."))
-        return redirect_to(request, url="/")
-    user_account.is_active = True
-    user_account.save()
-    messages.success(request, _("Congratulations! Your account is now active."))
-    return redirect_to(request, reverse('users_login'))
 
 def set_language(request):
     """Set the current language.
@@ -89,11 +52,6 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
         template_name='auth/user_list.html',
         **kwargs
     )
-    
-def user_dashboard(request, **kwargs):
-    """Displays the user's dashboard.
-    """
-    return render_to_response('auth/dashboard.html', RequestContext(request))
     
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.

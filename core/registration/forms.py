@@ -20,14 +20,16 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.conf.urls.defaults import *
+from django import forms
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
-urlpatterns = patterns('',
+from prometeo.core.auth.forms import UserEditForm
 
-    url(r'^users/$', view='prometeo.core.auth.views.user_list', name='users_list'),
-    url(r'^users/login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='users_login'),
-    url(r'^users/logout/$', view='django.contrib.auth.views.logout_then_login', name='users_logout'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/$', view='prometeo.core.auth.views.user_detail', name='users_detail'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='prometeo.core.auth.views.user_edit', name='users_edit'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='prometeo.core.auth.views.user_delete', name='users_delete'),
-)
+class UserRegistrationForm(UserEditForm):
+    """Form for user registration.
+    """
+    tos = forms.BooleanField(widget=forms.CheckboxInput(), label=mark_safe(_(u'I have read and agree to the <a href="/terms-service" target="_blank">Terms of Service</a>')), error_messages={ 'required': u"You must agree to the terms to register." })
+    pp = forms.BooleanField(widget=forms.CheckboxInput(), label=mark_safe(_(u'I have read and agree to the <a href="/privacy" target="_blank">Privacy Policy</a>')), error_messages={ 'required': u"You must agree to the privacy policy to register." })
+    
+    

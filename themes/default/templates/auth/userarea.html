@@ -1,11 +1,9 @@
 {% load i18n %}
+{% load menu %}
 
-<ul>
 {% if user.is_authenticated %}
-    <li class="profile"><a href="{% url users_detail user.username %}"><strong>{{ user }}</strong></a></li>
-    <li class="logout"><a href="{% url users_logout %}">{% trans 'Logout' %}</a></li>
+<span class="profile"><a href="{% url users_detail user.username %}"><strong>{{ user }}</strong></a></span>
+{% menu "user_area_logged" %}
 {% else %}
-    <li class="register"><a href="{% url users_register %}">{% trans 'Register' %}</a></li>
-    <li class="login"><a href="{% url users_login %}">{% trans 'Login' %}</a></li>
+{% menu "user_area_not_logged" %}
 {% endif %}
-</ul>

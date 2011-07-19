@@ -21,7 +21,6 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django import forms
-from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
@@ -75,18 +74,5 @@ class UserEditForm(forms.ModelForm):
         if commit:
             user.save()             
         return user
-
-class UserRegistrationForm(UserEditForm):
-    """Form for user registration.
-    """
-    tos = forms.BooleanField(widget=forms.CheckboxInput(), label=mark_safe(_(u'I have read and agree to the <a href="/terms-service" target="_blank">Terms of Service</a>')), error_messages={ 'required': u"You must agree to the terms to register." })
-    pp = forms.BooleanField(widget=forms.CheckboxInput(), label=mark_safe(_(u'I have read and agree to the <a href="/privacy" target="_blank">Privacy Policy</a>')), error_messages={ 'required': u"You must agree to the privacy policy to register." })
-    
-class ContactForm(forms.Form):
-    """A simple contact form.
-    """
-    email = forms.EmailField()
-    topic = forms.CharField()
-    message = forms.CharField(widget=forms.Textarea())
     
     

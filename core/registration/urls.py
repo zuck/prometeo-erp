@@ -24,10 +24,6 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
 
-    url(r'^users/$', view='prometeo.core.auth.views.user_list', name='users_list'),
-    url(r'^users/login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='users_login'),
-    url(r'^users/logout/$', view='django.contrib.auth.views.logout_then_login', name='users_logout'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/$', view='prometeo.core.auth.views.user_detail', name='users_detail'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='prometeo.core.auth.views.user_edit', name='users_edit'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='prometeo.core.auth.views.user_delete', name='users_delete'),
+    url(r'^users/register/$', view='prometeo.core.registration.views.register', name='users_register'),
+    url(r'^users/activate/(?P<activation_key>[\w\d]+)/$', view='prometeo.core.registration.views.activate', name='users_activate'),
 )
