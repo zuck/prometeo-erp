@@ -22,6 +22,7 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import Permission    
         
 class Menu(models.Model):
     """Menu model."""
@@ -46,6 +47,9 @@ class Link(models.Model):
     url = models.CharField(_('url'), max_length=200)
     sort_order = models.PositiveIntegerField(_('sort order'), default=0)
     submenu = models.ForeignKey(Menu, db_column='submenu_id', related_name='parent_links', blank=True, null=True, verbose_name=_('sub-menu'))
+    only_authenticated = models.BooleanField(_('Only for authenticated users'), default=True)
+    only_staff = models.BooleanField(_('Only for staff users'), default=False)
+    only_with_perms = models.ManyToManyField(Permission, blank=True, null=True, verbose_name=_('Only with following permissions'))
 
     class Meta:
         ordering = ('sort_order', 'title',)

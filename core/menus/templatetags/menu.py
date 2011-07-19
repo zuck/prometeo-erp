@@ -40,14 +40,30 @@ class MenuNode(template.Node):
         slug = self.slug.resolve(context)
         try:
             menu = Menu.objects.get(slug=slug)
+            user = context['user']
+            links = menu.links.all()
+            user_perms = user.user_permissions.all()
+            for link in links:
+                perms = link.only_with_perms.all()
+                link.authorized = True
+                if not (user.is_staff or user.is_superuser):
+                    if link.only_authenticated and not user.is_authenticated():
+                        link.authorized = False
+                    elif link.only_staff and not (user.is_staff or user.is_superuser):
+                        link.authorized = False
+                    elif link.only_with_perms:
+                        for perm in perms:
+                            if perm not in user_perms:
+                                link.authorized = False
+                                break
         except Menu.DoesNotExist:
-            menu = None
+            links = None
         if isinstance(self.html_template, template.Variable):
             html_template = self.html_template.resolve(context)
         else:
             html_template = self.html_template
-        if menu:
-            output += render_to_string(html_template, { 'menu': menu }, context)
+        if links:
+            output += render_to_string(html_template, { 'links': links }, context)
         return output
 
 @register.tag
