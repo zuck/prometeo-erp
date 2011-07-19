@@ -22,8 +22,8 @@ __version__ = '0.0.2'
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('',
+urlpatterns = patterns('prometeo.core.registration.views',
 
-    url(r'^users/register/$', view='prometeo.core.registration.views.register', name='users_register'),
-    url(r'^users/activate/(?P<activation_key>[\w\d]+)/$', view='prometeo.core.registration.views.activate', name='users_activate'),
+    url(r'^users/register/$', view='register', name='users_register'),
+    url(r'^users/activate/(?P<activation_key>[\w\d]+)/$', view='activate', name='users_activate'),
 )
