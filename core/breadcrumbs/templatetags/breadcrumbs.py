@@ -86,11 +86,21 @@ class AddCrumbNode(Node):
 
 @register.tag
 def add_crumb(parser, token):
+    """
+    Add a crumb to the breadcrumb list.
+
+    Example tag usage: {% add_crumb name [url] %}
+    """
     tag_name, args, kwargs = parse_args_kwargs(parser, token)
     return AddCrumbNode(*args, **kwargs)
 
 @register.inclusion_tag('breadcrumbs/breadcrumbs.html', takes_context=True)
 def render_breadcrumbs(context):
+    """
+    Renders the stored list of breadcrumbs.
+
+    Example tag usage: {% render_breadcrumbs %}
+    """
     try:
         breadcrumbs = context['request'].breadcrumbs
     except AttributeError:
