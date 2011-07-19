@@ -13,5 +13,5 @@
     url: "/admin"
     sort_order: 0
     only_authenticated: True
-    only_staff: False
+    only_staff: True
     only_with_perms: []
