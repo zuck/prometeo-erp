@@ -21,6 +21,9 @@ Make sure you have the following pre-requisites installed:
  * python 2.6 (required)
    http://www.python.org
 
+ * pyYaml 3.1.0 (required)
+   http://pyyaml.org/wiki
+
  * django 1.2.1 (required)
    http://www.djangoproject.com/
 
