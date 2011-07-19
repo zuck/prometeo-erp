@@ -33,6 +33,9 @@ urlpatterns = patterns('',
     
     # Media files.
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+
+    # Filemanager.
+    (r'^admin/filemanager/', include('prometeo.core.wysiwyg.urls')),
     
     # Admin.
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -43,6 +46,9 @@ urlpatterns = patterns('',
     
     # Authentication.
     (r'^users/', include('prometeo.core.auth.urls')),
+
+    # Taxonomy.
+    (r'^', include('prometeo.core.taxonomy.urls')),
 )
 
 LOADING = False

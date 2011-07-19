@@ -1,0 +1,17 @@
+- model: widgets.region
+  pk: 1
+  fields:
+    slug: "footer"
+    description: "Footer"
+- model: widgets.widget
+  pk: 1
+  fields:
+    region: 1
+    title: "Powered by"
+    slug: "powered-by"
+    description: "Info about Prometeo."
+    source: "prometeo.core.widgets.base.dummy"
+    template: "elements/powered-by.html"
+    context: "{\"text\": \"Prometeo\", \"url\": \"http://code.google.com/p/prometeo-erp/\"}"
+    show_title: false
+    sort_order: 0

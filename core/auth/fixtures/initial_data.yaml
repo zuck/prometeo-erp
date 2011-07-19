@@ -1,0 +1,12 @@
+- model: menus.link
+  pk: 2
+  fields:
+    menu: 1
+    title: "Users & Groups"
+    slug: "users-groups"
+    description: "Users and groups management."
+    url: "/users"
+    sort_order: 0
+    only_authenticated: True
+    only_staff: True
+    only_with_perms: []

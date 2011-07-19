@@ -1,0 +1,17 @@
+- model: menus.menu
+  pk: 1
+  fields:
+    slug: "main"
+    description: "Main Menu"
+- model: menus.link
+  pk: 1
+  fields:
+    menu: 1
+    title: "Administration"
+    slug: "administration"
+    description: "Administration panel."
+    url: "/admin"
+    sort_order: 0
+    only_authenticated: True
+    only_staff: False
+    only_with_perms: []
