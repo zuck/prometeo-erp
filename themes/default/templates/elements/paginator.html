@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="paginator">
+    <span class="previous">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span>&laquo;</span></a>
+        {% else %}
+        <span class="disabled">&laquo;</span>
+        {% endif %}
+    </span>
+    
+    <span class="current">
+        {% with page_obj.number as number %}
+        {% with paginator.num_pages as num_pages %}
+        {% blocktrans %}Page {{ number }} of {{ num_pages }}{% endblocktrans %}
+        {% endwith %}
+        {% endwith %}
+    </span>
+    
+    <span class="next">
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><span>&raquo;</span></a>
+        {% else %}
+        <span class="disabled">&raquo;</span>
+        {% endif %}
+    </span>
+</div>

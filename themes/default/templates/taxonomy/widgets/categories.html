@@ -1,0 +1,11 @@
+{% extends "widgets/widget.html" %}
+
+{% block widget-body %}
+<div class="body">
+    <ul>
+        {% for object in categories %}
+        {% include "taxonomy/category.html" %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

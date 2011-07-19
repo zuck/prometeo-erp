@@ -1,0 +1,13 @@
+{% extends "widgets/widget.html" %}
+
+{% load i18n %}
+
+{% block widget-body %}
+<div class="body">
+    <div class="tags">
+        {% for tag in tags %}
+        <span class="tag"><a style="font-size: 1.{% widthratio tag.occurences|length tag_max_occurences 9 %}em" href="{{ tag.get_absolute_url }}" title="{{ tag.occurences|length }} {% trans 'occurence/s' %}">{{ tag }}</a></span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

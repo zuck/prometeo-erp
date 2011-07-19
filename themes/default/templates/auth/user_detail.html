@@ -30,7 +30,7 @@
     <dd>{{ object.date_joined }}</dd>
 </dl>
 <div class="actions">
-    {% if request.user == object %}
+    {% if request.user == object or request.user.is_staff %}
     <ul>
         <li><a href="{% url users_edit  object.username %}">{% trans 'Edit' %}</a></li>
         <li><a href="{% url users_delete  object.username %}">{% trans 'Delete' %}</a></li>

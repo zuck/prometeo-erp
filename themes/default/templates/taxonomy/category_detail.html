@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% blocktrans %}Search results for {{ query }}{% endblocktrans %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Search' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}<h1 class="title">{% blocktrans %}Search results for {{ query }}{% endblocktrans %}</h1>{% endblock %}
+
+{% block main %}
+<ul class="result-list">
+    {% for object in object_list %}
+    <li class="result">
+        <h3><strong>{% trans object.content_type.name|title %}</strong>: <a href="{{ object.get_absolute_url }}">{{ object.title|title }}</a></h3>
+    </li>
+    {% empty %}
+    <li class="result"><span class="disabled">{% trans "No results found." %}</span></li>
+    {% endfor %}
+</ul>
+
+{% include "elements/paginator.html" %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "admin/wysiwyg/base.html" %}
+{% load i18n adminmedia %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block bodyclass %}wysiwyg change-form{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+	<a href="../../">{% trans "Home" %}</a> &rsaquo;
+	<a href="{% url admin_wysiwyg_index %}">{% trans "File Manager" %}</a> &rsaquo;
+	{% trans 'Delete' %}
+</div>
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+
+{% block content %}
+	<h1>Are you sure?</h1>
+
+{% if errorlist %}
+
+<p>
+	While attempting to remove '/{{ url }}':<br>
+    Found insufficient permissions to delete the following item{{ files|pluralize}}:
+</p>
+
+<ul>
+    {% for item in errorlist %}
+        <li><a href="{{item }}">{{ item }}</a></li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>
+    Are you sure you want to delete the following item{{ files|pluralize}}?
+</p>
+
+<ul>
+    {% for item in files %}
+        <li><a href="{{item }}">{{ item }}</a></li>
+    {% endfor %}
+</ul>
+
+<form action="" method="post">
+    {% csrf_token %}
+<div>
+    <input type="hidden" name="post" value="yes" />
+    <input type="submit" value="Yes, I'm sure" />
+</div>
+</form>
+
+{% endif %}
+
+{% endblock %}

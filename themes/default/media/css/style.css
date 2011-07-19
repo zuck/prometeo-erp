@@ -1,14 +1,13 @@
-html { background: #3c3c3c; }
+html { background: #1f1f1f; }
 
 body {
     font-family: 'Helvetica', arial, sans-serif;
     font-size: 12px;
     line-height: 1.5em;
-    color: #1a171b;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    float: none;
+    clear: both;
     margin: 0 0 12px;
     padding: 0;
     background: none;
@@ -16,9 +15,9 @@ h1, h2, h3, h4, h5, h6 {
     text-align: left;
 }
  
-h1 { font-size: 2.2em; }
-h2 { font-size: 1.8em; }
-h3 { font-size: 1.6em; }
+h1 { font-size: 2.4em; }
+h2 { font-size: 1.6em; }
+h3 { font-size: 1.4em; }
 h4 { font-size: 1.2em; }
 h5 { font-size: 1.0em; }
 h6 { font-size: 0.9em; }
@@ -29,7 +28,7 @@ a, a:link, a:visited {
     color: #ce0600;
 }
 
-a:hover { color: #000; }
+a:hover { color: #1f1f1f; }
 
 p, ol, ul, dl, pre { margin-bottom: 18px; }
 
@@ -45,18 +44,14 @@ ol ol, ul ul, dl dl {
     margin-bottom: 0;
 }
 
-li, dt {
-    padding: 4px 0;
-}
+li, dt { padding: 4px 0; }
 
 ul li, dl dt {
     clear: left;
     padding-left: 20px;
 }
 
-dl dd {
-    margin-left: 20px;
-}
+dl dd { margin-left: 20px; }
 
 pre {
     clear: both;
@@ -66,9 +61,7 @@ pre {
     overflow: auto;
 }
 
-hr {
-    display: none;
-}
+hr { display: none; }
 
 /**
  * Form
@@ -120,11 +113,10 @@ form .submit input {
     color: #fff;
     font-weight: bold;
     background: #ce0600;
+    border: 1px solid #1f1f1f;
 }
 
-form .submit input:hover {
-    background: #3c3c3c;
-}
+form .submit input:hover { background: #1f1f1f; }
 
 /**
  * Tables.
@@ -183,12 +175,10 @@ th { text-align: right; }
 .paginator a, .paginator a:link, .paginator a:visited {
     color: #fff;
     background: #ce0600;
-    border: 1px solid #60625d;
+    border: 1px solid #1f1f1f;
 }
 
-.paginator a:hover {
-    color: #000;
-}
+.paginator a:hover { background: #1f1f1f; }
 
 .page-navigation {
     clear: both;
@@ -236,11 +226,12 @@ th { text-align: right; }
     float: left;
     padding: 6px 16px;
     background: #ce0600;
+    border: 1px solid #1f1f1f;
     color: #fff;
 }
 
 .actions li a:hover {
-    background: #3c3c3c;
+    background: #1f1f1f;
 }
 
 .avatar {
@@ -250,18 +241,21 @@ th { text-align: right; }
 }
 
 .messages {
-    position: absolute;
-    top: 12px;
-    width: 60%;
-    margin: 0 20%;
-    background: #fffcaa;
-    border: 1px solid #ec7672;
-    z-index: 99999;
+    width: 100%;
+    border: 1px solid #ffda88;
+    margin-bottom: 30px;
+    background-color: #fffcaa;
 }
 
 .messages ul {
     margin: 0;
     padding: 5px;
+}
+
+.messages li {
+    padding-left: 40px;
+    background-repeat: no-repeat;
+    background-position: 10px 5px;
 }
 
 .messages li.error { background-image: url(images/error.png); }
@@ -281,6 +275,10 @@ ul.errorlist {
 
 ul.errorlist li { background-image: url(images/error.png); }
 
+ul.result-list { margin-left: 0; }
+
+ul.result-list li { padding-left: 0; }
+
 /**
  * Layout.
  */
@@ -290,6 +288,7 @@ ul.errorlist li { background-image: url(images/error.png); }
     float: left;
     padding: 0;
     width: 100%;
+    min-width: 800px;
 }
 
 #logo {
@@ -298,14 +297,17 @@ ul.errorlist li { background-image: url(images/error.png); }
     background: #ce0600;
     border-top: 1px solid #ec7672;
     border-bottom: 1px solid #7d0400;
+    color: #fff;
 }
+
+#logo h1, #logo h2 { display: none; }
 
 #nav {
     position: absolute;
     top: 0;
     padding: 6px 0;
     height: 16px;
-    background: #1f1f1f;
+    background: #1f1f1f url(images/footer.jpg) repeat-x top;
     color: #e6e6e6;
 }
 
@@ -318,6 +320,44 @@ ul.errorlist li { background-image: url(images/error.png); }
 #nav li { padding: 0 10px; }
 
 #nav a:hover { color: #fff; }
+
+#search {
+    position: absolute;
+    top: 45px;
+    right: 10px;
+}
+
+#searchform {
+    clear: none;
+    float: right;
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+#searchform .text, #searchform .submit { float: left; }
+
+#searchform .text input {
+    width: 180px;
+    margin: 2px;
+}
+
+#searchform .submit {
+    background: none;
+    margin: 0;
+}
+
+#searchform .submit input {
+    width: 30px;
+    height: 28px;
+    background: url(images/search.png) no-repeat center 5px;
+    border: none;
+    font-size: 0;
+}
+
+#searchform .submit input:hover {
+    background-color: #1f1f1f;
+}
 
 #bookmarks {
     float: left;
@@ -341,51 +381,49 @@ ul.errorlist li { background-image: url(images/error.png); }
 
 #breadcrumbs span.list { padding: 0 10px; }
 
-#content { background: #fff url(images/menu.jpg) repeat-y left; }
+#content { background: #fff url(images/menu.jpg) repeat-y 15%; }
 
 #menu {
-    position: absolute;
-    left: 0;
-    width: 200px;
+    float: left;
+    width: 15%;
 }
 
-#menu ul {
-    margin: 0;
-    padding: 0;
-}
-
-#menu li {
+#menu ul, #menu li {
+    float: left;
     width: 100%;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
 #menu li a {
-    float: left;
-    width: 180px;
-    padding: 8px 10px;
-    background: #f6f6f6;
-    border-top: 1px solid #fff;
-    border-bottom: 1px solid #e6e6e6;
+    display: block;
+    padding: 10px;
 }
 
-#menu li a:hover {
-    float: left;
-    width: 179px;
-    padding: 8px 10px;
-    color: #fff;
-    background: #3c3c3c;
-    border-bottom: 1px solid #fff;
-    border-top: 1px solid #000;
-}
+#menu li a:hover { background: #f6f6f6; }
+
+#menu li li a { padding-left: 40px; }
 
 #main {
-    margin-left: 200px;
-    padding: 20px 10px;
+    float: right;
+    width: 80%;
+    padding: 20px 2.5%;
+}
+
+#main .title {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dfdfdf;
 }
 
 #footer {
     height: 200px;
-    border-top: 1px solid #000;
+    border-top: 1px solid #111;
     background: url(images/footer.jpg) repeat-x top;
+    color: #e6e6e6;
+}
+
+#powered-by {
+    float: right;
+    padding: 10px;
 }

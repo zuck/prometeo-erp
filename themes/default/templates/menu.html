@@ -1,7 +1,3 @@
-{% load i18n %}
+{% load menu %}
 
-<ul>
-{% if user.is_staff %}
-    <li><a href="/admin">{% trans 'Administration' %}</a></li>
-{% endif %}
-</ul>
+{% menu "main" %}

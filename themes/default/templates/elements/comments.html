@@ -1,0 +1,53 @@
+{% load i18n %}
+{% load comments %}
+{% load markup %}
+{% load avatar %}
+
+{% get_comment_list for object as comment_list %}
+{% if comment_list or object.allow_comments %}
+<div class="comments">
+    {% if comment_list %}
+    <h3>{% trans "Comments" %}</h3>
+    <ul>
+    {% for comment in comment_list %}
+        <li class="comment">
+            {% with comment.user_name as user_name %}
+            {% with comment.user.get_absolute_url as user_link %}
+            {% with comment.submit_date as submit_date %}
+            <div class="meta">
+                {% avatar comment.user %}
+                <p>{% blocktrans %}Posted on {{ submit_date }}{% endblocktrans %}{% if comment.user %}{% blocktrans %} by <a href="{{ user_link }}">{{ user_name }}</a>{% endblocktrans %}{% endif %}</p>
+            </div>
+            {% endwith %}
+            {% endwith %}
+            {% endwith %}
+            {{ comment.comment|markdown }}
+        </li>
+    {% endfor %}
+    </ul>
+    {% get_comment_count for object as comment_count %}
+    <p class="comment-counter">{% blocktrans %}<strong>{{ comment_count }}</strong> comment(s){% endblocktrans %}</p>
+    {% endif %}
+    {% if object.allow_comments %}
+    <a name="add_comment"></a><h3>{% trans "Add comment" %}</h3>
+    {% get_comment_form for object as form %}
+    <form action="{% comment_form_target %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ ticket.get_absolute_url }}" />
+        {% for field in form %}
+        {% if field.is_hidden %}
+        {{ field }}
+        {% else %}
+        {% if field.errors %}{{ field.errors }}{% endif %}
+        <p {% if field.errors %} class="error"{% endif %} {% if field.name == "honeypot" %} style="display:none;"{% endif %}>
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.name == "comment" %}{% blocktrans %}Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.{% endblocktrans %}{% endif %}
+        </p>
+        {% endif %}
+        {% endfor %}
+        <span class="submit"><input type="submit" name="post" value="{% trans 'Post' %}"></span>
+    </form>
+    {% endif %}
+</div>
+{% endif %}
