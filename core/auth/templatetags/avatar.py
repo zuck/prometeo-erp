@@ -29,15 +29,9 @@ register = template.Library()
 @register.simple_tag
 def avatar(user, size=36, rating='g', default=None):
     """
-    Returns an image element with gravatar for the current user.
+    Returns an image element with gravatar for the specified user.
 
-    Example tag usage: {% avatar user.email 80 "g" %}
-
-    :Parameters:
-       - `email`: the email to send to gravatar.
-       - `size`: optional YxY size for the image.
-       - `rating`: optional rating (g, pg, r, or x) of the image.
-       - `default`: optional default image url or hosted image like wavatar.
+    Example tag usage: {% avatar user 80 "g" %}
     """
     
     # Verify the rating actually is a rating accepted by gravatar
