@@ -4,6 +4,7 @@ body {
     font-family: 'Helvetica', arial, sans-serif;
     font-size: 12px;
     line-height: 1.5em;
+    background: #fff;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -283,12 +284,12 @@ ul.result-list li { padding-left: 0; }
  * Layout.
  */
 
-#logo, #nav, #breadcrumbs, #content, #footer {
+#logo, #nav, #breadcrumbs, #footer {
     clear: both;
     float: left;
     padding: 0;
     width: 100%;
-    min-width: 800px;
+    min-width: 1024px;
 }
 
 #logo {
@@ -381,39 +382,69 @@ ul.result-list li { padding-left: 0; }
 
 #breadcrumbs span.list { padding: 0 10px; }
 
-#content { background: #fff url(images/menu.jpg) repeat-y 15%; }
-
-#menu {
-    float: left;
-    width: 15%;
+#content {
+    clear: both;
+    width: 1024px;
+    margin: 0 auto;
+    overflow: auto;
+    background: url(images/menu.jpg) repeat-y 200px;
 }
 
-#menu ul, #menu li {
+#sidebar {
+    float: left;
+    width: 190px;
+    padding-bottom: 25px;
+}
+
+#sidebar ul, #sidebar li {
     float: left;
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
-#menu li a {
+#sidebar li a {
     display: block;
-    padding: 10px;
+    padding: 5px 25px;
 }
 
-#menu li a:hover { background: #f6f6f6; }
+#sidebar li a:hover {
+    background-color: #f6f6f6;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e6e6e6;
+}
 
-#menu li li a { padding-left: 40px; }
+#sidebar li li a { padding-left: 40px; }
+
+#user-profile-widget {
+    float: left;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+#user-profile-widget .body {
+    padding: 10px 0;
+    margin: 0 10px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+#user-profile-widget .info { width: 160px; }
+
+#user-profile-widget h5 { 
+    clear: none;
+    margin-bottom: 0;
+}
 
 #main {
     float: right;
-    width: 80%;
-    padding: 20px 2.5%;
+    width: 794px;
+    padding: 20px 10px;
 }
 
 #main .title {
     padding-bottom: 10px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #dfdfdf;
+    border-bottom: 1px solid #e6e6e6;
 }
 
 #footer {
@@ -427,3 +458,5 @@ ul.result-list li { padding-left: 0; }
     float: right;
     padding: 10px;
 }
+
+#footer a:hover { color: #fff; }

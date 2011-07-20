@@ -15,3 +15,15 @@
     only_authenticated: True
     only_staff: True
     only_with_perms: []
+- model: widgets.widget
+  pk: 2
+  fields:
+    region: 2
+    title: "Main Menu"
+    slug: "main-menu"
+    description: "The main menu."
+    source: "prometeo.core.widgets.base.dummy"
+    template: "widgets/menu.html"
+    context: "{\"name\": \"main\"}"
+    show_title: false
+    sort_order: 1

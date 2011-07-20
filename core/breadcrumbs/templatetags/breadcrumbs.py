@@ -30,25 +30,11 @@ from django.template.loader import render_to_string
 from django.template import Node, NodeList, Variable, Library
 from django.template import TemplateSyntaxError, VariableDoesNotExist
 
+from prometeo.core.templatetags import parse_args_kwargs
+
 register = template.Library()
 
 # Inspired by http://code.google.com/p/django-crumbs/
-
-def parse_args_kwargs(parser, token):
-    contents = token.split_contents()
-    tag_name = contents[0]
-    args_list = contents[1:]
-    args = []
-    kwargs = {}
-    
-    for value in args_list:
-        if '=' in value:
-            k, v = value.split('=', 1)
-            kwargs[str(k)] = v
-        else:
-            args.append(value)
-    
-    return tag_name, args, kwargs
 
 class AddCrumbNode(Node):
     def __init__(self, *args, **kwargs):

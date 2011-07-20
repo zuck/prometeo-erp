@@ -22,10 +22,8 @@
 {% block main %}
 {% avatar object 90 %}
 <dl class="user-info">
-    {% comment %}
     <dt class="fullname">{% trans 'Fullname' %}</dt>
     <dd>{% if object.get_full_name %}{{ object.get_full_name }}{% else %}<span class="disabled">{% trans 'Not specified.' %}</span>{% endif %}</dd>
-    {% endcomment %}
     <dt class="joined">{% trans 'Joined on' %}</dt>
     <dd>{{ object.date_joined }}</dd>
 </dl>

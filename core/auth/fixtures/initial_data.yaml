@@ -44,3 +44,15 @@
     only_authenticated: True
     only_staff: False
     only_with_perms: []
+- model: widgets.widget
+  pk: 3
+  fields:
+    region: 2
+    title: "User Profile"
+    slug: "user-profile"
+    description: "The user's profile."
+    source: "prometeo.core.widgets.base.dummy"
+    template: "widgets/user_profile.html"
+    context: ""
+    show_title: false
+    sort_order: 0

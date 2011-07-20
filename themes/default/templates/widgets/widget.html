@@ -8,7 +8,7 @@
     {% endif %}
     {% block widget-body %}
     <div class="body">
-        {% trans text %}
+        {% block widget-content %}{% trans text %}{% endblock %}
     </div>
     {% endblock %}
 </div>
