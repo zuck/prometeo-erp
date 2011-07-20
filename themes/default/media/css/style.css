@@ -233,7 +233,7 @@ th { text-align: right; }
 #logo {
     height: 60px;
     margin-top: 28px;
-    background: #ce0600;
+    background: #ce0600 url(images/logo.png) no-repeat 10px center;
     border-top: 1px solid #ec7672;
     border-bottom: 1px solid #7d0400;
     color: #fff;
@@ -283,13 +283,13 @@ th { text-align: right; }
 
 #searchform .submit {
     background: none;
-    margin: 0;
+    margin: -1px 0 0;
 }
 
 #searchform .submit input {
     width: 30px;
     height: 28px;
-    background: url(images/search.png) no-repeat center 5px;
+    background: url(images/search.png) no-repeat center 8px;
     border: none;
     font-size: 0;
 }
@@ -318,7 +318,7 @@ th { text-align: right; }
     border-bottom: 1px solid #e6e6e6;
 }
 
-#breadcrumbs span.list { padding: 0 10px; }
+#breadcrumbs .list { padding: 0 10px; }
 
 #content {
     clear: both;
