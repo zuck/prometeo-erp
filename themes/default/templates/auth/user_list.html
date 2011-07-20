@@ -6,6 +6,8 @@
 
 {% block meta_title %}{% trans "Users" %}{% endblock %}
 
+{% block extrahead %}<link rel="stylesheet" href="{{ MEDIA_URL }}css/filterbox.css" type="text/css" media="all"/>{% endblock %}
+
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' %}
@@ -19,7 +21,7 @@
 {% endblock %}
 
 {% block main %}
-{% include 'search_box.html' %}
+{% include 'elements/filterbox.html' %}
 {% detail_table object_list '["username", "first_name", "last_name", "email"]' %}
 {% include "elements/paginator.html" %}
 {% endblock %}

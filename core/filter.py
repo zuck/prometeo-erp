@@ -22,38 +22,41 @@ __version__ = '0.0.2'
 
 from django.db.models import Q
 
-def search(request, model, fields=[], exclude=['id']):
+def filter_objects(request, model, fields=[], exclude=['id'], object_list=None):
     matches = []
     queryset = None
+
+    if object_list is None:
+        object_list = model.objects.all()
     
-    search_fields = get_search_fields(request, model, fields, exclude)
+    filter_fields = get_filter_fields(request, model, fields, exclude)
     
     if request.method == 'POST':
         queryset = []
-        for f, value in search_fields:
+        for f, value in filter_fields:
             if value is not None:
                 queryset.append(Q(**{"%s__startswith" % f.attname: value}) | Q(**{"%s__endswith" % f.attname: value}))
 
     if (queryset is not None):
-        matches = model.objects.filter(*queryset)
+        matches = object_list.filter(*queryset)
     else:
-        matches = model.objects.all()
+        matches = object_list
         
-    return search_fields, matches
+    return filter_fields, matches
     
-def get_search_fields(request, model, fields, exclude):
-    search_fields = [(f, search_field_value(request, f)) for f in model._meta.fields if is_visible(f.attname, fields, exclude)]
-    return search_fields
+def get_filter_fields(request, model, fields, exclude):
+    filter_fields = [(f, filter_field_value(request, f)) for f in model._meta.fields if is_visible(f.attname, fields, exclude)]
+    return filter_fields
 
 def is_visible(field, fields=[], exclude=[]):
     return (len(fields) == 0 or field in fields) and field not in exclude
 
-def search_field_value(request, field):
+def filter_field_value(request, field):
     name = field.attname
     if request.POST.has_key("sub_%s" % name):
         return None
     elif request.POST.has_key(name):
         return request.POST[name]
-    elif request.POST.has_key(u'search_field') and request.POST[u'search_field'] == name:
-        return request.POST[u'search_query']
+    elif request.POST.has_key(u'filter_field') and request.POST[u'filter_field'] == name:
+        return request.POST[u'filter_query']
     return None

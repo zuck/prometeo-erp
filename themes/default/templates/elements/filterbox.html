@@ -1,0 +1,34 @@
+{% load i18n %}
+
+<div class="filterbox">
+    <form action="." method="post">
+        {% csrf_token %}
+        
+        {% if filter_fields and filter_fields|length > 1 %}
+        {% for field, value in filter_fields %}
+        {% if value %}
+        <label for="{{ field.attname }}">{{ field.verbose_name|capfirst }}</label>
+        <input class="query" type="text" name="{{ field.attname }}" value="{{ value }}"/>
+        <button class="delete" type="submit" name="sub_{{ field.attname }}"><span>-</span></button>
+        <br/>
+        {% endif %}
+        {% endfor %}
+        <select class="filter_field" name="filter_field">
+            {% for field, value in filter_fields %}
+            {% if not value %}
+            <option value="{{ field.name }}">{% trans field.verbose_name|capfirst %}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        <input class="query" type="text" name="filter_query"/>
+
+        {% if filter_fields and filter_fields|length > 1 %}
+        <button class="add" type="submit" name="add_filter_field"><span>+</span></button>
+        <br/>
+        {% endif %}
+
+        <input class="filter" type="submit" name="filter" value="{% trans 'Filter' %}"/>
+    </form>
+</div>

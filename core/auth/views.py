@@ -32,6 +32,8 @@ from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 
+from prometeo.core.filter import filter_objects
+
 from models import *
 from forms import *
 
@@ -47,12 +49,14 @@ def set_language(request):
 def user_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all active users.
     """
+    filter_fields, object_list = filter_objects(request, User, object_list=User.objects.filter(is_active=True))
     return list_detail.object_list(
         request,
-        queryset=User.objects.filter(is_active=True),
+        queryset=object_list,
         paginate_by=paginate_by,
         page=page,
         template_name='auth/user_list.html',
+        extra_context={'filter_fields': filter_fields},
         **kwargs
     )
   

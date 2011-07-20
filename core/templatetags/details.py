@@ -42,7 +42,7 @@ class DetailTableNode(Node):
         self.field_list = []
 
     def render_with_args(self, context, object_list, fields=[], exclude=['id'], *args):
-        output = '<p class="disabled">%s</p>' % _('empty')        
+        output = '<p class="disabled">%s</p>' % _('No items.')        
         self.object_list = object_list
         if len(self.object_list) > 0:
             meta = self.object_list[0]._meta
@@ -103,7 +103,7 @@ class DetailTableNode(Node):
             else:
                 output = '<span class="yes">%s</span>' % _('Yes')
         elif not value:
-            output = '<span class="disabled">%s</span>' % _('empty')
+            output = '<span class="disabled">%s</span>' % _('Empty')
         return mark_safe(output)
 
     def field_to_value(self, field, instance):
