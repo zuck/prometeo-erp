@@ -37,8 +37,6 @@ ol, ul, dl { text-align: left; }
 
 ol { margin-left: 35px; }
 
-ul, dl { margin-left: 10px; }
-
 ol ol, ul ul, dl dl {
     margin-left: 5px;
     margin-top: 6px;
@@ -50,7 +48,6 @@ li, dt { padding: 4px 0; }
 ul li, dl dt {
     clear: left;
     padding-left: 15px;
-    background: url(images/bullet.png) no-repeat left 8px;
 }
 
 dl dd { margin-left: 15px; }
@@ -349,6 +346,8 @@ th { text-align: right; }
     overflow: auto;
     background: url(images/menu.jpg) repeat-y 200px;
 }
+
+#content li, #content dt { background: url(images/bullet.png) no-repeat left 8px; }
 
 #content ul.menu, #content ul.menu li {
     float: left;
