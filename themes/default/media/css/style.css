@@ -31,7 +31,7 @@ a, a:link, a:visited {
 
 a:hover { color: #1f1f1f; }
 
-p, ol, ul, dl, pre { margin-bottom: 18px; }
+p, ol, ul, dl, pre { margin-bottom: 10px; }
 
 ol, ul, dl { text-align: left; }
 
@@ -49,10 +49,11 @@ li, dt { padding: 4px 0; }
 
 ul li, dl dt {
     clear: left;
-    padding-left: 20px;
+    padding-left: 15px;
+    background: url(images/bullet.png) no-repeat left 8px;
 }
 
-dl dd { margin-left: 20px; }
+dl dd { margin-left: 15px; }
 
 pre {
     clear: both;
@@ -202,39 +203,6 @@ th { text-align: right; }
     text-align: right;
 }
 
-.actions {
-    clear: both;
-    float: left;
-    width: 100%;
-    border-top: 1px solid #dfdfdf;
-    padding-top: 12px;
-    margin-top: 12px;
-    text-align: right;
-}
-
-.actions ul {
-    float: right;
-}
-
-.actions li {
-    clear: none;
-    float: left;
-    padding: 0;
-    margin-left: 12px;
-}
-
-.actions li a {
-    float: left;
-    padding: 6px 16px;
-    background: #ce0600;
-    border: 1px solid #1f1f1f;
-    color: #fff;
-}
-
-.actions li a:hover {
-    background: #1f1f1f;
-}
-
 .avatar {
     float: left;
     margin-right: 12px;
@@ -382,20 +350,23 @@ th { text-align: right; }
     background: url(images/menu.jpg) repeat-y 200px;
 }
 
-#content ul, #content li {
+#content ul.menu, #content ul.menu li {
     float: left;
     width: 100%;
     margin: 0;
     padding: 0;
+    background: none;
 }
 
-#content li a {
+#content ul.menu li li a { padding-left: 40px; }
+
+#content ul.menu li a {
     display: block;
     padding: 5px 25px;
     background: url(images/bullet.png) no-repeat 10px center;
 }
 
-#content li a:hover {
+#content ul.menu li a:hover {
     background-image: url(images/bullet_hover.png);
     background-color: #f6f6f6;
     padding-bottom: 4px;
@@ -407,8 +378,6 @@ th { text-align: right; }
     width: 190px;
     padding-bottom: 25px;
 }
-
-#sidebar li li a { padding-left: 40px; }
 
 #user-profile-widget {
     float: left;
@@ -439,6 +408,39 @@ th { text-align: right; }
     padding-bottom: 10px;
     margin-bottom: 20px;
     border-bottom: 1px solid #e6e6e6;
+}
+
+#main .actions {
+    clear: both;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #dfdfdf;
+    padding-top: 12px;
+    margin-top: 12px;
+    text-align: right;
+}
+
+#main .actions ul {
+    float: right;
+}
+
+#main .actions li {
+    clear: none;
+    float: left;
+    padding: 0;
+    margin-left: 12px;
+}
+
+#main .actions li a {
+    float: left;
+    padding: 6px 16px;
+    background: #ce0600;
+    border: 1px solid #1f1f1f;
+    color: #fff;
+}
+
+#main .actions li a:hover {
+    background: #1f1f1f;
 }
 
 #footer {
