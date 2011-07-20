@@ -34,7 +34,6 @@ def validate_json(value):
 class Region(models.Model):
     """Region model.
     """
-    
     slug = models.SlugField(_('slug'), max_length=100, unique=True)
     description = models.TextField(_('description'), blank=True, null=True)
 
@@ -48,7 +47,6 @@ class Region(models.Model):
 class Widget(models.Model):
     """Widget model.
     """
-    
     region = models.ForeignKey(Region, related_name='widgets')
     title = models.CharField(_('title'), max_length=100)
     slug = models.SlugField(_('slug'), unique=True)

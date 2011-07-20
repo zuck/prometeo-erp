@@ -31,7 +31,6 @@ from django.conf import settings
 class Result(models.Model):
     """Query result model.
     """
-    
     title = models.CharField(_('title'), max_length=100)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -45,8 +44,8 @@ class Result(models.Model):
         return self.content_object.get_absolute_url()
 
 class Tag(models.Model):
-    """Tag model."""
-    
+    """Tag model.
+    """
     title = models.CharField(_('title'), max_length=100, unique=True)
     slug = models.SlugField(_('slug'), unique=True)
 
@@ -74,8 +73,8 @@ class Tag(models.Model):
         return ("tag_detail", (), {"slug": self.slug})
         
 class Category(models.Model):
-    """Category model."""
-    
+    """Category model.
+    """
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
     title = models.CharField(_('title'), max_length=100, unique=True)
     slug = models.SlugField(_('slug'), unique=True)

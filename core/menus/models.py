@@ -25,8 +25,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Permission    
         
 class Menu(models.Model):
-    """Menu model."""
-    
+    """Menu model.
+    """
     slug = models.SlugField(_('slug'), max_length=100, unique=True)
     description = models.TextField(_('description'), blank=True, null=True)
 
@@ -38,8 +38,8 @@ class Menu(models.Model):
         return self.slug
 
 class Link(models.Model):
-    """A generic menu entry."""
-    
+    """A generic menu entry.
+    """
     menu = models.ForeignKey(Menu, db_column='menu_id', related_name='links', verbose_name=_('menu'))
     title = models.CharField(_('title'), max_length=100)
     slug = models.SlugField(_('slug'), unique=True)
