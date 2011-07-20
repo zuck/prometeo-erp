@@ -248,37 +248,29 @@ th { text-align: right; }
     background-color: #fffcaa;
 }
 
-.messages ul {
-    margin: 0;
+.messages ul, .errorlist {
+    margin: 0 0 10px;
     padding: 5px;
 }
 
-.messages li {
+.messages li, .errorlist li {
     padding-left: 40px;
     background-repeat: no-repeat;
     background-position: 10px 5px;
 }
 
-.messages li.error { background-image: url(images/error.png); }
+.errorlist {
+    border: 1px solid #d21717;
+    background: #ffe0e0;
+}
+
+.messages li.error, .errorlist li { background-image: url(images/error.png); }
 
 .messages li.info { background-image: url(images/info.png); }
 
 .messages li.warning { background-image: url(images/warning.png); }
 
 .messages li.success { background-image: url(images/success.png); }
-
-ul.errorlist {
-    padding: 5px;
-    border: 1px solid #d21717;
-    background: #ffe0e0;
-    margin-left: 0;
-}
-
-ul.errorlist li { background-image: url(images/error.png); }
-
-ul.result-list { margin-left: 0; }
-
-ul.result-list li { padding-left: 0; }
 
 /**
  * Layout.

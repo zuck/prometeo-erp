@@ -30,10 +30,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.conf import settings
+from django.contrib.auth.decorators import permission_required
 
 from models import *
 from forms import *
 
+@permission_required('auth.change_user') 
 def set_language(request):
     """Set the current language.
     """
@@ -41,6 +43,7 @@ def set_language(request):
     if lang_code and check_for_language(lang_code):
         request.session['django_language'] = lang_code
 
+@permission_required('auth.change_user') 
 def user_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all active users.
     """
@@ -52,7 +55,8 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
         template_name='auth/user_list.html',
         **kwargs
     )
-    
+  
+@permission_required('auth.change_user')   
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.
     """
@@ -64,7 +68,8 @@ def user_detail(request, username, **kwargs):
         template_name='auth/user_detail.html',
         **kwargs
     )
-    
+ 
+@permission_required('auth.change_user')    
 def user_edit(request, username):
     """Edits a user's profile.
     """
@@ -84,7 +89,8 @@ def user_edit(request, username):
         form = UserEditForm(instance=user)
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
-    
+
+@permission_required('auth.delete_user')     
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.
     """ 
