@@ -382,28 +382,30 @@ th { text-align: right; }
     background: url(images/menu.jpg) repeat-y 200px;
 }
 
-#sidebar {
-    float: left;
-    width: 190px;
-    padding-bottom: 25px;
-}
-
-#sidebar ul, #sidebar li {
+#content ul, #content li {
     float: left;
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
-#sidebar li a {
+#content li a {
     display: block;
     padding: 5px 25px;
+    background: url(images/bullet.png) no-repeat 10px center;
 }
 
-#sidebar li a:hover {
+#content li a:hover {
+    background-image: url(images/bullet_hover.png);
     background-color: #f6f6f6;
     padding-bottom: 4px;
     border-bottom: 1px solid #e6e6e6;
+}
+
+#sidebar {
+    float: left;
+    width: 190px;
+    padding-bottom: 25px;
 }
 
 #sidebar li li a { padding-left: 40px; }
