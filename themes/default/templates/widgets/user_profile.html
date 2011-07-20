@@ -8,8 +8,8 @@
 <div class="body">
     {% avatar request.user %}
     <div class="info">
-        <h5>{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}</h5>
-        <a href="{{ request.user.get_absolute_url }}">{% trans "Profile" %}</a>
+        <p><strong>{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}</strong></p>
+        <p><a href="{{ request.user.get_absolute_url }}">{% trans "Profile" %}</a></p>
     </div>
 </div>
 {% endif %}

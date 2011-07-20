@@ -424,7 +424,7 @@ th { text-align: right; }
 
 #user-profile-widget .info { width: 160px; }
 
-#user-profile-widget h5 { 
+#user-profile-widget p { 
     clear: none;
     margin-bottom: 0;
 }
