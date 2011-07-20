@@ -179,26 +179,7 @@ th { text-align: right; }
 
 .paginator a:hover { background: #1f1f1f; }
 
-.page-navigation {
-    clear: both;
-    float: left;
-    width: 100%;
-    border-top: 1px solid #dfdfdf;
-    padding-top: 12px;
-    margin-bottom: 12px;
-}
-
-.page-navigation a { display: inline; }
-
-.page-navigation .previous {
-    float: left;
-    text-align: left;
-}
-
-.page-navigation .next {
-    float: right;
-    text-align: right;
-}
+.paginator .total { float: right; }
 
 .avatar {
     float: left;

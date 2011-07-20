@@ -24,4 +24,10 @@
         <span class="disabled">&raquo;</span>
         {% endif %}
     </span>
+
+    <span class="total">
+        {% with paginator.count as count %}
+        {% blocktrans %}Count: {{ count }}{% endblocktrans %}
+        {% endwith %}
+    </span>
 </div>
