@@ -42,7 +42,7 @@ class DetailTableNode(Node):
         self.field_list = []
 
     def render_with_args(self, context, object_list, fields=[], exclude=['id'], *args):
-        output = '<p class="disabled">%s</p>' % _('No items.')        
+        output = '<p class="disabled">%s</p>' % _('No results found.')      
         self.object_list = object_list
         if len(self.object_list) > 0:
             meta = self.object_list[0]._meta

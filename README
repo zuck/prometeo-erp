@@ -24,14 +24,17 @@ Make sure you have the following pre-requisites installed:
  * pyYaml 3.1.0 (required)
    http://pyyaml.org/wiki
 
+ * python-markdown 2.0 (required)
+   http://www.freewisdom.org/projects/python-markdown
+
  * django 1.2.1 (required)
-   http://www.djangoproject.com/
+   http://www.djangoproject.com
 
  * apache2 (optional)
-   http://httpd.apache.org/
+   http://httpd.apache.org
 
  * mod_wsgi (optional)
-   http://code.google.com/p/modwsgi/
+   http://code.google.com/p/modwsgi
 
 
 INSTALLATION

@@ -38,18 +38,23 @@ class CKEditor(forms.Textarea):
         rendered = super(CKEditor, self).render(name, value, attrs)
         tokens = {
             'name': name,
+            'skin': 'v2',
+            'toolbar': 'Full',
+            'height': '220',
+            'width': '765',
             'browse_url': reverse('admin_wysiwyg_index'),
             'image_browse_url': reverse('admin_wysiwyg_index'),
             'upload_url': reverse('admin_wysiwyg_upload', args=[None]),
             'image_upload_url': reverse('admin_wysiwyg_upload', args=[None]),
         }
+        tokens.update(attrs)
         rendered += mark_safe(u'<script type="text/javascript">'                                                \
                               u'   CKEDITOR.replace("%(name)s",'                                                \
                               u'       {'                                                                       \
-                              u'           skin: "v2",'                                                         \
-                              u'           toolbar: "Full",'                                                    \
-                              u'           height: "220",'                                                      \
-                              u'           width: "785",'                                                       \
+                              u'           skin: "%(skin)s",'                                                   \
+                              u'           toolbar: "%(toolbar)s",'                                             \
+                              u'           height: "%(height)s",'                                               \
+                              u'           width: "%(width)s",'                                                 \
                               u'           filebrowserBrowseUrl: "%(browse_url)s",'                             \
 					          u'           filebrowserImageBrowseUrl: "%(image_browse_url)s",'                  \
 					          u'           filebrowserUploadUrl: "%(upload_url)s",'                             \

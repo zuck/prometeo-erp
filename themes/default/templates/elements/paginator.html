@@ -27,7 +27,7 @@
 
     <span class="total">
         {% with paginator.count as count %}
-        {% blocktrans %}Count: {{ count }}{% endblocktrans %}
+        {% blocktrans %}<strong>{{ count }}</strong> element(s){% endblocktrans %}
         {% endwith %}
     </span>
 </div>

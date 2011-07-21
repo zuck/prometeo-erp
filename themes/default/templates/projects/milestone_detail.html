@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markup %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+{% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
+{% if object.tags.all %}{% block meta_keywords %}{{ object.tags.all|join:", " }}{% endblock %}{% endif %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' 'project_list' %}
+    {% add_crumb object.project object.project.get_absolute_url %}
+    {% add_crumb 'Milestones' 'milestone_list' object.project.slug %}
+    {% add_crumb object %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+    {% with object.created as created %}
+    {% with object.author as author %}
+    {% include "projects/meta.html" %}
+    {% endwith %}
+    {% endwith %}
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.projects.add_milestone %}
+        <li><a class="add" href="{% url milestone_add object.project.slug %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.projects.change_milestone %}
+        <li><a href="{% url milestone_edit object.project.slug object.slug %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.projects.delete_milestone %}
+        <li><a href="{% url milestone_delete object.project.slug object.slug %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% with object.description as description %}
+    {% include "projects/entry.html" %}
+    {% endwith %}
+    {% include "taxonomy/categories.html" %}
+    {% include "taxonomy/tags.html" %}
+</div>
+{% include "elements/comments.html" %}
+{% endblock %}

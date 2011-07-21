@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block meta_title %}{{ object.title|striptags|capfirst }}{% endblock %}
+{% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
+{% if object.tags.all %}{% block meta_keywords %}{{ object.tags.all|join:", " }}{% endblock %}{% endif %}
+
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb object.title %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object.title|escape|capfirst }}</h1>
+    {% with object.created as created %}
+    {% with object.author as author %}
+    {% include "projects/meta.html" %}
+    {% endwith %}
+    {% endwith %}
+    <div class="menu">
+        <ul>
+            <li><a href="{% url milestone_list object.slug %}">{% trans 'Milestones' %}</a></li>
+            <li><a href="{% url ticket_list object.slug %}">{% trans 'Tickets' %}</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.projects.add_project %}
+        <li><a class="add" href="{% url project_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.projects.change_project %}
+        <li><a href="{% url project_edit object.slug %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.projects.delete_project %}
+        <li><a href="{% url project_delete object.slug %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.projects.add_ticket %}
+        <li><a href="{% url ticket_add object.slug %}">{% trans 'Add ticket' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% with object.description as description %}
+    {% include "projects/entry.html" %}
+    {% endwith %}
+    {% include "taxonomy/categories.html" %}
+    {% include "taxonomy/tags.html" %}
+</div>
+{% include "elements/comments.html" %}
+{% endblock %}

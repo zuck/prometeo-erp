@@ -1,5 +1,7 @@
 {% load i18n %}
 
+{% block extrahead %}<link rel="stylesheet" href="{{ MEDIA_URL }}css/filterbox.css" type="text/css" media="all"/>{% endblock %}
+
 <div class="filterbox">
     <form action="." method="post">
         {% csrf_token %}
@@ -29,6 +31,6 @@
         <br/>
         {% endif %}
 
-        <input class="filter" type="submit" name="filter" value="{% trans 'Filter' %}"/>
+        <span class="submit"><input type="submit" name="filter" value="{% trans 'Filter' %}"/></span>
     </form>
 </div>

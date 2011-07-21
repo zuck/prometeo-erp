@@ -20,19 +20,23 @@
 {% endblock %}
 
 {% block main %}
-{% avatar object 90 %}
-<dl class="user-info">
-    <dt class="fullname">{% trans 'Fullname' %}</dt>
-    <dd>{% if object.get_full_name %}{{ object.get_full_name }}{% else %}<span class="disabled">{% trans 'Not specified.' %}</span>{% endif %}</dd>
-    <dt class="joined">{% trans 'Joined on' %}</dt>
-    <dd>{{ object.date_joined }}</dd>
-</dl>
 <div class="actions">
-    {% if request.user == object or request.user.is_staff %}
     <ul>
+        {% if request.user == object or perms.auth.change_user %}
         <li><a href="{% url users_edit  object.username %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if request.user == object or perms.auth.delete_user %}
         <li><a href="{% url users_delete  object.username %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
     </ul>
-    {% endif %}
+</div>
+<div class="details">
+    {% avatar object 90 %}
+    <dl class="user-info">
+        <dt class="fullname">{% trans 'Fullname' %}</dt>
+        <dd>{% if object.get_full_name %}{{ object.get_full_name }}{% else %}<span class="disabled">{% trans 'Not specified.' %}</span>{% endif %}</dd>
+        <dt class="joined">{% trans 'Joined on' %}</dt>
+        <dd>{{ object.date_joined }}</dd>
+    </dl>
 </div>
 {% endblock %}

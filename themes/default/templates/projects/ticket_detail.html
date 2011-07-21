@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markup %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+{% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
+{% if object.tags.all %}{% block meta_keywords %}{{ object.tags.all|join:", " }}{% endblock %}{% endif %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' '/projects/' %}
+    {% add_crumb object.project object.project.get_absolute_url %}
+    {% add_crumb 'Tickets' 'ticket_list' object.project.slug %}
+    {% add_crumb object %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+    <p class="meta">
+    {% if object.closed %}
+    {% blocktrans with object.closed as closed %}Closed on {{ closed }}{% endblocktrans %}
+    {% endif %}
+    </p>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.projects.add_ticket %}
+        <li><a class="add" href="{% url ticket_add object.project.slug %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.projects.change_ticket %}
+        <li><a href="{% url ticket_edit object.project.slug object.index %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.projects.delete_ticket %}
+        <li><a href="{% url ticket_delete object.project.slug object.index %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    <table class="properties">
+        <tr>
+            <th>{% trans "Reported by" %}:</th>
+            <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
+            <th>{% trans "Assigned to" %}:</th>
+            <td>{% for assignee in object.assignees.all %} <a class="assignee" href="{{ assignee.get_absolute_url }}">{{ assignee }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "nobody" %}</span>{% endfor %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Created on" %}:</th>
+            <td>{{ object.created }}</td>
+            <th>{% trans "Last modified on" %}:</th>
+            <td>{{ object.modified }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Milestone" %}:</th>
+            <td>
+                {% if object.milestone %}
+                <a href="{{ object.milestone.get_absolute_url }}">{{ object.milestone }}</a>
+                {% else %}
+                <span class="disabled">empty</span>
+                {% endif %}
+            </td>
+            <th>{% trans "Areas" %}:</th>
+            <td>{% for area in object.areas.all %} <a class="area" href="{{ area.get_absolute_url }}">{{ area }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Type" %}:</th>
+            <td>{{ object.type }}</td>
+            <th>{% trans "Urgency" %}:</th>
+            <td>{{ object.urgency }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Tags" %}:</th>
+            <td>{% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
+            <th>{% trans "Status" %}:</th>
+            <td>{{ object.status }}</td>
+        </tr>
+    </table>
+    {% with object.description as description %}
+    {% include "projects/entry.html" %}
+    {% endwith %}
+    {% include "elements/comments.html" %}
+</div>
+{% endblock %}

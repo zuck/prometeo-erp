@@ -187,6 +187,28 @@ th { text-align: right; }
     color: #60625d;
 }
 
+.comments li {
+    padding-left: 0;
+    background: none;
+}
+
+.comments p {
+    margin: 0;
+}
+
+.comment-counter {
+    float: right;
+    width: 100%;
+    text-align: right;
+    border-top: 1px solid #dfdfdf;
+    color: #60625d;
+}
+
+.meta {
+    color: #60625d;
+    font-style: italic;
+}
+
 .avatar {
     float: left;
     margin-right: 10px;
@@ -305,7 +327,7 @@ th { text-align: right; }
 
 #content li, #content dt { background: url(images/bullet.png) no-repeat left 8px; }
 
-#content ul.menu, #content ul.menu li {
+#content .menu, #content .menu li {
     float: left;
     width: 100%;
     margin: 0;
@@ -313,20 +335,20 @@ th { text-align: right; }
     background: none;
 }
 
-#content ul.menu li li a { padding-left: 40px; }
-
-#content ul.menu li a {
+#content .menu li a {
     display: block;
     padding: 5px 25px;
     background: url(images/bullet.png) no-repeat 10px center;
 }
 
-#content ul.menu li a:hover {
+#content .menu li a:hover {
     background-image: url(images/bullet_hover.png);
     background-color: #f6f6f6;
     padding-bottom: 4px;
     border-bottom: 1px solid #e6e6e6;
 }
+
+#content .menu li li a { padding-left: 40px; }
 
 #content .messages {
     width: 100%;
@@ -392,30 +414,47 @@ th { text-align: right; }
 }
 
 #main .title {
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
     border-bottom: 1px solid #e6e6e6;
 }
 
-#main .actions {
-    clear: both;
-    float: left;
-    width: 100%;
-    border-top: 1px solid #dfdfdf;
-    padding-top: 10px;
-    margin-top: 10px;
-    text-align: right;
+#main .title .menu {
+    float: right;
+    width: auto;
+    margin-top: -26px;
 }
 
-#main .actions ul {
-    float: right;
+#main .title .menu li {
+    clear: none;
+    float: left;
+    width: auto;
 }
+
+#main .title .menu li a {
+    background: none;
+    padding: 0;
+    margin-left: 20px;
+}
+
+#main .title .menu li a:hover {
+    background: none;
+    border: 0;
+}
+
+#main .actions {
+    clear: left;
+    float: left; 
+}
+
+#main .actions ul { float: left; }
 
 #main .actions li {
     clear: none;
     float: left;
     padding: 0;
-    margin-left: 10px;
+    margin-right: 5px;
 }
 
 #main .actions li a {
@@ -429,6 +468,8 @@ th { text-align: right; }
 #main .actions li a:hover {
     background: #1f1f1f;
 }
+
+#main .details { clear: both; }
 
 #footer {
     height: 200px;

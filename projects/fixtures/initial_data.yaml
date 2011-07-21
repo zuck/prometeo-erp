@@ -1,0 +1,12 @@
+- model: menus.link
+  pk: 7
+  fields:
+    menu: 1
+    title: "Projects"
+    slug: "projects"
+    description: "Project management."
+    url: "/projects"
+    sort_order: 1
+    only_authenticated: True
+    only_staff: False
+    only_with_perms: []

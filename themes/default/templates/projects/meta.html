@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<p class="meta">
+{% with author.get_absolute_url as author_link %}
+{% blocktrans %}Created on {{ created }}{% endblocktrans %}
+{% if author %}{% blocktrans %}by <a href="{{ author_link }}">{{ author }}</a>{% endblocktrans %}{% endif %}
+{% endwith %}
+</p>

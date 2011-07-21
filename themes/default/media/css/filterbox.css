@@ -20,7 +20,6 @@
 
 .filterbox form {
     float: right;
-    width: 100%;
     padding: 0;
     margin-bottom: 10px;
     text-align: right;
@@ -34,7 +33,8 @@
     width: auto;
 }
 
-.filterbox button, .filterbox input.filter {
+.filterbox button {
+    width: 20px;
     padding: 2px 4px;
     margin: 0;
     border: none;
@@ -44,7 +44,11 @@
     border: 1px solid #1f1f1f;
 }
 
-.filterbox button:hover, .filterbox input.filter:hover { background: #1f1f1f; }
+.filterbox button:hover { background: #1f1f1f; }
 
-.filterbox button { width: 20px; }
+.filterbox .submit {
+    clear: both;
+    float: right;
+    margin: 5px 0 0;
+}
 
