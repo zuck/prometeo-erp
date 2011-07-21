@@ -9,7 +9,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     clear: both;
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     padding: 0;
     background: none;
     border: none;
@@ -74,13 +74,17 @@ form {
     background: #f6f6f6;
 }
 
-form p { font-style: italic; }
+form p {
+    font-style: italic;
+    color: #60625d;
+}
 
 form label {
     clear: left;
     display: block;
     font-weight: bold;
     font-style: normal;
+    color: #1f1f1f;
 }
 
 form input, form select {
@@ -100,7 +104,7 @@ form textarea {
 
 form .submit {
     float: left;
-    margin-right: 12px;
+    margin-right: 10px;
 }
 
 form .submit input {
@@ -126,7 +130,7 @@ table {
     float: left;
     width: 100%;
     border: 1px solid #dfdfdf;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 td, th {
@@ -149,15 +153,14 @@ th { text-align: right; }
     float: left;
     width: 100%;
     border-top: 1px solid #dfdfdf;
-    padding-top: 12px;
-    margin-top: 12px;
-    margin-bottom: 12px;
+    padding-top: 10px;
+    margin-top: 10px;
 }
 
 .paginator .first, .paginator .previous, .paginator .next, .paginator .last,
 .paginator .page_number, .paginator .current { 
     float: left;
-    margin-right: 12px;
+    margin-right: 10px;
     text-align: center;
 }
 
@@ -179,44 +182,16 @@ th { text-align: right; }
 
 .paginator a:hover { background: #1f1f1f; }
 
-.paginator .total { float: right; }
+.paginator .total {
+    float: right;
+    color: #60625d;
+}
 
 .avatar {
     float: left;
-    margin-right: 12px;
-    margin-bottom: 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
-
-.messages {
-    width: 100%;
-    border: 1px solid #ffda88;
-    margin-bottom: 30px;
-    background-color: #fffcaa;
-}
-
-.messages ul, .errorlist {
-    margin: 0 0 10px;
-    padding: 5px;
-}
-
-.messages li, .errorlist li {
-    padding-left: 40px;
-    background-repeat: no-repeat;
-    background-position: 10px 5px;
-}
-
-.errorlist {
-    border: 1px solid #d21717;
-    background: #ffe0e0;
-}
-
-.messages li.error, .errorlist li { background-image: url(images/error.png); }
-
-.messages li.info { background-image: url(images/info.png); }
-
-.messages li.warning { background-image: url(images/warning.png); }
-
-.messages li.success { background-image: url(images/success.png); }
 
 /**
  * Layout.
@@ -353,6 +328,38 @@ th { text-align: right; }
     border-bottom: 1px solid #e6e6e6;
 }
 
+#content .messages {
+    width: 100%;
+    border: 1px solid #ffda88;
+    background-color: #fffcaa;
+    margin-bottom: 30px;
+}
+
+#content .messages ul, #content .errorlist {
+    margin: 0;
+    padding: 5px;
+}
+
+#content .messages li, #content .errorlist li {
+    padding-left: 40px;
+    background-repeat: no-repeat;
+    background-position: 10px 5px;
+}
+
+#content .errorlist {
+    border: 1px solid #d21717;
+    background: #ffe0e0;
+    margin-bottom: 5px;
+}
+
+#content .messages li.error, #content .errorlist li { background-image: url(images/error.png); }
+
+#content .messages li.info { background-image: url(images/info.png); }
+
+#content .messages li.warning { background-image: url(images/warning.png); }
+
+#content .messages li.success { background-image: url(images/success.png); }
+
 #sidebar {
     float: left;
     width: 190px;
@@ -395,8 +402,8 @@ th { text-align: right; }
     float: left;
     width: 100%;
     border-top: 1px solid #dfdfdf;
-    padding-top: 12px;
-    margin-top: 12px;
+    padding-top: 10px;
+    margin-top: 10px;
     text-align: right;
 }
 
@@ -408,7 +415,7 @@ th { text-align: right; }
     clear: none;
     float: left;
     padding: 0;
-    margin-left: 12px;
+    margin-left: 10px;
 }
 
 #main .actions li a {
