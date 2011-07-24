@@ -112,7 +112,6 @@ def search(request, query_string="", page=0, paginate_by=10, **kwargs):
                 r.save()
     else:
         messages.error(request, _("Please, specify a valid search query."))
-        return redirect_to(request, url='/')
             
     return list_detail.object_list(
         request,
