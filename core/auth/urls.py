@@ -24,10 +24,11 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
 
-    url(r'^users/$', view='prometeo.core.auth.views.user_list', name='users_list'),
-    url(r'^users/login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='users_login'),
-    url(r'^users/logout/$', view='django.contrib.auth.views.logout_then_login', name='users_logout'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/$', view='prometeo.core.auth.views.user_detail', name='users_detail'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='prometeo.core.auth.views.user_edit', name='users_edit'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='prometeo.core.auth.views.user_delete', name='users_delete'),
+    url(r'^users/$', view='prometeo.core.auth.views.user_list', name='user_list'),
+    url(r'^users/login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='user_login'),
+    url(r'^users/logout/$', view='django.contrib.auth.views.logout_then_login', name='user_logout'),
+    url(r'^users/add/$', view='prometeo.core.auth.views.user_add', name='user_add'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/$', view='prometeo.core.auth.views.user_detail', name='user_detail'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='prometeo.core.auth.views.user_edit', name='user_edit'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='prometeo.core.auth.views.user_delete', name='user_delete'),
 )

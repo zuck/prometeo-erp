@@ -2,7 +2,7 @@
 {% load menu %}
 
 {% if user.is_authenticated %}
-<span class="profile"><a href="{% url users_detail user.username %}"><strong>{{ user }}</strong></a></span>
+<span class="profile"><a href="{% url user_detail user.username %}"><strong>{{ user }}</strong></a></span>
 {% menu "user_area_logged" %}
 {% else %}
 {% menu "user_area_not_logged" %}

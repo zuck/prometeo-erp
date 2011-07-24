@@ -60,10 +60,15 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
   
-@permission_required('auth.change_user')   
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.
     """
+    user = get_object_or_404(User, username=username, is_active=True)
+    
+    if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
+        messages.error(request, _("You can't view this user's profile."))
+        return redirect_to(request, url=reverse('user_login'))
+
     return list_detail.object_detail(
         request,
         slug=username,
@@ -73,15 +78,33 @@ def user_detail(request, username, **kwargs):
         **kwargs
     )
  
-@permission_required('auth.change_user')    
-def user_edit(request, username):
+@permission_required('auth.add_user')    
+def user_add(request, **kwargs):
+    """Adds a new user's profile.
+    """
+    user = User()  
+      
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            user = form.save()
+            user.is_active = True
+            user.save()
+            messages.success(request, _("The user's profile has been saved."))
+            return redirect_to(request, url=user.get_absolute_url())
+    else:
+        form = UserEditForm(instance=user)
+
+    return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
+  
+def user_edit(request, username, **kwargs):
     """Edits a user's profile.
     """
     user = get_object_or_404(User, username=username, is_active=True)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
         messages.error(request, _("You can't edit this user's profile."))
-        return redirect_to(request, url=user.get_absolute_url())
+        return redirect_to(request, url=reverse('user_login'))
         
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
@@ -93,8 +116,7 @@ def user_edit(request, username):
         form = UserEditForm(instance=user)
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
-
-@permission_required('auth.delete_user')     
+  
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.
     """ 
@@ -112,7 +134,7 @@ def user_delete(request, username, **kwargs):
             model=User,
             slug=user.username,
             slug_field='username',
-            post_delete_redirect='/',
+            post_delete_redirect='/users/',
             template_name='auth/user_delete.html',
             **kwargs
         )

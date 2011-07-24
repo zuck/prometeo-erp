@@ -8,7 +8,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Users' 'users_list' %}
+    {% add_crumb 'Users' 'user_list' %}
     {% add_crumb object %}
     {% render_breadcrumbs %}
 {% endblock %}
@@ -22,11 +22,14 @@
 {% block main %}
 <div class="actions">
     <ul>
+        {% if perms.auth.add_user %}
+        <li><a href="{% url user_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
         {% if request.user == object or perms.auth.change_user %}
-        <li><a href="{% url users_edit  object.username %}">{% trans 'Edit' %}</a></li>
+        <li><a href="{% url user_edit object.username %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if request.user == object or perms.auth.delete_user %}
-        <li><a href="{% url users_delete  object.username %}">{% trans 'Delete' %}</a></li>
+        <li><a href="{% url user_delete object.username %}">{% trans 'Delete' %}</a></li>
         {% endif %}
     </ul>
 </div>

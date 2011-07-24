@@ -20,6 +20,13 @@
 
 {% block main %}
 {% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.auth.add_user %}
+        <li><a href="{% url user_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
 <div class="details">
     {% detail_table object_list '["username", "first_name", "last_name", "email"]' %}
     {% include "elements/paginator.html" %}
