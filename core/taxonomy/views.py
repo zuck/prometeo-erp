@@ -28,7 +28,9 @@ from django.db.models.loading import get_models
 from django.views.generic import list_detail
 from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.contrib import messages
 
 from models import *
 
@@ -108,6 +110,9 @@ def search(request, query_string="", page=0, paginate_by=10, **kwargs):
             for obj in objects:
                 r = Result(title=obj, content_object=obj)
                 r.save()
+    else:
+        messages.error(request, _("Please, specify a valid search query."))
+        return redirect_to(request, url='/')
             
     return list_detail.object_list(
         request,
