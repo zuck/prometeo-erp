@@ -38,7 +38,12 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tickets of a specified project.
     """
     project = get_object_or_404(Project, slug=project)
-    filter_fields, object_list = filter_objects(request, Ticket, object_list=project.tickets.all())
+    field_names, filter_fields, object_list = filter_objects(
+                                                request,
+                                                Ticket,
+                                                fields=['title', 'parent_id', 'author_id', 'manager_id', 'created', 'date_due', 'closed'],
+                                                object_list=project.tickets.all(),
+                                              )
     return list_detail.object_list(
         request,
         queryset=object_list,
@@ -46,7 +51,8 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
         page=page,
         extra_context={
             'project': project,
-            'filter_fields': filter_fields
+            'field_names': field_names,
+            'filter_fields': filter_fields,
         },
         **kwargs
     )

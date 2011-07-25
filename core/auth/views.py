@@ -49,14 +49,22 @@ def set_language(request):
 def user_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all active users.
     """
-    filter_fields, object_list = filter_objects(request, User, object_list=User.objects.filter(is_active=True))
+    field_names, filter_fields, object_list = filter_objects(
+                                                request,
+                                                User,
+                                                fields=['id', 'username', 'first_name', 'last_name', 'date_joined'],
+                                                object_list=User.objects.filter(is_active=True)
+                                              )
     return list_detail.object_list(
         request,
         queryset=object_list,
         paginate_by=paginate_by,
         page=page,
         template_name='auth/user_list.html',
-        extra_context={'filter_fields': filter_fields},
+        extra_context={
+            'field_names': field_names,
+            'filter_fields': filter_fields,
+        },
         **kwargs
     )
   

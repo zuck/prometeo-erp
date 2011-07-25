@@ -30,7 +30,7 @@
     </ul>
 </div>
 <div class="details">
-    {% detail_table object_list "['title', 'parent_id', 'author_id', 'manager_id', 'created', 'date_due', 'closed']" %}
+    {% detail_table object_list field_names %}
     {% include 'elements/paginator.html' %}
 </div>
 {% endblock %}

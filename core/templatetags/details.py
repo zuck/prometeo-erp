@@ -20,15 +20,17 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django import template
-from django.utils.translation import ugettext as _
-from django.utils.encoding import StrAndUnicode
-from django.utils.safestring import mark_safe
 from django.db import models
 from django.db.models import fields
+from django import template
 from django.template.loader import render_to_string
 from django.template import Node, NodeList, Variable, Library
 from django.template import TemplateSyntaxError, VariableDoesNotExist
+from django.template.defaultfilters import date, time, striptags, truncatewords
+from django.utils.translation import ugettext as _
+from django.utils.encoding import StrAndUnicode
+from django.utils.safestring import mark_safe
+from django.conf import settings
 
 from prometeo.core.templatetags import parse_args_kwargs
 
@@ -41,7 +43,7 @@ class DetailTableNode(Node):
         self.object_list = []
         self.field_list = []
 
-    def render_with_args(self, context, object_list, fields=[], exclude=['id'], *args):
+    def render_with_args(self, context, object_list, fields=[], exclude=[], *args):
         self.object_list = object_list
         request = context['request']
         url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
@@ -52,19 +54,19 @@ class DetailTableNode(Node):
         output = '<p class="disabled">%s</p>' % _('No results found.')
         if len(self.object_list) > 0:
             meta = self.object_list[0]._meta
-            self.field_list = [f for f in meta.fields if self.is_visible(f.attname, fields, exclude)]
+            self.field_list = [f for f in meta.fields if self.is_visible(f.name, fields, exclude)]
             output = self.table_template()
             output += u'\t<thead>\n'
             for f in self.field_list:
-                if f.attname in order_by:
+                if f.name in order_by:
                     verse = "-"
-                    aclass = "desc"
-                    if "-%s" % f.attname in order_by:
+                    aclass = "asc"
+                    if "-%s" % f.name in order_by:
                         verse = ""
-                        aclass = "asc"
-                    output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.attname, _(f.verbose_name.capitalize()))
+                        aclass = "desc"
+                    output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.name, _(f.verbose_name.capitalize()))
                 else:
-                    output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.attname, _(f.verbose_name.capitalize()))
+                    output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.name, _(f.verbose_name.capitalize()))
             output += u'\t</thead>\n'
             for i, instance in enumerate(self.object_list):
                 output += self.row_template(instance, i)
@@ -121,28 +123,34 @@ class DetailTableNode(Node):
         return mark_safe(output)
 
     def field_to_value(self, field, instance):
-        if isinstance(field, fields.related.RelatedField):
+        value = field.value_from_object(instance)
+        if field.primary_key:
+            return '#%s' % value
+        elif isinstance(field, fields.related.RelatedField):
             relationship = getattr(instance, field.name)
             try:
                 return '<a href="%s">%s</a>' % (relationship.get_absolute_url(), relationship)
             except AttributeError:
                 return relationship
+        elif isinstance(field, fields.DateTimeField):
+            return date(value, settings.DATETIME_FORMAT)
+        elif isinstance(field, fields.DateField):
+            return date(value, settings.DATE_FORMAT)
+        elif isinstance(field, fields.TimeField):
+            return time(value, settings.TIME_FORMAT)
         elif isinstance(field, fields.URLField):
-            url = field.value_from_object(instance)
-            if url:
-                return '<a href="%s">%s</a>' % (url, url)
+            return '<a href="%s">%s</a>' % (value, value)
         elif isinstance(field, fields.EmailField):
-            email = field.value_from_object(instance)
-            if email:
-                return '<a href="mailto:%s">%s</a>' % (email, email)
+            return '<a href="mailto:%s">%s</a>' % (value, value)
+        elif isinstance(field, fields.TextField):
+            return truncatewords(striptags(value), 6)
         elif field.choices:
             return getattr(instance, 'get_%s_display' % field.name)()
         elif isinstance(field, fields.BooleanField):
-            flag = field.value_from_object(instance)
-            if flag == '0' or not flag:
+            if value == '0' or not value:
                 return False
             return True
-        return field.value_from_object(instance)
+        return value
         
     def is_visible(self, field, fields=[], exclude=[]):
         return (len(fields) == 0 or field in fields) and field not in exclude

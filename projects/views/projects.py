@@ -37,14 +37,21 @@ from ..forms import *
 def project_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all published projects.
     """
-    filter_fields, object_list = filter_objects(request, Project)
+    field_names, filter_fields, object_list = filter_objects(
+                                                request,
+                                                Project,
+                                                fields=['id', 'title', 'author', 'manager', 'created', 'status'],
+                                              )
     return list_detail.object_list(
         request,
         queryset=object_list,
         paginate_by=paginate_by,
         page=page,
         template_name='projects/project_list.html',
-        extra_context={'filter_fields': filter_fields},
+        extra_context={
+            'field_names': field_names,
+            'filter_fields': filter_fields,
+        },
         **kwargs
     )   
     

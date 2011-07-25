@@ -21,8 +21,9 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.db.models import Q
+from django.db.models import fields as django_fields
 
-def filter_objects(request, model, fields=[], exclude=['id'], object_list=None):
+def filter_objects(request, model, fields=[], exclude=[], object_list=None):
     matches = []
     queryset = None
 
@@ -35,7 +36,10 @@ def filter_objects(request, model, fields=[], exclude=['id'], object_list=None):
         queryset = []
         for f, value in filter_fields:
             if value is not None:
-                queryset.append(Q(**{"%s__startswith" % f.attname: value}) | Q(**{"%s__endswith" % f.attname: value}))
+                if isinstance(f, django_fields.related.RelatedField):
+                    pass # Fail silently.
+                else:
+                    queryset.append(Q(**{"%s__startswith" % f.name: value}) | Q(**{"%s__endswith" % f.name: value}))
 
     if (queryset is not None):
         matches = object_list.filter(*queryset)
@@ -48,17 +52,17 @@ def filter_objects(request, model, fields=[], exclude=['id'], object_list=None):
     except:
         pass
         
-    return filter_fields, matches
+    return [f.name for f, value in filter_fields], filter_fields, matches
     
 def get_filter_fields(request, model, fields, exclude):
-    filter_fields = [(f, filter_field_value(request, f)) for f in model._meta.fields if is_visible(f.attname, fields, exclude)]
+    filter_fields = [(f, filter_field_value(request, f)) for f in model._meta.fields if is_visible(f.name, fields, exclude)]
     return filter_fields
 
 def is_visible(field, fields=[], exclude=[]):
     return (len(fields) == 0 or field in fields) and field not in exclude
 
 def filter_field_value(request, field):
-    name = field.attname
+    name = field.name
     if request.POST.has_key("sub_%s" % name):
         return None
     elif request.POST.has_key(name):
