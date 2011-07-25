@@ -52,10 +52,12 @@ def project_list(request, page=0, paginate_by=5, **kwargs):
 def project_detail(request, slug, **kwargs):
     """Displays the selected project.
     """
+    object_list = Project.objects.filter()
     return list_detail.object_detail(
         request,
         slug=slug,
-        queryset=Project.objects.filter(status='opened'),
+        queryset=object_list,
+        extra_context={'object_list': object_list},
         **kwargs
     )
 

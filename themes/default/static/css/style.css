@@ -148,6 +148,8 @@ th { text-align: right; }
 
 .disabled { color: #60625d; }
 
+.navigator { float: right; }
+
 .paginator {
     clear: both;
     float: left;
@@ -157,30 +159,39 @@ th { text-align: right; }
     margin-top: 10px;
 }
 
-.paginator .first, .paginator .previous, .paginator .next, .paginator .last,
-.paginator .page_number, .paginator .current { 
+.paginator .first, .navigator .first,
+.paginator .previous, .navigator .previous,
+.paginator .next, .navigator .next,
+.paginator .last, .navigator .last,
+.paginator .page_number,
+.paginator .current, .navigator .current { 
     float: left;
-    margin-right: 10px;
+    margin-left: 5px;
     text-align: center;
 }
 
-.paginator .disabled, .paginator a {
+.paginator .current, .navigator .current { padding: 0 5px; }
+
+.paginator .disabled, .navigator .disabled,
+.paginator a, .navigator a {
     display: block;   
     padding: 0 5px;
 }
 
-.paginator .disabled {
+.paginator .disabled, .navigator .disabled {
     border: 1px solid #dfdfdf;
     background: #f6f6f6;
 }
 
-.paginator a, .paginator a:link, .paginator a:visited {
+.paginator a, .navigator a,
+.paginator a:link, .navigator a:link,
+.paginator a:visited, .navigator a:visited {
     color: #fff;
     background: #ce0600;
     border: 1px solid #1f1f1f;
 }
 
-.paginator a:hover { background: #1f1f1f; }
+.paginator a:hover, .navigator a:hover { background: #1f1f1f; }
 
 .paginator .total {
     float: right;

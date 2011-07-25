@@ -56,10 +56,12 @@ def milestone_detail(request, project, slug, **kwargs):
     """Show milestone details.
     """
     project = get_object_or_404(Project, slug=project)
+    object_list = project.milestone_set.all()
     return list_detail.object_detail(
         request,
         slug=slug,
-        queryset=project.milestone_set.all(),
+        queryset=object_list,
+        extra_context={'object_list': object_list},
         **kwargs
     )
  

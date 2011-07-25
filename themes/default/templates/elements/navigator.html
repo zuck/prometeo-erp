@@ -1,0 +1,54 @@
+{% load i18n %}
+{% load navigator %}
+
+{% if object_list %}
+<div class="navigator">
+    {% with object_list|first_object as first_obj %}
+    <span class="first">
+        {% if first_obj != object %}
+        <a href="{{ first_obj.get_absolute_url }}"><span>&lt;&lt;</span></a>
+        {% else %}
+        <span class="disabled">&lt;&lt;</span>
+        {% endif %}
+    </span>
+    {% endwith %}
+
+    {% with object_list|prev_object:object as prev_obj %}
+    <span class="previous">
+        {% if prev_obj != object %}
+        <a href="{{ prev_obj.get_absolute_url }}"><span>&lt;</span></a>
+        {% else %}
+        <span class="disabled">&lt;</span>
+        {% endif %}
+    </span>
+    {% endwith %}
+    
+    <span class="current">
+        {% with object_list|index_of:object as index %}
+        {% with object_list.count as count %}
+        {% blocktrans %}{{ index }} of {{ count }}{% endblocktrans %}
+        {% endwith %}
+        {% endwith %}
+    </span>
+    
+    {% with object_list|next_object:object as next_obj %}
+    <span class="next">
+        {% if next_obj != object %}
+        <a href="{{ next_obj.get_absolute_url }}"><span>&gt;</span></a>
+        {% else %}
+        <span class="disabled">&gt;</span>
+        {% endif %}
+    </span>
+    {% endwith %}
+    
+    {% with object_list|last_object as last_obj %}
+    <span class="last">
+        {% if last_obj != object %}
+        <a href="{{ last_obj.get_absolute_url }}"><span>&gt;&gt;</span></a>
+        {% else %}
+        <span class="disabled">&gt;&gt;</span>
+        {% endif %}
+    </span>
+    {% endwith %}
+</div>
+{% endif %}

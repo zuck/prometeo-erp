@@ -56,14 +56,15 @@ def ticket_detail(request, project, index, **kwargs):
     """Show ticket details.
     """
     project = get_object_or_404(Project, slug=project)
+    object_list = project.tickets.all()
     try:
         index = int(index)-1
         if index < 0:
             raise IndexError
-        ticket = project.tickets.all()[index]
+        ticket = object_list[index]
     except IndexError:
         raise Http404
-    return render_to_response('projects/ticket_detail.html', RequestContext(request, {'object': ticket}))
+    return render_to_response('projects/ticket_detail.html', RequestContext(request, {'object': ticket, 'object_list': object_list}))
 
 @permission_required('projects.add_ticket')     
 def ticket_add(request, project, **kwargs):

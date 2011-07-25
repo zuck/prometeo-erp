@@ -69,12 +69,15 @@ def user_detail(request, username, **kwargs):
         messages.error(request, _("You can't view this user's profile."))
         return redirect_to(request, url=reverse('user_login'))
 
+    object_list = User.objects.filter(is_active=True)
+
     return list_detail.object_detail(
         request,
         slug=username,
         slug_field='username',
-        queryset=User.objects.filter(is_active=True),
+        queryset=object_list,
         template_name='auth/user_detail.html',
+        extra_context={'object_list': object_list},
         **kwargs
     )
  

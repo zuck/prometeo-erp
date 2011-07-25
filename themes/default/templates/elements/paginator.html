@@ -5,7 +5,7 @@
         {% if page_obj.has_previous %}
         <a href="?page={{ page_obj.previous_page_number }}"><span>&laquo;</span></a>
         {% else %}
-        <span class="disabled">&laquo;</span>
+        <span class="disabled">&lt;</span>
         {% endif %}
     </span>
     
@@ -21,7 +21,7 @@
         {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}"><span>&raquo;</span></a>
         {% else %}
-        <span class="disabled">&raquo;</span>
+        <span class="disabled">&gt;</span>
         {% endif %}
     </span>
 
