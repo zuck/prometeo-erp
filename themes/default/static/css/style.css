@@ -142,6 +142,17 @@ thead td, th { background: #dfdfdf; }
 
 th { text-align: right; }
 
+thead a.asc, thead a.desc {
+    float: left;
+    width: 100%;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+thead a.asc { background-image: url(images/up.png); }
+
+thead a.desc { background-image: url(images/down.png); }
+
 /**
  * Commons.
  */

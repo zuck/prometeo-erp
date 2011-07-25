@@ -41,6 +41,12 @@ def filter_objects(request, model, fields=[], exclude=['id'], object_list=None):
         matches = object_list.filter(*queryset)
     else:
         matches = object_list
+
+    try:
+        order_by = request.GET['order_by']
+        matches = matches.order_by(order_by)
+    except:
+        pass
         
     return filter_fields, matches
     

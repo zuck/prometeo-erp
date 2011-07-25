@@ -42,15 +42,29 @@ class DetailTableNode(Node):
         self.field_list = []
 
     def render_with_args(self, context, object_list, fields=[], exclude=['id'], *args):
-        output = '<p class="disabled">%s</p>' % _('No results found.')      
         self.object_list = object_list
+        request = context['request']
+        url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
+        try:
+            order_by = request.GET['order_by']
+        except:
+            order_by = []
+        output = '<p class="disabled">%s</p>' % _('No results found.')
         if len(self.object_list) > 0:
             meta = self.object_list[0]._meta
             self.field_list = [f for f in meta.fields if self.is_visible(f.attname, fields, exclude)]
             output = self.table_template()
             output += u'\t<thead>\n'
             for f in self.field_list:
-                output += u'\t\t<td>%s</td>\n' % (_(f.verbose_name.capitalize()))
+                if f.attname in order_by:
+                    verse = "-"
+                    aclass = "desc"
+                    if "-%s" % f.attname in order_by:
+                        verse = ""
+                        aclass = "asc"
+                    output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.attname, _(f.verbose_name.capitalize()))
+                else:
+                    output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.attname, _(f.verbose_name.capitalize()))
             output += u'\t</thead>\n'
             for i, instance in enumerate(self.object_list):
                 output += self.row_template(instance, i)
