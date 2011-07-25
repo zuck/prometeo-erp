@@ -31,8 +31,9 @@ urlpatterns = patterns('',
     # Home page.
     (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
     
-    # Media files.
+    # Media and static files.
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
 
     # Filemanager.
     (r'^admin/filemanager/', include('prometeo.core.wysiwyg.urls')),

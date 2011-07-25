@@ -1,14 +1,10 @@
-{% extends "base.html" %}
+{% extends "wysiwyg/base.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 
 {% block meta_title %}
 {% if object.pk %}{% trans 'Edit project' %}{% else %}{% trans 'Add project' %}{% endif %}
-{% endblock %}
-
-{% block extrahead %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/ckeditor/ckeditor.js"></script>
 {% endblock %}
 
 {% block breadcrumbs %}
