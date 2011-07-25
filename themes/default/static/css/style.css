@@ -203,7 +203,7 @@ th { text-align: right; }
     background: none;
 }
 
-.comments p {
+.comments li p {
     margin: 0;
 }
 
