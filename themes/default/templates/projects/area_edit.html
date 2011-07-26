@@ -4,14 +4,14 @@
 {% load breadcrumbs %}
 
 {% block meta_title %}
-{% if object.pk %}{% trans 'Edit ticket' %}{% else %}{% trans 'Add ticket' %}{% endif %}
+{% if object.pk %}{% trans 'Edit area' %}{% else %}{% trans 'Add area' %}{% endif %}
 {% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
     {% add_crumb object.project object.project.get_absolute_url %}
-    {% add_crumb 'Tickets' 'ticket_list' object.project.slug %}
+    {% add_crumb 'Areas' 'area_list' object.project.slug %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Edit' %}
@@ -25,18 +25,18 @@
 <div class="title">
     {% if object.pk %}
     <h1>{{ object }}</h1>
-    <h2>{% trans 'Edit ticket' %}</h2>
+    <h2>{% trans 'Edit area' %}</h2>
     {% else %}
-    <h1>{% trans 'Add ticket' %}</h1>
+    <h1>{% trans 'Add area' %}</h1>
     {% endif %}
 </div>
 {% endblock %}
 
 {% block main %}
 {% if object.pk %}
-<form method="post" action="{% url ticket_edit object.project.slug object.pk %}">
+<form method="post" action="{% url area_edit object.project.slug object.slug %}">
 {% else %}
-<form method="post" action="{% url ticket_add object.project.slug %}">
+<form method="post" action="{% url area_add object.project.slug %}">
 {% endif %}
     {% csrf_token %}
     {{ form.as_p }}

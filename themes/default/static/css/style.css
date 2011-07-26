@@ -153,6 +153,8 @@ thead a.asc { background-image: url(images/up.png); }
 
 thead a.desc { background-image: url(images/down.png); }
 
+td p { margin: 0; }
+
 /**
  * Commons.
  */

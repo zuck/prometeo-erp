@@ -41,7 +41,7 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Ticket,
-                                                fields=['title', 'parent_id', 'author_id', 'manager_id', 'created', 'date_due', 'closed'],
+                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed'],
                                                 object_list=project.tickets.all(),
                                               )
     return list_detail.object_list(
@@ -58,19 +58,18 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     )
 
 @permission_required('projects.change_ticket')    
-def ticket_detail(request, project, index, **kwargs):
+def ticket_detail(request, project, id, **kwargs):
     """Show ticket details.
     """
     project = get_object_or_404(Project, slug=project)
     object_list = project.tickets.all()
-    try:
-        index = int(index)-1
-        if index < 0:
-            raise IndexError
-        ticket = object_list[index]
-    except IndexError:
-        raise Http404
-    return render_to_response('projects/ticket_detail.html', RequestContext(request, {'object': ticket, 'object_list': object_list}))
+    return list_detail.object_detail(
+        request,
+        object_id=id,
+        queryset=object_list,
+        extra_context={'object_list': object_list},
+        **kwargs
+    )
 
 @permission_required('projects.add_ticket')     
 def ticket_add(request, project, **kwargs):
@@ -90,16 +89,16 @@ def ticket_add(request, project, **kwargs):
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
 @permission_required('projects.change_ticket')     
-def ticket_edit(request, project, index, **kwargs):
+def ticket_edit(request, project, id, **kwargs):
     """Edits a ticket.
     """
     project = get_object_or_404(Project, slug=project)
     try:
-        index = int(index)-1
-        if index < 0:
-            raise IndexError
-        ticket = project.tickets.all()[index]
-    except IndexError:
+        id = int(id)-1
+        if id < 0:
+            raise idError
+        ticket = project.tickets.all()[id]
+    except idError:
         raise Http404
     if request.method == 'POST':
         form = TicketForm(request.POST, instance=ticket)
@@ -114,16 +113,16 @@ def ticket_edit(request, project, index, **kwargs):
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
 @permission_required('projects.delete_ticket')     
-def ticket_delete(request, project, index, **kwargs):
+def ticket_delete(request, project, id, **kwargs):
     """Deletes a ticket.
     """
     project = get_object_or_404(Project, slug=project)
     try:
-        index = int(index)-1
-        if index < 0:
-            raise IndexError
-        ticket = project.tickets.all()[index]
-    except IndexError:
+        id = int(id)-1
+        if id < 0:
+            raise idError
+        ticket = project.tickets.all()[id]
+    except idError:
         raise Http404
     return create_update.delete_object(
             request,

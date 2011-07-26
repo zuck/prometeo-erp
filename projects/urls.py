@@ -30,6 +30,13 @@ urlpatterns = patterns('projects.views',
     url(r'^projects/(?P<slug>[-\w]+)/$', view='projects.project_detail', name='project_detail'),
     url(r'^projects/(?P<slug>[-\w]+)/edit/$', view='projects.project_edit', name='project_edit'),
     url(r'^projects/(?P<slug>[-\w]+)/delete/$', view='projects.project_delete', name='project_delete'),
+
+    # Areas.
+    url(r'^projects/(?P<project>[-\w]+)/areas/$', view='areas.area_list', name='area_list'),
+    url(r'^projects/(?P<project>[-\w]+)/areas/add/$', view='areas.area_add', name='area_add'),
+    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<slug>[-\w]+)/$', view='areas.area_detail', name='area_detail'),
+    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<slug>[-\w]+)/edit/$', view='areas.area_edit', name='area_edit'),
+    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<slug>[-\w]+)/delete/$', view='areas.area_delete', name='area_delete'),
     
     # Milestones.
     url(r'^projects/(?P<project>[-\w]+)/milestones/$', view='milestones.milestone_list', name='milestone_list'),
@@ -41,7 +48,7 @@ urlpatterns = patterns('projects.views',
     # Tickets.
     url(r'^projects/(?P<project>[-\w]+)/tickets/$', view='tickets.ticket_list', name='ticket_list'),
     url(r'^projects/(?P<project>[-\w]+)/tickets/add/$', view='tickets.ticket_add', name='ticket_add'),
-    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<index>\d+)/$', view='tickets.ticket_detail', name='ticket_detail'),
-    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<index>\d+)/edit/$', view='tickets.ticket_edit', name='ticket_edit'),
-    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<index>\d+)/delete/$', view='tickets.ticket_delete', name='ticket_delete'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/$', view='tickets.ticket_detail', name='ticket_detail'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/edit/$', view='tickets.ticket_edit', name='ticket_edit'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/delete/$', view='tickets.ticket_delete', name='ticket_delete'),
 )

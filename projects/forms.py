@@ -38,7 +38,15 @@ class ProjectForm(forms.ModelForm):
         exclude = ('id', 'closed')
         widgets = {
             'description': CKEditor(),
-            'tease': CKEditor(),
+        }
+
+class AreaForm(forms.ModelForm):
+    """Form for area data.
+    """
+    class Meta:
+        model = Area
+        widgets = {
+            'description': CKEditor(),
         }
 
 class MilestoneForm(forms.ModelForm):
@@ -46,14 +54,19 @@ class MilestoneForm(forms.ModelForm):
     """
     class Meta:
         model = Milestone
+        widgets = {
+            'description': CKEditor(),
+        }
         
 class TicketForm(forms.ModelForm):
     """Form for ticket data.
     """
     class Meta:
         model = Ticket
-        exclude = ('project', 'milestone', 'areas', 'author', 'assignees', 'closed', 'public', 'allow_comments')
-        widgets = {'description': CKEditor(),}
+        exclude = ('project', 'milestone', 'areas', 'author', 'assignees', 'closed', 'public', 'allow_comments')     
+        widgets = {
+            'description': CKEditor(),
+        }
         
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)

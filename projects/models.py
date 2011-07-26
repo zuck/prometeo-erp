@@ -39,7 +39,6 @@ class Project(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('name'))
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    tease = models.TextField(_('tease'), blank=True, null=True, help_text=_('Concise text suggested. Does not appear in RSS feed.'))
     author = models.ForeignKey('auth.User', related_name='created_projects', null=True, blank=True, verbose_name=_('author'))
     manager = models.ForeignKey('auth.User', related_name='managed_projects', null=True, blank=True, verbose_name=_('project manager'))
     status = models.CharField(_('status'), choices=PROJECT_STATUS_CHOICES, default='opened', max_length=10)
@@ -54,6 +53,12 @@ class Project(models.Model):
         """
         return self.milestone_set.filter(parent=None)
     milestones = property(_milestones)
+
+    def _areas(self):
+        """Returns only the top-level areas.
+        """
+        return self.area_set.filter(parent=None)
+    areas = property(_areas)
 
     def __unicode__(self):
         return u'%s' % self.title
@@ -74,6 +79,10 @@ class Area(models.Model):
     
     def __unicode__(self):
         return u'%s' % self.title
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('area_detail', (), {"project": self.project.slug, "slug": self.slug})
 
 class Milestone(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('title'))
@@ -185,13 +194,7 @@ class Ticket(models.Model):
     
     def __init__(self, *args, **kwargs):
         super(Ticket, self).__init__(*args, **kwargs)
-        self.__changes = {}
-    
-    def _index(self):
-        for i, t in enumerate(self.project.tickets.all()):
-            if t == self:
-                return i+1
-    index = property(_index)        
+        self.__changes = {}      
 
     class Meta:
         ordering = ('created', 'id')
@@ -237,10 +240,7 @@ class Ticket(models.Model):
     
     @models.permalink    
     def get_absolute_url(self):
-        return ('ticket_detail', (), {"project": self.project.slug, "index": self.index})
-           
-    def get_edit_url(self):
-        return self.get_absolute_url() + '/edit'
+        return ('ticket_detail', (), {"project": self.project.slug, "id": self.pk})
 
     def __unicode__(self):
-        return u'#%d %s' % (self.index, self.title)
+        return u'#%d %s' % (self.pk, self.title)

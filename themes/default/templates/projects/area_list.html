@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Areas" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' 'project_list' %}
+    {% add_crumb project project.get_absolute_url %}
+    {% add_crumb 'Areas' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Areas" %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.projects.add_area %}
+        <li><a class="add" href="{% url area_add project.slug %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

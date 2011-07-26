@@ -35,10 +35,10 @@
         <li><a class="add" href="{% url ticket_add object.project.slug %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.projects.change_ticket %}
-        <li><a href="{% url ticket_edit object.project.slug object.index %}">{% trans 'Edit' %}</a></li>
+        <li><a href="{% url ticket_edit object.project.slug object.pk %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.projects.delete_ticket %}
-        <li><a href="{% url ticket_delete object.project.slug object.index %}">{% trans 'Delete' %}</a></li>
+        <li><a href="{% url ticket_delete object.project.slug object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
     </ul>
 </div>
@@ -63,7 +63,7 @@
                 {% if object.milestone %}
                 <a href="{{ object.milestone.get_absolute_url }}">{{ object.milestone }}</a>
                 {% else %}
-                <span class="disabled">empty</span>
+                <span class="disabled">{% trans "empty" %}</span>
                 {% endif %}
             </td>
             <th>{% trans "Areas" %}:</th>
@@ -81,10 +81,15 @@
             <th>{% trans "Status" %}:</th>
             <td>{{ object.status }}</td>
         </tr>
+        <tr>
+            <th>{% trans "Description" %}:</th>
+            <td colspan="3">
+                {% with object.description as description %}
+                {% include "projects/entry.html" %}
+                {% endwith %}
+            </td>
+        </tr>
     </table>
-    {% with object.description as description %}
-    {% include "projects/entry.html" %}
-    {% endwith %}
     {% include "elements/comments.html" %}
 </div>
 {% endblock %}

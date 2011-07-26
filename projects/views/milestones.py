@@ -41,7 +41,7 @@ def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Milestone,
-                                                fields=['title', 'parent_id', 'author_id', 'manager_id', 'created', 'date_due', 'closed'],
+                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed'],
                                                 object_list=project.milestones.all(),
                                               )
     return list_detail.object_list(
@@ -90,7 +90,7 @@ def milestone_add(request, project, **kwargs):
 
 @permission_required('projects.change_milestone')    
 def milestone_edit(request, project, slug, **kwargs):
-    """Adds a new milestone.
+    """Edits a milestone.
     """
     project = get_object_or_404(Project, slug=project)
     milestone = get_object_or_404(Milestone, project=project, slug=slug)
