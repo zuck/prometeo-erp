@@ -36,7 +36,7 @@ class Project(models.Model):
         ('closed', _('closed')),
     )
 
-    title = models.CharField(max_length=100, verbose_name=_('name'))
+    title = models.CharField(max_length=100, verbose_name=_('title'))
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name='created_projects', null=True, blank=True, verbose_name=_('author'))
