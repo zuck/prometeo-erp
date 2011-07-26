@@ -122,6 +122,16 @@ form .submit input {
 
 form .submit input:hover { background: #1f1f1f; }
 
+form .required input, form .required textarea, form .required select {
+    background-color: #fffecc;
+    border: 1px solid #ffda88;
+}
+
+form .errors input, form .errors textarea, form .errors select {
+    background-color: #ffe0e0;
+    border: 1px solid #d21717;
+}
+
 /**
  * Tables.
  */
@@ -376,7 +386,7 @@ thead a.desc { background-image: url(images/down.png); }
 #content .messages {
     width: 100%;
     border: 1px solid #ffda88;
-    background-color: #fffcaa;
+    background-color: #fffecc;
     margin-bottom: 30px;
 }
 

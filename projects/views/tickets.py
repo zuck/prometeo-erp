@@ -93,13 +93,7 @@ def ticket_edit(request, project, id, **kwargs):
     """Edits a ticket.
     """
     project = get_object_or_404(Project, slug=project)
-    try:
-        id = int(id)-1
-        if id < 0:
-            raise idError
-        ticket = project.tickets.all()[id]
-    except idError:
-        raise Http404
+    ticket = get_object_or_404(Ticket, project=project, pk=id)
     if request.method == 'POST':
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():

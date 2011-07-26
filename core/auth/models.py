@@ -66,7 +66,7 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
         
         # Send an activation email.
         current_site = Site.objects.get_current()
-        activation_url = 'http://' + current_site.domain + reverse('users_activate', args=[profile.activation_key])
+        activation_url = 'http://' + current_site.domain + reverse('user_activate', args=[profile.activation_key])
         email_subject = 'Account confirmation'
         email_body = u'<p>Hello <strong>%s</strong>, and thanks for signing up for an account on <strong>%s</strong>.</p>' \
                      u'<p>To activate your account, click this link within <strong>%s day(s)</strong>:</p>' \

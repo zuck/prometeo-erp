@@ -33,7 +33,7 @@ from django.conf import settings
 from prometeo.core.auth.models import *
 from forms import *
 
-def register(request):
+def user_register(request):
     """Registers a new user account.
     """
     if request.user.is_authenticated():
@@ -51,7 +51,7 @@ def register(request):
 
     return render_to_response('registration/register.html', RequestContext(request, {'form': form}))        
     
-def activate(request, activation_key):
+def user_activate(request, activation_key):
     """Activates a pending user account.
     """
     user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
@@ -60,11 +60,11 @@ def activate(request, activation_key):
         messages.info(request, _("This account is already active."))
         if request.user.is_authenticated():
             return redirect_to(request, url="/")
-        return redirect_to(request, reverse('users_login'))
+        return redirect_to(request, reverse('user_login'))
     if user_profile.key_expires < datetime.datetime.today():
         messages.error(request, _("Sorry, your account is expired."))
         return redirect_to(request, url="/")
     user_account.is_active = True
     user_account.save()
     messages.success(request, _("Congratulations! Your account is now active."))
-    return redirect_to(request, reverse('users_login'))
+    return redirect_to(request, reverse('user_login'))

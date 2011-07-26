@@ -52,8 +52,8 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 User,
-                                                fields=['id', 'username', 'first_name', 'last_name', 'date_joined'],
-                                                object_list=User.objects.filter(is_active=True)
+                                                fields=['id', 'username', 'first_name', 'last_name', 'date_joined', 'is_active', 'is_staff', 'last_login'],
+                                                object_list=User.objects.all()
                                               )
     return list_detail.object_list(
         request,
@@ -71,13 +71,13 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.
     """
-    user = get_object_or_404(User, username=username, is_active=True)
+    user = get_object_or_404(User, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
         messages.error(request, _("You can't view this user's profile."))
         return redirect_to(request, url=reverse('user_login'))
 
-    object_list = User.objects.filter(is_active=True)
+    object_list = User.objects.all()
 
     return list_detail.object_detail(
         request,
@@ -111,7 +111,7 @@ def user_add(request, **kwargs):
 def user_edit(request, username, **kwargs):
     """Edits a user's profile.
     """
-    user = get_object_or_404(User, username=username, is_active=True)
+    user = get_object_or_404(User, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
         messages.error(request, _("You can't edit this user's profile."))
@@ -131,7 +131,7 @@ def user_edit(request, username, **kwargs):
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.
     """ 
-    user = get_object_or_404(User, username=username, is_active=True)
+    user = get_object_or_404(User, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.delete_user') or request.user.username == username)):
         messages.error(request, _("You can't delete this user's profile."))

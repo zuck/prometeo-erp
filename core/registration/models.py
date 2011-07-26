@@ -20,5 +20,4 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-# This file has been created because Django installs fixtures only if there is
-# a "models" module in the package.
+# TODO: move here some of the logic inside prometeo.core.auth.models.

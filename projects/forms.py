@@ -20,12 +20,10 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django import forms
-from django.contrib.formtools import wizard
-from django.views.generic.simple import redirect_to
+from django import forms as django_forms
 from django.utils.translation import ugettext_lazy as _
-from django.template.defaultfilters import slugify
 
+from prometeo.core import forms
 from prometeo.core.wysiwyg.forms.widgets import CKEditor
 
 from models import *
@@ -62,7 +60,7 @@ class MilestoneForm(forms.ModelForm):
         ddate = self.cleaned_data['date_due']
         parent = self.cleaned_data['parent']
         if parent and parent.date_due and ddate > parent.date_due:
-            raise forms.ValidationError(_("The date due is greater than the parent's one."))
+            raise django_forms.ValidationError(_("The date due is greater than the parent's one."))
         return ddate
         
 class TicketForm(forms.ModelForm):
@@ -70,10 +68,7 @@ class TicketForm(forms.ModelForm):
     """
     class Meta:
         model = Ticket
-        exclude = ('project', 'author', 'assignees', 'closed', 'public', 'allow_comments')     
-        widgets = {
-            'description': CKEditor(),
-        }
+        exclude = ('project', 'author', 'assignees', 'closed', 'public', 'allow_comments')
         
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)

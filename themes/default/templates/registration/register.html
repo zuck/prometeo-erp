@@ -7,7 +7,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Users' 'users_list' %}
+    {% add_crumb 'Users' 'user_list' %}
     {% add_crumb 'Register' %}
     {% render_breadcrumbs %}
 {% endblock %}
@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block main %}
-<form method="post" action="{% url users_register %}">
+<form method="post" action="{% url user_register %}">
     {% csrf_token %}
     {{ form.as_p }}
     <span class="submit"><input type="submit" value="{% trans 'Sign up' %}" /></span>

@@ -24,6 +24,6 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('prometeo.core.registration.views',
 
-    url(r'^users/register/$', view='register', name='users_register'),
-    url(r'^users/activate/(?P<activation_key>[\w\d]+)/$', view='activate', name='users_activate'),
+    url(r'^users/register/$', view='user_register', name='user_register'),
+    url(r'^users/activate/(?P<activation_key>[\w\d]+)/$', view='user_activate', name='user_activate'),
 )
