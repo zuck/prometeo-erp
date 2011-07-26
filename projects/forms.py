@@ -58,6 +58,13 @@ class MilestoneForm(forms.ModelForm):
             'description': CKEditor(),
         }
         
+    def clean_date_due(self):
+        ddate = self.cleaned_data['date_due']
+        parent = self.cleaned_data['parent']
+        if parent and parent.date_due and ddate > parent.date_due:
+            raise forms.ValidationError(_("The date due is greater than the parent's one."))
+        return ddate
+        
 class TicketForm(forms.ModelForm):
     """Form for ticket data.
     """
@@ -72,3 +79,5 @@ class TicketForm(forms.ModelForm):
         super(TicketForm, self).__init__(*args, **kwargs)
         if self.instance is None or self.instance.pk is None:
             del self.fields['status']
+        self.fields['milestone'].queryset = self.instance.project.milestones.all()
+        self.fields['areas'].queryset = self.instance.project.areas.all()
