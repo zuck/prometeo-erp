@@ -76,6 +76,8 @@ class Area(models.Model):
     author = models.ForeignKey('auth.User', related_name='created_areas', null=True, blank=True, verbose_name=_('author'))
     manager = models.ForeignKey('auth.User', related_name='managed_areas', null=True, blank=True, verbose_name=_('manager'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     
     def __unicode__(self):
         return u'%s' % self.title
@@ -95,6 +97,8 @@ class Milestone(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     
     def _expired(self):
         if self.date_due:
@@ -187,6 +191,7 @@ class Ticket(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     modified = models.DateTimeField(auto_now=True, verbose_name=_('modified on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     public = models.BooleanField(_('public'), default=True)
     allow_comments = models.BooleanField(_('allow comments'), default=True)

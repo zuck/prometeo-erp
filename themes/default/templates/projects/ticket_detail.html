@@ -58,6 +58,12 @@
             <td>{{ object.modified }}</td>
         </tr>
         <tr>
+            <th>{% trans "Status" %}:</th>
+            <td>{{ object.status }}</td>
+            <th>{% trans "Type" %}:</th>
+            <td>{{ object.type }}</td>
+        </tr>
+        <tr>
             <th>{% trans "Milestone" %}:</th>
             <td>
                 {% if object.milestone %}
@@ -66,20 +72,20 @@
                 <span class="disabled">{% trans "empty" %}</span>
                 {% endif %}
             </td>
-            <th>{% trans "Areas" %}:</th>
-            <td>{% for area in object.areas.all %} <a class="area" href="{{ area.get_absolute_url }}">{{ area }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
-        </tr>
-        <tr>
-            <th>{% trans "Type" %}:</th>
-            <td>{{ object.type }}</td>
             <th>{% trans "Urgency" %}:</th>
             <td>{{ object.urgency }}</td>
         </tr>
         <tr>
+            <th>{% trans "Areas" %}:</th>
+            <td colspan="3">{% for area in object.areas.all %} <a class="area" href="{{ area.get_absolute_url }}">{{ area }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
+        </tr>
+        <tr>
             <th>{% trans "Tags" %}:</th>
-            <td>{% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
-            <th>{% trans "Status" %}:</th>
-            <td>{{ object.status }}</td>
+            <td colspan="3">{% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Categories" %}:</th>
+            <td colspan="3">{% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
         </tr>
         <tr>
             <th>{% trans "Description" %}:</th>
