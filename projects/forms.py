@@ -43,6 +43,7 @@ class AreaForm(forms.ModelForm):
     """
     class Meta:
         model = Area
+        exclude = ('id', 'project')
         widgets = {
             'description': CKEditor(),
         }
@@ -52,6 +53,7 @@ class MilestoneForm(forms.ModelForm):
     """
     class Meta:
         model = Milestone
+        exclude = ('id', 'project', 'closed')
         widgets = {
             'description': CKEditor(),
         }
