@@ -118,3 +118,31 @@ def area_delete(request, project, slug, **kwargs):
             template_name='projects/area_delete.html',
             **kwargs
         )
+
+@permission_required('projects.change_area')
+@permission_required('projects.change_ticket')  
+def area_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
+    """Displays the list of all tickets of a specified area.
+    """
+    project = get_object_or_404(Project, slug=project)
+    area = get_object_or_404(Area, slug=slug)
+    field_names, filter_fields, object_list = filter_objects(
+                                                request,
+                                                Ticket,
+                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed'],
+                                                object_list=area.ticket_set.all(),
+                                              )
+    return list_detail.object_list(
+        request,
+        queryset=object_list,
+        paginate_by=paginate_by,
+        page=page,
+        extra_context={
+            'project': project,
+            'field_names': field_names,
+            'filter_fields': filter_fields,
+            'object': area
+        },
+        template_name='projects/area_tickets.html',
+        **kwargs
+    )

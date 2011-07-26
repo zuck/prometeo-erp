@@ -40,9 +40,6 @@
         {% if perms.projects.delete_project %}
         <li><a href="{% url project_delete object.slug %}">{% trans 'Delete' %}</a></li>
         {% endif %}
-        {% if perms.projects.add_ticket %}
-        <li><a href="{% url ticket_add object.slug %}">{% trans 'Add ticket' %}</a></li>
-        {% endif %}
     </ul>
 </div>
 {% include 'elements/navigator.html' %}

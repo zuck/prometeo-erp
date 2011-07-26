@@ -63,7 +63,7 @@ class TicketForm(forms.ModelForm):
     """
     class Meta:
         model = Ticket
-        exclude = ('project', 'milestone', 'areas', 'author', 'assignees', 'closed', 'public', 'allow_comments')     
+        exclude = ('project', 'author', 'assignees', 'closed', 'public', 'allow_comments')     
         widgets = {
             'description': CKEditor(),
         }

@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load markup %}
 {% load breadcrumbs %}
 {% load details %}
 
-{% block meta_title %}{% trans "Tickets" %}{% endblock %}
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+{% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
+{% if object.tags.all %}{% block meta_keywords %}{{ object.tags.all|join:", " }}{% endblock %}{% endif %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
-    {% add_crumb project project.get_absolute_url %}
-    {% if milestone %}
-    {% add_crumb 'Tickets' 'ticket_list' project.slug %}
-    {% add_crumb milestone %}
-    {% else %}
+    {% add_crumb object.project object.project.get_absolute_url %}
+    {% add_crumb 'Milestones' 'milestone_list' object.project.slug %}
+    {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Tickets' %}
-    {% endif %}
     {% render_breadcrumbs %}
 {% endblock %}
 
