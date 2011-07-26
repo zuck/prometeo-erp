@@ -3,26 +3,50 @@
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block meta_title %}{% blocktrans %}Search results for {{ query }}{% endblocktrans %}{% endblock %}
+{% block meta_title %}{{ object }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Search' %}
+    {% add_crumb 'Categories' 'category_list' %}
+    {% add_crumb object %}
     {% render_breadcrumbs %}
 {% endblock %}
 
-{% block title %}<h1 class="title">{% blocktrans %}Search results for {{ query }}{% endblocktrans %}</h1>{% endblock %}
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
 
 {% block main %}
-<ul class="result-list">
-    {% for object in object_list %}
-    <li class="result">
-        <h3><strong>{% trans object.content_type.name|title %}</strong>: <a href="{{ object.get_absolute_url }}">{{ object.title|title }}</a></h3>
-    </li>
-    {% empty %}
-    <li class="result"><span class="disabled">{% trans "No results found." %}</span></li>
-    {% endfor %}
-</ul>
-
-{% include "elements/paginator.html" %}
+<div class="actions">
+    <ul>
+        {% if perms.taxonomy.add_category %}
+        <li><a href="{% url category_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.taxonomy.change_category %}
+        <li><a href="{% url category_edit object.slug %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.taxonomy.delete_category %}
+        <li><a href="{% url category_delete object.slug %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% with categories as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+<div class="details">
+    {% if object_list %}
+    <ul class="result-list">
+        {% for object in object_list %}
+        <li class="result">
+            <strong>{% trans object.content_type.name|title %}</strong>: <a href="{{ object.get_absolute_url }}">{{ object.title|title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <span class="disabled">{% trans "No results found." %}</span>
+    {% endif %}
+    {% include "elements/paginator.html" %}
+</div>
 {% endblock %}

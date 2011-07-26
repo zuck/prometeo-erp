@@ -197,7 +197,7 @@ INSTALLED_APPS = (
     'prometeo.core.registration',
     'prometeo.core.taxonomy',
 
-    'prometeo.projects',
+    #'prometeo.projects',
 )
 
 # Authorization and login options.
@@ -226,3 +226,11 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SEARCH_IN_MODELS = (
+    'taxonomy.Category',
+    'taxonomy.Tag',
+    #'projects.Project',
+    #'projects.Area',
+    #'projects.Ticket',
+)

@@ -29,8 +29,16 @@ urlpatterns = patterns('prometeo.core.taxonomy.views',
     url(r'^search/(?P<query_string>.+)/$', view='search', name='search_with_query'),
 
     # Categories.
+    url(r'^categories/$', view='category_list', name='category_list'),
+    url(r'^categories/add/$', view='category_add', name='category_add'),
     url(r'^categories/(?P<slug>[-\w]+)/$', view='category_detail', name='category_detail'),
+    url(r'^categories/(?P<slug>[-\w]+)/edit/$', view='category_edit', name='category_edit'),
+    url(r'^categories/(?P<slug>[-\w]+)/delete/$', view='category_delete', name='category_delete'),
 
     # Tags.
+    url(r'^tags/$', view='tag_list', name='tag_list'),
+    url(r'^tags/add/$', view='tag_add', name='tag_add'),
     url(r'^tags/(?P<slug>[-\w]+)/$', view='tag_detail', name='tag_detail'),
+    url(r'^tags/(?P<slug>[-\w]+)/edit/$', view='tag_edit', name='tag_edit'),
+    url(r'^tags/(?P<slug>[-\w]+)/delete/$', view='tag_delete', name='tag_delete'),
 )

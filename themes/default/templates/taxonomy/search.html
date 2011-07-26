@@ -14,7 +14,7 @@
 {% block title %}
 <div class="title">
     {% if query %}
-    <h1>{% blocktrans %}Search results for {{ query }}{% endblocktrans %}</h1>
+    <h1>{% blocktrans %}Search results for &laquo;{{ query }}&raquo;{% endblocktrans %}</h1>
     {% else %}
     <h1>{% trans 'Search results' %}</h1>
     {% endif %}
@@ -26,7 +26,7 @@
 <ul class="result-list">
     {% for object in object_list %}
     <li class="result">
-        <h3><strong>{% trans object.content_type.name|title %}</strong>: <a href="{{ object.get_absolute_url }}">{{ object.title|title }}</a></h3>
+        <strong>{% trans object.content_type.name|title %}</strong>: <a href="{{ object.get_absolute_url }}">{{ object.title|title }}</a>
     </li>
     {% endfor %}
 </ul>
