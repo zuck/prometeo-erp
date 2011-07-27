@@ -33,7 +33,7 @@
     {% get_comment_form for object as form %}
     <form action="{% comment_form_target %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="next" value="{{ ticket.get_absolute_url }}" />
+        <input type="hidden" name="next" value="{{ request.META.PATH_INFO }}" />
         {% for field in form %}
         {% if field.is_hidden %}
         {{ field }}
