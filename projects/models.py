@@ -30,7 +30,9 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.comments.models import Comment
 
-class Project(models.Model):
+from prometeo.core import models as prometeo_models
+
+class Project(prometeo_models.Commentable):
     PROJECT_STATUS_CHOICES = (
         ('opened', _('opened')),
         ('closed', _('closed')),
@@ -46,7 +48,6 @@ class Project(models.Model):
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    allow_comments = models.BooleanField(_('allow comments'), default=True)
     
     def _milestones(self):
         """Returns only the top-level milestones.
@@ -67,7 +68,7 @@ class Project(models.Model):
     def get_absolute_url(self):
         return ('project_detail', (), {"slug": self.slug})
         
-class Area(models.Model):
+class Area(prometeo_models.Commentable):
     title = models.CharField(max_length=50, verbose_name=_('title'))
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     project = models.ForeignKey(Project, verbose_name=_('project'))
@@ -86,7 +87,7 @@ class Area(models.Model):
     def get_absolute_url(self):
         return ('area_detail', (), {"project": self.project.slug, "slug": self.slug})
 
-class Milestone(models.Model):
+class Milestone(prometeo_models.Commentable):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     project = models.ForeignKey(Project, verbose_name=_('project'))
@@ -152,7 +153,7 @@ class TicketManager(models.Manager):
         return self.opened()[:5]
     
 
-class Ticket(models.Model):
+class Ticket(prometeo_models.Commentable):
     TICKET_URGENCY_CHOICES = (
         ('very low', _('very low')),
         ('low', _('low')),
@@ -194,7 +195,7 @@ class Ticket(models.Model):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     public = models.BooleanField(_('public'), default=True)
-    allow_comments = models.BooleanField(_('allow comments'), default=True)
+
     objects = TicketManager()
     
     def __init__(self, *args, **kwargs):
