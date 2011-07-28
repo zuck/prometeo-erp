@@ -1,0 +1,6 @@
+{% load i18n %}
+{% load menu %}
+
+{% if user.is_authenticated %}
+{% menu user.get_profile.bookmarks.slug %}
+{% endif %}

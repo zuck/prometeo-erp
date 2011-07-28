@@ -21,7 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.shortcuts import render_to_response, get_object_or_404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, check_for_language
 from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
@@ -37,13 +37,18 @@ from prometeo.core.filter import filter_objects
 from models import *
 from forms import *
 
-@permission_required('auth.change_user') 
 def set_language(request):
-    """Set the current language.
+    """Sets the current language.
     """
     lang_code = request.user.get_profile().language
     if lang_code and check_for_language(lang_code):
         request.session['django_language'] = lang_code
+
+def user_logged(request):
+    """Sets the language selected by the logged user.
+    """
+    set_language(request)
+    return redirect_to(request, url='/')
 
 @permission_required('auth.change_user') 
 def user_list(request, page=0, paginate_by=10, **kwargs):
@@ -119,14 +124,18 @@ def user_edit(request, username, **kwargs):
         
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
-        if form.is_valid():
+        pform = UserProfileForm(request.POST, instance=user.get_profile())
+        if form.is_valid() and pform.is_valid():
             user = form.save()
+            profile = pform.save()
+            set_language(request)
             messages.success(request, _("The user's profile has been updated."))
             return redirect_to(request, url=user.get_absolute_url())
     else:
         form = UserEditForm(instance=user)
+        pform = UserProfileForm(instance=user.get_profile())
 
-    return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
+    return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'pform': pform, 'object': user}))
   
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.

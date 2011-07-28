@@ -38,6 +38,9 @@
 {% endif %}
     {% csrf_token %}
     {{ form.as_p }}
+    {% if pform %}
+    {{ pform.as_p }}
+    {% endif %}
     <span class="submit"><input type="submit" value="{% trans 'Save' %}" /></span>
 </form>
 {% endblock %}

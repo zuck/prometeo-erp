@@ -30,6 +30,10 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 from django.core.mail import EmailMessage
+
+from pytz import common_timezones
+
+TIME_ZONES = [(tz, tz) for tz in common_timezones]
  
 class UserProfile(models.Model):
     """User profile.
@@ -37,7 +41,10 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40, blank=True, null=True)
     key_expires = models.DateTimeField(blank=True, null=True)
-    language = models.CharField(max_length=5, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
+    language = models.CharField(max_length=5, null=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
+    timezone = models.CharField(max_length=12, null=True, choices=TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
+    bookmarks = models.OneToOneField('menus.Menu', null=True, verbose_name=_("bookmarks"))
 
 class ObjectPermission(models.Model):
     """A generic object/row-level permission.
@@ -75,6 +82,12 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
         email = EmailMessage(email_subject, email_body, email_from, [instance.email,])
         email.content_subtype = "html"
         email.send()
+
+    try:
+        profile.language = instance.language
+        profile.timezone = instance.timezone
+    except:
+        pass
 
 models.signals.post_save.connect(user_post_save, User)
 

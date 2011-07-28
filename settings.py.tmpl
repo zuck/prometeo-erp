@@ -206,12 +206,12 @@ AUTHENTICATION_BACKENDS = (
     'prometeo.core.auth.backends.ObjectPermBackend',
 )
 
-AUTH_PROFILE_MODULE = 'prometeo.core.auth.UserProfile'
+AUTH_PROFILE_MODULE = 'auth.UserProfile'
 AUTH_EXPIRATION_DAYS = 2
 
 LOGIN_URL = '/users/login'
 LOGOUT_URL = '/users/logout'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/users/logged/'
 
 LOGIN_REQUIRED_URLS = (
     r'/(.*)$',

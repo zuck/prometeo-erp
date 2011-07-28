@@ -23,12 +23,18 @@ __version__ = '0.0.2'
 from django import forms as django_forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from prometeo.core import forms
 
+from models import *
+
 class UserEditForm(forms.ModelForm):
-    """Form for editing a user's profile.
-    """    
+    """Form for user data.
+    """
+    password1 = django_forms.CharField(label=_("Password"), widget=django_forms.PasswordInput)
+    password2 = django_forms.CharField(label=_("Password confirmation"), widget=django_forms.PasswordInput)
+
     class Meta:
         model = User
         exclude = ('password', 'is_staff', 'is_active', 'is_superuser', 
@@ -36,8 +42,8 @@ class UserEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
-        self.fields['password1'] = django_forms.CharField(label=_("Password"), required=(self.instance.pk is None), widget=django_forms.PasswordInput)
-        self.fields['password2'] = django_forms.CharField(label=_("Password confirmation"), required=(self.instance.pk is None), widget=django_forms.PasswordInput)
+        self.fields['password1'].required = (self.instance.pk is None)
+        self.fields['password2'].required = (self.instance.pk is None)
         self.fields['email'].required = True
 
     def clean_password1(self):
@@ -71,13 +77,16 @@ class UserEditForm(forms.ModelForm):
         return self.cleaned_data['email']
 
     def save(self, commit=True):
-        """Saves the user's profile.
-        """
         user = super(UserEditForm, self).save(commit=False)
         if self.cleaned_data['password1'] or not user.password:
             user.set_password(self.cleaned_data["password1"])
         if commit:
-            user.save()             
+            user.save()     
         return user
-    
-    
+
+class UserProfileForm(forms.ModelForm):
+    """Form for user's profile data.
+    """
+    class Meta:
+        model = UserProfile
+        exclude = ('user', 'activation_key', 'key_expires', 'dashboard', 'bookmarks')

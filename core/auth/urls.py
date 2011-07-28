@@ -26,6 +26,7 @@ urlpatterns = patterns('',
 
     url(r'^users/$', view='prometeo.core.auth.views.user_list', name='user_list'),
     url(r'^users/login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='user_login'),
+    url(r'^users/logged/$', 'prometeo.core.auth.views.user_logged'),
     url(r'^users/logout/$', view='django.contrib.auth.views.logout_then_login', name='user_logout'),
     url(r'^users/add/$', view='prometeo.core.auth.views.user_add', name='user_add'),
     url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/$', view='prometeo.core.auth.views.user_detail', name='user_detail'),
