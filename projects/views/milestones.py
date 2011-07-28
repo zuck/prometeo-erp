@@ -114,7 +114,7 @@ def milestone_delete(request, project, slug, **kwargs):
             request,
             model=Milestone,
             slug=slug,
-            post_delete_redirect='/projects/%s/milestones' % project,
+            post_delete_redirect='/projects/%s/milestones' % project.slug,
             template_name='projects/milestone_delete.html',
             **kwargs
         )
@@ -143,6 +143,5 @@ def milestone_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
             'filter_fields': filter_fields,
             'object': milestone
         },
-        template_name='projects/milestone_tickets.html',
         **kwargs
     )

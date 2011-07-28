@@ -111,18 +111,12 @@ def ticket_delete(request, project, id, **kwargs):
     """Deletes a ticket.
     """
     project = get_object_or_404(Project, slug=project)
-    try:
-        id = int(id)-1
-        if id < 0:
-            raise idError
-        ticket = project.tickets.all()[id]
-    except idError:
-        raise Http404
+    ticket = get_object_or_404(Ticket, project=project, pk=id)
     return create_update.delete_object(
             request,
             model=Ticket,
             object_id=ticket.pk,
-            post_delete_redirect='/projects/%s/tickets' % project,
+            post_delete_redirect='/projects/%s/tickets' % project.slug,
             template_name='projects/ticket_delete.html',
             **kwargs
         )

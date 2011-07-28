@@ -114,7 +114,7 @@ def area_delete(request, project, slug, **kwargs):
             request,
             model=Area,
             slug=slug,
-            post_delete_redirect='/projects/%s/areas' % project,
+            post_delete_redirect='/projects/%s/areas' % project.slug,
             template_name='projects/area_delete.html',
             **kwargs
         )
@@ -143,6 +143,5 @@ def area_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
             'filter_fields': filter_fields,
             'object': area
         },
-        template_name='projects/area_tickets.html',
         **kwargs
     )

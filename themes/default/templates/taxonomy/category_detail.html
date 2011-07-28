@@ -22,13 +22,16 @@
 <div class="actions">
     <ul>
         {% if perms.taxonomy.add_category %}
-        <li><a href="{% url category_add %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a href="{% url category_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.taxonomy.change_category %}
-        <li><a href="{% url category_edit object.slug %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a href="{% url category_edit object.slug %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.taxonomy.delete_category %}
-        <li><a href="{% url category_delete object.slug %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a href="{% url category_delete object.slug %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.taxonomy.change_category %}
+        <li class="list"><a href="{% url category_list %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>

@@ -30,7 +30,7 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_ticket %}
-        <li><a class="add" href="{% url ticket_add project.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a href="{% url ticket_add project.slug %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

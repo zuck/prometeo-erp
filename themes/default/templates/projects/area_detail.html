@@ -22,7 +22,9 @@
     <h1>{{ object|escape|capfirst }}</h1>
     <div class="menu">
         <ul>
+            {% if perms.projects.change_ticket %}
             <li><a href="{% url area_tickets object.project.slug object.slug %}">{% trans 'Tickets' %}</a></li>
+            {% endif %}
         </ul>
     </div>
 </div>
@@ -32,13 +34,16 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_area %}
-        <li><a class="add" href="{% url area_add object.project.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a href="{% url area_add object.project.slug %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.projects.change_area %}
-        <li><a href="{% url area_edit object.project.slug object.slug %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a href="{% url area_edit object.project.slug object.slug %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.projects.delete_area %}
-        <li><a href="{% url area_delete object.project.slug object.slug %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a href="{% url area_delete object.project.slug object.slug %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.projects.change_area %}
+        <li class="list"><a href="{% url area_list object.project.slug %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>

@@ -47,7 +47,6 @@ def project_list(request, page=0, paginate_by=5, **kwargs):
         queryset=object_list,
         paginate_by=paginate_by,
         page=page,
-        template_name='projects/project_list.html',
         extra_context={
             'field_names': field_names,
             'filter_fields': filter_fields,
