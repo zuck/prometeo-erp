@@ -164,6 +164,8 @@ thead a.asc { background-image: url(images/up.png); }
 
 thead a.desc { background-image: url(images/down.png); }
 
+tr.altrow td { background-color: #f2f2f2; }
+
 /**
  * Commons.
  */
