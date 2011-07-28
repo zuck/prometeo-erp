@@ -1,7 +1,7 @@
 - model: menus.link
   pk: 5
   fields:
-    menu: 2
+    menu: 3
     title: "Register"
     slug: "register"
     description: "Register a new account."

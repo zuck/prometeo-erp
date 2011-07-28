@@ -1,12 +1,12 @@
 - model: menus.menu
-  pk: 1
+  pk: 2
   fields:
     slug: "main"
     description: "Main Menu"
 - model: menus.link
   pk: 1
   fields:
-    menu: 1
+    menu: 2
     title: "Administration"
     slug: "administration"
     description: "Administration panel."

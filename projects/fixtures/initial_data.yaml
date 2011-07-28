@@ -1,7 +1,7 @@
 - model: menus.link
   pk: 7
   fields:
-    menu: 1
+    menu: 2
     title: "Projects"
     slug: "projects"
     description: "Project management."

@@ -24,6 +24,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import django.utils.simplejson as json
+
+from prometeo.core.auth.models import *
         
 def validate_json(value):
     try:
@@ -64,3 +66,12 @@ class Widget(models.Model):
 
     def __unicode__(self):
         return self.title
+
+def profile_post_save(sender, instance, signal, *args, **kwargs):
+    if not instance.dashboard:
+        dashboard = Region(slug="profile_%d_dashboard" % instance.pk)
+        dashboard.save()
+        instance.dashboard = dashboard
+        instance.save()
+
+models.signals.post_save.connect(profile_post_save, UserProfile)

@@ -22,7 +22,9 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import Permission    
+from django.contrib.auth.models import Permission
+
+from prometeo.core.auth.models import UserProfile   
         
 class Menu(models.Model):
     """Menu model.
@@ -61,3 +63,12 @@ class Link(models.Model):
 
     def get_absolute_url(self):
         return self.url
+
+def profile_post_save(sender, instance, signal, *args, **kwargs):
+    if not instance.bookmarks:
+        bookmarks = Menu(slug="profile_%d_bookmarks" % instance.pk)
+        bookmarks.save()
+        instance.bookmarks = bookmarks
+        instance.save()
+
+models.signals.post_save.connect(profile_post_save, UserProfile)

@@ -1,17 +1,17 @@
 - model: menus.menu
-  pk: 2
+  pk: 3
   fields:
     slug: "user_area_not_logged"
     description: "User area for anonymous users."
 - model: menus.menu
-  pk: 3
+  pk: 4
   fields:
     slug: "user_area_logged"
     description: "User area for logged users."
 - model: menus.link
   pk: 2
   fields:
-    menu: 1
+    menu: 2
     title: "Users"
     slug: "users"
     description: "Users management."
@@ -23,7 +23,7 @@
 - model: menus.link
   pk: 3
   fields:
-    menu: 2
+    menu: 3
     title: "Login"
     slug: "login"
     description: "Login."
@@ -35,7 +35,7 @@
 - model: menus.link
   pk: 4
   fields:
-    menu: 3
+    menu: 4
     title: "Logout"
     slug: "Logout"
     description: "Logout."
