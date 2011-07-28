@@ -83,11 +83,5 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
         email.content_subtype = "html"
         email.send()
 
-    try:
-        profile.language = instance.language
-        profile.timezone = instance.timezone
-    except:
-        pass
-
 models.signals.post_save.connect(user_post_save, User)
 
