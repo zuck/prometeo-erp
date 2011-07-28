@@ -1,17 +1,17 @@
 - model: widgets.region
-  pk: 1
+  pk: 2
   fields:
     slug: "footer"
     description: "Footer"
 - model: widgets.region
-  pk: 2
+  pk: 3
   fields:
     slug: "sidebar"
     description: "Sidebar"
 - model: widgets.widget
   pk: 1
   fields:
-    region: 1
+    region: 2
     title: "Powered by"
     slug: "powered-by"
     description: "Info about Prometeo."

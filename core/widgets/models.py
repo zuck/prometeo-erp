@@ -69,7 +69,7 @@ class Widget(models.Model):
 
 def profile_post_save(sender, instance, signal, *args, **kwargs):
     if not instance.dashboard:
-        dashboard = Region(slug="profile_%d_dashboard" % instance.pk)
+        dashboard = Region(slug="profile_%d_dashboard" % instance.pk, description='Dashboard')
         dashboard.save()
         instance.dashboard = dashboard
         instance.save()

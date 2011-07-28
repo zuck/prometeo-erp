@@ -18,7 +18,7 @@
 - model: widgets.widget
   pk: 2
   fields:
-    region: 2
+    region: 3
     title: "Main Menu"
     slug: "main-menu"
     description: "The main menu."

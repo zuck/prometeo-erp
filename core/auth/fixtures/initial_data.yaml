@@ -47,7 +47,7 @@
 - model: widgets.widget
   pk: 3
   fields:
-    region: 2
+    region: 3
     title: "User Profile"
     slug: "user-profile"
     description: "The user's profile."

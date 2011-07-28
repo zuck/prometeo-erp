@@ -66,7 +66,7 @@ class Link(models.Model):
 
 def profile_post_save(sender, instance, signal, *args, **kwargs):
     if not instance.bookmarks:
-        bookmarks = Menu(slug="profile_%d_bookmarks" % instance.pk)
+        bookmarks = Menu(slug="profile_%d_bookmarks" % instance.pk, description='Bookmarks')
         bookmarks.save()
         instance.bookmarks = bookmarks
         instance.save()
