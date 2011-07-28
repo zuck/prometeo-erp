@@ -74,4 +74,10 @@ def profile_post_save(sender, instance, signal, *args, **kwargs):
         instance.dashboard = dashboard
         instance.save()
 
+def profile_post_delete(sender, instance, signal, *args, **kwargs):
+    dashboard = instance.dashboard
+    if dashboard:
+        dashboard.delete()
+
 models.signals.post_save.connect(profile_post_save, UserProfile)
+models.signals.post_delete.connect(profile_post_delete, UserProfile)

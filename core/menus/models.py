@@ -71,4 +71,10 @@ def profile_post_save(sender, instance, signal, *args, **kwargs):
         instance.bookmarks = bookmarks
         instance.save()
 
+def profile_post_delete(sender, instance, signal, *args, **kwargs):
+    bookmarks = instance.bookmarks
+    if bookmarks:
+        bookmarks.delete()
+
 models.signals.post_save.connect(profile_post_save, UserProfile)
+models.signals.post_delete.connect(profile_post_delete, UserProfile)
