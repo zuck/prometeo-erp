@@ -21,6 +21,8 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django import forms
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 class Form(forms.Form):
     """Base form.
@@ -33,3 +35,18 @@ class ModelForm(forms.ModelForm):
     """
     required_css_class = 'required'
     error_css_class = 'errors'
+
+class SelectMultipleAndAdd(forms.SelectMultiple):
+    """."""
+    def __init__(self, *args, **kwargs):
+        self.add_url = ""
+        if kwargs.has_key('add_url'):
+            self.add_url = kwargs['add_url']
+            del kwargs['add_url']
+        super(SelectMultipleAndAdd, self).__init__(*args, **kwargs)
+
+    def render(self, name, value, attrs=None, choices=()):
+        output = super(SelectMultipleAndAdd, self).render(name, value, attrs, choices)
+        if self.add_url:
+            output += '<span class="add"><a target="_blank" href="%s">+</a></span><br/>' % self.add_url
+        return mark_safe(output)

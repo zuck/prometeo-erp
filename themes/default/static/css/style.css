@@ -132,6 +132,8 @@ form .errors input, form .errors textarea, form .errors select {
     border: 1px solid #d21717;
 }
 
+form .add a { margin-right: 100%; }
+
 /**
  * Tables.
  */
