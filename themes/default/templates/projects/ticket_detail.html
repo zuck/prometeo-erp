@@ -32,16 +32,16 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_ticket %}
-        <li class="add"><a href="{% url ticket_add object.project.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url ticket_add object.project.slug %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.projects.change_ticket %}
-        <li class="edit"><a href="{% url ticket_edit object.project.slug object.pk %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url ticket_edit object.project.slug object.pk %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.projects.delete_ticket %}
-        <li class="delete"><a href="{% url ticket_delete object.project.slug object.pk %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url ticket_delete object.project.slug object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.projects.change_ticket %}
-        <li class="list"><a href="{% url ticket_list object.project.slug %}">{% trans 'All' %}</a></li>
+        <li class="all"><a title="{% trans 'All' %}" href="{% url ticket_list object.project.slug %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>

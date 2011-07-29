@@ -28,16 +28,16 @@
 <div class="actions">
     <ul>
         {% if perms.auth.add_user %}
-        <li class="add"><a href="{% url user_add %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url user_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if request.user == object or perms.auth.change_user %}
-        <li class="edit"><a href="{% url user_edit object.username %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url user_edit object.username %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if request.user == object or perms.auth.delete_user %}
-        <li class="delete"><a href="{% url user_delete object.username %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url user_delete object.username %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.auth.change_user %}
-        <li class="list"><a href="{% url user_list %}">{% trans 'All' %}</a></li>
+        <li class="all"><a title="{% trans 'All' %}" href="{% url user_list %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>

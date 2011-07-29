@@ -23,7 +23,7 @@
 <div class="actions">
     <ul>
         {% if perms.taxonomy.add_category %}
-        <li class="add"><a href="{% url category_add %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url category_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

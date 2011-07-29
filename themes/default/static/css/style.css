@@ -250,6 +250,33 @@ tr.altrow td { background-color: #f2f2f2; }
     margin-bottom: 10px;
 }
 
+.add a, .edit a, .delete a, .all a {
+    float: left;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-size: 0;
+}
+
+.add a { background-image: url(images/add.png); }
+
+.add a:hover { background-image: url(images/add_hover.png); }
+
+.edit a { background-image: url(images/edit.png); }
+
+.edit a:hover { background-image: url(images/edit_hover.png); }
+
+.delete a { background-image: url(images/delete.png); }
+
+.delete a:hover { background-image: url(images/delete_hover.png); }
+
+.all a { background-image: url(images/all.png); }
+
+.all a:hover { background-image: url(images/all_hover.png); }
+
 /**
  * Layout.
  */
@@ -335,13 +362,7 @@ tr.altrow td { background-color: #f2f2f2; }
     width: 85%;
 }
 
-#bookmarks .add a {
-    margin: 0 10px;
-    padding: 0 5px;
-    border: 1px solid #ce0600;
-}
-
-#bookmarks .add a:hover { border-color: #fff; }
+#bookmarks .add a { margin-left: 10px; }
 
 #userarea {
     float: right;
@@ -498,19 +519,8 @@ tr.altrow td { background-color: #f2f2f2; }
     clear: none;
     float: left;
     padding: 0;
-    margin-right: 5px;
-}
-
-#main .actions li a {
-    float: left;
-    padding: 6px 16px;
-    background: #ce0600;
-    border: 1px solid #1f1f1f;
-    color: #fff;
-}
-
-#main .actions li a:hover {
-    background: #1f1f1f;
+    margin: 0;
+    background: none;
 }
 
 #main .details { clear: both; }

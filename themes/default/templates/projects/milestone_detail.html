@@ -34,16 +34,16 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_milestone %}
-        <li class="add"><a href="{% url milestone_add object.project.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.project.slug %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.projects.change_milestone %}
-        <li class="edit"><a href="{% url milestone_edit object.project.slug object.slug %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url milestone_edit object.project.slug object.slug %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.projects.delete_milestone %}
-        <li class="delete"><a href="{% url milestone_delete object.project.slug object.slug %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url milestone_delete object.project.slug object.slug %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.projects.change_milestone %}
-        <li class="list"><a href="{% url milestone_list object.project.slug %}">{% trans 'All' %}</a></li>
+        <li class="list"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.slug %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>

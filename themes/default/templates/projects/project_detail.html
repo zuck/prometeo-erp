@@ -38,16 +38,16 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_project %}
-        <li class="add"><a href="{% url project_add %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url project_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.projects.change_project %}
-        <li class="edit"><a href="{% url project_edit object.slug %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url project_edit object.slug %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.projects.delete_project %}
-        <li class="delete"><a href="{% url project_delete object.slug %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url project_delete object.slug %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.projects.change_project %}
-        <li class="list"><a href="{% url project_list %}">{% trans 'All' %}</a></li>
+        <li class="all"><a title="{% trans 'All' %}" href="{% url project_list %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>
