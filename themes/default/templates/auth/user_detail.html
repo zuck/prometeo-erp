@@ -16,6 +16,11 @@
 {% block title %}
 <div class="title">
     <h1>{{ object }}</h1>
+    <div class="menu">
+        <ul>
+            <li><a href="{% url bookmark_list %}">{% trans 'Bookmarks' %}</a></li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
 

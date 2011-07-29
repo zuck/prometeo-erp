@@ -335,6 +335,14 @@ tr.altrow td { background-color: #f2f2f2; }
     width: 85%;
 }
 
+#bookmarks .add a {
+    margin: 0 10px;
+    padding: 0 5px;
+    border: 1px solid #ce0600;
+}
+
+#bookmarks .add a:hover { border-color: #fff; }
+
 #userarea {
     float: right;
     width: 15%;

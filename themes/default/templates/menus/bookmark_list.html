@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Bookmarks" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' 'user_list' %}
+    {% add_crumb user user.get_absolute_url %}
+    {% add_crumb 'Bookmarks' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Bookmarks" %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        <li class="add"><a href="{% url bookmark_add %}">{% trans 'Add' %}</a></li>
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

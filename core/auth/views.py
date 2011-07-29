@@ -65,7 +65,6 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
         queryset=object_list,
         paginate_by=paginate_by,
         page=page,
-        template_name='auth/user_list.html',
         extra_context={
             'field_names': field_names,
             'filter_fields': filter_fields,
