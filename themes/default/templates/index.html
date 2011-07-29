@@ -16,5 +16,12 @@
 {% endblock %}
 
 {% block main %}
+<div class="actions">
+    <ul>
+        <li class="add"><a href="{% url widget_add %}">{% trans 'Add' %}</a></li>
+    </ul>
+</div>
+<div class="details">
     {% region user.get_profile.dashboard.slug %}
+</div>
 {% endblock %}

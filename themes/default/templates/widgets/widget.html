@@ -1,14 +1,16 @@
 {% load i18n %}
 
-<div class="widget" id="{{ widget.slug }}-widget">
-    {% if widget.show_title %}
-    <div class="title">
-        <h4>{% block widget-title %}{% trans widget.title %}{% endblock %}</h4>
+<div class="widget">
+    <div class="wrapper{% if widget_index and not widget_index|divisibleby:"2" %}-altrow{% endif %}" id="{{ widget.slug }}-widget">
+        {% if widget.show_title %}
+        <div class="title">
+            <h4>{% block widget-title %}{% trans widget.title %}{% endblock %}</h4>
+        </div>
+        {% endif %}
+        {% block widget-body %}
+        <div class="body">
+            {% block widget-content %}{% trans text %}{% endblock %}
+        </div>
+        {% endblock %}
     </div>
-    {% endif %}
-    {% block widget-body %}
-    <div class="body">
-        {% block widget-content %}{% trans text %}{% endblock %}
-    </div>
-    {% endblock %}
 </div>

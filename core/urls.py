@@ -45,6 +45,9 @@ urlpatterns = patterns('',
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
 
+    # Widgets.
+    (r'^', include('prometeo.core.widgets.urls')),
+
     # Menus.
     (r'^', include('prometeo.core.menus.urls')),
 

@@ -44,7 +44,8 @@ class RegionNode(template.Node):
         except Region.DoesNotExist:
             region = None
         if region:
-            for widget in region.widgets.all():
+            for index, widget in enumerate(region.widgets.all()):
+                context['widget_index'] = index
                 output += WidgetNode(widget.slug).render(context)
         return output
 
