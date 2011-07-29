@@ -49,5 +49,5 @@ def avatar(user, size=36, rating='g', default=None):
     if default:
         url = "%s&d=%s" % (url, default)
         
-    return '<img class="avatar" width="%s" height="%s" src="%s" alt="Avatar image for %s"/>' % (size, size, url, user)
+    return '<img class="avatar" width="%s" height="%s" src="%s" />' % (size, size, url)
 
