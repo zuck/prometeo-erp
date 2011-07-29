@@ -23,7 +23,7 @@
     slug: "main-menu"
     description: "The main menu."
     source: "prometeo.core.widgets.base.dummy"
-    template: "widgets/menu.html"
+    template: "menus/widgets/menu.html"
     context: "{\"name\": \"main\"}"
     show_title: false
     sort_order: 1

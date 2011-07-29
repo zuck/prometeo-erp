@@ -364,6 +364,7 @@ tr.altrow td { background-color: #f2f2f2; }
     clear: both;
     width: 1024px;
     margin: 0 auto;
+    padding-bottom: 20px;
     overflow: auto;
     background: url(images/menu.jpg) repeat-y 200px;
 }
