@@ -59,7 +59,8 @@ class Tag(models.Model):
         
     def _occurences(self):
         object_list = []
-        for related in self._meta.get_all_related_many_to_many_objects():
+        related_objects = self._meta.get_all_related_many_to_many_objects()
+        for related in related_objects:
             if related.opts.installed:
                 model = related.model
                 for obj in model.objects.select_related().filter(tags__title=self.title):
@@ -85,12 +86,13 @@ class Category(models.Model):
         
     def _occurences(self):
         object_list = []
-        for related in self._meta.get_all_related_many_to_many_objects():
+        related_objects = self._meta.get_all_related_many_to_many_objects()
+        for related in related_objects:
             if related.opts.installed:
                 model = related.model
                 for obj in model.objects.select_related().filter(categories__title=self.title):
                     object_list.append(obj)
-            return object_list
+        return object_list
     occurences = property(_occurences)
 
     def __unicode__(self):
