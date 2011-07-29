@@ -58,15 +58,17 @@ class DetailTableNode(Node):
             output = self.table_template()
             output += u'\t<thead>\n'
             for f in self.field_list:
+                verbose_name = _(f.verbose_name)
+                verbose_name = verbose_name[0].capitalize() + verbose_name[1:]
                 if f.name in order_by:
                     verse = "-"
                     aclass = "asc"
                     if "-%s" % f.name in order_by:
                         verse = ""
                         aclass = "desc"
-                    output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.name, _(f.verbose_name.capitalize()))
+                    output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.name, verbose_name)
                 else:
-                    output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.name, _(f.verbose_name.capitalize()))
+                    output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.name, verbose_name)
             output += u'\t</thead>\n'
             for i, instance in enumerate(self.object_list):
                 output += self.row_template(instance, i)
