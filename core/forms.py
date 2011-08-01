@@ -20,9 +20,14 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+from time import strftime
+
 from django import forms
+from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.template.loader import render_to_string
+from django.forms.extras.widgets import *
 
 class Form(forms.Form):
     """Base form.
@@ -36,8 +41,9 @@ class ModelForm(forms.ModelForm):
     required_css_class = 'required'
     error_css_class = 'errors'
 
-class SelectMultipleAndAdd(forms.SelectMultiple):
-    """."""
+class SelectMultipleAndAddWidget(forms.SelectMultiple):
+    """A multiple-select widget with an optional "add" link.
+    """
     def __init__(self, *args, **kwargs):
         self.add_url = ""
         if kwargs.has_key('add_url'):
