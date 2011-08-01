@@ -1,0 +1,43 @@
+{% extends "wysiwyg/base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit task' %}{% else %}{% trans 'Add task' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Tasks' 'task_list' %}
+    {% if object.pk %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit task' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add task' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form method="post" action="{% url task_edit object.pk %}">
+{% else %}
+<form method="post" action="{% url task_add %}">
+{% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

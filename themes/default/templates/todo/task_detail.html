@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markup %}
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Tasks' 'task_list' %}
+    {% add_crumb object %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.todo.add_task %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.todo.change_task %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url task_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.todo.delete_task %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url task_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.todo.change_task %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url task_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% include 'elements/navigator.html' %}
+<div class="details">
+    <table class="properties">
+        <tr>
+            <th>{% trans "Created on" %}:</th>
+            <td>{{ object.created }}</td>
+            <th>{% trans "Date due" %}:</th>
+            <td>{{ object.date_due }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Closed on" %}:</th>
+            <td colspan="3">
+                {{ object.closed }}
+                {% if not object.closed %}
+                <a title="{% trans 'Close' %}" href="{% url task_close object.pk %}">({% trans 'Close' %})</a>
+                {% else %}
+                <a title="{% trans 'Reopen' %}" href="{% url task_reopen object.pk %}">({% trans 'Reopen' %})</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Description" %}:</th>
+            <td colspan="3">
+                <div class="entry">
+                    {{ object.description|safe }}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+{% include "elements/comments.html" %}
+{% endblock %}
