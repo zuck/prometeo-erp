@@ -308,7 +308,7 @@ tr.altrow td { background-color: #f2f2f2; }
     padding: 6px 0;
     height: 16px;
     background: #1f1f1f url(images/footer.jpg) repeat-x top;
-    color: #e6e6e6;
+    color: #fff;
 }
 
 #nav ul, #nav li {
@@ -318,6 +318,8 @@ tr.altrow td { background-color: #f2f2f2; }
 }
 
 #nav li { padding: 0 10px; }
+
+#nav a, #nav a:link, #nav a:visited { color: #d6d6d6; }
 
 #nav a:hover { color: #fff; }
 
@@ -557,12 +559,14 @@ tr.altrow td { background-color: #f2f2f2; }
     height: 200px;
     border-top: 1px solid #111;
     background: url(images/footer.jpg) repeat-x top;
-    color: #e6e6e6;
+    color: #fff;
 }
+
+#footer a, #footer a:link, #footer a:visited { color: #d6d6d6; }
+
+#footer a:hover { color: #fff; }
 
 #powered-by {
     float: right;
     padding: 10px;
 }
-
-#footer a:hover { color: #fff; }
