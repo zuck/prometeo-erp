@@ -41,12 +41,15 @@ from forms import *
 def task_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered tasks.
     """
+    object_list = Task.objects.filter(user=request.user)
+
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Task,
-                                                fields=['id', 'title', 'created', 'date_due', 'closed'],
-                                                object_list=Task.objects.filter(user=request.user)
+                                                fields=['id', 'title', 'start', 'end', 'closed'],
+                                                object_list=object_list
                                               )
+
     return list_detail.object_list(
         request,
         queryset=object_list,
@@ -131,37 +134,35 @@ def task_delete(request, id, **kwargs):
             request,
             model=Task,
             object_id=id,
-            post_delete_redirect='/todo/',
+            post_delete_redirect='/tasks/',
             template_name='todo/task_delete.html',
             **kwargs
         )
 
 def task_close(request, id, **kwargs):
     """Closes an open task.
-    """ 
-    task = get_object_or_404(Task, id=id)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('todo.change_task') or request.user == task.user)):
-        messages.error(request, _("You can't close this task."))
-        return redirect_to(request, url=task.get_absolute_url())
-
-    task.closed = datetime.datetime.utcnow()
-    task.save()
+    """
     messages.success(request, _("The task has been closed."))
 
-    return redirect_to(request, url=task.get_absolute_url())
+    return create_update.delete_object(
+            request,
+            model=Task,
+            object_id=id,
+            post_delete_redirect='/tasks/',
+            template_name='todo/task_delete.html',
+            **kwargs
+        )
 
 def task_reopen(request, id, **kwargs):
     """Reopens a closed task.
     """ 
-    task = get_object_or_404(Task, id=id)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('todo.change_task') or request.user == task.user)):
-        messages.error(request, _("You can't close this task."))
-        return redirect_to(request, url=task.get_absolute_url())
-
-    task.closed = None
-    task.save()
     messages.success(request, _("The task has been reopened."))
 
-    return redirect_to(request, url=task.get_absolute_url())
+    return create_update.delete_object(
+            request,
+            model=Task,
+            object_id=id,
+            post_delete_redirect='/tasks/',
+            template_name='todo/task_delete.html',
+            **kwargs
+        )

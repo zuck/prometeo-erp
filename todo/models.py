@@ -28,13 +28,14 @@ class Task(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     user = models.ForeignKey('auth.User', null=True, blank=True, verbose_name=_('user'))
+    start = models.DateTimeField(null=True, blank=True, verbose_name=_('Start'))
+    end = models.DateTimeField(null=True, blank=True, verbose_name=_('End'))    
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
-    closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))      
+    closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))  
 
     class Meta:
-        ordering = ('created', 'id')
-        get_latest_by = 'created'
+        ordering = ('start', 'id')
+        get_latest_by = 'start'
 
     def __unicode__(self):
         return u'%s' % self.title

@@ -20,6 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+from django.forms.fields import *
+
 from prometeo.core import forms
 from prometeo.core.wysiwyg.forms.widgets import CKEditor
 
