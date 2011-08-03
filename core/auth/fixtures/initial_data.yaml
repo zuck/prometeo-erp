@@ -9,19 +9,19 @@
     slug: "user_area_logged"
     description: "User area for logged users."
 - model: menus.link
-  pk: 2
+  pk: 3
   fields:
     menu: 2
     title: "Users"
     slug: "users"
     description: "Users management."
     url: "/users/"
-    sort_order: 0
+    sort_order: 2
     only_authenticated: True
     only_staff: True
     only_with_perms: []
 - model: menus.link
-  pk: 3
+  pk: 4
   fields:
     menu: 3
     title: "Login"
@@ -33,7 +33,7 @@
     only_staff: False
     only_with_perms: []
 - model: menus.link
-  pk: 4
+  pk: 5
   fields:
     menu: 4
     title: "Logout"

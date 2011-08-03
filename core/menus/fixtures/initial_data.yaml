@@ -7,11 +7,23 @@
   pk: 1
   fields:
     menu: 2
+    title: "Dashboard"
+    slug: "dashboard"
+    description: "Personal dashboard."
+    url: "/"
+    sort_order: 0
+    only_authenticated: True
+    only_staff: False
+    only_with_perms: []
+- model: menus.link
+  pk: 2
+  fields:
+    menu: 2
     title: "Administration"
     slug: "administration"
     description: "Administration panel."
     url: "/admin"
-    sort_order: 0
+    sort_order: 1
     only_authenticated: True
     only_staff: True
     only_with_perms: []

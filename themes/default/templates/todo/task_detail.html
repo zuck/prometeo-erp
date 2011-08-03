@@ -39,30 +39,35 @@
     <table class="properties">
         <tr>
             <th>{% trans "Created on" %}:</th>
-            <td>{{ object.created }}</td>
-            <th>{% trans "Date due" %}:</th>
-            <td>{{ object.date_due }}</td>
+            <td>{% if object.created %}{{ object.created }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+            <th>{% trans "Closed on" %}:</th>
+            <td>{% if object.closed %}{{ object.closed }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
         </tr>
         <tr>
-            <th>{% trans "Closed on" %}:</th>
-            <td colspan="3">
-                {{ object.closed }}
-                {% if not object.closed %}
-                <a title="{% trans 'Close' %}" href="{% url task_close object.pk %}">({% trans 'Close' %})</a>
-                {% else %}
-                <a title="{% trans 'Reopen' %}" href="{% url task_reopen object.pk %}">({% trans 'Reopen' %})</a>
-                {% endif %}
-            </td>
+            <th>{% trans "Start" %}:</th>
+            <td>{% if object.start %}{{ object.start }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+            <th>{% trans "End" %}:</th>
+            <td>{% if object.end %}{{ object.end }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
         </tr>
         <tr>
             <th>{% trans "Description" %}:</th>
             <td colspan="3">
                 <div class="entry">
+                    {% if object.description %}
                     {{ object.description|safe }}
+                    {% else %}
+                    <span class="disabled">{% trans "Empty" %}</span>
+                    {% endif %}
                 </div>
             </td>
         </tr>
     </table>
 </div>
-{% include "elements/comments.html" %}
+<ul>
+    {% if not object.closed %}
+    <li><span class="submit"><a title="{% trans 'Close' %}" href="{% url task_close object.pk %}">{% trans 'Close' %}</a></span></li>
+    {% else %}
+    <li><span class="submit"><a title="{% trans 'Reopen' %}" href="{% url task_reopen object.pk %}">{% trans 'Reopen' %}</a></span></li>
+    {% endif %}
+</ul>
 {% endblock %}
