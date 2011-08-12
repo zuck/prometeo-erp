@@ -53,7 +53,8 @@ class DetailTableNode(Node):
             order_by = []
         output = '<p class="disabled">%s</p>' % _('No results found.')
         if len(self.object_list) > 0:
-            meta = self.object_list[0]._meta
+            instance = self.object_list[0]
+            meta = instance._meta
             self.field_list = [f for f in meta.fields if self.is_visible(f.name, fields, exclude)]
             output = self.table_template()
             output += u'\t<thead>\n'
@@ -69,11 +70,14 @@ class DetailTableNode(Node):
                     output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.name, verbose_name)
                 else:
                     output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.name, verbose_name)
+            if self.has_actions(instance):
+                output += u'\t\t<td class="actions"></td>\n'
             output += u'\t</thead>\n'
             for i, instance in enumerate(self.object_list):
                 output += self.row_template(instance, i)
                 for j, f in enumerate(self.field_list):
                     output += self.column_template(instance, j)
+                output += self.actions_template(instance)
                 output += u'\t</tr>\n'
             output += u'</table>\n'
         return mark_safe(output)
@@ -104,30 +108,45 @@ class DetailTableNode(Node):
         return u'\t<tr>\n'
         
     def column_template(self, instance, index):
+        css = ''
         value = self.field_to_value(self.field_list[index], instance)
         if index == 0:
-            value = '<a href="%s">%s</a>' % (instance.get_absolute_url(), value)
+            value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), self.value_to_string(value))
         if isinstance(value, (int, float)) and not isinstance(value, bool):
-            return u'\t\t<td class="number">%s</td>\n' % self.value_to_string(value)
-        return u'\t\t<td>%s</td>\n' % self.value_to_string(value)
+            css = u' class="number"'
+        return u'\t\t<td%s>%s</td>\n' % (css, self.value_to_string(value))
+
+    def actions_template(self, instance):
+        actions = []
+        try:
+            actions.append(u'<span class="edit"><a href="%s">%s</a></span>' % (instance.get_edit_url(), _('Edit')))
+        except AttributeError:
+            pass
+        try:
+            actions.append(u'<span class="delete"><a href="%s">%s</a></span>' % (instance.get_delete_url(), _('Delete')))
+        except AttributeError:
+            pass
+        if len(actions) > 0:
+            return u'\t\t<td class="actions">%s</td>\n' % ' '.join(actions)
+        return u''
     
     def value_to_string(self, value):
         output = value
         if isinstance(value, float):
-            output = '%.2f' % value
+            output = u'%.2f' % value
         elif isinstance(value, bool):
             if not value:
-                output = '<span class="no">%s</span>' % _('No')
+                output = u'<span class="no">%s</span>' % _('No')
             else:
-                output = '<span class="yes">%s</span>' % _('Yes')
+                output = u'<span class="yes">%s</span>' % _('Yes')
         elif not value:
-            output = '<span class="disabled">%s</span>' % _('Empty')
+            output = u'<span class="disabled">%s</span>' % _('Empty')
         return mark_safe(output)
 
     def field_to_value(self, field, instance):
         value = field.value_from_object(instance)
         if field.primary_key:
-            return '#%s' % value
+            return u'#%s' % value
         elif isinstance(field, fields.related.RelatedField):
             relationship = getattr(instance, field.name)
             try:
@@ -141,9 +160,9 @@ class DetailTableNode(Node):
         elif isinstance(field, fields.TimeField):
             return time(value, settings.TIME_FORMAT)
         elif isinstance(field, fields.URLField):
-            return '<a href="%s">%s</a>' % (value, value)
+            return u'<a href="%s">%s</a>' % (value, value)
         elif isinstance(field, fields.EmailField):
-            return '<a href="mailto:%s">%s</a>' % (value, value)
+            return u'<a href="mailto:%s">%s</a>' % (value, value)
         elif isinstance(field, fields.TextField):
             return truncatewords(striptags(value), 6)
         elif field.choices:
@@ -156,6 +175,20 @@ class DetailTableNode(Node):
         
     def is_visible(self, field, fields=[], exclude=[]):
         return (len(fields) == 0 or field in fields) and field not in exclude
+
+    def has_actions(self, instance):
+        actions = 0
+        try:
+            instance.get_edit_url()
+            actions += 1
+        except AttributeError:
+            pass
+        try:
+            instance.get_delete_url()
+            actions += 1
+        except AttributeError:
+            pass
+        return (actions > 0)
 
 @register.tag
 def detail_table(parser, token):
