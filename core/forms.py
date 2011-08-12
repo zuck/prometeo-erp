@@ -25,9 +25,8 @@ from time import strftime
 from django import forms
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
-from django.forms.extras.widgets import *
 
 class Form(forms.Form):
     """Base form.
@@ -49,10 +48,10 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
         if kwargs.has_key('add_url'):
             self.add_url = kwargs['add_url']
             del kwargs['add_url']
-        super(SelectMultipleAndAdd, self).__init__(*args, **kwargs)
+        super(SelectMultipleAndAddWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None, choices=()):
-        output = super(SelectMultipleAndAdd, self).render(name, value, attrs, choices)
+        output = super(SelectMultipleAndAddWidget, self).render(name, value, attrs, choices)
         if self.add_url:
-            output += '<span class="add"><a target="_blank" href="%s">+</a></span><br/>' % self.add_url
+            output += '<span class="add"><a target="_blank" href="%s">%s</a></span><br/>' % (self.add_url, _('Add'))
         return mark_safe(output)
