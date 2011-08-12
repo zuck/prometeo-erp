@@ -77,7 +77,7 @@ def bookmark_add(request, **kwargs):
             link.slug = slugify("%s_%s" % (link.title, request.user.pk))
             link = form.save()
             messages.success(request, _("The link has been saved."))
-            return redirect_to(request, url="/")
+            return redirect_to(request, url="/bookmarks/")
     else:
         url = clean_referer(request)
         if url == reverse('bookmark_list', args=[]):
