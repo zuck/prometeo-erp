@@ -139,8 +139,6 @@ td, th {
 
 thead td, th { background: #dfdfdf; }
 
-th { text-align: right; }
-
 thead a.asc, thead a.desc {
     float: left;
     width: 100%;
@@ -257,7 +255,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     width: 16px;
     height: 16px;
     padding: 0;
-    margin-right: 10px;
+    margin-right: 5px;
     background-repeat: no-repeat;
     background-position: center center;
     font-size: 0;
@@ -517,11 +515,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border: 0;
 }
 
-#main .actions {
-    clear: left;
-    float: left; 
-}
-
 #main .actions ul { float: left; }
 
 #main .actions li {
@@ -533,6 +526,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #main .details { clear: both; }
+
+#main .details .actions { width: 40px; }
+
+#main .details .actions .delete a { margin: 0; }
 
 #main .widget .wrapper {
     clear: both;

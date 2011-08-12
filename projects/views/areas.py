@@ -129,7 +129,7 @@ def area_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Ticket,
-                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed'],
+                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed', 'urgency'],
                                                 object_list=area.ticket_set.all(),
                                               )
     return list_detail.object_list(
@@ -143,5 +143,6 @@ def area_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
             'filter_fields': filter_fields,
             'object': area
         },
+        template_name='projects/area_tickets.html',
         **kwargs
     )

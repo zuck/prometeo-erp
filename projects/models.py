@@ -67,6 +67,14 @@ class Project(prometeo_models.Commentable):
     @models.permalink
     def get_absolute_url(self):
         return ('project_detail', (), {"slug": self.slug})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('project_edit', (), {"slug": self.slug})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('project_delete', (), {"slug": self.slug})
         
 class Area(prometeo_models.Commentable):
     title = models.CharField(max_length=50, verbose_name=_('title'))
@@ -86,6 +94,14 @@ class Area(prometeo_models.Commentable):
     @models.permalink
     def get_absolute_url(self):
         return ('area_detail', (), {"project": self.project.slug, "slug": self.slug})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('area_edit', (), {"project": self.project.slug, "slug": self.slug})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('area_delete', (), {"project": self.project.slug, "slug": self.slug})
 
 class Milestone(prometeo_models.Commentable):
     title = models.CharField(max_length=255, verbose_name=_('title'))
@@ -124,6 +140,14 @@ class Milestone(prometeo_models.Commentable):
     @models.permalink
     def get_absolute_url(self):
         return ('milestone_detail', (), {"project": self.project.slug, "slug": self.slug})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('milestone_edit', (), {"project": self.project.slug, "slug": self.slug})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('milestone_delete', (), {"project": self.project.slug, "slug": self.slug})
         
     def save(self):
         if self.date_due:
@@ -247,6 +271,14 @@ class Ticket(prometeo_models.Commentable):
     @models.permalink    
     def get_absolute_url(self):
         return ('ticket_detail', (), {"project": self.project.slug, "id": self.pk})
+    
+    @models.permalink    
+    def get_edit_url(self):
+        return ('ticket_edit', (), {"project": self.project.slug, "id": self.pk})
+    
+    @models.permalink    
+    def get_delete_url(self):
+        return ('ticket_delete', (), {"project": self.project.slug, "id": self.pk})
 
     def __unicode__(self):
         return u'#%d %s' % (self.pk, self.title)

@@ -41,7 +41,7 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Ticket,
-                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed'],
+                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed', 'urgency'],
                                                 object_list=project.tickets.all(),
                                               )
     return list_detail.object_list(

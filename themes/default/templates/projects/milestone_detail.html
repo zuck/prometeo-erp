@@ -43,7 +43,7 @@
         <li class="delete"><a title="{% trans 'Delete' %}" href="{% url milestone_delete object.project.slug object.slug %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.projects.change_milestone %}
-        <li class="list"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.slug %}">{% trans 'All' %}</a></li>
+        <li class="all"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.slug %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>

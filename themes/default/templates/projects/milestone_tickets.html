@@ -1,13 +1,10 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load markup %}
 {% load breadcrumbs %}
 {% load details %}
 
-{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
-{% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
-{% if object.tags.all %}{% block meta_keywords %}{{ object.tags.all|join:", " }}{% endblock %}{% endif %}
+{% block meta_title %}{% trans "Tickets" %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
