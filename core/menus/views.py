@@ -99,7 +99,7 @@ def bookmark_edit(request, slug, **kwargs):
         if form.is_valid():
             link = form.save()
             messages.success(request, _("The link has been updated."))
-            return redirect_to(request, url="/")
+            return redirect_to(request, url="/bookmarks/")
     else:
         form = LinkForm(instance=link)
 
@@ -113,7 +113,7 @@ def bookmark_delete(request, slug, **kwargs):
         request,
         model=Link,
         slug=slug,
-        post_delete_redirect='/',
+        post_delete_redirect='/bookmarks/',
         template_name='menus/bookmark_delete.html',
         **kwargs
      )
