@@ -20,6 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+from datetime import datetime
+
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
@@ -28,8 +30,8 @@ class Task(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     user = models.ForeignKey('auth.User', null=True, blank=True, verbose_name=_('user'))
-    start = models.DateTimeField(null=True, blank=True, verbose_name=_('Start'))
-    end = models.DateTimeField(null=True, blank=True, verbose_name=_('End'))    
+    start = models.DateTimeField(null=True, blank=True, verbose_name=_('start date'))
+    end = models.DateTimeField(null=True, blank=True, verbose_name=_('end date'))    
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))  
 
@@ -37,9 +39,22 @@ class Task(models.Model):
         ordering = ('start', 'id')
         get_latest_by = 'start'
 
+    def __init__(self, *args, **kwargs):
+        super(Task, self).__init__(*args, **kwargs)
+        if not self.start:
+            self.start = datetime.now()
+
     def __unicode__(self):
         return u'%s' % self.title
 
     @models.permalink
     def get_absolute_url(self):
         return ('task_detail', (), {"id": self.pk})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('task_edit', (), {"id": self.pk})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('task_delete', (), {"id": self.pk})
