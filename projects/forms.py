@@ -76,7 +76,7 @@ class TicketForm(forms.ModelForm):
     """
     class Meta:
         model = Ticket
-        exclude = ('project', 'author', 'assignees', 'closed', 'public', 'allow_comments')
+        exclude = ('project', 'author', 'closed', 'public', 'allow_comments')
         widgets = {
             'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),

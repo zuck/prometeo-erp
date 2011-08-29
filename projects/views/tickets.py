@@ -86,6 +86,9 @@ def ticket_add(request, project, **kwargs):
     else:
         form = TicketForm(instance=ticket)
 
+    if not request.user.has_perm("projects.change_assignees"):
+        del form.fields['assignees']
+
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
 @permission_required('projects.change_ticket')     
@@ -103,6 +106,9 @@ def ticket_edit(request, project, id, **kwargs):
             return redirect_to(request, url=ticket.get_absolute_url())
     else:
         form = TicketForm(instance=ticket)
+
+    if not request.user.has_perm("projects.change_assignees"):
+        del form.fields['assignees']
 
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 

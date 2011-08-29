@@ -229,6 +229,9 @@ class Ticket(prometeo_models.Commentable):
     class Meta:
         ordering = ('created', 'id')
         get_latest_by = 'created'
+        permissions = (
+            ("change_assignees", "Can change assignees"),
+        )
         
     def __setattr__(self, name, value):
         try:
