@@ -33,5 +33,10 @@ class UserRegistrationForm(UserEditForm):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['tos'] = forms.BooleanField(widget=forms.CheckboxInput(), label=mark_safe(_(u'I have read and agree to the <a href="/terms-service" target="_blank">Terms of Service</a>')), error_messages={ 'required': u"You must agree to the terms to register." })
         self.fields['pp'] = forms.BooleanField(widget=forms.CheckboxInput(), label=mark_safe(_(u'I have read and agree to the <a href="/privacy" target="_blank">Privacy Policy</a>')), error_messages={ 'required': u"You must agree to the privacy policy to register." })
+        del self.fields['is_staff']
+        del self.fields['is_active']
+        del self.fields['is_superuser']
+        del self.fields['groups']
+        del self.fields['user_permissions']
     
     

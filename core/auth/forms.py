@@ -37,8 +37,7 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = User
-        exclude = ('password', 'is_staff', 'is_active', 'is_superuser', 
-                   'groups', 'user_permissions', 'last_login', 'date_joined')
+        exclude = ('password', 'last_login', 'date_joined')
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)

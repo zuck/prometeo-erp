@@ -42,7 +42,7 @@ class UserProfile(models.Model):
     activation_key = models.CharField(max_length=40, blank=True, null=True)
     key_expires = models.DateTimeField(blank=True, null=True)
     language = models.CharField(max_length=5, null=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
-    timezone = models.CharField(max_length=12, null=True, choices=TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))
+    timezone = models.CharField(max_length=20, null=True, choices=TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     bookmarks = models.OneToOneField('menus.Menu', null=True, verbose_name=_("bookmarks"))
 

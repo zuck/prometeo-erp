@@ -109,6 +109,17 @@ def user_add(request, **kwargs):
             return redirect_to(request, url=user.get_absolute_url())
     else:
         form = UserEditForm(instance=user)
+    
+    if not request.user.has_perm('auth.change_group'):
+        del form.fields['groups']
+
+    if not request.user.has_perm('auth.change_user_permission'):
+        del form.fields['user_permissions']
+        
+    if not request.user.is_superuser:
+        del form.fields['is_staff']
+        del form.fields['is_active']
+        del form.fields['is_superuser']
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
   
@@ -133,6 +144,17 @@ def user_edit(request, username, **kwargs):
     else:
         form = UserEditForm(instance=user)
         pform = UserProfileForm(instance=user.get_profile())
+    
+    if not request.user.has_perm('auth.change_group'):
+        del form.fields['groups']
+
+    if not request.user.has_perm('auth.change_permission'):
+        del form.fields['user_permissions']
+        
+    if not request.user.is_superuser:
+        del form.fields['is_staff']
+        del form.fields['is_active']
+        del form.fields['is_superuser']
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'pform': pform, 'object': user}))
   
