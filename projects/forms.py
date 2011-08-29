@@ -33,7 +33,7 @@ class ProjectForm(forms.ModelForm):
     """
     class Meta:
         model = Project
-        exclude = ('author', 'closed')
+        exclude = ('author', 'slug', 'closed')
         widgets = {
             'description': CKEditor(),
             'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
@@ -45,7 +45,7 @@ class AreaForm(forms.ModelForm):
     """
     class Meta:
         model = Area
-        exclude = ('project', 'author')
+        exclude = ('project', 'slug', 'author')
         widgets = {
             'description': CKEditor(),
             'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
@@ -57,7 +57,7 @@ class MilestoneForm(forms.ModelForm):
     """
     class Meta:
         model = Milestone
-        exclude = ('project', 'author', 'closed')
+        exclude = ('project', 'slug', 'author', 'closed')
         widgets = {
             'description': CKEditor(),
             'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),

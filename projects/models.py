@@ -29,6 +29,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.comments.models import Comment
+from django.template.defaultfilters import slugify
 
 from prometeo.core import models as prometeo_models
 
@@ -75,6 +76,11 @@ class Project(prometeo_models.Commentable):
     @models.permalink
     def get_delete_url(self):
         return ('project_delete', (), {"slug": self.slug})
+
+    def save(self):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Project, self).save()
         
 class Area(prometeo_models.Commentable):
     title = models.CharField(max_length=50, verbose_name=_('title'))
@@ -102,6 +108,11 @@ class Area(prometeo_models.Commentable):
     @models.permalink
     def get_delete_url(self):
         return ('area_delete', (), {"project": self.project.slug, "slug": self.slug})
+
+    def save(self):
+        if not self.slug:
+            self.slug = slugify('%s_%s' % (self.project.pk, self.title))
+        super(Area, self).save()
 
 class Milestone(prometeo_models.Commentable):
     title = models.CharField(max_length=255, verbose_name=_('title'))
@@ -150,6 +161,8 @@ class Milestone(prometeo_models.Commentable):
         return ('milestone_delete', (), {"project": self.project.slug, "slug": self.slug})
         
     def save(self):
+        if not self.slug:
+            self.slug = slugify('%s_%s' % (self.project.pk, self.title))
         if self.date_due:
             if self.parent != None:
                 if self.parent.date_due and self.date_due > self.parent.date_due:
