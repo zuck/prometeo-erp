@@ -72,19 +72,30 @@ def ticket_detail(request, project, id, **kwargs):
     )
 
 @permission_required('projects.add_ticket')     
-def ticket_add(request, project, **kwargs):
+def ticket_add(request, project, milestone=None, area=None, **kwargs):
     """Adds a new ticket.
     """
     project = get_object_or_404(Project, slug=project)
     ticket = Ticket(project=project, author=request.user)
+
+    initial = {}
+
+    if milestone is not None:
+        milestone = get_object_or_404(Milestone, slug=milestone, project=project)
+        initial['milestone'] = milestone
+
+    if area is not None:
+        area = get_object_or_404(Area, slug=area, project=project)
+        initial['areas'] = [area]
+
     if request.method == 'POST':
-        form = TicketForm(request.POST, instance=ticket)
+        form = TicketForm(request.POST, instance=ticket, initial=initial)
         if form.is_valid():
             ticket = form.save()
             messages.success(request, _("Your ticket has been registered."))
             return redirect_to(request, url=ticket.get_absolute_url())
     else:
-        form = TicketForm(instance=ticket)
+        form = TicketForm(instance=ticket, initial=initial)
 
     if not request.user.has_perm("projects.change_assignees"):
         del form.fields['assignees']
