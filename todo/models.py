@@ -30,22 +30,32 @@ class Task(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     user = models.ForeignKey('auth.User', null=True, blank=True, verbose_name=_('user'))
-    start = models.DateTimeField(null=True, blank=True, verbose_name=_('start date'))
-    end = models.DateTimeField(null=True, blank=True, verbose_name=_('end date'))    
+    start_date = models.DateField(null=True, blank=True, verbose_name=_('start date'))
+    start_time = models.TimeField(null=True, blank=True, verbose_name=_('start time'))
+    end_date = models.DateField(null=True, blank=True, verbose_name=_('end date'))    
+    end_time = models.TimeField(null=True, blank=True, verbose_name=_('end time')) 
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))  
 
     class Meta:
-        ordering = ('start', 'id')
-        get_latest_by = 'start'
+        ordering = ('-start_date', '-start_time', 'id')
+        get_latest_by = '-start_date'
 
     def __init__(self, *args, **kwargs):
         super(Task, self).__init__(*args, **kwargs)
-        if not self.start:
-            self.start = datetime.now()
+        if not self.start_date:
+            now = datetime.now()
+            self.start_date = now.date()
+            self.start_time = now.time()
 
     def __unicode__(self):
         return u'%s' % self.title
+
+    def start(self):
+        return datetime.combine(self.start_date, self.start_time)
+
+    def end(self):
+        return datetime.combine(self.end_date, self.end_time)
 
     @models.permalink
     def get_absolute_url(self):

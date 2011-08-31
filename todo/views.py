@@ -46,7 +46,7 @@ def task_list(request, page=0, paginate_by=10, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Task,
-                                                fields=['id', 'title', 'start', 'end', 'closed'],
+                                                fields=['id', 'title', 'start_date', 'start_time', 'closed'],
                                                 object_list=object_list
                                               )
 
