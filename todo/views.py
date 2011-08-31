@@ -20,7 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-import datetime
+from datetime import datetime
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -142,27 +142,29 @@ def task_delete(request, id, **kwargs):
 def task_close(request, id, **kwargs):
     """Closes an open task.
     """
+    task = get_object_or_404(Task, id=id)
+    
+    if not (request.user.is_authenticated() and (request.user.has_perm('todo.change_task') or request.user == task.user)):
+        messages.error(request, _("You can't close this task."))
+        return redirect_to(request, url=task.get_absolute_url())
+
+    task.closed = datetime.now()
+    task.save()
     messages.success(request, _("The task has been closed."))
 
-    return create_update.delete_object(
-            request,
-            model=Task,
-            object_id=id,
-            post_delete_redirect='/tasks/',
-            template_name='todo/task_delete.html',
-            **kwargs
-        )
+    return redirect_to(request, permanent=False, url=task.get_absolute_url())
 
 def task_reopen(request, id, **kwargs):
     """Reopens a closed task.
-    """ 
+    """
+    task = get_object_or_404(Task, id=id)
+    
+    if not (request.user.is_authenticated() and (request.user.has_perm('todo.change_task') or request.user == task.user)):
+        messages.error(request, _("You can't reopen this task."))
+        return redirect_to(request, url=task.get_absolute_url())
+
+    task.closed = None
+    task.save()
     messages.success(request, _("The task has been reopened."))
 
-    return create_update.delete_object(
-            request,
-            model=Task,
-            object_id=id,
-            post_delete_redirect='/tasks/',
-            template_name='todo/task_delete.html',
-            **kwargs
-        )
+    return redirect_to(request, permanent=False, url=task.get_absolute_url())
