@@ -454,6 +454,36 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .messages li.success { background-image: url(images/success.png); }
 
+#content .tasks dt {
+    border-bottom: 2px solid #d6d6d6;
+    background: none;
+    padding-left: 0;
+}
+
+#content .tasks dd { margin: 0; }
+
+#content .tasks li {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px 15px 10px 35px;
+    background: no-repeat 10px 10px;
+}
+
+#content .tasks li.closed { background-image: url(images/success.png); }
+
+#content .tasks li.expired {
+    background-color: #ffe0e0;
+    background-image: url(images/error.png);
+}
+
+#content .tasks li strong {
+    float: left;
+    width: 65px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+#content .tasks li .delay, #content .tasks li .countdown  { float: right; }
+
 #sidebar {
     float: left;
     width: 190px;

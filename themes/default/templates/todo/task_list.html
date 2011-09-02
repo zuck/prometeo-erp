@@ -30,16 +30,22 @@
 <div class="details">
     {% regroup object_list by start_date as tasks_by_date %}
     {% if tasks_by_date %}
-    <dl>
+    <dl class="tasks">
     {% for date in tasks_by_date %}
         <dt><h3>{{ date.grouper }}</h3></dt>
         <dd>
             <ul>
             {% for item in date.list %}
-                <li class="task_item">
-                    <strong{% if item.closed %} class="closed"{% endif %}>{{ item.start_time }}</strong>
+                <li{% if item.closed %} class="closed"{% else %}{% if item.expired %} class="expired"{% endif %}{% endif %}>
+                    <strong>{{ item.start_time }}</strong>
                     <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
-                    {% if item.end and not item.closed %}({{ item.end|timeuntil }}){% endif %}
+                    {% if item.expired %}
+                    <span class="delay">({{ item.end|timesince }} {% trans "overdue" %})</span>
+                    {% else %}
+                    {% if not item.closed and item.end and item.is_started %}
+                    <span class="countdown">({{ item.end|timeuntil }})</span>
+                    {% endif %}
+                    {% endif %}
                 </li>
             {% endfor %}
             </ul>
