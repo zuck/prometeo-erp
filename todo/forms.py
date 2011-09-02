@@ -35,4 +35,6 @@ class TaskForm(forms.ModelForm):
         exclude = ('user', 'closed')
         widgets = {
             'description': CKEditor(),
+            'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
+            'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }

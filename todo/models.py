@@ -35,7 +35,9 @@ class Task(models.Model):
     end_date = models.DateField(null=True, blank=True, verbose_name=_('end date'))    
     end_time = models.TimeField(null=True, blank=True, verbose_name=_('end time')) 
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))  
+    closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on')) 
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags')) 
 
     class Meta:
         ordering = ('-start_date', '-start_time', 'id')
