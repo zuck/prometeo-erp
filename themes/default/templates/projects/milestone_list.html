@@ -30,7 +30,13 @@
     </ul>
 </div>
 <div class="details">
-    {% detail_table object_list field_names %}
+    <dl class="milestones">
+        {% for object in object_list %}
+        {% if not object.parent %}
+        {% include 'projects/milestone.html' %}
+        {% endif %}
+        {% endfor %}
+    </dl>
     {% include 'elements/paginator.html' %}
 </div>
 {% endblock %}

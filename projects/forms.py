@@ -66,9 +66,10 @@ class MilestoneForm(forms.ModelForm):
         
     def clean_date_due(self):
         ddate = self.cleaned_data['date_due']
-        parent = self.cleaned_data['parent']
-        if parent and parent.date_due and ddate > parent.date_due:
-            raise django_forms.ValidationError(_("The date due is greater than the parent's one."))
+        if ddate:
+            parent = self.cleaned_data['parent']
+            if parent and parent.date_due and ddate > parent.date_due:
+                raise django_forms.ValidationError(_("The date due is greater than the parent's one."))
         return ddate
         
 class TicketForm(forms.ModelForm):

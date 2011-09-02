@@ -277,6 +277,66 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 .all a:hover { background-image: url(images/all_hover.png); }
 
+.progressbar {
+    clear: both;
+    float: left;
+    width: 100%;
+    background: #f2f2f2 url(images/bg_progressbar_right.jpg) no-repeat right center;
+}
+
+.progressbar p { display: none; }
+
+.progressbar .progress {
+    float: left;
+    background: #96bf0d url(images/bg_progress_left.jpg) no-repeat left center;
+}
+
+.delayed .progress { background: #fffcaa url(images/bg_progress_delayed_left.jpg) no-repeat left center; }
+
+.expired .progress { background: #d21717 url(images/bg_progress_expired_left.jpg) no-repeat left center; }
+
+.progress-20 { width: 100%; }
+.progress-19 { width: 95%; }
+.progress-18 { width: 90%; }
+.progress-17 { width: 85%; }
+.progress-16 { width: 80%; }
+.progress-15 { width: 75%; }
+.progress-14 { width: 70%; }
+.progress-13 { width: 65%; }
+.progress-12 { width: 60%; }
+.progress-11 { width: 55%; }
+.progress-10 { width: 50%; }
+.progress-9 { width: 45%; }
+.progress-8 { width: 40%; }
+.progress-7 { width: 35%; }
+.progress-6 { width: 30%; }
+.progress-5 { width: 25%; }
+.progress-4 { width: 20%; }
+.progress-3 { width: 15%; }
+.progress-2 { width: 10%; }
+.progress-1 { width: 5%; }
+.progress-0 { width: 0%; }
+
+.progressbar .value {
+    float: left;
+    width: 100%;
+    padding: 6px 0;
+    text-align: center;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.progressbar .progress-20 .value { background-image: url(images/bg_progress_right.jpg); }
+
+.delayed .progress-20 .value { background-image: url(images/bg_progress_delayed_right.jpg); }
+
+.expired .progress-20 .value { background-image: url(images/bg_progress_expired_right.jpg); }
+
+.progressbar .progress-0 .value {
+    padding-left: 10px;
+    background: url(images/bg_progressbar_left.jpg) no-repeat left center;
+}
+
 /**
  * Layout.
  */
@@ -483,6 +543,26 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #content .tasks li .delay, #content .tasks li .countdown  { float: right; }
+
+#content .milestones .milestones { padding-left: 100px; }
+
+#content .milestones dt {
+    border-bottom: 2px solid #d6d6d6;
+    background: none;
+    padding: 0;
+}
+
+#content .milestones dt h3 { margin-bottom: 5px; }
+
+#content .milestones .meta {
+    font-weight: normal;
+    color: #000;
+}
+
+#content .milestones dd {
+    margin-top: 5px;
+    margin-left: 0;
+}
 
 #sidebar {
     float: left;

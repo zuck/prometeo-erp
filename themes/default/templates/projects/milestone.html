@@ -1,0 +1,38 @@
+{% load i18n %}
+
+<dt{% if object.closed %} class="closed"{% else %}{% if object.expired %} class="expired"{% endif %}{% endif %}>
+    <h3><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h3>
+</dt>
+<dd>
+    <p class="meta">
+        <strong>{% trans "Deadline" %}:</strong>
+        <span>
+            {% if object.date_due %}
+            {{ object.date_due }}
+            {% if object.expired %}
+            <span class="delay">({{ object.date_due|timesince }} {% trans "overdue" %})</span>
+            {% else %}
+            {% if not object.closed and object.date_due %}
+            <span class="countdown">({{ object.date_due|timeuntil }})</span>
+            {% endif %}
+            {% endif %}
+            {% else %}
+            <span class="disabled">{% trans "undefined" %}</span>
+            {% endif %}
+        </span>
+        -
+        <strong>{% trans "Tickets" %}:</strong>
+        <span><a href="{% url milestone_tickets object.project.slug object.slug %}">{{ object.tickets.closed.count }}/{{ object.tickets.count }}</a></span>
+    </p>
+    {% include "projects/milestone_progress.html" %}
+    {{ object.description|safe }}
+    {% if object.sub_milestones.all %}
+    {% with object.sub_milestones.all as object_list %}
+    <dl class="milestones">
+        {% for object in object_list %}
+        {% include 'projects/milestone.html' %}
+        {% endfor %}
+    </dl>
+    {% endwith %}
+    {% endif %}
+</dd>
