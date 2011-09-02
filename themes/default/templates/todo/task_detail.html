@@ -50,6 +50,14 @@
             <td>{% if object.end %}{{ object.end }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
         </tr>
         <tr>
+            <th>{% trans "Tags" %}:</th>
+            <td colspan="3">{% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Categories" %}:</th>
+            <td colspan="3">{% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
+        </tr>
+        <tr>
             <th>{% trans "Description" %}:</th>
             <td colspan="3">
                 <div class="entry">
