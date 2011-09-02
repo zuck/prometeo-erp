@@ -586,6 +586,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     position: relative;
     float: right;
     top: -36px;
+    margin-bottom: -36px;
 }
 
 #footer {
