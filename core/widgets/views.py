@@ -40,9 +40,9 @@ def widget_add(request, **kwargs):
     """Adds a new widget for the current user's dashboard.
     """
     dashboard = request.user.get_profile().dashboard
-    widget = Widget(region=dashboard, sort_order=dashboard.widgets.count())
+    widget = Widget(region=dashboard, sort_order=dashboard.widgets.count(), editable=True)
     if request.method == 'POST':
-        form = LinkForm(request.POST, instance=widget)
+        form = WidgetForm(request.POST, instance=widget)
         if form.is_valid():
             widget.slug = slugify("%s_%s" % (widget.title, request.user.pk))
             widget = form.save()

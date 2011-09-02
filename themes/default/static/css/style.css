@@ -582,6 +582,12 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border: 1px solid #e6e6e6;
 }
 
+#main .widget .actions {
+    position: relative;
+    float: right;
+    top: -36px;
+}
+
 #footer {
     height: 200px;
     border-top: 1px solid #111;

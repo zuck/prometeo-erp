@@ -57,6 +57,7 @@ class Widget(models.Model):
     template = models.CharField(_('template'), blank=True, null=True, max_length=200, default="widgets/widget.html")
     context = models.TextField(_('context'), blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'))
     show_title = models.BooleanField(_('show title'), default=True)
+    editable = models.BooleanField(_('editable'), default=False)
     sort_order = models.PositiveIntegerField(_('sort order'), default=0)
 
     class Meta:
@@ -66,6 +67,14 @@ class Widget(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('widget_edit', (), {"slug": self.slug})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('widget_delete', (), {"slug": self.slug})
 
 def profile_post_save(sender, instance, signal, *args, **kwargs):
     if not instance.dashboard:

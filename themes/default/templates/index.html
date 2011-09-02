@@ -23,5 +23,8 @@
 </div>
 <div class="details">
     {% region user.get_profile.dashboard.slug %}
+    {% if not user.get_profile.dashboard.widgets.all %}
+    <p class="disabled">{% trans "No widgets found." %}</p>
+    {% endif %}
 </div>
 {% endblock %}
