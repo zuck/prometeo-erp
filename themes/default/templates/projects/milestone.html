@@ -4,8 +4,12 @@
     <h3><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h3>
     <span class="actions">
         <ul>
+            {% if perms.projects.edit_milestone %}
             <li class="edit"><a title="{% trans "Edit" %}" href="{{ object.get_edit_url }}">{% trans "Edit" %}</a></li>
+            {% endif %}
+            {% if perms.projects.delete_milestone %}
             <li class="delete"><a title="{% trans "Delete" %}" href="{{ object.get_delete_url }}">{% trans "Delete" %}</a></li>
+            {% endif %}
         </ul>
     </span>
 </dt>
