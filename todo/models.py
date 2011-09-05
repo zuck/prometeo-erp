@@ -53,17 +53,17 @@ class Task(models.Model):
     def __unicode__(self):
         return u'%s' % self.title
 
-    def is_started(self):
+    def started(self):
         return (self.start() <= datetime.now())
+
+    def expired(self):
+        return (self.end() < datetime.now())
 
     def start(self):
         return datetime.combine(self.start_date, self.start_time)
 
     def end(self):
         return datetime.combine(self.end_date, self.end_time)
-
-    def expired(self):
-        return (self.end() < datetime.now())
 
     @models.permalink
     def get_absolute_url(self):

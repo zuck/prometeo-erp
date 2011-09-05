@@ -528,7 +528,9 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background: no-repeat 10px 10px;
 }
 
-#content .tasks li.closed { background-image: url(images/success.png); }
+#content .tasks li.closed, #content .tasks li.delayed { background-image: url(images/success.png); }
+
+#content .tasks li.delayed { background-color: #fffecc; }
 
 #content .tasks li.expired {
     background-color: #ffe0e0;
@@ -542,7 +544,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     text-align: right;
 }
 
-#content .tasks li .delay, #content .tasks li .countdown  { float: right; }
+#content .tasks .delay, #content .tasks .countdown  { float: right; }
 
 #content .milestones .milestones { padding-left: 100px; }
 

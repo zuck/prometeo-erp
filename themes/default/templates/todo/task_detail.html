@@ -38,6 +38,20 @@
 <div class="details">
     <table class="properties">
         <tr>
+            <th>{% trans "Status" %}:</th>
+            <td colspan="3">
+                {% if object.closed %}
+                {% trans "Closed" %}{% if object.expired %} <span class="delay">({{ object.end|timesince }} {% trans "overdue" %})</span>{% endif %}
+                {% else %}
+                {% if object.expired %}
+                {% trans "Expired" %}{% if object.expired %} <span class="delay">({{ object.end|timesince }} {% trans "overdue" %})</span>{% endif %}
+                {% else %}
+                {% trans "Open" %}
+                {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
             <th>{% trans "Created on" %}:</th>
             <td>{% if object.created %}{{ object.created }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
             <th>{% trans "Closed on" %}:</th>

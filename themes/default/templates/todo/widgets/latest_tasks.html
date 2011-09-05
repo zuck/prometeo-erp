@@ -11,7 +11,7 @@
     <dd>
         <ul>
         {% for item in date.list %}
-            <li{% if item.closed %} class="closed"{% else %}{% if item.expired %} class="expired"{% endif %}{% endif %}>
+            <li{% if item.closed %}{% if item.expired %} class="delayed"{% else %} class="closed"{% endif %}{% else %}{% if item.expired %} class="expired"{% endif %}{% endif %}>
                 <strong>{{ item.start_time }}</strong>
                 <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
             </li>
@@ -23,5 +23,6 @@
 {% else %}
 <p class="disabled">{% trans "No results found." %}</p>
 {% endif %}
-<p><a href="{% url task_list %}">{% trans "See all" %}</a></p>
+<p class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans "Add" %}</a></p>
+<p><a title="{% trans 'See all' %}" href="{% url task_list %}">{% trans "See all" %}</a></p>
 {% endblock %}
