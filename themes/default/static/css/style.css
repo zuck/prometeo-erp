@@ -671,6 +671,13 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-bottom: -36px;
 }
 
+#main .milestones .actions {
+    position: relative;
+    float: right;
+    top: -22px;
+    margin-bottom: -22px;
+}
+
 #footer {
     height: 200px;
     border-top: 1px solid #111;
