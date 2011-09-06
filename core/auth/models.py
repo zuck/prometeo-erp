@@ -22,6 +22,8 @@ __version__ = '0.0.2'
 
 import datetime, random, hashlib
 
+from pytz import common_timezones
+
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.conf import settings
@@ -31,7 +33,7 @@ from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 from django.core.mail import EmailMessage
 
-from pytz import common_timezones
+from prometeo.core.widgets.models import create_dashboard, delete_dashboard
 
 TIME_ZONES = [(tz, tz) for tz in common_timezones]
  
@@ -84,4 +86,6 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
         email.send()
 
 models.signals.post_save.connect(user_post_save, User)
+models.signals.post_save.connect(create_dashboard, UserProfile)
+models.signals.post_delete.connect(delete_dashboard, UserProfile)
 

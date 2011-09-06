@@ -32,6 +32,7 @@ from django.contrib.comments.models import Comment
 from django.template.defaultfilters import slugify
 
 from prometeo.core import models as prometeo_models
+from prometeo.core.widgets.models import create_dashboard, delete_dashboard
 
 class Project(prometeo_models.Commentable):
     PROJECT_STATUS_CHOICES = (
@@ -49,6 +50,7 @@ class Project(prometeo_models.Commentable):
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     
     def _milestones(self):
         """Returns only the top-level milestones.
@@ -93,6 +95,7 @@ class Area(prometeo_models.Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     
     def __unicode__(self):
         return u'%s' % self.title
@@ -127,6 +130,7 @@ class Milestone(prometeo_models.Commentable):
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     
     def _expired(self):
         if self.date_due:
@@ -298,3 +302,10 @@ class Ticket(prometeo_models.Commentable):
 
     def __unicode__(self):
         return u'#%d %s' % (self.pk, self.title)
+
+models.signals.post_save.connect(create_dashboard, Project)
+models.signals.post_delete.connect(delete_dashboard, Project)
+models.signals.post_save.connect(create_dashboard, Area)
+models.signals.post_delete.connect(delete_dashboard, Area)
+models.signals.post_save.connect(create_dashboard, Milestone)
+models.signals.post_delete.connect(delete_dashboard, Milestone)

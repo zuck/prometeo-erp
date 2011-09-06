@@ -76,17 +76,14 @@ class Widget(models.Model):
     def get_delete_url(self):
         return ('widget_delete', (), {"slug": self.slug})
 
-def profile_post_save(sender, instance, signal, *args, **kwargs):
+def create_dashboard(sender, instance, signal, *args, **kwargs):
     if not instance.dashboard:
-        dashboard = Region(slug="profile_%d_dashboard" % instance.pk, description='Dashboard')
+        dashboard = Region(slug="%s_%d_dashboard" % (instance.__class__.__name__.lower(), instance.pk), description='Dashboard')
         dashboard.save()
         instance.dashboard = dashboard
         instance.save()
 
-def profile_post_delete(sender, instance, signal, *args, **kwargs):
+def delete_dashboard(sender, instance, signal, *args, **kwargs):
     dashboard = instance.dashboard
     if dashboard:
         dashboard.delete()
-
-models.signals.post_save.connect(profile_post_save, UserProfile)
-models.signals.post_delete.connect(profile_post_delete, UserProfile)

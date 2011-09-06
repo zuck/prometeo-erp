@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load markup %}
 {% load breadcrumbs %}
+{% load region %}
 
 {% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 {% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
@@ -91,6 +92,7 @@
             </td>
         </tr>
     </table>
+    {% region object.dashboard %}
 </div>
 {% include "elements/comments.html" %}
 {% endblock %}

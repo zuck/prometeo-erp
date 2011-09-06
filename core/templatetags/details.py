@@ -70,14 +70,15 @@ class DetailTableNode(Node):
                     output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.name, verbose_name)
                 else:
                     output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.name, verbose_name)
-            if self.has_actions(instance):
+            if 'actions' not in exclude and self.has_actions(instance):
                 output += u'\t\t<td class="actions"></td>\n'
             output += u'\t</thead>\n'
             for i, instance in enumerate(self.object_list):
                 output += self.row_template(instance, i)
                 for j, f in enumerate(self.field_list):
                     output += self.column_template(instance, j)
-                output += self.actions_template(instance)
+                if 'actions' not in exclude:
+                    output += self.actions_template(instance)
                 output += u'\t</tr>\n'
             output += u'</table>\n'
         return mark_safe(output)

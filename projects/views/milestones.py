@@ -129,7 +129,7 @@ def milestone_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Ticket,
-                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency'],
+                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
                                                 object_list=milestone.tickets.all(),
                                               )
     return list_detail.object_list(
