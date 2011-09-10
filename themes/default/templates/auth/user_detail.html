@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load navigator %}
 {% load avatar %}
 
 {% block meta_title %}{{ object }}{% endblock %}
@@ -16,11 +17,7 @@
 {% block title %}
 <div class="title">
     <h1>{{ object }}</h1>
-    <div class="menu">
-        <ul>
-            <li><a href="{% url bookmark_list %}">{% trans 'Bookmarks' %}</a></li>
-        </ul>
-    </div>
+    <h2>{% block subtitle %}{% trans "Profile" %}{% endblock %}</h2>
 </div>
 {% endblock %}
 
@@ -41,14 +38,37 @@
         {% endif %}
     </ul>
 </div>
+{% objects_from object %}
+{% with objects as object_list %}
 {% include 'elements/navigator.html' %}
-<div class="details">
-    {% avatar object 90 %}
-    <dl class="user-info">
-        <dt class="fullname">{% trans 'Fullname' %}</dt>
-        <dd>{% if object.get_full_name %}{{ object.get_full_name }}{% else %}<span class="disabled">{% trans 'Not specified.' %}</span>{% endif %}</dd>
-        <dt class="joined">{% trans 'Joined on' %}</dt>
-        <dd>{{ object.date_joined }}</dd>
-    </dl>
+{% endwith %}
+<div class="sections">
+    <div class="menu">
+        <ul>
+            {% block menu %}
+            <li class="active"><a href="{{ object.get_absolute_url }}">{% trans 'Profile' %}</a></li>
+            <li><a href="{% url bookmark_list %}">{% trans 'Bookmarks' %}</a></li>
+            {% endblock %}
+        </ul>
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            {% avatar object 90 %}
+            <dl class="user-info">
+                <dt class="fullname">{% trans 'Fullname' %}</dt>
+                <dd>
+                    {% if object.get_full_name %}
+                    {{ object.get_full_name }}
+                    {% else %}
+                    <span class="disabled">{% trans 'Not specified.' %}</span>
+                    {% endif %}
+                </dd>
+                <dt class="joined">{% trans 'Joined on' %}</dt>
+                <dd>{{ object.date_joined }}</dd>
+            </dl>
+        </div>
+        {% endblock %}
+    </div>
 </div>
 {% endblock %}

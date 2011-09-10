@@ -56,7 +56,7 @@ dl dd { margin-left: 15px; }
 pre {
     clear: both;
     padding: 15px;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #d6d6d6;
     background: #efefef;
     overflow: auto;
 }
@@ -71,7 +71,7 @@ form {
     clear: both;
     overflow: hidden;
     padding: 15px;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #d6d6d6;
     background: #f6f6f6;
 }
 
@@ -128,7 +128,7 @@ table {
     clear: both;
     float: left;
     width: 100%;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #d6d6d6;
     margin-bottom: 10px;
 }
 
@@ -137,7 +137,7 @@ td, th {
     background: #f6f6f6;
 }
 
-thead td, th { background: #dfdfdf; }
+thead td, th { background: #d6d6d6; }
 
 thead a.asc, thead a.desc {
     float: left;
@@ -172,23 +172,36 @@ form .submit input, .submit a {
 
 form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
-.navigator { float: right; }
-
 .paginator {
     clear: both;
     float: left;
     width: 100%;
-    border-top: 1px solid #dfdfdf;
+    border-top: 1px solid #d6d6d6;
     padding-top: 10px;
     margin-top: 10px;
 }
 
-.paginator .first, .navigator .first,
-.paginator .previous, .navigator .previous,
-.paginator .next, .navigator .next,
-.paginator .last, .navigator .last,
+.navigator {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.paginator .first,
+.paginator .previous,
+.paginator .next,
+.paginator .last,
 .paginator .page_number,
-.paginator .current, .navigator .current { 
+.paginator .current { 
+    float: left;
+    margin-right: 5px;
+    text-align: center;
+}
+
+.navigator .first,
+.navigator .previous,
+.navigator .next,
+.navigator .last,
+.navigator .current { 
     float: left;
     margin-left: 5px;
     text-align: center;
@@ -198,12 +211,12 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 .paginator .disabled, .navigator .disabled,
 .paginator a, .navigator a {
-    display: block;   
+    display: block;
     padding: 0 5px;
 }
 
 .paginator .disabled, .navigator .disabled {
-    border: 1px solid #dfdfdf;
+    border: 1px solid #d6d6d6;
     background: #f6f6f6;
 }
 
@@ -235,7 +248,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     float: right;
     width: 100%;
     text-align: right;
-    border-top: 1px solid #dfdfdf;
+    border-top: 1px solid #d6d6d6;
     color: #60625d;
 }
 
@@ -604,27 +617,44 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border-bottom: 1px solid #e6e6e6;
 }
 
-#main .title .menu {
-    float: right;
-    width: auto;
-    margin-top: -26px;
+#main .title h2 { color: #1f1f1f; }
+
+#main .sections .menu {
+    border-bottom: 1px solid #e6e6e6;
 }
 
-#main .title .menu li {
+#main .sections .menu ul {
+    float: left;
+    width: auto;
+    margin-bottom: -1px;
+    border-left: 1px solid #e6e6e6;
+}
+
+#main .sections .menu li {
     clear: none;
     float: left;
     width: auto;
 }
 
-#main .title .menu li a {
-    background: none;
-    padding: 0;
-    margin-left: 20px;
+#main .sections .menu li a {
+    background: #f6f6f6;
+    border-top: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding: 10px;
 }
 
-#main .title .menu li a:hover {
-    background: none;
-    border: 0;
+#main .sections .menu li.active a {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    
+}
+
+#main .sections .section {
+    clear: both;
+    width: 100%;
+    float: left;
+    padding-top: 10px;
+    margin-bottom: 10px;
 }
 
 #main .actions ul { float: left; }

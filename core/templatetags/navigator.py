@@ -24,6 +24,16 @@ from django import template
 
 register = template.Library()
 
+@register.simple_tag(takes_context=True)
+def objects_from(context, obj):
+    """
+    Adds the "objects" variable to the context.
+
+    Example tag usage: {% objects_from object %}
+    """
+    context['objects'] = obj.__class__._default_manager.all()
+    return ''
+
 @register.filter
 def index_of(obj_list, obj):
     """

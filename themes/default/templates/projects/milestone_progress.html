@@ -1,7 +1,7 @@
 {% load i18n %}
 
-<p class="progressbar {% if object.expired %}{% if object.closed %}delayed{% else %}expired{% endif %}{% endif %}">   
-    <span class="progress progress-{% widthratio object.progress 100 20 %}">
-        <strong class="value">{{ object.progress }}%</strong>
+<p class="progressbar {% if milestone.expired %}{% if milestone.closed %}delayed{% else %}expired{% endif %}{% endif %}">   
+    <span class="progress progress-{% widthratio milestone.progress 100 20 %}">
+        <strong class="value">{{ milestone.progress }}%</strong>
     </span>
 </p>

@@ -50,7 +50,7 @@ def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
         paginate_by=paginate_by,
         page=page,
         extra_context={
-            'project': project,
+            'object': project,
             'field_names': field_names,
             'filter_fields': filter_fields,
         },

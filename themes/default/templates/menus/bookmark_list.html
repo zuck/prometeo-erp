@@ -1,10 +1,12 @@
-{% extends "base.html" %}
+{% extends "auth/user_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
 
 {% block meta_title %}{% trans "Bookmarks" %}{% endblock %}
+
+{% block subtitle %}{% trans "Bookmarks" %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -14,13 +16,12 @@
     {% render_breadcrumbs %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{% trans "Bookmarks" %}</h1>
-</div>
+{% block menu %}
+<li><a href="{{ object.get_absolute_url }}">{% trans 'Profile' %}</a></li>
+<li class="active"><a href="{% url bookmark_list %}">{% trans 'Bookmarks' %}</a></li>
 {% endblock %}
 
-{% block main %}
+{% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>

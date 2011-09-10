@@ -58,6 +58,7 @@ def bookmark_list(request, page=0, paginate_by=10, **kwargs):
         paginate_by=paginate_by,
         page=page,
         extra_context={
+            'object': request.user,
             'field_names': field_names,
             'filter_fields': filter_fields,
         },

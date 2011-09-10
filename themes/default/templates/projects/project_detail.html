@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load navigator %}
 {% load region %}
 
 {% block meta_title %}{{ object.title|striptags|capfirst }}{% endblock %}
@@ -19,19 +20,7 @@
 {% block title %}
 <div class="title">
     <h1>{{ object.title|escape|capfirst }}</h1>
-    <div class="menu">
-        <ul>
-            {% if perms.projects.change_area %}
-            <li><a href="{% url area_list object.slug %}">{% trans 'Areas' %}</a></li>
-            {% endif %}
-            {% if perms.projects.change_milestone %}
-            <li><a href="{% url milestone_list object.slug %}">{% trans 'Milestones' %}</a></li>
-            {% endif %}
-            {% if perms.projects.change_ticket %}
-            <li><a href="{% url ticket_list object.slug %}">{% trans 'Tickets' %}</a></li>
-            {% endif %}
-        </ul>
-    </div>
+    <h2>{% block subtitle %}{% trans "Dashboard" %}{% endblock %}</h2>
 </div>
 {% endblock %}
 
@@ -52,59 +41,86 @@
         {% endif %}
     </ul>
 </div>
+{% objects_from object %}
+{% with objects as object_list %}
 {% include 'elements/navigator.html' %}
-<div class="details">
-    <table class="properties">
-        <tr>
-            <th>{% trans "Project manager" %}:</th>
-            <td colspan="3">
-                {% if object.parent %}
-                <a class="manager" href="{{ object.manager.get_absolute_url }}">{{ object.manager }}</a>
-                {% else %}
-                <span class="disabled">{% trans "empty" %}</span>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>{% trans "Created by" %}:</th>
-            <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
-            <th>{% trans "Created on" %}:</th>
-            <td>{{ object.created }}</td>
-        </tr>
-        <tr>
-            <th>{% trans "Status" %}:</th>
-            <td>{% trans object.status %}</td>
-            <th>{% trans "Closed on" %}:</th>
-            <td>
-                {% if object.closed %}
-                {{ object.closed }}
-                {% else %}
-                <span class="disabled">{% trans "empty" %}</span>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>{% trans "Tags" %}:</th>
-            <td colspan="3">
-                {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <th>{% trans "Categories" %}:</th>
-            <td colspan="3">
-                {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <th>{% trans "Description" %}:</th>
-            <td colspan="3">
-                {% with object.description as description %}
-                {% include "projects/entry.html" %}
-                {% endwith %}
-            </td>
-        </tr>
-    </table>
-    {% region object.dashboard %}
+{% endwith %}
+<div class="sections">   
+    <div class="menu">
+        <ul>
+            {% block menu %}
+            {% if perms.projects.change_project %}
+            <li class="active"><a href="{{ object.get_absolute_url }}">{% trans 'Dashboard' %}</a></li>
+            {% endif %}
+            {% if perms.projects.change_area %}
+            <li><a href="{% url area_list object.slug %}">{% trans 'Areas' %}</a></li>
+            {% endif %}
+            {% if perms.projects.change_milestone %}
+            <li><a href="{% url milestone_list object.slug %}">{% trans 'Milestones' %}</a></li>
+            {% endif %}
+            {% if perms.projects.change_ticket %}
+            <li><a href="{% url ticket_list object.slug %}">{% trans 'Tickets' %}</a></li>
+            {% endif %}
+            {% endblock %}
+        </ul>
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            <table class="properties">
+                <tr>
+                    <th>{% trans "Project manager" %}:</th>
+                    <td colspan="3">
+                        {% if object.parent %}
+                        <a class="manager" href="{{ object.manager.get_absolute_url }}">{{ object.manager }}</a>
+                        {% else %}
+                        <span class="disabled">{% trans "empty" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Created by" %}:</th>
+                    <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
+                    <th>{% trans "Created on" %}:</th>
+                    <td>{{ object.created }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans "Status" %}:</th>
+                    <td>{% trans object.status %}</td>
+                    <th>{% trans "Closed on" %}:</th>
+                    <td>
+                        {% if object.closed %}
+                        {{ object.closed }}
+                        {% else %}
+                        <span class="disabled">{% trans "empty" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Tags" %}:</th>
+                    <td colspan="3">
+                        {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Categories" %}:</th>
+                    <td colspan="3">
+                        {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Description" %}:</th>
+                    <td colspan="3">
+                        {% with object.description as description %}
+                        {% include "projects/entry.html" %}
+                        {% endwith %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {% region object.dashboard %}
+        {% endblock %}
+    </div>
 </div>
 {% include "elements/comments.html" %}
 {% endblock %}

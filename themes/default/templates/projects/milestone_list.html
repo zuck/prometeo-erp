@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "projects/project_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -6,37 +6,52 @@
 
 {% block meta_title %}{% trans "Milestones" %}{% endblock %}
 
+{% block subtitle %}{% trans "Milestones" %}{% endblock %}
+
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
-    {% add_crumb project project.get_absolute_url %}
+    {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Milestones' %}
     {% render_breadcrumbs %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{% trans "Milestones" %}</h1>
-</div>
+{% block menu %}
+{% if perms.projects.change_project %}
+<li><a href="{{ object.get_absolute_url }}">{% trans 'Dashboard' %}</a></li>
+{% endif %}
+{% if perms.projects.change_area %}
+<li><a href="{% url area_list object.slug %}">{% trans 'Areas' %}</a></li>
+{% endif %}
+{% if perms.projects.change_milestone %}
+<li class="active"><a href="{% url milestone_list object.slug %}">{% trans 'Milestones' %}</a></li>
+{% endif %}
+{% if perms.projects.change_ticket %}
+<li><a href="{% url ticket_list object.slug %}">{% trans 'Tickets' %}</a></li>
+{% endif %}
 {% endblock %}
 
-{% block main %}
+{% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
         {% if perms.projects.add_milestone %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add project.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.slug %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>
 <div class="details">
+    {% if object_list %}
     <dl class="milestones">
-        {% for object in object_list %}
-        {% if not object.parent %}
+        {% for milestone in object_list %}
+        {% if not milestone.parent %}
         {% include 'projects/milestone.html' %}
         {% endif %}
         {% endfor %}
     </dl>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
     {% include 'elements/paginator.html' %}
 </div>
 {% endblock %}
