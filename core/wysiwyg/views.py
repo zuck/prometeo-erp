@@ -40,7 +40,7 @@ import forms
 import utils
 
 if not os.access(utils.get_upload_root(), os.F_OK):
-    os.mkdir(utils.get_upload_root())
+    os.makedirs(utils.get_upload_root())
 
 @staff_member_required
 def admin_copy(request, url=None):
