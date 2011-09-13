@@ -701,11 +701,18 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .widget .title {
     width: 367px;
-    padding: 10px 10px 0;
+    padding: 5px 10px;
     background: #1f1f1f;
     color: #fff;
     border-bottom: none;
 }
+
+#main .widget .title h1,
+#main .widget .title h2,
+#main .widget .title h3,
+#main .widget .title h4,
+#main .widget .title h5,
+#main .widget .title h6 { margin-bottom: 0; }
 
 #main .widget .title h2 { color: #e6e6e6; }
 
@@ -725,8 +732,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .widget .actions {
     position: relative;
     float: right;
-    top: -38px;
-    margin-bottom: -38px;
+    top: -32px;
+    margin-bottom: -32px;
     margin-right: 5px;
 }
 
