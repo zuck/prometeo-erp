@@ -36,6 +36,7 @@ from django.conf import settings
 from prometeo.core.filter import filter_objects
 
 from models import *
+from forms import *
 
 @permission_required('notifications.change_notification') 
 def notification_list(request, page=0, paginate_by=10, **kwargs):
@@ -49,6 +50,14 @@ def notification_list(request, page=0, paginate_by=10, **kwargs):
                                                 fields=['id', 'title', 'created', 'read'],
                                                 object_list=object_list
                                               )
+    
+    if request.method == 'POST':
+        form = SubscriptionsForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("The user's profile has been saved."))
+    else:
+        form = SubscriptionsForm(user=request.user)
 
     return list_detail.object_list(
         request,
@@ -56,6 +65,7 @@ def notification_list(request, page=0, paginate_by=10, **kwargs):
         paginate_by=paginate_by,
         page=page,
         extra_context={
+            'form' : form,
             'object': request.user,
             'field_names': field_names,
             'filter_fields': filter_fields,

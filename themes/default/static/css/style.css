@@ -179,6 +179,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border-top: 1px solid #d6d6d6;
     padding-top: 10px;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .navigator {
@@ -356,6 +357,42 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 .progressbar .progress-0 .value {
     padding-left: 10px;
     background: url(images/bg_progressbar_left.jpg) no-repeat left center;
+}
+
+.notification-form {
+    clear: both;
+    float: left;
+    width: 100%;
+    padding: 10px 0 0;
+    margin-top: 40px;
+    border: none;
+    background: none;
+    border-top: 1px solid #d6d6d6;
+}
+
+.notification-form p {
+    clear: both;
+    float: left;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.notification-form label {
+    float: left;
+    width: 770px;
+}
+
+.notification-form input {
+    clear: none;
+    float: right;
+    margin-top: 2px;
+    margin-right: 0;
+}
+
+.notification-form .submit {
+    float: right;
+    margin-right: 0;
 }
 
 /**
