@@ -57,6 +57,9 @@ urlpatterns = patterns('',
     # Authentication.
     (r'^', include('prometeo.core.auth.urls')),
 
+    # Notifications.
+    (r'^', include('prometeo.core.notifications.urls')),
+
     # Taxonomy.
     (r'^', include('prometeo.core.taxonomy.urls')),
 )

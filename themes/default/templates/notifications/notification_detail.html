@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+
+{% block meta_title %}{{ object }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' 'user_list' %}
+    {% add_crumb object.user object.user.get_absolute_url %}
+    {% add_crumb 'Notifications' 'notification_list' %}
+    {% add_crumb object %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.notifications.change_notification %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url notification_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% include 'elements/navigator.html' %}
+<div class="details">
+    <table class="properties">
+        <tr>
+            <th>{% trans "Created on" %}:</th>
+            <td>{% if object.created %}{{ object.created }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+            <th>{% trans "Read on" %}:</th>
+            <td>{% if object.read %}{{ object.read }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Description" %}:</th>
+            <td colspan="3">
+                <div class="entry">
+                    {% if object.description %}
+                    {{ object.description|safe }}
+                    {% else %}
+                    <span class="disabled">{% trans "Empty" %}</span>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

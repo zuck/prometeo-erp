@@ -455,7 +455,19 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #userarea .profile {
     border-right: 1px solid #d6d6d6;
-    padding-right: 15px;
+    padding-right: 10px;
+}
+
+#userarea a.notification-counter {
+    padding: 2px 6px 0;
+    margin-left: 10px;
+    color: #fff;
+    background: #ce0600;
+}
+
+#userarea a.notification-counter:hover {
+    background: #d6d6d6;
+    color: #1f1f1f;
 }
 
 #userarea li { text-align: right; }
@@ -717,6 +729,15 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-bottom: -38px;
     margin-right: 5px;
 }
+
+#main .avatar {
+    float: left;
+    margin-right: 20px;
+}
+
+#main .user-info { float: left; }
+
+#main .user-info dt { clear: none; }
 
 #main .milestones .actions {
     position: relative;

@@ -60,7 +60,7 @@ class UserEditForm(forms.ModelForm):
         """
         password1 = self.cleaned_data.get("password1", "")
         password2 = self.cleaned_data["password2"]
-        if password1 != password2:
+        if password1 != password2 and (password2 or not self.instance.pk):
             raise django_forms.ValidationError(_("The two password fields didn't match."))
             
         if not (password2 or self.instance.pk):

@@ -2,7 +2,12 @@
 {% load menu %}
 
 {% if user.is_authenticated %}
-<span class="profile"><a href="{% url user_detail user.username %}"><strong>{{ user }}</strong></a></span>
+<span class="profile">
+    <a href="{% url user_detail user.username %}"><strong>{{ user }}</strong></a>
+    {% with user.notification_set.unread|length as notification_count %}
+    <a class="notification-counter" title="{% blocktrans %}{{ notification_count }} unred notification(s){% endblocktrans %}" href="{% url notification_list %}">{{ notification_count }}</a>
+    {% endwith %}
+</span>
 {% menu "user_area_logged" %}
 {% else %}
 {% menu "user_area_not_logged" %}
