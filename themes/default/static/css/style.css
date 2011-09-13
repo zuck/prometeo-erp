@@ -679,32 +679,35 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .details .actions .delete a { margin: 0; }
 
+#main .widget .title {
+    width: 367px;
+    padding: 10px 10px 0;
+    background: #1f1f1f;
+    color: #fff;
+    border-bottom: none;
+}
+
+#main .widget .title h2 { color: #e6e6e6; }
+
 #main .widget .wrapper {
     clear: both;
     float: left;
-    width: 347px;
-    padding: 20px;
-    margin-right: 5px;
-    margin-bottom: 10px;
-    background: #f6f6f6;
-    border: 1px solid #e6e6e6;
+    width: 387px;
+    margin: 10px 5px 10px 0;
 } 
 
 #main .widget .wrapper-altrow {
     float: right;
-    width: 347px;
-    padding: 20px;
-    margin-left: 5px;
-    margin-bottom: 10px;
-    background: #f6f6f6;
-    border: 1px solid #e6e6e6;
+    width: 387px;
+    margin: 10px 0 10px 5px;
 }
 
 #main .widget .actions {
     position: relative;
     float: right;
-    top: -36px;
-    margin-bottom: -36px;
+    top: -38px;
+    margin-bottom: -38px;
+    margin-right: 5px;
 }
 
 #main .milestones .actions {
