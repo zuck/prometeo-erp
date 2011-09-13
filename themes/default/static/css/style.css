@@ -235,6 +235,14 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     color: #60625d;
 }
 
+.comments {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 2px solid #d6d6d6;
+}
+
 .comments li {
     padding-left: 0;
     background: none;
@@ -659,7 +667,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     clear: both;
     width: 100%;
     float: left;
-    padding-top: 10px;
+    padding-top: 15px;
     margin-bottom: 10px;
 }
 
@@ -693,7 +701,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     clear: both;
     float: left;
     width: 387px;
-    margin: 10px 5px 10px 0;
+    margin: 10px 5px 0 0;
 } 
 
 #main .widget .wrapper-altrow {
