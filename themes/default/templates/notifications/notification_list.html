@@ -28,7 +28,11 @@
     {% if object_list %}
     <ul class="notifications">
         {% for notification in object_list %}
-        <li{% if notification.read %} class="read"{% endif %}><strong>{{ notification.created }}</strong> <a href="{{ notification.get_absolute_url }}">{{ notification.title }}</a>{% if notification.read %} <span class="read-on">({{ notification.read }})</span>{% endif %}</li>
+        <li{% if notification.read %} class="read"{% endif %}>
+            <strong>{{ notification.created }}</strong>
+            <a href="{{ notification.get_absolute_url }}">{{ notification.title }}</a>
+            {% if notification.read %}<span class="read-on">({{ notification.read }})</span>{% endif %}
+        </li>
         {% endfor %}
     </ul>
     {% else %}
