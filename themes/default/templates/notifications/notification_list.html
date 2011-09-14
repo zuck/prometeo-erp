@@ -25,7 +25,15 @@
 {% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="details">
-    {% detail_table object_list field_names %}
+    {% if object_list %}
+    <ul class="notifications">
+        {% for notification in object_list %}
+        <li{% if notification.read %} class="read"{% endif %}><strong>{{ notification.created }}</strong> <a href="{{ notification.get_absolute_url }}">{{ notification.title }}</a>{% if notification.read %} <span class="read-on">({{ notification.read }})</span>{% endif %}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
     {% include 'elements/paginator.html' %}
     <form class="notification-form" method="post" action=".">
         {% csrf_token %}

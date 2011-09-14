@@ -66,6 +66,8 @@ class Notification(models.Model):
     class Meta:
         verbose_name = _('notification')
         verbose_name_plural = _('notifications')
+        ordering = ('-created', 'id')
+        get_latest_by = '-created'
 
     def __unicode__(self):
         return self.title

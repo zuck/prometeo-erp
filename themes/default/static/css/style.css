@@ -364,10 +364,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     float: left;
     width: 100%;
     padding: 10px 0 0;
-    margin-top: 40px;
+    margin-top: 50px;
     border: none;
     background: none;
-    border-top: 1px solid #d6d6d6;
+    border-top: 2px solid #d6d6d6;
 }
 
 .notification-form p {
@@ -523,7 +523,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     padding: 6px 0;
     background: #f6f6f6;
     border-top: 1px solid #fff;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #d6d6d6;
 }
 
 #breadcrumbs .list { padding: 0 10px; }
@@ -562,13 +562,13 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background-image: url(images/bullet_hover.png);
     background-color: #f6f6f6;
     padding-bottom: 4px;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #d6d6d6;
 }
 
 #content .menu li li a { padding-left: 40px; }
 
 #content .result-list li {
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #d6d6d6;
     padding: 10px 0;
     background: none;
 }
@@ -605,6 +605,31 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .messages li.success { background-image: url(images/success.png); }
 
+#content .notifications { border-top: 2px solid #d6d6d6; }
+
+#content .notifications li {
+    border-bottom: 1px solid #d6d6d6;
+    padding: 10px 15px 10px 35px;
+    background: #fffecc url(images/email.png) no-repeat 10px 10px;
+}
+
+#content .notifications li.read {
+    background-color: transparent;
+    background-image: url(images/email_open.png);
+}
+
+#content .notifications li strong {
+    float: left;
+    width: 140px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+#content .notifications .read-on  {
+    float: right;
+    padding-right: 0;
+}
+
 #content .tasks dt {
     border-bottom: 2px solid #d6d6d6;
     background: none;
@@ -614,7 +639,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .tasks dd { margin: 0; }
 
 #content .tasks li {
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #d6d6d6;
     padding: 10px 15px 10px 35px;
     background: no-repeat 10px 10px;
 }
@@ -672,7 +697,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #user-profile-widget .body {
     padding: 10px 0;
     margin: 0 10px;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #d6d6d6;
 }
 
 #user-profile-widget .info { width: 160px; }
@@ -692,20 +717,20 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     float: left;
     width: 100%;
     margin-bottom: 10px;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #d6d6d6;
 }
 
 #main .title h2 { color: #1f1f1f; }
 
 #main .sections .menu {
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #d6d6d6;
 }
 
 #main .sections .menu ul {
     float: left;
     width: auto;
     margin-bottom: -1px;
-    border-left: 1px solid #e6e6e6;
+    border-left: 1px solid #d6d6d6;
 }
 
 #main .sections .menu li {
@@ -716,8 +741,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .sections .menu li a {
     background: #f6f6f6;
-    border-top: 1px solid #e6e6e6;
-    border-right: 1px solid #e6e6e6;
+    border-top: 1px solid #d6d6d6;
+    border-right: 1px solid #d6d6d6;
     padding: 10px;
 }
 
@@ -766,7 +791,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .widget .title h5,
 #main .widget .title h6 { margin-bottom: 0; }
 
-#main .widget .title h2 { color: #e6e6e6; }
+#main .widget .title h2 { color: #d6d6d6; }
 
 #main .widget .wrapper {
     clear: both;
