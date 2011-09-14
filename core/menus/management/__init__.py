@@ -37,16 +37,6 @@ def fixtures(sender, **kwargs):
         description=_("Main menu")
     )
     
-    # Links.
-    administration_link = Link.objects.create(
-        title=_("Administration"),
-        slug="administration",
-        description=_("Administration panel"),
-        url="/admin",
-        only_staff=True,
-        menu=main_menu
-    )
-    
     # Widgets.
     main_menu_widget = Widget.objects.create(
         title=_("Main Menu"),

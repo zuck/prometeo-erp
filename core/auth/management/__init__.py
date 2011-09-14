@@ -70,6 +70,15 @@ def fixtures(sender, **kwargs):
         menu=user_area_not_logged_menu
     )
     
+    administration_link = Link.objects.create(
+        title=_("Administration"),
+        slug="administration",
+        description=_("Administration panel"),
+        url="/admin",
+        only_staff=True,
+        menu=user_area_logged_menu
+    )
+    
     logout_link = Link.objects.create(
         title=_("Logout"),
         slug="logout",

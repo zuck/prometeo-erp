@@ -433,7 +433,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin: 0;
 }
 
-#nav li { padding: 0 10px; }
+#nav li {
+    padding: 0;
+    margin: 0 10px;
+}
 
 #nav a, #nav a:link, #nav a:visited { color: #d6d6d6; }
 
@@ -479,8 +482,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #bookmarks {
     float: left;
-    width: 85%;
+    width: 80%;
 }
+
+#bookmarks li { margin-right: 0; }
 
 #bookmarks .add a { margin-left: 10px; }
 
@@ -488,13 +493,16 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #userarea {
     float: right;
-    width: 15%;
+    width: 20%;
     text-align: right;
 }
+
+#userarea li { margin-left: 0; }
 
 #userarea .profile {
     border-right: 1px solid #d6d6d6;
     padding-right: 10px;
+    margin-right: 10px;
 }
 
 #userarea a.notification-counter {
