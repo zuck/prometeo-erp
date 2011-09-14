@@ -26,5 +26,6 @@ urlpatterns = patterns('prometeo.core.notifications.views',
 
     # Notifications.
     url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/notifications/$', view='notification_list', name='notification_list'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/notifications/(?P<id>\d+)/$', view='notification_detail', name='notification_detail')
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/notifications/(?P<id>\d+)/$', view='notification_detail', name='notification_detail'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/notifications/(?P<id>\d+)/delete/$', view='notification_delete', name='notification_delete')
 )

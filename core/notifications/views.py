@@ -105,3 +105,19 @@ def notification_detail(request, username, id, **kwargs):
         extra_context={'object_list': object_list},
         **kwargs
     )
+
+@login_required
+def notification_delete(request, username, id, **kwargs):
+    """Deletes an existing notification for the current user.
+    """
+    user = get_object_or_404(User, username=username)
+    notification = get_object_or_404(Notification, pk=id, user=user)
+
+    return create_update.delete_object(
+        request,
+        model=Notification,
+        object_id=id,
+        post_delete_redirect=reverse('notification_list', args=[user.username]),
+        template_name='notifications/notification_delete.html',
+        **kwargs
+     )

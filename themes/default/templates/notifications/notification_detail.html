@@ -24,6 +24,9 @@
 {% block main %}
 <div class="actions">
     <ul>
+        {% if request.user == object.user or perms.notifications.delete_notification %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url notification_delete object.user.username object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
         {% if perms.notifications.change_notification %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url notification_list object.user.username %}">{% trans 'All' %}</a></li>
         {% endif %}

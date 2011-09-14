@@ -72,3 +72,7 @@ class Notification(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('notification_detail', (), {"username": self.user.username, "id": self.pk})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('notification_delete', (), {"username": self.user.username, "id": self.pk})
