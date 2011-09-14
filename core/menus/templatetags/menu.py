@@ -89,15 +89,20 @@ def menu(parser, token):
     return MenuNode(slug, html_template)
 
 @register.filter
-def compare_url(url, ref_url):
+def compare_link(link, ref_url):
     """
-    Checks if the first url starts with the second one.
+    Checks if the link instance is the best match for "ref_url".
 
-    If <ref_url> is "/", the comparison will return True only
-    if <url> is exactly equal to "/".
-
-    Example tag usage: {% url|compare_url:ref_url %}
+    Example tag usage: {% link|compare_link:ref_url %}
     """
-    if ref_url == "/":
-        return url == ref_url
-    return url.startswith(ref_url)
+    links = link.menu.links.all()
+    score = len(ref_url)
+    matched_link = None
+    for l in links:
+        if l.url == ref_url or ref_url.startswith(l.url):
+            remainder = ref_url[len(l.url):]
+            current_score = len(remainder)
+            if current_score < score:
+                score = current_score
+                matched_link = l                    
+    return (matched_link == link)
