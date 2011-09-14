@@ -22,6 +22,7 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 
 class NotificationManager(models.Manager):
     """Manager for notifications.
@@ -56,7 +57,7 @@ class Notification(models.Model):
     title = models.CharField(_('title'), max_length=100)
     description = models.TextField(_('description'), blank=True, null=True)
     user = models.ForeignKey('auth.User', verbose_name=_('user'))
-    siganture = models.ForeignKey(Subscription, verbose_name=_('subscription'))
+    subscription = models.ForeignKey(Subscription, verbose_name=_('subscription'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     read = models.DateTimeField(blank=True, null=True, verbose_name=_('read on'))
 
@@ -76,3 +77,8 @@ class Notification(models.Model):
     @models.permalink
     def get_delete_url(self):
         return ('notification_delete', (), {"username": self.user.username, "id": self.pk})
+
+    def clean(self):
+        if self.subscription not in self.user.subscription_set.all():
+            raise ValidationError('The user is not subscribed for this kind of notification.')
+        super(Notification, self).clean()

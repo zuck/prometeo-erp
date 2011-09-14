@@ -26,6 +26,7 @@ from models import *
 
 class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('signature', 'title')
+    prepopulated_fields = {'signature': ('title',)}
 
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ('title', 'created', 'read')
