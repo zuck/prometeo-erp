@@ -5,7 +5,7 @@
 {% for link in links %}
     {% if link.authorized %}
     <li class="menu-link" id="{{ link.slug|escape }}-link">
-        <a href="{{ link.url|escape }}" title="{% if link.description %}{{ link.description|escape }}{% else %}{{ link.title|escape }}{% endif %}">
+        <a{% if request.get_full_path|compare_url:link.url %} class="active"{% endif %} href="{{ link.url|escape }}" title="{% if link.description %}{{ link.description|escape }}{% else %}{{ link.title|escape }}{% endif %}">
             {% trans link.title|escape %}
         </a>
         {% if link.submenu %}

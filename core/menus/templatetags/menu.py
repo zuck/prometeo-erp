@@ -68,6 +68,11 @@ class MenuNode(template.Node):
 
 @register.tag
 def menu(parser, token):
+    """
+    Renders a menu.
+
+    Example tag usage: {% menu menu_slug [html_template] %}
+    """
     try:
         args = token.split_contents()
         if len(args) < 2:
@@ -82,3 +87,17 @@ def menu(parser, token):
         raise template.TemplateSyntaxError, "%r tag requires one or two arguments" % token.contents.split()[0]
 
     return MenuNode(slug, html_template)
+
+@register.filter
+def compare_url(url, ref_url):
+    """
+    Checks if the first url starts with the second one.
+
+    If <ref_url> is "/", the comparison will return True only
+    if <url> is exactly equal to "/".
+
+    Example tag usage: {% url|compare_url:ref_url %}
+    """
+    if ref_url == "/":
+        return url == ref_url
+    return url.startswith(ref_url)

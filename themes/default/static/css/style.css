@@ -484,6 +484,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #bookmarks .add a { margin-left: 10px; }
 
+#bookmarks a.active { color: #fff; }
+
 #userarea {
     float: right;
     width: 15%;
@@ -541,6 +543,11 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     display: block;
     padding: 5px 25px;
     background: url(images/bullet.png) no-repeat 10px center;
+}
+
+#content .menu li a.active {
+    color: #1f1f1f;
+    background-image: url(images/bullet_hover.png);
 }
 
 #content .menu li a:hover {
