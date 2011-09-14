@@ -11,7 +11,7 @@
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
     {% add_crumb user user.get_absolute_url %}
-    {% add_crumb 'Bookmarks' 'bookmark_list' %}
+    {% add_crumb 'Bookmarks' 'bookmark_list' user.username %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Edit' %}
@@ -34,9 +34,9 @@
 
 {% block main %}
 {% if object.pk %}
-<form method="post" action="{% url bookmark_edit object.slug %}">
+<form method="post" action="{% url bookmark_edit user.username object.slug %}">
 {% else %}
-<form method="post" action="{% url bookmark_add %}">
+<form method="post" action="{% url bookmark_add user.username %}">
 {% endif %}
     {% csrf_token %}
     {{ form.as_p }}

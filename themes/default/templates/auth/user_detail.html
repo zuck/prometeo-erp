@@ -47,8 +47,8 @@
         <ul>
             {% block menu %}
             <li class="active"><a href="{{ object.get_absolute_url }}">{% trans 'Profile' %}</a></li>
-            <li><a href="{% url bookmark_list %}">{% trans 'Bookmarks' %}</a></li>
-            <li><a href="{% url notification_list %}">{% trans 'Notifications' %}</a></li>
+            <li><a href="{% url bookmark_list object.username %}">{% trans 'Bookmarks' %}</a></li>
+            <li><a href="{% url notification_list object.username %}">{% trans 'Notifications' %}</a></li>
             {% endblock %}
         </ul>
     </div>

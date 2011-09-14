@@ -10,7 +10,7 @@
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
     {% add_crumb object.user object.user.get_absolute_url %}
-    {% add_crumb 'Notifications' 'notification_list' %}
+    {% add_crumb 'Notifications' 'notification_list' object.user.username %}
     {% add_crumb object %}
     {% render_breadcrumbs %}
 {% endblock %}
@@ -25,7 +25,7 @@
 <div class="actions">
     <ul>
         {% if perms.notifications.change_notification %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url notification_list %}">{% trans 'All' %}</a></li>
+        <li class="all"><a title="{% trans 'All' %}" href="{% url notification_list object.user.username %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>
 </div>

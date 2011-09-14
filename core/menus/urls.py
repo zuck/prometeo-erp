@@ -24,8 +24,8 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('prometeo.core.menus.views',
 
-    url(r'^bookmarks/$', view='bookmark_list', name='bookmark_list'),
-    url(r'^bookmarks/add/$', view='bookmark_add', name='bookmark_add'),
-    url(r'^bookmarks/(?P<slug>[-\w]+)/edit/$', view='bookmark_edit', name='bookmark_edit'),
-    url(r'^bookmarks/(?P<slug>[-\w]+)/delete/$', view='bookmark_delete', name='bookmark_delete'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/bookmarks/$', view='bookmark_list', name='bookmark_list'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/bookmarks/add/$', view='bookmark_add', name='bookmark_add'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/bookmarks/(?P<slug>[-\w]+)/edit/$', view='bookmark_edit', name='bookmark_edit'),
+    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/bookmarks/(?P<slug>[-\w]+)/delete/$', view='bookmark_delete', name='bookmark_delete'),
 )

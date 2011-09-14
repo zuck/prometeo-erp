@@ -71,4 +71,4 @@ class Notification(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('notification_detail', (), {"id": self.pk})
+        return ('notification_detail', (), {"username": self.user.username, "id": self.pk})

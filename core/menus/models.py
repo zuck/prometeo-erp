@@ -21,8 +21,9 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.db import models
+from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import User, Permission
 from django.db.models import permalink
 
 from prometeo.core.auth.models import UserProfile   
@@ -67,11 +68,13 @@ class Link(models.Model):
 
     @models.permalink
     def get_edit_url(self):
-        return ('bookmark_edit', (), {"slug": self.slug})
+        user = get_object_or_404(User, pk=self.slug.split('_')[1])
+        return ('bookmark_edit', (), {"username": user.username, "slug": self.slug})
 
     @models.permalink
     def get_delete_url(self):
-        return ('bookmark_delete', (), {"slug": self.slug})
+        user = get_object_or_404(User, pk=self.slug.split('_')[1])
+        return ('bookmark_delete', (), {"username": user.username, "slug": self.slug})
 
 def profile_post_save(sender, instance, signal, *args, **kwargs):
     if not instance.bookmarks:

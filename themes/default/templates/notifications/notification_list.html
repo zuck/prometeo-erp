@@ -18,8 +18,8 @@
 
 {% block menu %}
 <li><a href="{{ object.get_absolute_url }}">{% trans 'Profile' %}</a></li>
-<li><a href="{% url bookmark_list %}">{% trans 'Bookmarks' %}</a></li>
-<li class="active"><a href="{% url notification_list %}">{% trans 'Notifications' %}</a></li>
+<li><a href="{% url bookmark_list user.username %}">{% trans 'Bookmarks' %}</a></li>
+<li class="active"><a href="{% url notification_list user.username %}">{% trans 'Notifications' %}</a></li>
 {% endblock %}
 
 {% block section %}

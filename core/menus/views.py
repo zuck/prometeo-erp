@@ -30,6 +30,8 @@ from django.template import RequestContext
 from django.template.defaultfilters import slugify
 from django.contrib import messages
 
+from django.contrib.auth.models import User
+
 from prometeo.core.filter import filter_objects
 
 from models import *
@@ -43,14 +45,16 @@ def clean_referer(request):
     return referer.replace("http://", "").replace(request.META['HTTP_HOST'], "")
 
 @login_required
-def bookmark_list(request, page=0, paginate_by=10, **kwargs):
+def bookmark_list(request, username, page=0, paginate_by=10, **kwargs):
     """Displays the list of all bookmarks for the current user.
     """
+    user = get_object_or_404(User, username=username)
+
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Link,
                                                 fields=['title', 'url'],
-                                                object_list=request.user.get_profile().bookmarks.links.all()
+                                                object_list=user.get_profile().bookmarks.links.all()
                                               )
     return list_detail.object_list(
         request,
@@ -58,7 +62,7 @@ def bookmark_list(request, page=0, paginate_by=10, **kwargs):
         paginate_by=paginate_by,
         page=page,
         extra_context={
-            'object': request.user,
+            'object': user,
             'field_names': field_names,
             'filter_fields': filter_fields,
         },
@@ -67,21 +71,24 @@ def bookmark_list(request, page=0, paginate_by=10, **kwargs):
     )
 
 @login_required
-def bookmark_add(request, **kwargs):
+def bookmark_add(request, username, **kwargs):
     """Adds a new bookmark for the current user.
     """
-    bookmarks = request.user.get_profile().bookmarks
+    user = get_object_or_404(User, username=username)
+
+    bookmarks = user.get_profile().bookmarks
     link = Link(menu=bookmarks, sort_order=bookmarks.links.count())
+
     if request.method == 'POST':
         form = LinkForm(request.POST, instance=link)
         if form.is_valid():
-            link.slug = slugify("%s_%s" % (link.title, request.user.pk))
+            link.slug = slugify("%s_%s" % (link.title, user.pk))
             link = form.save()
             messages.success(request, _("The link has been saved."))
-            return redirect_to(request, url="/bookmarks/")
+            return redirect_to(request, url=reverse('bookmark_list', args=[user.username]))
     else:
         url = clean_referer(request)
-        if url == reverse('bookmark_list', args=[]):
+        if url == reverse('bookmark_list', args=[user.username]):
             url = ""
         link.url = url
         form = LinkForm(instance=link)
@@ -89,10 +96,12 @@ def bookmark_add(request, **kwargs):
     return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link}))
 
 @login_required
-def bookmark_edit(request, slug, **kwargs):
+def bookmark_edit(request, username, slug, **kwargs):
     """Edits an existing bookmark for the current user.
     """
-    bookmarks = request.user.get_profile().bookmarks
+    user = get_object_or_404(User, username=username)
+
+    bookmarks = user.get_profile().bookmarks
     link = get_object_or_404(Link, menu=bookmarks, slug=slug)
 
     if request.method == 'POST':
@@ -100,21 +109,26 @@ def bookmark_edit(request, slug, **kwargs):
         if form.is_valid():
             link = form.save()
             messages.success(request, _("The link has been updated."))
-            return redirect_to(request, url="/bookmarks/")
+            return redirect_to(request, url=reverse('bookmark_list', args=[user.username]))
     else:
         form = LinkForm(instance=link)
 
     return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link}))
 
 @login_required
-def bookmark_delete(request, slug, **kwargs):
+def bookmark_delete(request, username, slug, **kwargs):
     """Deletes an existing bookmark for the current user.
     """
+    user = get_object_or_404(User, username=username)
+
+    bookmarks = user.get_profile().bookmarks
+    link = get_object_or_404(Link, menu=bookmarks, slug=slug)
+
     return create_update.delete_object(
         request,
         model=Link,
         slug=slug,
-        post_delete_redirect='/bookmarks/',
+        post_delete_redirect=reverse('bookmark_list', args=[user.username]),
         template_name='menus/bookmark_delete.html',
         **kwargs
      )

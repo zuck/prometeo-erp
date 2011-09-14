@@ -18,15 +18,15 @@
 
 {% block menu %}
 <li><a href="{{ object.get_absolute_url }}">{% trans 'Profile' %}</a></li>
-<li class="active"><a href="{% url bookmark_list %}">{% trans 'Bookmarks' %}</a></li>
-<li><a href="{% url notification_list %}">{% trans 'Notifications' %}</a></li>
+<li class="active"><a href="{% url bookmark_list user.username %}">{% trans 'Bookmarks' %}</a></li>
+<li><a href="{% url notification_list user.username %}">{% trans 'Notifications' %}</a></li>
 {% endblock %}
 
 {% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url bookmark_add %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url bookmark_add user.username %}">{% trans 'Add' %}</a></li>
     </ul>
 </div>
 <div class="details">
