@@ -93,7 +93,7 @@ def bookmark_add(request, username, **kwargs):
         link.url = url
         form = LinkForm(instance=link)
 
-    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link}))
+    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link, 'object_user': user}))
 
 @login_required
 def bookmark_edit(request, username, slug, **kwargs):
@@ -113,7 +113,7 @@ def bookmark_edit(request, username, slug, **kwargs):
     else:
         form = LinkForm(instance=link)
 
-    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link}))
+    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link, 'object_user': user}))
 
 @login_required
 def bookmark_delete(request, username, slug, **kwargs):
@@ -130,5 +130,6 @@ def bookmark_delete(request, username, slug, **kwargs):
         slug=slug,
         post_delete_redirect=reverse('bookmark_list', args=[user.username]),
         template_name='menus/bookmark_delete.html',
+        extra_context={'object_user': user},
         **kwargs
      )

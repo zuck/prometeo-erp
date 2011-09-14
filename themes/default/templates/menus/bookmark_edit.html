@@ -10,7 +10,7 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
-    {% add_crumb user user.get_absolute_url %}
+    {% add_crumb object_user object_user.get_absolute_url %}
     {% add_crumb 'Bookmarks' 'bookmark_list' user.username %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
@@ -34,9 +34,9 @@
 
 {% block main %}
 {% if object.pk %}
-<form method="post" action="{% url bookmark_edit user.username object.slug %}">
+<form method="post" action="{% url bookmark_edit object_user.username object.slug %}">
 {% else %}
-<form method="post" action="{% url bookmark_add user.username %}">
+<form method="post" action="{% url bookmark_add object_user.username %}">
 {% endif %}
     {% csrf_token %}
     {{ form.as_p }}

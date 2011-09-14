@@ -11,15 +11,15 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
-    {% add_crumb user user.get_absolute_url %}
+    {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Notifications' %}
     {% render_breadcrumbs %}
 {% endblock %}
 
 {% block menu %}
 <li><a href="{{ object.get_absolute_url }}">{% trans 'Profile' %}</a></li>
-<li><a href="{% url bookmark_list user.username %}">{% trans 'Bookmarks' %}</a></li>
-<li class="active"><a href="{% url notification_list user.username %}">{% trans 'Notifications' %}</a></li>
+<li><a href="{% url bookmark_list object.username %}">{% trans 'Bookmarks' %}</a></li>
+<li class="active"><a href="{% url notification_list object.username %}">{% trans 'Notifications' %}</a></li>
 {% endblock %}
 
 {% block section %}
