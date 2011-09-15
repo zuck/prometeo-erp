@@ -54,7 +54,7 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Notification,
-                                                fields=['id', 'title', 'created', 'read'],
+                                                fields=['title', 'created', 'read'],
                                                 object_list=object_list
                                               )
     
