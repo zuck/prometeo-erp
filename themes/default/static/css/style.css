@@ -138,7 +138,11 @@ td { border-bottom: 1px solid #d6d6d6; }
 
 thead td { border-bottom: none; }
 
-thead td, th { background: #1f1f1f; }
+thead td, th {
+    color: #fff;
+    background: #1f1f1f;
+    border-bottom: 1px solid #fff;
+}
 
 thead td a, thead td a:link, thead td a:visited,
 th a, th a:link, th a:visited { color: #d6d6d6; }
