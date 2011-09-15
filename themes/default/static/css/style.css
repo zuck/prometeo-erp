@@ -128,16 +128,22 @@ table {
     clear: both;
     float: left;
     width: 100%;
-    border: 1px solid #d6d6d6;
+    border-collapse: collapse;
     margin-bottom: 10px;
 }
 
-td, th {
-    padding: 5px;
-    background: #f6f6f6;
-}
+td, th { padding: 10px; }
 
-thead td, th { background: #d6d6d6; }
+td { border-bottom: 1px solid #d6d6d6; }
+
+thead td { border-bottom: none; }
+
+thead td, th { background: #1f1f1f; }
+
+thead td a, thead td a:link, thead td a:visited,
+th a, th a:link, th a:visited { color: #d6d6d6; }
+
+thead td a:hover, th a:hover { color: #fff; }
 
 thead a.asc, thead a.desc {
     float: left;
@@ -150,7 +156,7 @@ thead a.asc { background-image: url(images/up.png); }
 
 thead a.desc { background-image: url(images/down.png); }
 
-tr.altrow td { background-color: #f2f2f2; }
+tr.altrow td { background-color: #f6f6f6; }
 
 /**
  * Commons.
