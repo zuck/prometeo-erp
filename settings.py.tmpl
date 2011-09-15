@@ -230,6 +230,7 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Taxonomy options.
 SEARCH_IN_MODELS = (
     'taxonomy.Category',
     'taxonomy.Tag',
@@ -239,3 +240,35 @@ SEARCH_IN_MODELS = (
     #'projects.Milestone',
     #'projects.Ticket',
 )
+
+# Project management options.
+"""
+PROJECT_STATUS_CHOICES = (
+    ('opened', _('opened')),
+    ('closed', _('closed')),
+)
+
+TICKET_URGENCY_CHOICES = (
+    ('very low', _('very low')),
+    ('low', _('low')),
+    ('medium', _('medium')),
+    ('high', _('high')),
+    ('critical', _('critical')),
+)
+
+TICKET_TYPE_CHOICES = (
+    ('bug', _('bug')),
+    ('task', _('task')),
+    ('idea', _('idea')),
+)
+
+TICKET_STATUS_CHOICES = (
+    ('new', _('new')),
+    ('tests', _('needs tests')),
+    ('accepted', _('accepted')),
+    ('invalid', _("invalid")),
+    ('duplicate', _('duplicated')),
+    ('resolved', _('resolved')),
+    ('review', _('awaiting review')),
+)
+"""

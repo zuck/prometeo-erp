@@ -34,18 +34,27 @@ from django.template.defaultfilters import slugify
 from prometeo.core import models as prometeo_models
 from prometeo.core.widgets.models import create_dashboard, delete_dashboard
 
-class Project(prometeo_models.Commentable):
-    PROJECT_STATUS_CHOICES = (
-        ('opened', _('opened')),
-        ('closed', _('closed')),
-    )
+class TicketManager(models.Manager):
+    """Custom manager for Ticket model.
+    """
+    def opened(self):
+        return self.filter(closed=None)
+    
+    def closed(self):
+        return self.exclude(closed=None)
+    
+    def last(self):
+        return self.opened()[:5]
 
+class Project(prometeo_models.Commentable):
+    """Project model.
+    """
     title = models.CharField(max_length=100, verbose_name=_('title'))
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name='created_projects', null=True, blank=True, verbose_name=_('author'))
     manager = models.ForeignKey('auth.User', related_name='managed_projects', null=True, blank=True, verbose_name=_('project manager'))
-    status = models.CharField(_('status'), choices=PROJECT_STATUS_CHOICES, default='opened', max_length=10)
+    status = models.CharField(_('status'), choices=settings.PROJECT_STATUS_CHOICES, default='opened', max_length=10)
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
@@ -85,6 +94,8 @@ class Project(prometeo_models.Commentable):
         super(Project, self).save()
         
 class Area(prometeo_models.Commentable):
+    """Project area model.
+    """
     title = models.CharField(max_length=50, verbose_name=_('title'))
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     project = models.ForeignKey(Project, verbose_name=_('project'))
@@ -118,6 +129,8 @@ class Area(prometeo_models.Commentable):
         super(Area, self).save()
 
 class Milestone(prometeo_models.Commentable):
+    """Milestone model.
+    """
     title = models.CharField(max_length=255, verbose_name=_('title'))
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     project = models.ForeignKey(Project, verbose_name=_('project'))
@@ -180,45 +193,11 @@ class Milestone(prometeo_models.Commentable):
             child.save()
 
     def __unicode__(self):
-        return u'%s' % self.title
-        
-class TicketManager(models.Manager):
-    
-    def opened(self):
-        return self.filter(closed=None)
-    
-    def closed(self):
-        return self.exclude(closed=None)
-    
-    def last(self):
-        return self.opened()[:5]
-    
+        return u'%s' % self.title    
 
 class Ticket(prometeo_models.Commentable):
-    TICKET_URGENCY_CHOICES = (
-        ('very low', _('very low')),
-        ('low', _('low')),
-        ('medium', _('medium')),
-        ('high', _('high')),
-        ('critical', _('critical')),
-    )
-    
-    TICKET_TYPE_CHOICES = (
-        ('bug', _('bug')),
-        ('task', _('task')),
-        ('idea', _('idea')),
-    )
-    
-    TICKET_STATUS_CHOICES = (
-        ('new', _('new')),
-        ('tests', _('needs tests')),
-        ('accepted', _('accepted')),
-        ('invalid', _("invalid")),
-        ('duplicate', _('duplicated')),
-        ('resolved', _('resolved')),
-        ('review', _('awaiting review')),
-    )
-    
+    """Ticket model.
+    """    
     project = models.ForeignKey(Project, related_name='tickets', verbose_name=_('project'))
     title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(verbose_name=_('description'))
@@ -226,10 +205,10 @@ class Ticket(prometeo_models.Commentable):
     last_modified_by = models.ForeignKey('auth.User', related_name="modified_tickets", editable=False, null=True, blank=True, verbose_name=_('last modified by'))
     areas = models.ManyToManyField(Area, null=True, blank=True, verbose_name=_('areas'))
     milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', verbose_name=_('milestone'))
-    type = models.CharField(max_length=11, choices=TICKET_TYPE_CHOICES, default='bug', verbose_name=_('type'))
-    urgency = models.CharField(max_length=10, choices=TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
+    type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default='bug', verbose_name=_('type'))
+    urgency = models.CharField(max_length=10, choices=settings.TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
     assignees = models.ManyToManyField('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('assignees'))
-    status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
+    status = models.CharField(max_length=10, choices=settings.TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     modified = models.DateTimeField(auto_now=True, verbose_name=_('modified on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
