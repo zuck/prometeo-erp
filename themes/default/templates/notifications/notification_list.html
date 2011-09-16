@@ -39,10 +39,12 @@
     <p class="disabled">{% trans "No results found." %}</p>
     {% endif %}
     {% include 'elements/paginator.html' %}
+    {% if form %}
     <form class="notification-form" method="post" action=".">
         {% csrf_token %}
         {{ form.as_p }}
         <span class="submit"><input type="submit" value="{% trans 'Save' %}" /></span>
     </form>
+    {% endif %}
 </div>
 {% endblock %}
