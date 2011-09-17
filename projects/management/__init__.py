@@ -32,7 +32,7 @@ def fixtures(sender, **kwargs):
     main_menu = Menu.objects.get(slug="main")
     
     # Links.
-    tasks_link = Link.objects.create(
+    projects_link = Link.objects.create(
         title=_("Projects"),
         slug="projects",
         description=_("Project management"),
