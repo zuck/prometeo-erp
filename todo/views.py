@@ -92,8 +92,6 @@ def task_add(request, **kwargs):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             task = form.save()
-            task.is_active = True
-            task.save()
             messages.success(request, _("The task has been saved."))
             return redirect_to(request, url=task.get_absolute_url())
     else:
