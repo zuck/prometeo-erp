@@ -42,7 +42,19 @@
     {% if form %}
     <form class="subscription-form" method="post" action=".">
         {% csrf_token %}
-        {{ form.as_p }}
+        <table>
+            <tr>
+                <th class="signature">{% trans "Signature" %}</th>
+                <th class="subscribe">{% trans "Subscribe?" %}</th>
+                <th class="email">{% trans "Email?" %}</th>
+            </tr>
+            {% for field in form %}
+            <tr>
+                <td>{{ field.label_tag }}</td>
+                {{ field }}
+            </tr>
+            {% endfor %}
+        </table>
         <span class="submit"><input type="submit" value="{% trans 'Save' %}" /></span>
     </form>
     {% endif %}

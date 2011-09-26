@@ -32,24 +32,31 @@ class NotificationManager(models.Manager):
 
     def unread(self):
         return self.filter(read__isnull=True)
+
+class Signature(models.Model):
+    """Signature model.
+    """
+    title = models.CharField(_('title'), max_length=100)
+    slug = models.SlugField(_('slug'), max_length=100, unique=True)
+    subscribers = models.ManyToManyField('auth.User', null=True, blank=True, through='Subscription', verbose_name=_('subscribers'))
+
+    class Meta:
+        verbose_name = _('signature')
+        verbose_name_plural = _('signatures')
+
+    def __unicode__(self):
+        return self.title
         
 class Subscription(models.Model):
     """Subscription model.
     """
-    title = models.CharField(_('title'), max_length=100)
-    signature = models.SlugField(_('signature'), max_length=100, unique=True)
-    subscribers = models.ManyToManyField('auth.User', null=True, blank=True, verbose_name=_('subscribers'))
+    user = models.ForeignKey('auth.User')
+    signature = models.ForeignKey(Signature)
+    send_email = models.BooleanField(default=True, verbose_name=_('send email'))
 
     class Meta:
         verbose_name = _('subscription')
         verbose_name_plural = _('subscriptions')
-
-    def __unicode__(self):
-        return self.title
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('subscription_detail', (), {"id": self.pk})
 
 class Notification(models.Model):
     """Notification model.

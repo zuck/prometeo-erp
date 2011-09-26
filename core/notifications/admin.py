@@ -24,12 +24,12 @@ from django.contrib import admin
 
 from models import *
 
-class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('signature', 'title')
-    prepopulated_fields = {'signature': ('title',)}
+class SignatureAdmin(admin.ModelAdmin):
+    list_display = ('slug', 'title')
+    prepopulated_fields = {'slug': ('title',)}
 
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ('title', 'created', 'read')
 
-admin.site.register(Subscription, SubscriptionAdmin)
+admin.site.register(Signature, SignatureAdmin)
 admin.site.register(Notification, NotificationAdmin)

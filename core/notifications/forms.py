@@ -21,8 +21,49 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from models import *
+
+class SubscriptionWidget(forms.MultiWidget):
+    """Widget for subscription entry.
+    """
+    def __init__(self, *args, **kwargs):
+        if 'attrs' not in kwargs:
+            kwargs['attrs'] = {}
+        kwargs['widgets'] = (
+            forms.CheckboxInput(attrs={'class': 'subscribe'}),
+            forms.CheckboxInput(attrs={'class': 'email'})
+        )
+        super(SubscriptionWidget, self).__init__(*args, **kwargs)
+
+    def decompress(self, value):
+        if value:
+            return value.values()
+        return (None, None)
+
+    def format_output(self, rendered_widgets):
+        return '<td>%s</td>' % '</td>\n<td>'.join(rendered_widgets)
+
+class SubscriptionField(forms.MultiValueField):
+    """Field for subscription entry.
+    """
+    def __init__(self, *args, **kwargs):
+        if 'initial' not in kwargs:
+            kwargs['initial'] = {'subscribe': False, 'email': False}
+        initial = kwargs['initial']
+        kwargs['fields'] = (
+            forms.BooleanField(label=_('subscribe'), initial=initial['subscribe']),
+            forms.BooleanField(label=_('send email'), initial=initial['email'])
+        )
+        if 'widget' not in kwargs:
+            kwargs['widget'] = SubscriptionWidget()
+        super(SubscriptionField, self).__init__(*args, **kwargs)
+
+    def compress(self, data_list):
+        if len(data_list) >= 2:
+            return (data_list[0], data_list[1])
+        return None
 
 class SubscriptionsForm(forms.Form):
     """Form for notification subscriptions.
@@ -33,19 +74,27 @@ class SubscriptionsForm(forms.Form):
         except KeyError:
             self.user = None
         super(SubscriptionsForm, self).__init__(*args, **kwargs)
-        subscriptions = Subscription.objects.all()
-        for subscription in subscriptions:
-            name = subscription.signature
-            field = forms.BooleanField(required=False, label=subscription.title, initial=(self.user in subscription.subscribers.all()))
-            self.fields[name] = field
+        self._update()
             
     def save(self):
         data = self.cleaned_data
-        for key, value in data.iteritems():
-            subscription = Subscription.objects.get(signature=key)
-            if value and self.user not in subscription.subscribers.all():
-                subscription.subscribers.add(self.user)
-            elif not value and self.user in subscription.subscribers.all():
-                subscription.subscribers.remove(self.user)
-            subscription.save()
-            
+        for key, (subscribe, email) in data.iteritems():
+            signature = Signature.objects.get(slug=key)
+            is_subscriber = (self.user in signature.subscribers.all())
+            if subscribe:
+                subscription = Subscription.objects.get_or_create(user=self.user, signature=signature)[0]
+                subscription.send_email = email
+                subscription.save()
+            elif is_subscriber and not subscribe:
+                Subscription.objects.filter(user=self.user, signature=signature).delete()
+        self._update()
+
+    def _update(self):
+        signatures = Signature.objects.all()
+        for signature in signatures:
+            name = signature.slug
+            is_subscriber = (Subscription.objects.filter(signature=signature, user=self.user).count() > 0)
+            send_email = (Subscription.objects.filter(signature=signature, user=self.user, send_email=True).count() > 0)
+            field = SubscriptionField(label=signature.title, initial={'subscribe': is_subscriber, 'email': send_email})
+            self.fields[name] = field
+                 
