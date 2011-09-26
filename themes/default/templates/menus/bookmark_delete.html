@@ -9,8 +9,8 @@
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
     {% add_crumb object_user object_user.get_absolute_url %}
-    {% add_crumb 'Bookmarks' 'bookmark_list' user.username %}
-    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Bookmarks' 'bookmark_list' object_user.username %}
+    {% add_crumb object %}
     {% add_crumb 'Delete' %}
     {% render_breadcrumbs %}
 {% endblock %}
