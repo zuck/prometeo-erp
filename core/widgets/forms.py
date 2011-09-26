@@ -30,3 +30,4 @@ class WidgetForm(forms.ModelForm):
     class Meta:
         model = Widget
         exclude = ['region', 'slug', 'show_title', 'editable', 'sort_order']
+        widgets = {'context': forms.JsonPairWidget()}

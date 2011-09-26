@@ -120,6 +120,17 @@ form .errors input, form .errors textarea, form .errors select {
 
 form .add a { margin-right: 100%; }
 
+form .json-key {
+    float: left;
+    width: 100px; 
+    margin-right: 0;
+}
+form .json-val {
+    clear: none;
+    width: 160px; 
+    margin-right: 0;
+}
+
 /**
  * Tables.
  */
@@ -371,7 +382,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background: url(images/bg_progressbar_left.jpg) no-repeat left center;
 }
 
-.notification-form {
+.subscription-form {
     clear: both;
     float: left;
     width: 100%;
@@ -382,7 +393,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border-top: 2px solid #d6d6d6;
 }
 
-.notification-form p {
+.subscription-form p {
     clear: both;
     float: left;
     width: 100%;
@@ -390,19 +401,19 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border-bottom: 1px solid #d6d6d6;
 }
 
-.notification-form label {
+.subscription-form label {
     float: left;
     width: 770px;
 }
 
-.notification-form input {
+.subscription-form input {
     clear: none;
     float: right;
     margin-top: 2px;
     margin-right: 0;
 }
 
-.notification-form .submit {
+.subscription-form .submit {
     float: right;
     margin-right: 0;
 }
