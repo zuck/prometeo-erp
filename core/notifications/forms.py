@@ -29,8 +29,6 @@ class SubscriptionWidget(forms.MultiWidget):
     """Widget for subscription entry.
     """
     def __init__(self, *args, **kwargs):
-        if 'attrs' not in kwargs:
-            kwargs['attrs'] = {}
         kwargs['widgets'] = (
             forms.CheckboxInput(attrs={'class': 'subscribe'}),
             forms.CheckboxInput(attrs={'class': 'email'})
@@ -40,7 +38,7 @@ class SubscriptionWidget(forms.MultiWidget):
     def decompress(self, value):
         if value:
             return value.values()
-        return (None, None)
+        return (False, False)
 
     def format_output(self, rendered_widgets):
         return '<td>%s</td>' % '</td>\n<td>'.join(rendered_widgets)
@@ -48,16 +46,16 @@ class SubscriptionWidget(forms.MultiWidget):
 class SubscriptionField(forms.MultiValueField):
     """Field for subscription entry.
     """
+    widget = SubscriptionWidget
+
     def __init__(self, *args, **kwargs):
         if 'initial' not in kwargs:
             kwargs['initial'] = {'subscribe': False, 'email': False}
         initial = kwargs['initial']
         kwargs['fields'] = (
-            forms.BooleanField(label=_('subscribe'), initial=initial['subscribe']),
-            forms.BooleanField(label=_('send email'), initial=initial['email'])
+            forms.BooleanField(required=False, label=_('subscribe'), initial=initial['subscribe']),
+            forms.BooleanField(required=False, label=_('send email'), initial=initial['email'])
         )
-        if 'widget' not in kwargs:
-            kwargs['widget'] = SubscriptionWidget()
         super(SubscriptionField, self).__init__(*args, **kwargs)
 
     def compress(self, data_list):
@@ -74,7 +72,13 @@ class SubscriptionsForm(forms.Form):
         except KeyError:
             self.user = None
         super(SubscriptionsForm, self).__init__(*args, **kwargs)
-        self._update()
+        signatures = Signature.objects.all()
+        for signature in signatures:
+            name = signature.slug
+            is_subscriber = (Subscription.objects.filter(signature=signature, user=self.user).count() > 0)
+            send_email = (Subscription.objects.filter(signature=signature, user=self.user, send_email=True).count() > 0)
+            field = SubscriptionField(label=signature.title, initial={'subscribe': is_subscriber, 'email': send_email})
+            self.fields[name] = field
             
     def save(self):
         data = self.cleaned_data
@@ -87,14 +91,5 @@ class SubscriptionsForm(forms.Form):
                 subscription.save()
             elif is_subscriber and not subscribe:
                 Subscription.objects.filter(user=self.user, signature=signature).delete()
-        self._update()
-
-    def _update(self):
-        signatures = Signature.objects.all()
-        for signature in signatures:
-            name = signature.slug
-            is_subscriber = (Subscription.objects.filter(signature=signature, user=self.user).count() > 0)
-            send_email = (Subscription.objects.filter(signature=signature, user=self.user, send_email=True).count() > 0)
-            field = SubscriptionField(label=signature.title, initial={'subscribe': is_subscriber, 'email': send_email})
-            self.fields[name] = field
+                self.fields[key].initial = (False, False)
                  

@@ -44,12 +44,12 @@
         {% csrf_token %}
         <table>
             <tr>
-                <th class="signature">{% trans "Signature" %}</th>
+                <th class="signature">{% trans "Subscriptions" %}</th>
                 <th class="subscribe">{% trans "Subscribe?" %}</th>
                 <th class="email">{% trans "Email?" %}</th>
             </tr>
             {% for field in form %}
-            <tr>
+            <tr{% if forloop.counter|divisibleby:2 %} class="altrow"{% endif %}>
                 <td>{{ field.label_tag }}</td>
                 {{ field }}
             </tr>

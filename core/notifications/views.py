@@ -62,6 +62,7 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
         form = SubscriptionsForm(request.POST, user=user)
         if form.is_valid():
             form.save()
+            form = SubscriptionsForm(user=user)
             messages.success(request, _("The user's profile has been saved."))
     else:
         if Signature.objects.count() > 0:
