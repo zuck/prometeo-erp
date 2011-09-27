@@ -640,7 +640,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .notifications li strong {
     float: left;
-    width: 140px;
+    width: 160px;
     margin-right: 20px;
     text-align: right;
 }

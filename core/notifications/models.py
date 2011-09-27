@@ -23,6 +23,8 @@ __version__ = '0.0.2'
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 class NotificationManager(models.Manager):
     """Manager for notifications.
@@ -64,7 +66,7 @@ class Notification(models.Model):
     title = models.CharField(_('title'), max_length=100)
     description = models.TextField(_('description'), blank=True, null=True)
     user = models.ForeignKey('auth.User', verbose_name=_('user'))
-    subscription = models.ForeignKey(Subscription, verbose_name=_('subscription'))
+    signature = models.ForeignKey(Signature, verbose_name=_('signature'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     read = models.DateTimeField(blank=True, null=True, verbose_name=_('read on'))
 
@@ -88,6 +90,17 @@ class Notification(models.Model):
         return ('notification_delete', (), {"username": self.user.username, "id": self.pk})
 
     def clean(self):
-        if self.subscription not in self.user.subscription_set.all():
+        if self.user.subscription_set.filter(signature=self.signature).count() == 0:
             raise ValidationError('The user is not subscribed for this kind of notification.')
         super(Notification, self).clean()
+
+def send_notification_email(sender, instance, signal, *args, **kwargs):
+    if Subscription.objects.filter(signature=instance.signature, user=instance.user, send_email=True).count() > 0:
+        email_subject = instance.title
+        email_body = instance.description
+        email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
+        email = EmailMessage(email_subject, email_body, email_from, [instance.user.email,])
+        email.content_subtype = "html"
+        email.send()
+
+models.signals.post_save.connect(send_notification_email, Notification)
