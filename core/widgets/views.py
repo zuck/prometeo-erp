@@ -57,8 +57,7 @@ def widget_add(request, **kwargs):
 def widget_edit(request, slug, **kwargs):
     """Edits an existing widget for the current user's dashboard.
     """
-    dashboard = request.user.get_profile().dashboard
-    widget = get_object_or_404(Widget, region=dashboard, slug=slug)
+    widget = get_object_or_404(Widget, slug=slug)
 
     if request.method == 'POST':
         form = WidgetForm(request.POST, instance=widget)
