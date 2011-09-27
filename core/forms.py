@@ -88,16 +88,16 @@ class JsonPairWidget(forms.Widget):
         super(forms.Widget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
-        if value is None or value.strip() is '':
-            value = ''
-
-        data = simplejson.loads(force_unicode(value))
+        try:
+            data = simplejson.loads(force_unicode(value))
+        except:
+            data = {}
 
         output = ''
-        if value and len(value) > 0:
-            for k,v in data.items():
-                output += self.render_pair(k, v, name)
+        for k,v in data.items():
+            output += self.render_pair(k, v, name)
         output += self.render_pair('', '', name)
+
         return mark_safe(output)
 
     def render_pair(self, key, value, name):
