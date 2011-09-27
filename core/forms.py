@@ -20,7 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-import simplejson
+import json as json
 from time import strftime
 
 from django import forms
@@ -89,7 +89,7 @@ class JsonPairWidget(forms.Widget):
 
     def render(self, name, value, attrs=None):
         try:
-            data = simplejson.loads(force_unicode(value))
+            data = json.loads(force_unicode(value))
         except:
             data = {}
 
@@ -119,5 +119,5 @@ class JsonPairWidget(forms.Widget):
             for key, value in zip(keys, values):
                 if len(key) > 0:
                     data[key] = value
-            jsontext = simplejson.dumps(data)
+            jsontext = json.dumps(data)
         return jsontext
