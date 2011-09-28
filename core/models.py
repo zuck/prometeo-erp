@@ -23,12 +23,11 @@ __version__ = '0.0.2'
 from django.db import models
 from django.db.models.signals import pre_delete
 from django.contrib.comments.models import Comment
-from django.contrib.contenttypes.models import ContentType
-from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
 class Commentable(models.Model):
-    """Template model for all commentable resources.
+    """Mix-in for all commentable resources.
     """
     allow_comments = models.BooleanField(_('allow comments'), default=True)
 
