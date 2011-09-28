@@ -25,11 +25,7 @@ from django.contrib import admin
 from models import *
 
 class SignatureAdmin(admin.ModelAdmin):
-    list_display = ('slug', 'title')
+    list_display = ('title', 'slug')
     prepopulated_fields = {'slug': ('title',)}
 
-class NotificationAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created', 'read')
-
 admin.site.register(Signature, SignatureAdmin)
-admin.site.register(Notification, NotificationAdmin)
