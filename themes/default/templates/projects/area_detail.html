@@ -5,10 +5,9 @@
 {% load breadcrumbs %}
 {% load navigator %}
 {% load region %}
+{% load menu %}
 
 {% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
-{% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
-{% if object.tags.all %}{% block meta_keywords %}{{ object.tags.all|join:", " }}{% endblock %}{% endif %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -49,16 +48,7 @@
 {% endwith %}
 <div class="sections">
     <div class="menu">
-        <ul>
-            {% block menu %}
-            {% if perms.projects.change_area %}
-            <li class="active"><a href="{{ object.get_absolute_url }}">{% trans 'Dashboard' %}</a></li>
-            {% endif %}
-            {% if perms.projects.change_ticket %}
-            <li><a href="{% url area_tickets object.project.slug object.slug %}">{% trans 'Tickets' %}</a></li>
-            {% endif %}
-            {% endblock %}
-        </ul>
+        {% menu "area_menu" %}
     </div>
     <div class="section">
         {% block section %}

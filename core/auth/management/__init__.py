@@ -43,6 +43,11 @@ def fixtures(sender, **kwargs):
         slug="user_area_logged",
         description=_("User area for logged users")
     )
+
+    user_profile_menu = Menu.objects.create(
+        slug="user_profile_menu",
+        description=_("Main menu for user profiles")
+    )
     
     # Links.
     dashboard_link = Link.objects.create(
@@ -86,6 +91,27 @@ def fixtures(sender, **kwargs):
         url=reverse("user_logout"),
         menu=user_area_logged_menu
     )
+    
+    user_profile_details_link = Link.objects.create(
+        title=_("Details"),
+        slug="user_profile_details",
+        url="{{ object.get_absolute_url }}",
+        menu=user_profile_menu
+    )
+    
+    user_profile_bookmarks_link = Link.objects.create(
+        title=_("Bookmarks"),
+        slug="user_profile_bookmarks",
+        url="{% url bookmark_list object.username %}",
+        menu=user_profile_menu
+    )
+    
+    user_profile_notifications_link = Link.objects.create(
+        title=_("Notifications"),
+        slug="user_profile_notifications",
+        url="{% url notification_list object.username %}",
+        menu=user_profile_menu
+    )
 
     # Widgets.
     profile_widget = Widget.objects.create(
@@ -95,7 +121,6 @@ def fixtures(sender, **kwargs):
         source="prometeo.core.widgets.base.dummy",
         template="auth/widgets/user_profile.html",
         show_title=False,
-        sort_order=0,
         region=sidebar_region
     )
     

@@ -767,6 +767,11 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .title h2 { color: #1f1f1f; }
 
+#main .title .meta {
+    float: right;
+    margin-bottom: -20px;
+}
+
 #main .sections .menu {
     border-bottom: 1px solid #d6d6d6;
 }
@@ -786,15 +791,16 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .sections .menu li a {
     background: #f6f6f6;
+    border: none;
     border-top: 1px solid #d6d6d6;
     border-right: 1px solid #d6d6d6;
     padding: 10px;
 }
 
-#main .sections .menu li.active a {
+#main .sections .menu li a.active {
     background: #fff;
     border-bottom: 1px solid #fff;
-    
+    margin-bottom: -1px;
 }
 
 #main .sections .section {

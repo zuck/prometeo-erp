@@ -3,10 +3,9 @@
 {% load i18n %}
 {% load navigator %}
 {% load region %}
+{% load menu %}
 
 {% block meta_title %}{{ object.title|striptags|capfirst }}{% endblock %}
-{% if object.description %}{% block meta_description %}{{ object.description|striptags|capfirst }}{% endblock %}{% endif %}
-{% if object.tags.all %}{% block meta_keywords %}{{ object.tags.all|join:", " }}{% endblock %}{% endif %}
 
 {% load breadcrumbs %}
 
@@ -47,25 +46,7 @@
 {% endwith %}
 <div class="sections">   
     <div class="menu">
-        <ul>
-            {% block menu %}
-            {% if perms.projects.change_project %}
-            <li class="active"><a href="{{ object.get_absolute_url }}">{% trans 'Dashboard' %}</a></li>
-            {% endif %}
-            {% if perms.projects.change_area %}
-            <li><a href="{% url area_list object.slug %}">{% trans 'Areas' %}</a></li>
-            {% endif %}
-            {% if perms.projects.change_milestone %}
-            <li><a href="{% url milestone_list object.slug %}">{% trans 'Milestones' %}</a></li>
-            {% endif %}
-            {% if perms.projects.change_ticket %}
-            <li><a href="{% url ticket_list object.slug %}">{% trans 'Tickets' %}</a></li>
-            {% endif %}
-            {% if perms.streams.change_stream %}
-            <li><a href="{% url project_timeline object.slug %}">{% trans 'Timeline' %}</a></li>
-            {% endif %}
-            {% endblock %}
-        </ul>
+        {% menu "project_menu" %}
     </div>
     <div class="section">
         {% block section %}

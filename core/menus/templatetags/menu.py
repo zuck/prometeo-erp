@@ -91,21 +91,24 @@ def menu(parser, token):
 
     return MenuNode(slug, html_template)
 
-@register.filter
-def compare_link(link, ref_url):
+@register.simple_tag(takes_context=True)
+def matchlink(context, link, ref_url, css_class="active"):
     """
     Checks if the link instance is the best match for "ref_url".
 
-    Example tag usage: {% link|compare_link:ref_url %}
+    Example tag usage: {% matchlink link ref_url %}
     """
     links = link.menu.links.all()
     score = len(ref_url)
     matched_link = None
     for l in links:
-        if l.url == ref_url or ref_url.startswith(l.url):
-            remainder = ref_url[len(l.url):]
+        url = template.Template(l.url).render(context)
+        if url == ref_url or ref_url.startswith(url):
+            remainder = ref_url[len(url):]
             current_score = len(remainder)
             if current_score < score:
                 score = current_score
                 matched_link = l                    
-    return (matched_link == link)
+    if matched_link == link:
+        return " class=\"%s\"" % css_class
+    return ""

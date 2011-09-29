@@ -18,15 +18,6 @@
     {% render_breadcrumbs %}
 {% endblock %}
 
-{% block menu %}
-{% if perms.projects.change_area %}
-<li><a href="{{ object.get_absolute_url }}">{% trans 'Dashboard' %}</a></li>
-{% endif %}
-{% if perms.projects.change_ticket %}
-<li class="active"><a href="{% url area_tickets object.project.slug object.slug %}">{% trans 'Tickets' %}</a></li>
-{% endif %}
-{% endblock %}
-
 {% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="actions">

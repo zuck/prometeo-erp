@@ -16,12 +16,6 @@
     {% render_breadcrumbs %}
 {% endblock %}
 
-{% block menu %}
-<li><a href="{{ object.get_absolute_url }}">{% trans 'Profile' %}</a></li>
-<li><a href="{% url bookmark_list object.username %}">{% trans 'Bookmarks' %}</a></li>
-<li class="active"><a href="{% url notification_list object.username %}">{% trans 'Notifications' %}</a></li>
-{% endblock %}
-
 {% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="details">

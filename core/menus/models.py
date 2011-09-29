@@ -54,7 +54,7 @@ class Link(models.Model):
     only_with_perms = models.ManyToManyField(Permission, blank=True, null=True, verbose_name=_('Only with following permissions'))
 
     class Meta:
-        ordering = ('sort_order', 'title',)
+        ordering = ('sort_order', 'id',)
         verbose_name = _('link')
         verbose_name_plural = _('links')
 

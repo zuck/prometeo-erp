@@ -8,31 +8,12 @@
 
 {% block subtitle %}{% trans "Timeline" %}{% endblock %}
 
-
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Timeline' %}
     {% render_breadcrumbs %}
-{% endblock %}
-
-{% block menu %}
-{% if perms.projects.change_project %}
-<li><a href="{{ object.get_absolute_url }}">{% trans 'Dashboard' %}</a></li>
-{% endif %}
-{% if perms.projects.change_area %}
-<li><a href="{% url area_list object.slug %}">{% trans 'Areas' %}</a></li>
-{% endif %}
-{% if perms.projects.change_milestone %}
-<li><a href="{% url milestone_list object.slug %}">{% trans 'Milestones' %}</a></li>
-{% endif %}
-{% if perms.projects.change_ticket %}
-<li><a href="{% url ticket_list object.slug %}">{% trans 'Tickets' %}</a></li>
-{% endif %}
-{% if perms.streams.change_stream %}
-<li class="active"><a href="{% url project_timeline object.slug %}">{% trans 'Timeline' %}</a></li>
-{% endif %}
 {% endblock %}
 
 {% block section %}
