@@ -554,7 +554,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin: 0 auto;
     padding-bottom: 20px;
     overflow: auto;
-    background: url(images/menu.jpg) repeat-y 200px;
+    background: url(images/menu.jpg) repeat-y 200px -5px;
 }
 
 #content li, #content dt { background: url(images/bullet.png) no-repeat left 8px; }
