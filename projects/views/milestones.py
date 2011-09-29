@@ -41,7 +41,7 @@ def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Milestone,
-                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'deadline', 'closed'],
+                                                fields=['title', 'parent', 'author', 'manager', 'created', 'deadline', 'closed'],
                                                 object_list=project.milestone_set.all(),
                                               )
     return list_detail.object_list(
