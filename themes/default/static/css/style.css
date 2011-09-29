@@ -325,7 +325,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 .progressbar {
     clear: both;
     float: left;
-    width: 100%;
+    width: 50%;
     background: #f2f2f2 url(images/bg_progressbar_right.jpg) no-repeat right center;
 }
 
@@ -709,12 +709,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .tasks .delay, #content .tasks .countdown  { float: right; }
 
-#content .milestones .milestones { padding-left: 100px; }
-
 #content .milestones dt {
     border-bottom: 2px solid #d6d6d6;
     background: none;
-    padding: 0;
+    padding: 25px 0 0;
 }
 
 #content .milestones dt h3 { margin-bottom: 5px; }
