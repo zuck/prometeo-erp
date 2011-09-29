@@ -40,6 +40,7 @@ urlpatterns = patterns('projects.views',
     url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/delete/$', view='milestones.milestone_delete', name='milestone_delete'),
     url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/tickets/$', view='milestones.milestone_tickets', name='milestone_tickets'),
     url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<milestone>[-\w]+)/tickets/add/$', view='tickets.ticket_add', name='milestone_ticket_add'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/timeline/$', 'milestones.milestone_detail', {'template_name': 'projects/milestone_timeline.html'}, 'milestone_timeline'),
 
     # Tickets.
     url(r'^projects/(?P<project>[-\w]+)/tickets/$', view='tickets.ticket_list', name='ticket_list'),
@@ -47,4 +48,5 @@ urlpatterns = patterns('projects.views',
     url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/$', view='tickets.ticket_detail', name='ticket_detail'),
     url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/edit/$', view='tickets.ticket_edit', name='ticket_edit'),
     url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/delete/$', view='tickets.ticket_delete', name='ticket_delete'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/timeline/$', 'tickets.ticket_detail', {'template_name': 'projects/ticket_timeline.html'}, 'ticket_timeline'),
 )

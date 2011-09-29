@@ -77,7 +77,7 @@ def fixtures(sender, **kwargs):
         menu=project_menu
     )
 
-    project_tickets_link = Link.objects.create(
+    project_timeline_link = Link.objects.create(
         title=_("Timeline"),
         slug="project_timeline",
         url="{% url project_timeline object.slug %}",
@@ -98,10 +98,24 @@ def fixtures(sender, **kwargs):
         menu=milestone_menu
     )
 
+    milestone_timeline_link = Link.objects.create(
+        title=_("Timeline"),
+        slug="milestone_timeline",
+        url="{% url milestone_timeline object.project.slug object.slug %}",
+        menu=milestone_menu
+    )
+
     ticket_details_link = Link.objects.create(
         title=_("Details"),
         slug="ticket_details",
         url="{{ object.get_absolute_url }}",
+        menu=ticket_menu
+    )
+
+    ticket_timeline_link = Link.objects.create(
+        title=_("Timeline"),
+        slug="ticket_timeline",
+        url="{% url ticket_timeline object.project.slug object.pk %}",
         menu=ticket_menu
     )
     
