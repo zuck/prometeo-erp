@@ -55,7 +55,7 @@
                 <tr>
                     <th>{% trans "Project manager" %}:</th>
                     <td colspan="3">
-                        {% if object.parent %}
+                        {% if object.manager %}
                         <a class="manager" href="{{ object.manager.get_absolute_url }}">{{ object.manager }}</a>
                         {% else %}
                         <span class="disabled">{% trans "empty" %}</span>
