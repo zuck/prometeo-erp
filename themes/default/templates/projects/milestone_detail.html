@@ -56,9 +56,17 @@
             <table class="properties">
                 <tr>
                     <th>{% trans "Manager" %}:</th>
-                    <td colspan="3">
+                    <td>
                         {% if object.parent %}
                         <a class="manager" href="{{ object.manager.get_absolute_url }}">{{ object.manager }}</a>
+                        {% else %}
+                        <span class="disabled">{% trans "empty" %}</span>
+                        {% endif %}
+                    </td>
+                    <th>{% trans "Deadline" %}:</th>
+                    <td>
+                        {% if object.date_due %}
+                        {{ object.date_due }}
                         {% else %}
                         <span class="disabled">{% trans "empty" %}</span>
                         {% endif %}
@@ -69,24 +77,6 @@
                     <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
                     <th>{% trans "Created on" %}:</th>
                     <td>{{ object.created }}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Parent" %}:</th>
-                    <td>
-                        {% if object.parent %}
-                        <a class="parent" href="{{ object.parent.get_absolute_url }}">{{ object.parent }}</a>
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                    <th>{% trans "Date due" %}:</th>
-                    <td>
-                        {% if object.date_due %}
-                        {{ object.date_due }}
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
                 </tr>
                 <tr>
                     <th>{% trans "Progress" %}:</th>

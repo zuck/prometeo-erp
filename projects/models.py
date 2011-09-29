@@ -84,7 +84,7 @@ class Milestone(prometeo_models.Commentable):
     author = models.ForeignKey('auth.User', related_name='created_milestones', null=True, blank=True, verbose_name=_('author'))
     manager = models.ForeignKey('auth.User', related_name='managed_milestones', null=True, blank=True, verbose_name=_('manager'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
+    deadline = models.DateTimeField(null=True, blank=True, verbose_name=_('deadline'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
@@ -92,17 +92,17 @@ class Milestone(prometeo_models.Commentable):
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
 
     class Meta:
-        ordering = ['-date_due',]
+        ordering = ['deadline', 'created']
 
     def __unicode__(self):
         return u'%s' % self.title
     
     def _expired(self):
-        if self.date_due:
+        if self.deadline:
             if self.closed:
-                return self.closed > self.date_due
+                return self.closed > self.deadline
             else:
-                return datetime.datetime.now() > self.date_due
+                return datetime.datetime.now() > self.deadline
         return False
     expired = property(_expired)
     
