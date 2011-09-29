@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
+{% load menu %}
 
 {% block meta_title %}{% trans "Tasks" %}{% endblock %}
 
@@ -15,46 +16,56 @@
 {% block title %}
 <div class="title">
     <h1>{% trans "Tasks" %}</h1>
+    <h2>{% block subtitle %}{% trans "Planned" %}{% endblock %}</h2>
 </div>
 {% endblock %}
 
 {% block main %}
-{% include 'elements/filterbox.html' %}
-<div class="actions">
-    <ul>
-        {% if perms.todo.add_task %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
-        {% endif %}
-    </ul>
-</div>
-<div class="details">
-    {% regroup object_list by start_date as tasks_by_date %}
-    {% if tasks_by_date %}
-    <dl class="tasks">
-    {% for date in tasks_by_date %}
-        <dt><h3>{{ date.grouper }}</h3></dt>
-        <dd>
+<div class="sections">   
+    <div class="menu">
+        {% menu "todo_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        {% include 'elements/filterbox.html' %}
+        <div class="actions">
             <ul>
-            {% for item in date.list %}
-                <li{% if item.closed %}{% if item.expired %} class="delayed"{% else %} class="closed"{% endif %}{% else %}{% if item.expired %} class="expired"{% endif %}{% endif %}>
-                    <strong>{{ item.start_time }}</strong>
-                    <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
-                    {% if item.expired %}
-                    <span class="delay">({{ item.end|timesince }} {% trans "overdue" %})</span>
-                    {% else %}
-                    {% if not item.closed and item.end and item.started %}
-                    <span class="countdown">({{ item.end|timeuntil }})</span>
-                    {% endif %}
-                    {% endif %}
-                </li>
-            {% endfor %}
+                {% if perms.todo.add_task %}
+                <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
+                {% endif %}
             </ul>
-        </dd>
-    {% endfor %}
-    </dl>
-    {% else %}
-    <p class="disabled">{% trans "No results found." %}</p>
-    {% endif %}
-    {% include 'elements/paginator.html' %}
+        </div>
+        <div class="details">
+            {% regroup object_list by start_date as tasks_by_date %}
+            {% if tasks_by_date %}
+            <dl class="tasks">
+            {% for date in tasks_by_date %}
+                <dt><h3>{{ date.grouper }}</h3></dt>
+                <dd>
+                    <ul>
+                    {% for item in date.list %}
+                        <li{% if item.closed %}{% if item.expired %} class="delayed"{% else %} class="closed"{% endif %}{% else %}{% if item.expired %} class="expired"{% endif %}{% endif %}>
+                            <strong>{{ item.start_time }}</strong>
+                            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+                            {% if item.expired %}
+                            <span class="delay">({{ item.end|timesince }} {% trans "overdue" %})</span>
+                            {% else %}
+                            {% if not item.closed and item.end and item.started %}
+                            <span class="countdown">({{ item.end|timeuntil }})</span>
+                            {% endif %}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </dd>
+            {% endfor %}
+            </dl>
+            {% else %}
+            <p class="disabled">{% trans "No results found." %}</p>
+            {% endif %}
+            {% include 'elements/paginator.html' %}
+        </div>
+        {% endblock %}
+    </div>
 </div>
 {% endblock %}

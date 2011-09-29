@@ -1,0 +1,39 @@
+{% extends "todo/task_list.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Tasks' 'task_list' %}
+    {% add_crumb 'Unplanned' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Unplanned" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.todo.add_task %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% if object_list %}
+    <ul class="tasks">
+    {% for item in object_list %}
+        <li{% if item.closed %} class="closed"{% endif %}>
+            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

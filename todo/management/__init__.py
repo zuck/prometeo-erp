@@ -30,6 +30,12 @@ def fixtures(sender, **kwargs):
     """Installs fixtures for this application.
     """
     main_menu = Menu.objects.get(slug="main")
+
+    # Menus.
+    todo_menu = Menu.objects.create(
+        slug="todo_menu",
+        description=_("Main menu for tasks")
+    )
     
     # Links.
     tasks_link = Link.objects.create(
@@ -38,6 +44,20 @@ def fixtures(sender, **kwargs):
         description=_("List of tasks"),
         url=reverse("task_list"),
         menu=main_menu
+    )
+
+    planned_tasks_link = Link.objects.create(
+        title=_("Planned"),
+        slug="planned_tasks",
+        url=reverse("task_list"),
+        menu=todo_menu
+    )
+
+    unplanned_tasks_link = Link.objects.create(
+        title=_("Unplanned"),
+        slug="unplanned_tasks",
+        url=reverse("unplanned_task_list"),
+        menu=todo_menu
     )
     
     post_syncdb.disconnect(fixtures)

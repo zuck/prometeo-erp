@@ -681,6 +681,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     padding-left: 0;
 }
 
+#content ul.tasks { border-top: 2px solid #d6d6d6; }
+
 #content .tasks dd { margin: 0; }
 
 #content .tasks li {

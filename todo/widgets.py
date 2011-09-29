@@ -23,6 +23,8 @@ from datetime import date
 from models import *
 
 def latest_tasks(context):
+    """The list of latest planned and unplanned tasks.
+    """
     try:
         count = context['count']
     except KeyError:
@@ -31,7 +33,31 @@ def latest_tasks(context):
     context['object_list'] = Task.objects.filter(user=request.user)[0:count]
     return context
 
+def latest_planned_tasks(context):
+    """The list of latest planned tasks.
+    """
+    try:
+        count = context['count']
+    except KeyError:
+        count = 5
+    request = context['request']
+    context['object_list'] = Task.objects.planned(user=request.user)[0:count]
+    return context
+
+def latest_unplanned_tasks(context):
+    """The list of latest unplanned tasks.
+    """
+    try:
+        count = context['count']
+    except KeyError:
+        count = 5
+    request = context['request']
+    context['object_list'] = Task.objects.unplanned(user=request.user)[0:count]
+    return context
+
 def today_tasks(context):
+    """The list of tasks planned for the current day.
+    """
     request = context['request']
     context['object_list'] = Task.objects.filter(user=request.user, start_date=date.today())
     return context

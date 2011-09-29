@@ -23,10 +23,14 @@ __version__ = '0.0.2'
 from datetime import datetime
 
 from django.db import models
-from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import permalink
+
+from managers import *
 
 class Task(models.Model):
+    """Task model.
+    """
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     user = models.ForeignKey('auth.User', null=True, blank=True, verbose_name=_('user'))
@@ -37,18 +41,13 @@ class Task(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on')) 
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
-    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags')) 
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+
+    objects = TaskManager() 
 
     class Meta:
         ordering = ('-start_date', '-start_time', 'id')
         get_latest_by = '-start_date'
-
-    def __init__(self, *args, **kwargs):
-        super(Task, self).__init__(*args, **kwargs)
-        if not self.start_date:
-            now = datetime.now()
-            self.start_date = now.date()
-            self.start_time = now.time()
 
     def __unicode__(self):
         return u'%s' % self.title

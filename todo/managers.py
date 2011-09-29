@@ -20,16 +20,14 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.conf.urls.defaults import *
+from django.db import models
+from django.db.models import Q
 
-urlpatterns = patterns('todo.views',
-
-    url(r'^tasks/$', view='task_list', name='task_list'),
-    url(r'^tasks/unplanned/$', view='unplanned_task_list', name='unplanned_task_list'),
-    url(r'^tasks/add/$', view='task_add', name='task_add'),
-    url(r'^tasks/(?P<id>\d+)/$', view='task_detail', name='task_detail'),
-    url(r'^tasks/(?P<id>\d+)/edit/$', view='task_edit', name='task_edit'),
-    url(r'^tasks/(?P<id>\d+)/delete/$', view='task_delete', name='task_delete'),
-    url(r'^tasks/(?P<id>\d+)/close/$', view='task_close', name='task_close'),
-    url(r'^tasks/(?P<id>\d+)/reopen/$', view='task_reopen', name='task_reopen'),
-)
+class TaskManager(models.Manager):
+    """Custom manager for Task model.
+    """
+    def planned(self, user):
+        return self.filter(start_date__isnull=False, user=user)
+    
+    def unplanned(self, user):
+        return self.filter(start_date__isnull=True, user=user)

@@ -41,12 +41,12 @@ from forms import *
 def task_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered tasks.
     """
-    object_list = Task.objects.filter(user=request.user)
+    object_list = Task.objects.planned(user=request.user)
 
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
                                                 Task,
-                                                fields=['title', 'start_date', 'start_time', 'closed'],
+                                                fields=['title', 'start_date', 'start_time', 'created', 'closed'],
                                                 object_list=object_list
                                               )
 
@@ -55,6 +55,32 @@ def task_list(request, page=0, paginate_by=10, **kwargs):
         queryset=object_list,
         paginate_by=paginate_by,
         page=page,
+        extra_context={
+            'field_names': field_names,
+            'filter_fields': filter_fields,
+        },
+        **kwargs
+    )
+
+@permission_required('todo.change_task') 
+def unplanned_task_list(request, page=0, paginate_by=10, **kwargs):
+    """Displays the list of all filtered tasks.
+    """
+    object_list = Task.objects.unplanned(user=request.user)
+
+    field_names, filter_fields, object_list = filter_objects(
+                                                request,
+                                                Task,
+                                                fields=['title', 'created', 'closed'],
+                                                object_list=object_list
+                                              )
+
+    return list_detail.object_list(
+        request,
+        queryset=object_list,
+        paginate_by=paginate_by,
+        page=page,
+        template_name='todo/unplanned_task_list.html',
         extra_context={
             'field_names': field_names,
             'filter_fields': filter_fields,

@@ -28,7 +28,7 @@ from prometeo.core.wysiwyg.forms.widgets import CKEditor
 from models import *
 
 class TaskForm(forms.ModelForm):
-    """Form for task data.
+    """Form for Task data.
     """
     class Meta:
         model = Task
