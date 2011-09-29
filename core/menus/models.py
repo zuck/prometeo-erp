@@ -24,9 +24,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User, Permission
-from django.db.models import permalink
-
-from prometeo.core.auth.models import UserProfile   
+from django.db.models import permalink 
         
 class Menu(models.Model):
     """Menu model.
@@ -75,18 +73,3 @@ class Link(models.Model):
     def get_delete_url(self):
         user = get_object_or_404(User, pk=self.slug.split('_')[1])
         return ('bookmark_delete', (), {"username": user.username, "slug": self.slug})
-
-def profile_post_save(sender, instance, signal, *args, **kwargs):
-    if not instance.bookmarks:
-        bookmarks = Menu(slug="profile_%d_bookmarks" % instance.pk, description='Bookmarks')
-        bookmarks.save()
-        instance.bookmarks = bookmarks
-        instance.save()
-
-def profile_post_delete(sender, instance, signal, *args, **kwargs):
-    bookmarks = instance.bookmarks
-    if bookmarks:
-        bookmarks.delete()
-
-models.signals.post_save.connect(profile_post_save, UserProfile)
-models.signals.post_delete.connect(profile_post_delete, UserProfile)

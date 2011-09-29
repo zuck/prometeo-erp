@@ -33,6 +33,7 @@ from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 from django.core.mail import EmailMessage
 
+from prometeo.core.menus.signals import manage_bookmarks
 from prometeo.core.widgets.signals import manage_dashboard
 
 TIME_ZONES = [(tz, tz) for tz in common_timezones]
@@ -87,5 +88,6 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
 
 models.signals.post_save.connect(user_post_save, User)
 
+manage_bookmarks(UserProfile)
 manage_dashboard(UserProfile)
 
