@@ -40,18 +40,6 @@ class ProjectForm(forms.ModelForm):
             'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
 
-class AreaForm(forms.ModelForm):
-    """Form for area data.
-    """
-    class Meta:
-        model = Area
-        exclude = ('project', 'slug', 'author', 'dashboard', 'stream')
-        widgets = {
-            'description': CKEditor(),
-            'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),
-        }
-
 class MilestoneForm(forms.ModelForm):
     """Form for milestone data.
     """
@@ -87,5 +75,4 @@ class TicketForm(forms.ModelForm):
         super(TicketForm, self).__init__(*args, **kwargs)
         if self.instance is None or self.instance.pk is None:
             del self.fields['status']
-        self.fields['milestone'].queryset = self.instance.project.milestones.all()
-        self.fields['areas'].queryset = self.instance.project.areas.all()
+        self.fields['milestone'].queryset = self.instance.project.milestone_set.all()

@@ -42,7 +42,7 @@ def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
                                                 request,
                                                 Milestone,
                                                 fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'date_due', 'closed'],
-                                                object_list=project.milestones.all(),
+                                                object_list=project.milestone_set.all(),
                                               )
     return list_detail.object_list(
         request,

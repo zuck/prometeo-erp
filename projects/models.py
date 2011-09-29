@@ -53,18 +53,6 @@ class Project(prometeo_models.Commentable):
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
-    
-    def _milestones(self):
-        """Returns only the top-level milestones.
-        """
-        return self.milestone_set.filter(parent=None)
-    milestones = property(_milestones)
-
-    def _areas(self):
-        """Returns only the top-level areas.
-        """
-        return self.area_set.filter(parent=None)
-    areas = property(_areas)
 
     def __unicode__(self):
         return u'%s' % self.title
@@ -85,42 +73,6 @@ class Project(prometeo_models.Commentable):
         if not self.slug:
             self.slug = slugify(self.title)
         super(Project, self).save()
-        
-class Area(prometeo_models.Commentable):
-    """Project area model.
-    """
-    title = models.CharField(max_length=50, verbose_name=_('title'))
-    slug = models.SlugField(max_length=100, verbose_name=_('slug'))
-    project = models.ForeignKey(Project, verbose_name=_('project'))
-    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'))
-    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    author = models.ForeignKey('auth.User', related_name='created_areas', null=True, blank=True, verbose_name=_('author'))
-    manager = models.ForeignKey('auth.User', related_name='managed_areas', null=True, blank=True, verbose_name=_('manager'))
-    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
-    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
-    
-    def __unicode__(self):
-        return u'%s' % self.title
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('area_detail', (), {"project": self.project.slug, "slug": self.slug})
-
-    @models.permalink
-    def get_edit_url(self):
-        return ('area_edit', (), {"project": self.project.slug, "slug": self.slug})
-
-    @models.permalink
-    def get_delete_url(self):
-        return ('area_delete', (), {"project": self.project.slug, "slug": self.slug})
-
-    def save(self):
-        if not self.slug:
-            self.slug = slugify('%s_%s' % (self.project.pk, self.title))
-        super(Area, self).save()
 
 class Milestone(prometeo_models.Commentable):
     """Milestone model.
@@ -129,7 +81,6 @@ class Milestone(prometeo_models.Commentable):
     slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     project = models.ForeignKey(Project, verbose_name=_('project'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    parent = models.ForeignKey('self', related_name='sub_milestones', null=True, blank=True, verbose_name=_('parent'))
     author = models.ForeignKey('auth.User', related_name='created_milestones', null=True, blank=True, verbose_name=_('author'))
     manager = models.ForeignKey('auth.User', related_name='managed_milestones', null=True, blank=True, verbose_name=_('manager'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
@@ -139,6 +90,12 @@ class Milestone(prometeo_models.Commentable):
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
+
+    class Meta:
+        ordering = ['-date_due',]
+
+    def __unicode__(self):
+        return u'%s' % self.title
     
     def _expired(self):
         if self.date_due:
@@ -157,9 +114,6 @@ class Milestone(prometeo_models.Commentable):
         return 100
     progress = property(_progress)
 
-    class Meta:
-        ordering = ['-date_due',]
-
     @models.permalink
     def get_absolute_url(self):
         return ('milestone_detail', (), {"project": self.project.slug, "slug": self.slug})
@@ -175,20 +129,7 @@ class Milestone(prometeo_models.Commentable):
     def save(self):
         if not self.slug:
             self.slug = slugify('%s_%s' % (self.project.pk, self.title))
-        if self.date_due:
-            if self.parent != None:
-                if self.parent.date_due and self.date_due > self.parent.date_due:
-                    self.date_due = self.parent.date_due
-            else:
-                for child in self.sub_milestones.all():
-                    if child.date_due and child.date_due > self.date_due:
-                        child.date_due = self.date_due
-        super(Milestone, self).save()
-        for child in self.sub_milestones.all():
-            child.save()
-
-    def __unicode__(self):
-        return u'%s' % self.title    
+        super(Milestone, self).save()  
 
 class Ticket(prometeo_models.Commentable):
     """Ticket model.
@@ -198,7 +139,6 @@ class Ticket(prometeo_models.Commentable):
     description = models.TextField(verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name="created_tickets", verbose_name=_('author'))
     last_modified_by = models.ForeignKey('auth.User', related_name="modified_tickets", editable=False, null=True, blank=True, verbose_name=_('last modified by'))
-    areas = models.ManyToManyField(Area, null=True, blank=True, verbose_name=_('areas'))
     milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', verbose_name=_('milestone'))
     type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default='bug', verbose_name=_('type'))
     urgency = models.CharField(max_length=10, choices=settings.TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
@@ -212,11 +152,7 @@ class Ticket(prometeo_models.Commentable):
     public = models.BooleanField(_('public'), default=True)
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
 
-    objects = TicketManager()
-    
-    def __init__(self, *args, **kwargs):
-        super(Ticket, self).__init__(*args, **kwargs)
-        self.__changes = {}      
+    objects = TicketManager()     
 
     class Meta:
         ordering = ('created', 'id')
@@ -224,14 +160,9 @@ class Ticket(prometeo_models.Commentable):
         permissions = (
             ("change_assignees", "Can change assignees"),
         )
-        
-    def save(self):
-        if self.status in ('invalid', 'duplicated', 'resolved'):
-            if self.closed is None:
-                self.closed = datetime.datetime.now()
-        else:
-            self.closed = None
-        super(Ticket, self).save()
+
+    def __unicode__(self):
+        return u'#%d %s' % (self.pk, self.title)
     
     @models.permalink    
     def get_absolute_url(self):
@@ -244,9 +175,14 @@ class Ticket(prometeo_models.Commentable):
     @models.permalink    
     def get_delete_url(self):
         return ('ticket_delete', (), {"project": self.project.slug, "id": self.pk})
-
-    def __unicode__(self):
-        return u'#%d %s' % (self.pk, self.title)
+        
+    def save(self):
+        if self.status in ('invalid', 'duplicated', 'resolved'):
+            if self.closed is None:
+                self.closed = datetime.datetime.now()
+        else:
+            self.closed = None
+        super(Ticket, self).save()
 
 def notify_project_change(sender, instance, changes, *args, **kwargs):
     activity = Activity.objects.create(
@@ -271,9 +207,6 @@ post_change.connect(notify_ticket_change, Ticket, dispatch_uid="ticket_changed")
 manage_dashboard(Project)
 manage_stream(Project)
 make_observable(Project)
-manage_dashboard(Area)
-manage_stream(Area)
-make_observable(Area)
 manage_dashboard(Milestone)
 manage_stream(Milestone)
 make_observable(Milestone)

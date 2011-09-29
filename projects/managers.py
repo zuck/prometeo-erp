@@ -20,7 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.db import models
+from django.db import models    
 
 class TicketManager(models.Manager):
     """Custom manager for Ticket model.

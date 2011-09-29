@@ -31,15 +31,6 @@ urlpatterns = patterns('projects.views',
     url(r'^projects/(?P<slug>[-\w]+)/edit/$', view='projects.project_edit', name='project_edit'),
     url(r'^projects/(?P<slug>[-\w]+)/delete/$', view='projects.project_delete', name='project_delete'),
     url(r'^projects/(?P<slug>[-\w]+)/timeline/$', 'projects.project_detail', {'template_name': 'projects/project_timeline.html'}, 'project_timeline'),
-
-    # Areas.
-    url(r'^projects/(?P<project>[-\w]+)/areas/$', view='areas.area_list', name='area_list'),
-    url(r'^projects/(?P<project>[-\w]+)/areas/add/$', view='areas.area_add', name='area_add'),
-    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<slug>[-\w]+)/$', view='areas.area_detail', name='area_detail'),
-    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<slug>[-\w]+)/edit/$', view='areas.area_edit', name='area_edit'),
-    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<slug>[-\w]+)/delete/$', view='areas.area_delete', name='area_delete'),
-    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<slug>[-\w]+)/tickets/$', view='areas.area_tickets', name='area_tickets'),
-    url(r'^projects/(?P<project>[-\w]+)/areas/(?P<area>[-\w]+)/tickets/add/$', view='tickets.ticket_add', name='area_ticket_add'),
     
     # Milestones.
     url(r'^projects/(?P<project>[-\w]+)/milestones/$', view='milestones.milestone_list', name='milestone_list'),

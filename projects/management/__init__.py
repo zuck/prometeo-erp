@@ -37,11 +37,6 @@ def fixtures(sender, **kwargs):
         description=_("Main menu for projects")
     )
 
-    area_menu = Menu.objects.create(
-        slug="area_menu",
-        description=_("Main menu for areas")
-    )
-
     milestone_menu = Menu.objects.create(
         slug="milestone_menu",
         description=_("Main menu for milestones")
@@ -68,13 +63,6 @@ def fixtures(sender, **kwargs):
         menu=project_menu
     )
 
-    project_areas_link = Link.objects.create(
-        title=_("Areas"),
-        slug="project_areas",
-        url="{% url area_list object.slug %}",
-        menu=project_menu
-    )
-
     project_milestones_link = Link.objects.create(
         title=_("Milestones"),
         slug="project_milestones",
@@ -94,20 +82,6 @@ def fixtures(sender, **kwargs):
         slug="project_timeline",
         url="{% url project_timeline object.slug %}",
         menu=project_menu
-    )
-
-    area_dashboard_link = Link.objects.create(
-        title=_("Dashboard"),
-        slug="area_dashboard",
-        url="{{ object.get_absolute_url }}",
-        menu=area_menu
-    )
-
-    area_tickets_link = Link.objects.create(
-        title=_("Tickets"),
-        slug="area_tickets",
-        url="{% url area_tickets object.project.slug object.slug %}",
-        menu=area_menu
     )
 
     milestone_dashboard_link = Link.objects.create(

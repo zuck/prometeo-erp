@@ -81,10 +81,6 @@
                     <td>{{ object.urgency }}</td>
                 </tr>
                 <tr>
-                    <th>{% trans "Areas" %}:</th>
-                    <td colspan="3">{% for area in object.areas.all %} <a class="area" href="{{ area.get_absolute_url }}">{{ area }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
-                </tr>
-                <tr>
                     <th>{% trans "Tags" %}:</th>
                     <td colspan="3">{% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
                 </tr>

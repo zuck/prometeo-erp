@@ -97,6 +97,9 @@ def ticket_add(request, project, milestone=None, area=None, **kwargs):
     else:
         form = TicketForm(instance=ticket, initial=initial)
 
+    if not request.user.has_perm("projects.change_milestones"):
+        del form.fields['milestone']
+
     if not request.user.has_perm("projects.change_assignees"):
         del form.fields['assignees']
 
