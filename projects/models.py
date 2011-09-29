@@ -32,19 +32,9 @@ from django.contrib.comments.models import Comment
 from django.template.defaultfilters import slugify
 
 from prometeo.core import models as prometeo_models
-from prometeo.core.widgets.models import create_dashboard, delete_dashboard
+from prometeo.core.widgets.signals import manage_dashboard
 
-class TicketManager(models.Manager):
-    """Custom manager for Ticket model.
-    """
-    def opened(self):
-        return self.filter(closed=None)
-    
-    def closed(self):
-        return self.exclude(closed=None)
-    
-    def last(self):
-        return self.opened()[:5]
+from managers import *
 
 class Project(prometeo_models.Commentable):
     """Project model.
@@ -282,9 +272,6 @@ class Ticket(prometeo_models.Commentable):
     def __unicode__(self):
         return u'#%d %s' % (self.pk, self.title)
 
-models.signals.post_save.connect(create_dashboard, Project)
-models.signals.post_delete.connect(delete_dashboard, Project)
-models.signals.post_save.connect(create_dashboard, Area)
-models.signals.post_delete.connect(delete_dashboard, Area)
-models.signals.post_save.connect(create_dashboard, Milestone)
-models.signals.post_delete.connect(delete_dashboard, Milestone)
+manage_dashboard(Project)
+manage_dashboard(Area)
+manage_dashboard(Milestone)

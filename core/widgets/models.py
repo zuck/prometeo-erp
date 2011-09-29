@@ -25,13 +25,15 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 import django.utils.simplejson as json
 
-from prometeo.core.auth.models import *
+## VALIDATION RULES ##
         
 def validate_json(value):
     try:
         json.loads(value)
     except:
-        raise ValidationError('Ivalid JSON syntax')
+        raise ValidationError(_('Ivalid JSON syntax'))
+
+## MODELS ##
     
 class Region(models.Model):
     """Region model.
@@ -75,15 +77,3 @@ class Widget(models.Model):
     @models.permalink
     def get_delete_url(self):
         return ('widget_delete', (), {"slug": self.slug})
-
-def create_dashboard(sender, instance, signal, *args, **kwargs):
-    if not instance.dashboard:
-        dashboard = Region(slug="%s_%d_dashboard" % (instance.__class__.__name__.lower(), instance.pk), description='Dashboard')
-        dashboard.save()
-        instance.dashboard = dashboard
-        instance.save()
-
-def delete_dashboard(sender, instance, signal, *args, **kwargs):
-    dashboard = instance.dashboard
-    if dashboard:
-        dashboard.delete()
