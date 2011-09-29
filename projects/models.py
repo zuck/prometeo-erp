@@ -24,6 +24,7 @@ import datetime
 
 from django.db import models
 from django.db.models import permalink
+from django.db.models.signals import post_save, post_delete
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -184,25 +185,52 @@ class Ticket(prometeo_models.Commentable):
             self.closed = None
         super(Ticket, self).save()
 
-def notify_project_change(sender, instance, changes, *args, **kwargs):
+def notify_object_created(sender, instance, *args, **kwargs):
+    if kwargs['created']:  
+        activity = Activity.objects.create(
+            actor=instance,
+            action="created",
+            description=_("%s \"%s\" created") % (sender.__name__, instance)
+        )
+        activity.streams.add(instance.stream)
+        try:
+            activity.streams.add(instance.project.stream)
+        except:
+            pass
+
+def notify_object_change(sender, instance, changes, *args, **kwargs):
     activity = Activity.objects.create(
         actor=instance,
         action="changed",
-        description="\n".join(["Changed %s from %s to %s" % (name, old_value, value) for name, old_value, value in changes])
+        description="<br/>".join(["Changed \"%s\" from \"%s\" to \"%s\"" % (name, old_value, value) for name, (old_value, value) in changes.items()])
     )
     activity.streams.add(instance.stream)
+    try:
+        activity.streams.add(instance.project.stream)
+    except:
+        pass
 
-def notify_ticket_change(sender, instance, changes, *args, **kwargs):
+def notify_object_deleted(sender, instance, *args, **kwargs):
     activity = Activity.objects.create(
         actor=instance,
-        action="changed",
-        description="\n".join(["Changed %s from %s to %s" % (name, old_value, value) for name, old_value, value in changes])
+        action="deleted",
+        description=_("%s %s deleted") % (sender.__name__, instance)
     )
     activity.streams.add(instance.stream)
-    activity.streams.add(instance.project.stream)
+    try:
+        activity.streams.add(instance.project.stream)
+    except:
+        pass
 
-post_change.connect(notify_project_change, Project, dispatch_uid="project_changed")
-post_change.connect(notify_ticket_change, Ticket, dispatch_uid="ticket_changed")
+post_save.connect(notify_object_created, Project, dispatch_uid="project_created")
+post_change.connect(notify_object_change, Project, dispatch_uid="project_changed")
+post_delete.connect(notify_object_deleted, Project, dispatch_uid="project_deleted")
+post_save.connect(notify_object_created, Milestone, dispatch_uid="milestone_created")
+post_change.connect(notify_object_change, Milestone, dispatch_uid="milestone_changed")
+post_delete.connect(notify_object_deleted, Milestone, dispatch_uid="milestone_deleted")
+post_save.connect(notify_object_created, Ticket, dispatch_uid="ticket_created")
+post_change.connect(notify_object_change, Ticket, dispatch_uid="ticket_changed")
+post_delete.connect(notify_object_deleted, Ticket, dispatch_uid="ticket_deleted")
 
 manage_dashboard(Project)
 manage_stream(Project)

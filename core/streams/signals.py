@@ -37,7 +37,10 @@ def notify_changes(sender, instance, *args, **kwargs):
     """
     if not kwargs['created']:
         try:
-            changes = [(name, old_value, value) for name, (old_value, value) in instance._Observable__changes.items() if value != old_value]   
+            changes = {}
+            for name, (old_value, value) in instance._Observable__changes.items():
+                if value != old_value:
+                    changes[name] = (old_value, value)  
             instance._Observable__changes = {}
             if changes:
                 post_change.send(sender=sender, instance=instance, changes=changes)
