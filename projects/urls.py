@@ -30,6 +30,7 @@ urlpatterns = patterns('projects.views',
     url(r'^projects/(?P<slug>[-\w]+)/$', view='projects.project_detail', name='project_detail'),
     url(r'^projects/(?P<slug>[-\w]+)/edit/$', view='projects.project_edit', name='project_edit'),
     url(r'^projects/(?P<slug>[-\w]+)/delete/$', view='projects.project_delete', name='project_delete'),
+    url(r'^projects/(?P<slug>[-\w]+)/timeline/$', 'projects.project_detail', {'template_name': 'projects/project_timeline.html'}, 'project_timeline'),
 
     # Areas.
     url(r'^projects/(?P<project>[-\w]+)/areas/$', view='areas.area_list', name='area_list'),

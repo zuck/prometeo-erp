@@ -61,6 +61,9 @@
             {% if perms.projects.change_ticket %}
             <li><a href="{% url ticket_list object.slug %}">{% trans 'Tickets' %}</a></li>
             {% endif %}
+            {% if perms.streams.change_stream %}
+            <li><a href="{% url project_timeline object.slug %}">{% trans 'Timeline' %}</a></li>
+            {% endif %}
             {% endblock %}
         </ul>
     </div>

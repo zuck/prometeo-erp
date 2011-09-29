@@ -32,7 +32,9 @@ from django.contrib.comments.models import Comment
 from django.template.defaultfilters import slugify
 
 from prometeo.core import models as prometeo_models
-from prometeo.core.widgets.signals import manage_dashboard
+from prometeo.core.widgets.signals import *
+from prometeo.core.streams.signals import *
+from prometeo.core.streams.models import Activity
 
 from managers import *
 
@@ -50,6 +52,7 @@ class Project(prometeo_models.Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
     
     def _milestones(self):
         """Returns only the top-level milestones.
@@ -97,6 +100,7 @@ class Area(prometeo_models.Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
     
     def __unicode__(self):
         return u'%s' % self.title
@@ -134,6 +138,7 @@ class Milestone(prometeo_models.Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
     
     def _expired(self):
         if self.date_due:
@@ -205,6 +210,7 @@ class Ticket(prometeo_models.Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     public = models.BooleanField(_('public'), default=True)
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
 
     objects = TicketManager()
     
@@ -219,16 +225,6 @@ class Ticket(prometeo_models.Commentable):
             ("change_assignees", "Can change assignees"),
         )
         
-    def __setattr__(self, name, value):
-        try:
-            if self.pk and name != 'modified' and name in [f.attname for f in self._meta.fields]:
-                old_value = getattr(self, name)
-                if value != old_value:
-                    self.__changes[name] = (old_value, value)
-        except AttributeError:
-            pass
-        super(Ticket, self).__setattr__(name, value)
-        
     def save(self):
         if self.status in ('invalid', 'duplicated', 'resolved'):
             if self.closed is None:
@@ -236,26 +232,6 @@ class Ticket(prometeo_models.Commentable):
         else:
             self.closed = None
         super(Ticket, self).save()
-        reports = []
-        for name, (old_value, value) in self.__changes.items():
-            if old_value:
-                reports.append(u'**%s**' % name)
-        if reports:      
-            body = u'Changed %s.' % (u', '.join(reports))
-            data = {
-                'content_object': self,
-                'comment': body,
-                'submit_date': datetime.datetime.now(),
-                'site': Site.objects.get_current(), 
-                'user': self.last_modified_by,
-            }
-            try:
-                data['user_name'] = self.last_modified_by.username
-                data['user_email'] = self.last_modified_by.email
-            except:
-                pass
-            Comment.objects.create(**data)
-        self.__changes = {}
     
     @models.permalink    
     def get_absolute_url(self):
@@ -272,6 +248,34 @@ class Ticket(prometeo_models.Commentable):
     def __unicode__(self):
         return u'#%d %s' % (self.pk, self.title)
 
+def notify_project_change(sender, instance, changes, *args, **kwargs):
+    activity = Activity.objects.create(
+        actor=instance,
+        action="changed",
+        description="\n".join(["Changed %s from %s to %s" % (name, old_value, value) for name, old_value, value in changes])
+    )
+    activity.streams.add(instance.stream)
+
+def notify_ticket_change(sender, instance, changes, *args, **kwargs):
+    activity = Activity.objects.create(
+        actor=instance,
+        action="changed",
+        description="\n".join(["Changed %s from %s to %s" % (name, old_value, value) for name, old_value, value in changes])
+    )
+    activity.streams.add(instance.stream)
+    activity.streams.add(instance.project.stream)
+
+post_change.connect(notify_project_change, Project, dispatch_uid="project_changed")
+post_change.connect(notify_ticket_change, Ticket, dispatch_uid="ticket_changed")
+
 manage_dashboard(Project)
+manage_stream(Project)
+make_observable(Project)
 manage_dashboard(Area)
+manage_stream(Area)
+make_observable(Area)
 manage_dashboard(Milestone)
+manage_stream(Milestone)
+make_observable(Milestone)
+manage_stream(Ticket)
+make_observable(Ticket)

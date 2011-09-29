@@ -650,6 +650,31 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     padding-right: 0;
 }
 
+#content .activities dt {
+    border-bottom: 2px solid #d6d6d6;
+    background: none;
+    padding-left: 0;
+}
+
+#content .activities dd { margin: 0; }
+
+#content .activities li {
+    border-bottom: 1px solid #d6d6d6;
+    padding: 10px 15px 10px 35px;
+    background: no-repeat 10px 10px;
+}
+
+#content .activities li strong {
+    float: left;
+    width: 65px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+#content .activities .timesince  { float: right; }
+
+#content .activities p.description  { margin-left: 85px; }
+
 #content .tasks dt {
     border-bottom: 2px solid #d6d6d6;
     background: none;
