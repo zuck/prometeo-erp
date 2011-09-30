@@ -28,6 +28,18 @@ from prometeo.core.notifications.models import *
 
 from models import *
 
+## CONNECTORS ##
+
+def manage_stream(cls):
+    models.signals.pre_save.connect(create_stream, cls)
+    models.signals.post_save.connect(update_stream, cls)
+    models.signals.post_delete.connect(delete_stream, cls)
+
+def make_observable(cls):
+    if Observable not in cls.__bases__:
+        cls.__bases__ += (Observable,)
+    models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
+
 ## HANDLERS ##
 
 def notify_changes(sender, instance, *args, **kwargs):
@@ -50,8 +62,13 @@ def notify_changes(sender, instance, *args, **kwargs):
 def notify_activity(sender, instance, action, *args, **kwargs):
     """Notifies a new activity to all the followers of the related streams.
     """
-    if action == "post_add" and isinstance(instance, Activity):
-        activity = instance
+    if not isinstance(instance, Activity):
+        return
+
+    activity = instance
+
+    # Notifies an activity to all the followers.
+    if action == "post_add":
         subscriptions = Subscription.objects.filter(signature__slug=activity.signature()).distinct()
         streams = activity.streams.all()
         for subscription in subscriptions:
@@ -65,6 +82,24 @@ def notify_activity(sender, instance, action, *args, **kwargs):
                         title=u"%s" % activity
                     )
                     break
+
+    # Deletes orphans.
+    elif action in ["post_remove", "post_clear"]:
+        streams = activity.streams.all()
+        if len(streams) == 0:
+            activity.delete()
+
+def clear_orphans(sender, instance, *args, **kwargs):
+    """Clears all orphan activites.
+    """
+    if not isinstance(instance, Stream):
+        return
+
+    # Deletes orphans.
+    for activity in instance.activity_set.all():
+        streams = activity.streams.all()
+        if len(streams) == 1 and streams[0] == instance:
+            activity.delete()
 
 def create_stream(sender, instance, *args, **kwargs):
     """Creates a new stream for the given object.
@@ -87,20 +122,11 @@ def delete_stream(sender, instance, *args, **kwargs):
     if stream:
         stream.delete()
 
-## CONNECTORS ##
-
-def manage_stream(cls):
-    models.signals.pre_save.connect(create_stream, cls)
-    models.signals.post_save.connect(update_stream, cls)
-    models.signals.post_delete.connect(delete_stream, cls)
-
-def make_observable(cls):
-    if Observable not in cls.__bases__:
-        cls.__bases__ += (Observable,)
-    models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
-
-## SIGNALS AND CONNECTIONS ##
+## SIGNALS ##
 
 post_change = django.dispatch.Signal(providing_args=["instance", "changes"])
 
-models.signals.m2m_changed.connect(notify_activity, sender=Activity.streams.through)
+## CONNECTIONS ##
+
+models.signals.m2m_changed.connect(notify_activity, sender=Activity.streams.through, dispatch_uid="change_activities")
+models.signals.pre_delete.connect(clear_orphans, sender=Stream)
