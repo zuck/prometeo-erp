@@ -139,18 +139,16 @@ class Ticket(prometeo_models.Commentable):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name="created_tickets", verbose_name=_('author'))
-    last_modified_by = models.ForeignKey('auth.User', related_name="modified_tickets", editable=False, null=True, blank=True, verbose_name=_('last modified by'))
     milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', verbose_name=_('milestone'))
     type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default='bug', verbose_name=_('type'))
     urgency = models.CharField(max_length=10, choices=settings.TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
-    assignees = models.ManyToManyField('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('assignees'))
     status = models.CharField(max_length=10, choices=settings.TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
+    assignee = models.ForeignKey('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('assignee'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     modified = models.DateTimeField(auto_now=True, verbose_name=_('modified on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    public = models.BooleanField(_('public'), default=True)
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
 
     objects = TicketManager()     
@@ -159,7 +157,7 @@ class Ticket(prometeo_models.Commentable):
         ordering = ('created', 'id')
         get_latest_by = 'created'
         permissions = (
-            ("change_assignees", "Can change assignees"),
+            ("change_assignee", "Can change assignee"),
         )
 
     def __unicode__(self):

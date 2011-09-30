@@ -52,20 +52,12 @@ class MilestoneForm(forms.ModelForm):
             'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
         
-    def clean_date_due(self):
-        ddate = self.cleaned_data['date_due']
-        if ddate:
-            parent = self.cleaned_data['parent']
-            if parent and parent.date_due and ddate > parent.date_due:
-                raise django_forms.ValidationError(_("The date due is greater than the parent's one."))
-        return ddate
-        
 class TicketForm(forms.ModelForm):
     """Form for ticket data.
     """
     class Meta:
         model = Ticket
-        exclude = ('project', 'author', 'closed', 'public', 'allow_comments', 'stream')
+        exclude = ('project', 'author', 'closed', 'stream')
         widgets = {
             'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),

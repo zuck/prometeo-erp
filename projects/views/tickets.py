@@ -97,11 +97,11 @@ def ticket_add(request, project, milestone=None, area=None, **kwargs):
     else:
         form = TicketForm(instance=ticket, initial=initial)
 
-    if not request.user.has_perm("projects.change_milestones"):
+    if not request.user.has_perm("projects.change_milestone"):
         del form.fields['milestone']
 
-    if not request.user.has_perm("projects.change_assignees"):
-        del form.fields['assignees']
+    if not request.user.has_perm("projects.change_assignee"):
+        del form.fields['assignee']
 
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
@@ -121,8 +121,11 @@ def ticket_edit(request, project, id, **kwargs):
     else:
         form = TicketForm(instance=ticket)
 
-    if not request.user.has_perm("projects.change_assignees"):
-        del form.fields['assignees']
+    if not request.user.has_perm("projects.change_milestone"):
+        del form.fields['milestone']
+
+    if not request.user.has_perm("projects.change_assignee"):
+        del form.fields['assignee']
 
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 

@@ -54,7 +54,7 @@
                     <th>{% trans "Reported by" %}:</th>
                     <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
                     <th>{% trans "Assigned to" %}:</th>
-                    <td>{% for assignee in object.assignees.all %} <a class="assignee" href="{{ assignee.get_absolute_url }}">{{ assignee }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "nobody" %}</span>{% endfor %}</td>
+                    <td>{% if object.assignee %}<a class="assignee" href="{{ object.assignee.get_absolute_url }}">{{ object.assignee }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}</td>
                 </tr>
                 <tr>
                     <th>{% trans "Created on" %}:</th>
