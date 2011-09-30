@@ -80,7 +80,7 @@ def add_crumb(parser, token):
     tag_name, args, kwargs = parse_args_kwargs(parser, token)
     return AddCrumbNode(*args, **kwargs)
 
-@register.inclusion_tag('breadcrumbs/breadcrumbs.html', takes_context=True)
+@register.inclusion_tag('elements/breadcrumbs.html', takes_context=True)
 def render_breadcrumbs(context):
     """
     Renders the stored list of breadcrumbs.
