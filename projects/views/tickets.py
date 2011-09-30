@@ -114,7 +114,6 @@ def ticket_edit(request, project, id, **kwargs):
     if request.method == 'POST':
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
-            ticket.last_modified_by = request.user
             ticket = form.save()
             messages.success(request, _("The ticket has been updated."))
             return redirect_to(request, url=ticket.get_absolute_url())
