@@ -89,7 +89,7 @@ class Activity(models.Model):
         """Signature of this activity.
         """
         if self.target_content_type:
-            return "%s-%s-%s" % (self.actor_content_type.name, self.action, self.target_content_type.name)
+            return "%s-%s" % (self.target_content_type.name, self.action)
         return "%s-%s" % (self.actor_content_type.name, self.action)
 
     def get_absolute_url(self):

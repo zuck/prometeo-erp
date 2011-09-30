@@ -25,6 +25,7 @@ from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
 from prometeo.core.menus.models import *
+from prometeo.core.notifications.models import Signature
 
 def fixtures(sender, **kwargs):
     """Installs fixtures for this application.
@@ -117,6 +118,53 @@ def fixtures(sender, **kwargs):
         slug="ticket_timeline",
         url="{% url ticket_timeline object.project.slug object.pk %}",
         menu=ticket_menu
+    )
+
+    # Signatures.
+
+    project_created_signature = Signature.objects.create(
+        title=_("Project created"),
+        slug="project-created"
+    )
+
+    project_changed_signature = Signature.objects.create(
+        title=_("Project changed"),
+        slug="project-changed"
+    )
+
+    project_deleted_signature = Signature.objects.create(
+        title=_("Project deleted"),
+        slug="project-deleted"
+    )
+
+    milestone_created_signature = Signature.objects.create(
+        title=_("Milestone created"),
+        slug="milestone-created"
+    )
+
+    milestone_changed_signature = Signature.objects.create(
+        title=_("Milestone changed"),
+        slug="milestone-changed"
+    )
+
+    milestone_deleted_signature = Signature.objects.create(
+        title=_("Milestone deleted"),
+        slug="milestone-deleted"
+    )
+
+    ticket_created_signature = Signature.objects.create(
+        title=_("Ticket created"),
+        slug="ticket-created"
+    )
+
+    ticket_changed_signature = Signature.objects.create(
+        title=_("Ticket changed"),
+        slug="ticket-changed"
+    )
+
+    ticket_deleted_signature = Signature.objects.create(
+        title=_("Ticket deleted"),
+        slug="ticket-deleted"
     )
     
     post_syncdb.disconnect(fixtures)

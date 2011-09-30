@@ -185,6 +185,18 @@ class Ticket(prometeo_models.Commentable):
 
 def notify_object_created(sender, instance, *args, **kwargs):
     if kwargs['created']:  
+        if instance.author and instance.author not in instance.stream.followers.all():
+            instance.stream.followers.add(instance.author)
+        try:
+            if instance.manager and instance.manager not in instance.stream.followers.all():
+                instance.stream.followers.add(instance.manager)
+        except:
+            pass
+        try:
+            if instance.assignee and instance.assignee not in instance.stream.followers.all():
+                instance.stream.followers.add(instance.assignee)
+        except:
+            pass
         activity = Activity.objects.create(
             actor=instance.author,
             action="created",
@@ -198,6 +210,18 @@ def notify_object_created(sender, instance, *args, **kwargs):
             pass
 
 def notify_object_change(sender, instance, changes, *args, **kwargs):
+    if instance.author and instance.author not in instance.stream.followers.all():
+        instance.stream.followers.add(instance.author)
+    try:
+        if instance.manager and instance.manager not in instance.stream.followers.all():
+            instance.stream.followers.add(instance.manager)
+    except:
+        pass
+    try:
+        if instance.assignee and instance.assignee not in instance.stream.followers.all():
+            instance.stream.followers.add(instance.assignee)
+    except:
+        pass
     activity = Activity.objects.create(
         actor=instance,
         action="changed",
