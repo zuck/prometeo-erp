@@ -143,6 +143,8 @@ def task_edit(request, id, **kwargs):
     else:
         form = TaskForm(instance=task)
 
+    print form.media
+
     return render_to_response('todo/task_edit.html', RequestContext(request, {'form': form, 'object': task}))
   
 def task_delete(request, id, **kwargs):

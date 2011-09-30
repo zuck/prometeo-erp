@@ -21,7 +21,11 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.ie.css" type="text/css" media="all"/>
     <![endif]-->
 
-    {% block extrahead %}{% endblock %}
+    {% block extrahead %}
+    {% if form %}
+    {{ form.media }}
+    {% endif %}
+    {% endblock %}
 </head>
 
 <body>

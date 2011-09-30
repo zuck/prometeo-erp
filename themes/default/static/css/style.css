@@ -96,6 +96,10 @@ form input, form select {
     font-style: normal;
 }
 
+form input { padding: 3px; }
+
+form select { padding: 2px 3px 1px; }
+
 form textarea {
     clear: left;
     width: 100%;
@@ -125,10 +129,32 @@ form .json-key {
     width: 100px; 
     margin-right: 0;
 }
+
 form .json-val {
     clear: none;
     width: 160px; 
     margin-right: 0;
+}
+
+form .datepicker, form .timepicker {
+    clear: none;
+    margin-right: 0;
+}
+
+form input.datepicker {
+    width: 135px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+form input.timepicker {
+    width: 30px;
+    margin-left: 5px;
+}
+
+select.timepicker {
+    width: 55px;
+    margin-left: 5px;
 }
 
 /**

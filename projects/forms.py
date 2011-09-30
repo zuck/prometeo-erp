@@ -24,6 +24,7 @@ from django import forms as forms
 from django.utils.translation import ugettext_lazy as _
 
 from prometeo.core.forms import enrich_form
+from prometeo.core.forms.fields import *
 from prometeo.core.forms.widgets import *
 from prometeo.core.wysiwyg.forms.widgets import CKEditor
 
@@ -44,6 +45,8 @@ class ProjectForm(forms.ModelForm):
 class MilestoneForm(forms.ModelForm):
     """Form for milestone data.
     """
+    deadline = SplitDateTimeField(required=False)
+
     class Meta:
         model = Milestone
         exclude = ('project', 'slug', 'author', 'closed', 'dashboard', 'stream')

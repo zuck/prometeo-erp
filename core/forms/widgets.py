@@ -20,18 +20,86 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+from time import strftime
 import json
 
 from django import forms
-from django.forms.widgets import flatatt
+from django.forms.widgets import flatatt, Select, MultiWidget, DateInput, TextInput
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.db import models
 
+class SplitDateTimeWidget(MultiWidget):
+    """A more-friendly date/time widget.
+
+    Inspired by:
+
+    http://copiesofcopies.org/webl/2010/04/26/a-better-datetime-widget-for-django/
+    """
+    class Media:
+        css = {
+            "screen": ("css/blitzer/jquery-ui-1.8.16.custom.css",)
+        }
+        js = (
+            "js/jquery-1.6.2.min.js",
+            "js/jquery-ui-1.8.16.custom.min.js",
+            "js/splitdatetime.js",
+        )
+
+    def __init__(self, attrs=None, date_format=None, time_format=None):
+        if not attrs:
+            attrs = {}
+
+        try:
+            date_class = attrs['date_class']
+            del attrs['date_class']
+        except:
+            date_class = "datepicker"
+
+        try:
+            time_class = attrs['time_class']
+            del attrs['time_class']
+        except:
+            time_class = "timepicker"
+
+        time_attrs = attrs.copy()
+        time_attrs['class'] = time_class
+        date_attrs = attrs.copy()
+        date_attrs['class'] = date_class
+
+        widgets = (
+            DateInput(attrs=date_attrs, format=date_format),
+            TextInput(attrs=time_attrs), TextInput(attrs=time_attrs),
+            Select(attrs=time_attrs, choices=[('AM','AM'),('PM','PM')])
+        )
+
+        super(SplitDateTimeWidget, self).__init__(widgets, attrs)
+
+    def decompress(self, value):
+        if value:
+            d = strftime("%Y-%m-%d", value.timetuple())
+            hour = strftime("%I", value.timetuple())
+            minute = strftime("%M", value.timetuple())
+            meridian = strftime("%p", value.timetuple())
+            return (d, hour, minute, meridian)
+        else:
+            return (None, None, None, None)
+
+    def format_output(self, rendered_widgets):
+        """
+        Given a list of rendered widgets (as strings), it inserts an HTML
+        linebreak between them.
+
+        Returns a Unicode string representing the HTML for the whole lot.
+        """
+        return "%s: %s<br/>%s: %s%s%s" % (_("Date"), rendered_widgets[0], _("Time"), rendered_widgets[1], rendered_widgets[2], rendered_widgets[3])
+
 class SelectMultipleAndAddWidget(forms.SelectMultiple):
     """A multiple-select widget with an optional "add" link.
+
+    add_url -- link to the "add" action.    
     """
     def __init__(self, *args, **kwargs):
         self.add_url = ""
@@ -48,8 +116,6 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
 
 class JsonPairWidget(forms.Widget):
     """A widget that displays a list of text key/value pairs.
-
-    kwargs:
 
     key_attrs -- html attributes applied to the 1st input box pairs
     val_attrs -- html attributes applied to the 2nd input box pairs

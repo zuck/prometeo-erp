@@ -23,6 +23,7 @@ __version__ = '0.0.2'
 from django.forms.fields import *
 
 from prometeo.core.forms import enrich_form
+from prometeo.core.forms.fields import SplitDateTimeField
 from prometeo.core.forms.widgets import *
 from prometeo.core.wysiwyg.forms.widgets import CKEditor
 
@@ -31,6 +32,9 @@ from models import *
 class TaskForm(forms.ModelForm):
     """Form for Task data.
     """
+    start = SplitDateTimeField(required=False)
+    end = SplitDateTimeField(required=False)
+
     class Meta:
         model = Task
         exclude = ('user', 'closed')
