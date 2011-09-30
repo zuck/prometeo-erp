@@ -188,9 +188,10 @@ class Ticket(prometeo_models.Commentable):
 def notify_object_created(sender, instance, *args, **kwargs):
     if kwargs['created']:  
         activity = Activity.objects.create(
-            actor=instance,
+            actor=instance.author,
             action="created",
-            description=_("%s \"%s\" created") % (sender.__name__, instance)
+            target=instance,
+            description=_("%s \"%s\" created by %s") % (sender.__name__, instance, instance.author)
         )
         activity.streams.add(instance.stream)
         try:
