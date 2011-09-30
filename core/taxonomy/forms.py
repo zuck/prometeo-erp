@@ -20,7 +20,9 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from prometeo.core import forms
+from django import forms
+
+from prometeo.core.forms import enrich_form
 
 from models import *
 
@@ -35,3 +37,6 @@ class TagForm(forms.ModelForm):
     """
     class Meta:
         model = Tag
+
+enrich_form(CategoryForm)
+enrich_form(TagForm)

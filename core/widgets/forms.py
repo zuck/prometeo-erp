@@ -20,7 +20,10 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from prometeo.core import forms
+from django import forms
+
+from prometeo.core.forms import enrich_form
+from prometeo.core.forms.widgets import JsonPairWidget
 
 from models import *
 
@@ -30,4 +33,6 @@ class WidgetForm(forms.ModelForm):
     class Meta:
         model = Widget
         exclude = ['region', 'slug', 'show_title', 'editable', 'sort_order']
-        widgets = {'context': forms.JsonPairWidget()}
+        widgets = {'context': JsonPairWidget()}
+
+enrich_form(WidgetForm)

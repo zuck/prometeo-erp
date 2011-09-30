@@ -203,12 +203,6 @@ INSTALLED_APPS = (
     #'prometeo.projects',
 )
 
-# Authorization and login options.
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'prometeo.core.auth.backends.ObjectPermBackend',
-)
-
 AUTH_PROFILE_MODULE = 'auth.UserProfile'
 AUTH_EXPIRATION_DAYS = 2
 

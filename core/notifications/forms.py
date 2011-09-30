@@ -23,6 +23,8 @@ __version__ = '0.0.2'
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from prometeo.core.forms import enrich_form
+
 from models import *
 
 class SubscriptionWidget(forms.MultiWidget):
@@ -93,3 +95,4 @@ class SubscriptionsForm(forms.Form):
                 Subscription.objects.filter(user=self.user, signature=signature).delete()
                 self.fields[key].initial = (False, False)
                  
+enrich_form(SubscriptionsForm)

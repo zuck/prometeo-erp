@@ -20,20 +20,20 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django import forms as django_forms
+from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from prometeo.core import forms
+from prometeo.core.forms import enrich_form
 
 from models import *
 
 class UserEditForm(forms.ModelForm):
     """Form for user data.
     """
-    password1 = django_forms.CharField(label=_("Password"), widget=django_forms.PasswordInput)
-    password2 = django_forms.CharField(label=_("Password confirmation"), widget=django_forms.PasswordInput)
+    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -51,7 +51,7 @@ class UserEditForm(forms.ModelForm):
         password1 = self.cleaned_data["password1"]
             
         if not (password1 or self.instance.pk):
-            raise django_forms.ValidationError(_('This field is required.'))
+            raise forms.ValidationError(_('This field is required.'))
             
         return password1
 
@@ -61,10 +61,10 @@ class UserEditForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1", "")
         password2 = self.cleaned_data["password2"]
         if password1 != password2 and (password2 or not self.instance.pk):
-            raise django_forms.ValidationError(_("The two password fields didn't match."))
+            raise forms.ValidationError(_("The two password fields didn't match."))
             
         if not (password2 or self.instance.pk):
-            raise django_forms.ValidationError(_('This field is required.'))
+            raise forms.ValidationError(_('This field is required.'))
             
         return password2
         
@@ -72,7 +72,7 @@ class UserEditForm(forms.ModelForm):
         """Checks if the email address is unique.
         """
         if User.objects.filter(email__iexact=self.cleaned_data['email']).exclude(pk=self.instance.pk):
-            raise django_forms.ValidationError(_(u'This email address is already in use. Please supply a different email address.'))
+            raise forms.ValidationError(_(u'This email address is already in use. Please supply a different email address.'))
         return self.cleaned_data['email']
 
     def save(self, commit=True):
@@ -89,3 +89,6 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user', 'activation_key', 'key_expires', 'dashboard', 'bookmarks')
+
+enrich_form(UserEditForm)
+enrich_form(UserProfileForm)

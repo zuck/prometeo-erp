@@ -19,25 +19,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
-
-from django.forms.fields import *
-
-from prometeo.core.forms import enrich_form
-from prometeo.core.forms.widgets import *
-from prometeo.core.wysiwyg.forms.widgets import CKEditor
-
-from models import *
-
-class TaskForm(forms.ModelForm):
-    """Form for Task data.
-    """
-    class Meta:
-        model = Task
-        exclude = ('user', 'closed')
-        widgets = {
-            'description': CKEditor(),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
-        }
-
-enrich_form(TaskForm)

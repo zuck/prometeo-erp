@@ -31,6 +31,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from prometeo.core.auth.models import *
+
 from forms import *
 
 def user_register(request):

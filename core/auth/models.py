@@ -49,16 +49,6 @@ class UserProfile(models.Model):
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     bookmarks = models.OneToOneField('menus.Menu', null=True, verbose_name=_("bookmarks"))
 
-class ObjectPermission(models.Model):
-    """A generic object/row-level permission.
-    """
-    user = models.ForeignKey(User)
-    can_view = models.BooleanField()
-    can_change = models.BooleanField()
-    can_delete = models.BooleanField()
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-
 def user_post_save(sender, instance, signal, *args, **kwargs):
     profile, is_new = UserProfile.objects.get_or_create(user=instance)
     if is_new and UserProfile.objects.count() > 1:

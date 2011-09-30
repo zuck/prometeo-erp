@@ -20,24 +20,14 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.forms.fields import *
-
-from prometeo.core.forms import enrich_form
-from prometeo.core.forms.widgets import *
-from prometeo.core.wysiwyg.forms.widgets import CKEditor
-
-from models import *
-
-class TaskForm(forms.ModelForm):
-    """Form for Task data.
+class RichForm(object):
+    """Mix-in to make rich forms.
     """
-    class Meta:
-        model = Task
-        exclude = ('user', 'closed')
-        widgets = {
-            'description': CKEditor(),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
-        }
+    required_css_class = 'required'
+    error_css_class = 'errors'
 
-enrich_form(TaskForm)
+def enrich_form(cls):
+    """Makes the form richer with custom CSS classes for special fields.
+    """
+    if RichForm not in cls.__bases__:
+        cls.__bases__ += (RichForm,)

@@ -20,10 +20,11 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django import forms as django_forms
+from django import forms as forms
 from django.utils.translation import ugettext_lazy as _
 
-from prometeo.core import forms
+from prometeo.core.forms import enrich_form
+from prometeo.core.forms.widgets import *
 from prometeo.core.wysiwyg.forms.widgets import CKEditor
 
 from models import *
@@ -36,8 +37,8 @@ class ProjectForm(forms.ModelForm):
         exclude = ('author', 'slug', 'closed', 'dashboard', 'stream')
         widgets = {
             'description': CKEditor(),
-            'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
 
 class MilestoneForm(forms.ModelForm):
@@ -48,8 +49,8 @@ class MilestoneForm(forms.ModelForm):
         exclude = ('project', 'slug', 'author', 'closed', 'dashboard', 'stream')
         widgets = {
             'description': CKEditor(),
-            'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
         
 class TicketForm(forms.ModelForm):
@@ -59,8 +60,8 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         exclude = ('project', 'author', 'closed', 'stream')
         widgets = {
-            'tags': forms.SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': forms.SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
         
     def __init__(self, *args, **kwargs):
@@ -68,3 +69,7 @@ class TicketForm(forms.ModelForm):
         if self.instance is None or self.instance.pk is None:
             del self.fields['status']
         self.fields['milestone'].queryset = self.instance.project.milestone_set.all()
+
+enrich_form(ProjectForm)
+enrich_form(MilestoneForm)
+enrich_form(TicketForm)

@@ -20,8 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-import json as json
-from time import strftime
+import json
 
 from django import forms
 from django.forms.widgets import flatatt
@@ -30,18 +29,6 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.db import models
-
-class Form(forms.Form):
-    """Base form.
-    """
-    required_css_class = 'required'
-    error_css_class = 'errors'
-
-class ModelForm(forms.ModelForm):
-    """Base model form.
-    """
-    required_css_class = 'required'
-    error_css_class = 'errors'
 
 class SelectMultipleAndAddWidget(forms.SelectMultiple):
     """A multiple-select widget with an optional "add" link.

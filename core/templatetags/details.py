@@ -141,7 +141,7 @@ class DetailTableNode(Node):
             else:
                 output = u'<span class="yes">%s</span>' % _('Yes')
         elif not value:
-            output = u'<span class="disabled">%s</span>' % _('Empty')
+            output = u'<span class="disabled">%s</span>' % _('empty')
         return mark_safe(output)
 
     def field_to_value(self, field, instance):

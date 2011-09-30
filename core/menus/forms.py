@@ -20,7 +20,9 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from prometeo.core import forms
+from django import forms
+
+from prometeo.core.forms import enrich_form
 
 from models import *
 
@@ -30,3 +32,5 @@ class LinkForm(forms.ModelForm):
     class Meta:
         model = Link
         exclude = ['menu', 'slug', 'submenu', 'sort_order', 'only_authenticated', 'only_staff', 'only_with_perms']
+
+enrich_form(LinkForm)
