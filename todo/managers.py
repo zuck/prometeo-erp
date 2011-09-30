@@ -27,7 +27,7 @@ class TaskManager(models.Manager):
     """Custom manager for Task model.
     """
     def planned(self, user):
-        return self.filter(start_date__isnull=False, user=user)
+        return self.filter(start__isnull=False, user=user)
     
     def unplanned(self, user):
-        return self.filter(start_date__isnull=True, user=user)
+        return self.filter(start__isnull=True, user=user)

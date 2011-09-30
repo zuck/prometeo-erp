@@ -36,7 +36,7 @@
             </ul>
         </div>
         <div class="details">
-            {% regroup object_list by start_date as tasks_by_date %}
+            {% regroup object_list by start.date as tasks_by_date %}
             {% if tasks_by_date %}
             <dl class="tasks">
             {% for date in tasks_by_date %}
@@ -45,7 +45,7 @@
                     <ul>
                     {% for item in date.list %}
                         <li{% if item.closed %}{% if item.expired %} class="delayed"{% else %} class="closed"{% endif %}{% else %}{% if item.expired %} class="expired"{% endif %}{% endif %}>
-                            <strong>{{ item.start_time }}</strong>
+                            <strong>{{ item.start.time }}</strong>
                             <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                             {% if item.expired %}
                             <span class="delay">({{ item.end|timesince }} {% trans "overdue" %})</span>

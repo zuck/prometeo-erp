@@ -7,6 +7,9 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Tasks' 'task_list' %}
+    {% if not object.planned %}
+    {% add_crumb 'Unplanned' 'unplanned_task_list' %}
+    {% endif %}
     {% add_crumb object %}
     {% render_breadcrumbs %}
 {% endblock %}
@@ -53,15 +56,15 @@
         </tr>
         <tr>
             <th>{% trans "Created on" %}:</th>
-            <td>{% if object.created %}{{ object.created }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+            <td>{% if object.created %}{{ object.created }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}</td>
             <th>{% trans "Closed on" %}:</th>
-            <td>{% if object.closed %}{{ object.closed }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+            <td>{% if object.closed %}{{ object.closed }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}</td>
         </tr>
         <tr>
             <th>{% trans "Start date" %}:</th>
-            <td>{% if object.start %}{{ object.start }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+            <td>{% if object.start %}{{ object.start }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}</td>
             <th>{% trans "End date" %}:</th>
-            <td>{% if object.end %}{{ object.end }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
+            <td>{% if object.end %}{{ object.end }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}</td>
         </tr>
         <tr>
             <th>{% trans "Tags" %}:</th>
@@ -78,7 +81,7 @@
                     {% if object.description %}
                     {{ object.description|safe }}
                     {% else %}
-                    <span class="disabled">{% trans "Empty" %}</span>
+                    <span class="disabled">{% trans "empty" %}</span>
                     {% endif %}
                 </div>
             </td>

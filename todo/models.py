@@ -34,10 +34,8 @@ class Task(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     user = models.ForeignKey('auth.User', null=True, blank=True, verbose_name=_('user'))
-    start_date = models.DateField(null=True, blank=True, verbose_name=_('start date'))
-    start_time = models.TimeField(null=True, blank=True, verbose_name=_('start time'))
-    end_date = models.DateField(null=True, blank=True, verbose_name=_('end date'))    
-    end_time = models.TimeField(null=True, blank=True, verbose_name=_('end time')) 
+    start = models.DateTimeField(null=True, blank=True, verbose_name=_('start'))
+    end = models.DateTimeField(null=True, blank=True, verbose_name=_('end'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on')) 
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
@@ -46,23 +44,20 @@ class Task(models.Model):
     objects = TaskManager() 
 
     class Meta:
-        ordering = ('-start_date', '-start_time', 'id')
-        get_latest_by = '-start_date'
+        ordering = ('-start', 'id')
+        get_latest_by = '-start'
 
     def __unicode__(self):
         return u'%s' % self.title
 
+    def planned(self):
+        return (self.start is not None)
+
     def started(self):
-        return (self.start() <= datetime.now())
+        return (self.start <= datetime.now())
 
     def expired(self):
-        return (self.end() < datetime.now())
-
-    def start(self):
-        return datetime.combine(self.start_date, self.start_time)
-
-    def end(self):
-        return datetime.combine(self.end_date, self.end_time)
+        return (self.end < datetime.now())
 
     @models.permalink
     def get_absolute_url(self):
