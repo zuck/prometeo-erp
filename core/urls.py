@@ -60,6 +60,9 @@ urlpatterns = patterns('',
     # Notifications.
     (r'^', include('prometeo.core.notifications.urls')),
 
+    # Streams.
+    (r'^', include('prometeo.core.streams.urls')),
+
     # Taxonomy.
     (r'^', include('prometeo.core.taxonomy.urls')),
 )
