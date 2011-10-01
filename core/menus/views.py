@@ -32,17 +32,11 @@ from django.contrib import messages
 
 from django.contrib.auth.models import User
 
+from prometeo.core.utils import clean_referer
 from prometeo.core.utils.filter import filter_objects
 
 from models import *
 from forms import *
-
-def clean_referer(request):
-    try:
-        referer = request.META['HTTP_REFERER']
-    except:
-        referer = '/'
-    return referer.replace("http://", "").replace(request.META['HTTP_HOST'], "")
 
 @login_required
 def bookmark_list(request, username, page=0, paginate_by=10, **kwargs):

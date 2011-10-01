@@ -101,6 +101,15 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
 
     add_url -- link to the "add" action.    
     """
+    class Media:
+        css = {
+            "screen": ("css/blitzer/jquery-ui-1.8.16.custom.css",)
+        }
+        js = (
+            "js/jquery-1.6.2.min.js",
+            "js/jquery-ui-1.8.16.custom.min.js"
+        )
+
     def __init__(self, *args, **kwargs):
         self.add_url = ""
         if kwargs.has_key('add_url'):
@@ -111,7 +120,32 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
     def render(self, name, value, attrs=None, choices=()):
         output = super(SelectMultipleAndAddWidget, self).render(name, value, attrs, choices)
         if self.add_url:
-            output += '<span class="add"><a target="_blank" href="%s">%s</a></span><br/>' % (self.add_url, _('Add'))
+            tokens = {
+                'name': name,
+                'add_url': self.add_url,
+                'label': _('Add')
+            }
+            output += '<span id="add-%(name)s" class="add">'                                                                \
+                      '    <a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>'    \
+                      '</span>'                                                                                             \
+                      '<script>'                                                                                            \
+                      '    $("#add-link-%(name)s")'                                                                         \
+                      '    .click('                                                                                         \
+                      '        function(e) {'                                                                               \
+                      '            e.preventDefault();'                                                                     \
+                      '            $("#add-%(name)s")'                                                                      \
+                      '            .append(\'<div id="add-dialog-%(name)s"></div>\')'                                       \
+                      '            .children("#add-dialog-%(name)s")'                                                       \
+                      '            .load("%(add_url)s #main")'                                                              \
+                      '            .dialog({'                                                                               \
+                      '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },'                 \
+                      '                modal: true,'                                                                        \
+                      '                width: 360'                                                                          \
+                      '             });'                                                                                    \
+                      '         }'                                                                                          \
+                      '    );'                                                                                              \
+                      '</script>' % tokens
+            output += '<br/>'
         return mark_safe(output)
 
 class JsonPairWidget(forms.Widget):

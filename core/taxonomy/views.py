@@ -35,6 +35,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 
+from prometeo.core.utils import clean_referer
 from prometeo.core.utils.filter import filter_objects
 
 from models import *
@@ -161,7 +162,7 @@ def category_add(request, **kwargs):
         if form.is_valid():
             category = form.save()
             messages.success(request, _("The category has been saved."))
-            return redirect_to(request, url=category.get_absolute_url())
+            return redirect_to(request, url=clean_referer(request))
     else:
         form = CategoryForm(instance=category)
 
@@ -248,7 +249,7 @@ def tag_add(request, **kwargs):
         if form.is_valid():
             tag = form.save()
             messages.success(request, _("The tag has been saved."))
-            return redirect_to(request, url=tag.get_absolute_url())
+            return redirect_to(request, url=clean_referer(request))
     else:
         form = TagForm(instance=tag)
 
