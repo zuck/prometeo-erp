@@ -26,7 +26,6 @@ from django.utils.translation import ugettext_lazy as _
 from prometeo.core.forms import enrich_form
 from prometeo.core.forms.fields import *
 from prometeo.core.forms.widgets import *
-from prometeo.core.wysiwyg.forms.widgets import CKEditor
 
 from models import *
 

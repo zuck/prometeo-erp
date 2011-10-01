@@ -208,3 +208,30 @@ class JsonPairWidget(forms.Widget):
                     data[key] = value
             jsontext = json.dumps(data)
         return jsontext
+
+class CKEditor(forms.Textarea):
+    """A wrapper for the powerful CKEditor.
+    """
+    class Media:
+        js = ('js/ckeditor/ckeditor.js',)
+
+    def render(self, name, value, attrs={}):
+        rendered = super(CKEditor, self).render(name, value, attrs)
+        tokens = {
+            'name': name,
+            'skin': attrs.get('skin', 'v2'),
+            'toolbar': attrs.get('toolbar', 'Full'),
+            'height': attrs.get('height', '220'),
+            'width': attrs.get('width', '765'),
+        }
+        rendered += mark_safe(u'<script type="text/javascript">'                                                \
+                              u'   CKEDITOR.replace("%(name)s",'                                                \
+                              u'       {'                                                                       \
+                              u'           skin: "%(skin)s",'                                                   \
+                              u'           toolbar: "%(toolbar)s",'                                             \
+                              u'           height: "%(height)s",'                                               \
+                              u'           width: "%(width)s",'                                                 \
+                              u'       }'                                                                       \
+                              u'   );'                                                                          \
+                              u'</script>' % tokens)
+        return rendered
