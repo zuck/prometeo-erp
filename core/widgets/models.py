@@ -22,18 +22,8 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
-import django.utils.simplejson as json
 
-## VALIDATION RULES ##
-        
-def validate_json(value):
-    try:
-        json.loads(value)
-    except:
-        raise ValidationError(_('Ivalid JSON syntax'))
-
-## MODELS ##
+from prometeo.core.models import validate_json
     
 class Region(models.Model):
     """Region model.

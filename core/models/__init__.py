@@ -24,7 +24,19 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.contrib.comments.models import Comment
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 from django.dispatch import receiver
+import django.utils.simplejson as json
+
+## VALIDATION RULES ##
+        
+def validate_json(value):
+    try:
+        json.loads(value)
+    except:
+        raise ValidationError(_('Ivalid JSON syntax'))
+
+## MODELS ##
 
 class Commentable(models.Model):
     """Mix-in for all commentable resources.
