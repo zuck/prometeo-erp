@@ -133,7 +133,7 @@ class Ticket(Commentable):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name="created_tickets", verbose_name=_('author'))
-    milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', verbose_name=_('milestone'))
+    milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', on_delete=models.SET_NULL, verbose_name=_('milestone'))
     type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default='bug', verbose_name=_('type'))
     urgency = models.CharField(max_length=10, choices=settings.TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
     status = models.CharField(max_length=10, choices=settings.TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
