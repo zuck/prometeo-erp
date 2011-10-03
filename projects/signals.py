@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.db.models.signals import post_save, post_delete
+from django.utils.translation import ugettext_noop as _
 
 from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
@@ -38,7 +39,8 @@ def _get_streams(instance):
     try:
         streams.append(instance.stream)
         streams.append(instance.project.stream)
-    except AttributeError:
+        streams.append(instance.milestone.stream)
+    except:
         pass
 
     return streams
@@ -51,7 +53,7 @@ def _register_followers(instance):
             register_follower_to_stream(instance.author, stream)
             register_follower_to_stream(instance.manager, stream)
             register_follower_to_stream(instance.assignee, stream)
-        except AttributeError:
+        except:
             pass
 
 ## HANDLERS ##
@@ -63,8 +65,16 @@ def notify_object_created(sender, instance, *args, **kwargs):
         _register_followers(instance)
 
         activity = Activity.objects.create(
-            actor=instance,
-            action="created",
+            title=_("%(class)s %(name)s created by %(author)s"),
+            description=_('%(class)s <a href="%(link)s">%(name)s</a> has been created by <a href="%(author_link)s">%(author)s</a>.'),
+            signature="%s-created" % (sender.__name__.lower()),
+            context='{"class": "%s", "name": "%s", "link": "%s", "author": "%s", "author_link": "%s"}' % (
+                sender.__name__.lower(),
+                instance,
+                instance.get_absolute_url(),
+                instance.author,
+                instance.author.get_absolute_url()
+            ),
             backlink=instance.get_absolute_url()
         )
 
@@ -76,9 +86,15 @@ def notify_object_change(sender, instance, changes, *args, **kwargs):
     _register_followers(instance)
 
     activity = Activity.objects.create(
-        actor=instance,
-        action="changed",
-        description="<br/>".join(["Changed \"%s\" from \"%s\" to \"%s\"" % (name, old_value, value) for name, (old_value, value) in changes.items()]),
+        title=_("%(class)s %(name)s changed"),
+        description=_('The following attributes of %(class)s <a href="%(link)s">%(name)s</a> has been changed:<br/>%(changes)s'),
+        signature="%s-changed" % (sender.__name__.lower()),
+        context='{"class": "%s", "name": "%s", "link": "%s", "changes": "%s"}' % (
+            sender.__name__.lower(),
+            instance,
+            instance.get_absolute_url(),
+            changes
+        ),
         backlink=instance.get_absolute_url()
     )
 
@@ -88,9 +104,13 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
     """Generates an activity related to the deletion of an existing object.
     """
     activity = Activity.objects.create(
-        actor=instance,
-        action="deleted",
-        backlink=instance.get_absolute_url()
+        title=_("%(class)s %(name)s deleted"),
+        description=_('%(class)s %(name)s has been deleted.'),
+        signature="%s-deleted" % (sender.__name__.lower()),
+        context='{"class": "%s", "name": "%s"}' % (
+            sender.__name__.lower(),
+            instance,
+        )
     )
 
     [activity.streams.add(s) for s in _get_streams(instance)]

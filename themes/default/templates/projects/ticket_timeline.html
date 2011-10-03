@@ -31,7 +31,7 @@
                 <li class="{{ item.action }}">
                     <strong>{{ item.created.time }}</strong>
                     {% if item.get_absolute_url %}
-                    <a href="{{ item.get_absolute_url }}">{{ item }}</a>
+                    <a href="{{ item.get_absolute_url }}">{{ item|capfirst }}</a>
                     {% else %}
                     {{ item }}
                     {% endif %}
@@ -39,7 +39,7 @@
                     <span class="timesince">({% blocktrans %}{{ timesince }} ago{% endblocktrans %})</span>
                     {% endwith %}
                     {% if item.description %}
-                    <p class="description">{{ item.description|safe }}</p>
+                    <p class="description">{{ item.get_description|safe }}</p>
                     {% endif %}
                 </li>
             {% endfor %}

@@ -79,7 +79,7 @@ def notify_activity(sender, instance, action, *args, **kwargs):
 
     # Notifies an activity to all the followers.
     if action == "post_add":
-        subscriptions = Subscription.objects.filter(signature__slug=activity.signature()).distinct()
+        subscriptions = Subscription.objects.filter(signature__slug=activity.signature).distinct()
         streams = activity.streams.all()
         for subscription in subscriptions:
             for stream in streams:
@@ -88,7 +88,7 @@ def notify_activity(sender, instance, action, *args, **kwargs):
                         signature=subscription.signature,
                         user=subscription.user,
                         created=activity.created,
-                        description=activity.description,
+                        description=activity.get_description(),
                         title=u"%s" % activity
                     )
                     break

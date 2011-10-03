@@ -21,9 +21,10 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.db import models
-from django.contrib.contenttypes import generic
-from django.contrib.contenttypes.models import *
 from django.utils.translation import ugettext_lazy as _
+import django.utils.simplejson as json
+
+from prometeo.core.models import validate_json
 
 class Observable(object):
     """Mix-in that sends a special signal when a field is changed.
@@ -60,14 +61,10 @@ class Stream(models.Model):
 class Activity(models.Model):
     """Activity model.
     """
-    actor_content_type = models.ForeignKey(ContentType, related_name='actor')
-    actor_object_id = models.PositiveIntegerField()
-    actor = generic.GenericForeignKey('actor_content_type', 'actor_object_id')
-    action = models.CharField(max_length=255, verbose_name=_('action'))
-    target_content_type = models.ForeignKey(ContentType, related_name='target', blank=True, null=True)
-    target_object_id = models.PositiveIntegerField(blank=True, null=True)
-    target = generic.GenericForeignKey('target_content_type', 'target_object_id')
+    title = models.CharField(_('title'), max_length=200)
     description = models.TextField(blank=True, null=True, verbose_name=_('description'))
+    context = models.TextField(_('context'), blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'))
+    signature = models.CharField(_('signature'), max_length=50)
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created'))
     streams = models.ManyToManyField(Stream, null=True, verbose_name=_('streams'))
     backlink = models.CharField(_('backlink'), blank=True, null=True, max_length=200)
@@ -78,29 +75,15 @@ class Activity(models.Model):
         ordering = ('-created',)
 
     def __unicode__(self):
-        if self.target_content_type:
-            if self.target:
-                return _(u'%s %s %s %s') % (self.actor, self.action, self.target_content_type, self.target)
-            else:
-                return _(u'%s %s %s') % (self.actor, self.action, self.target_content_type)
-        return _(u'%s %s') % (self.actor, self.action)
+        return self.title % self.get_context()
 
-    def signature(self):
-        """Signature of this activity.
-        """
-        if self.target_content_type:
-            return "%s-%s" % (self.target_content_type.name, self.action)
-        return "%s-%s" % (self.actor_content_type.name, self.action)
+    def get_context(self):
+        return json.loads(unicode(self.context))
+
+    def get_description(self):
+        return self.description % self.get_context()
 
     def get_absolute_url(self):
         if self.backlink:
             return self.backlink
-        try:
-            return self.target.get_absolute_url()
-        except:
-            pass
-        try:
-            return self.actor.get_absolute_url()
-        except:
-            pass
         return ""
