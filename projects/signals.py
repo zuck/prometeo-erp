@@ -1,0 +1,119 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""This file is part of the prometeo project.
+
+This program is free software: you can redistribute it and/or modify it 
+under the terms of the GNU Lesser General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+"""
+
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.2'
+
+from django.db.models.signals import post_save, post_delete
+
+from prometeo.core.widgets.signals import *
+from prometeo.core.streams.signals import *
+from prometeo.core.streams.models import Activity
+
+from models import *
+
+## UTILS ##
+
+def _get_streams(instance):
+    """Returns all available streams for the given object.
+    """
+    streams = []
+
+    try:
+        streams.append(instance.stream)
+        streams.append(instance.project.stream)
+    except AttributeError:
+        pass
+
+    return streams
+
+def _register_followers(instance):
+    """Registers all available followers to all available streams.
+    """
+    for stream in _get_streams(instance):
+        try:
+            register_follower_to_stream(instance.author, stream)
+            register_follower_to_stream(instance.manager, stream)
+            register_follower_to_stream(instance.assignee, stream)
+        except AttributeError:
+            pass
+
+## HANDLERS ##
+
+def notify_object_created(sender, instance, *args, **kwargs):
+    """Generates an activity related to the creation of a new object.
+    """
+    if kwargs['created']:
+        _register_followers(instance)
+
+        activity = Activity.objects.create(
+            actor=instance,
+            action="created",
+            backlink=instance.get_absolute_url()
+        )
+
+        [activity.streams.add(s) for s in _get_streams(instance)]
+
+def notify_object_change(sender, instance, changes, *args, **kwargs):
+    """Generates an activity related to the change of an existing object.
+    """
+    _register_followers(instance)
+
+    activity = Activity.objects.create(
+        actor=instance,
+        action="changed",
+        description="<br/>".join(["Changed \"%s\" from \"%s\" to \"%s\"" % (name, old_value, value) for name, (old_value, value) in changes.items()]),
+        backlink=instance.get_absolute_url()
+    )
+
+    [activity.streams.add(s) for s in _get_streams(instance)]
+
+def notify_object_deleted(sender, instance, *args, **kwargs):
+    """Generates an activity related to the deletion of an existing object.
+    """
+    activity = Activity.objects.create(
+        actor=instance,
+        action="deleted",
+        backlink=instance.get_absolute_url()
+    )
+
+    [activity.streams.add(s) for s in _get_streams(instance)]
+
+## CONNECTIONS ##
+
+post_save.connect(notify_object_created, Project, dispatch_uid="project_created")
+post_change.connect(notify_object_change, Project, dispatch_uid="project_changed")
+post_delete.connect(notify_object_deleted, Project, dispatch_uid="project_deleted")
+post_save.connect(notify_object_created, Milestone, dispatch_uid="milestone_created")
+post_change.connect(notify_object_change, Milestone, dispatch_uid="milestone_changed")
+post_delete.connect(notify_object_deleted, Milestone, dispatch_uid="milestone_deleted")
+post_save.connect(notify_object_created, Ticket, dispatch_uid="ticket_created")
+post_change.connect(notify_object_change, Ticket, dispatch_uid="ticket_changed")
+post_delete.connect(notify_object_deleted, Ticket, dispatch_uid="ticket_deleted")
+
+manage_stream(Project)
+manage_stream(Milestone)
+manage_stream(Ticket)
+
+manage_dashboard(Project)
+manage_dashboard(Milestone)
+
+make_observable(Project)
+make_observable(Milestone)
+make_observable(Ticket)

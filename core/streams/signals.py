@@ -28,14 +28,24 @@ from prometeo.core.notifications.models import *
 
 from models import *
 
-## CONNECTORS ##
+## UTILS ##
+
+def register_follower_to_stream(follower, stream):
+    """Registers the given follower to the given stream.
+    """
+    if follower and follower not in stream.followers.all():
+        stream.followers.add(follower)
 
 def manage_stream(cls):
+    """Connects handlers for stream management.
+    """
     models.signals.pre_save.connect(create_stream, cls)
     models.signals.post_save.connect(update_stream, cls)
     models.signals.post_delete.connect(delete_stream, cls)
 
 def make_observable(cls):
+    """Adds Observable mix-in to the given class.
+    """
     if Observable not in cls.__bases__:
         cls.__bases__ += (Observable,)
     models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)

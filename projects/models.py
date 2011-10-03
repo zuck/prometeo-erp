@@ -24,22 +24,16 @@ import datetime
 
 from django.db import models
 from django.db.models import permalink
-from django.db.models.signals import post_save, post_delete
+from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.contrib.sites.models import Site
-from django.contrib.comments.models import Comment
-from django.template.defaultfilters import slugify
 
-from prometeo.core import models as prometeo_models
-from prometeo.core.widgets.signals import *
-from prometeo.core.streams.signals import *
-from prometeo.core.streams.models import Activity
+from prometeo.core.models import Commentable
 
 from managers import *
 
-class Project(prometeo_models.Commentable):
+class Project(Commentable):
     """Project model.
     """
     title = models.CharField(max_length=100, verbose_name=_('title'))
@@ -75,7 +69,7 @@ class Project(prometeo_models.Commentable):
             self.slug = slugify(self.title)
         super(Project, self).save()
 
-class Milestone(prometeo_models.Commentable):
+class Milestone(Commentable):
     """Milestone model.
     """
     title = models.CharField(max_length=255, verbose_name=_('title'))
@@ -132,7 +126,7 @@ class Milestone(prometeo_models.Commentable):
             self.slug = slugify('%s_%s' % (self.project.pk, self.title))
         super(Milestone, self).save()  
 
-class Ticket(prometeo_models.Commentable):
+class Ticket(Commentable):
     """Ticket model.
     """    
     project = models.ForeignKey(Project, related_name='tickets', verbose_name=_('project'))
@@ -182,84 +176,3 @@ class Ticket(prometeo_models.Commentable):
         else:
             self.closed = None
         super(Ticket, self).save()
-
-def notify_object_created(sender, instance, *args, **kwargs):
-    if kwargs['created']:  
-        if instance.author and instance.author not in instance.stream.followers.all():
-            instance.stream.followers.add(instance.author)
-        try:
-            if instance.manager and instance.manager not in instance.stream.followers.all():
-                instance.stream.followers.add(instance.manager)
-        except:
-            pass
-        try:
-            if instance.assignee and instance.assignee not in instance.stream.followers.all():
-                instance.stream.followers.add(instance.assignee)
-        except:
-            pass
-        activity = Activity.objects.create(
-            actor=instance.author,
-            action="created",
-            target=instance,
-            description=_("%s \"%s\" created by %s") % (sender.__name__, instance, instance.author)
-        )
-        activity.streams.add(instance.stream)
-        try:
-            activity.streams.add(instance.project.stream)
-        except:
-            pass
-
-def notify_object_change(sender, instance, changes, *args, **kwargs):
-    if instance.author and instance.author not in instance.stream.followers.all():
-        instance.stream.followers.add(instance.author)
-    try:
-        if instance.manager and instance.manager not in instance.stream.followers.all():
-            instance.stream.followers.add(instance.manager)
-    except:
-        pass
-    try:
-        if instance.assignee and instance.assignee not in instance.stream.followers.all():
-            instance.stream.followers.add(instance.assignee)
-    except:
-        pass
-    activity = Activity.objects.create(
-        actor=instance,
-        action="changed",
-        description="<br/>".join(["Changed \"%s\" from \"%s\" to \"%s\"" % (name, old_value, value) for name, (old_value, value) in changes.items()])
-    )
-    activity.streams.add(instance.stream)
-    try:
-        activity.streams.add(instance.project.stream)
-    except:
-        pass
-
-def notify_object_deleted(sender, instance, *args, **kwargs):
-    activity = Activity.objects.create(
-        actor=instance,
-        action="deleted",
-        description=_("%s %s deleted") % (sender.__name__, instance)
-    )
-    activity.streams.add(instance.stream)
-    try:
-        activity.streams.add(instance.project.stream)
-    except:
-        pass
-
-post_save.connect(notify_object_created, Project, dispatch_uid="project_created")
-post_change.connect(notify_object_change, Project, dispatch_uid="project_changed")
-post_delete.connect(notify_object_deleted, Project, dispatch_uid="project_deleted")
-post_save.connect(notify_object_created, Milestone, dispatch_uid="milestone_created")
-post_change.connect(notify_object_change, Milestone, dispatch_uid="milestone_changed")
-post_delete.connect(notify_object_deleted, Milestone, dispatch_uid="milestone_deleted")
-post_save.connect(notify_object_created, Ticket, dispatch_uid="ticket_created")
-post_change.connect(notify_object_change, Ticket, dispatch_uid="ticket_changed")
-post_delete.connect(notify_object_deleted, Ticket, dispatch_uid="ticket_deleted")
-
-manage_dashboard(Project)
-manage_stream(Project)
-make_observable(Project)
-manage_dashboard(Milestone)
-manage_stream(Milestone)
-make_observable(Milestone)
-manage_stream(Ticket)
-make_observable(Ticket)

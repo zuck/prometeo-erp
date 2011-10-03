@@ -25,6 +25,15 @@ from django.utils.translation import ugettext_noop as _
 
 from models import *
 
+## UTILS ##
+
+def manage_dashboard(cls):
+    """Connects handlers for dashboard management.
+    """
+    models.signals.pre_save.connect(create_dashboard, cls)
+    models.signals.post_save.connect(update_dashboard, cls)
+    models.signals.post_delete.connect(delete_dashboard, cls)
+
 ## HANDLERS ##
 
 def create_dashboard(sender, instance, *args, **kwargs):
@@ -47,10 +56,3 @@ def delete_dashboard(sender, instance, *args, **kwargs):
     dashboard = instance.dashboard
     if dashboard:
         dashboard.delete()
-
-## CONNECTORS ##
-
-def manage_dashboard(cls):
-    models.signals.pre_save.connect(create_dashboard, cls)
-    models.signals.post_save.connect(update_dashboard, cls)
-    models.signals.post_delete.connect(delete_dashboard, cls)
