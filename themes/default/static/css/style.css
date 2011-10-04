@@ -235,24 +235,15 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-bottom: 10px;
 }
 
-.paginator .first,
-.paginator .previous,
-.paginator .next,
-.paginator .last,
+.paginator .first, .navigator .first,
+.paginator .previous, .navigator .previous,
+.paginator .next, .navigator .next,
+.paginator .last, .navigator .last,
 .paginator .page_number,
-.paginator .current { 
+.paginator .current, .navigator .current {
+    clear: none;
     float: left;
     margin-right: 5px;
-    text-align: center;
-}
-
-.navigator .first,
-.navigator .previous,
-.navigator .next,
-.navigator .last,
-.navigator .current { 
-    float: left;
-    margin-left: 5px;
     text-align: center;
 }
 
@@ -262,22 +253,23 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 .paginator a, .navigator a {
     display: block;
     padding: 0 5px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-size: 0;
 }
 
-.paginator .disabled, .navigator .disabled {
-    border: 1px solid #d6d6d6;
-    background: #f6f6f6;
-}
-
-.paginator a, .navigator a,
-.paginator a:link, .navigator a:link,
-.paginator a:visited, .navigator a:visited {
-    color: #fff;
-    background: #ce0600;
-    border: 1px solid #1f1f1f;
-}
-
-.paginator a:hover, .navigator a:hover { background: #1f1f1f; }
+.paginator .first .disabled, .navigator .first .disabled { background-image: url(images/first_disabled.png); }
+.paginator .first a, .navigator .first a { background-image: url(images/first.png); }
+.paginator .first a:hover, .navigator .first a:hover { background-image: url(images/first_hover.png); }
+.paginator .previous .disabled, .navigator .previous .disabled { background-image: url(images/left_disabled.png); }
+.paginator .previous a, .navigator .previous a { background-image: url(images/left.png); }
+.paginator .previous a:hover, .navigator .previous a:hover { background-image: url(images/left_hover.png); }
+.paginator .next .disabled, .navigator .next .disabled { background-image: url(images/right_disabled.png); }
+.paginator .next a, .navigator .next a { background-image: url(images/right.png); }
+.paginator .next a:hover, .navigator .next a:hover { background-image: url(images/right_hover.png); }
+.paginator .last .disabled, .navigator .last .disabled { background-image: url(images/last_disabled.png); }
+.paginator .last a, .navigator .last a { background-image: url(images/last.png); }
+.paginator .last a:hover, .navigator .last a:hover { background-image: url(images/last_hover.png); }
 
 .paginator .total {
     float: right;
