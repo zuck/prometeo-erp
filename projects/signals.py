@@ -20,8 +20,9 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.db.models.signals import post_save, post_delete
 from django.utils.translation import ugettext_noop as _
+from django.db.models.signals import post_save, post_delete
+from django.contrib.comments.models import Comment
 
 from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
@@ -115,6 +116,48 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
 
     [activity.streams.add(s) for s in _get_streams(instance)]
 
+def notify_comment_created(sender, instance, *args, **kwargs):
+    """Generates an activity related to the creation of a new comment.
+    """
+    if kwargs['created']:
+        obj = instance.content_object
+
+        if isinstance(obj, (Project, Milestone, Ticket)):
+            activity = Activity.objects.create(
+                title=_("%(author)s commented %(class)s %(name)s"),
+                description=_('<a href="%(author_link)s">%(author)s</a> has posted this comment to %(class)s <a href="%(link)s">%(name)s</a>:<br/>%(comment)s'),
+                signature="comment-created",
+                context='{"class": "%s", "name": "%s", "link": "%s", "author": "%s", "author_link": "%s", "comment": "%s"}' % (
+                    obj.__class__.__name__.lower(),
+                    obj,
+                    obj.get_absolute_url(),
+                    instance.user_name,
+                    instance.user.get_absolute_url(),
+                    instance.comment
+                ),
+                backlink=obj.get_absolute_url()
+            )
+
+            [activity.streams.add(s) for s in _get_streams(obj)]
+
+def notify_comment_deleted(sender, instance, *args, **kwargs):
+    """Generates an activity related to the deletion of an existing comment.
+    """
+    obj = instance.content_object
+
+    activity = Activity.objects.create(
+        title=_("comment deleted"),
+        description=_('A comment has been deleted from %(class)s <a href="%(link)s">%(name)s</a>.'),
+        signature="comment-deleted",
+        context='{"class": "%s", "name": "%s", "link": "%s"}' % (
+            obj.__class__.__name__.lower(),
+            obj,
+            obj.get_absolute_url(),
+        )
+    )
+
+    [activity.streams.add(s) for s in _get_streams(obj)]
+
 ## CONNECTIONS ##
 
 post_save.connect(notify_object_created, Project, dispatch_uid="project_created")
@@ -126,6 +169,9 @@ post_delete.connect(notify_object_deleted, Milestone, dispatch_uid="milestone_de
 post_save.connect(notify_object_created, Ticket, dispatch_uid="ticket_created")
 post_change.connect(notify_object_change, Ticket, dispatch_uid="ticket_changed")
 post_delete.connect(notify_object_deleted, Ticket, dispatch_uid="ticket_deleted")
+
+post_save.connect(notify_comment_created, Comment, dispatch_uid="comment_created")
+post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="comment_deleted")
 
 manage_stream(Project)
 manage_stream(Milestone)

@@ -122,6 +122,16 @@ def fixtures(sender, **kwargs):
 
     # Signatures.
 
+    comment_created_signature = Signature.objects.get_or_create(
+        title=_("Comment posted"),
+        slug="comment-created"
+    )
+
+    comment_deleted_signature = Signature.objects.get_or_create(
+        title=_("Comment deleted"),
+        slug="comment-deleted"
+    )
+
     project_created_signature = Signature.objects.create(
         title=_("Project created"),
         slug="project-created"

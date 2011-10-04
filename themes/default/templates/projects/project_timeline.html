@@ -31,7 +31,7 @@
                     {% if item.get_absolute_url %}
                     <a href="{{ item.get_absolute_url }}">{{ item|capfirst }}</a>
                     {% else %}
-                    {{ item }}
+                    {{ item|capfirst }}
                     {% endif %}
                     {% with item.created|timesince as timesince %}
                     <span class="timesince">({% blocktrans %}{{ timesince }} ago{% endblocktrans %})</span>

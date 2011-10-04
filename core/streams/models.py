@@ -75,13 +75,22 @@ class Activity(models.Model):
         ordering = ('-created',)
 
     def __unicode__(self):
-        return self.title % self.get_context()
+        try:
+            return self.title % self.get_context()
+        except:
+            return self.title
 
     def get_context(self):
-        return json.loads(unicode(self.context))
+        try:
+            return json.loads(unicode(self.context))
+        except:
+            return {}
 
     def get_description(self):
-        return self.description % self.get_context()
+        try:
+            return self.description % self.get_context()
+        except:
+            return self.description
 
     def get_absolute_url(self):
         if self.backlink:
