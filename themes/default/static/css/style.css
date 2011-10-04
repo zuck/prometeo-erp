@@ -538,7 +538,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #bookmarks {
     float: left;
-    width: 80%;
+    width: 60%;
 }
 
 #bookmarks li { margin-right: 0; }
@@ -549,7 +549,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #userarea {
     float: right;
-    width: 20%;
+    width: 40%;
     text-align: right;
 }
 
