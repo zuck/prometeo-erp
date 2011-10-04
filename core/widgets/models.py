@@ -54,7 +54,6 @@ class Widget(models.Model):
 
     class Meta:
         ordering = ('sort_order', 'title',)
-        order_with_respect_to = 'region'
         verbose_name = _('widget')
         verbose_name_plural = _('widgets')
 

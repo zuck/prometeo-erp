@@ -55,7 +55,6 @@ class Link(models.Model):
 
     class Meta:
         ordering = ('sort_order', 'id',)
-        order_with_respect_to = 'menu'
         verbose_name = _('link')
         verbose_name_plural = _('links')
 
