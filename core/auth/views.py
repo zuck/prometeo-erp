@@ -28,6 +28,7 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from django.contrib.comments.models import *
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
@@ -179,4 +180,21 @@ def user_delete(request, username, **kwargs):
             template_name='auth/user_delete.html',
             **kwargs
         )
+  
+def comment_delete(request, id, **kwargs):
+    """Deletes a user's comment.
+    """ 
+    comment = get_object_or_404(Comment, id=id, site__pk=settings.SITE_ID)
+    
+    if not (request.user.is_authenticated() and (request.user.has_perm('comments.delete_comment') or request.user == comment.user)):
+        messages.error(request, _("You can't delete this user's comment."))
+        return redirect_to(request, url=user.get_absolute_url())
 
+    return create_update.delete_object(
+            request,
+            model=Comment,
+            object_id=id,
+            post_delete_redirect=comment.content_object.get_absolute_url(),
+            template_name='auth/comment_delete.html',
+            **kwargs
+        )

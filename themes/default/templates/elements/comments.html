@@ -11,16 +11,21 @@
     <ul>
         {% for comment in comment_list %}
         <li class="comment">
-            {% with comment.user_name as user_name %}
-            {% with comment.user.get_absolute_url as user_link %}
-            {% with comment.submit_date as submit_date %}
             <div class="meta">
+                {% with comment.user_name as user_name %}
+                {% with comment.user.get_absolute_url as user_link %}
+                {% with comment.submit_date as submit_date %}
                 {% avatar comment.user %}
                 <p>{% blocktrans %}Posted on {{ submit_date }}{% endblocktrans %}{% if comment.user %}{% blocktrans %} by <a href="{{ user_link }}">{{ user_name }}</a>{% endblocktrans %}{% endif %}</p>
+                {% endwith %}
+                {% endwith %}
+                {% endwith %}
+                <ul class="actions">
+                    {% if perms.comments.can_delete %}
+                    <li class="delete"><a title="{% trans 'Delete' %}" href="{% url comment_delete comment.id %}">{% trans "Delete" %}</a></li>
+                    {% endif %}
+                </ul>
             </div>
-            {% endwith %}
-            {% endwith %}
-            {% endwith %}
             {{ comment.comment|markdown }}
         </li>
         {% endfor %}

@@ -297,9 +297,13 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background: none;
 }
 
-.comments li p {
-    margin: 0;
+.comments li .actions {
+    clear: none;
+    float: right;
+    margin: -20px 0 0;
 }
+
+.comments li p { margin: 0; }
 
 .comment-counter {
     float: right;
