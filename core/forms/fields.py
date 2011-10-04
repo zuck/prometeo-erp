@@ -20,7 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from time import strptime, strftime
+from time import strptime, strftime, localtime
 
 from django import forms
 from django.db import models
@@ -48,9 +48,11 @@ class SplitDateTimeField(MultiValueField):
         super(SplitDateTimeField, self).__init__(fields, *args, **kwargs)
 
     def compress(self, data_list):
-        if data_list \
-        and (data_list[0] and data_list[1] and data_list[2] and data_list[3]):
-            input_time = strptime("%s:%s %s" % (data_list[1], data_list[2], data_list[3]), "%I:%M %p")
+        if data_list and data_list[0]:
+            if data_list[1] and data_list[2] and data_list[3]:
+                input_time = strptime("%s:%s %s" % (data_list[1], data_list[2], data_list[3]), "%I:%M %p")
+            else:
+                input_time = localtime()
             datetime_string = "%s %s" % (data_list[0], strftime('%H:%M', input_time))
             return datetime_string
         return None
