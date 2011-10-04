@@ -125,7 +125,7 @@ def notify_comment_created(sender, instance, *args, **kwargs):
         if isinstance(obj, (Project, Milestone, Ticket)):
             activity = Activity.objects.create(
                 title=_("%(author)s commented %(class)s %(name)s"),
-                description=_('<a href="%(author_link)s">%(author)s</a> has posted this comment to %(class)s <a href="%(link)s">%(name)s</a>:<br/>%(comment)s'),
+                description=_('<a href="%(author_link)s">%(author)s</a> has posted a comment to %(class)s <a href="%(link)s">%(name)s</a>:<br/>%(comment)s'),
                 signature="comment-created",
                 context='{"class": "%s", "name": "%s", "link": "%s", "author": "%s", "author_link": "%s", "comment": "%s"}' % (
                     obj.__class__.__name__.lower(),
