@@ -53,7 +53,8 @@ class Widget(models.Model):
     sort_order = models.PositiveIntegerField(_('sort order'), default=0)
 
     class Meta:
-        ordering = ('sort_order', 'title',)
+        ordering = ('sort_order', 'title',
+        order_with_respect_to = 'region'
         verbose_name = _('widget')
         verbose_name_plural = _('widgets')
 
