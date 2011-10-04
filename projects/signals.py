@@ -172,8 +172,8 @@ post_save.connect(notify_object_created, Ticket, dispatch_uid="ticket_created")
 post_change.connect(notify_object_change, Ticket, dispatch_uid="ticket_changed")
 post_delete.connect(notify_object_deleted, Ticket, dispatch_uid="ticket_deleted")
 
-post_save.connect(notify_comment_created, Comment, dispatch_uid="comment_created")
-post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="comment_deleted")
+post_save.connect(notify_comment_created, Comment, dispatch_uid="projects_comment_created")
+post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="projects_comment_deleted")
 
 manage_stream(Project)
 manage_stream(Milestone)
