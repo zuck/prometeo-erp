@@ -21,21 +21,30 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.core.paginator import Paginator
+from django import template
 
-def paginate(request, object_list, paginate_by=10):
+register = template.Library()
+
+@register.simple_tag(takes_context=True)
+def paginate(context, object_list, paginate_by=10):
+    """Allows pagination on arbitrary querysets.
     """
-    This is a convenience wrapper to eliminate duplication
-    in views that require pagination.
-    """
+    request = context['request']
+
     paginator = Paginator(object_list, paginate_by)
+
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     
     try:
-        objects = paginator.page(page)
+        p = paginator.page(page)
     except:
-        objects = paginator.page(paginator.num_pages)
+        p = paginator.page(paginator.num_pages)
+
+    context['paginator'] = paginator
+    context['page_obj'] = p
+    context['object_list'] = p.object_list
         
-    return objects
+    return ""

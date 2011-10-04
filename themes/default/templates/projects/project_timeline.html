@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load paginator %}
 {% load details %}
 
 {% block meta_title %}{% trans "Timeline" %}{% endblock %}
@@ -18,7 +19,9 @@
 
 {% block section %}
 <div class="details">
-    {% regroup object.stream.activity_set.all by created.date as activities_by_date %}
+    {% with object.stream.activity_set.all as object_list %}
+    {% paginate object_list %}
+    {% regroup object_list by created.date as activities_by_date %}
     {% if activities_by_date %}
     <dl class="activities">
     {% for date in activities_by_date %}
@@ -48,6 +51,8 @@
     {% else %}
     <p class="disabled">{% trans "No results found." %}</p>
     {% endif %}
+    {% include 'elements/paginator.html' %}
+    {% endwith %}
 </div>
 <ul>
     {% if user not in object.stream.followers.all %}
