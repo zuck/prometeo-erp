@@ -22,8 +22,10 @@ __version__ = '0.0.2'
 
 import datetime, random, hashlib
 
+from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
 
@@ -51,11 +53,15 @@ def user_profile_post_save(sender, instance, signal, *args, **kwargs):
         
         # Send an activation email.
         current_site = Site.objects.get_current()
-        activation_url = 'http://' + current_site.domain + reverse('user_activate', args=[token.activation_key])
-        email_subject = 'Account confirmation'
-        email_body = u'<p>Hello <strong>%s</strong>, and thanks for signing up for an account on <strong>%s</strong>.</p>' \
-                     u'<p>To activate your account, click this link within <strong>%s day(s)</strong>:</p>' \
-                     u'<p><a href="%s">%s</a></p>' % (instance.user.username, current_site.name, settings.AUTH_EXPIRATION_DAYS, activation_url, activation_url)
+        activation_link = 'http://' + current_site.domain + reverse('user_activate', args=[token.activation_key])
+        context = {
+            "user_name": instance.user.username,
+            "current_site": current_site.name,
+            "expiration_time": settings.AUTH_EXPIRATION_DAYS,
+            "activation_link": activation_link
+        }
+        email_subject = _('Account confirmation')
+        email_body = render_to_string("registration/emails/activation.html", context)
         email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
         email = EmailMessage(email_subject, email_body, email_from, [instance.user.email,])
         email.content_subtype = "html"
