@@ -20,7 +20,23 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+from django.db.models import Q
+
 from models import *
+
+def my_projects(context):
+    user = context['user']
+    context['project_list'] = Project.objects.filter(Q(author=user) | Q(manager=user))
+    return context
+
+def my_latest_tickets(context):
+    user = context['user']
+    try:
+        count = context['count']
+    except KeyError:
+        count = 5
+    context['ticket_list'] = Ticket.objects.filter(Q(author=user) | Q(assignee=user))[0:count]
+    return context
 
 def latest_tickets(context):
     try:
