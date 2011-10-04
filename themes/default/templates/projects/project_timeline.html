@@ -29,7 +29,7 @@
         <dd>
             <ul>
             {% for item in date.list %}
-                <li class="{{ item.action }}">
+                <li class="{{ item.signature }}">
                     <strong>{{ item.created.time }}</strong>
                     {% if item.get_absolute_url %}
                     <a href="{{ item.get_absolute_url }}">{{ item|capfirst }}</a>
