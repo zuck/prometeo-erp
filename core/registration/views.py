@@ -20,18 +20,18 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+import datetime
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 
-from prometeo.core.auth.models import *
-
+from models import *
 from forms import *
 
 def user_register(request):
@@ -55,16 +55,19 @@ def user_register(request):
 def user_activate(request, activation_key):
     """Activates a pending user account.
     """
-    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
-    user_account = user_profile.user
+    token = get_object_or_404(ActivationToken, activation_key=activation_key)
+    user_account = token.profile.user
     if user_account.is_active:
         messages.info(request, _("This account is already active."))
         if request.user.is_authenticated():
             return redirect_to(request, url="/")
         return redirect_to(request, reverse('user_login'))
-    if user_profile.key_expires < datetime.datetime.today():
-        messages.error(request, _("Sorry, your account is expired."))
-        return redirect_to(request, url="/")
+    try:
+        if token.key_expiration < datetime.datetime.today():
+            messages.error(request, _("Sorry, your account is expired."))
+            return redirect_to(request, url="/")
+    except TypeError:
+        pass
     user_account.is_active = True
     user_account.save()
     messages.success(request, _("Congratulations! Your account is now active."))

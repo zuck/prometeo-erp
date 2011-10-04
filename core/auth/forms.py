@@ -88,7 +88,7 @@ class UserProfileForm(forms.ModelForm):
     """
     class Meta:
         model = UserProfile
-        exclude = ('user', 'activation_key', 'key_expires', 'dashboard', 'bookmarks')
+        exclude = ('user', 'dashboard', 'bookmarks')
 
 enrich_form(UserEditForm)
 enrich_form(UserProfileForm)

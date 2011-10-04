@@ -20,12 +20,17 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-class ActivationToken(models.Model):
-    """Activation token for user account.
-    """
-    profile = models.OneToOneField('auth.UserProfile', null=True, verbose_name=_("user profile"))
-    activation_key = models.CharField(_("activation key"), max_length=40, blank=True, null=True)
-    key_expiration = models.DateTimeField(_("key expiration"), blank=True, null=True)
+from prometeo.core.menus.signals import manage_bookmarks
+from prometeo.core.widgets.signals import manage_dashboard
+
+from models import *
+
+def user_post_save(sender, instance, signal, *args, **kwargs):
+    profile, is_new = UserProfile.objects.get_or_create(user=instance)
+
+models.signals.post_save.connect(user_post_save, User)
+
+manage_bookmarks(UserProfile)
+manage_dashboard(UserProfile)

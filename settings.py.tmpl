@@ -22,6 +22,8 @@ __version__ = '0.0.2'
 
 import os
 
+from pytz import common_timezones
+
 _ = lambda x: x
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -53,6 +55,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
+TIME_ZONES = [(tz, tz) for tz in common_timezones]
 TIME_ZONE = None
 
 # Language code for this installation. All choices can be found here:
@@ -141,6 +144,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+
     'prometeo.core.auth.middleware.RequireLoginMiddleware',
 )
 
