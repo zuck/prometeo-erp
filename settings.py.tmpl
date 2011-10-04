@@ -238,9 +238,13 @@ SEARCH_IN_MODELS = (
 # Project management options.
 """
 PROJECT_STATUS_CHOICES = (
-    ('opened', _('opened')),
+    ('open', _('open')),
     ('closed', _('closed')),
 )
+
+PROJECT_DEFAULT_STATUS = 'open'
+
+PROJECT_CLOSE_STATUSES = ('closed',)
 
 TICKET_URGENCY_CHOICES = (
     ('very low', _('very low')),
@@ -250,11 +254,15 @@ TICKET_URGENCY_CHOICES = (
     ('critical', _('critical')),
 )
 
+TICKET_DEFAULT_URGENCY = 'medium'
+
 TICKET_TYPE_CHOICES = (
     ('bug', _('bug')),
     ('task', _('task')),
     ('idea', _('idea')),
 )
+
+TICKET_DEFAULT_TYPE = 'bug'
 
 TICKET_STATUS_CHOICES = (
     ('new', _('new')),
@@ -265,4 +273,8 @@ TICKET_STATUS_CHOICES = (
     ('resolved', _('resolved')),
     ('review', _('awaiting review')),
 )
+
+PROJECT_DEFAULT_STATUS = 'new'
+
+TICKET_CLOSE_STATUSES = ('invalid', 'duplicate', 'resolved')
 """

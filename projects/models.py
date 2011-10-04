@@ -41,7 +41,7 @@ class Project(Commentable):
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name='created_projects', null=True, blank=True, verbose_name=_('author'))
     manager = models.ForeignKey('auth.User', related_name='managed_projects', null=True, blank=True, verbose_name=_('project manager'))
-    status = models.CharField(_('status'), choices=settings.PROJECT_STATUS_CHOICES, default='opened', max_length=10)
+    status = models.CharField(_('status'), choices=settings.PROJECT_STATUS_CHOICES, default=settings.PROJECT_DEFAULT_STATUS, max_length=10)
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
@@ -67,6 +67,11 @@ class Project(Commentable):
     def save(self):
         if not self.slug:
             self.slug = slugify(self.title)
+        if self.status in settings.PROJECT_CLOSE_STATUSES:
+            if self.closed is None:
+                self.closed = datetime.datetime.now()
+        else:
+            self.closed = None
         super(Project, self).save()
 
 class Milestone(Commentable):
@@ -134,9 +139,9 @@ class Ticket(Commentable):
     description = models.TextField(verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name="created_tickets", verbose_name=_('author'))
     milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', on_delete=models.SET_NULL, verbose_name=_('milestone'))
-    type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default='bug', verbose_name=_('type'))
-    urgency = models.CharField(max_length=10, choices=settings.TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
-    status = models.CharField(max_length=10, choices=settings.TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
+    type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default=settings.TICKET_DEFAULT_TYPE, verbose_name=_('type'))
+    urgency = models.CharField(max_length=10, choices=settings.TICKET_URGENCY_CHOICES, default=settings.TICKET_DEFAULT_URGENCY, verbose_name=_('urgency'))
+    status = models.CharField(max_length=10, choices=settings.TICKET_STATUS_CHOICES, default=settings.TICKET_DEFAULT_STATUS, verbose_name=_('status'))
     assignee = models.ForeignKey('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('assignee'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     modified = models.DateTimeField(auto_now=True, verbose_name=_('modified on'))
@@ -170,7 +175,7 @@ class Ticket(Commentable):
         return ('ticket_delete', (), {"project": self.project.slug, "id": self.pk})
         
     def save(self):
-        if self.status in ('invalid', 'duplicated', 'resolved'):
+        if self.status in settings.TICKET_CLOSE_STATUSES:
             if self.closed is None:
                 self.closed = datetime.datetime.now()
         else:
