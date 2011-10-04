@@ -147,12 +147,14 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
 
     activity = Activity.objects.create(
         title=_("comment deleted"),
-        description=_('A comment has been deleted from %(class)s <a href="%(link)s">%(name)s</a>.'),
+        description=_('A comment of <a href="%(author_link)s">%(author)s</a> has been deleted from %(class)s <a href="%(link)s">%(name)s</a>.'),
         signature="comment-deleted",
-        context='{"class": "%s", "name": "%s", "link": "%s"}' % (
+        context='{"class": "%s", "name": "%s", "link": "%s", "author": "%s", "author_link": "%s"}' % (
             obj.__class__.__name__.lower(),
             obj,
             obj.get_absolute_url(),
+            instance.user_name,
+            instance.user.get_absolute_url(),
         )
     )
 
