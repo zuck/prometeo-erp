@@ -69,10 +69,10 @@ hr { display: none; }
 
 form {
     clear: both;
-    overflow: hidden;
     padding: 15px;
     border: 1px solid #d6d6d6;
     background: #f6f6f6;
+    overflow: hidden;
 }
 
 form p {
@@ -88,7 +88,7 @@ form label {
     color: #1f1f1f;
 }
 
-form input, form select {
+form input, form select, form textarea {
     clear: left;
     width: 270px;
     margin-right: 100%;
@@ -100,10 +100,10 @@ form input { padding: 3px 3px 4px; }
 form select { padding: 2px; }
 
 form textarea {
-    clear: left;
-    width: 100%;
+    width: 755px;
+    max-width: 755px;
     height: 270px;
-    font-style: normal;
+    padding: 5px;
 }
 
 form .submit {
@@ -284,6 +284,11 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border-top: 2px solid #d6d6d6;
 }
 
+.comments .meta p {
+    margin-left: 54px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
 .comments li {
     padding-left: 0;
     background: none;
@@ -455,7 +460,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
  * Layout.
  */
 
-#logo, #nav, #breadcrumbs, #footer {
+#logo, #nav, #breadcrumbs, #content, #footer {
     clear: both;
     float: left;
     padding: 0;
@@ -585,12 +590,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #breadcrumbs .list { padding: 0 10px; }
 
 #content {
-    clear: both;
-    width: 1024px;
-    margin: 0 auto;
     padding-bottom: 20px;
-    overflow: auto;
-    background: url(images/menu.jpg) repeat-y 200px -5px;
+    background: #fff url(images/menu.jpg) repeat-y 200px -5px;
 }
 
 #content li, #content dt { background: url(images/bullet.png) no-repeat left 8px; }
@@ -791,9 +792,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #main {
-    float: right;
-    width: 794px;
+    overflow: auto;
     padding: 20px 10px;
+    padding-left: 30px;
+    max-width: 795px;
 }
 
 #main .title {
