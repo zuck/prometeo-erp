@@ -20,6 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+from datetime import datetime
+
 from django.db import models
 from django.utils.translation import ugettext_noop as _
 import django.dispatch
@@ -84,13 +86,20 @@ def notify_activity(sender, instance, action, *args, **kwargs):
         for subscription in subscriptions:
             for stream in streams:
                 if subscription.user in stream.followers.all():
-                    notification = Notification.objects.get_or_create(
+                    notifications = Notification.objects.filter(
                         signature=subscription.signature,
                         user=subscription.user,
-                        created=activity.created,
                         description=activity.get_description(),
-                        title=u"%s" % activity
+                        title=u"%s" % activity,
+                        created__startswith=activity.created.replace(microsecond=0),
                     )
+                    if not notifications:
+                        notification = Notification.objects.create(
+                            signature=subscription.signature,
+                            user=subscription.user,
+                            description=activity.get_description(),
+                            title=u"%s" % activity,
+                        )
                     break
 
     # Deletes orphans.
