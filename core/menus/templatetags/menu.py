@@ -47,7 +47,8 @@ class MenuNode(template.Node):
                 perms = link.only_with_perms.all()
                 link.authorized = True
                 link.title = template.Template(link.title).render(context)
-                link.description = template.Template(link.description).render(context)
+                if link.description:
+                    link.description = template.Template(link.description).render(context)
                 link.url = template.Template(link.url).render(context)
                 if not (user.is_staff or user.is_superuser):
                     if link.only_authenticated and not user.is_authenticated():
