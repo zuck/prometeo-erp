@@ -78,6 +78,7 @@ def notify_activity(sender, instance, action, *args, **kwargs):
         return
 
     activity = instance
+    content = activity.get_content()
 
     # Notifies an activity to all the followers.
     if action == "post_add":
@@ -89,7 +90,7 @@ def notify_activity(sender, instance, action, *args, **kwargs):
                     notifications = Notification.objects.filter(
                         signature=subscription.signature,
                         user=subscription.user,
-                        description=activity.get_description(),
+                        description=content,
                         title=u"%s" % activity,
                         created__startswith=activity.created.replace(microsecond=0),
                     )
@@ -97,7 +98,7 @@ def notify_activity(sender, instance, action, *args, **kwargs):
                         notification = Notification.objects.create(
                             signature=subscription.signature,
                             user=subscription.user,
-                            description=activity.get_description(),
+                            description=content,
                             title=u"%s" % activity,
                         )
                     break

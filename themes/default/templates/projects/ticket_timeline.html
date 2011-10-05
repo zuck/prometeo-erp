@@ -41,9 +41,9 @@
                     {% with item.created|timesince as timesince %}
                     <span class="timesince">({% blocktrans %}{{ timesince }} ago{% endblocktrans %})</span>
                     {% endwith %}
-                    {% if item.description %}
-                    <p class="description">{{ item.get_description|safe }}</p>
-                    {% endif %}
+                    <div class="description">
+                        {{ item.get_content|safe }}
+                    </div>
                 </li>
             {% endfor %}
             </ul>

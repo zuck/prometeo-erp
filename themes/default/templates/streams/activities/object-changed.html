@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% blocktrans %}
+<p>The following attributes of {{ class }} <a href="{{ link }}">{{ name }}</a> has been changed:</p>
+{% endblocktrans %}
+<dl>
+{% for fieldname, values in changes.items %}
+    <dt>{{ fieldname }}</dt>
+    <dd>
+        {% with values|first as old_value %}
+        {% with values|last as new_value %}
+        {% blocktrans %}from {{ old_value }} to {{ new_value }}{% endblocktrans %}
+        {% endwith %}
+        {% endwith %}
+    </dd>
+{% endfor %}
+</dl>

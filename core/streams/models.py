@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 import django.utils.simplejson as json
 
@@ -40,7 +41,7 @@ class Observable(object):
                 if name in self.__changes:
                     old_value = self.__changes[name][0]
                 if value != old_value:
-                    self.__changes[name] = (old_value, value)
+                    self.__changes[name] = (u"%s" % old_value, u"%s" % value)
         except AttributeError:
             pass
         super(Observable, self).__setattr__(name, value)
@@ -62,9 +63,9 @@ class Activity(models.Model):
     """Activity model.
     """
     title = models.CharField(_('title'), max_length=200)
-    description = models.TextField(blank=True, null=True, verbose_name=_('description'))
-    context = models.TextField(_('context'), blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'))
     signature = models.CharField(_('signature'), max_length=50)
+    template = models.CharField(_('template'), blank=True, null=True, max_length=200, default=None)
+    context = models.TextField(_('context'), blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created'))
     streams = models.ManyToManyField(Stream, null=True, verbose_name=_('streams'))
     backlink = models.CharField(_('backlink'), blank=True, null=True, max_length=200)
@@ -86,12 +87,12 @@ class Activity(models.Model):
         except:
             return {}
 
-    def get_description(self):
-        try:
-            return self.description % self.get_context()
-        except:
-            return self.description
-
+    def get_content(self):
+        template_name = "streams/activities/%s.html" % self.signature
+        if self.template:
+            template_name = self.template
+        return render_to_string(template_name, self.get_context())
+        
     def get_absolute_url(self):
         if self.backlink:
             return self.backlink

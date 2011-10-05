@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% with class|capfirst as class %}
+{% blocktrans %}
+<p>{{ class }} <a href="{{ link }}">{{ name }}</a> has been created by <a href="{{ author_link }}">{{ author }}</a>.</p>
+{% endblocktrans %}
+{% endwith %}

@@ -20,6 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+import json
+
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete
 from django.contrib.comments.models import Comment
@@ -67,15 +69,15 @@ def notify_object_created(sender, instance, *args, **kwargs):
 
         activity = Activity.objects.create(
             title=_("%(class)s %(name)s created by %(author)s"),
-            description=_('%(class)s <a href="%(link)s">%(name)s</a> has been created by <a href="%(author_link)s">%(author)s</a>.'),
-            signature="%s-created" % (sender.__name__.lower()),
-            context='{"class": "%s", "name": "%s", "link": "%s", "author": "%s", "author_link": "%s"}' % (
-                sender.__name__.lower(),
-                instance,
-                instance.get_absolute_url(),
-                instance.author,
-                instance.author.get_absolute_url()
-            ),
+            signature="%s-created" % sender.__name__.lower(),
+            template="streams/activities/object-created.html",
+            context=json.dumps({
+                "class": sender.__name__.lower(),
+                "name": "%s" % instance,
+                "link": instance.get_absolute_url(),
+                "author": "%s" % instance.author,
+                "author_link": instance.author.get_absolute_url()
+            }),
             backlink=instance.get_absolute_url()
         )
 
@@ -88,14 +90,14 @@ def notify_object_change(sender, instance, changes, *args, **kwargs):
 
     activity = Activity.objects.create(
         title=_("%(class)s %(name)s changed"),
-        description=_('The following attributes of %(class)s <a href="%(link)s">%(name)s</a> has been changed:<br/>%(changes)s'),
-        signature="%s-changed" % (sender.__name__.lower()),
-        context='{"class": "%s", "name": "%s", "link": "%s", "changes": "%s"}' % (
-            sender.__name__.lower(),
-            instance,
-            instance.get_absolute_url(),
-            changes
-        ),
+        signature="%s-changed" % sender.__name__.lower(),
+        template="streams/activities/object-changed.html",
+        context=json.dumps({
+            "class": sender.__name__.lower(),
+            "name": "%s" % instance,
+            "link": instance.get_absolute_url(),
+            "changes": changes
+        }),
         backlink=instance.get_absolute_url()
     )
 
@@ -106,12 +108,12 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
     """
     activity = Activity.objects.create(
         title=_("%(class)s %(name)s deleted"),
-        description=_('%(class)s %(name)s has been deleted.'),
-        signature="%s-deleted" % (sender.__name__.lower()),
-        context='{"class": "%s", "name": "%s"}' % (
-            sender.__name__.lower(),
-            instance,
-        )
+        signature="%s-deleted" % sender.__name__.lower(),
+        template="streams/activities/object-deleted.html",
+        context=json.dumps({
+            "class": sender.__name__.lower(),
+            "name": "%s" % instance
+        }),
     )
 
     [activity.streams.add(s) for s in _get_streams(instance)]
@@ -125,16 +127,15 @@ def notify_comment_created(sender, instance, *args, **kwargs):
         if isinstance(obj, (Project, Milestone, Ticket)):
             activity = Activity.objects.create(
                 title=_("%(author)s commented %(class)s %(name)s"),
-                description=_('<a href="%(author_link)s">%(author)s</a> has posted a comment to %(class)s <a href="%(link)s">%(name)s</a>:<br/>%(comment)s'),
                 signature="comment-created",
-                context='{"class": "%s", "name": "%s", "link": "%s", "author": "%s", "author_link": "%s", "comment": "%s"}' % (
-                    obj.__class__.__name__.lower(),
-                    obj,
-                    obj.get_absolute_url(),
-                    instance.user_name,
-                    instance.user.get_absolute_url(),
-                    instance.comment
-                ),
+                context=json.dumps({
+                    "class": obj.__class__.__name__.lower(),
+                    "name": "%s" % obj,
+                    "link": instance.get_absolute_url(),
+                    "author": "%s" % instance.user,
+                    "author_link": instance.user.get_absolute_url(),
+                    "comment": instance.comment
+                }),
                 backlink=obj.get_absolute_url()
             )
 
@@ -147,15 +148,14 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
 
     activity = Activity.objects.create(
         title=_("comment deleted"),
-        description=_('A comment of <a href="%(author_link)s">%(author)s</a> has been deleted from %(class)s <a href="%(link)s">%(name)s</a>.'),
         signature="comment-deleted",
-        context='{"class": "%s", "name": "%s", "link": "%s", "author": "%s", "author_link": "%s"}' % (
-            obj.__class__.__name__.lower(),
-            obj,
-            obj.get_absolute_url(),
-            instance.user_name,
-            instance.user.get_absolute_url(),
-        )
+        context=json.dumps({
+            "class": obj.__class__.__name__.lower(),
+            "name": "%s" % obj,
+            "link": instance.get_absolute_url(),
+            "author": "%s" % instance.user,
+            "author_link": instance.user.get_absolute_url()
+        })
     )
 
     [activity.streams.add(s) for s in _get_streams(obj)]

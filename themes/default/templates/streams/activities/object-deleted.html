@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% with class|capfirst as class %}
+{% blocktrans %}
+<p>{{ class }} {{ name }} has been deleted.</p>
+{% endblocktrans %}
+{% endwith %}

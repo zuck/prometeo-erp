@@ -711,7 +711,14 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .activities .timesince  { float: right; }
 
-#content .activities p.description  { margin-left: 85px; }
+#content .activities .description  {
+    margin-top: 10px;
+    margin-left: 85px;
+}
+
+#content .activities .description dt { border: none; }
+
+#content .activities .description dd { margin-left: 20px; }
 
 #content .tasks dt {
     border-bottom: 2px solid #d6d6d6;
