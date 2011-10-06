@@ -20,7 +20,7 @@
 
 .filterbox form {
     float: right;
-    padding: 0;
+    padding: 0 30px 0 0;
     margin-bottom: 10px;
     text-align: right;
     background: none;
@@ -30,12 +30,13 @@
 .filterbox label, .filterbox select, .filterbox input, .filterbox button {
     display: inline;
     margin-right: 5px;
+    margin-bottom: 5px;
     width: auto;
 }
 
 .filterbox button {
-    width: 20px;
-    padding: 2px 4px;
+    width: 24px;
+    padding: 2px 4px 3px;
     margin: 0;
     border: none;
     color: #fff;
@@ -47,8 +48,18 @@
 .filterbox button:hover { background: #1f1f1f; }
 
 .filterbox .submit {
-    clear: both;
     float: right;
-    margin: 5px 0 0;
+    margin-right: -30px;
+    margin-top: -29px;
+}
+
+.filterbox .submit input, .filterbox .submit input:hover {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    font-size: 0;
+    background-image: url(images/update.png);
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
