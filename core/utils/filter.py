@@ -22,6 +22,7 @@ __version__ = '0.0.2'
 
 from django.db.models import Q
 from django.db.models import fields as django_fields
+from django.utils.datastructures import SortedDict
 
 def filter_objects(request, model, fields=[], exclude=[], object_list=None):
     matches = []
@@ -52,7 +53,7 @@ def filter_objects(request, model, fields=[], exclude=[], object_list=None):
     except:
         pass
         
-    return [f.name for f, value in filter_fields], filter_fields, matches
+    return [f.name for f, value in filter_fields], SortedDict(filter_fields), matches
     
 def get_filter_fields(request, model, fields, exclude):
     filter_fields = [(f, filter_field_value(request, f)) for f in model._meta.fields if is_visible(f.name, fields, exclude)]
