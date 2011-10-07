@@ -5,7 +5,7 @@
 {% for link in links %}
     {% if link.authorized %}
     <li class="menu-link" id="{{ link.slug|escape }}-link">
-        {% with link.description|default:link.title|escape as link_title %}
+        {% with link.description|default:link.title|striptags as link_title %}
         <a{% matchlink link request.get_full_path %} href="{{ link.url|escape }}" title="{% trans link_title %}">
             {% trans link.title|escape %}
         </a>
