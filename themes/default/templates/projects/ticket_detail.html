@@ -64,9 +64,9 @@
                 </tr>
                 <tr>
                     <th>{% trans "Status" %}:</th>
-                    <td>{{ object.status }}</td>
+                    <td>{{ object.get_status_display }}</td>
                     <th>{% trans "Type" %}:</th>
-                    <td>{{ object.type }}</td>
+                    <td>{{ object.get_type_display }}</td>
                 </tr>
                 <tr>
                     <th>{% trans "Milestone" %}:</th>
@@ -78,7 +78,7 @@
                         {% endif %}
                     </td>
                     <th>{% trans "Urgency" %}:</th>
-                    <td>{{ object.urgency }}</td>
+                    <td>{{ object.get_urgency_display }}</td>
                 </tr>
                 <tr>
                     <th>{% trans "Tags" %}:</th>

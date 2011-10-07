@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                     <th>{% trans "Status" %}:</th>
-                    <td>{% trans object.status %}</td>
+                    <td>{% trans object.get_status_display %}</td>
                     <th>{% trans "Closed on" %}:</th>
                     <td>
                         {% if object.closed %}
