@@ -640,8 +640,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .menu li a:hover {
     background-image: url(images/bullet_hover.png);
     background-color: #f6f6f6;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #c0c0c0;
 }
 
 #content .menu li li a { padding-left: 40px; }
