@@ -36,4 +36,5 @@ urlpatterns = patterns('events.views',
     url(r'^events/(?P<id>\d+)/export/$', view='event_export', name='event_export'),
     url(r'^events/(?P<id>\d+)/edit/$', view='event_edit', name='event_edit'),
     url(r'^events/(?P<id>\d+)/delete/$', view='event_delete', name='event_delete'),
+    url(r'^events/(?P<id>\d+)/timeline/$', 'event_detail', {'template_name': 'events/event_timeline.html'}, 'event_timeline'),
 )

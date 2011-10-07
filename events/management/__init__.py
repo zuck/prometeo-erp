@@ -37,6 +37,11 @@ def fixtures(sender, **kwargs):
         slug="events_menu",
         description=_("Main menu for events")
     )
+
+    event_menu = Menu.objects.create(
+        slug="event_menu",
+        description=_("Main menu for event")
+    )
     
     # Links.
     events_link = Link.objects.create(
@@ -80,6 +85,20 @@ def fixtures(sender, **kwargs):
         slug="events_year",
         url="{% url event_year current_day.year %}",
         menu=events_menu
+    )
+
+    event_dashboard_link = Link.objects.create(
+        title=_("Dashboard"),
+        slug="event_dashboard",
+        url="{{ object.get_absolute_url }}",
+        menu=event_menu
+    )
+
+    event_timeline_link = Link.objects.create(
+        title=_("Timeline"),
+        slug="event_timeline",
+        url="{% url event_timeline object.pk %}",
+        menu=event_menu
     )
 
     # Signatures.
