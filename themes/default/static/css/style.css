@@ -870,8 +870,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     padding-left: 0;
 }
 
-#content .tasks { border-top: 2px solid #c0c0c0; }
-
 #content .tasks dd { margin: 0; }
 
 #content .tasks li {
@@ -902,7 +900,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .milestones dt {
     border-bottom: 2px solid #c0c0c0;
     background: none;
-    padding: 25px 0 0;
+    padding: 15px 0 0;
 }
 
 #content .milestones dt h3 { margin-bottom: 5px; }
