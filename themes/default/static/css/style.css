@@ -829,6 +829,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .calendar .events .daynr .weekend .disabled { color: #ffe0e0; }
 
+#content .calendar .events dd .actions { float: right; }
+
 #content .calendar .events dt {
     border: none;
     margin-bottom: -10px;
@@ -836,21 +838,9 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .calendar .events dd { border-bottom: 2px solid #c0c0c0; }
 
-#content .calendar .events dd ul { margin-bottom: 0; }
+#content .calendar .events ul { margin-bottom: 0; }
 
-#content .calendar .events dd li {
-    border-top: 1px solid #c0c0c0;
-    border-bottom: none;
-}
-
-#content .calendar .events dd li strong { width: 25px; }
-
-#content .calendar .events dd .actions { float: right; }
-
-#content .calendar .events dd .actions li {
-    border: none;
-    margin-top: -22px;
-}
+#content .calendar .events li strong { width: 25px; }
 
 #content .calendar .events td {
     vertical-align: top;
@@ -858,15 +848,17 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     border-right: 1px solid #c0c0c0;
 }
 
-#content .calendar .day .events,
 #content .calendar .year .events { border-top: 2px solid #c0c0c0; }
 
 #content .calendar .month td,
 #content .calendar .year td { height: 80px; }
 
-#content .calendar .week th { width: 13.5%; }
-
+#content .calendar .day th.hour,
 #content .calendar .week th.hour { width: 4.5%; }
+
+#content .calendar .week th { width: 95.5%; }
+
+#content .calendar .week th { width: 13.5%; }
 
 #content .calendar .month th { width: 14.28%; }
 

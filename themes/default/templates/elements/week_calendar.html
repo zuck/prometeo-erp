@@ -1,14 +1,14 @@
-{% load calendar %}
+{% load i18n %}
 
 <table class="events">
     <tr>
-        <th class="hour"></th>
+        <th class="hour">{% trans "Hour" %}</th>
         {% for day, day_events in calendar.items %}
         <th>{{ day|date:"D" }}, {{ day }}</th>
         {% endfor %}
     </tr>
     {% for hour in hour_headers %}
-    <tr>
+    <tr{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
         <td>{{ hour|stringformat:"02d" }}:00</td>
         {% for day, day_events in calendar.items %}
         {% for day_hour, events in day_events.items %}

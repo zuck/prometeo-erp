@@ -117,7 +117,7 @@ def day_calendar(context, year, month, day, event_list, template_name="elements/
 def week_calendar(context, year, week, event_list, template_name="elements/week_calendar.html"):
     """Renders a week calendar.
     """
-    context['hour_headers'] = [i for i in range(1, 24)]
+    context['hour_headers'] = [i for i in range(0, 24)]
     context['calendar'] = get_events_for_week(int(year), int(week), event_list)
 
     return render_to_string(template_name, context)
