@@ -21,6 +21,13 @@
 {% endblock %}
 
 {% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.todo.add_task %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
 <div class="sections">   
     <div class="menu">
         {% menu "todo_menu" %}
@@ -28,13 +35,6 @@
     <div class="section">
         {% block section %}
         {% include 'elements/filterbox.html' %}
-        <div class="actions">
-            <ul>
-                {% if perms.todo.add_task %}
-                <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
-                {% endif %}
-            </ul>
-        </div>
         <div class="details">
             {% regroup object_list by start.date as tasks_by_date %}
             {% if tasks_by_date %}

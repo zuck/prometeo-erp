@@ -15,13 +15,6 @@
 
 {% block section %}
 {% include 'elements/filterbox.html' %}
-<div class="actions">
-    <ul>
-        {% if perms.todo.add_task %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
-        {% endif %}
-    </ul>
-</div>
 <div class="details">
     {% if object_list %}
     <ul class="tasks">
