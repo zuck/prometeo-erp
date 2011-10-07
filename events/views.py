@@ -37,6 +37,7 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
+from django.conf import settings
 
 from prometeo.core.utils.filter import filter_objects
 
@@ -237,13 +238,12 @@ def event_import(request, **kwargs):
                 for cal in cals:
                     for evt in cal.walk('VEVENT'):
                         event, new = Event.objects.get_or_create(
-                            title=evt.decoded('summary'),
-                            start=evt.decoded('dtstart'),
-                            end=evt.decoded('dtend'),
-                            location=evt.decoded('location'),
-                            description=evt.decoded('description'),
-                            status=evt.decoded('status'),
-                            created=evt.decoded('created'),
+                            title=evt.decoded('summary', _("Empty event")),
+                            start=evt.decoded('dtstart', datetime.datetime.now()),
+                            end=evt.decoded('dtend', datetime.datetime.now()),
+                            location=evt.decoded('location', ""),
+                            description=evt.decoded('description', ""),
+                            status=evt.decoded('status', settings.EVENT_DEFAULT_STATUS),
                             author=request.user
                         )
                         messages.success(request, _("Event \"%s\" has been imported.") % event.title)
