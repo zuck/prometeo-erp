@@ -44,6 +44,13 @@
         {% if perms.events.change_event %}
         <li class="export"><a title="{% trans 'Export event to an .ics file' %}" href="{% url event_export object.pk %}">{% trans 'Export' %}</a></li>
         {% endif %}
+        {% if perms.events.change_event %}
+        {% if user not in object.stream.followers.all %}
+        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+        {% else %}
+        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+        {% endif %}
+        {% endif %}
     </ul>
 </div>
 {% objects_from object %}

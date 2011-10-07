@@ -334,7 +334,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 .no { background-image: url(images/error.png); }
 
-.add a, .edit a, .delete a, .all a, .import a, .export a, .open a, .reopen a, .close a {
+.add a, .edit a, .delete a, .all a, .import a, .export a,
+.open a, .reopen a, .close a, .view a, .exit a, .follow a, .leave a {
     float: left;
     width: 16px;
     height: 16px;
@@ -380,6 +381,22 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 .close a { background-image: url(images/close.png); }
 
 .close a:hover { background-image: url(images/close_hover.png); }
+
+.view a { background-image: url(images/view.png); }
+
+.view a:hover { background-image: url(images/view_hover.png); }
+
+.exit a { background-image: url(images/exit.png); }
+
+.exit a:hover { background-image: url(images/exit_hover.png); }
+
+.follow a { background-image: url(images/view.png); }
+
+.follow a:hover { background-image: url(images/view_hover.png); }
+
+.leave a { background-image: url(images/exit.png); }
+
+.leave a:hover { background-image: url(images/exit_hover.png); }
 
 .progressbar {
     clear: both;

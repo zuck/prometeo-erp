@@ -39,6 +39,13 @@
         {% if perms.projects.change_ticket %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url ticket_list object.project.slug %}">{% trans 'All' %}</a></li>
         {% endif %}
+        {% if perms.projects.change_ticket %}
+        {% if user not in object.stream.followers.all %}
+        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+        {% else %}
+        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+        {% endif %}
+        {% endif %}
     </ul>
 </div>
 {% include 'elements/navigator.html' %}

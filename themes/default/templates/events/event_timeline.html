@@ -53,11 +53,4 @@
     {% include 'elements/paginator.html' %}
     {% endwith %}
 </div>
-<ul>
-    {% if user not in object.stream.followers.all %}
-    <li><span class="submit"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></span></li>
-    {% else %}
-    <li><span class="submit"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></span></li>
-    {% endif %}
-</ul>
 {% endblock %}
