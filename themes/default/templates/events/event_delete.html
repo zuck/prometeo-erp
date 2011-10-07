@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{{ object }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Events' 'event_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Delete' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Delete' %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" action="{% url event_delete object.pk %}">
+    {% csrf_token %}
+    <p>{% trans "Are you sure you want to delete this event?" %}</p>
+    <span class="submit"><input type="submit" value="{% trans "Yes, I'm sure." %}" /></span>
+</form>
+{% endblock %}

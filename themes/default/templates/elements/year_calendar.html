@@ -1,0 +1,16 @@
+<table class="events">
+    {% for month, month_events in calendar.items %}
+    {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:"3" %}
+    <tr>
+    {% endif %}
+        <td>
+            <span class="monthnr">{{ month|date:"M" }}</span>
+            {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:"3" %}
+            <span class="quarternr">(Q{% cycle "1" "2" "3" "4" %})</span>
+            {% endif %}
+        </td>
+    {% if forloop.counter0|add:"1"|divisibleby:"3" %}
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>

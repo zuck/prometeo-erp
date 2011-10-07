@@ -1,0 +1,21 @@
+{% extends "events/event_list.html" %}
+
+{% load i18n %}
+{% load calendar %}
+
+{% block subtitle %}{% trans "Week" %}{% endblock %}
+
+{% block section %}
+<div class="calendar">
+    <div class="week">
+        {% with week_number=current_day|date:"W" week_year=current_day.year %}
+        <div class="navigator">
+            <span class="previous"><a href="{% url event_week previous_week.year previous_week|date:'W' %}">&lt;&lt;</a></span>
+            <span class="current"><h3>{% blocktrans %}Week {{ week_number }}, {{ week_year }}{% endblocktrans %}</h3></span>
+            <span class="next"><a href="{% url event_week next_week.year next_week|date:'W' %}">&gt;&gt;</a></span>
+        </div>
+        {% week_calendar week_year week_number object_list %}
+        {% endwith %}
+    </div>
+</div>
+{% endblock %}

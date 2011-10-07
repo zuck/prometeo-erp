@@ -201,6 +201,7 @@ INSTALLED_APPS = (
     'prometeo.core.streams',
     'prometeo.core.taxonomy',
 
+    #'prometeo.events',
     #'prometeo.todo',
     #'prometeo.projects',
 )
@@ -232,6 +233,7 @@ SEARCH_IN_MODELS = (
     'auth.User',
     'taxonomy.Category',
     'taxonomy.Tag',
+    #'events.Event',
     #'todo.Task',
     #'projects.Project',
     #'projects.Area',
@@ -239,46 +241,57 @@ SEARCH_IN_MODELS = (
     #'projects.Ticket',
 )
 
+# Events management options.
+"""
+EVENT_STATUS_CHOICES = (
+    ('TENTATIVE', _('tentative')),
+    ('CONFIRMED', _('confirmed')),
+    ('CANCELLED', _('cancelled')),
+)
+
+EVENT_DEFAULT_STATUS = 'CONFIRMED'
+"""
+
 # Project management options.
 """
 PROJECT_STATUS_CHOICES = (
-    ('open', _('open')),
-    ('closed', _('closed')),
+    ('OPEN', _('open')),
+    ('CLOSED', _('closed')),
 )
 
-PROJECT_DEFAULT_STATUS = 'open'
+PROJECT_DEFAULT_STATUS = 'OPEN'
 
-PROJECT_CLOSE_STATUSES = ('closed',)
+PROJECT_CLOSE_STATUSES = ('CLOSED',)
 
 TICKET_URGENCY_CHOICES = (
-    ('very low', _('very low')),
-    ('low', _('low')),
-    ('medium', _('medium')),
-    ('high', _('high')),
-    ('critical', _('critical')),
+    ('VERY-LOW', _('very low')),
+    ('LOW', _('low')),
+    ('MEDIUM', _('medium')),
+    ('HIGH', _('high')),
+    ('CRITICAL', _('critical')),
 )
 
-TICKET_DEFAULT_URGENCY = 'medium'
+TICKET_DEFAULT_URGENCY = 'MEDIUM'
 
 TICKET_TYPE_CHOICES = (
-    ('bug', _('bug')),
-    ('task', _('task')),
-    ('idea', _('idea')),
+    ('BUG', _('bug')),
+    ('TASK', _('task')),
+    ('IDEA', _('idea')),
 )
 
-TICKET_DEFAULT_TYPE = 'bug'
+TICKET_DEFAULT_TYPE = 'BUG'
 
 TICKET_STATUS_CHOICES = (
-    ('new', _('new')),
-    ('tests', _('needs tests')),
-    ('accepted', _('accepted')),
-    ('invalid', _("invalid")),
-    ('duplicate', _('duplicated')),
-    ('resolved', _('resolved')),
-    ('review', _('awaiting review')),
+    ('NEW', _('new')),
+    ('TESTS', _('needs tests')),
+    ('ACCEPTED', _('accepted')),
+    ('INVALID', _("invalid")),
+    ('DUPLICATE', _('duplicated')),
+    ('RESOLVED', _('resolved')),
+    ('REVIEW', _('awaiting review')),
 )
 
-TICKET_DEFAULT_STATUS = 'new'
+TICKET_DEFAULT_STATUS = 'NEW'
 
-TICKET_CLOSE_STATUSES = ('invalid', 'duplicate', 'resolved')
+TICKET_CLOSE_STATUSES = ('INVALID', 'DUPLICATE', 'RESOLVED')
 """

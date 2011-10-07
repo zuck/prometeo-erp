@@ -1,0 +1,15 @@
+<dl class="events">
+    {% for hour, events in calendar.items %}
+    <dt{% if events %} class="with_events"{% endif %}><h4>{{ hour|time:"H" }}:00</h4></dt>
+    <dd{% if events %} class="with_events"{% endif %}>
+        <ul>
+            {% for event in events %}
+            <li>
+                <strong>:{{ event.start.minute|stringformat:"02d" }}</strong>
+                <a title="{{ event.description|striptags|default:event.title }}" href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </dd>
+    {% endfor %}
+</dl>

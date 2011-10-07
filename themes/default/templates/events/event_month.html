@@ -1,0 +1,19 @@
+{% extends "events/event_list.html" %}
+
+{% load i18n %}
+{% load calendar %}
+
+{% block subtitle %}{% trans "Month" %}{% endblock %}
+
+{% block section %}
+<div class="calendar">
+    <div class="month">
+        <div class="navigator">
+            <span class="previous"><a href="{% url event_month previous_month.year previous_month.month %}">&lt;&lt;</a></span>
+            <span class="current"><h3>{{ current_day|date:"F" }}, {{ current_day.year }}</h3></span>
+            <span class="next"><a href="{% url event_month next_month.year next_month.month %}">&gt;&gt;</a></span>
+        </div>
+        {% month_calendar current_day.year current_day.month object_list %}
+    </div>
+</div>
+{% endblock %}

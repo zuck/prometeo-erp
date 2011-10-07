@@ -56,7 +56,7 @@ dl dd { margin-left: 15px; }
 pre {
     clear: both;
     padding: 15px;
-    border: 1px solid #d6d6d6;
+    border: 1px solid #c0c0c0;
     background: #efefef;
     overflow: auto;
 }
@@ -70,7 +70,7 @@ hr { display: none; }
 form {
     clear: both;
     padding: 15px;
-    border: 1px solid #d6d6d6;
+    border: 1px solid #c0c0c0;
     background: #f6f6f6;
     overflow: hidden;
 }
@@ -170,7 +170,7 @@ table {
 
 td, th { padding: 10px; }
 
-td { border-bottom: 1px solid #d6d6d6; }
+td { border-bottom: 1px solid #c0c0c0; }
 
 thead td { border-bottom: none; }
 
@@ -183,7 +183,7 @@ thead td, th {
 }
 
 thead td a, thead td a:link, thead td a:visited,
-th a, th a:link, th a:visited { color: #d6d6d6; }
+th a, th a:link, th a:visited { color: #c0c0c0; }
 
 thead td a:hover, th a:hover { color: #fff; }
 
@@ -204,7 +204,7 @@ tr.altrow td { background-color: #f6f6f6; }
  * Commons.
  */
 
-.disabled { color: #60625d; }
+.disabled { color: #c0c0c0; }
 
 form .submit input, .submit a {
     float: right;
@@ -224,9 +224,9 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     clear: both;
     float: left;
     width: 100%;
-    border-top: 1px solid #d6d6d6;
+    border-top: 2px solid #c0c0c0;
     padding-top: 10px;
-    margin-top: 10px;
+    margin-top: 25px;
     margin-bottom: 10px;
 }
 
@@ -281,12 +281,12 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     width: 100%;
     margin-top: 10px;
     padding-top: 15px;
-    border-top: 2px solid #d6d6d6;
+    border-top: 2px solid #c0c0c0;
 }
 
 .comments .meta p {
     margin-left: 54px;
-    border-bottom: 1px solid #dfdfdf;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 .comments li {
@@ -306,7 +306,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     float: right;
     width: 100%;
     text-align: right;
-    border-top: 1px solid #d6d6d6;
+    border-top: 1px solid #c0c0c0;
     color: #60625d;
 }
 
@@ -334,7 +334,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 .no { background-image: url(images/error.png); }
 
-.add a, .edit a, .delete a, .all a {
+.add a, .edit a, .delete a, .all a, .import a, .export a {
     float: left;
     width: 16px;
     height: 16px;
@@ -360,6 +360,14 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 .all a { background-image: url(images/all.png); }
 
 .all a:hover { background-image: url(images/all_hover.png); }
+
+.import a { background-image: url(images/import.png); }
+
+.import a:hover { background-image: url(images/import_hover.png); }
+
+.export a { background-image: url(images/export.png); }
+
+.export a:hover { background-image: url(images/export_hover.png); }
 
 .progressbar {
     clear: both;
@@ -471,7 +479,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #logo {
     height: 60px;
     margin-top: 28px;
-    background: #ce0600 url(images/logo.png) no-repeat 10px center;
+    background: #ce0600 url(images/logo.png) no-repeat 20px center;
     border-top: 1px solid #ec7672;
     border-bottom: 1px solid #7d0400;
     color: #fff;
@@ -494,19 +502,21 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin: 0;
 }
 
+#nav ul { margin-right: 10px; }
+
 #nav li {
     padding: 0;
     margin: 0 10px;
 }
 
-#nav a, #nav a:link, #nav a:visited { color: #d6d6d6; }
+#nav a, #nav a:link, #nav a:visited { color: #c0c0c0; }
 
 #nav a:hover { color: #fff; }
 
 #search {
     position: absolute;
     top: 45px;
-    right: 10px;
+    right: 20px;
 }
 
 #searchform {
@@ -548,7 +558,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #bookmarks li { margin-right: 0; }
 
-#bookmarks .add a { margin-left: 10px; }
+#bookmarks .add a { margin-left: 20px; }
 
 #bookmarks a.active { color: #fff; }
 
@@ -561,7 +571,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #userarea li { margin-left: 0; }
 
 #userarea .profile {
-    border-right: 1px solid #d6d6d6;
+    border-right: 1px solid #c0c0c0;
     padding-right: 10px;
     margin-right: 10px;
 }
@@ -574,7 +584,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #userarea a.notification-counter:hover {
-    background: #d6d6d6;
+    background: #c0c0c0;
     color: #1f1f1f;
 }
 
@@ -584,14 +594,14 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     padding: 6px 0;
     background: #f6f6f6;
     border-top: 1px solid #fff;
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
 }
 
-#breadcrumbs .list { padding: 0 10px; }
+#breadcrumbs .list { padding: 0 20px; }
 
 #content {
     padding-bottom: 20px;
-    background: #fff url(images/menu.jpg) repeat-y 200px -5px;
+    background: #fff url(images/menu.jpg) repeat-y 220px -5px;
 }
 
 #content li, #content dt { background: url(images/bullet.png) no-repeat left 8px; }
@@ -619,13 +629,13 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background-image: url(images/bullet_hover.png);
     background-color: #f6f6f6;
     padding-bottom: 4px;
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 #content .menu li li a { padding-left: 40px; }
 
 #content .result-list li {
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
     padding: 10px 0;
     background: none;
 }
@@ -662,10 +672,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .messages li.success { background-image: url(images/success.png); }
 
-#content .notifications { border-top: 2px solid #d6d6d6; }
+#content .notifications { border-top: 2px solid #c0c0c0; }
 
 #content .notifications li {
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
     padding: 10px 15px 10px 35px;
     background: #fffecc url(images/email.png) no-repeat 10px 10px;
 }
@@ -688,7 +698,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #content .activities dt {
-    border-bottom: 2px solid #d6d6d6;
+    border-bottom: 2px solid #c0c0c0;
     background: none;
     padding-left: 0;
 }
@@ -696,7 +706,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .activities dd { margin: 0; }
 
 #content .activities li {
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
     padding: 10px 15px 10px 35px;
     background: no-repeat 10px 10px;
     background-image: url(images/time.png);
@@ -720,18 +730,133 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .activities .description dd { margin-left: 20px; }
 
-#content .tasks dt {
-    border-bottom: 2px solid #d6d6d6;
+#content .events { clear: both; }
+
+#content .events dt {
+    border-bottom: 2px solid #c0c0c0;
     background: none;
     padding-left: 0;
 }
 
-#content ul.tasks { border-top: 2px solid #d6d6d6; }
+#content .events dd { margin: 0; }
+
+#content .events li {
+    padding: 0 15px 0 25px;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-image: url(images/calendar.png);
+}
+
+#content dl.events li {
+    padding: 10px 15px 10px 35px;
+    background-position: 10px 10px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+#content dl.events li strong {
+    float: left;
+    width: 65px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+#content .calendar .navigator {
+    width: 100%;
+    text-align: center;
+}
+
+#content .calendar .with_events { background-color: #fffecc; }
+
+#content .calendar .navigator .current { float: none; }
+
+#content .calendar .navigator .current h3 {
+    float: none;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+#content .calendar .navigator .previous {
+    float: left;
+    margin: 0;
+}
+
+#content .calendar .navigator .next {
+    float: right;
+    margin: 0;
+}
+
+#content .calendar .events .daynr,
+#content .calendar .events .monthnr {
+    float: left;
+    margin-bottom: 5px;
+}
+
+#content .calendar .events .weeknr,
+#content .calendar .events .quarternr {
+    float: right;
+    color: #c0c0c0;
+}
+
+#content .calendar .events .daynr .weekend { color: #d21717; }
+
+#content .calendar .events .daynr .weekend .disabled { color: #ffe0e0; }
+
+#content .calendar .events dt {
+    border: none;
+    margin-bottom: -10px;
+}
+
+#content .calendar .events dd { border-bottom: 2px solid #c0c0c0; }
+
+#content .calendar .events dd ul { margin-bottom: 0; }
+
+#content .calendar .events dd li {
+    border-top: 1px solid #c0c0c0;
+    border-bottom: none;
+}
+
+#content .calendar .events dd li strong { width: 25px; }
+
+#content .calendar .events dd .actions { float: right; }
+
+#content .calendar .events dd .actions li {
+    border: none;
+    margin-top: -22px;
+}
+
+#content .calendar .events td {
+    vertical-align: top;
+    border-left: 1px solid #c0c0c0;
+    border-right: 1px solid #c0c0c0;
+}
+
+#content .calendar .day .events,
+#content .calendar .year .events { border-top: 2px solid #c0c0c0; }
+
+#content .calendar .month td,
+#content .calendar .year td { height: 80px; }
+
+#content .calendar .week th { width: 13.5%; }
+
+#content .calendar .week th.hour { width: 4.5%; }
+
+#content .calendar .month th { width: 14.28%; }
+
+#content .calendar .year td { width: 33.33%; }
+
+#content .tasks dt {
+    border-bottom: 2px solid #c0c0c0;
+    background: none;
+    padding-left: 0;
+}
+
+#content .tasks { border-top: 2px solid #c0c0c0; }
 
 #content .tasks dd { margin: 0; }
 
 #content .tasks li {
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
     padding: 10px 15px 10px 35px;
     background: no-repeat 10px 10px;
     background-image: url(images/note.png);
@@ -756,7 +881,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .tasks .delay, #content .tasks .countdown  { float: right; }
 
 #content .milestones dt {
-    border-bottom: 2px solid #d6d6d6;
+    border-bottom: 2px solid #c0c0c0;
     background: none;
     padding: 25px 0 0;
 }
@@ -775,8 +900,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #sidebar {
     float: left;
-    width: 190px;
-    padding-bottom: 25px;
+    width: 180px;
+    padding: 0 20px 20px;
 }
 
 #user-profile-widget {
@@ -787,8 +912,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #user-profile-widget .body {
     padding: 10px 0;
-    margin: 0 10px;
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 #user-profile-widget .info { width: 160px; }
@@ -799,17 +923,15 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #main {
+    min-width: 795px;
+    padding: 20px;
     overflow: auto;
-    padding: 20px 10px;
-    padding-left: 30px;
-    max-width: 795px;
 }
 
 #main .title {
     float: left;
     width: 100%;
     margin-bottom: 10px;
-    border-bottom: 1px solid #d6d6d6;
 }
 
 #main .title h2 { color: #1f1f1f; }
@@ -820,14 +942,14 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #main .sections .menu {
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 #main .sections .menu ul {
     float: left;
     width: auto;
     margin-bottom: -1px;
-    border-left: 1px solid #d6d6d6;
+    border-left: 1px solid #c0c0c0;
 }
 
 #main .sections .menu li {
@@ -839,8 +961,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .sections .menu li a {
     background: #f6f6f6;
     border: none;
-    border-top: 1px solid #d6d6d6;
-    border-right: 1px solid #d6d6d6;
+    border-top: 1px solid #c0c0c0;
+    border-right: 1px solid #c0c0c0;
     padding: 10px 15px;
 }
 
@@ -889,7 +1011,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .widget .title h5,
 #main .widget .title h6 { margin-bottom: 0; }
 
-#main .widget .title h2 { color: #d6d6d6; }
+#main .widget .title h2 { color: #c0c0c0; }
 
 #main .widget .wrapper {
     clear: both;
@@ -935,11 +1057,11 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     color: #fff;
 }
 
-#footer a, #footer a:link, #footer a:visited { color: #d6d6d6; }
+#footer a, #footer a:link, #footer a:visited { color: #c0c0c0; }
 
 #footer a:hover { color: #fff; }
 
 #powered-by {
     float: right;
-    padding: 10px;
+    margin: 20px;
 }
