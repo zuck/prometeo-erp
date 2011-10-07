@@ -4,6 +4,13 @@
     <h3><a href="{{ milestone.get_absolute_url }}">{{ milestone.title }}</a></h3>
     <span class="actions">
         <ul>
+            {% if perms.projects.change_milestone %}
+            {% if not milestone.closed %}
+            <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close milestone.project.slug milestone.slug %}">{% trans 'Close' %}</a></li>
+            {% else %}
+            <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen milestone.project.slug milestone.slug %}">{% trans 'Reopen' %}</a></li>
+            {% endif %}
+            {% endif %}
             {% if perms.projects.edit_milestone %}
             <li class="edit"><a title="{% trans "Edit" %}" href="{{ milestone.get_edit_url }}">{% trans "Edit" %}</a></li>
             {% endif %}
@@ -33,6 +40,11 @@
         -
         <strong>{% trans "Tickets" %}:</strong>
         <span><a href="{% url milestone_tickets milestone.project.slug milestone.slug %}">{{ milestone.tickets.closed.count }}/{{ milestone.tickets.count }}</a></span>
+        {% if milestone.closed %}
+        -
+        <strong>{% trans "Closed" %}:</strong>
+        <span>{{ milestone.closed }}</span>
+        {% endif %}
     </p>
     {% include "projects/milestone_progress.html" %}
     {{ milestone.description|safe }}

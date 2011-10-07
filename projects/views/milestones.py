@@ -120,6 +120,32 @@ def milestone_delete(request, project, slug, **kwargs):
         )
 
 @permission_required('projects.change_milestone')
+def milestone_close(request, project, slug, **kwargs):
+    """Closes an open milestone.
+    """
+    project = get_object_or_404(Project, slug=project)
+    milestone = get_object_or_404(Milestone, slug=slug)
+
+    milestone.closed = datetime.datetime.now()
+    milestone.save()
+    messages.success(request, _("The milestone has been closed."))
+
+    return redirect_to(request, permanent=False, url=milestone.get_absolute_url())
+
+@permission_required('projects.change_milestone')
+def milestone_reopen(request, project, slug, **kwargs):
+    """Reopens a closed milestone.
+    """
+    project = get_object_or_404(Project, slug=project)
+    milestone = get_object_or_404(Milestone, slug=slug)
+
+    milestone.closed = None
+    milestone.save()
+    messages.success(request, _("The milestone has been reopened."))
+
+    return redirect_to(request, permanent=False, url=milestone.get_absolute_url())
+
+@permission_required('projects.change_milestone')
 @permission_required('projects.change_ticket')  
 def milestone_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tickets of a specified milestone.

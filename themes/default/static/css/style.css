@@ -1058,6 +1058,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .milestones .actions {
     position: relative;
     float: right;
+    width: auto;
     top: -22px;
     margin-bottom: -22px;
 }

@@ -40,6 +40,13 @@
         {% if perms.projects.change_milestone %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.slug %}">{% trans 'All' %}</a></li>
         {% endif %}
+        {% if perms.projects.change_milestone %}
+        {% if not object.closed %}
+        <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close object.project.slug object.slug %}">{% trans 'Close' %}</a></li>
+        {% else %}
+        <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen object.project.slug object.slug %}">{% trans 'Reopen' %}</a></li>
+        {% endif %}
+        {% endif %}
     </ul>
 </div>
 {% objects_from object %}
