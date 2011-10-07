@@ -35,6 +35,13 @@
         {% if perms.todo.change_task %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url task_list %}">{% trans 'All' %}</a></li>
         {% endif %}
+        {% if perms.todo.change_task %}
+        {% if not object.closed %}
+        <li class="close"><a title="{% trans 'Close' %}" href="{% url task_close object.pk %}">{% trans 'Close' %}</a></li>
+        {% else %}
+        <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url task_reopen object.pk %}">{% trans 'Reopen' %}</a></li>
+        {% endif %}
+        {% endif %}
     </ul>
 </div>
 {% include 'elements/navigator.html' %}
@@ -88,11 +95,4 @@
         </tr>
     </table>
 </div>
-<ul>
-    {% if not object.closed %}
-    <li><span class="submit"><a title="{% trans 'Close' %}" href="{% url task_close object.pk %}">{% trans 'Close' %}</a></span></li>
-    {% else %}
-    <li><span class="submit"><a title="{% trans 'Reopen' %}" href="{% url task_reopen object.pk %}">{% trans 'Reopen' %}</a></span></li>
-    {% endif %}
-</ul>
 {% endblock %}
