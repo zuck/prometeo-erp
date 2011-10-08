@@ -33,7 +33,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 
-from prometeo.core.utils.filter import filter_objects
+from prometeo.core.utils import filter_objects
 
 from models import *
 from forms import *

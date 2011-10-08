@@ -35,7 +35,7 @@ from django.conf import settings
 
 from django.contrib.auth.models import User
 
-from prometeo.core.utils.filter import filter_objects
+from prometeo.core.utils import filter_objects
 
 from models import *
 from forms import *

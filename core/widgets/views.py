@@ -30,7 +30,7 @@ from django.template import RequestContext
 from django.template.defaultfilters import slugify
 from django.contrib import messages
 
-from prometeo.core.utils.filter import filter_objects
+from prometeo.core.utils import filter_objects
 
 from models import *
 from forms import *
