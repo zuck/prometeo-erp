@@ -200,6 +200,10 @@ thead a.desc { background-image: url(images/down.png); }
 
 tr.altrow td { background-color: #f6f6f6; }
 
+th.auto { width: 4%; }
+th.boolean { width: 8%; }
+th.char, th.email { width: 16%; }
+
 /**
  * Commons.
  */

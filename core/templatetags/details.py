@@ -57,22 +57,23 @@ class DetailTableNode(Node):
             meta = instance._meta
             self.field_list = [f for f in meta.fields if self.is_visible(f.name, fields, exclude)]
             output = self.table_template()
-            output += u'\t<thead>\n'
+            output += u'\t<tr>\n'
             for f in self.field_list:
                 verbose_name = _(f.verbose_name)
                 verbose_name = verbose_name[0].capitalize() + verbose_name[1:]
+                field_type = f.__class__.__name__.lower().replace("field", "")
                 if f.name in order_by:
                     verse = "-"
                     aclass = "asc"
                     if "-%s" % f.name in order_by:
                         verse = ""
                         aclass = "desc"
-                    output += u'\t\t<td><a class="%s" href="%sorder_by=%s%s">%s</a></td>\n' % (aclass, url, verse, f.name, verbose_name)
+                    output += u'\t\t<th class="%s"><a class="%s" href="%sorder_by=%s%s">%s</a></th>\n' % (field_type, aclass, url, verse, f.name, verbose_name)
                 else:
-                    output += u'\t\t<td><a href="%sorder_by=%s">%s</a></td>\n' % (url, f.name, verbose_name)
+                    output += u'\t\t<th class="%s"><a href="%sorder_by=%s">%s</a></th>\n' % (field_type, url, f.name, verbose_name)
             if 'actions' not in exclude and self.has_actions(instance):
-                output += u'\t\t<td class="actions"></td>\n'
-            output += u'\t</thead>\n'
+                output += u'\t\t<th class="actions"></th>\n'
+            output += u'\t</tr>\n'
             for i, instance in enumerate(self.object_list):
                 output += self.row_template(instance, i)
                 for j, f in enumerate(self.field_list):
