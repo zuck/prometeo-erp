@@ -161,9 +161,9 @@ class DetailTableNode(Node):
             return date(value, settings.DATE_FORMAT)
         elif isinstance(field, fields.TimeField):
             return time(value, settings.TIME_FORMAT)
-        elif isinstance(field, fields.URLField):
-            return u'<a href="%s">%s</a>' % (value, value)
-        elif isinstance(field, fields.EmailField):
+        elif isinstance(field, fields.URLField) and value:
+                return u'<a href="%s">%s</a>' % (value, value)
+        elif isinstance(field, fields.EmailField) and value:
             return u'<a href="mailto:%s">%s</a>' % (value, value)
         elif isinstance(field, fields.TextField):
             return truncatewords(striptags(value), 6)

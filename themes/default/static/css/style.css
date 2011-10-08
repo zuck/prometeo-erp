@@ -187,16 +187,16 @@ th a, th a:link, th a:visited { color: #c0c0c0; }
 
 thead td a:hover, th a:hover { color: #fff; }
 
-thead a.asc, thead a.desc {
+table a.asc, table a.desc {
     float: left;
     width: 100%;
     background-position: right center;
     background-repeat: no-repeat;
 }
 
-thead a.asc { background-image: url(images/up.png); }
+table a.asc { background-image: url(images/up.png); }
 
-thead a.desc { background-image: url(images/down.png); }
+table a.desc { background-image: url(images/down.png); }
 
 tr.altrow td { background-color: #f6f6f6; }
 
