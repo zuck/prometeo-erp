@@ -476,7 +476,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 .subscription-form th.signature {
     text-align: left;
-    width: 600px;
+    width: 80%;
 }
 
 .subscription-form label {
