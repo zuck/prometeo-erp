@@ -136,9 +136,8 @@ def category_list(request, page=0, paginate_by=5, **kwargs):
     """
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Category,
+                                                Category.objects.all(),
                                                 fields=['title', 'parent'],
-                                                object_list=Category.objects.all(),
                                               )
     return list_detail.object_list(
         request,
@@ -223,9 +222,8 @@ def tag_list(request, page=0, paginate_by=5, **kwargs):
     """
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Tag,
+                                                Tag.objects.all(),
                                                 fields=['title'],
-                                                object_list=Tag.objects.all(),
                                               )
     return list_detail.object_list(
         request,

@@ -46,9 +46,8 @@ def bookmark_list(request, username, page=0, paginate_by=10, **kwargs):
 
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Link,
+                                                user.get_profile().bookmarks.links.all(),
                                                 fields=['title', 'url'],
-                                                object_list=user.get_profile().bookmarks.links.all()
                                               )
     return list_detail.object_list(
         request,

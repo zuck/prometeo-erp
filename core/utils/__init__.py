@@ -31,13 +31,15 @@ def filter_objects(request, model_or_queryset=None, fields=[], exclude=[]):
     object_list = None
     queryset = None
 
-    if isinstance(model_or_queryset, models.Model):
+    if isinstance(model_or_queryset, query.QuerySet):
+        model = model_or_queryset.model
+        object_list = model_or_queryset
+
+    elif issubclass(model_or_queryset, models.Model):
         model = model_or_queryset
         object_list = model.objects.all()
 
-    elif isinstance(model_or_queryset, query.QuerySet):
-        model = model_or_queryset.model
-        object_list = model_or_queryset
+    print object_list
 
     if not object_list.query.can_filter():
         pks = [instance.pk for instance in object_list]

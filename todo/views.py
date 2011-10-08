@@ -41,13 +41,10 @@ from forms import *
 def task_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered tasks.
     """
-    object_list = Task.objects.planned(user=request.user)
-
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Task,
-                                                fields=['title', 'start', 'end', 'created', 'closed'],
-                                                object_list=object_list
+                                                Task.objects.planned(user=request.user),
+                                                fields=['title', 'start', 'end', 'created', 'closed']
                                               )
 
     return list_detail.object_list(
@@ -66,13 +63,10 @@ def task_list(request, page=0, paginate_by=10, **kwargs):
 def unplanned_task_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered tasks.
     """
-    object_list = Task.objects.unplanned(user=request.user)
-
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Task,
+                                                Task.objects.unplanned(user=request.user),
                                                 fields=['title', 'created', 'closed'],
-                                                object_list=object_list
                                               )
 
     return list_detail.object_list(

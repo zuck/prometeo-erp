@@ -40,9 +40,8 @@ def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
     project = get_object_or_404(Project, slug=project)
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Milestone,
+                                                project.milestone_set.all(),
                                                 fields=['title', 'parent', 'author', 'manager', 'created', 'deadline', 'closed'],
-                                                object_list=project.milestone_set.all(),
                                               )
     return list_detail.object_list(
         request,
@@ -154,9 +153,8 @@ def milestone_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
     milestone = get_object_or_404(Milestone, slug=slug)
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Ticket,
+                                                milestone.tickets.all(),
                                                 fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
-                                                object_list=milestone.tickets.all(),
                                               )
     return list_detail.object_list(
         request,

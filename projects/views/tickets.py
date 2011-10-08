@@ -40,9 +40,8 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     project = get_object_or_404(Project, slug=project)
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Ticket,
+                                                project.tickets.all(),
                                                 fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
-                                                object_list=project.tickets.all(),
                                               )
     return list_detail.object_list(
         request,

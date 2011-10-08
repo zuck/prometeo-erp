@@ -45,7 +45,6 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered notifications.
     """
     user = get_object_or_404(User, username=username)
-    object_list = Notification.objects.filter(user=user)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('notifications.change_notification') or request.user == user)):
         messages.error(request, _("You can't view this notification list."))
@@ -53,9 +52,8 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
 
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Notification,
+                                                Notification.objects.filter(user=user),
                                                 fields=['title', 'created', 'read'],
-                                                object_list=object_list
                                               )
     
     if request.method == 'POST':

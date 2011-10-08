@@ -57,9 +57,8 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
     """
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                User,
-                                                fields=['username', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login'],
-                                                object_list=User.objects.all()
+                                                User.objects.all(),
+                                                fields=['username', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login']
                                               )
     return list_detail.object_list(
         request,

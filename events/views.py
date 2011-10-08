@@ -70,13 +70,10 @@ def _current_day(year=None, month=None, day=None, week=None):
 def event_list(request, year=None, month=None, day=None, page=0, paginate_by=10, **kwargs):
     """Displays the list of all events.
     """
-    object_list = Event.objects.filter(author=request.user)
-
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Event,
+                                                Event.objects.filter(author=request.user),
                                                 fields=['title', 'start', 'end', 'created'],
-                                                object_list=object_list
                                               )
 
     return list_detail.object_list(
