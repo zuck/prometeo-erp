@@ -53,6 +53,8 @@
     margin-top: -29px;
 }
 
+.filterbox .submit .alone { margin-top: 29px; }
+
 .filterbox .submit input, .filterbox .submit input:hover {
     width: 24px;
     height: 24px;
