@@ -932,7 +932,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #user-profile-widget {
     float: left;
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 #user-profile-widget .body {
