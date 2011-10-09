@@ -62,7 +62,7 @@
                 </dd>
                 <dt class="joined">{% trans 'Joined on' %}</dt>
                 <dd>{{ object.date_joined }}</dd>
-                <dt class="joined">{% trans 'Group(s):' %}</dt>
+                <dt class="groups">{% trans 'Group(s):' %}</dt>
                 <dd>
                 {% for group in object.groups.all %}{{ group }}{% if not forloop.last %}, {% else %}.{% endif %}{% empty %}<span class="disabled">{% trans "No groups." %}</span>{% endfor %}
                 </dd>
