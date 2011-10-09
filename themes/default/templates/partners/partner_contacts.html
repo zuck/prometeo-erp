@@ -1,0 +1,32 @@
+{% extends "partners/partner_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Contacts" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Contacts' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Contacts" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.partners.add_job %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url partner_add_contact object.pk %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

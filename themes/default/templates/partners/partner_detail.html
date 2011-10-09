@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+{% load region %}
+{% load menu %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Partners' 'partner_list' %}
+    {% add_crumb object %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+    <h2>{% block subtitle %}{% trans "Dashboard" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.partners.add_partner %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url partner_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.partners.change_partner %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url partner_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.partners.delete_partner %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url partner_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.partners.change_partner %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url partner_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+        {% if perms.partners.change_partner %}
+        {% if user not in object.stream.followers.all %}
+        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+        {% else %}
+        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% objects_from object %}
+{% with objects as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "partner_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            <table class="properties">
+                <tr>
+                    <th>{% trans "Assignee" %}:</th>
+                    <td colspan="3">
+                        {% if object.assignee %}
+                        <a class="assignee" href="{{ object.assignee.get_absolute_url }}">{{ object.assignee }}</a>
+                        {% else %}
+                        <span class="disabled">{% trans "empty" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Language" %}:</th>
+                    <td>
+                        {{ object.get_language_display }}
+                    </td>
+                    <th>{% trans "Timezone" %}:</th>
+                    <td>
+                        {{ object.get_timezone_display }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "VAT Number" %}:</th>
+                    <td>
+                        {% if object.vat_number %}{{ object.vat_number }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
+                    </td>
+                    <th>{% trans "Currency" %}:</th>
+                    <td>
+                        {{ object.get_currency_display }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "URL" %}:</th>
+                    <td>
+                        {% if object.url %}<a href="{{ object.url }}">{{ object.url }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
+                    </td>
+                    <th>{% trans "Email" %}:</th>
+                    <td>
+                        {% if object.email %}<a href="mailto:{{ object.email }}">{{ object.email }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Phone numbers" %}:</th>
+                    <td colspan="3" class="phone_numbers">
+                        {% if object.phone_numbers.all %}
+                        <ul>
+                            {% for phone_number in object.phone_numbers.all %}
+                            <li class="{{ phone_number.get_type_display }}">
+                                {{ phone_number }}
+                                <span class="type">({{ phone_number.get_type_display|capfirst }})</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <span class="disabled">{% trans "empty" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Addresses" %}:</th>
+                    <td colspan="3" class="addresses">
+                        {% if object.addresses.all %}
+                        <ul>
+                            {% for address in object.addresses.all %}
+                            <li class="{{ address.get_type_display }}">
+                                {{ address }}
+                                <span class="type">({{ address.get_type_display|capfirst }})</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <span class="disabled">{% trans "empty" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Tags" %}:</th>
+                    <td colspan="3">
+                        {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Categories" %}:</th>
+                    <td colspan="3">
+                        {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Notes" %}:</th>
+                    <td colspan="3">
+                        {% if object.notes %}{{ object.notes }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {% region object.dashboard %}
+        {% include "elements/comments.html" %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
