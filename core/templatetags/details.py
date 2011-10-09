@@ -108,14 +108,14 @@ class DetailTableNode(Node):
     def column_template(self, instance, index, with_actions=True):
         css = ''
         value = self.field_to_value(self.field_list[index], instance)
-        if index == 0:
-            if hasattr(instance, 'get_absolute_url'):
-                value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), self.value_to_string(value))
-            if with_actions:
-                value += self.actions_template(instance)
         if isinstance(value, (int, float)) and not isinstance(value, bool):
             css = u' class="number"'
-        return u'\t\t<td%s>%s</td>\n' % (css, self.value_to_string(value))
+        value = self.value_to_string(value)
+        if index == 0 and hasattr(instance, 'get_absolute_url'):
+            value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), value)
+        elif index == len(self.field_list)-1 and with_actions:
+            value += " " + self.actions_template(instance)
+        return u'\t\t<td%s>%s</td>\n' % (css, value)
 
     def actions_template(self, instance):
         actions = []

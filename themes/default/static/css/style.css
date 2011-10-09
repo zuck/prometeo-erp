@@ -201,17 +201,11 @@ table a.desc { background-image: url(images/down.png); }
 
 tr.altrow td { background-color: #f6f6f6; }
 
-th.auto, th.boolean { width: 8%; }
-th.char, th.email { width: 20%; }
+th.auto { width: 6%; }
+th.boolean { width: 8%; }
+th.char, th.email, th.url { width: 20%; }
 
 td .actions { float: right; }
-
-.properties th {
-    width: 18%;
-    padding: 10px;
-}
-
-.properties td { width: 32%; }
 
 /**
  * Commons.
@@ -1025,6 +1019,27 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .details .actions { width: 40px; }
 
 #main .details .actions .delete a { margin: 0; }
+
+#main .properties th {
+    width: 18%;
+    padding: 10px;
+}
+
+#main .properties td { width: 32%; }
+
+#main .properties .addresses, #main .properties .phone_numbers { padding: 0; }
+
+#main .properties .addresses .disabled, #main .properties .phone_numbers .disabled { padding: 10px; }
+
+#main .properties td ul { margin: 0 0 -1px; }
+
+#main .properties td ul li {
+    background: none;
+    padding: 10px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+#main .properties td ul li .type { float: right; }
 
 #main .widget .title {
     width: 367px;
