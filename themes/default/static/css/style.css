@@ -926,7 +926,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #sidebar {
     float: left;
     width: 180px;
-    padding: 0 20px 20px;
+    padding: 20px;
 }
 
 #user-profile-widget {
@@ -936,7 +936,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #user-profile-widget .body {
-    padding: 10px 0;
+    padding: 0 0 10px;
     border-bottom: 1px solid #c0c0c0;
 }
 
