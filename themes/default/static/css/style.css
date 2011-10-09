@@ -117,7 +117,7 @@ form .required input, form .required textarea, form .required select {
 }
 
 form .errors input, form .errors textarea, form .errors select {
-    background-color: #ffe0e0;
+    background-color: #ffc0c0;
     border: 1px solid #d21717;
 }
 
@@ -200,9 +200,13 @@ table a.desc { background-image: url(images/down.png); }
 
 tr.altrow td { background-color: #f6f6f6; }
 
-th.auto { width: 4%; }
-th.boolean { width: 8%; }
-th.char, th.email { width: 16%; }
+th.auto, th.boolean { width: 8%; }
+th.char, th.email { width: 20%; }
+
+td .actions { float: right; }
+
+.properties th { width: 18%; }
+.properties td { width: 32%; }
 
 /**
  * Commons.
@@ -691,7 +695,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .errorlist {
     border: 1px solid #d21717;
-    background: #ffe0e0;
+    background: #ffc0c0;
     margin-bottom: 5px;
 }
 
@@ -831,7 +835,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .calendar .events .daynr .weekend { color: #d21717; }
 
-#content .calendar .events .daynr .weekend .disabled { color: #ffe0e0; }
+#content .calendar .events .daynr .weekend .disabled { color: #ffc0c0; }
 
 #content .calendar .events dd .actions { float: right; }
 
@@ -888,7 +892,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .tasks li.delayed { background-color: #fffecc; }
 
 #content .tasks li.expired {
-    background-color: #ffe0e0;
+    background-color: #ffc0c0;
     background-image: url(images/error.png);
 }
 
