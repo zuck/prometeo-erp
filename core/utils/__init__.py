@@ -39,8 +39,6 @@ def filter_objects(request, model_or_queryset=None, fields=[], exclude=[]):
         model = model_or_queryset
         object_list = model.objects.all()
 
-    print object_list
-
     if not object_list.query.can_filter():
         pks = [instance.pk for instance in object_list]
         object_list = model.objects.filter(pk__in=pks)
