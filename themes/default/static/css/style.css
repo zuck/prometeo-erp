@@ -180,6 +180,7 @@ thead td, th {
     border-right: 1px solid #fff;
     border-bottom: 1px solid #fff;
     padding: 5px 10px;
+    vertical-align: top;
 }
 
 thead td a, thead td a:link, thead td a:visited,
@@ -205,7 +206,11 @@ th.char, th.email { width: 20%; }
 
 td .actions { float: right; }
 
-.properties th { width: 18%; }
+.properties th {
+    width: 18%;
+    padding: 10px;
+}
+
 .properties td { width: 32%; }
 
 /**
