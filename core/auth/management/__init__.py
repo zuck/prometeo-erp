@@ -26,6 +26,7 @@ from django.utils.translation import ugettext_noop as _
 
 from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
+from prometeo.core.notifications.models import Signature
 
 def fixtures(sender, **kwargs):
     """Installs fixtures for this application.
@@ -111,6 +112,17 @@ def fixtures(sender, **kwargs):
         slug="user_profile_notifications",
         url="{% url notification_list object.username %}",
         menu=user_profile_menu
+    )
+
+    # Signatures.
+    comment_created_signature = Signature.objects.get_or_create(
+        title=_("Comment posted"),
+        slug="comment-created"
+    )
+
+    comment_deleted_signature = Signature.objects.get_or_create(
+        title=_("Comment deleted"),
+        slug="comment-deleted"
     )
 
     # Widgets.
