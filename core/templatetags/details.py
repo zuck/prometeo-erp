@@ -71,15 +71,11 @@ class DetailTableNode(Node):
                     output += u'\t\t<th class="%s"><a class="%s" href="%sorder_by=%s%s">%s</a></th>\n' % (field_type, aclass, url, verse, f.name, verbose_name)
                 else:
                     output += u'\t\t<th class="%s"><a href="%sorder_by=%s">%s</a></th>\n' % (field_type, url, f.name, verbose_name)
-            if 'actions' not in exclude and self.has_actions(instance):
-                output += u'\t\t<th class="actions"></th>\n'
             output += u'\t</tr>\n'
             for i, instance in enumerate(self.object_list):
                 output += self.row_template(instance, i)
                 for j, f in enumerate(self.field_list):
-                    output += self.column_template(instance, j)
-                if 'actions' not in exclude:
-                    output += self.actions_template(instance)
+                    output += self.column_template(instance, j, ('actions' not in exclude))
                 output += u'\t</tr>\n'
             output += u'</table>\n'
         return mark_safe(output)
@@ -109,11 +105,14 @@ class DetailTableNode(Node):
             return u'\t<tr class="altrow">\n'
         return u'\t<tr>\n'
         
-    def column_template(self, instance, index):
+    def column_template(self, instance, index, with_actions=True):
         css = ''
         value = self.field_to_value(self.field_list[index], instance)
         if index == 0:
-            value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), self.value_to_string(value))
+            if hasattr(instance, 'get_absolute_url'):
+                value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), self.value_to_string(value))
+            if with_actions:
+                value += self.actions_template(instance)
         if isinstance(value, (int, float)) and not isinstance(value, bool):
             css = u' class="number"'
         return u'\t\t<td%s>%s</td>\n' % (css, self.value_to_string(value))
@@ -128,9 +127,10 @@ class DetailTableNode(Node):
             actions.append(u'<span class="delete"><a href="%s">%s</a></span>' % (instance.get_delete_url(), _('Delete')))
         except AttributeError:
             pass
-        if len(actions) > 0:
-            return u'\t\t<td class="actions">%s</td>\n' % ' '.join(actions)
-        return u''
+        output = ' '.join(actions)
+        if output:
+            output = u'<span class="actions">%s</span>' % output
+        return output
     
     def value_to_string(self, value):
         output = value
