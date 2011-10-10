@@ -2,7 +2,6 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
-{% load details %}
 
 {% block meta_title %}{% trans "Categories" %}{% endblock %}
 
@@ -28,7 +27,15 @@
     </ul>
 </div>
 <div class="details">
-    {% detail_table object_list field_names %}
+    {% if object_list %}
+    <ul>
+        {% for object in object_list %}
+        {% include "taxonomy/category.html" %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
     {% include "elements/paginator.html" %}
 </div>
 {% endblock %}

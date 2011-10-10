@@ -136,7 +136,7 @@ def category_list(request, page=0, paginate_by=5, **kwargs):
     """
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                Category.objects.all(),
+                                                Category.objects.filter(parent=None),
                                                 fields=['title', 'parent'],
                                               )
     return list_detail.object_list(

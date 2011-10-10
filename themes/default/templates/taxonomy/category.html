@@ -1,5 +1,5 @@
 <li class="category">
-    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+    <a title="{{ object }}" href="{{ object.get_absolute_url }}">{{ object }}</a>
     {% if object.children.all %}
     <ul>
         {% for child in object.children.all %}
