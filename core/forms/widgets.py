@@ -125,9 +125,7 @@ class SelectAndAddWidget(forms.Select):
                 'add_url': self.add_url,
                 'label': _('Add')
             }
-            output += '<span id="add-%(name)s" class="add">'                                                                \
-                      '    <a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>'    \
-                      '</span>'                                                                                             \
+            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>'        \
                       '<script>'                                                                                            \
                       '    $("#add-link-%(name)s")'                                                                         \
                       '    .click('                                                                                         \
@@ -146,7 +144,7 @@ class SelectAndAddWidget(forms.Select):
                       '    );'                                                                                              \
                       '</script>' % tokens
             output += '<br/>'
-        return mark_safe(output)
+        return mark_safe('<span id="add-%(name)s" class="add">%(output)s</span>' % {'name': name, 'output': output})
 
 
 class SelectMultipleAndAddWidget(forms.SelectMultiple):
@@ -178,9 +176,7 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
                 'add_url': self.add_url,
                 'label': _('Add')
             }
-            output += '<span id="add-%(name)s" class="add">'                                                                \
-                      '    <a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>'    \
-                      '</span>'                                                                                             \
+            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>'        \
                       '<script>'                                                                                            \
                       '    $("#add-link-%(name)s")'                                                                         \
                       '    .click('                                                                                         \
@@ -199,7 +195,7 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
                       '    );'                                                                                              \
                       '</script>' % tokens
             output += '<br/>'
-        return mark_safe(output)
+        return mark_safe('<span id="add-%(name)s" class="add"><span class="multiple">%(output)s</span></span>' % {'name': name, 'output': output})
 
 class JsonPairWidget(forms.Widget):
     """A widget that displays a list of text key/value pairs.

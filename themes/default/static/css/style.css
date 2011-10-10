@@ -121,7 +121,20 @@ form .errors input, form .errors textarea, form .errors select {
     border: 1px solid #d21717;
 }
 
-form .add a { margin-right: 100%; }
+form .add {
+    display: block;
+    overflow: auto;
+}
+
+form .add input, form .add select {
+    float: left;
+    margin-bottom: 0;
+    margin-right: 5px;
+}
+
+form .add a { margin-top: 4px; }
+
+form .add .multiple a { margin-top: 0; }
 
 form .json-key {
     float: left;
