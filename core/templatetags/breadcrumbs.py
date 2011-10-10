@@ -80,6 +80,16 @@ def add_crumb(parser, token):
     tag_name, args, kwargs = parse_args_kwargs(parser, token)
     return AddCrumbNode(*args, **kwargs)
 
+@register.simple_tag(takes_context=True)
+def remove_last_crumb(context):
+    """
+    Remove the last crumb from the breadcrumb list.
+
+    Example tag usage: {% remove_last_crumb %}
+    """
+    context['request'].breadcrumbs.pop()
+    return ""
+
 @register.inclusion_tag('elements/breadcrumbs.html', takes_context=True)
 def render_breadcrumbs(context):
     """
