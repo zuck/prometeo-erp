@@ -12,7 +12,6 @@
     {% add_crumb object.user object.user.get_absolute_url %}
     {% add_crumb 'Notifications' 'notification_list' object.user.username %}
     {% add_crumb object %}
-    {% render_breadcrumbs %}
 {% endblock %}
 
 {% block title %}

@@ -15,7 +15,6 @@
     {% add_crumb object.project object.project.get_absolute_url %}
     {% add_crumb 'Milestones' 'milestone_list' object.project.slug %}
     {% add_crumb object %}
-    {% render_breadcrumbs %}
 {% endblock %}
 
 {% block title %}

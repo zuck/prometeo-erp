@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load menu %}
 {% load region %}
+{% load breadcrumbs %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ LANGUAGE_CODE }}">
@@ -42,7 +43,7 @@
                 <div id="userarea">{% include "auth/userarea.html" %}</div>
             </div>
 
-            <div id="breadcrumbs"><span class="list">{% block breadcrumbs %}{% endblock %}</span></div>
+            <div id="breadcrumbs"><span class="list">{% block breadcrumbs %}{% add_crumb 'Home' %}{% endblock %}{% render_breadcrumbs %}</span></div>
         </div>
         
         <hr/>
