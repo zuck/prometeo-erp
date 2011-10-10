@@ -80,6 +80,20 @@ def fixtures(sender, created_models, **kwargs):
         menu=partner_menu
     )
 
+    partner_addresses_link = Link.objects.create(
+        title=_("Addresses"),
+        slug="partner-addresses",
+        url="{% url partner_addresses object.pk %}",
+        menu=partner_menu
+    )
+
+    partner_phones_link = Link.objects.create(
+        title=_("Phone numbers"),
+        slug="partner-phones",
+        url="{% url partner_phones object.pk %}",
+        menu=partner_menu
+    )
+
     partner_contacts_link = Link.objects.create(
         title=_("Contacts"),
         slug="partner-contacts",
@@ -98,6 +112,20 @@ def fixtures(sender, created_models, **kwargs):
         title=_("Dashboard"),
         slug="contact-dashboard",
         url="{% url contact_detail object.pk %}",
+        menu=contact_menu
+    )
+
+    contact_addresses_link = Link.objects.create(
+        title=_("Addresses"),
+        slug="contact-addresses",
+        url="{% url contact_addresses object.pk %}",
+        menu=contact_menu
+    )
+
+    contact_phones_link = Link.objects.create(
+        title=_("Phone numbers"),
+        slug="contact-phones",
+        url="{% url contact_phones object.pk %}",
         menu=contact_menu
     )
 

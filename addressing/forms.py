@@ -31,12 +31,36 @@ class AddressForm(forms.ModelForm):
     """
     class Meta:
         model = Address
+        exclude = ['content_type', 'object_id']
+
+    def __init__(self, *args, **kwargs):
+        self._ct_object = kwargs.pop('content_object', None)
+        super(AddressForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        instance = super(AddressForm, self).save(False)
+        instance.content_object = self._ct_object
+        if commit:
+           instance.save()
+        return instance 
         
 class PhoneNumberForm(forms.ModelForm):
     """Form for a phone number data.
     """
     class Meta:
         model = PhoneNumber
+        exclude = ['content_type', 'object_id']
+
+    def __init__(self, *args, **kwargs):
+        self._ct_object = kwargs.pop('content_object', None)
+        super(PhoneNumberForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        instance = super(PhoneNumberForm, self).save(False)
+        instance.content_object = self._ct_object
+        if commit:
+           instance.save()
+        return instance 
 
 enrich_form(AddressForm)
 enrich_form(PhoneNumberForm)

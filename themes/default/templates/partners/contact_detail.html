@@ -63,38 +63,16 @@
                 </dd>
                 <dt>{% trans "URL" %}</dt>
                 <dd>
-                    {% if object.url %}<a href="{{ object.url }}">{{ object.url }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
-                </dd>
-                <dt>{% trans "Email" %}</dt>
-                <dd>
-                    {% if object.email %}<a href="mailto:{{ object.email }}">{{ object.email }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
-                </dd>
-                <dt>{% trans "Phone numbers" %}</dt>
-                <dd class="phone_numbers">
-                    {% if object.phone_numbers.all %}
-                    <ul>
-                        {% for phone_number in object.phone_numbers.all %}
-                        <li>
-                            <strong>{{ phone_number.get_type_display|capfirst }}</strong>
-                            <span>{{ phone_number }}</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    {% if object.url %}
+                    <a href="{{ object.url }}">{{ object.url }}</a>
                     {% else %}
                     <span class="disabled">{% trans "empty" %}</span>
                     {% endif %}
                 </dd>
-                <dt>{% trans "Addresses" %}</dt>
-                <dd class="addresses">
-                    {% if object.addresses.all %}
-                    <ul>
-                        {% for address in object.addresses.all %}
-                        <li>
-                            <strong>{{ address.get_type_display|capfirst }}</strong>
-                            <span>{{ address }}</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                <dt>{% trans "Email" %}</dt>
+                <dd>
+                    {% if object.email %}
+                    <a href="mailto:{{ object.email }}">{{ object.email }}</a>
                     {% else %}
                     <span class="disabled">{% trans "empty" %}</span>
                     {% endif %}

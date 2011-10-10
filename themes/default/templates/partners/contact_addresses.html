@@ -1,0 +1,50 @@
+{% extends "partners/contact_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% trans "Addresses" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Partners' '/partners/' %}
+    {% add_crumb 'Contacts' '/contacts/' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Addresses' %}
+    {% render_breadcrumbs %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Addresses" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.addressing.add_address %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url contact_add_address object.pk %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% regroup object_list by type as object_by_type %}
+    {% if object_by_type %}
+    <dl>
+        {% for type in object_by_type %}
+        {% with type.list|first as first_object %}
+        <dt>{{ first_object.get_type_display }}</dt>
+        {% endwith %}
+        <dd>
+            <ul>
+                {% for object in type.list %}
+                <li>{{ object }}</li>                
+                {% endfor %}
+            </ul>
+        </dd>
+        {% endfor %}
+    </dl>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

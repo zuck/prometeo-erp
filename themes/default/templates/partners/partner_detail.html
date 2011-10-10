@@ -99,40 +99,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>{% trans "Phone numbers" %}:</th>
-                    <td colspan="3" class="phone_numbers">
-                        {% if object.phone_numbers.all %}
-                        <ul>
-                            {% for phone_number in object.phone_numbers.all %}
-                            <li class="{{ phone_number.get_type_display }}">
-                                {{ phone_number }}
-                                <span class="type">({{ phone_number.get_type_display|capfirst }})</span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Addresses" %}:</th>
-                    <td colspan="3" class="addresses">
-                        {% if object.addresses.all %}
-                        <ul>
-                            {% for address in object.addresses.all %}
-                            <li class="{{ address.get_type_display }}">
-                                {{ address }}
-                                <span class="type">({{ address.get_type_display|capfirst }})</span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
                     <th>{% trans "Tags" %}:</th>
                     <td colspan="3">
                         {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
