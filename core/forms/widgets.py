@@ -134,13 +134,13 @@ class SelectAndAddWidget(forms.Select):
                       '        function(e) {'                                                                               \
                       '            e.preventDefault();'                                                                     \
                       '            $("#add-%(name)s")'                                                                      \
-                      '            .append(\'<div id="add-dialog-%(name)s"></div>\')'                                       \
+                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')'                    \
                       '            .children("#add-dialog-%(name)s")'                                                       \
                       '            .load("%(add_url)s #main")'                                                              \
                       '            .dialog({'                                                                               \
                       '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },'                 \
                       '                modal: true,'                                                                        \
-                      '                width: 360'                                                                          \
+                      '                width: 375'                                                                          \
                       '             });'                                                                                    \
                       '         }'                                                                                          \
                       '    );'                                                                                              \
@@ -187,13 +187,13 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
                       '        function(e) {'                                                                               \
                       '            e.preventDefault();'                                                                     \
                       '            $("#add-%(name)s")'                                                                      \
-                      '            .append(\'<div id="add-dialog-%(name)s"></div>\')'                                       \
+                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')'                    \
                       '            .children("#add-dialog-%(name)s")'                                                       \
                       '            .load("%(add_url)s #main")'                                                              \
                       '            .dialog({'                                                                               \
                       '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },'                 \
                       '                modal: true,'                                                                        \
-                      '                width: 360'                                                                          \
+                      '                width: 375'                                                                          \
                       '             });'                                                                                    \
                       '         }'                                                                                          \
                       '    );'                                                                                              \

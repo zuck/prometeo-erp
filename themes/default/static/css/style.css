@@ -947,7 +947,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #main {
-    min-width: 795px;
+    min-width: 300px;
     padding: 20px;
     overflow: auto;
 }
