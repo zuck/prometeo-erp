@@ -104,6 +104,7 @@ def partner_addresses(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's addresses.
     """
     partner = get_object_or_404(Partner, pk=id)
+
     return address_list(
         request,
         owner=partner,
@@ -128,24 +129,28 @@ def partner_add_address(request, id, **kwargs):
 def partner_edit_address(request, partner_id, id, **kwargs):
     """Edits an address of the given partner.
     """
+    partner = get_object_or_404(Partner, pk=partner_id)
+
     return address_edit(
         request,
         object_id=id,
-        owner=get_object_or_404(Partner, pk=partner_id),
         post_save_redirect=reverse('partner_addresses', args=[id]),
-        template_name='partners/address_edit.html'
+        template_name='partners/address_edit.html',
+        extra_context={'owner': partner}
     )
 
 @permission_required('partners.change_partner')
 def partner_delete_address(request, partner_id, id, **kwargs):
     """Deletes an address of the given partner.
     """
+    partner = get_object_or_404(Partner, pk=partner_id)
+
     return address_delete(
         request,
         object_id=id,
-        owner=get_object_or_404(Partner, pk=partner_id),
         post_delete_redirect=reverse('partner_addresses', args=[id]),
-        template_name='partners/address_delete.html'
+        template_name='partners/address_delete.html',
+        extra_context={'owner': partner}
     )
 
 @permission_required('partners.change_partner')  
@@ -153,6 +158,7 @@ def partner_phones(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's phone numbers.
     """
     partner = get_object_or_404(Partner, pk=id)
+
     return phone_number_list(
         request,
         owner=partner,
@@ -177,24 +183,28 @@ def partner_add_phone(request, id, **kwargs):
 def partner_edit_phone(request, partner_id, id, **kwargs):
     """Edits a phone number of the given partner.
     """
+    partner = get_object_or_404(Partner, pk=partner_id)
+
     return phone_number_edit(
         request,
         object_id=id,
-        owner=get_object_or_404(Partner, pk=partner_id),
         post_save_redirect=reverse('partner_phones', args=[id]),
-        template_name='partners/phone_edit.html'
+        template_name='partners/phone_edit.html',
+        extra_context={'owner': partner}
     )
 
 @permission_required('partners.change_partner')
 def partner_delete_phone(request, partner_id, id, **kwargs):
     """Deletes a phone number of the given partner.
     """
+    partner = get_object_or_404(Partner, pk=partner_id)
+
     return phone_number_delete(
         request,
         object_id=id,
-        owner=get_object_or_404(Partner, pk=partner_id),
         post_delete_redirect=reverse('partner_phones', args=[id]),
-        template_name='partners/phone_delete.html'
+        template_name='partners/phone_delete.html',
+        extra_context={'owner': partner}
     )
 
 @permission_required('partners.change_partner')
