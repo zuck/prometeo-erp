@@ -29,8 +29,8 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 
-from prometeo.core.utils import filter_objects
-from prometeo.addressing.forms import *
+from prometeo.core.views import filtered_list_detail
+from prometeo.addressing.views import *
 
 from ..models import *
 from ..forms import *
@@ -39,20 +39,13 @@ from ..forms import *
 def partner_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a partner list.
     """
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                Partner,
-                                                fields=['name', 'vat_number', 'is_managed', 'is_supplier', 'is_customer', 'vat', 'email'],
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
-        paginate_by=paginate_by,
+        Partner,
+        fields=['name', 'vat_number', 'is_managed', 'is_supplier', 'is_customer', 'vat', 'email'],
         page=page,
-        extra_context={
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
+        paginate_by=paginate_by,
+        template_name='partners/partner_list.html',
         **kwargs
     )
 
@@ -60,22 +53,18 @@ def partner_list(request, page=0, paginate_by=10, **kwargs):
 def partner_add(request, **kwargs):
     """Adds a new partner.
     """
-    if request.method == 'POST':
-        form = PartnerForm(request.POST)
-        if form.is_valid():
-            partner = form.save()
-            messages.success(request, _("Partner added"))
-            return redirect_to(request, url=partner.get_absolute_url())
-    else:
-        form = PartnerForm(initial={'assignee': request.user})
-
-    return render_to_response('partners/partner_edit.html', RequestContext(request, {'form': form}))
+    return create_update.create_object(
+        request,
+        form_class=PartnerForm,
+        template_name='partners/partner_edit.html'
+    )
 
 @permission_required('partners.change_partner')     
 def partner_detail(request, id, page=None, **kwargs):
     """Shows partner details.
     """
     object_list = Partner.objects.all()
+
     return list_detail.object_detail(
         request,
         object_id=id,
@@ -90,115 +79,123 @@ def partner_detail(request, id, page=None, **kwargs):
 def partner_edit(request, id, **kwargs):
     """Edits a partner.
     """
-    partner = get_object_or_404(Partner, pk=id)
-    if request.method == 'POST':
-        form = PartnerForm(request.POST, instance=partner)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _("Partner updated"))
-            return redirect_to(request, url=partner.get_absolute_url())
-    else:
-        form = PartnerForm(instance=partner)
-    return render_to_response('partners/partner_edit.html', RequestContext(request, {'object': partner, 'form': form}))
+    return create_update.update_object(
+        request,
+        object_id=id,
+        form_class=PartnerForm,
+        template_name='partners/partner_edit.html'
+    )
 
 @permission_required('partners.delete_partner')    
 def partner_delete(request, id, **kwargs):
     """Deletes a partner.
     """
     return create_update.delete_object(
-            request,
-            model=Partner,
-            object_id=id,
-            post_delete_redirect=reverse('partner_list'),
-            template_name='partners/partner_delete.html',
-            **kwargs
-        )
+        request,
+        model=Partner,
+        object_id=id,
+        post_delete_redirect=reverse('partner_list'),
+        template_name='partners/partner_delete.html',
+        **kwargs
+    )
 
-@permission_required('partners.change_partner')
-@permission_required('addressing.change_address')    
+@permission_required('partners.change_partner') 
 def partner_addresses(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's addresses.
     """
     partner = get_object_or_404(Partner, pk=id)
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                partner.addresses.all(),
-                                                exclude=['id', 'content_object']
-                                              )
-    return list_detail.object_list(
+    return address_list(
         request,
-        queryset=object_list,
-        paginate_by=paginate_by,
+        owner=partner,
         page=page,
-        extra_context={
-            'object': partner,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
+        paginate_by=paginate_by,
         template_name='partners/partner_addresses.html',
-        **kwargs
+        extra_context={'object': partner}
     )
 
 @permission_required('partners.change_partner')
-@permission_required('addressing.add_address')    
 def partner_add_address(request, id, **kwargs):
     """Adds a new address to the given partner.
     """
-    partner = get_object_or_404(Partner, pk=id)
-
-    if request.method == 'POST':
-        form = AddressForm(request.POST, content_object=partner)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _("Address added to %s") % partner)
-            return redirect_to(request, url=partner.get_absolute_url())
-    else:
-        form = AddressForm(content_object=partner)
-
-    return render_to_response('partners/address_edit.html', RequestContext(request, {'form': form}))
+    return address_add(
+        request,
+        owner=get_object_or_404(Partner, pk=id),
+        post_save_redirect=reverse('partner_addresses', args=[id]),
+        template_name='partners/address_edit.html'
+    )
 
 @permission_required('partners.change_partner')
-@permission_required('addressing.change_phone_number')    
+def partner_edit_address(request, partner_id, id, **kwargs):
+    """Edits an address of the given partner.
+    """
+    return address_edit(
+        request,
+        object_id=id,
+        owner=get_object_or_404(Partner, pk=partner_id),
+        post_save_redirect=reverse('partner_addresses', args=[id]),
+        template_name='partners/address_edit.html'
+    )
+
+@permission_required('partners.change_partner')
+def partner_delete_address(request, partner_id, id, **kwargs):
+    """Deletes an address of the given partner.
+    """
+    return address_delete(
+        request,
+        object_id=id,
+        owner=get_object_or_404(Partner, pk=partner_id),
+        post_delete_redirect=reverse('partner_addresses', args=[id]),
+        template_name='partners/address_delete.html'
+    )
+
+@permission_required('partners.change_partner')  
 def partner_phones(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's phone numbers.
     """
     partner = get_object_or_404(Partner, pk=id)
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                partner.phone_numbers.all(),
-                                                exclude=['id', 'content_object']
-                                              )
-    return list_detail.object_list(
+    return phone_number_list(
         request,
-        queryset=object_list,
-        paginate_by=paginate_by,
+        owner=partner,
         page=page,
-        extra_context={
-            'object': partner,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
+        paginate_by=paginate_by,
         template_name='partners/partner_phones.html',
-        **kwargs
+        extra_context={'object': partner}
     )
 
-@permission_required('partners.change_partner')
-@permission_required('addressing.add_phone_number')    
+@permission_required('partners.change_partner')   
 def partner_add_phone(request, id, **kwargs):
     """Adds a new phone number to the given partner.
     """
-    partner = get_object_or_404(Partner, pk=id)
+    return phone_number_add(
+        request,
+        owner=get_object_or_404(Partner, pk=id),
+        post_save_redirect=reverse('partner_phones', args=[id]),
+        template_name='partners/phone_edit.html'
+    )
 
-    if request.method == 'POST':
-        form = PhoneNumberForm(request.POST, content_object=partner)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _("Phone number added to %s") % partner)
-            return redirect_to(request, url=partner.get_absolute_url())
-    else:
-        form = PhoneNumberForm(content_object=partner)
+@permission_required('partners.change_partner')
+def partner_edit_phone(request, partner_id, id, **kwargs):
+    """Edits a phone number of the given partner.
+    """
+    return phone_number_edit(
+        request,
+        object_id=id,
+        owner=get_object_or_404(Partner, pk=partner_id),
+        post_save_redirect=reverse('partner_phones', args=[id]),
+        template_name='partners/phone_edit.html'
+    )
 
-    return render_to_response('partners/phone_edit.html', RequestContext(request, {'form': form}))
+@permission_required('partners.change_partner')
+def partner_delete_phone(request, partner_id, id, **kwargs):
+    """Deletes a phone number of the given partner.
+    """
+    return phone_number_delete(
+        request,
+        object_id=id,
+        owner=get_object_or_404(Partner, pk=partner_id),
+        post_delete_redirect=reverse('partner_phones', args=[id]),
+        template_name='partners/phone_delete.html'
+    )
 
 @permission_required('partners.change_partner')
 @permission_required('partners.change_contact')    
@@ -206,23 +203,15 @@ def partner_contacts(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's contacts.
     """
     partner = get_object_or_404(Partner, pk=id)
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                partner.job_set.all(),
-                                                exclude=['id', 'partner']
-                                              )
-    return list_detail.object_list(
+
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        partner.job_set.all(),
+        exclude=['id', 'partner'],
         paginate_by=paginate_by,
         page=page,
-        extra_context={
-            'object': partner,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
-        template_name='partners/partner_contacts.html',
-        **kwargs
+        extra_context={'object': partner},
+        template_name='partners/partner_contacts.html'
     )
 
 @permission_required('partners.change_partner')
@@ -231,16 +220,15 @@ def partner_add_contact(request, id, **kwargs):
     """Adds a new contact to the given partner.
     """
     partner = get_object_or_404(Partner, pk=id)
+    instance = Job(partner=partner)
 
     if request.method == 'POST':
-        form = PartnerJobForm(request.POST)
+        form = PartnerJobForm(request.POST, instance=instance)
         if form.is_valid():
-            job = form.save(False)
-            job.partner = partner
-            job.save()
+            form.save()
             messages.success(request, _("Contact added to %s") % partner)
             return redirect_to(request, url=reverse("partner_contacts", args=[id]))
     else:
-        form = PartnerJobForm()
+        form = PartnerJobForm(instance=instance)
 
     return render_to_response('partners/job_edit.html', RequestContext(request, {'form': form}))

@@ -39,10 +39,11 @@ class Contact(models.Model):
     timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))
     email = models.EmailField(max_length=255, null=True, blank=True, verbose_name=_('email'))
     url = models.URLField(max_length=255, null=True, blank=True, verbose_name=_('url'))
-    addresses = generic.GenericRelation('addressing.Address', null=True, blank=True, verbose_name=_('addresses'))
-    phone_numbers = generic.GenericRelation('addressing.PhoneNumber', null=True, blank=True, verbose_name=_('phone numbers'))
-    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+    addresses = models.ManyToManyField('addressing.Address', null=True, blank=True, verbose_name=_('addresses'))
+    phone_numbers = models.ManyToManyField('addressing.PhoneNumber', null=True, blank=True, verbose_name=_('phone numbers'))
     user = models.ForeignKey('auth.User', blank=True, null=True, verbose_name=_('user account'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
 
     class Meta:
         verbose_name = _('contact')
@@ -64,29 +65,26 @@ class Contact(models.Model):
         return ('contact_delete', (), {"id": self.pk})
 
     def get_full_name(self):
-        names = [self.firstname]
-        if self.nickname:
-            names.append("\"%s\"" % self.nickname)
-        names.append(self.lastname)
-        return ' '.join(names)  
+        return ' '.join([self.firstname, self.lastname])  
 
 class Partner(Commentable):
     """Partner model.
     """
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
-    is_managed = models.BooleanField(default=False, verbose_name=_('managed'))
-    is_customer = models.BooleanField(default=False, verbose_name=_('customer'))
-    is_supplier = models.BooleanField(default=False, verbose_name=_('supplier'))
+    is_managed = models.BooleanField(default=False, verbose_name=_('managed?'))
+    is_customer = models.BooleanField(default=False, verbose_name=_('customer?'))
+    is_supplier = models.BooleanField(default=False, verbose_name=_('supplier?'))
+    is_lead = models.BooleanField(default=True, verbose_name=_('sales lead?'))
     vat_number = models.CharField(max_length=64, null=True, blank=True, unique=True, verbose_name=_('VAT number'))
     currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, null=True, blank=True, verbose_name=_('currency'))
     language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
     timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))    
     url = models.URLField(null=True, blank=True, verbose_name=_('url'))
     email = models.EmailField(null=True, blank=True, verbose_name=_('email'))
-    addresses = generic.GenericRelation('addressing.Address', null=True, blank=True, verbose_name=_('addresses'))
-    phone_numbers = generic.GenericRelation('addressing.PhoneNumber', null=True, blank=True, verbose_name=_('phone numbers'))
+    addresses = models.ManyToManyField('addressing.Address', null=True, blank=True, verbose_name=_('addresses'))
+    phone_numbers = models.ManyToManyField('addressing.PhoneNumber', null=True, blank=True, verbose_name=_('phone numbers'))
     contacts = models.ManyToManyField(Contact, through='partners.Job', null=True, blank=True, verbose_name=_('contacts'))
-    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     assignee = models.ForeignKey('auth.User', related_name="assigned_partners", null=True, blank=True, verbose_name=_('assignee'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
@@ -121,4 +119,12 @@ class Job(models.Model):
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
         
     def __unicode__(self):
-        return _("%(contact)s as %(role)s for %(partner)s") % {'contact': self.contact, 'role': self.get_role_display(), 'partner': self.partner}
+        return _("%(contact)s as %(role)s") % {'contact': self.contact, 'role': self.get_role_display()}
+    
+    @models.permalink
+    def get_edit_url(self):
+        return ('contact_edit_job', (), {"contact_id": self.contact.pk, "id": self.pk})
+    
+    @models.permalink
+    def get_delete_url(self):
+        return ('contact_delete_job', (), {"contact_id": self.contact.pk, "id": self.pk})

@@ -161,8 +161,7 @@ def fixtures(sender, created_models, **kwargs):
                 vat = raw_input("Insert the VAT number (optional): ") or None
                 email = raw_input("Insert the main email address (optional): ") or None
                 url = raw_input("Insert the main URL address (optional): ") or None
-                notes = raw_input("Insert additional notes (optional): ") or None
-                if Partner.objects.create(name=name, vat_number=vat, email=email, url=url, notes=notes, is_managed=True):
+                if Partner.objects.create(name=name, vat_number=vat, email=email, url=url, is_lead=False, is_managed=True):
                     print "Default managed company created successfully.\n"
             break
     

@@ -50,4 +50,6 @@ urlpatterns = patterns('partners.views',
     url(r'^partners/contacts/(?P<id>\d+)/phones/add/$', view='contacts.contact_add_phone', name='contact_add_phone'),
     url(r'^partners/contacts/(?P<id>\d+)/jobs/$', view='contacts.contact_jobs', name='contact_jobs'),
     url(r'^partners/contacts/(?P<id>\d+)/jobs/add/$', view='contacts.contact_add_job', name='contact_add_job'),
+    url(r'^partners/contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/edit/$', view='contacts.contact_edit_job', name='contact_edit_job'),
+    url(r'^partners/contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/delete/$', view='contacts.contact_delete_job', name='contact_delete_job'),
 )

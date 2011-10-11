@@ -68,6 +68,42 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>{% trans "Managed?" %}:</th>
+                    <td>
+                        {% if object.is_managed %}
+                        <span class="yes">{% trans "Yes" %}</span>
+                        {% else %}
+                        <span class="no">{% trans "No" %}</span>
+                        {% endif %}
+                    </td>
+                    <th>{% trans "Sales Lead?" %}:</th>
+                    <td>
+                        {% if object.is_lead %}
+                        <span class="yes">{% trans "Yes" %}</span>
+                        {% else %}
+                        <span class="no">{% trans "No" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans "Customer?" %}:</th>
+                    <td>
+                        {% if object.is_customer %}
+                        <span class="yes">{% trans "Yes" %}</span>
+                        {% else %}
+                        <span class="no">{% trans "No" %}</span>
+                        {% endif %}
+                    </td>
+                    <th>{% trans "Supplier?" %}:</th>
+                    <td>
+                        {% if object.is_supplier %}
+                        <span class="yes">{% trans "Yes" %}</span>
+                        {% else %}
+                        <span class="no">{% trans "No" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
                     <th>{% trans "Language" %}:</th>
                     <td>
                         {{ object.get_language_display }}
@@ -110,9 +146,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>{% trans "Notes" %}:</th>
+                    <th>{% trans "Description" %}:</th>
                     <td colspan="3">
-                        {% if object.notes %}{{ object.notes }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
+                        {% if object.notes %}{{ object.description }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
                     </td>
                 </tr>
             </table>

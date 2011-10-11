@@ -302,8 +302,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     float: left;
     width: 100%;
     margin-top: 10px;
-    padding-top: 15px;
-    border-top: 2px solid #c0c0c0;
 }
 
 .comments .meta p {
@@ -1057,6 +1055,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     width: 32%;
     border: none;
 }
+
+#main .properties .yes { margin: 0; }
+
+#main .properties .no { margin: 0; }
 
 #main .properties td ul { margin: 0 0 -1px; }
 

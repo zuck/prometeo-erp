@@ -37,7 +37,46 @@
 <form method="post" action="{% url contact_add %}">
 {% endif %}
     {% csrf_token %}
-    {{ form.as_p }}
+    <table class="properties">
+        <tr>
+            <th>{% trans 'Firstname' %}</th>
+            <td>
+                {{ form.firstname.errors }}
+                {{ form.firstname }}
+            </td>
+            <th>{% trans 'Lastname' %}</th>
+            <td>
+                {{ form.lastname.errors }}
+                {{ form.lastname }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "URL" %}</th>
+            <td>
+                {{ form.url.errors }}
+                {{ form.url }}
+            </td>
+            <th>{% trans "Email" %}</th>
+            <td>
+                {{ form.email.errors }}
+                {{ form.email }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Tags" %}</th>
+            <td colspan="3">
+                {{ form.tags.errors }}
+                {{ form.tags }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Categories" %}:</th>
+            <td colspan="3">
+                {{ form.categories.errors }}
+                {{ form.categories }}
+            </td>
+        </tr>
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

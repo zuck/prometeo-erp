@@ -22,8 +22,6 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 from django.conf import settings
 
 class Address(models.Model):
@@ -36,9 +34,6 @@ class Address(models.Model):
     zip = models.CharField(max_length=255, verbose_name=_('zip'))
     state = models.CharField(max_length=64, verbose_name=_('state/province'))
     country = models.CharField(max_length=64, verbose_name=_('country'))
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     class Meta:
         verbose_name = _('address')
@@ -54,14 +49,14 @@ class Address(models.Model):
             'country': self.country
         }
 
+    def get_absolute_url(self):
+        return self.content_object.get_absolute_url()
+
 class PhoneNumber(models.Model):
     """PhoneNumber model.
     """
     type = models.CharField(max_length=3, choices=settings.PHONE_TYPES, default=settings.DEFAULT_PHONE_TYPE, verbose_name=_('type'))
     number = models.CharField(max_length=30, verbose_name=_('number'))
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     class Meta:
         verbose_name = _('phone number')
@@ -69,3 +64,6 @@ class PhoneNumber(models.Model):
         
     def __unicode__(self):
         return self.number
+
+    def get_absolute_url(self):
+        return self.content_object.get_absolute_url()

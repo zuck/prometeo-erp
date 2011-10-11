@@ -84,10 +84,6 @@
                 <dd>
                     {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
                 </dd>
-                <dt>{% trans "Notes" %}</dt>
-                <dd>
-                    {% if object.notes %}{{ object.notes }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
-                </dd>
             </dl>
         </div>
         {% endblock %}

@@ -36,7 +36,110 @@
 <form method="post" action="{% url partner_add %}">
 {% endif %}
     {% csrf_token %}
-    {{ form.as_p }}
+    <table class="properties">
+        <tr>
+            <th>{% trans "Name" %}:</th>
+            <td colspan="3">
+                {{ form.name.errors }}
+                {{ form.name }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Assignee" %}:</th>
+            <td colspan="3">
+                {{ form.assignee.errors }}
+                {{ form.assignee }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Managed?" %}:</th>
+            <td>
+                {{ form.is_managed.errors }}
+                {{ form.is_managed }}
+            </td>
+            <th>{% trans "Sales Lead?" %}:</th>
+            <td>
+                {{ form.is_lead.errors }}
+                {{ form.is_lead }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Customer?" %}:</th>
+            <td>
+                {{ form.is_customer.errors }}
+                {{ form.is_customer }}
+            </td>
+            <th>{% trans "Supplier?" %}:</th>
+            <td>
+                {{ form.is_supplier.errors }}
+                {{ form.is_supplier }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Language" %}:</th>
+            <td>
+                {{ form.language.errors }}
+                {{ form.language }}
+            </td>
+            <th>{% trans "Timezone" %}:</th>
+            <td>
+                {{ form.timezone.errors }}
+                {{ form.timezone }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "VAT Number" %}:</th>
+            <td>
+                {{ form.vat_number.errors }}
+                {{ form.vat_number }}
+            </td>
+            <th>{% trans "Currency" %}:</th>
+            <td>
+                {{ form.currency.errors }}
+                {{ form.currency }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "URL" %}:</th>
+            <td>
+                {{ form.url.errors }}
+                {{ form.url }}
+            </td>
+            <th>{% trans "Email" %}:</th>
+            <td>
+                {{ form.email.errors }}
+                {{ form.email }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Tags" %}:</th>
+            <td colspan="3">
+                {{ form.tags.errors }}
+                {{ form.tags }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Categories" %}:</th>
+            <td colspan="3">
+                {{ form.categories.errors }}
+                {{ form.categories }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Description" %}:</th>
+            <td colspan="3">
+                {{ form.description.errors }}
+                {{ form.description }}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Allow comments" %}:</th>
+            <td colspan="3">
+                {{ form.allow_comments.errors }}
+                {{ form.allow_comments }}
+            </td>
+        </tr>
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}
