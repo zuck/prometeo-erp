@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load menu %}
+
+<ul class="menu">
+{% for link in links %}
+    {% if link.authorized %}
+    <li class="menu-link" id="{{ link.slug|escape }}-link">
+        {% with link.description|default:link.title|striptags as link_title %}
+        <span{% matchlink link request.get_full_path %}>
+            {% trans link.title|escape %}
+        </span>
+        {% endwith %}
+        {% if link.submenu %}
+        {% menu link.submenu.slug %}
+        {% endif %}
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>

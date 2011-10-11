@@ -997,15 +997,17 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     width: auto;
 }
 
-#main .sections .menu li a {
+#main .sections .menu li a, #main .sections .menu li span {
+    display: block;
     background: #f6f6f6;
     border: none;
     border-top: 1px solid #c0c0c0;
     border-right: 1px solid #c0c0c0;
     padding: 10px 15px;
+    font-weight: bold;
 }
 
-#main .sections .menu li a.active {
+#main .sections .menu li a.active, #main .sections .menu li span.active {
     background: #fff;
     border-bottom: 1px solid #fff;
     margin-bottom: -1px;
