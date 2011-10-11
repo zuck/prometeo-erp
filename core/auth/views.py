@@ -26,7 +26,6 @@ from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.comments.models import *
 from django.contrib import messages
@@ -57,7 +56,7 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
     """
     field_names, filter_fields, object_list = filter_objects(
                                                 request,
-                                                User.objects.all(),
+                                                MyUser.objects.all(),
                                                 fields=['username', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login']
                                               )
     return list_detail.object_list(
@@ -69,6 +68,7 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
             'field_names': field_names,
             'filter_fields': filter_fields,
         },
+        template_name='auth/user_list.html',
         **kwargs
     )
   

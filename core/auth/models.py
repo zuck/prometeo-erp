@@ -24,6 +24,20 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+
+class MyUser(User):
+    """A Prometeo's user.
+    """
+    class Meta:
+        proxy = True
+    
+    @models.permalink
+    def get_edit_url(self):
+        return ('user_edit', (), {"username": self.username})
+    
+    @models.permalink
+    def get_delete_url(self):
+        return ('user_delete', (), {"username": self.username})   
  
 class UserProfile(models.Model):
     """User profile.
