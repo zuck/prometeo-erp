@@ -69,9 +69,6 @@ hr { display: none; }
 
 form {
     clear: both;
-    padding: 15px;
-    border: 1px solid #c0c0c0;
-    background: #f6f6f6;
     overflow: hidden;
 }
 
