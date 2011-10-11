@@ -90,14 +90,19 @@ form label {
 
 form input, form select, form textarea {
     clear: left;
-    width: 270px;
     margin-right: 100%;
     font-style: normal;
 }
 
-form input { padding: 3px 3px 4px; }
+form input {
+    width: 270px;
+    padding: 3px 3px 4px;
+}
 
-form select { padding: 2px; }
+form select {
+    width: 278px;
+    padding: 2px;
+}
 
 form textarea {
     width: 755px;
@@ -1033,16 +1038,26 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .details .actions .delete a { margin: 0; }
 
+#main .properties {
+    margin-top: 5px;
+    border-top: 1px solid #c0c0c0;
+}
+
+#main .properties tr { border-bottom: 1px solid #c0c0c0; }
+
 #main .properties th {
     width: 18%;
     padding: 10px;
+    background: none;
+    border: none;
+    color: #1f1f1f;
+    text-align: right;
 }
 
-#main .properties td { width: 32%; }
-
-#main .properties .addresses, #main .properties .phone_numbers { padding: 0; }
-
-#main .properties .addresses .disabled, #main .properties .phone_numbers .disabled { padding: 10px; }
+#main .properties td {
+    width: 32%;
+    border: none;
+}
 
 #main .properties td ul { margin: 0 0 -1px; }
 
