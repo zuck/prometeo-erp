@@ -42,7 +42,7 @@ def partner_list(request, page=0, paginate_by=10, **kwargs):
     return filtered_list_detail(
         request,
         Partner,
-        fields=['name', 'vat_number', 'is_managed', 'is_supplier', 'is_customer', 'vat', 'email'],
+        fields=['name', 'vat_number', 'is_managed', 'is_lead', 'is_supplier', 'is_customer', 'email'],
         page=page,
         paginate_by=paginate_by,
         template_name='partners/partner_list.html',

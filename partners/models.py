@@ -72,9 +72,9 @@ class Partner(Commentable):
     """
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
     is_managed = models.BooleanField(default=False, verbose_name=_('managed?'))
+    is_lead = models.BooleanField(default=True, verbose_name=_('sales lead?'))
     is_customer = models.BooleanField(default=False, verbose_name=_('customer?'))
     is_supplier = models.BooleanField(default=False, verbose_name=_('supplier?'))
-    is_lead = models.BooleanField(default=True, verbose_name=_('sales lead?'))
     vat_number = models.CharField(max_length=64, null=True, blank=True, unique=True, verbose_name=_('VAT number'))
     currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, null=True, blank=True, verbose_name=_('currency'))
     language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
