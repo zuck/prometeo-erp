@@ -31,7 +31,6 @@ from django.template import Node, NodeList, Variable, Library
 from django.template import TemplateSyntaxError, VariableDoesNotExist
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
-from django.conf import settings
 
 from prometeo.core.templatetags import parse_args_kwargs
 from prometeo.core.utils import is_visible, value_to_string, field_to_value
@@ -47,21 +46,30 @@ def field_template(name, field, form_or_model, attrs=['colspan="3"']):
     label = ""
     value = ""
     output = ""
+    td_attrs = attrs or []
 
     if isinstance(field, models.Field):
         label = u'%s' % field.verbose_name
         value = value_to_string(field_to_value(field, form_or_model))
     elif isinstance(field, forms.Field):
+        bf = BoundField(form_or_model, field, name)
         label = u'%s' % field.label
-        value = u'%s' % BoundField(form_or_model, field, name)
+        value = u'%s' % bf
+        css_classes = bf.css_classes()
+        if css_classes:
+            td_attrs.append('class="%s"' % css_classes)
+
+    print td_attrs
 
     if label and value:
-        output += "\t\t<th>%s</th>\n" % (label[0].capitalize() + label[1:])
-        if attrs:
-            output += "\t\t<td %s>\n" % ' '.join(attrs)
+        output += ("\t\t<th>%s</th>\n" % (label[0].capitalize() + label[1:]))
+        if td_attrs:
+            output += ("\t\t<td %s>\n" % (' '.join(td_attrs)))
         else:
             output += "\t\t<td>\n"
         output += "\t\t\t%s\n" % value
+        if isinstance(field, forms.Field) and field.help_text:
+            output += '\t\t\t<span class="help_text">%s</span>' % (u'%s' % field.help_text)
         output += "\t\t</td>\n"
 
     return output

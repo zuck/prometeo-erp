@@ -92,19 +92,21 @@ form input, form select, form textarea {
 }
 
 form input {
-    width: 270px;
+    width: 80%;
+    max-width: 250px;
     padding: 3px 3px 4px;
 }
 
 form select {
-    width: 278px;
+    width: 84%;
+    max-width: 258px;
     padding: 2px;
 }
 
 form textarea {
-    width: 755px;
-    max-width: 755px;
-    height: 270px;
+    width: 92%;
+    max-width: 790px;
+    height: 250px;
     padding: 5px;
 }
 
@@ -1103,12 +1105,12 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     text-align: right;
 }
 
-#main .properties .altrow td { background-color: transparent; }
-
 #main .properties td {
     width: 32%;
     border: none;
 }
+
+#main .properties .altrow td { background-color: transparent; }
 
 #main .properties .yes { margin: 0; }
 
