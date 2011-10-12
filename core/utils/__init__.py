@@ -23,7 +23,11 @@ __version__ = '0.0.2'
 from django.db import models
 from django.db.models import Q, query
 from django.db.models import fields as django_fields
+from django.utils.encoding import StrAndUnicode
 from django.utils.datastructures import SortedDict
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
+from django.template.defaultfilters import date, time, striptags, truncatewords
 
 def filter_objects(request, model_or_queryset=None, fields=[], exclude=[]):
     matches = []
@@ -73,6 +77,58 @@ def get_filter_fields(request, model, fields, exclude):
 
 def is_visible(field, fields=[], exclude=[]):
     return (len(fields) == 0 or field in fields) and field not in exclude
+
+def value_to_string(value):
+    output = value
+    if isinstance(value, float):
+        output = u'%.2f' % value
+    elif isinstance(value, bool):
+        if not value:
+            output = u'<span class="no">%s</span>' % _('No')
+        else:
+            output = u'<span class="yes">%s</span>' % _('Yes')
+    elif not value:
+        output = u'<span class="disabled">%s</span>' % _('empty')
+    return mark_safe(output)
+
+def field_to_value(field, instance):
+    value = field.value_from_object(instance)
+    if field.primary_key:
+        return u'#%s' % value
+    elif isinstance(field, models.related.RelatedField):
+        relationship = getattr(instance, field.name)
+        if isinstance(relationship, models.Model):
+            try:
+                return '<a href="%s">%s</a>' % (relationship.get_absolute_url(), relationship)
+            except AttributeError:
+                return relationship
+        elif isinstance(relationship, query.QuerySet):
+            items = []
+            for item in relationship:
+                try:
+                    items += '<a href="%s">%s</a>' % (item.get_absolute_url(), item)
+                except AttributeError:
+                    items += item
+            return items
+    elif isinstance(field, models.DateTimeField):
+        return date(value, settings.DATETIME_FORMAT)
+    elif isinstance(field, models.DateField):
+        return date(value, settings.DATE_FORMAT)
+    elif isinstance(field, models.TimeField):
+        return time(value, settings.TIME_FORMAT)
+    elif isinstance(field, models.URLField) and value:
+            return u'<a href="%s">%s</a>' % (value, value)
+    elif isinstance(field, models.EmailField) and value:
+        return u'<a href="mailto:%s">%s</a>' % (value, value)
+    elif isinstance(field, models.TextField):
+        return truncatewords(striptags(value), 6)
+    elif field.choices:
+        return getattr(instance, 'get_%s_display' % field.name)()
+    elif isinstance(field, models.BooleanField):
+        if value == '0' or not value:
+            return False
+        return True
+    return value
 
 def filter_field_value(request, field):
     name = field.name

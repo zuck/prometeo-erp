@@ -20,21 +20,80 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+import pickle
+
 from django.db import models
-from django.db.models import fields
+from django import forms
+from django.forms.forms import BoundField
 from django import template
 from django.template.loader import render_to_string
 from django.template import Node, NodeList, Variable, Library
 from django.template import TemplateSyntaxError, VariableDoesNotExist
-from django.template.defaultfilters import date, time, striptags, truncatewords
 from django.utils.translation import ugettext as _
-from django.utils.encoding import StrAndUnicode
 from django.utils.safestring import mark_safe
 from django.conf import settings
 
 from prometeo.core.templatetags import parse_args_kwargs
+from prometeo.core.utils import is_visible, value_to_string, field_to_value
 
 register = template.Library()
+        
+def row_template(index):
+    if (index % 2) == 1:
+        return u'\t<tr class="altrow">\n'
+    return u'\t<tr>\n'
+
+def field_template(name, field, form_or_model, attrs=['colspan="3"']):
+    label = ""
+    value = ""
+    output = ""
+
+    if isinstance(field, models.Field):
+        label = u'%s' % field.verbose_name
+        value = value_to_string(field_to_value(field, form_or_model))
+    elif isinstance(field, forms.Field):
+        label = u'%s' % field.label
+        value = u'%s' % BoundField(form_or_model, field, name)
+
+    if label and value:
+        output += "\t\t<th>%s</th>\n" % (label[0].capitalize() + label[1:])
+        if attrs:
+            output += "\t\t<td %s>\n" % ' '.join(attrs)
+        else:
+            output += "\t\t<td>\n"
+        output += "\t\t\t%s\n" % value
+        output += "\t\t</td>\n"
+
+    return output
+
+def actions_template(instance):
+    actions = []
+    try:
+        actions.append(u'<span class="edit"><a href="%s">%s</a></span>' % (instance.get_edit_url(), _('Edit')))
+    except AttributeError:
+        pass
+    try:
+        actions.append(u'<span class="delete"><a href="%s">%s</a></span>' % (instance.get_delete_url(), _('Delete')))
+    except AttributeError:
+        pass
+    output = ' '.join(actions)
+    if output:
+        output = u'<span class="actions">%s</span>' % output
+    return output
+
+def has_actions(instance):
+    actions = 0
+    try:
+        instance.get_edit_url()
+        actions += 1
+    except AttributeError:
+        pass
+    try:
+        instance.get_delete_url()
+        actions += 1
+    except AttributeError:
+        pass
+    return (actions > 0)
 
 class DetailTableNode(Node):
     def __init__(self, *args, **kwargs):
@@ -43,7 +102,7 @@ class DetailTableNode(Node):
         self.object_list = []
         self.field_list = []
 
-    def render_with_args(self, context, object_list, fields=[], exclude=[], *args):
+    def render_with_args(self, context, object_list, fields=[], exclude=[], *args, **kwargs):
         self.object_list = object_list
         request = context['request']
         url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
@@ -55,8 +114,8 @@ class DetailTableNode(Node):
         if len(self.object_list) > 0:
             instance = self.object_list[0]
             meta = instance._meta
-            self.field_list = [f for f in meta.fields if self.is_visible(f.name, fields, exclude)]
-            output = self.table_template()
+            self.field_list = [f for f in meta.fields if is_visible(f.name, fields, exclude)]
+            output = u'<table>\n'
             output += u'\t<tr>\n'
             for f in self.field_list:
                 verbose_name = _(f.verbose_name)
@@ -73,7 +132,7 @@ class DetailTableNode(Node):
                     output += u'\t\t<th class="%s"><a href="%sorder_by=%s">%s</a></th>\n' % (field_type, url, f.name, verbose_name)
             output += u'\t</tr>\n'
             for i, instance in enumerate(self.object_list):
-                output += self.row_template(instance, i)
+                output += row_template(i)
                 for j, f in enumerate(self.field_list):
                     output += self.column_template(instance, j, ('actions' not in exclude))
                 output += u'\t</tr>\n'
@@ -97,107 +156,92 @@ class DetailTableNode(Node):
         
         return self.render_with_args(context, *args, **kwargs)
         
-    def table_template(self):
-        return u'<table>\n'
-        
-    def row_template(self, instance, index):
-        if (index % 2) == 1:
-            return u'\t<tr class="altrow">\n'
-        return u'\t<tr>\n'
-        
     def column_template(self, instance, index, with_actions=True):
         css = ''
-        value = self.field_to_value(self.field_list[index], instance)
+        value = field_to_value(self.field_list[index], instance)
         if isinstance(value, (int, float)) and not isinstance(value, bool):
             css = u' class="number"'
-        value = self.value_to_string(value)
+        value = value_to_string(value)
         if index == 0 and hasattr(instance, 'get_absolute_url'):
             value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), value)
         elif index == len(self.field_list)-1 and with_actions:
-            value += " " + self.actions_template(instance)
+            value += " " + actions_template(instance)
         return u'\t\t<td%s>%s</td>\n' % (css, value)
-
-    def actions_template(self, instance):
-        actions = []
-        try:
-            actions.append(u'<span class="edit"><a href="%s">%s</a></span>' % (instance.get_edit_url(), _('Edit')))
-        except AttributeError:
-            pass
-        try:
-            actions.append(u'<span class="delete"><a href="%s">%s</a></span>' % (instance.get_delete_url(), _('Delete')))
-        except AttributeError:
-            pass
-        output = ' '.join(actions)
-        if output:
-            output = u'<span class="actions">%s</span>' % output
-        return output
-    
-    def value_to_string(self, value):
-        output = value
-        if isinstance(value, float):
-            output = u'%.2f' % value
-        elif isinstance(value, bool):
-            if not value:
-                output = u'<span class="no">%s</span>' % _('No')
-            else:
-                output = u'<span class="yes">%s</span>' % _('Yes')
-        elif not value:
-            output = u'<span class="disabled">%s</span>' % _('empty')
-        return mark_safe(output)
-
-    def field_to_value(self, field, instance):
-        value = field.value_from_object(instance)
-        if field.primary_key:
-            return u'#%s' % value
-        elif isinstance(field, fields.related.RelatedField):
-            relationship = getattr(instance, field.name)
-            try:
-                return '<a href="%s">%s</a>' % (relationship.get_absolute_url(), relationship)
-            except AttributeError:
-                return relationship
-        elif isinstance(field, fields.DateTimeField):
-            return date(value, settings.DATETIME_FORMAT)
-        elif isinstance(field, fields.DateField):
-            return date(value, settings.DATE_FORMAT)
-        elif isinstance(field, fields.TimeField):
-            return time(value, settings.TIME_FORMAT)
-        elif isinstance(field, fields.URLField) and value:
-                return u'<a href="%s">%s</a>' % (value, value)
-        elif isinstance(field, fields.EmailField) and value:
-            return u'<a href="mailto:%s">%s</a>' % (value, value)
-        elif isinstance(field, fields.TextField):
-            return truncatewords(striptags(value), 6)
-        elif field.choices:
-            return getattr(instance, 'get_%s_display' % field.name)()
-        elif isinstance(field, fields.BooleanField):
-            if value == '0' or not value:
-                return False
-            return True
-        return value
-        
-    def is_visible(self, field, fields=[], exclude=[]):
-        return (len(fields) == 0 or field in fields) and field not in exclude
-
-    def has_actions(self, instance):
-        actions = 0
-        try:
-            instance.get_edit_url()
-            actions += 1
-        except AttributeError:
-            pass
-        try:
-            instance.get_delete_url()
-            actions += 1
-        except AttributeError:
-            pass
-        return (actions > 0)
 
 @register.tag
 def detail_table(parser, token):
-    """
-    Renders an interactive table from an object list.
+    """Renders an interactive table from an object list.
 
     Example tag usage: {% detail_table object_list [fields] [exclude] %}
     """
     tag_name, args, kwargs = parse_args_kwargs(parser, token)
     return DetailTableNode(*args, **kwargs)
+
+class PropertyTableNode(Node):
+    def __init__(self, *args, **kwargs):
+        self.args = [Variable(arg) for arg in args]
+        self.kwargs = dict([(k, Variable(arg)) for k, arg in kwargs.items()])
+
+    def render_with_args(self, context, form_or_instance, layout=None, *args, **kwargs):
+        output = ""
+
+        if isinstance(form_or_instance, (models.Model, forms.ModelForm)):
+            fields = {}
+            output = '<table class="properties">\n'
+            
+            if isinstance(form_or_instance, models.Model):
+                fields = dict([(f.name, f) for f in (form_or_instance._meta.fields + form_or_instance._meta.many_to_many)])
+            else:
+                fields = form_or_instance.fields
+
+            if layout is None:
+                layout = [n for n, f in fields.items()]
+            elif isinstance(layout, basestring):
+                layout = eval(layout)
+            else:
+                return ""
+
+            for i, field in enumerate(layout):
+                output += row_template(i)
+
+                # Single field.
+                if isinstance(field, basestring) and field in fields:
+                    output += field_template(field, fields[field], form_or_instance)
+
+                # Many fields on the same row.
+                elif isinstance(field, list):
+                    for i, f in enumerate(field):
+                        if isinstance(f, basestring) and f in fields:
+                            output += field_template(f, fields[f], form_or_instance, [])
+
+                output += '\t</tr>\n'
+
+            output += '</table>\n'
+
+        return mark_safe(output)
+    
+    def render(self, context):
+        args = []
+        for arg in self.args:
+            try:
+                args.append(arg.resolve(context)) 
+            except VariableDoesNotExist:
+                args.append(None)
+        
+        kwargs = {}
+        for k, arg in self.kwargs.items():
+            try:
+                kwargs[k] = arg.resolve(context)
+            except VariableDoesNotExist:
+                kwargs[k] = None
+        
+        return self.render_with_args(context, *args, **kwargs)
+
+@register.tag
+def property_table(parser, token):
+    """Renders a property table from a ModelForm or an object instance.
+
+    Example tag usage: {% property_table form [field1, [field2, field3], field4] %}
+    """
+    tag_name, args, kwargs = parse_args_kwargs(parser, token)
+    return PropertyTableNode(*args, **kwargs)
