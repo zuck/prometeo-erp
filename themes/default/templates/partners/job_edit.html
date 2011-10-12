@@ -1,6 +1,34 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% if object.pk %}{% trans 'Edit contact' %}{% else %}{% trans 'Add contact' %}{% endif %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Partners' 'partner_list' %}
+    {% add_crumb object.partner object.partner.get_absolute_url %}
+    {% add_crumb 'Contacts' 'partner_contacts' object.partner.pk %}
+    {% if object.pk %}
+    {% add_crumb object 'contact_jobs' object.contact.pk %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {{ context }}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit contact' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add contact' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
 
 {% block main %}
 <form method="post" action=".">

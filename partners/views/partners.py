@@ -111,7 +111,7 @@ def partner_addresses(request, id, page=0, paginate_by=10, **kwargs):
         page=page,
         paginate_by=paginate_by,
         template_name='partners/partner_addresses.html',
-        extra_context={'object': partner}
+        extra_context={'object': partner, 'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')
@@ -122,7 +122,8 @@ def partner_add_address(request, id, **kwargs):
         request,
         owner=get_object_or_404(Partner, pk=id),
         post_save_redirect=reverse('partner_addresses', args=[id]),
-        template_name='partners/address_edit.html'
+        template_name='partners/address_edit.html',
+        extra_context={'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')
@@ -136,7 +137,7 @@ def partner_edit_address(request, partner_id, id, **kwargs):
         object_id=id,
         post_save_redirect=reverse('partner_addresses', args=[id]),
         template_name='partners/address_edit.html',
-        extra_context={'owner': partner}
+        extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')
@@ -150,7 +151,7 @@ def partner_delete_address(request, partner_id, id, **kwargs):
         object_id=id,
         post_delete_redirect=reverse('partner_addresses', args=[id]),
         template_name='partners/address_delete.html',
-        extra_context={'owner': partner}
+        extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')  
@@ -165,7 +166,7 @@ def partner_phones(request, id, page=0, paginate_by=10, **kwargs):
         page=page,
         paginate_by=paginate_by,
         template_name='partners/partner_phones.html',
-        extra_context={'object': partner}
+        extra_context={'object': partner, 'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')   
@@ -176,7 +177,8 @@ def partner_add_phone(request, id, **kwargs):
         request,
         owner=get_object_or_404(Partner, pk=id),
         post_save_redirect=reverse('partner_phones', args=[id]),
-        template_name='partners/phone_edit.html'
+        template_name='partners/phone_edit.html',
+        extra_context={'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')
@@ -190,7 +192,7 @@ def partner_edit_phone(request, partner_id, id, **kwargs):
         object_id=id,
         post_save_redirect=reverse('partner_phones', args=[id]),
         template_name='partners/phone_edit.html',
-        extra_context={'owner': partner}
+        extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')
@@ -204,7 +206,7 @@ def partner_delete_phone(request, partner_id, id, **kwargs):
         object_id=id,
         post_delete_redirect=reverse('partner_phones', args=[id]),
         template_name='partners/phone_delete.html',
-        extra_context={'owner': partner}
+        extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
 @permission_required('partners.change_partner')
@@ -241,4 +243,4 @@ def partner_add_contact(request, id, **kwargs):
     else:
         form = PartnerJobForm(instance=instance)
 
-    return render_to_response('partners/job_edit.html', RequestContext(request, {'form': form}))
+    return render_to_response('partners/job_edit.html', RequestContext(request, {'form': form, 'object': instance}))

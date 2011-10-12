@@ -1,8 +1,24 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 
 {% block meta_title %}{% trans 'Delete phone number' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Partners' 'partner_list' %}
+    {% if owner_class == "Contact" %}
+    {% add_crumb 'Contacts' 'contact_list' %}
+    {% add_crumb owner owner.get_absolute_url %}
+    {% add_crumb 'Phone numbers' 'contact_phones' owner.pk %}
+    {% else %}
+    {% add_crumb owner owner.get_absolute_url %}
+    {% add_crumb 'Phone numbers' 'partner_phones' owner.pk %}
+    {% endif %}
+    {% add_crumb object %}
+    {% add_crumb "Delete" %}
+{% endblock %}
 
 {% block title %}
 <div class="title">

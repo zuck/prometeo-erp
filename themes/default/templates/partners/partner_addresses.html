@@ -26,15 +26,23 @@
 <div class="details">
     {% regroup object_list by type as object_by_type %}
     {% if object_by_type %}
-    <dl>
+    <dl class="addresses">
         {% for type in object_by_type %}
         {% with type.list|first as first_object %}
         <dt>{{ first_object.get_type_display }}</dt>
         {% endwith %}
         <dd>
             <ul>
-                {% for object in type.list %}
-                <li>{{ object }}</li>                
+                {% for address in type.list %}
+                <li>
+                    {{ address }}
+                    <span class="actions">
+                        <ul>
+                            <li class="edit"><a title="{% trans 'Edit' %}" href="{% url partner_edit_address object.pk address.pk %}">{% trans 'Edit' %}</a></li>
+                            <li class="delete"><a title="{% trans 'Delete' %}" href="{% url partner_delete_address object.pk address.pk %}">{% trans 'Delete' %}</a></li>
+                        </ul>
+                    </span>
+                </li>                
                 {% endfor %}
             </ul>
         </dd>

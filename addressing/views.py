@@ -97,7 +97,7 @@ def address_edit(request, object_id, post_save_redirect, template_name, **kwargs
     else:
         form = AddressForm(instance=instance)
 
-    context = {'form': form}
+    context = {'object': instance, 'form': form}
     if 'extra_context' in kwargs:
         context.update(kwargs['extra_context'])
 
@@ -171,7 +171,7 @@ def phone_number_edit(request, object_id, post_save_redirect, template_name, **k
     else:
         form = PhoneNumberForm(instance=instance)
 
-    context = {'form': form}
+    context = {'object': instance, 'form': form}
     if 'extra_context' in kwargs:
         context.update(kwargs['extra_context'])
 

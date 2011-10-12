@@ -917,6 +917,52 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .tasks .delay, #content .tasks .countdown  { float: right; }
 
+#content .addresses dt {
+    border-bottom: 2px solid #c0c0c0;
+    background: none;
+    padding-left: 0;
+}
+
+#content .addresses dd { margin: 0; }
+
+#content .addresses li {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 10px 15px 10px 35px;
+    background: no-repeat 10px 10px;
+    background-image: url(images/house.png);
+}
+
+#content .addresses li .actions ul {
+    float: right;
+    margin: 2px -15px 0 0;
+    padding: 0;
+}
+
+#content .addresses li .actions li { border: none; }
+
+#content .phone_numbers dt {
+    border-bottom: 2px solid #c0c0c0;
+    background: none;
+    padding-left: 0;
+}
+
+#content .phone_numbers dd { margin: 0; }
+
+#content .phone_numbers li {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 10px 15px 10px 35px;
+    background: no-repeat 10px 10px;
+    background-image: url(images/phone.png);
+}
+
+#content .phone_numbers li .actions ul {
+    float: right;
+    margin: 2px -15px 0 0;
+    padding: 0;
+}
+
+#content .phone_numbers li .actions li { border: none; }
+
 #content .milestones dt {
     border-bottom: 2px solid #c0c0c0;
     background: none;
