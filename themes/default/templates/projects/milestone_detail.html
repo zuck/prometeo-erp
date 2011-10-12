@@ -78,8 +78,8 @@
                     </td>
                     <th>{% trans "Deadline" %}:</th>
                     <td>
-                        {% if object.date_due %}
-                        {{ object.date_due }}
+                        {% if object.deadline %}
+                        {{ object.deadline }}
                         {% else %}
                         <span class="disabled">{% trans "empty" %}</span>
                         {% endif %}

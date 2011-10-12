@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <dt{% if milestone.closed %} class="closed"{% else %}{% if milestone.expired %} class="expired"{% endif %}{% endif %}>
-    <h3><a href="{{ milestone.get_absolute_url }}">{{ milestone.title }}</a></h3>
+    <h3><a href="{{ milestone.get_absolute_url }}">{{ milestone.title }}</a>{% if milestone.closed %} <span class="yes">({% trans "Closed" %})</span>{% endif %}</h3>
     <span class="actions">
         <ul>
             {% if perms.projects.change_milestone %}
@@ -24,17 +24,17 @@
     <p class="meta">
         <strong>{% trans "Deadline" %}:</strong>
         <span>
-            {% if milestone.date_due %}
-            {{ milestone.date_due }}
+            {% if milestone.deadline %}
+            {{ milestone.deadline }}
             {% if milestone.expired %}
-            <span class="delay">({{ milestone.date_due|timesince }} {% trans "overdue" %})</span>
+            <span class="delay">({{ milestone.deadline|timesince }} {% trans "overdue" %})</span>
             {% else %}
-            {% if not milestone.closed and milestone.date_due %}
-            <span class="countdown">({{ milestone.date_due|timeuntil }})</span>
+            {% if not milestone.closed and milestone.deadline %}
+            <span class="countdown">({{ milestone.deadline|timeuntil }})</span>
             {% endif %}
             {% endif %}
             {% else %}
-            <span class="disabled">{% trans "undefined" %}</span>
+            <span class="disabled">{% trans "empty" %}</span>
             {% endif %}
         </span>
         -
