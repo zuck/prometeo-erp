@@ -59,8 +59,6 @@ def field_template(name, field, form_or_model, attrs=['colspan="3"']):
         if css_classes:
             td_attrs.append('class="%s"' % css_classes)
 
-    print td_attrs
-
     if label and value:
         output += ("\t\t<th>%s</th>\n" % (label[0].capitalize() + label[1:]))
         if td_attrs:
