@@ -140,6 +140,8 @@ class DetailTableNode(Node):
                 verbose_name = _(f.verbose_name)
                 verbose_name = verbose_name[0].capitalize() + verbose_name[1:]
                 field_type = f.__class__.__name__.lower().replace("field", "")
+                if f.choices:
+                    field_type += "_choices"
                 if f.name in order_by:
                     verse = "-"
                     aclass = "asc"
