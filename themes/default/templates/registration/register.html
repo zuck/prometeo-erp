@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load details %}
 
 {% block meta_title %}{% trans 'Register' %}{% endblock %}
 
@@ -20,7 +21,7 @@
 {% block main %}
 <form method="post" action="{% url user_register %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% property_table form "['username', 'email', ['password1', 'password2'], ['first_name', 'last_name'], 'tos', 'pp']" %}
     <span class="submit"><input type="submit" value="{% trans 'Sign up' %}" /></span>
 </form>
 {% endblock %}
