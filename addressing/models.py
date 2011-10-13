@@ -31,7 +31,7 @@ class Address(models.Model):
     street = models.CharField(max_length=255, verbose_name=_('street'))
     number = models.CharField(max_length=15, verbose_name=_('number'))
     city = models.CharField(max_length=255, verbose_name=_('city'))
-    zip = models.CharField(max_length=255, verbose_name=_('zip'))
+    zip = models.CharField(max_length=255, verbose_name=_('zip code'))
     state = models.CharField(max_length=64, verbose_name=_('state/province'))
     country = models.CharField(max_length=64, verbose_name=_('country'))
 
