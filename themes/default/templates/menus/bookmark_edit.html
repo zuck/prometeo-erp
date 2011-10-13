@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load details %}
 
 {% block meta_title %}
 {% if object.pk %}{% trans 'Edit bookmark' %}{% else %}{% trans 'Add bookmark' %}{% endif %}
@@ -38,7 +39,7 @@
 <form method="post" action="{% url bookmark_add object_user.username %}">
 {% endif %}
     {% csrf_token %}
-    {{ form.as_p }}
+    {% property_table form "['title', 'url', 'description']" %}
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}
