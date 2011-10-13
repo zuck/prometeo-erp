@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load details %}
 
 {% block meta_title %}
 {% if object.pk %}{% trans 'Edit widget' %}{% else %}{% trans 'Add widget' %}{% endif %}
@@ -38,7 +39,7 @@
 <form method="post" action="{% url widget_add %}">
 {% endif %}
     {% csrf_token %}
-    {{ form.as_p }}
+    {% property_table form "['title', ['source', 'template'], 'context', 'description']" %}
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}
