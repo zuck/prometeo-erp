@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% regroup object_list by content_type as results_by_type %}
+{% if results_by_type %}
+<dl class="results">
+    {% for type in results_by_type %}
+    <dt><h3>{{ type.grouper|capfirst }}</h3></dt>
+    <dd>
+        <ul>
+            {% for object in type.list %}
+            <li><a href="{{ object.get_absolute_url }}">{{ object.title|capfirst }}</a></li>
+            {% endfor %}
+        </ul>
+    </dd>
+    {% endfor %}
+</dl>
+{% else %}
+<span class="disabled">{% trans "No results found." %}</span>
+{% endif %}

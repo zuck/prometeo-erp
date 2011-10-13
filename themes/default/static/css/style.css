@@ -696,12 +696,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .menu li li a { padding-left: 40px; }
 
-#content .result-list li {
-    border-bottom: 1px solid #c0c0c0;
-    padding: 10px 0;
-    background: none;
-}
-
 #content .messages {
     width: 100%;
     border: 1px solid #ffda88;
@@ -766,6 +760,21 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .notifications .read-on  {
     float: right;
     padding-right: 0;
+}
+
+#content .results dt {
+    border-bottom: 2px solid #c0c0c0;
+    background: none;
+    padding-left: 0;
+}
+
+#content .results dd { margin: 0; }
+
+#content .results li {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 10px 15px 10px 35px;
+    background: no-repeat 10px 10px;
+    background-image: url(images/tag.png);
 }
 
 #content .activities dt {

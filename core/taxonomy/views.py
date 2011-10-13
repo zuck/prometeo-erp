@@ -25,7 +25,7 @@ import re
 from django.db import models
 from django.db.models import Q
 from django.db.models.loading import get_models
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
@@ -36,7 +36,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 
 from prometeo.core.utils import clean_referer
-from prometeo.core.utils import filter_objects
+from prometeo.core.views import filtered_list_detail
 
 from models import *
 from forms import *
@@ -134,20 +134,12 @@ def search(request, query_string="", page=0, paginate_by=10, **kwargs):
 def category_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all categories.
     """
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                Category.objects.filter(parent=None),
-                                                fields=['title', 'parent'],
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        Category.objects.filter(parent=None),
+        fields=['title', 'parent'],
         paginate_by=paginate_by,
         page=page,
-        extra_context={
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
         **kwargs
     )
 
@@ -155,17 +147,16 @@ def category_list(request, page=0, paginate_by=5, **kwargs):
 def category_add(request, **kwargs):
     """Adds a new category.
     """
-    category = Category()
-    if request.method == 'POST':
-        form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            category = form.save()
-            messages.success(request, _("The category has been saved."))
-            return redirect_to(request, url=clean_referer(request))
-    else:
-        form = CategoryForm(instance=category)
+    referer = clean_referer(request)
+    if referer == reverse("tag_list"):
+        referer = None
 
-    return render_to_response('taxonomy/category_edit.html', RequestContext(request, {'form': form, 'object': category}))
+    return create_update.create_object(
+        request,
+        form_class=CategoryForm,
+        post_save_redirect=referer,
+        template_name='taxonomy/category_edit.html'
+    )
 
 @permission_required('taxonomy.change_category') 
 def category_detail(request, slug, page=0, paginate_by=10, **kwargs):
@@ -191,17 +182,12 @@ def category_detail(request, slug, page=0, paginate_by=10, **kwargs):
 def category_edit(request, slug, **kwargs):
     """Edits a category.
     """
-    category = get_object_or_404(Category, slug=slug)
-    if request.method == 'POST':
-        form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            category = form.save()
-            messages.success(request, _("The category has been saved."))
-            return redirect_to(request, url=category.get_absolute_url())
-    else:
-        form = CategoryForm(instance=category)
-
-    return render_to_response('taxonomy/category_edit.html', RequestContext(request, {'form': form, 'object': category}))
+    return create_update.update_object(
+        request,
+        slug=slug,
+        form_class=CategoryForm,
+        template_name='taxonomy/category_edit.html'
+    )
 
 @permission_required('taxonomy.delete_category')     
 def category_delete(request, slug, **kwargs):
@@ -220,20 +206,12 @@ def category_delete(request, slug, **kwargs):
 def tag_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tags.
     """
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                Tag.objects.all(),
-                                                fields=['title'],
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        Tag.objects.all(),
+        fields=['title'],
         paginate_by=paginate_by,
         page=page,
-        extra_context={
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
         **kwargs
     )
 
@@ -241,17 +219,16 @@ def tag_list(request, page=0, paginate_by=5, **kwargs):
 def tag_add(request, **kwargs):
     """Adds a new tag.
     """
-    tag = Tag()
-    if request.method == 'POST':
-        form = TagForm(request.POST, instance=tag)
-        if form.is_valid():
-            tag = form.save()
-            messages.success(request, _("The tag has been saved."))
-            return redirect_to(request, url=clean_referer(request))
-    else:
-        form = TagForm(instance=tag)
+    referer = clean_referer(request)
+    if referer == reverse("tag_list"):
+        referer = None
 
-    return render_to_response('taxonomy/tag_edit.html', RequestContext(request, {'form': form, 'object': tag}))
+    return create_update.create_object(
+        request,
+        form_class=TagForm,
+        post_save_redirect=referer,
+        template_name='taxonomy/tag_edit.html'
+    )
 
 @permission_required('taxonomy.change_tag')  
 def tag_detail(request, slug, page=0, paginate_by=10, **kwargs):
@@ -277,17 +254,12 @@ def tag_detail(request, slug, page=0, paginate_by=10, **kwargs):
 def tag_edit(request, slug, **kwargs):
     """Edits a tag.
     """
-    tag = get_object_or_404(Tag, slug=slug)
-    if request.method == 'POST':
-        form = TagForm(request.POST, instance=tag)
-        if form.is_valid():
-            tag = form.save()
-            messages.success(request, _("The tag has been saved."))
-            return redirect_to(request, url=tag.get_absolute_url())
-    else:
-        form = TagForm(instance=tag)
-
-    return render_to_response('taxonomy/tag_edit.html', RequestContext(request, {'form': form, 'object': tag}))
+    return create_update.update_object(
+        request,
+        slug=slug,
+        form_class=TagForm,
+        template_name='taxonomy/tag_edit.html'
+    )
 
 @permission_required('taxonomy.delete_tag')     
 def tag_delete(request, slug, **kwargs):

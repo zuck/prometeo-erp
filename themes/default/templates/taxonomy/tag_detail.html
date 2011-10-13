@@ -38,17 +38,7 @@
 {% include 'elements/navigator.html' %}
 {% endwith %}
 <div class="details">
-    {% if object_list %}
-    <ul class="result-list">
-        {% for object in object_list %}
-        <li class="result">
-            <strong>{% trans object.content_type.name|title %}</strong>: <a href="{{ object.get_absolute_url }}">{{ object.title|title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <span class="disabled">{% trans "No results found." %}</span>
-    {% endif %}
+    {% include "taxonomy/results.html" %}
     {% include "elements/paginator.html" %}
 </div>
 {% endblock %}
