@@ -39,7 +39,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 from django.conf import settings
 
-from prometeo.core.utils import filter_objects
+from prometeo.core.views import filtered_list_detail
 
 from models import *
 from forms import *
@@ -68,22 +68,15 @@ def _current_day(year=None, month=None, day=None, week=None):
 
 @permission_required('events.change_event') 
 def event_list(request, year=None, month=None, day=None, page=0, paginate_by=10, **kwargs):
-    """Displays the list of all events.
+    """Displays the list of all events for the request user.
     """
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                Event.objects.filter(author=request.user),
-                                                fields=['title', 'start', 'end', 'created'],
-                                              )
-
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        Event.objects.for_user(request.user),
         paginate_by=paginate_by,
         page=page,
+        fields=['title', 'start', 'end', 'created'],
         extra_context={
-            'field_names': field_names,
-            'filter_fields': filter_fields,
             'current_day': _current_day(year, month, day),
         },
         **kwargs
@@ -102,7 +95,7 @@ def event_day(request, year=None, month=None, day=None, **kwargs):
         year=year,
         month=month,
         day=day,
-        queryset=Event.objects.filter(author=request.user),
+        queryset=Event.objects.for_user(request.user),
         date_field="start",
         month_format="%m",
         allow_empty=True,
@@ -128,7 +121,7 @@ def event_week(request, year=None, week=None, **kwargs):
         request,
         year=year,
         week=week,
-        queryset=Event.objects.filter(author=request.user),
+        queryset=Event.objects.for_user(request.user),
         date_field="start",
         allow_empty=True,
         allow_future=True,
@@ -153,7 +146,7 @@ def event_month(request, year=None, month=None, **kwargs):
         request,
         year=year,
         month=month,
-        queryset=Event.objects.filter(author=request.user),
+        queryset=Event.objects.for_user(request.user),
         date_field="start",
         month_format="%m",
         allow_empty=True,
@@ -178,7 +171,7 @@ def event_year(request, year=None, **kwargs):
     return archive_year(
         request,
         year=year,
-        queryset=Event.objects.filter(author=request.user),
+        queryset=Event.objects.for_user(request.user),
         date_field="start",
         allow_empty=True,
         allow_future=True,
@@ -195,11 +188,10 @@ def event_year(request, year=None, **kwargs):
 def event_detail(request, id, **kwargs):
     """Displays an event.
     """
-    object_list = Event.objects.all()
     return list_detail.object_detail(
         request,
         object_id=id,
-        queryset=object_list,
+        queryset=Event.objects.for_user(request.user),
         **kwargs
     )
 
@@ -219,9 +211,38 @@ def event_add(request, **kwargs):
 
     return render_to_response('events/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
 
+@permission_required('events.change_event') 
+def event_edit(request, id, **kwargs):
+    """Edits an event.
+    """
+    event = get_object_or_404(Event, id=id)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            event = form.save()
+            messages.success(request, _("The event has been saved."))
+            return redirect_to(request, url=event.get_absolute_url())
+    else:
+        form = EventForm(instance=event)
+
+    return render_to_response('events/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
+
+@permission_required('events.delete_event') 
+def event_delete(request, id, **kwargs):
+    """Deletes an event.
+    """
+    return create_update.delete_object(
+            request,
+            model=Event,
+            object_id=id,
+            post_delete_redirect='/events/',
+            template_name='events/event_delete.html',
+            **kwargs
+        )
+
 @permission_required('events.add_event') 
 def event_import(request, **kwargs):
-    """Imports a new event from an .ics file.
+    """Imports one or more events from an .ics file.
     """
     if request.method == 'POST':
         form = ImportEventsForm(request.POST, request.FILES)
@@ -254,15 +275,17 @@ def event_import(request, **kwargs):
 
 @permission_required('events.change_event')
 def event_export(request, id=None, **kwargs):
-    """Exports an event as an .ics file.
+    """Exports one or more events as an .ics file.
     """
-    filename = "events.ics"
+    filename = "%s-events.ics" % (request.user)
+
+    queryset = Event.objects.for_user(request.user)
 
     if id:
-        events = [get_object_or_404(Event, id=id)]
+        events = [get_object_or_404(queryset, id=id)]
         filename = u'%s.ics' % slugify(events[0].title)
     else:
-        events = list(Event.objects.all())
+        events = list(queryset)
 
     cal = icalendar.Calendar()
     cal.add('prodid', '-//Prometeo ERP//')
@@ -292,32 +315,3 @@ def event_export(request, id=None, **kwargs):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
     return response
-
-@permission_required('events.change_event') 
-def event_edit(request, id, **kwargs):
-    """Edits an event.
-    """
-    event = get_object_or_404(Event, id=id)
-    if request.method == 'POST':
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            event = form.save()
-            messages.success(request, _("The event has been saved."))
-            return redirect_to(request, url=event.get_absolute_url())
-    else:
-        form = EventForm(instance=event)
-
-    return render_to_response('events/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
-
-@permission_required('events.delete_event') 
-def event_delete(request, id, **kwargs):
-    """Deletes an event.
-    """
-    return create_update.delete_object(
-            request,
-            model=Event,
-            object_id=id,
-            post_delete_redirect='/events/',
-            template_name='events/event_delete.html',
-            **kwargs
-        )

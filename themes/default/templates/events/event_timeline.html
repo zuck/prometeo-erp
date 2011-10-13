@@ -6,15 +6,14 @@
 
 {% block meta_title %}{% trans "Timeline" %}{% endblock %}
 
-{% block subtitle %}{% trans "Timeline" %}{% endblock %}
-
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Events' 'event_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Timeline' %}
-    {% render_breadcrumbs %}
 {% endblock %}
+
+{% block subtitle %}{% trans "Timeline" %}{% endblock %}
 
 {% block section %}
 <div class="details">
