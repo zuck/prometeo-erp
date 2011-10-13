@@ -24,7 +24,7 @@ import pickle
 
 from django.db import models
 from django import forms
-from django.forms.forms import BoundField
+from django.forms.forms import BoundField, pretty_name
 from django.forms.util import flatatt
 from django import template
 from django.template.loader import render_to_string
@@ -69,8 +69,11 @@ def field_template(name, field, form_or_model, attrs={'colspan': "3"}):
             td_attrs['class'] = css_classes
 
     else:
-        label = u'%s' % name
-        value = value_to_string(field)
+        label = u'%s' % pretty_name(name)
+        if callable(field):
+            value = value_to_string(field())
+        else:
+            value = value_to_string(field)
     
     td_attrs.update(attrs)
 
