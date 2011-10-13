@@ -696,24 +696,29 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-bottom: 30px;
 }
 
-#content .messages ul, #content .errorlist {
+#content .messages ul {
     margin: 0;
     padding: 5px;
 }
 
-#content .messages li, #content .errorlist li {
+#content .messages li {
     padding-left: 40px;
     background-repeat: no-repeat;
     background-position: 10px 5px;
 }
 
-#content .errorlist {
-    border: 1px solid #d21717;
-    background: #ffc0c0;
-    margin-bottom: 5px;
+#content form .properties .errorlist { margin: 0; }
+
+#content form .properties .errorlist li {
+    padding: 5px 0 5px 25px;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-position: 0 5px;
+    border: none;
+    color: #d21717;
 }
 
-#content .messages li.error, #content .errorlist li { background-image: url(images/error.png); }
+#content .messages li.error, #content form .properties .errorlist li { background-image: url(images/error.png); }
 
 #content .messages li.info { background-image: url(images/info.png); }
 

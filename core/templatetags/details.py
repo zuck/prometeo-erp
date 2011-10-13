@@ -25,6 +25,7 @@ import pickle
 from django.db import models
 from django import forms
 from django.forms.forms import BoundField
+from django.forms.util import flatatt
 from django import template
 from django.template.loader import render_to_string
 from django.template import Node, NodeList, Variable, Library
@@ -42,32 +43,40 @@ def row_template(index):
         return u'\t<tr class="altrow">\n'
     return u'\t<tr>\n'
 
-def field_template(name, field, form_or_model, attrs=['colspan="3"']):
+def field_template(name, field, form_or_model, attrs={'colspan': "3"}):
     label = ""
     value = ""
     output = ""
-    td_attrs = attrs or []
+    td_attrs = {}
 
     if isinstance(field, models.Field):
         label = u'%s' % field.verbose_name
         value = value_to_string(field_to_value(field, form_or_model))
+
     elif isinstance(field, forms.Field):
         bf = BoundField(form_or_model, field, name)
-        label = u'%s' % field.label
+        label = u'%s' % bf.label_tag()
         value = u'%s' % bf
+        if bf.help_text:
+            value += '<br/>\n<span class="help_text">%s</span>' % (u'%s' % bf.help_text)
+        if bf._errors():
+            value += '<br/>\n<ul class="errorlist">\n'
+            for error in bf._errors():
+                value += '\t<li>%s</li>\n' % error
+            value += '</ul>\n'
         css_classes = bf.css_classes()
         if css_classes:
-            td_attrs.append('class="%s"' % css_classes)
+            td_attrs['class'] = css_classes
+    
+    td_attrs.update(attrs)
 
     if label and value:
         output += ("\t\t<th>%s</th>\n" % (label[0].capitalize() + label[1:]))
-        if td_attrs:
-            output += ("\t\t<td %s>\n" % (' '.join(td_attrs)))
+        if td_attrs and len(td_attrs) > 0:
+            output += "\t\t<td %s>\n" % flatatt(td_attrs)
         else:
             output += "\t\t<td>\n"
         output += "\t\t\t%s\n" % value
-        if isinstance(field, forms.Field) and field.help_text:
-            output += '\t\t\t<span class="help_text">%s</span>' % (u'%s' % field.help_text)
         output += "\t\t</td>\n"
 
     return output
@@ -218,7 +227,7 @@ class PropertyTableNode(Node):
                 elif isinstance(field, list):
                     for i, f in enumerate(field):
                         if isinstance(f, basestring) and f in fields:
-                            output += field_template(f, fields[f], form_or_instance, [])
+                            output += field_template(f, fields[f], form_or_instance, {})
 
                 output += '\t</tr>\n'
 
