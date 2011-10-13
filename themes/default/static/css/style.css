@@ -1009,7 +1009,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin: 1px 10px -1px 0;
 }
 
-#content .milestones .meta {
+#content .milestones dt .meta {
     clear: both;
     font-weight: normal;
     color: #000;
