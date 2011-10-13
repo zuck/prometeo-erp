@@ -30,7 +30,7 @@
      <dl class="addresses">
         {% for type in object_by_type %}
         {% with type.list|first as first_object %}
-        <dt>{{ first_object.get_type_display }}</dt>
+        <dt>{{ first_object.get_type_display|capfirst }}</dt>
         {% endwith %}
         <dd>
             <ul>
