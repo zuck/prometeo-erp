@@ -34,16 +34,16 @@ class Event(Commentable):
     """
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    start = models.DateTimeField(null=True, blank=True, verbose_name=_('start'))
-    end = models.DateTimeField(null=True, blank=True, verbose_name=_('end'))
+    start = models.DateTimeField(null=True, blank=True, verbose_name=_('start date'))
+    end = models.DateTimeField(null=True, blank=True, verbose_name=_('end date'))
     location = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('location'))
     status = models.CharField(max_length=100, choices=settings.EVENT_STATUS_CHOICES, default=settings.EVENT_DEFAULT_STATUS, verbose_name=_('status'))
     attendees = models.ManyToManyField('auth.User', null=True, blank=True, verbose_name=_('attendees'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    author = models.ForeignKey('auth.User', related_name='created_events', null=True, blank=True, verbose_name=_('author'))
+    author = models.ForeignKey('auth.User', related_name='created_events', null=True, blank=True, verbose_name=_('created by'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering = ('-start', 'id')
