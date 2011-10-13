@@ -247,7 +247,7 @@ def contact_add_job(request, id, **kwargs):
     else:
         form = ContactJobForm(instance=instance)
 
-    return render_to_response('partners/job_edit.html', RequestContext(request, {'form': form}))
+    return render_to_response('partners/job_edit.html', RequestContext(request, {'object': instance, 'form': form}))
 
 @permission_required('partners.change_partner')
 @permission_required('partners.change_contact')
