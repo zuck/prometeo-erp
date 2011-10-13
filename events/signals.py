@@ -121,7 +121,7 @@ def notify_comment_created(sender, instance, *args, **kwargs):
     if kwargs['created']:
         obj = instance.content_object
 
-        if isinstance(obj, (Project, Milestone, Ticket)):
+        if isinstance(obj, Event):
             activity = Activity.objects.create(
                 title=_("%(author)s commented %(class)s %(name)s"),
                 signature="comment-created",
