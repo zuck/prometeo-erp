@@ -707,8 +707,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background-position: 10px 5px;
 }
 
+#content form .errorlist,
 #content form .properties .errorlist { margin: 0; }
 
+#content form .errorlist li,
 #content form .properties .errorlist li {
     padding: 5px 0 5px 25px;
     margin: 0;
@@ -718,7 +720,9 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     color: #d21717;
 }
 
-#content .messages li.error, #content form .properties .errorlist li { background-image: url(images/error.png); }
+#content .messages li.error,
+#content form .errorlist li,
+#content form .properties .errorlist li { background-image: url(images/error.png); }
 
 #content .messages li.info { background-image: url(images/info.png); }
 
