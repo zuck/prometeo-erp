@@ -76,10 +76,7 @@ def field_template(name, field, form_or_model, attrs={'colspan': "3"}):
 
     if label and value:
         output += ("\t\t<th>%s</th>\n" % (label[0].capitalize() + label[1:]))
-        if td_attrs and len(td_attrs) > 0:
-            output += "\t\t<td %s>\n" % flatatt(td_attrs)
-        else:
-            output += "\t\t<td>\n"
+        output += "\t\t<td%s>\n" % flatatt(td_attrs)
         output += "\t\t\t%s\n" % value
         output += "\t\t</td>\n"
 
@@ -243,7 +240,7 @@ class PropertyTableNode(Node):
                                 f = fields[name]
                             else:
                                 f = getattr(form_or_instance, name)
-                            output += field_template(name, f, form_or_instance)
+                            output += field_template(name, f, form_or_instance, {})
 
                 output += '\t</tr>\n'
 
