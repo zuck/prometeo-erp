@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load breadcrumbs %}
 {% load navigator %}
+{% load details %}
 
 {% block meta_title %}{{ object }}{% endblock %}
 
@@ -33,25 +34,6 @@
 </div>
 {% include 'elements/navigator.html' %}
 <div class="details">
-    <table class="properties">
-        <tr>
-            <th>{% trans "Created on" %}:</th>
-            <td>{% if object.created %}{{ object.created }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
-            <th>{% trans "Read on" %}:</th>
-            <td>{% if object.read %}{{ object.read }}{% else %}<span class="disabled">{% trans "Empty" %}</span>{% endif %}</td>
-        </tr>
-        <tr>
-            <th>{% trans "Description" %}:</th>
-            <td colspan="3">
-                <div class="entry">
-                    {% if object.description %}
-                    {{ object.description|safe }}
-                    {% else %}
-                    <span class="disabled">{% trans "Empty" %}</span>
-                    {% endif %}
-                </div>
-            </td>
-        </tr>
-    </table>
+    {% property_table object "[['created', 'read'], 'description']" %}
 </div>
 {% endblock %}
