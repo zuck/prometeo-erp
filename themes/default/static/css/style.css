@@ -110,6 +110,8 @@ form textarea {
     padding: 5px;
 }
 
+form br { display: none; }
+
 form .submit {
     float: left;
     margin-right: 10px;
@@ -119,7 +121,6 @@ form .help_text {
     display: block;
     color: #c0c0c0;
     font-style: italic;
-    margin-top: -10px;
 }
 
 form .required input, form .required textarea, form .required select {
@@ -160,22 +161,26 @@ form .json-val {
 }
 
 form .datepicker, form .timepicker {
-    clear: none;
+    float: left;
+    clear: left;
     margin-right: 0;
 }
 
-form input.datepicker {
+form .datepicker input {
+    margin-right: 0;
     width: 115px;
     margin-left: 5px;
     margin-bottom: 5px;
 }
 
-form input.timepicker {
+form .timepicker input {
+    margin-right: 0;
     width: 20px;
     margin-left: 5px;
 }
 
-select.timepicker {
+.timepicker select {
+    margin-right: 0;
     width: 55px;
     margin-left: 5px;
 }

@@ -53,26 +53,24 @@ class SplitDateTimeWidget(MultiWidget):
             attrs = {}
 
         try:
-            date_class = attrs['date_class']
+            self.date_class = attrs['date_class']
             del attrs['date_class']
         except:
-            date_class = "datepicker"
+            self.date_class = "datepicker"
+        date_attrs = attrs.copy()
+        date_attrs['class'] = 'date'
 
         try:
-            time_class = attrs['time_class']
+            self.time_class = attrs['time_class']
             del attrs['time_class']
         except:
-            time_class = "timepicker"
-
+            self.time_class = "timepicker"
         time_attrs = attrs.copy()
-        time_attrs['class'] = time_class
-        date_attrs = attrs.copy()
-        date_attrs['class'] = date_class
+        time_attrs['class'] = 'time'
 
         widgets = (
             DateInput(attrs=date_attrs, format=date_format),
-            TextInput(attrs=time_attrs), TextInput(attrs=time_attrs),
-            Select(attrs=time_attrs, choices=[('AM','AM'),('PM','PM')])
+            TextInput(attrs=time_attrs), TextInput(attrs=time_attrs), Select(attrs=time_attrs, choices=[('AM','AM'),('PM','PM')])
         )
 
         super(SplitDateTimeWidget, self).__init__(widgets, attrs)
@@ -94,7 +92,14 @@ class SplitDateTimeWidget(MultiWidget):
 
         Returns a Unicode string representing the HTML for the whole lot.
         """
-        return "%s: %s<br/>%s: %s%s%s" % (_("Date"), rendered_widgets[0], _("Time"), rendered_widgets[1], rendered_widgets[2], rendered_widgets[3])
+        return '<span class="%s">%s: %s</span><br/><span class="%s">%s: %s%s%s</span>' % (
+            self.date_class,
+            _("Date"),
+            rendered_widgets[0],
+            self.time_class,
+            _("Time"),
+            rendered_widgets[1], rendered_widgets[2], rendered_widgets[3]
+        )
 
 class SelectAndAddWidget(forms.Select):
     """A select widget with an optional "add" link.
