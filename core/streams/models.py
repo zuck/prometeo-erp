@@ -26,6 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 import django.utils.simplejson as json
 
 from prometeo.core.models import validate_json
+from prometeo.core.utils import field_to_string
 
 class Observable(object):
     """Mix-in that sends a special signal when a field is changed.
@@ -33,17 +34,24 @@ class Observable(object):
     def __init__(self, *args, **kwargs):
         super(Observable, self).__init__(*args, **kwargs)
         self.__changes = {}
+        self.__field_cache = dict([(f.attname, f) for f in (self._meta.fields)])
 
     def __setattr__(self, name, value):
         try:
-            if self.pk and name != 'modified' and name in [f.attname for f in self._meta.fields]:
-                old_value = getattr(self, name)
-                if name in self.__changes:
-                    old_value = self.__changes[name][0]
+            if self.pk and name != 'modified' and name in self.__field_cache:
+                field = self.__field_cache[name]
+                label = u"%s" % field.verbose_name
+                old_value = field_to_string(field, self)
+                if label in self.__changes:
+                    old_value = self.__changes[label][0]
+                super(Observable, self).__setattr__(name, value)
+                value = field_to_string(field, self)
                 if value != old_value:
-                    self.__changes[name] = (u"%s" % old_value, u"%s" % value)
+                    self.__changes[label] = (u"%s" % old_value, u"%s" % value)
+                return
         except AttributeError:
             pass
+
         super(Observable, self).__setattr__(name, value)
 
 class Stream(models.Model):

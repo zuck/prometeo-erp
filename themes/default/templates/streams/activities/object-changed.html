@@ -5,11 +5,11 @@
 {% endblocktrans %}
 <dl>
 {% for fieldname, values in changes.items %}
-    <dt>{{ fieldname }}</dt>
+    <dt>{{ fieldname|capfirst }}</dt>
     <dd>
-        {% with values|first as old_value %}
-        {% with values|last as new_value %}
-        {% blocktrans %}from {{ old_value }} to {{ new_value }}{% endblocktrans %}
+        {% with values|first|safe as old_value %}
+        {% with values|last|safe as new_value %}
+        {% blocktrans %}from <em>{{ old_value }}</em> to <em>{{ new_value }}</em>{% endblocktrans %}
         {% endwith %}
         {% endwith %}
     </dd>
