@@ -37,7 +37,9 @@
 <form method="post" action="{% url task_add %}">
 {% endif %}
     {% csrf_token %}
-    {% property_table form "['title', ['start', 'end'], 'description', 'categories', 'tags']" %}
+    <table class="properties">
+        {% property_table form "['title', ['start', 'end'], 'description', 'categories', 'tags']" %}
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

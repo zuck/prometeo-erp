@@ -52,7 +52,9 @@
         {% block section %}
         <div class="details">
             {% avatar object 90 %}
-            {% property_table object "['full_name', ['email', 'url'], 'tags', 'categories']" %}
+            <table class="properties">
+                {% property_table object "['full_name', ['email', 'url'], 'tags', 'categories']" %}
+            </table>
         </div>
         {% endblock %}
     </div>

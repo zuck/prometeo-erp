@@ -39,7 +39,9 @@
 <form method="post" action="{% url widget_add %}">
 {% endif %}
     {% csrf_token %}
-    {% property_table form "['title', ['source', 'template'], 'context', 'description']" %}
+    <table class="properties">
+        {% property_table form "['title', ['source', 'template'], 'context', 'description']" %}
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

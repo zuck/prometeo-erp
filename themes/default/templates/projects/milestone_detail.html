@@ -67,7 +67,9 @@
         </div>
         <div class="section">
             {% block section %}
-            {% property_table object "[['manager', 'deadline'], ['author', 'created'], ['progress', 'closed'], 'description', 'categories', 'tags']" %}
+            <table class="properties">
+                {% property_table object "[['manager', 'deadline'], ['author', 'created'], ['progress', 'closed'], 'description', 'categories', 'tags']" %}
+            </table>
             {% region object.dashboard %}
             {% include "elements/comments.html" %}
             {% endblock %}

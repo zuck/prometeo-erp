@@ -37,7 +37,9 @@
 <form method="post" action="{% url partner_add %}">
 {% endif %}
     {% csrf_token %}
-    {% property_table form "['name', 'assignee', ['is_managed', 'is_lead'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags', 'allow_comments']" %}
+    <table class="properties">
+        {% property_table form "['name', 'assignee', ['is_managed', 'is_lead'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags', 'allow_comments']" %}
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

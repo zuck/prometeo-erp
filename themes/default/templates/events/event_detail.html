@@ -63,7 +63,9 @@
     <div class="section">
         {% block section %}
         <div class="details">
-            {% property_table object "[['author', 'created'], ['start', 'end'], ['location', 'status'], 'description', 'attendees', 'categories', 'tags']" %}
+            <table class="properties">
+                {% property_table object "[['author', 'created'], ['start', 'end'], ['location', 'status'], 'description', 'attendees', 'categories', 'tags']" %}
+            </table>
             {% include "elements/comments.html" %}
         </div>
         {% endblock %}

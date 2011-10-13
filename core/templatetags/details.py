@@ -208,7 +208,7 @@ class PropertyTableNode(Node):
 
         if isinstance(form_or_instance, (models.Model, forms.ModelForm)):
             fields = {}
-            output = '<table class="properties">\n'
+            output = ''
             
             if isinstance(form_or_instance, models.Model):
                 fields = dict([(f.name, f) for f in (form_or_instance._meta.fields + form_or_instance._meta.many_to_many)])
@@ -246,8 +246,6 @@ class PropertyTableNode(Node):
                             output += field_template(name, f, form_or_instance, {})
 
                 output += '\t</tr>\n'
-
-            output += '</table>\n'
 
         return mark_safe(output)
     

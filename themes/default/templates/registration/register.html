@@ -21,7 +21,9 @@
 {% block main %}
 <form method="post" action="{% url user_register %}">
     {% csrf_token %}
-    {% property_table form "['username', 'email', ['password1', 'password2'], ['first_name', 'last_name'], 'tos', 'pp']" %}
+    <table class="properties">
+        {% property_table form "['username', 'email', ['password1', 'password2'], ['first_name', 'last_name'], 'tos', 'pp']" %}
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Sign up' %}" /></span>
 </form>
 {% endblock %}

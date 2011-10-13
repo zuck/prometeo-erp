@@ -39,7 +39,9 @@
 {% block main %}
 <form method="post" action=".">
     {% csrf_token %}
-    {% property_table form "[['type', 'number']]" %}
+    <table class="properties">
+        {% property_table form "[['type', 'number']]" %}
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

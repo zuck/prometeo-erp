@@ -34,6 +34,8 @@
 </div>
 {% include 'elements/navigator.html' %}
 <div class="details">
-    {% property_table object "[['created', 'read'], 'description']" %}
+    <table class="properties">
+        {% property_table object "[['created', 'read'], 'description']" %}
+    </table>
 </div>
 {% endblock %}
