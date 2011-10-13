@@ -22,7 +22,7 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.db.models import Q, query
-from django.db.models import fields as django_fields
+from django.db.models import fields
 from django.utils.encoding import StrAndUnicode
 from django.utils.datastructures import SortedDict
 from django.utils.safestring import mark_safe
@@ -30,56 +30,17 @@ from django.utils.translation import ugettext as _
 from django.template.defaultfilters import date, time, striptags, truncatewords
 from django.conf import settings
 
-def filter_objects(request, model_or_queryset=None, fields=[], exclude=[]):
-    matches = []
-    model = None
-    object_list = None
-    queryset = None
-
-    if isinstance(model_or_queryset, query.QuerySet):
-        model = model_or_queryset.model
-        object_list = model_or_queryset
-
-    elif issubclass(model_or_queryset, models.Model):
-        model = model_or_queryset
-        object_list = model.objects.all()
-
-    if not object_list.query.can_filter():
-        pks = [instance.pk for instance in object_list]
-        object_list = model.objects.filter(pk__in=pks)
+def clean_referer(request, default_referer='/'):
+    """Returns the HTTP referer of the given <request>.
     
-    filter_fields = get_filter_fields(request, model, fields, exclude)
-    
-    if request.method == 'POST':
-        queryset = []
-        for f, value in filter_fields:
-            if value is not None:
-                if isinstance(f, django_fields.related.RelatedField):
-                    pass # Fail silently.
-                else:
-                    queryset.append(Q(**{"%s__startswith" % f.name: value}) | Q(**{"%s__endswith" % f.name: value}))
-
-    if (queryset is not None):
-        matches = object_list.filter(*queryset)
-    else:
-        matches = object_list
-
-    try:
-        order_by = request.GET['order_by']
-        matches = matches.order_by(order_by)
-    except:
-        pass
-        
-    return [f.name for f, value in filter_fields], SortedDict(filter_fields), matches
-    
-def get_filter_fields(request, model, fields, exclude):
-    filter_fields = [(f, filter_field_value(request, f)) for f in model._meta.fields if is_visible(f.name, fields, exclude)]
-    return filter_fields
-
-def is_visible(field, fields=[], exclude=[]):
-    return (len(fields) == 0 or field in fields) and field not in exclude
+    If the HTTP referer is not recognizable, <default_referer> is returned.
+    """
+    referer = request.META.get('HTTP_REFERER', default_referer)
+    return referer.replace("http://", "").replace(request.META['HTTP_HOST'], "")
 
 def value_to_string(value):
+    """Tries to return a smart string representation of the given <value>.
+    """
     output = value
     if isinstance(value, (list, tuple)):
         output = ', '.join(value)
@@ -95,6 +56,8 @@ def value_to_string(value):
     return mark_safe(output)
 
 def field_to_value(field, instance):
+    """Tries to convert a model field value in something smarter to render.
+    """
     value = getattr(instance, field.name)
     if field.primary_key:
         return u'#%s' % value
@@ -129,7 +92,19 @@ def field_to_value(field, instance):
         return True
     return value
 
+def field_to_string(field, instance):
+    """All-in-one conversion from a model field value to a smart string representation.
+    """
+    return value_to_string(field_to_value(field, instance))
+
+def is_visible(field_name, fields=[], exclude=[]):
+    """Checks if <field_name> is in the resulting combination of <fields> and <exclude>.
+    """
+    return (len(fields) == 0 or field_name in fields) and field_name not in exclude
+
 def filter_field_value(request, field):
+    """Retrieves from POST the value of the filter related to the given <field>.
+    """
     name = field.name
     if request.POST.has_key("sub_%s" % name):
         return None
@@ -138,10 +113,54 @@ def filter_field_value(request, field):
     elif request.POST.has_key(u'filter_field') and request.POST[u'filter_field'] == name:
         return request.POST[u'filter_query']
     return None
+    
+def get_filter_fields(request, model, fields, exclude):
+    """Returns the list of available filters for the given <model>.
+    """
+    return [(f, filter_field_value(request, f)) for f in model._meta.fields if is_visible(f.name, fields, exclude)]
 
-def clean_referer(request):
+def filter_objects(request, model_or_queryset=None, fields=[], exclude=[]):
+    """Returns a queryset of filtered objects.
+
+    <model_or_queryset> can be a Model class or a starting queryset.
+    """
+    matches = []
+    model = None
+    object_list = None
+    queryset = None
+
+    if isinstance(model_or_queryset, query.QuerySet):
+        model = model_or_queryset.model
+        object_list = model_or_queryset
+
+    elif issubclass(model_or_queryset, models.Model):
+        model = model_or_queryset
+        object_list = model.objects.all()
+
+    if not object_list.query.can_filter():
+        pks = [instance.pk for instance in object_list]
+        object_list = model.objects.filter(pk__in=pks)
+    
+    filter_fields = get_filter_fields(request, model, fields, exclude)
+    
+    if request.method == 'POST':
+        queryset = []
+        for f, value in filter_fields:
+            if value is not None:
+                if isinstance(f, fields.related.RelatedField):
+                    pass # Fail silently.
+                else:
+                    queryset.append(Q(**{"%s__startswith" % f.name: value}) | Q(**{"%s__endswith" % f.name: value}))
+
+    if (queryset is not None):
+        matches = object_list.filter(*queryset)
+    else:
+        matches = object_list
+
     try:
-        referer = request.META['HTTP_REFERER']
+        order_by = request.GET['order_by']
+        matches = matches.order_by(order_by)
     except:
-        referer = '/'
-    return referer.replace("http://", "").replace(request.META['HTTP_HOST'], "")
+        pass
+        
+    return [f.name for f, value in filter_fields], SortedDict(filter_fields), matches
