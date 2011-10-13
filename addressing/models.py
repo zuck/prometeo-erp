@@ -49,9 +49,6 @@ class Address(models.Model):
             'country': self.country
         }
 
-    def get_absolute_url(self):
-        return self.content_object.get_absolute_url()
-
 class PhoneNumber(models.Model):
     """PhoneNumber model.
     """
@@ -64,6 +61,3 @@ class PhoneNumber(models.Model):
         
     def __unicode__(self):
         return self.number
-
-    def get_absolute_url(self):
-        return self.content_object.get_absolute_url()

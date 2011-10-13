@@ -41,7 +41,10 @@ class Result(models.Model):
         verbose_name_plural = _('results')
 
     def get_absolute_url(self):
-        return self.content_object.get_absolute_url()
+        try:
+            return self.content_object.get_absolute_url()
+        except:
+            return None
 
 class Tag(models.Model):
     """Tag model.

@@ -8,7 +8,11 @@
     <dd>
         <ul>
             {% for object in type.list %}
+            {% if object.get_absolute_url %}
             <li><a href="{{ object.get_absolute_url }}">{{ object.title|capfirst }}</a></li>
+            {% else %}
+            <li>{{ object.title|capfirst }}</li>
+            {% endif %}
             {% endfor %}
         </ul>
     </dd>
