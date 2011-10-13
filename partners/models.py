@@ -79,8 +79,8 @@ class Partner(Commentable):
     is_supplier = models.BooleanField(default=False, verbose_name=_('supplier?'))
     vat_number = models.CharField(max_length=64, null=True, blank=True, unique=True, verbose_name=_('VAT number'))
     currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, null=True, blank=True, verbose_name=_('currency'))
-    language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
-    timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))    
+    language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_('language'))
+    timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_('timezone'))    
     url = models.URLField(null=True, blank=True, verbose_name=_('url'))
     email = models.EmailField(null=True, blank=True, verbose_name=_('email'))
     addresses = models.ManyToManyField('addressing.Address', null=True, blank=True, verbose_name=_('addresses'))
@@ -91,7 +91,7 @@ class Partner(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_("stream"))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         verbose_name = _('partner')
@@ -115,8 +115,8 @@ class Partner(Commentable):
 class Job(models.Model):
     """Job model.
     """
-    contact = models.ForeignKey(Contact)
-    partner = models.ForeignKey(Partner)
+    contact = models.ForeignKey(Contact, verbose_name=_('contact'))
+    partner = models.ForeignKey(Partner, verbose_name=_('partner'))
     role = models.CharField(max_length=30, choices=settings.ROLES, default=settings.DEFAULT_ROLE, verbose_name=_('role'))
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
         
