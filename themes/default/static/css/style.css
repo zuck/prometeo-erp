@@ -115,6 +115,13 @@ form .submit {
     margin-right: 10px;
 }
 
+form .help_text {
+    display: block;
+    color: #c0c0c0;
+    font-style: italic;
+    margin-top: -10px;
+}
+
 form .required input, form .required textarea, form .required select {
     background-color: #fffecc;
     border: 1px solid #ffda88;
