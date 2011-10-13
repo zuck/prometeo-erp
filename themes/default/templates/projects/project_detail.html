@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 {% load navigator %}
 {% load region %}
 {% load menu %}
+{% load details %}
 
 {% block meta_title %}{{ object.title|striptags|capfirst }}{% endblock %}
-
-{% load breadcrumbs %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -57,59 +57,10 @@
     <div class="section">
         {% block section %}
         <div class="details">
-            <table class="properties">
-                <tr>
-                    <th>{% trans "Project manager" %}:</th>
-                    <td colspan="3">
-                        {% if object.manager %}
-                        <a class="manager" href="{{ object.manager.get_absolute_url }}">{{ object.manager }}</a>
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Created by" %}:</th>
-                    <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
-                    <th>{% trans "Created on" %}:</th>
-                    <td>{{ object.created }}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Status" %}:</th>
-                    <td>{% trans object.get_status_display %}</td>
-                    <th>{% trans "Closed on" %}:</th>
-                    <td>
-                        {% if object.closed %}
-                        {{ object.closed }}
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Tags" %}:</th>
-                    <td colspan="3">
-                        {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Categories" %}:</th>
-                    <td colspan="3">
-                        {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Description" %}:</th>
-                    <td colspan="3">
-                        {% with object.description as description %}
-                        {% include "projects/entry.html" %}
-                        {% endwith %}
-                    </td>
-                </tr>
-            </table>
+            {% property_table object "['manager', ['author', 'created'], ['status', 'closed'], 'description', 'categories', 'tags']" %}
+            {% region object.dashboard %}
+            {% include "elements/comments.html" %}
         </div>
-        {% region object.dashboard %}
-        {% include "elements/comments.html" %}
         {% endblock %}
     </div>
 </div>

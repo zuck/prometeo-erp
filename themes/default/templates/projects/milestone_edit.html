@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load details %}
 
 {% block meta_title %}
 {% if object.pk %}{% trans 'Edit milestone' %}{% else %}{% trans 'Add milestone' %}{% endif %}
@@ -38,7 +39,7 @@
 <form method="post" action="{% url milestone_add object.project.slug %}">
 {% endif %}
     {% csrf_token %}
-    {{ form.as_p }}
+    {% property_table form "['title', 'description', 'manager', 'deadline', 'categories', 'tags', 'allow_comments']" %}
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

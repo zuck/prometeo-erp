@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load markup %}
 {% load breadcrumbs %}
 {% load menu %}
+{% load details %}
 
 {% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
@@ -55,54 +55,7 @@
     <div class="section">
         {% block section %}
         <div class="details">
-            <table class="properties">
-                <tr>
-                    <th>{% trans "Reported by" %}:</th>
-                    <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
-                    <th>{% trans "Assigned to" %}:</th>
-                    <td>{% if object.assignee %}<a class="assignee" href="{{ object.assignee.get_absolute_url }}">{{ object.assignee }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Created on" %}:</th>
-                    <td>{{ object.created }}</td>
-                    <th>{% trans "Last modified on" %}:</th>
-                    <td>{{ object.modified }}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Status" %}:</th>
-                    <td>{{ object.get_status_display }}</td>
-                    <th>{% trans "Type" %}:</th>
-                    <td>{{ object.get_type_display }}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Milestone" %}:</th>
-                    <td>
-                        {% if object.milestone %}
-                        <a href="{{ object.milestone.get_absolute_url }}">{{ object.milestone }}</a>
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                    <th>{% trans "Urgency" %}:</th>
-                    <td>{{ object.get_urgency_display }}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Tags" %}:</th>
-                    <td colspan="3">{% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Categories" %}:</th>
-                    <td colspan="3">{% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Description" %}:</th>
-                    <td colspan="3">
-                        {% with object.description as description %}
-                        {% include "projects/entry.html" %}
-                        {% endwith %}
-                    </td>
-                </tr>
-            </table>
+            {% property_table object "[['author', 'assignee'], ['created', 'modified'], ['status', 'type'], ['milestone', 'urgency'], 'description', 'categories', 'tags']" %}
             {% include "elements/comments.html" %}
         </div>
         {% endblock %}

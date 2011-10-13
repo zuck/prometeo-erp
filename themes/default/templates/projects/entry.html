@@ -1,9 +1,0 @@
-{% load i18n %}
-
-<div class="entry">
-    {% if description %}
-    {{ description|safe }}
-    {% else %}
-    <p class="disabled">{% trans "empty" %}</p>
-    {% endif %}
-</div>
