@@ -67,6 +67,10 @@ def field_template(name, field, form_or_model, attrs={'colspan': "3"}):
         css_classes = bf.css_classes()
         if css_classes:
             td_attrs['class'] = css_classes
+
+    else:
+        label = u'%s' % name
+        value = value_to_string(field)
     
     td_attrs.update(attrs)
 
@@ -220,14 +224,24 @@ class PropertyTableNode(Node):
                 output += row_template(i)
 
                 # Single field.
-                if isinstance(field, basestring) and field in fields:
-                    output += field_template(field, fields[field], form_or_instance)
+                if isinstance(field, basestring):
+                    name = field
+                    if field in fields:
+                        field = fields[name]
+                    else:
+                        field = getattr(form_or_instance, name)
+                    output += field_template(name, field, form_or_instance)
 
                 # Many fields on the same row.
                 elif isinstance(field, list):
                     for i, f in enumerate(field):
-                        if isinstance(f, basestring) and f in fields:
-                            output += field_template(f, fields[f], form_or_instance, {})
+                        if isinstance(f, basestring):
+                            name = f
+                            if f in fields:
+                                f = fields[name]
+                            else:
+                                f = getattr(form_or_instance, name)
+                            output += field_template(name, f, form_or_instance)
 
                 output += '\t</tr>\n'
 
