@@ -30,6 +30,10 @@ class MyUser(User):
     """
     class Meta:
         proxy = True
+
+    def _full_name(self):
+        return self.get_full_name()
+    full_name = property(_full_name)
     
     @models.permalink
     def get_edit_url(self):

@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load details %}
 
 {% block meta_title %}
 {% if object.pk %}{% trans 'Edit user' %}{% else %}{% trans 'Add user' %}{% endif %}
@@ -35,11 +36,14 @@
 {% else %}
 <form method="post" action="{% url user_add %}">
 {% endif %}
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if pform %}
-    {{ pform.as_p }}
-    {% endif %}
+    <table class="properties">
+        {% csrf_token %}
+        {% property_table form "['username', 'email', ['password1', 'password2'], ['first_name', 'last_name']]" %}
+        {% if pform %}
+        {% property_table pform "[['language', 'timezone']]" %}
+        {% endif %}
+        {% property_table form "['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions']" %}
+    </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}" /></span>
 </form>
 {% endblock %}

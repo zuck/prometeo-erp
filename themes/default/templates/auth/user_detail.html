@@ -5,6 +5,7 @@
 {% load navigator %}
 {% load avatar %}
 {% load menu %}
+{% load details %}
 
 {% block meta_title %}{{ object }}{% endblock %}
 
@@ -50,22 +51,9 @@
         {% block section %}
         <div class="details">
             {% avatar object 90 %}
-            <dl class="user-info">
-                <dt class="fullname">{% trans 'Fullname' %}</dt>
-                <dd>
-                    {% if object.get_full_name %}
-                    {{ object.get_full_name }}
-                    {% else %}
-                    <span class="disabled">{% trans 'Not specified.' %}</span>
-                    {% endif %}
-                </dd>
-                <dt class="joined">{% trans 'Joined on' %}</dt>
-                <dd>{{ object.date_joined }}</dd>
-                <dt class="groups">{% trans 'Group(s):' %}</dt>
-                <dd>
-                {% for group in object.groups.all %}{{ group }}{% if not forloop.last %}, {% else %}.{% endif %}{% empty %}<span class="disabled">{% trans "No groups." %}</span>{% endfor %}
-                </dd>
-            </dl>
+            <table class="properties">
+                {% property_table object "[['full_name', 'is_active'], ['is_staff', 'is_superuser'], ['date_joined', 'last_login'], 'groups']" %}
+            </table>
         </div>
         {% endblock %}
     </div>

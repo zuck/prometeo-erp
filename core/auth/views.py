@@ -75,13 +75,13 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.
     """
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(MyUser, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
         messages.error(request, _("You can't view this user's profile."))
         return redirect_to(request, url=reverse('user_login'))
 
-    object_list = User.objects.all()
+    object_list = MyUser.objects.all()
 
     return list_detail.object_detail(
         request,
@@ -97,14 +97,12 @@ def user_detail(request, username, **kwargs):
 def user_add(request, **kwargs):
     """Adds a new user's profile.
     """
-    user = User()  
+    user = MyUser(is_active=True)  
       
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
         if form.is_valid():
-            user = form.save()
-            user.is_active = True
-            user.save()
+            form.save()
             messages.success(request, _("The user's profile has been saved."))
             return redirect_to(request, url=user.get_absolute_url())
     else:
@@ -126,7 +124,7 @@ def user_add(request, **kwargs):
 def user_edit(request, username, **kwargs):
     """Edits a user's profile.
     """
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(MyUser, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
         messages.error(request, _("You can't edit this user's profile."))
@@ -161,7 +159,7 @@ def user_edit(request, username, **kwargs):
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.
     """ 
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(MyUser, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.delete_user') or request.user.username == username)):
         messages.error(request, _("You can't delete this user's profile."))
