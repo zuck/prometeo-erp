@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load details %}
 
 {% block meta_title %}
 {% if object.pk %}{% trans 'Edit task' %}{% else %}{% trans 'Add task' %}{% endif %}
@@ -36,7 +37,7 @@
 <form method="post" action="{% url task_add %}">
 {% endif %}
     {% csrf_token %}
-    {{ form.as_p }}
+    {% property_table form "['title', ['start', 'end'], 'description', 'categories', 'tags']" %}
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}
