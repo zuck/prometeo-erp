@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 {% load navigator %}
 {% load region %}
 {% load menu %}
+{% load details %}
 
 {% block meta_title %}{{ object.title|striptags|capfirst }}{% endblock %}
-
-{% load breadcrumbs %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -63,72 +63,9 @@
     <div class="section">
         {% block section %}
         <div class="details">
-            <table class="properties">
-                <tr>
-                    <th>{% trans "Created by" %}:</th>
-                    <td><a class="author" href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
-                    <th>{% trans "Created on" %}:</th>
-                    <td>{{ object.created }}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Start date" %}:</th>
-                    <td>{{ object.start }}</td>
-                    <th>{% trans "End date" %}:</th>
-                    <td>
-                        {% if object.end %}
-                        {{ object.end }}
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Location" %}:</th>
-                    <td>
-                        {% if object.location %}
-                        {{ object.location }}
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                    <th>{% trans "Status" %}:</th>
-                    <td>
-                        {% if object.status %}
-                        {{ object.get_status_display }}
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Attendees" %}:</th>
-                    <td colspan="3">
-                        {% for attendee in object.attendees.all %} <a class="attendee" href="{{ attendee.get_absolute_url }}">{{ attendee }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Tags" %}:</th>
-                    <td colspan="3">
-                        {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Categories" %}:</th>
-                    <td colspan="3">
-                        {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Description" %}:</th>
-                    <td colspan="3">
-                        {% with object.description as description %}
-                        {% include "projects/entry.html" %}
-                        {% endwith %}
-                    </td>
-                </tr>
-            </table>
+            {% property_table object "[['author', 'created'], ['start', 'end'], ['location', 'status'], 'description', 'attendees', 'categories', 'tags']" %}
+            {% include "elements/comments.html" %}
         </div>
-        {% include "elements/comments.html" %}
         {% endblock %}
     </div>
 </div>
