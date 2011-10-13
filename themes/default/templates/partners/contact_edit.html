@@ -38,7 +38,7 @@
 <form method="post" action="{% url contact_add %}">
 {% endif %}
     {% csrf_token %}
-    {% property_table form "[['firstname', 'lastname'], ['url', 'email'], 'tags', 'categories']" %}
+    {% property_table form "[['firstname', 'lastname'], ['email', 'url'], 'tags', 'categories']" %}
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

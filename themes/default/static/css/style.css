@@ -242,6 +242,13 @@ td .actions { float: right; }
 
 .disabled { color: #c0c0c0; }
 
+.avatar {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 form .submit input, .submit a {
     float: right;
     width: auto;
@@ -347,12 +354,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 .meta {
     color: #60625d;
     font-style: italic;
-}
-
-.avatar {
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
 }
 
 .yes, .no {
@@ -1110,6 +1111,18 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .details .actions .delete a { margin: 0; }
 
+#main .details .avatar {
+    display: block;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main .details .avatar img {
+    padding: 5px;
+    border: 1px solid #c0c0c0;
+}
+
 #main .properties {
     margin-top: 5px;
     border-top: 1px solid #c0c0c0;
@@ -1184,15 +1197,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-bottom: -32px;
     margin-right: 5px;
 }
-
-#main .avatar {
-    float: left;
-    margin-right: 20px;
-}
-
-#main .user-info { float: left; }
-
-#main .user-info dt { clear: none; }
 
 #main .milestones .actions {
     position: relative;

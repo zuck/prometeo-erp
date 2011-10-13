@@ -65,7 +65,9 @@ class Contact(models.Model):
         return ('contact_delete', (), {"id": self.pk})
 
     def get_full_name(self):
-        return ' '.join([self.firstname, self.lastname])  
+        return ' '.join([self.firstname, self.lastname])
+
+    full_name = property(get_full_name)
 
 class Partner(Commentable):
     """Partner model.
