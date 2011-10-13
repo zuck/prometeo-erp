@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load breadcrumbs %}
+{% load details %}
 
 {% block meta_title %}{% if object.pk %}{% trans 'Edit phone number' %}{% else %}{% trans 'Add phone number' %}{% endif %}{% endblock %}
 
@@ -38,20 +39,7 @@
 {% block main %}
 <form method="post" action=".">
     {% csrf_token %}
-    <table class="properties">
-        <tr>
-            <th>{% trans "Type" %}:</th>
-            <td>
-                {{ form.type.errors }}
-                {{ form.type }}
-            </td>
-            <th>{% trans "Number" %}:</th>
-            <td>
-                {{ form.number.errors }}
-                {{ form.number }}
-            </td>
-        </tr>
-    </table>
+    {% property_table form "[['type', 'number']]" %}
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
 {% endblock %}

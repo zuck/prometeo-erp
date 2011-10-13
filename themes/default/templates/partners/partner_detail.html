@@ -5,6 +5,7 @@
 {% load navigator %}
 {% load region %}
 {% load menu %}
+{% load details %}
 
 {% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
@@ -56,102 +57,7 @@
     <div class="section">
         {% block section %}
         <div class="details">
-            <table class="properties">
-                <tr>
-                    <th>{% trans "Assignee" %}:</th>
-                    <td colspan="3">
-                        {% if object.assignee %}
-                        <a class="assignee" href="{{ object.assignee.get_absolute_url }}">{{ object.assignee }}</a>
-                        {% else %}
-                        <span class="disabled">{% trans "empty" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Managed?" %}:</th>
-                    <td>
-                        {% if object.is_managed %}
-                        <span class="yes">{% trans "Yes" %}</span>
-                        {% else %}
-                        <span class="no">{% trans "No" %}</span>
-                        {% endif %}
-                    </td>
-                    <th>{% trans "Sales Lead?" %}:</th>
-                    <td>
-                        {% if object.is_lead %}
-                        <span class="yes">{% trans "Yes" %}</span>
-                        {% else %}
-                        <span class="no">{% trans "No" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Customer?" %}:</th>
-                    <td>
-                        {% if object.is_customer %}
-                        <span class="yes">{% trans "Yes" %}</span>
-                        {% else %}
-                        <span class="no">{% trans "No" %}</span>
-                        {% endif %}
-                    </td>
-                    <th>{% trans "Supplier?" %}:</th>
-                    <td>
-                        {% if object.is_supplier %}
-                        <span class="yes">{% trans "Yes" %}</span>
-                        {% else %}
-                        <span class="no">{% trans "No" %}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Language" %}:</th>
-                    <td>
-                        {{ object.get_language_display }}
-                    </td>
-                    <th>{% trans "Timezone" %}:</th>
-                    <td>
-                        {{ object.get_timezone_display }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "VAT Number" %}:</th>
-                    <td>
-                        {% if object.vat_number %}{{ object.vat_number }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
-                    </td>
-                    <th>{% trans "Currency" %}:</th>
-                    <td>
-                        {{ object.get_currency_display }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "URL" %}:</th>
-                    <td>
-                        {% if object.url %}<a href="{{ object.url }}">{{ object.url }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
-                    </td>
-                    <th>{% trans "Email" %}:</th>
-                    <td>
-                        {% if object.email %}<a href="mailto:{{ object.email }}">{{ object.email }}</a>{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Tags" %}:</th>
-                    <td colspan="3">
-                        {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Categories" %}:</th>
-                    <td colspan="3">
-                        {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>{% trans "Description" %}:</th>
-                    <td colspan="3">
-                        {% if object.notes %}{{ object.description }}{% else %}<span class="disabled">{% trans "empty" %}</span>{% endif %}
-                    </td>
-                </tr>
-            </table>
+            {% property_table object "['assignee', ['is_managed', 'is_lead'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags']" %}
         </div>
         {% region object.dashboard %}
         {% include "elements/comments.html" %}

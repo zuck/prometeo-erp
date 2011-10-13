@@ -5,6 +5,7 @@
 {% load navigator %}
 {% load avatar %}
 {% load menu %}
+{% load details %}
 
 {% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
@@ -51,40 +52,7 @@
         {% block section %}
         <div class="details">
             {% avatar object 90 %}
-            <dl class="user-info">
-                <dt class="fullname">{% trans 'Fullname' %}</dt>
-                <dd>
-                    {% if object.get_full_name %}
-                    {{ object.get_full_name }}
-                    {% else %}
-                    <span class="disabled">{% trans 'Not specified.' %}</span>
-                    {% endif %}
-                </dd>
-                <dt>{% trans "URL" %}</dt>
-                <dd>
-                    {% if object.url %}
-                    <a href="{{ object.url }}">{{ object.url }}</a>
-                    {% else %}
-                    <span class="disabled">{% trans "empty" %}</span>
-                    {% endif %}
-                </dd>
-                <dt>{% trans "Email" %}</dt>
-                <dd>
-                    {% if object.email %}
-                    <a href="mailto:{{ object.email }}">{{ object.email }}</a>
-                    {% else %}
-                    <span class="disabled">{% trans "empty" %}</span>
-                    {% endif %}
-                </dd>
-                <dt>{% trans "Tags" %}</dt>
-                <dd>
-                    {% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                </dd>
-                <dt>{% trans "Categories" %}:</dt>
-                <dd>
-                    {% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% empty %}<span class="disabled">{% trans "empty" %}</span>{% endfor %}
-                </dd>
-            </dl>
+            {% property_table object "[['firstname', 'lastname'], ['url', 'email'], 'tags', 'categories']" %}
         </div>
         {% endblock %}
     </div>
