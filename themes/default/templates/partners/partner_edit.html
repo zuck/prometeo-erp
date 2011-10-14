@@ -38,7 +38,7 @@
 {% endif %}
     {% csrf_token %}
     <table class="properties">
-        {% property_table form "['name', 'assignee', ['is_managed', 'is_lead'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags', 'allow_comments']" %}
+        {% property_table form "['name', 'is_managed', ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags', 'allow_comments']" %}
     </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>

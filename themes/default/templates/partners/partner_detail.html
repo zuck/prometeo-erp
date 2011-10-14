@@ -58,7 +58,7 @@
         {% block section %}
         <div class="details">
             <table class="properties">
-                {% property_table object "['assignee', ['is_managed', 'is_lead'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags']" %}
+                {% property_table object "['is_managed', ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags']" %}
             </table>
         </div>
         {% region object.dashboard %}
