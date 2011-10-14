@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block meta_title %}{{ object }}{% endblock %}
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -14,7 +14,7 @@
 
 {% block title %}
 <div class="title">
-    <h1>{{ object }}</h1>
+    <h1>{{ object|striptags|capfirst }}</h1>
     <h2>{% trans 'Delete' %}</h2>
 </div>
 {% endblock %}

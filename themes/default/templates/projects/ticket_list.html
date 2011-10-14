@@ -6,8 +6,6 @@
 
 {% block meta_title %}{% trans "Tickets" %}{% endblock %}
 
-{% block subtitle %}{% trans "Tickets" %}{% endblock %}
-
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
@@ -19,6 +17,8 @@
     {% add_crumb 'Tickets' %}
     {% endif %}
 {% endblock %}
+
+{% block subtitle %}{% trans "Tickets" %}{% endblock %}
 
 {% block section %}
 {% include 'elements/filterbox.html' %}

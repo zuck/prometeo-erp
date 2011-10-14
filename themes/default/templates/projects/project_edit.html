@@ -22,7 +22,7 @@
 {% block title %}
 <div class="title">
     {% if object.pk %}
-    <h1>{{ object }}</h1>
+    <h1>{{ object|striptags|capfirst }}</h1>
     <h2>{% trans 'Edit project' %}</h2>
     {% else %}
     <h1>{% trans 'Add project' %}</h1>

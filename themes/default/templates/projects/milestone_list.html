@@ -6,14 +6,14 @@
 
 {% block meta_title %}{% trans "Milestones" %}{% endblock %}
 
-{% block subtitle %}{% trans "Milestones" %}{% endblock %}
-
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Milestones' %}
 {% endblock %}
+
+{% block subtitle %}{% trans "Milestones" %}{% endblock %}
 
 {% block section %}
 {% include 'elements/filterbox.html' %}

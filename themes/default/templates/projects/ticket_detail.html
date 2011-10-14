@@ -18,7 +18,7 @@
 {% block title %}
 <div class="title">
     {% if object.closed %}<p class="meta">{% blocktrans with object.closed as closed %}Closed on {{ closed }}{% endblocktrans %}</p>{% endif %}
-    <h1>{{ object|escape|capfirst }}</h1>
+    <h1>{{ object|striptags|capfirst }}</h1>
     <h2>{% block subtitle %}{% trans "Details" %}{% endblock %}</h2>
 </div>
 {% endblock %}

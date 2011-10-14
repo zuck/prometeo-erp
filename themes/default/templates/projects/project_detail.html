@@ -7,7 +7,7 @@
 {% load menu %}
 {% load details %}
 
-{% block meta_title %}{{ object.title|striptags|capfirst }}{% endblock %}
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -17,7 +17,7 @@
 
 {% block title %}
 <div class="title">
-    <h1>{{ object.title|escape|capfirst }}</h1>
+    <h1>{{ object|striptags|capfirst }}</h1>
     <h2>{% block subtitle %}{% trans "Dashboard" %}{% endblock %}</h2>
 </div>
 {% endblock %}
