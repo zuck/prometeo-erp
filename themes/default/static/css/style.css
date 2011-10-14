@@ -168,21 +168,14 @@ form .datepicker, form .timepicker {
 
 form .datepicker input {
     margin-right: 0;
-    width: 115px;
-    margin-left: 5px;
+    width: 140px;
     margin-bottom: 5px;
-}
-
-form .timepicker input {
-    margin-right: 0;
-    width: 20px;
-    margin-left: 5px;
 }
 
 .timepicker select {
     margin-right: 0;
-    width: 55px;
-    margin-left: 5px;
+    width: 45px;
+    margin-right: 6px;
 }
 
 /**

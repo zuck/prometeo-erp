@@ -70,7 +70,9 @@ class SplitDateTimeWidget(MultiWidget):
 
         widgets = (
             DateInput(attrs=date_attrs, format=date_format),
-            TextInput(attrs=time_attrs), TextInput(attrs=time_attrs), Select(attrs=time_attrs, choices=[('AM','AM'),('PM','PM')])
+            Select(attrs=time_attrs, choices=[(i+1, "%02d" % (i+1)) for i in range(0, 12)]),
+            Select(attrs=time_attrs, choices=[(i, "%02d" % i) for i in range(0, 60)]),
+            Select(attrs=time_attrs, choices=[('AM', _('AM')),('PM', _('PM'))])
         )
 
         super(SplitDateTimeWidget, self).__init__(widgets, attrs)
@@ -92,12 +94,10 @@ class SplitDateTimeWidget(MultiWidget):
 
         Returns a Unicode string representing the HTML for the whole lot.
         """
-        return '<span class="%s">%s: %s</span><br/><span class="%s">%s: %s%s%s</span>' % (
+        return '<span class="%s">%s</span><br/><span class="%s">%s%s%s</span>' % (
             self.date_class,
-            _("Date"),
             rendered_widgets[0],
             self.time_class,
-            _("Time"),
             rendered_widgets[1], rendered_widgets[2], rendered_widgets[3]
         )
 

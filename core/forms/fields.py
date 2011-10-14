@@ -41,8 +41,8 @@ class SplitDateTimeField(MultiValueField):
     def __init__(self, *args, **kwargs):
         fields = (
             CharField(max_length=10),
-            CharField(max_length=2),
-            CharField(max_length=2),
+            ChoiceField(choices=[(i+1, "%02d" % (i+1)) for i in range(0, 12)]),
+            ChoiceField(choices=[(i, "%02d" % i) for i in range(0, 60)]),
             ChoiceField(choices=[('AM','AM'),('PM','PM')])
         )
         super(SplitDateTimeField, self).__init__(fields, *args, **kwargs)
