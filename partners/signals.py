@@ -39,10 +39,12 @@ def _get_streams(instance):
     """
     streams = []
 
-    try:
+    if isinstance(instance, Partner):
         streams.append(instance.stream)
-    except:
-        pass
+    elif isinstance(instance, Contact):
+        streams += [p.stream for p in instance.partner_set.all()]
+    elif isinstance(instance, Job):
+        streams.append(instance.partner.stream)
 
     return streams
 
@@ -62,47 +64,79 @@ def notify_object_created(sender, instance, *args, **kwargs):
     """
     if kwargs['created']:
         _register_followers(instance)
+        
+        title = _("%(class)s %(name)s created")
+        signature = "%s-created" % sender.__name__.lower()
+        template = "streams/activities/object-created.html"
+        context_pairs = {
+            "class": sender.__name__.lower(),
+            "name": "%s" % instance,
+            "link": instance.get_absolute_url()
+        }
+        backlink = instance.get_absolute_url()
 
-        if instance.assignee:
-            activity = Activity.objects.create(
-                title=_("%(class)s %(name)s created by %(author)s"),
-                signature="%s-created" % sender.__name__.lower(),
-                template="streams/activities/object-created.html",
-                context=json.dumps({
-                    "class": sender.__name__.lower(),
-                    "name": "%s" % instance,
-                    "link": instance.get_absolute_url(),
-                    "author": "%s" % instance.assignee,
-                    "author_link": instance.assignee.get_absolute_url()
-                }),
-                backlink=instance.get_absolute_url()
-            )
-        else:
-            activity = Activity.objects.create(
-                title=_("%(class)s %(name)s created"),
-                signature="%s-created" % sender.__name__.lower(),
-                template="streams/activities/object-created.html",
-                context=json.dumps({
-                    "class": sender.__name__.lower(),
-                    "name": "%s" % instance,
-                    "link": instance.get_absolute_url()
-                }),
-                backlink=instance.get_absolute_url()
-            ) 
+        if isinstance(instance, Partner) and instance.assignee:
+            title = _("%(class)s %(name)s created by %(author)s")
+            context_pairs.update({
+                "author": "%s" % instance.assignee,
+                "author_link": instance.assignee.get_absolute_url()
+            })
+
+        elif isinstance(instance, Job):
+            title = _("Contact added to partner %(partner)s")
+            signature = "contact-added"
+            template = "partners/activities/contact-added.html"
+            context_pairs.update({
+                'name':  "%s" % instance.contact,
+                'link':  "%s" % instance.contact.get_absolute_url(),
+                'partner':  "%s" % instance.partner,
+                'partner_link':  "%s" % instance.partner.get_absolute_url(),
+                'role':  instance.get_role_display()
+            })
+            backlink = instance.partner.get_absolute_url()
+
+        activity = Activity.objects.create(
+            title=title,
+            signature=signature,
+            template=template,
+            context=json.dumps(context_pairs),
+            backlink=backlink
+        ) 
 
         [activity.streams.add(s) for s in _get_streams(instance)]
 
 def notify_object_deleted(sender, instance, *args, **kwargs):
     """Generates an activity related to the deletion of an existing object.
     """
+    title = _("%(class)s %(name)s deleted")
+    signature = "%s-deleted" % sender.__name__.lower()
+    template = "streams/activities/object-deleted.html"
+    context_pairs = {
+        "class": sender.__name__.lower(),
+    }
+
+    if isinstance(instance, Job):
+        try:
+            title = _("Contact removed from partner %(partner)s")
+            signature = "contact-removed"
+            template = "partners/activities/contact-removed.html"
+            context_pairs.update({
+                'name':  "%s" % instance.contact,
+                'link':  "%s" % instance.contact.get_absolute_url(),
+                'partner':  "%s" % instance.partner,
+                'partner_link':  "%s" % instance.partner.get_absolute_url(),
+                'role':  instance.get_role_display()
+            })
+        except:
+            return
+    else:
+        context_pairs.update({"name": "%s" % instance})
+
     activity = Activity.objects.create(
-        title=_("%(class)s %(name)s deleted"),
-        signature="%s-deleted" % sender.__name__.lower(),
-        template="streams/activities/object-deleted.html",
-        context=json.dumps({
-            "class": sender.__name__.lower(),
-            "name": "%s" % instance
-        }),
+        title=title,
+        signature=signature,
+        template=template,
+        context=json.dumps(context_pairs)
     )
 
     [activity.streams.add(s) for s in _get_streams(instance)]
@@ -152,6 +186,10 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
 
 post_save.connect(notify_object_created, Partner, dispatch_uid="partner_created")
 post_delete.connect(notify_object_deleted, Partner, dispatch_uid="partner_deleted")
+post_save.connect(notify_object_created, Contact, dispatch_uid="contact_created")
+post_delete.connect(notify_object_deleted, Contact, dispatch_uid="contact_deleted")
+post_save.connect(notify_object_created, Job, dispatch_uid="contact_added")
+post_delete.connect(notify_object_deleted, Job, dispatch_uid="contact_removed")
 
 post_save.connect(notify_comment_created, Comment, dispatch_uid="partners_comment_created")
 post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="partners_comment_deleted")

@@ -147,6 +147,26 @@ def fixtures(sender, created_models, **kwargs):
         slug="partner-deleted"
     )
 
+    contact_created_signature = Signature.objects.get_or_create(
+        title=_("Contact created"),
+        slug="contact-created"
+    )
+
+    contact_added_signature = Signature.objects.get_or_create(
+        title=_("Contact added to partner"),
+        slug="contact-added"
+    )
+
+    contact_removed_signature = Signature.objects.get_or_create(
+        title=_("Contact removed from partner"),
+        slug="contact-removed"
+    )
+
+    contact_deleted_signature = Signature.objects.get_or_create(
+        title=_("Contact deleted"),
+        slug="contact-deleted"
+    )
+
     # Creates first managed company.
     if Partner in created_models and kwargs.get('interactive', True):
         msg = "\nYou just installed Prometeo's partners system, which means you don't have " \

@@ -122,6 +122,13 @@ class Job(models.Model):
         
     def __unicode__(self):
         return _("%(contact)s as %(role)s") % {'contact': self.contact, 'role': self.get_role_display()}
+
+    def get_absolute_url(self):
+        if self.contact:
+            return self.contact.get_absolute_url()
+        elif self.partner:
+            return self.partner.get_absolute_url()
+        return ""
     
     @models.permalink
     def get_edit_url(self):
