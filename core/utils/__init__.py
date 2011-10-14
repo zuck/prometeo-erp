@@ -22,7 +22,7 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.db.models import Q, query
-from django.db.models import fields
+from django.db.models import fields as django_fields
 from django.utils.encoding import StrAndUnicode
 from django.utils.datastructures import SortedDict
 from django.utils.safestring import mark_safe
@@ -147,7 +147,7 @@ def filter_objects(request, model_or_queryset=None, fields=[], exclude=[]):
         queryset = []
         for f, value in filter_fields:
             if value is not None:
-                if isinstance(f, fields.related.RelatedField):
+                if isinstance(f, django_fields.related.RelatedField):
                     pass # Fail silently.
                 else:
                     queryset.append(Q(**{"%s__startswith" % f.name: value}) | Q(**{"%s__endswith" % f.name: value}))

@@ -27,6 +27,8 @@
     border: none;
 }
 
+.filterbox form br { display: block; }
+
 .filterbox label, .filterbox select, .filterbox input, .filterbox button {
     display: inline;
     margin-right: 5px;
