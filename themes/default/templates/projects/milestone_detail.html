@@ -60,20 +60,20 @@
 {% with objects as object_list %}
 {% include 'elements/navigator.html' %}
 {% endwith %}
-<div class="details">
-    <div class="sections">
-        <div class="menu">
-            {% menu "milestone_menu" %}
-        </div>
-        <div class="section">
-            {% block section %}
+<div class="sections">
+    <div class="menu">
+        {% menu "milestone_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
             <table class="properties">
                 {% property_table object "[['manager', 'deadline'], ['author', 'created'], ['progress', 'closed'], 'description', 'categories', 'tags']" %}
             </table>
             {% region object.dashboard %}
             {% include "elements/comments.html" %}
-            {% endblock %}
         </div>
+        {% endblock %}
     </div>
 </div>
 {% endblock %}

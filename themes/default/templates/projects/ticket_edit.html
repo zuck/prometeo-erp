@@ -40,7 +40,7 @@
 {% endif %}
     {% csrf_token %}
     <table class="properties">
-        {% property_table form "['title', ['milestone', 'assignee'],  ['type', 'urgency'], 'description', 'status', 'categories', 'tags']" %}
+        {% property_table form "['title', ['milestone', 'assignee'],  ['type', 'urgency'], 'description', 'status', 'categories', 'tags', 'allow_comments']" %}
     </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
