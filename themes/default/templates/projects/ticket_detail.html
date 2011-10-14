@@ -58,8 +58,8 @@
             <table class="properties">
                 {% property_table object "[['author', 'assignee'], ['created', 'modified'], ['status', 'type'], ['milestone', 'urgency'], 'description', 'categories', 'tags']" %}
             </table>
-            {% include "elements/comments.html" %}
         </div>
+        {% include "elements/comments.html" %}
         {% endblock %}
     </div>
 </div>

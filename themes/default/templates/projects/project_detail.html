@@ -60,9 +60,9 @@
             <table class="properties">
                 {% property_table object "['manager', ['author', 'created'], ['status', 'closed'], 'description', 'categories', 'tags']" %}
             </table>
-            {% region object.dashboard %}
-            {% include "elements/comments.html" %}
         </div>
+        {% region object.dashboard %}
+        {% include "elements/comments.html" %}
         {% endblock %}
     </div>
 </div>
