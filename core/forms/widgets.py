@@ -143,7 +143,7 @@ class SelectAndAddWidget(forms.Select):
                       '            .dialog({'                                                                               \
                       '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },'                 \
                       '                modal: true,'                                                                        \
-                      '                width: 375'                                                                          \
+                      '                width: 800'                                                                          \
                       '             });'                                                                                    \
                       '         }'                                                                                          \
                       '    );'                                                                                              \
@@ -194,7 +194,7 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
                       '            .dialog({'                                                                               \
                       '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },'                 \
                       '                modal: true,'                                                                        \
-                      '                width: 375'                                                                          \
+                      '                width: 800'                                                                          \
                       '             });'                                                                                    \
                       '         }'                                                                                          \
                       '    );'                                                                                              \
