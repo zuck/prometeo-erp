@@ -1137,6 +1137,8 @@ td .yes, td .no {
 
 #main .properties td ul li .type { float: right; }
 
+#main .properties td .yes, #main .properties td .no { margin: 0; }
+
 #main .widget .title {
     width: 367px;
     padding: 5px 10px;
