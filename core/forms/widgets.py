@@ -273,15 +273,13 @@ class CKEditor(forms.Textarea):
         rendered = super(CKEditor, self).render(name, value, attrs)
         tokens = {
             'name': name,
-            'skin': attrs.get('skin', 'v2'),
             'toolbar': attrs.get('toolbar', 'Full'),
             'height': attrs.get('height', '220'),
-            'width': attrs.get('width', '765'),
+            'width': attrs.get('width', '665'),
         }
         rendered += mark_safe(u'<script type="text/javascript">'                                                \
                               u'   CKEDITOR.replace("%(name)s",'                                                \
                               u'       {'                                                                       \
-                              u'           skin: "%(skin)s",'                                                   \
                               u'           toolbar: "%(toolbar)s",'                                             \
                               u'           height: "%(height)s",'                                               \
                               u'           width: "%(width)s",'                                                 \
