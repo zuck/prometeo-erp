@@ -20,8 +20,6 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-import pickle
-
 from django.db import models
 from django import forms
 from django.forms.forms import BoundField, pretty_name
@@ -36,14 +34,14 @@ from django.utils.safestring import mark_safe
 from prometeo.core.templatetags import parse_args_kwargs
 from prometeo.core.utils import is_visible, value_to_string, field_to_value
 
-register = template.Library()
+register = template.Library()   
         
 def row_template(index):
     if (index % 2) == 1:
         return u'\t<tr class="altrow">\n'
     return u'\t<tr>\n'
 
-def field_template(name, field, form_or_model, attrs={'colspan': "3"}):
+def field_template(name, field, form_or_model, attrs={}):
     label = ""
     value = ""
     output = ""
@@ -198,6 +196,16 @@ def detail_table(parser, token):
     tag_name, args, kwargs = parse_args_kwargs(parser, token)
     return DetailTableNode(*args, **kwargs)
 
+def get_object_field(name, fields, form_or_instance, attrs={}):
+    field = name
+    if name in fields:
+        field = fields[name]
+    elif hasattr(form_or_instance, name):
+        field = getattr(form_or_instance, name)
+    else:
+        return ""
+    return field_template(name, field, form_or_instance, attrs)
+
 class PropertyTableNode(Node):
     def __init__(self, *args, **kwargs):
         self.args = [Variable(arg) for arg in args]
@@ -227,23 +235,13 @@ class PropertyTableNode(Node):
 
                 # Single field.
                 if isinstance(field, basestring):
-                    name = field
-                    if field in fields:
-                        field = fields[name]
-                    else:
-                        field = getattr(form_or_instance, name)
-                    output += field_template(name, field, form_or_instance)
+                    output += get_object_field(field, fields, form_or_instance, {'colspan': '3'})
 
                 # Many fields on the same row.
                 elif isinstance(field, list):
                     for i, f in enumerate(field):
                         if isinstance(f, basestring):
-                            name = f
-                            if f in fields:
-                                f = fields[name]
-                            else:
-                                f = getattr(form_or_instance, name)
-                            output += field_template(name, f, form_or_instance, {})
+                            output += get_object_field(f, fields, form_or_instance)
 
                 output += '\t</tr>\n'
 
