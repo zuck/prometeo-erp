@@ -5,12 +5,12 @@
 
 {% get_comment_list for object as comment_list %}
 {% if comment_list or object.allow_comments %}
-<div class="comments">
+<div id="comments">
     <h3>{% trans "Comments" %}</h3>
     {% if comment_list %}
     <ul>
         {% for comment in comment_list %}
-        <li class="comment">
+        <li{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
             <div class="meta">
                 {% with comment.user_name as user_name %}
                 {% with comment.user.get_absolute_url as user_link %}
@@ -35,24 +35,19 @@
     {% else %}
     <p class="disabled">{% trans "No comments." %}</p>
     {% endif %}
-    {% if object.allow_comments %}
+    {% if object.allow_comments and user.is_authenticated %}
     <h3>{% trans "Add comment" %}</h3>
     {% get_comment_form for object as form %}
     <form action="{% comment_form_target %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ object.get_absolute_url }}" />
-        {% for field in form %}
-        {% if field.is_hidden %}
+        {% for field in form.hidden_fields %}
         {{ field }}
-        {% else %}
-        {% if field.errors %}{{ field.errors }}{% endif %}
-        <p {% if field.errors %} class="error"{% endif %} {% if field.name == "honeypot" %} style="display:none;"{% endif %}>
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.name == "comment" %}{% blocktrans %}Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.{% endblocktrans %}{% endif %}
-        </p>
-        {% endif %}
         {% endfor %}
+        <p>
+            {{ form.comment }}
+            {% blocktrans %}Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.{% endblocktrans %}
+        </p>
         <span class="submit"><input type="submit" name="post" value="{% trans 'Post' %}"></span>
     </form>
     {% endif %}

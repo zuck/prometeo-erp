@@ -319,38 +319,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     color: #60625d;
 }
 
-.comments {
-    float: left;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.comments .meta p {
-    margin-left: 54px;
-    border-bottom: 1px solid #c0c0c0;
-}
-
-.comments li {
-    padding-left: 0;
-    background: none;
-}
-
-.comments li .actions {
-    clear: none;
-    float: right;
-    margin: -20px 0 0;
-}
-
-.comments li p { margin: 0; }
-
-.comment-counter {
-    float: right;
-    width: 100%;
-    text-align: right;
-    border-top: 1px solid #c0c0c0;
-    color: #60625d;
-}
-
 .meta {
     color: #60625d;
     font-style: italic;
@@ -1213,6 +1181,36 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     width: auto;
     top: -22px;
     margin-bottom: -22px;
+}
+
+#main #comments {
+    float: left;
+    width: 100%;
+}
+
+#main #comments li {
+    padding: 10px; 
+    background: none;
+}
+
+#main #comments li.altrow { background: #f8f8f8; }
+
+#main #comments li .meta p { margin: 0; }
+
+#main #comments li .actions {
+    clear: none;
+    float: right;
+    margin: -20px -5px 0 0;
+}
+
+#main #comments li .actions li { padding: 0; }
+
+#main #comments .comment-counter {
+    float: right;
+    width: 100%;
+    text-align: right;
+    border-top: 1px solid #c0c0c0;
+    color: #60625d;
 }
 
 #footer {
