@@ -70,3 +70,8 @@ class Task(models.Model):
     @models.permalink
     def get_delete_url(self):
         return ('task_delete', (), {"id": self.pk})
+
+    def save(self):
+        if self.start and not self.end:
+            self.end = self.start + datetime.timedelta(hours=1)
+        super(Task, self).save()

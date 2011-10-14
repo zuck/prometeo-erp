@@ -36,7 +36,7 @@ class Event(Commentable):
     """
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    start = models.DateTimeField(null=True, blank=True, verbose_name=_('start date'))
+    start = models.DateTimeField(verbose_name=_('start date'))
     end = models.DateTimeField(null=True, blank=True, verbose_name=_('end date'))
     location = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('location'))
     status = models.CharField(max_length=100, choices=settings.EVENT_STATUS_CHOICES, default=settings.EVENT_DEFAULT_STATUS, verbose_name=_('status'))
@@ -68,3 +68,8 @@ class Event(Commentable):
     @models.permalink
     def get_delete_url(self):
         return ('event_delete', (), {"id": self.pk})
+
+    def save(self):
+        if self.start and not self.end:
+            self.end = self.start + datetime.timedelta(hours=1)
+        super(Event, self).save()
