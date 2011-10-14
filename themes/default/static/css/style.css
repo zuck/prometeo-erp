@@ -325,11 +325,17 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 .yes, .no {
-    display: block;
-    width: 16px;
-    height: 16px;
+    width: 0;
+    height: 0;
+    padding: 8px;
     font-size: 0;
-    background: no-repeat center;
+    background: no-repeat left top;
+    margin: 0 5px;
+}
+
+td .yes, td .no {
+    display: block;
+    background-position: center;
     margin: 0 auto;
 }
 
@@ -1120,10 +1126,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 }
 
 #main .properties .altrow td { background-color: transparent; }
-
-#main .properties .yes { margin: 0; }
-
-#main .properties .no { margin: 0; }
 
 #main .properties td ul { margin: 0 0 -1px; }
 
