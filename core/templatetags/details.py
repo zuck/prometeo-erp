@@ -32,7 +32,7 @@ from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 
 from prometeo.core.templatetags import parse_args_kwargs
-from prometeo.core.utils import is_visible, value_to_string, field_to_value
+from prometeo.core.utils import is_visible, value_to_string, field_to_value, field_to_string
 
 register = template.Library()   
         
@@ -41,7 +41,7 @@ def row_template(index):
         return u'\t<tr class="altrow">\n'
     return u'\t<tr>\n'
 
-def field_template(name, field, form_or_model, attrs={}):
+def field_template(name, field, form_or_model, attrs={}, suffix=""):
     label = ""
     value = ""
     output = ""
@@ -49,7 +49,7 @@ def field_template(name, field, form_or_model, attrs={}):
 
     if isinstance(field, models.Field):
         label = u'%s' % field.verbose_name
-        value = value_to_string(field_to_value(field, form_or_model))
+        value = field_to_string(field, form_or_model)
 
     elif isinstance(field, forms.Field):
         bf = BoundField(form_or_model, field, name)
@@ -78,7 +78,7 @@ def field_template(name, field, form_or_model, attrs={}):
     if label and value:
         output += ("\t\t<th>%s</th>\n" % (label[0].capitalize() + label[1:]))
         output += "\t\t<td%s>\n" % flatatt(td_attrs)
-        output += "\t\t\t%s\n" % value
+        output += "\t\t\t%s%s\n" % (value, suffix)
         output += "\t\t</td>\n"
 
     return output
@@ -197,14 +197,17 @@ def detail_table(parser, token):
     return DetailTableNode(*args, **kwargs)
 
 def get_object_field(name, fields, form_or_instance, attrs={}):
-    field = name
+    name, sep, suffix = name.partition(':')
+
     if name in fields:
         field = fields[name]
+        return field_template(name, field, form_or_instance, attrs, suffix)
+
     elif hasattr(form_or_instance, name):
         field = getattr(form_or_instance, name)
-    else:
-        return ""
-    return field_template(name, field, form_or_instance, attrs)
+        return field_template(name, field, form_or_instance, attrs, suffix)
+
+    return ""
 
 class PropertyTableNode(Node):
     def __init__(self, *args, **kwargs):
