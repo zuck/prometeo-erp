@@ -44,13 +44,15 @@ def value_to_string(value):
     output = value
     if isinstance(value, (list, tuple)):
         output = ', '.join(value)
-    elif isinstance(value, float):
-        output = u'%.2f' % value
     elif isinstance(value, bool):
         if not value:
             output = u'<span class="no">%s</span>' % _('No')
         else:
             output = u'<span class="yes">%s</span>' % _('Yes')
+    elif isinstance(value, float):
+        output = u'%.2f' % value
+    elif isinstance(value, int):
+        output = '%d' % value
     if not value and not output:
         output = u'<span class="disabled">%s</span>' % _('empty')
     return mark_safe(output)
