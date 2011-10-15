@@ -86,11 +86,17 @@ def field_template(name, field, form_or_model, attrs={}, suffix=""):
 def actions_template(instance):
     actions = []
     try:
-        actions.append(u'<span class="edit"><a href="%s">%s</a></span>' % (instance.get_edit_url(), _('Edit')))
+        actions.append(u'<span class="edit"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
+            "link": instance.get_edit_url(),
+            "label": _('Edit')
+        })
     except AttributeError:
         pass
     try:
-        actions.append(u'<span class="delete"><a href="%s">%s</a></span>' % (instance.get_delete_url(), _('Delete')))
+        actions.append(u'<span class="delete"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
+            "link": instance.get_delete_url(),
+            "label": _('Delete')
+        })
     except AttributeError:
         pass
     output = ' '.join(actions)
