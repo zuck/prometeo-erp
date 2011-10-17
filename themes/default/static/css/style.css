@@ -105,9 +105,14 @@ form select {
 
 form textarea {
     width: 92%;
-    max-width: 790px;
     height: 250px;
-    padding: 5px;
+    padding: 2px;
+}
+
+.formset textarea {
+    max-width: 500px;
+    min-height: 18px;
+    height: 18px;
 }
 
 form br { display: none; }
@@ -172,8 +177,7 @@ form .datepicker input {
     margin-bottom: 5px;
 }
 
-.timepicker select {
-    margin-right: 0;
+form .timepicker select {
     width: 45px;
     margin-right: 6px;
 }
@@ -190,7 +194,10 @@ table {
     margin-bottom: 10px;
 }
 
-td, th { padding: 10px; }
+td, th {
+    padding: 10px;
+    vertical-align: top;
+}
 
 td { border-bottom: 1px solid #c0c0c0; }
 
@@ -202,7 +209,6 @@ thead td, th {
     border-right: 1px solid #fff;
     border-bottom: 1px solid #fff;
     padding: 5px 10px;
-    vertical-align: top;
 }
 
 thead td a, thead td a:link, thead td a:visited,
@@ -226,8 +232,20 @@ tr.altrow td { background-color: #f8f8f8; }
 th.auto { width: 6%; }
 th.boolean { width: 8%; }
 th.char, th.email, th.url { width: 20%; }
+th.actions { width: 16px; }
 
-td .actions { float: right; }
+td.number { text-align: right; }
+
+td .actions {
+    float: right;
+    margin-right: -10px;
+}
+
+td .yes, td .no {
+    display: block;
+    background-position: center;
+    margin: 0 auto;
+}
 
 /**
  * Commons.
@@ -324,12 +342,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     font-size: 0;
     background: no-repeat left top;
     margin: 0 5px;
-}
-
-td .yes, td .no {
-    display: block;
-    background-position: center;
-    margin: 0 auto;
 }
 
 .yes { background-image: url(images/success.png); }

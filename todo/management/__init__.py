@@ -59,6 +59,13 @@ def fixtures(sender, **kwargs):
         url=reverse("unplanned_task_list"),
         menu=todo_menu
     )
+
+    timesheets_link = Link.objects.create(
+        title=_("Timesheets"),
+        slug="timesheets",
+        url=reverse("timesheet_list"),
+        menu=todo_menu
+    )
     
     post_syncdb.disconnect(fixtures)
 

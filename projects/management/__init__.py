@@ -113,6 +113,13 @@ def fixtures(sender, **kwargs):
         menu=ticket_menu
     )
 
+    ticket_tasks_link = Link.objects.create(
+        title=_("Tasks"),
+        slug="ticket_tasks",
+        url="{% url ticket_tasks object.project.slug object.pk %}",
+        menu=ticket_menu
+    )
+
     ticket_timeline_link = Link.objects.create(
         title=_("Timeline"),
         slug="ticket_timeline",

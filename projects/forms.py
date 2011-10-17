@@ -44,7 +44,7 @@ class ProjectForm(forms.ModelForm):
 class MilestoneForm(forms.ModelForm):
     """Form for milestone data.
     """
-    deadline = SplitDateTimeField(required=False)
+    deadline = DateTimeField(required=False)
 
     class Meta:
         model = Milestone

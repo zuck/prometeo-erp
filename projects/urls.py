@@ -50,5 +50,6 @@ urlpatterns = patterns('projects.views',
     url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/$', view='tickets.ticket_detail', name='ticket_detail'),
     url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/edit/$', view='tickets.ticket_edit', name='ticket_edit'),
     url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/delete/$', view='tickets.ticket_delete', name='ticket_delete'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/tasks/$', 'tickets.ticket_detail', {'template_name': 'projects/ticket_tasks.html'}, 'ticket_tasks'),
     url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/timeline/$', 'tickets.ticket_detail', {'template_name': 'projects/ticket_timeline.html'}, 'ticket_timeline'),
 )

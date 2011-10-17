@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 import os
+import datetime
 
 from pytz import common_timezones
 
@@ -256,6 +257,22 @@ EVENT_STATUS_CHOICES = (
 )
 
 EVENT_DEFAULT_STATUS = 'CONFIRMED'
+"""
+
+# ToDo managements options.
+"""
+TIMESHEET_STATUS_CHOICES = (
+    ('DRAFT', _('draft')),
+    ('CONFIRMED', _('confirmed'))
+)
+
+TIMESHEET_DEFAULT_STATUS = 'DRAFT'
+
+WORKING_DAY_START = datetime.time(9, 0)
+WORKING_DAY_END = datetime.time(18, 30)
+
+LAUNCH_TIME_START = datetime.time(13, 0)
+LAUNCH_TIME_END = datetime.time(14, 30)
 """
 
 # Addressing management options.

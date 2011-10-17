@@ -74,6 +74,12 @@ class Project(Commentable):
             self.closed = None
         super(Project, self).save()
 
+    def working_hours(self):
+        count = 0
+        for ticket in self.tickets.all():
+            count += ticket.working_hours()
+        return count
+
 class Milestone(Commentable):
     """Milestone model.
     """
@@ -129,7 +135,13 @@ class Milestone(Commentable):
     def save(self):
         if not self.slug:
             self.slug = slugify('%s_%s' % (self.project.pk, self.title))
-        super(Milestone, self).save()  
+        super(Milestone, self).save()
+
+    def working_hours(self):
+        count = 0
+        for ticket in self.tickets.all():
+            count += ticket.working_hours()
+        return count
 
 class Ticket(Commentable):
     """Ticket model.
@@ -148,6 +160,7 @@ class Ticket(Commentable):
     closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    tasks = models.ManyToManyField('todo.Task', null=True, blank=True, verbose_name=_('related tasks'))
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     objects = TicketManager()     
@@ -181,3 +194,9 @@ class Ticket(Commentable):
         else:
             self.closed = None
         super(Ticket, self).save()
+
+    def working_hours(self):
+        count = 0
+        for task in self.tasks.all():
+            count += task.working_hours()
+        return count

@@ -1,0 +1,32 @@
+{% extends "projects/ticket_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load paginator %}
+{% load filtering %}
+{% load details %}
+
+{% block meta_title %}{% trans "Tasks" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' 'project_list' %}
+    {% add_crumb object.project object.project.get_absolute_url %}
+    {% add_crumb 'Tickets' 'ticket_list' object.project.slug %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Tasks' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Tasks" %}{% endblock %}
+
+{% block section %}
+<div class="details">
+    {% with object.tasks.all as object_list %}
+    {% filter_by object_list "['title', 'description', 'owner', 'start', 'end', 'closed']" %}
+    {% paginate object_list %}
+    {% include 'elements/filterbox.html' %}
+    {% detail_table object_list filter_field_names %}
+    {% include 'elements/paginator.html' %}
+    {% endwith %}
+</div>
+{% endblock %}

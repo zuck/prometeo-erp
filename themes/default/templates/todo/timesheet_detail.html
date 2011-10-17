@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Tasks' 'task_list' %}
+    {% add_crumb 'Timesheets' 'timesheet_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.todo.add_timesheet %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url timesheet_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.todo.change_timesheet %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url timesheet_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.todo.delete_timesheet %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url timesheet_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.todo.change_timesheet %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url timesheet_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% include 'elements/navigator.html' %}
+<div class="details">
+    <table class="properties">
+        {% property_table object "[['date', 'created'], 'status', 'working_hours']" %}
+    </table>
+    {% detail_table object.entries.all "['start_time', 'end_time', 'task', 'description']" %}
+</div>
+{% endblock %}

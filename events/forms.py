@@ -37,8 +37,8 @@ class ImportEventsForm(forms.Form):
 class EventForm(forms.ModelForm):
     """Form for event data.
     """
-    start = SplitDateTimeField()
-    end = SplitDateTimeField(required=False)
+    start = DateTimeField()
+    end = DateTimeField(required=False)
 
     class Meta:
         model = Event

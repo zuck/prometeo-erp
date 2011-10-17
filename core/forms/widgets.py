@@ -20,23 +20,20 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from time import strftime
+from datetime import time
+from time import strptime, strftime
 import json
 
 from django import forms
-from django.forms.widgets import flatatt, Select, MultiWidget, DateInput, TextInput
+from django.forms.widgets import flatatt
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.db import models
 
-class SplitDateTimeWidget(MultiWidget):
-    """A more-friendly date/time widget.
-
-    Inspired by:
-
-    http://copiesofcopies.org/webl/2010/04/26/a-better-datetime-widget-for-django/
+class DateWidget(forms.DateInput):
+    """A more-friendly date widget with a pop-up calendar.
     """
     class Media:
         css = {
@@ -48,58 +45,83 @@ class SplitDateTimeWidget(MultiWidget):
             "js/splitdatetime.js",
         )
 
-    def __init__(self, attrs=None, date_format=None, time_format=None):
+    def __init__(self, attrs=None):
+        self.date_class = 'datepicker'
         if not attrs:
             attrs = {}
+        if 'date_class' in attrs:
+            self.date_class = attrs.pop('date_class')
+        if 'class' not in attrs:
+            attrs['class'] = 'date'
 
-        try:
-            self.date_class = attrs['date_class']
-            del attrs['date_class']
-        except:
-            self.date_class = "datepicker"
-        date_attrs = attrs.copy()
-        date_attrs['class'] = 'date'
+        super(DateWidget, self).__init__(attrs=attrs)
 
-        try:
-            self.time_class = attrs['time_class']
-            del attrs['time_class']
-        except:
-            self.time_class = "timepicker"
-        time_attrs = attrs.copy()
-        time_attrs['class'] = 'time'
+    def render(self, name, value, attrs=None):
+        return '<span class="%s">%s</span>' % (self.date_class, super(DateWidget, self).render(name, value, attrs))
+
+class TimeWidget(forms.MultiWidget):
+    """A more-friendly time widget.
+    """
+    def __init__(self, attrs=None):
+        self.time_class = 'timepicker'
+        if not attrs:
+            attrs = {}
+        if 'time_class' in attrs:
+            self.time_class = attrs.pop('time_class')
+        if 'class' not in attrs:
+            attrs['class'] = 'time'
 
         widgets = (
-            DateInput(attrs=date_attrs, format=date_format),
-            Select(attrs=time_attrs, choices=[(i+1, "%02d" % (i+1)) for i in range(0, 12)]),
-            Select(attrs=time_attrs, choices=[(i, "%02d" % i) for i in range(0, 60)]),
-            Select(attrs=time_attrs, choices=[('AM', _('AM')),('PM', _('PM'))])
+            forms.Select(attrs=attrs, choices=[(i+1, "%02d" % (i+1)) for i in range(0, 12)]),
+            forms.Select(attrs=attrs, choices=[(i, "%02d" % i) for i in range(0, 60)]),
+            forms.Select(attrs=attrs, choices=[('AM', _('AM')),('PM', _('PM'))])
         )
 
-        super(SplitDateTimeWidget, self).__init__(widgets, attrs)
+        super(TimeWidget, self).__init__(widgets, attrs)
+
+    def decompress(self, value):
+        if isinstance(value, time):
+            hour = int(value.strftime("%I"))
+            minute = int(value.strftime("%M"))
+            meridian = value.strftime("%p")
+            return (hour, minute, meridian)
+        return (None, None, None)
+
+    def value_from_datadict(self, data, files, name):
+        value = super(TimeWidget, self).value_from_datadict(data, files, name)
+        t = strptime("%02d:%02d %s" % (int(value[0]), int(value[1]), value[2]), "%I:%M %p")
+        return strftime("%H:%M:%S", t)
+
+    def format_output(self, rendered_widgets):
+        return '<span class="%s">%s%s%s</span>' % (
+            self.time_class,
+            rendered_widgets[0], rendered_widgets[1], rendered_widgets[2]
+        )
+
+class DateTimeWidget(forms.SplitDateTimeWidget):
+    """A more-friendly date/time widget.
+
+    Inspired by:
+
+    http://copiesofcopies.org/webl/2010/04/26/a-better-datetime-widget-for-django/
+    """
+    def __init__(self, attrs=None, date_format=None, time_format=None):
+        super(DateTimeWidget, self).__init__(attrs, date_format, time_format)
+        self.widgets = (
+            DateWidget(attrs=attrs),
+            TimeWidget(attrs=attrs),
+        )
 
     def decompress(self, value):
         if value:
             d = strftime("%Y-%m-%d", value.timetuple())
-            hour = strftime("%I", value.timetuple())
-            minute = strftime("%M", value.timetuple())
-            meridian = strftime("%p", value.timetuple())
-            return (d, hour, minute, meridian)
+            t = strftime("%I:%M %p", value.timetuple())
+            return (d, t)
         else:
-            return (None, None, None, None)
+            return (None, None)
 
     def format_output(self, rendered_widgets):
-        """
-        Given a list of rendered widgets (as strings), it inserts an HTML
-        linebreak between them.
-
-        Returns a Unicode string representing the HTML for the whole lot.
-        """
-        return '<span class="%s">%s</span><br/><span class="%s">%s%s%s</span>' % (
-            self.date_class,
-            rendered_widgets[0],
-            self.time_class,
-            rendered_widgets[1], rendered_widgets[2], rendered_widgets[3]
-        )
+        return '%s<br/>%s' % (rendered_widgets[0], rendered_widgets[1])
 
 class SelectAndAddWidget(forms.Select):
     """A select widget with an optional "add" link.
