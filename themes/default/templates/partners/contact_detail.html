@@ -53,7 +53,7 @@
         <div class="details">
             {% avatar object 90 %}
             <table class="properties">
-                {% property_table object "['full_name', ['email', 'url'], 'tags', 'categories']" %}
+                {% property_table object "['full_name', ['email', 'url'], ['main_address', 'main_phone_number'], 'tags', 'categories']" %}
             </table>
         </div>
         {% endblock %}

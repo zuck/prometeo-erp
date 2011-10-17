@@ -38,6 +38,11 @@ class ContactForm(forms.ModelForm):
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+        self.fields['main_address'].queryset = self.instance.addresses.all()
+        self.fields['main_phone_number'].queryset = self.instance.phone_numbers.all()
+
 class ContactJobForm(forms.ModelForm):
     """Form for job data from a contact point of view.
     """
@@ -58,6 +63,11 @@ class PartnerForm(forms.ModelForm):
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(PartnerForm, self).__init__(*args, **kwargs)
+        self.fields['main_address'].queryset = self.instance.addresses.all()
+        self.fields['main_phone_number'].queryset = self.instance.phone_numbers.all()
         
 class PartnerJobForm(forms.ModelForm):
     """Form for job data from a partner point of view.
