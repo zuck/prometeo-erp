@@ -20,10 +20,10 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.contrib.auth.models import User, Group, Permission
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.contrib.auth.models import User
 
 class MyUser(User):
     """A Prometeo's user.
