@@ -57,8 +57,8 @@ class ObjectPermission(models.Model):
     """
     object_id = models.PositiveIntegerField()
     perm = models.ForeignKey(Permission, verbose_name=_("permission"))
-    users = models.ManyToManyField(User, null=True, blank=True, verbose_name=_("users"))
-    groups = models.ManyToManyField(Group, null=True, blank=True, verbose_name=_("groups"))
+    users = models.ManyToManyField(User, null=True, blank=True, related_name='objectpermissions', verbose_name=_("users"))
+    groups = models.ManyToManyField(Group, null=True, blank=True, related_name='objectpermissions', verbose_name=_("groups"))
 
     def __unicode__(self):
-        return "%s | %d" % (self.model_perm, self.object_id)
+        return "%s | %d" % (self.perm, self.object_id)
