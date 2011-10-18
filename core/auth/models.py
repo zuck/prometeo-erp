@@ -52,3 +52,13 @@ class UserProfile(models.Model):
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     bookmarks = models.OneToOneField('menus.Menu', null=True, verbose_name=_("bookmarks"))
 
+class ObjectPermission(models.Model):
+    """A generic object/row-level permission.
+    """
+    object_id = models.PositiveIntegerField()
+    model_perm = models.ForeignKey(Permission, verbose_name=_("model permission"))
+    users = models.ManyToManyField(User, null=True, blank=True, verbose_name=_("users"))
+    groups = models.ManyToManyField(Group, null=True, blank=True, verbose_name=_("groups"))
+
+    def __unicode__(self):
+        return "%s | %d" % (self.model_perm, self.object_id)
