@@ -20,9 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.db.models import Q
 from django.conf import settings
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User
 
 from models import *
 
