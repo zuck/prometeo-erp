@@ -76,13 +76,13 @@ class TimesheetEntryFormset(_TimesheetEntryFormset):
             self.forms[0].fields['end_time'].initial = settings.LAUNCH_TIME_START
             self.forms[1].fields['start_time'].initial = settings.LAUNCH_TIME_END
             self.forms[1].fields['end_time'].initial = settings.WORKING_DAY_END
-        else:
+        elif len(self.forms) > 2:
             del self.forms[self.initial_form_count():-1]
-            self.extra = 1
             if self.initial_form_count() < self.total_form_count():
                 self.forms[-1].fields['start_time'].required = False
                 self.forms[-1].fields['end_time'].required = False
-                self.forms[-1].fields['DELETE'].initial = True   
+                self.forms[-1].fields['DELETE'].initial = True
+            self.extra = 1
 
 enrich_form(TaskForm)
 enrich_form(TimesheetForm)
