@@ -1,5 +1,7 @@
 INSTRUCTIONS
 ============
 
-Remember to replace, in "apache_django_cong.wsgi" file, the <PROMETEO_PATH>
-token with your local prometeo installation path.
+- Copy "prometeo_wsgi.conf" into "apache2/sites-available" folder.
+- Replace all occurences of "<PROMETEO_PATH>" in "prometeo_wsgi.conf" with your
+  local Prometeo installation path.
+- Restart the Apache web-server.
