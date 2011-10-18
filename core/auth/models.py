@@ -56,7 +56,7 @@ class ObjectPermission(models.Model):
     """A generic object/row-level permission.
     """
     object_id = models.PositiveIntegerField()
-    model_perm = models.ForeignKey(Permission, verbose_name=_("model permission"))
+    perm = models.ForeignKey(Permission, verbose_name=_("permission"))
     users = models.ManyToManyField(User, null=True, blank=True, verbose_name=_("users"))
     groups = models.ManyToManyField(Group, null=True, blank=True, verbose_name=_("groups"))
 
