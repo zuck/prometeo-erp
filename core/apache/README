@@ -1,7 +1,5 @@
 INSTRUCTIONS
 ============
 
-- Copy "prometeo_wsgi.conf" into "apache2/sites-available" folder.
-- Replace all occurences of "<PROMETEO_PATH>" in "prometeo_wsgi.conf" with your
-  local Prometeo installation path.
-- Restart the Apache web-server.
+Includes the "prometeo.conf" file inside your virtual host configuration, then replace
+all occurrencies of "<PROMETEO_PATH>" token with your local Prometeo installation path.
