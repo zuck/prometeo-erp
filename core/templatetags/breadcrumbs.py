@@ -20,10 +20,6 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-import copy
-import pprint
-import re
-
 from django import template
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
