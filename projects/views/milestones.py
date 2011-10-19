@@ -25,38 +25,35 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.template import RequestContext
-from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 
-from prometeo.core.utils import filter_objects
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
+from prometeo.core.views import filtered_list_detail
 
 from ..models import *
 from ..forms import *
+
+def _get_milestone(request, *args, **kwargs):
+    project_slug = kwargs.get('project', None)
+    milestone_slug = kwargs.get('slug', None)
+    return get_object_or_404(Milestone, slug=milestone_slug, project__slug=project_slug)
 
 @permission_required('projects.change_milestone') 
 def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
     """Displays the list of all milestones of a specified project.
     """
     project = get_object_or_404(Project, slug=project)
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                project.milestone_set.all(),
-                                                fields=['title', 'parent', 'author', 'manager', 'created', 'deadline', 'closed'],
-                                              )
-    return list_detail.object_list(
+    return filetered_list_detail(
         request,
-        queryset=object_list,
+        project.milestone_set.all(),
+        fields=['title', 'parent', 'author', 'manager', 'created', 'deadline', 'closed'],
         paginate_by=paginate_by,
         page=page,
-        extra_context={
-            'object': project,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
+        extra_context={'object': project},
         **kwargs
     )
  
-@permission_required('projects.change_milestone')    
+@permission_required('projects.change_milestone', _get_milestone)    
 def milestone_detail(request, project, slug, **kwargs):
     """Show milestone details.
     """
@@ -87,7 +84,7 @@ def milestone_add(request, project, **kwargs):
 
     return render_to_response('projects/milestone_edit.html', RequestContext(request, {'form': form, 'object': milestone}))
 
-@permission_required('projects.change_milestone')    
+@permission_required('projects.change_milestone', _get_milestone)    
 def milestone_edit(request, project, slug, **kwargs):
     """Edits a milestone.
     """
@@ -104,7 +101,7 @@ def milestone_edit(request, project, slug, **kwargs):
 
     return render_to_response('projects/milestone_edit.html', RequestContext(request, {'form': form, 'object': milestone}))
 
-@permission_required('projects.delete_milestone')     
+@permission_required('projects.delete_milestone', _get_milestone)     
 def milestone_delete(request, project, slug, **kwargs):
     """Deletes a milestone.
     """ 
@@ -118,7 +115,7 @@ def milestone_delete(request, project, slug, **kwargs):
             **kwargs
         )
 
-@permission_required('projects.change_milestone')
+@permission_required('projects.change_milestone', _get_milestone)
 def milestone_close(request, project, slug, **kwargs):
     """Closes an open milestone.
     """
@@ -131,7 +128,7 @@ def milestone_close(request, project, slug, **kwargs):
 
     return redirect_to(request, permanent=False, url=milestone.get_absolute_url())
 
-@permission_required('projects.change_milestone')
+@permission_required('projects.change_milestone', _get_milestone)
 def milestone_reopen(request, project, slug, **kwargs):
     """Reopens a closed milestone.
     """
@@ -144,27 +141,21 @@ def milestone_reopen(request, project, slug, **kwargs):
 
     return redirect_to(request, permanent=False, url=milestone.get_absolute_url())
 
-@permission_required('projects.change_milestone')
+@permission_required('projects.change_milestone', _get_milestone)
 @permission_required('projects.change_ticket')  
 def milestone_tickets(request, project, slug, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tickets of a specified milestone.
     """
     project = get_object_or_404(Project, slug=project)
     milestone = get_object_or_404(Milestone, slug=slug)
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                milestone.tickets.all(),
-                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        milestone.tickets.all(),
+        fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
         paginate_by=paginate_by,
         page=page,
         extra_context={
             'project': project,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
             'object': milestone
         },
         template_name='projects/milestone_tickets.html',

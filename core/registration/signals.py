@@ -34,37 +34,33 @@ from prometeo.core.auth.models import UserProfile
 from models import *
 
 def user_profile_post_save(sender, instance, signal, *args, **kwargs):
-    if kwargs['created'] and UserProfile.objects.count() > 1:
+    if kwargs['created'] \
+    and not instance.user.is_active \
+    and UserProfile.objects.count() > 1:        
         token, is_new = ActivationToken.objects.get_or_create(profile=instance)
-        if not is_new or instance.user.is_active:
-            return
-
-        # Creates an activation key.
-        sha = hashlib.sha1()
-        sha.update(str(random.random()))
-        sha.update(instance.user.username)
-        token.activation_key = sha.hexdigest()
-        token.key_expiration = datetime.datetime.today() + datetime.timedelta(settings.AUTH_EXPIRATION_DAYS)
-        token.save()
-        
-        # Updates the user activation status.
-        instance.user.is_active = False
-        instance.user.save()
-        
-        # Send an activation email.
-        current_site = Site.objects.get_current()
-        activation_link = 'http://' + current_site.domain + reverse('user_activate', args=[token.activation_key])
-        context = {
-            "user_name": instance.user.username,
-            "current_site": current_site.name,
-            "expiration_time": settings.AUTH_EXPIRATION_DAYS,
-            "activation_link": activation_link
-        }
-        email_subject = _('Account confirmation')
-        email_body = render_to_string("registration/emails/activation.html", context)
-        email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
-        email = EmailMessage(email_subject, email_body, email_from, [instance.user.email,])
-        email.content_subtype = "html"
-        email.send()
+        if is_new:
+            # Creates an activation key.
+            sha = hashlib.sha1()
+            sha.update(str(random.random()))
+            sha.update(instance.user.username)
+            token.activation_key = sha.hexdigest()
+            token.key_expiration = datetime.datetime.today() + datetime.timedelta(settings.AUTH_EXPIRATION_DAYS)
+            token.save()
+            
+            # Send an activation email.
+            current_site = Site.objects.get_current()
+            activation_link = 'http://' + current_site.domain + reverse('user_activate', args=[token.activation_key])
+            context = {
+                "user_name": instance.user.username,
+                "current_site": current_site.name,
+                "expiration_time": settings.AUTH_EXPIRATION_DAYS,
+                "activation_link": activation_link
+            }
+            email_subject = _('Account confirmation')
+            email_body = render_to_string("registration/emails/activation.html", context)
+            email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
+            email = EmailMessage(email_subject, email_body, email_from, [instance.user.email,])
+            email.content_subtype = "html"
+            email.send()
 
 models.signals.post_save.connect(user_profile_post_save, UserProfile)

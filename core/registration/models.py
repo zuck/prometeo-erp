@@ -26,6 +26,6 @@ from django.db import models
 class ActivationToken(models.Model):
     """Activation token for user account.
     """
-    profile = models.OneToOneField('auth.UserProfile', null=True, verbose_name=_("user profile"))
+    profile = models.ForeignKey('auth.UserProfile', null=True, verbose_name=_("user profile"))
     activation_key = models.CharField(_("activation key"), max_length=40, blank=True, null=True)
     key_expiration = models.DateTimeField(_("key expiration"), blank=True, null=True)

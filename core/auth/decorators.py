@@ -30,7 +30,7 @@ from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.utils.decorators import available_attrs
 
-def obj_permission_required(perm, get_obj_func, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME):
+def obj_permission_required(perm, get_obj_func=None, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME):
     """Checks if the user has "perm" for obj returned by "get_obj_func".
 
     It first checks if the user has generic model permissions. If no model
@@ -41,8 +41,10 @@ def obj_permission_required(perm, get_obj_func, login_url=None, redirect_field_n
     def decorator(view_func):
         @wraps(view_func, assigned=available_attrs(view_func))
         def _wrapped_view(request, *args, **kwargs):
-            obj = get_obj_func(request, *args, **kwargs)
-            if request.user.has_perm(perm) or request.user.has_perm(perm, obj):
+            obj = None
+            if callable(get_obj_func):
+                obj = get_obj_func(request, *args, **kwargs)
+            if request.user.has_perm(perm, obj):
                 return view_func(request, *args, **kwargs)
             path = request.build_absolute_uri()
             # If the login url is the same scheme and net location then just

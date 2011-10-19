@@ -27,14 +27,23 @@ from django.views.generic.simple import redirect_to
 from django.views.generic import list_detail, create_update
 from django.template import RequestContext
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
 
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.utils import clean_referer
 from prometeo.core.views import filtered_list_detail
 from prometeo.addressing.views import *
 
 from ..models import *
 from ..forms import *
+
+def _get_contact(request, *args, **kwargs):
+    contact_id = kwargs.get('contact_id', None)
+    id = kwargs.get('id', None)
+    if contact_id:
+        return get_object_or_404(Contact, id=contact_id)
+    elif id:
+        return get_object_or_404(Contact, id=id)
+    return None
 
 @permission_required('partners.change_contact')
 def contact_list(request, page=0, paginate_by=10, **kwargs):
@@ -64,7 +73,7 @@ def contact_add(request, **kwargs):
         template_name='partners/contact_edit.html'
     )
 
-@permission_required('partners.change_contact')     
+@permission_required('partners.change_contact', _get_contact)     
 def contact_detail(request, id, page=None, **kwargs):
     """Shows contact details.
     """
@@ -79,7 +88,7 @@ def contact_detail(request, id, page=None, **kwargs):
         **kwargs
     )
 
-@permission_required('partners.change_contact')     
+@permission_required('partners.change_contact', _get_contact)     
 def contact_edit(request, id, **kwargs):
     """Edits a contact.
     """
@@ -90,7 +99,7 @@ def contact_edit(request, id, **kwargs):
         template_name='partners/contact_edit.html'
     )
 
-@permission_required('partners.delete_contact')    
+@permission_required('partners.delete_contact', _get_contact)    
 def contact_delete(request, id, **kwargs):
     """Deletes a contact.
     """
@@ -103,7 +112,7 @@ def contact_delete(request, id, **kwargs):
             **kwargs
         )
 
-@permission_required('partners.change_contact')   
+@permission_required('partners.change_contact', _get_contact)   
 def contact_addresses(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the contact's addresses.
     """
@@ -118,7 +127,7 @@ def contact_addresses(request, id, page=0, paginate_by=10, **kwargs):
         extra_context={'object': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact')
+@permission_required('partners.change_contact', _get_contact)
 def contact_add_address(request, id, **kwargs):
     """Adds a new address to the given partner.
     """
@@ -130,7 +139,7 @@ def contact_add_address(request, id, **kwargs):
         extra_context={'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact')
+@permission_required('partners.change_contact', _get_contact)
 def contact_edit_address(request, contact_id, id, **kwargs):
     """Edits an address of the given contact.
     """
@@ -144,7 +153,7 @@ def contact_edit_address(request, contact_id, id, **kwargs):
         extra_context={'owner': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact')
+@permission_required('partners.change_contact', _get_contact)
 def contact_delete_address(request, contact_id, id, **kwargs):
     """Deletes an address of the given contact.
     """
@@ -158,7 +167,7 @@ def contact_delete_address(request, contact_id, id, **kwargs):
         extra_context={'owner': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact')  
+@permission_required('partners.change_contact', _get_contact)  
 def contact_phones(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the contact's phone numbers.
     """
@@ -173,7 +182,7 @@ def contact_phones(request, id, page=0, paginate_by=10, **kwargs):
         extra_context={'object': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact')   
+@permission_required('partners.change_contact', _get_contact)   
 def contact_add_phone(request, id, **kwargs):
     """Adds a new phone number to the given contact.
     """
@@ -185,7 +194,7 @@ def contact_add_phone(request, id, **kwargs):
         extra_context={'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact')
+@permission_required('partners.change_contact', _get_contact)
 def contact_edit_phone(request, contact_id, id, **kwargs):
     """Edits a phone number of the given contact.
     """
@@ -199,7 +208,7 @@ def contact_edit_phone(request, contact_id, id, **kwargs):
         extra_context={'owner': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact')
+@permission_required('partners.change_contact', _get_contact)
 def contact_delete_phone(request, contact_id, id, **kwargs):
     """Deletes a phone number of the given contact.
     """
@@ -214,7 +223,7 @@ def contact_delete_phone(request, contact_id, id, **kwargs):
     )
 
 @permission_required('partners.change_partner')
-@permission_required('partners.change_contact')    
+@permission_required('partners.change_contact', _get_contact)    
 def contact_jobs(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the contact's jobs.
     """
@@ -250,7 +259,7 @@ def contact_add_job(request, id, **kwargs):
     return render_to_response('partners/job_edit.html', RequestContext(request, {'object': instance, 'form': form}))
 
 @permission_required('partners.change_partner')
-@permission_required('partners.change_contact')
+@permission_required('partners.change_contact', _get_contact)
 def contact_edit_job(request, contact_id, id, **kwargs):
     """Edits a job of the given contact.
     """
@@ -268,7 +277,7 @@ def contact_edit_job(request, contact_id, id, **kwargs):
     return render_to_response('partners/job_edit.html', RequestContext(request, {'object': instance, 'form': form}))
 
 @permission_required('partners.change_partner')
-@permission_required('partners.delete_contact')
+@permission_required('partners.delete_contact', _get_contact)
 def contact_delete_job(request, contact_id, id, **kwargs):
     """Deletes a job of the given contact.
     """

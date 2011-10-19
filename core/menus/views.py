@@ -20,7 +20,6 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
@@ -28,42 +27,43 @@ from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 from django.contrib import messages
 
-from django.contrib.auth.models import User
-
 from prometeo.core.utils import clean_referer
-from prometeo.core.utils import filter_objects
+from prometeo.core.auth.views import _get_user
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
+from prometeo.core.views import filtered_list_detail
 
 from models import *
 from forms import *
 
-@login_required
+def _get_bookmark(request, *args, **kwargs):
+    username = kwargs.get('username', None)
+    slug = kwargs.get('slug', None)
+    return get_object_or_404(Link, menu__users__username=username, slug=slug)
+
+@permission_required('auth.change_user', _get_user)
 def bookmark_list(request, username, page=0, paginate_by=10, **kwargs):
     """Displays the list of all bookmarks for the current user.
     """
     user = get_object_or_404(User, username=username)
 
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                user.get_profile().bookmarks.links.all(),
-                                                fields=['title', 'url'],
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        user.get_profile().bookmarks.links.all(),
+        fields=['title', 'url'],
         paginate_by=paginate_by,
         page=page,
         extra_context={
             'object': user,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
         },
         template_name='menus/bookmark_list.html',
         **kwargs
     )
 
-@login_required
+@permission_required('auth.change_user', _get_user)
+@permission_required('menus.add_link')
 def bookmark_add(request, username, **kwargs):
     """Adds a new bookmark for the current user.
     """
@@ -88,7 +88,8 @@ def bookmark_add(request, username, **kwargs):
 
     return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link, 'object_user': user}))
 
-@login_required
+@permission_required('auth.change_user', _get_user)
+@permission_required('menus.change_link', _get_bookmark)
 def bookmark_edit(request, username, slug, **kwargs):
     """Edits an existing bookmark for the current user.
     """
@@ -108,7 +109,8 @@ def bookmark_edit(request, username, slug, **kwargs):
 
     return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link, 'object_user': user}))
 
-@login_required
+@permission_required('auth.change_user', _get_user)
+@permission_required('menus.delete_link', _get_bookmark)
 def bookmark_delete(request, username, slug, **kwargs):
     """Deletes an existing bookmark for the current user.
     """

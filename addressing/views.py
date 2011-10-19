@@ -24,15 +24,21 @@ from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
 from django.views.generic.simple import redirect_to
 from django.views.generic import create_update
 from django.db import models
 
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
 
 from models import *
 from forms import *
+
+def _get_address(request, *args, **kwargs):
+    return get_object_or_404(Address, id=kwargs.get('object_id', None))
+
+def _get_phone_num(request, *args, **kwargs):
+    return get_object_or_404(PhoneNumber, id=kwargs.get('object_id', None))
 
 def _get_field_and_value(owner, owner_field):
     """Returns the field object and the value of the given field.
@@ -40,7 +46,7 @@ def _get_field_and_value(owner, owner_field):
     rel = owner._meta.get_field_by_name(owner_field)[0]
     value = getattr(owner, owner_field)
 
-    return rel, value
+    return rel, value  
 
 @permission_required('addressing.change_address')
 def address_list(request, template_name, page=0, paginate_by=10, owner=None, owner_field='addresses', **kwargs):
@@ -82,7 +88,7 @@ def address_add(request, owner, post_save_redirect, template_name, owner_field='
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.change_address')    
+@permission_required('addressing.change_address', _get_address)    
 def address_edit(request, object_id, post_save_redirect, template_name, **kwargs):
     """Edits an address.
     """
@@ -103,7 +109,7 @@ def address_edit(request, object_id, post_save_redirect, template_name, **kwargs
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.delete_address')    
+@permission_required('addressing.delete_address', _get_address)    
 def address_delete(request, object_id, post_delete_redirect, template_name, **kwargs):
     """Deletes an address.
     """
@@ -156,7 +162,7 @@ def phone_number_add(request, owner, post_save_redirect, template_name, owner_fi
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.change_phone_number')    
+@permission_required('addressing.change_phone_number', _get_phone_num)    
 def phone_number_edit(request, object_id, post_save_redirect, template_name, **kwargs):
     """Edits a phone number.
     """
@@ -177,7 +183,7 @@ def phone_number_edit(request, object_id, post_save_redirect, template_name, **k
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.delete_phone_number')    
+@permission_required('addressing.delete_phone_number', _get_phone_num)    
 def phone_number_delete(request, object_id, post_delete_redirect, template_name, **kwargs):
     """Deletes a phone number.
     """

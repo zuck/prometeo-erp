@@ -25,38 +25,37 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.template import RequestContext
-from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 
-from prometeo.core.utils import filter_objects
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
+from prometeo.core.views import filtered_list_detail
 
 from ..models import *
 from ..forms import *
+
+def _get_ticket(request, *args, **kwargs):
+    id = kwargs.get('id', None)
+    project_slug = kwargs.get('project', None)
+    return get_object_or_404(Ticket, id=id, project__slug=project_slug)
 
 @permission_required('projects.change_ticket') 
 def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tickets of a specified project.
     """
     project = get_object_or_404(Project, slug=project)
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                project.tickets.all(),
-                                                fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        project.tickets.all(),
+        fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
         paginate_by=paginate_by,
         page=page,
         extra_context={
             'object': project,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
         },
         **kwargs
     )
 
-@permission_required('projects.change_ticket')    
+@permission_required('projects.change_ticket', _get_ticket)    
 def ticket_detail(request, project, id, **kwargs):
     """Show ticket details.
     """
@@ -104,7 +103,7 @@ def ticket_add(request, project, milestone=None, area=None, **kwargs):
 
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
-@permission_required('projects.change_ticket')     
+@permission_required('projects.change_ticket', _get_ticket)     
 def ticket_edit(request, project, id, **kwargs):
     """Edits a ticket.
     """
@@ -127,17 +126,17 @@ def ticket_edit(request, project, id, **kwargs):
 
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
-@permission_required('projects.delete_ticket')     
+@permission_required('projects.delete_ticket', _get_ticket)     
 def ticket_delete(request, project, id, **kwargs):
     """Deletes a ticket.
     """
     project = get_object_or_404(Project, slug=project)
     ticket = get_object_or_404(Ticket, project=project, pk=id)
     return create_update.delete_object(
-            request,
-            model=Ticket,
-            object_id=ticket.pk,
-            post_delete_redirect='/projects/%s/tickets' % project.slug,
-            template_name='projects/ticket_delete.html',
-            **kwargs
-        )
+        request,
+        model=Ticket,
+        object_id=ticket.pk,
+        post_delete_redirect='/projects/%s/tickets' % project.slug,
+        template_name='projects/ticket_delete.html',
+        **kwargs
+    )

@@ -30,12 +30,20 @@ from django.contrib.auth import logout
 from django.contrib.comments.models import *
 from django.contrib import messages
 from django.conf import settings
-from django.contrib.auth.decorators import permission_required
 
-from prometeo.core.utils import filter_objects
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
+from prometeo.core.views import filtered_list_detail
 
 from models import *
 from forms import *
+
+def _get_user(request, *args, **kwargs):
+    username = kwargs.get('username', None)
+    return get_object_or_404(User, username=username)
+
+def _get_comment(request, *args, **kwargs):
+    id = kwargs.get('id', None)
+    return get_object_or_404(Comment, id=id, site__pk=settings.SITE_ID)
 
 def set_language(request):
     """Sets the current language.
@@ -54,35 +62,21 @@ def user_logged(request):
 def user_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all active users.
     """
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                MyUser.objects.all(),
-                                                fields=['username', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login']
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        MyUser.objects.all(),
+        fields=['username', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login'],
         paginate_by=paginate_by,
         page=page,
-        extra_context={
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
         template_name='auth/user_list.html',
         **kwargs
     )
-  
+
+@permission_required('auth.change_user', _get_user)  
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.
     """
-    user = get_object_or_404(MyUser, username=username)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
-        messages.error(request, _("You can't view this user's profile."))
-        return redirect_to(request, url=reverse('user_login'))
-
     object_list = MyUser.objects.all()
-
     return list_detail.object_detail(
         request,
         slug=username,
@@ -120,15 +114,12 @@ def user_add(request, **kwargs):
         del form.fields['is_superuser']
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
-  
+
+@permission_required('auth.change_user', _get_user)   
 def user_edit(request, username, **kwargs):
     """Edits a user's profile.
     """
     user = get_object_or_404(User, username=username)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
-        messages.error(request, _("You can't edit this user's profile."))
-        return redirect_to(request, url=reverse('user_login'))
         
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
@@ -155,15 +146,12 @@ def user_edit(request, username, **kwargs):
         del form.fields['is_superuser']
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'pform': pform, 'object': user}))
-  
+
+@permission_required('auth.delete_user', _get_user)  
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.
     """ 
     user = get_object_or_404(User, username=username)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('auth.delete_user') or request.user.username == username)):
-        messages.error(request, _("You can't delete this user's profile."))
-        return redirect_to(request, url=user.get_absolute_url())
         
     if request.method == 'POST' and user == request.user:
         logout(request)
@@ -177,16 +165,12 @@ def user_delete(request, username, **kwargs):
             template_name='auth/user_delete.html',
             **kwargs
         )
-  
+
+@permission_required('comments.delete_comment', _get_comment)  
 def comment_delete(request, id, **kwargs):
     """Deletes a user's comment.
     """ 
     comment = get_object_or_404(Comment, id=id, site__pk=settings.SITE_ID)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('comments.delete_comment') or request.user == comment.user)):
-        messages.error(request, _("You can't delete this user's comment."))
-        return redirect_to(request, url=user.get_absolute_url())
-
     return create_update.delete_object(
             request,
             model=Comment,

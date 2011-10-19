@@ -35,14 +35,20 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 from django.conf import settings
 
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
 
 from models import *
 from forms import *
+
+def _get_event(request, *args, **kwargs):
+    id = kwargs.get('id', None)
+    if id:
+        return get_object_or_404(Event, id=id)
+    return None
 
 def _current_day(year=None, month=None, day=None, week=None):
     """Tries to return the best matched day for the given data.
@@ -184,7 +190,7 @@ def event_year(request, year=None, **kwargs):
         **kwargs
     )
 
-@permission_required('events.change_event')
+@permission_required('events.change_event', _get_event)
 def event_detail(request, id, **kwargs):
     """Displays an event.
     """
@@ -211,7 +217,7 @@ def event_add(request, **kwargs):
 
     return render_to_response('events/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
 
-@permission_required('events.change_event') 
+@permission_required('events.change_event', _get_event) 
 def event_edit(request, id, **kwargs):
     """Edits an event.
     """
@@ -227,7 +233,7 @@ def event_edit(request, id, **kwargs):
 
     return render_to_response('events/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
 
-@permission_required('events.delete_event') 
+@permission_required('events.delete_event', _get_event) 
 def event_delete(request, id, **kwargs):
     """Deletes an event.
     """
@@ -273,7 +279,7 @@ def event_import(request, **kwargs):
 
     return render_to_response('events/event_import.html', RequestContext(request, {'form': form}))
 
-@permission_required('events.change_event')
+@permission_required('events.change_event', _get_event)
 def event_export(request, id=None, **kwargs):
     """Exports one or more events as an .ics file.
     """

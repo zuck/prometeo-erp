@@ -29,32 +29,26 @@ from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
 
-from django.contrib.auth.models import User
-
-from prometeo.core.utils import filter_objects
+from prometeo.core.auth.views import _get_user
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
+from prometeo.core.views import filtered_list_detail
 
 from models import *
 from forms import *
 
-@login_required
+def _get_notification(request, *args, **kwargs):
+    username = kwargs.get('username', None)
+    id = kwargs.get('id', None)
+    return get_object_or_404(Notification, user__username=username, id=id)
+
+@permission_required('auth.change_user', _get_user)
 def notification_list(request, username, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered notifications.
     """
     user = get_object_or_404(User, username=username)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('notifications.change_notification') or request.user == user)):
-        messages.error(request, _("You can't view this notification list."))
-        return redirect_to(request, url=reverse('user_login'))
-
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                Notification.objects.filter(user=user),
-                                                fields=['title', 'created', 'read'],
-                                              )
     
     if request.method == 'POST':
         form = SubscriptionsForm(request.POST, user=user)
@@ -68,21 +62,21 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
         else:
             form = None
 
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        Notification.objects.filter(user=user),
+        fields=['title', 'created', 'read'],
         paginate_by=paginate_by,
         page=page,
         extra_context={
             'form' : form,
             'object': user,
-            'field_names': field_names,
-            'filter_fields': filter_fields,
         },
         **kwargs
     )
 
-@login_required
+@permission_required('auth.change_user', _get_user)
+@permission_required('notifications.change_notification', _get_notification)
 def notification_detail(request, username, id, **kwargs):
     """Displays the details of the selected notification.
     """
@@ -108,7 +102,8 @@ def notification_detail(request, username, id, **kwargs):
         **kwargs
     )
 
-@login_required
+@permission_required('auth.change_user', _get_user)
+@permission_required('notifications.delete_notification', _get_notification)
 def notification_delete(request, username, id, **kwargs):
     """Deletes an existing notification for the current user.
     """

@@ -25,44 +25,39 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.template import RequestContext
-from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 
-from prometeo.core.utils import filter_objects
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
+from prometeo.core.views import filtered_list_detail
 
 from ..models import *
 from ..forms import *
+
+def _get_project(request, *args, **kwargs):
+    slug = kwargs.get('slug', None)
+    return get_object_or_404(Project, slug=slug)
 
 @permission_required('projects.change_project') 
 def project_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all published projects.
     """
-    field_names, filter_fields, object_list = filter_objects(
-                                                request,
-                                                Project,
-                                                fields=['id', 'title', 'author', 'manager', 'created', 'status'],
-                                              )
-    return list_detail.object_list(
+    return filtered_list_detail(
         request,
-        queryset=object_list,
+        Project,
+        fields=['id', 'title', 'author', 'manager', 'created', 'status'],
         paginate_by=paginate_by,
         page=page,
-        extra_context={
-            'field_names': field_names,
-            'filter_fields': filter_fields,
-        },
         **kwargs
     )   
     
-@permission_required('projects.change_project') 
+@permission_required('projects.change_project', _get_project) 
 def project_detail(request, slug, **kwargs):
     """Displays the selected project.
     """
-    object_list = Project.objects.all()
     return list_detail.object_detail(
         request,
         slug=slug,
-        queryset=object_list,
+        queryset=Project.objects.all(),
         **kwargs
     )
 
@@ -82,7 +77,7 @@ def project_add(request, **kwargs):
 
     return render_to_response('projects/project_edit.html', RequestContext(request, {'form': form, 'object': project}))
 
-@permission_required('projects.change_project')     
+@permission_required('projects.change_project', _get_project)     
 def project_edit(request, slug, **kwargs):
     """Edits a project.
     """
@@ -98,11 +93,10 @@ def project_edit(request, slug, **kwargs):
 
     return render_to_response('projects/project_edit.html', RequestContext(request, {'form': form, 'object': project}))
 
-@permission_required('projects.delete_project')     
+@permission_required('projects.delete_project', _get_project)     
 def project_delete(request, slug, **kwargs):
     """Deletes a project.
-    """ 
-    project = get_object_or_404(Project, slug=slug)
+    """
     return create_update.delete_object(
             request,
             model=Project,

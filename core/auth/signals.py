@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.db import models
+from django.contrib.auth.models import User, Permission
 
 from prometeo.core.menus.signals import manage_bookmarks
 from prometeo.core.widgets.signals import manage_dashboard
@@ -29,6 +30,15 @@ from models import *
 
 def user_post_save(sender, instance, signal, *args, **kwargs):
     profile, is_new = UserProfile.objects.get_or_create(user=instance)
+    if is_new:
+        # Change user.
+        can_change_user = Permission.objects.get_by_natural_key("change_user", "auth", "user")
+        can_change_this_user, is_new = ObjectPermission.objects.get_or_create(perm=can_change_user, object_id=instance.pk)
+        can_change_this_user.users.add(instance)
+        # Delete user.
+        can_delete_user = Permission.objects.get_by_natural_key("delete_user", "auth", "user")
+        can_delete_this_user, is_new = ObjectPermission.objects.get_or_create(perm=can_delete_user, object_id=instance.pk)
+        can_delete_this_user.users.add(instance)
 
 models.signals.post_save.connect(user_post_save, User)
 
