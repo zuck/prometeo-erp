@@ -28,6 +28,7 @@ from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -40,15 +41,17 @@ def user_register(request):
     if request.user.is_authenticated():
         messages.info(request, _("You are already registered."))
         return redirect_to(request, url="/")
+
+    user = User(is_active=False)
         
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST, instance=user)
         if form.is_valid():
-            user = form.save()
+            form.save()
             messages.success(request, _("An email has been sent with an activation key. Please check your mail to complete the registration."))
             return redirect_to(request, url="/")
     else:
-        form = UserRegistrationForm()
+        form = UserRegistrationForm(instance=user)
 
     return render_to_response('registration/register.html', RequestContext(request, {'form': form}))        
     

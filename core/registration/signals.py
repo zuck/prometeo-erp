@@ -36,7 +36,7 @@ from models import *
 def user_profile_post_save(sender, instance, signal, *args, **kwargs):
     if kwargs['created'] and UserProfile.objects.count() > 1:
         token, is_new = ActivationToken.objects.get_or_create(profile=instance)
-        if not is_new:
+        if not is_new or instance.user.is_active:
             return
 
         # Creates an activation key.
