@@ -53,6 +53,8 @@ class Event(Commentable):
     class Meta:
         ordering = ('-start', 'id')
         get_latest_by = '-start'
+        verbose_name = _('event')
+        verbose_name_plural = _('events')
 
     def __unicode__(self):
         return u'%s' % self.title
