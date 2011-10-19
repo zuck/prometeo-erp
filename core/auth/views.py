@@ -97,7 +97,7 @@ def user_detail(request, username, **kwargs):
 def user_add(request, **kwargs):
     """Adds a new user's profile.
     """
-    user = MyUser(is_active=True)  
+    user = User(is_active=True)  
       
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
@@ -124,7 +124,7 @@ def user_add(request, **kwargs):
 def user_edit(request, username, **kwargs):
     """Edits a user's profile.
     """
-    user = get_object_or_404(MyUser, username=username)
+    user = get_object_or_404(User, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.change_user') or request.user.username == username)):
         messages.error(request, _("You can't edit this user's profile."))
@@ -159,7 +159,7 @@ def user_edit(request, username, **kwargs):
 def user_delete(request, username, **kwargs):
     """Deletes a user's profile.
     """ 
-    user = get_object_or_404(MyUser, username=username)
+    user = get_object_or_404(User, username=username)
     
     if not (request.user.is_authenticated() and (request.user.has_perm('auth.delete_user') or request.user.username == username)):
         messages.error(request, _("You can't delete this user's profile."))
