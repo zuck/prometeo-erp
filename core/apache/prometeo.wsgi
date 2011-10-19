@@ -25,6 +25,7 @@ from django.core.handlers.wsgi import WSGIHandler
 
 prometeo_path = os.path.dirname(os.path.abspath(__file__)) + '/../..'
 
+sys.path.append(prometeo_path)
 sys.path.append(prometeo_path + '/..')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'prometeo.settings'
 
