@@ -61,6 +61,48 @@ def _register_followers(instance):
 
 ## HANDLERS ##
 
+def update_project_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given project.
+    """
+    # Change project.
+    can_change_this_project, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_project", "projects", "project", instance.pk)
+    can_change_this_project.users.add(instance.author)
+    if instance.manager:
+        can_change_this_project.users.add(instance.manager)
+    # Delete project.
+    can_delete_this_project, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_project", "projects", "project", instance.pk)
+    can_delete_this_project.users.add(instance.author)
+    if instance.manager:
+        can_delete_this_project.users.add(instance.manager)
+
+def update_milestone_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given milestone.
+    """
+    # Change milestone.
+    can_change_this_milestone, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_milestone", "projects", "milestone", instance.pk)
+    can_change_this_milestone.users.add(instance.author)
+    if instance.manager:
+        can_change_this_milestone.users.add(instance.manager)
+    # Delete milestone.
+    can_delete_this_milestone, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_milestone", "projects", "milestone", instance.pk)
+    can_delete_this_milestone.users.add(instance.author)
+    if instance.manager:
+        can_delete_this_milestone.users.add(instance.manager)
+
+def update_ticket_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given ticket.
+    """
+    # Change ticket.
+    can_change_this_ticket, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_ticket", "projects", "ticket", instance.pk)
+    can_change_this_ticket.users.add(instance.author)
+    if instance.assignee:
+        can_change_this_ticket.users.add(instance.assignee)
+    # Delete ticket.
+    can_delete_this_ticket, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_ticket", "projects", "ticket", instance.pk)
+    can_delete_this_ticket.users.add(instance.author)
+    if instance.assignee:
+        can_delete_this_ticket.users.add(instance.assignee)
+
 def notify_object_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new object.
     """
@@ -161,6 +203,10 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
     [activity.streams.add(s) for s in _get_streams(obj)]
 
 ## CONNECTIONS ##
+
+post_save.connect(update_project_permissions, Project, dispatch_uid="update_project_permissions")
+post_save.connect(update_milestone_permissions, Milestone, dispatch_uid="update_milestone_permissions")
+post_save.connect(update_ticket_permissions, Ticket, dispatch_uid="update_ticket_permissions")
 
 post_save.connect(notify_object_created, Project, dispatch_uid="project_created")
 post_change.connect(notify_object_change, Project, dispatch_uid="project_changed")
