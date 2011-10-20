@@ -35,19 +35,19 @@ class ObjectPermissionBackend(object):
     def authenticate(self, username, password):
         return None
 
-    def get_group_permissions(self, user_obj, obj):
+    def get_group_permissions(self, user_obj):
         if not hasattr(user_obj, '_group_obj_perm_cache'):
-            perms = ObjectPermission.objects.filter(groups__user=user_obj, object_id=obj.pk)
-            perms = perms.values_list('perm__content_type__app_label', 'perm__codename').order_by()
-            user_obj._group_obj_perm_cache = set(["%s.%s" % (ct, name) for ct, name in perms])
+            perms = ObjectPermission.objects.filter(groups__user=user_obj)
+            perms = perms.values_list('perm__content_type__app_label', 'perm__codename', 'object_id').order_by()
+            user_obj._group_obj_perm_cache = set(["%s.%s.%s" % (ct, name, obj_id) for ct, name in perms])
         return user_obj._group_obj_perm_cache
 
-    def get_all_permissions(self, user_obj, obj):
+    def get_all_permissions(self, user_obj):
         if user_obj.is_anonymous():
             return set()
         if not hasattr(user_obj, '_obj_perm_cache'):
-            user_obj._obj_perm_cache = set([u"%s.%s" % (p.perm.content_type.app_label, p.perm.codename) for p in user_obj.objectpermissions.filter(object_id=obj.pk)])
-            user_obj._obj_perm_cache.update(self.get_group_permissions(user_obj, obj))
+            user_obj._obj_perm_cache = set([u"%s.%s.%s" % (p.perm.content_type.app_label, p.perm.codename, p.object_id) for p in user_obj.objectpermissions.all()])
+            user_obj._obj_perm_cache.update(self.get_group_permissions(user_obj))
         return user_obj._obj_perm_cache
 
     def has_perm(self, user_obj, perm, obj=None):

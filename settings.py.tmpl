@@ -132,7 +132,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages'
+    'django.contrib.messages.context_processors.messages',
+
+    'prometeo.core.auth.context_processors.auth',
 )
 
 # List of middleware classes to use.  Order is important; in the request phase,
