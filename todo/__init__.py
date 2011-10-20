@@ -19,3 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
+
+from django.conf import settings
+
+if __name__ in settings.INSTALLED_APPS:
+    from signals import *
