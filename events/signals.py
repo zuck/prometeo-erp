@@ -23,9 +23,10 @@ __version__ = '0.0.2'
 import json
 
 from django.utils.translation import ugettext_noop as _
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.contrib.comments.models import Comment
 
+from prometeo.core.auth.models import ObjectPermission
 from prometeo.core.streams.signals import *
 from prometeo.core.streams.models import Activity
 
@@ -57,6 +58,24 @@ def _register_followers(instance):
             pass
 
 ## HANDLERS ##
+
+def update_author_event_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the author of the given event.
+    """
+    # Change event.
+    can_change_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_event", "events", "event", instance.pk)
+    can_change_this_event.users.add(instance.author)
+    # Delete event.
+    can_delete_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_event", "events", "event", instance.pk)
+    can_delete_this_event.users.add(instance.author)
+
+def update_attendees_event_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the attendees of the given event.
+    """
+    # Change event.
+    can_change_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_event", "events", "event", instance.pk)
+    for att in instance.attendees.all():
+        can_change_this_event.users.add(att)
 
 def notify_event_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new event.
@@ -158,6 +177,9 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
     [activity.streams.add(s) for s in _get_streams(obj)]
 
 ## CONNECTIONS ##
+
+post_save.connect(update_author_event_permissions, Event, dispatch_uid="update_event_permissions")
+m2m_changed.connect(update_attendees_event_permissions, Event.attendees.through, dispatch_uid="update_event_permissions")
 
 post_save.connect(notify_event_created, Event, dispatch_uid="event_created")
 post_change.connect(notify_event_change, Event, dispatch_uid="event_changed")

@@ -206,10 +206,11 @@ def event_add(request, **kwargs):
     """Adds a new event.
     """
     event = Event(author=request.user)
+
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
-            event = form.save()
+            form.save()
             messages.success(request, _("The event has been saved."))
             return redirect_to(request, url=event.get_absolute_url())
     else:
@@ -222,10 +223,11 @@ def event_edit(request, id, **kwargs):
     """Edits an event.
     """
     event = get_object_or_404(Event, id=id)
+
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
-            event = form.save()
+            form.save()
             messages.success(request, _("The event has been saved."))
             return redirect_to(request, url=event.get_absolute_url())
     else:
