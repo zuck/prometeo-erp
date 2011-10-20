@@ -167,8 +167,7 @@ def install(sender, created_models, **kwargs):
 
     # Creates first managed company.
     if Partner in created_models \
-    and kwargs.get('interactive', True) \
-    and Partner.objects.count() == 0:
+    and kwargs.get('interactive', True):
         msg = "\nYou just installed Prometeo's partners system, which means you don't have " \
                 "a default managed company defined.\nWould you like to create one now? (yes/no): "
         confirm = raw_input(msg)
