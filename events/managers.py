@@ -27,4 +27,4 @@ class EventManager(models.Manager):
     """Custom manager for Event model.
     """
     def for_user(self, user):
-        return self.filter(Q(author=user) | Q(attendees=user) | Q(public=True))
+        return self.filter(Q(author=user) | Q(attendees=user) | Q(public=True)).distinct()
