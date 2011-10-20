@@ -62,4 +62,4 @@ class ObjectPermissionBackend(object):
         if obj is None:
             return False
 
-        return perm in self.get_all_permissions(user_obj, obj)
+        return "%s.%d" % (perm, obj.pk) in self.get_all_permissions(user_obj)
