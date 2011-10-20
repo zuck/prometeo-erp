@@ -25,6 +25,8 @@ from django.contrib.auth.models import User, Group, Permission
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
+from managers import *
+
 class MyUser(User):
     """A Prometeo's user.
     """
@@ -59,6 +61,8 @@ class ObjectPermission(models.Model):
     perm = models.ForeignKey(Permission, verbose_name=_("permission"))
     users = models.ManyToManyField(User, null=True, blank=True, related_name='objectpermissions', verbose_name=_("users"))
     groups = models.ManyToManyField(Group, null=True, blank=True, related_name='objectpermissions', verbose_name=_("groups"))
+
+    objects = ObjectPermissionManager()
 
     def __unicode__(self):
         return "%s | %d" % (self.perm, self.object_id)

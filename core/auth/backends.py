@@ -37,7 +37,7 @@ class ObjectPermissionBackend(object):
 
     def get_group_permissions(self, user_obj):
         if not hasattr(user_obj, '_group_obj_perm_cache'):
-            perms = ObjectPermission.objects.filter(groups__user=user_obj)
+            perms = ObjectPermission.objects.get_group_permissions(user_obj)
             perms = perms.values_list('perm__content_type__app_label', 'perm__codename', 'object_id').order_by()
             user_obj._group_obj_perm_cache = set(["%s.%s.%s" % (ct, name, obj_id) for ct, name in perms])
         return user_obj._group_obj_perm_cache

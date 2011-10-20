@@ -21,24 +21,22 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.db.models import Q
+from django.contrib.auth.models import Permission
 
-from prometeo.core.menus.signals import manage_bookmarks
-from prometeo.core.widgets.signals import manage_dashboard
+class ObjectPermissionManager(models.Manager):
+    """Custom manager for ObjectPermission model.
+    """
+    def get_by_natural_key(self, codename, app_label, model, object_id):
+        perm = Permission.objects.get_by_natural_key(codename, app_label, model)
+        return self.get(perm=perm, object_id=object_id)
 
-from models import *
+    def get_or_create_by_natural_key(self, codename, app_label, model, object_id):
+        perm = Permission.objects.get_by_natural_key(codename, app_label, model)
+        return self.get_or_create(perm=perm, object_id=object_id)
 
-def user_post_save(sender, instance, signal, *args, **kwargs):
-    profile, is_new = UserProfile.objects.get_or_create(user=instance)
-    if is_new:
-        # Change user.
-        can_change_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_user", "auth", "user", instance.pk)
-        can_change_this_user.users.add(instance)
-        # Delete user.
-        can_delete_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_user", "auth", "user", instance.pk)
-        can_delete_this_user.users.add(instance)
+    def get_group_permissions(self, user):
+        return self.filter(groups__user=user)
 
-models.signals.post_save.connect(user_post_save, User)
-
-manage_bookmarks(UserProfile)
-manage_dashboard(UserProfile)
+    def get_all_permissions(self, user):
+        return self.filter(Q(groups__user=user) | Q(users=user))
