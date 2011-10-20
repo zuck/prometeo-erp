@@ -26,9 +26,9 @@ from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.contrib.comments.models import Comment
 
-from prometeo.core.auth.models import ObjectPermission
 from prometeo.core.streams.signals import *
 from prometeo.core.streams.models import Activity
+from prometeo.core.auth.models import ObjectPermission
 
 from models import *
 

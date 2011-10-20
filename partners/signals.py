@@ -29,6 +29,7 @@ from django.contrib.comments.models import Comment
 from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
 from prometeo.core.streams.models import Activity
+from prometeo.core.auth.models import ObjectPermission
 
 from models import *
 
