@@ -25,22 +25,20 @@ from django.utils.translation import ugettext_noop as _
 
 from prometeo.core.widgets.models import *
 
-def fixtures(sender, **kwargs):
-    """Installs fixtures for this application.
-    """
+def install(sender, **kwargs):
     # Regions.
-    footer_region = Region.objects.create(
+    footer_region, is_new = Region.objects.get_or_create(
         slug="footer",
         description=_("Footer")
     )
     
-    sidebar_region = Region.objects.create(
+    sidebar_region, is_new = Region.objects.get_or_create(
         slug="sidebar",
         description=_("Sidebar")
     )
     
     # Widgets.
-    powered_by_widget = Widget.objects.create(
+    powered_by_widget, is_new = Widget.objects.get_or_create(
         title=_("Powered by"),
         slug="powered-by",
         description=_("Info about Prometeo"),
@@ -51,6 +49,6 @@ def fixtures(sender, **kwargs):
         region=footer_region
     )
     
-    post_syncdb.disconnect(fixtures)
+    post_syncdb.disconnect(install)
 
-post_syncdb.connect(fixtures)
+post_syncdb.connect(install)

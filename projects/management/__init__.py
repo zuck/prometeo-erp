@@ -27,29 +27,27 @@ from django.utils.translation import ugettext_noop as _
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
 
-def fixtures(sender, **kwargs):
-    """Installs fixtures for this application.
-    """
-    main_menu = Menu.objects.get(slug="main")
+def install(sender, **kwargs):
+    main_menu, is_new = Menu.objects.get_or_create(slug="main")
 
     # Menus.
-    project_menu = Menu.objects.create(
+    project_menu, is_new = Menu.objects.get_or_create(
         slug="project_menu",
         description=_("Main menu for projects")
     )
 
-    milestone_menu = Menu.objects.create(
+    milestone_menu, is_new = Menu.objects.get_or_create(
         slug="milestone_menu",
         description=_("Main menu for milestones")
     )
 
-    ticket_menu = Menu.objects.create(
+    ticket_menu, is_new = Menu.objects.get_or_create(
         slug="ticket_menu",
         description=_("Main menu for tickets")
     )
     
     # Links.
-    projects_link = Link.objects.create(
+    projects_link, is_new = Link.objects.get_or_create(
         title=_("Projects"),
         slug="projects",
         description=_("Project management"),
@@ -57,70 +55,70 @@ def fixtures(sender, **kwargs):
         menu=main_menu
     )
 
-    project_dashboard_link = Link.objects.create(
+    project_dashboard_link, is_new = Link.objects.get_or_create(
         title=_("Dashboard"),
         slug="project_dashboard",
         url="{{ object.get_absolute_url }}",
         menu=project_menu
     )
 
-    project_milestones_link = Link.objects.create(
+    project_milestones_link, is_new = Link.objects.get_or_create(
         title=_("Milestones"),
         slug="project_milestones",
         url="{% url milestone_list object.slug %}",
         menu=project_menu
     )
 
-    project_tickets_link = Link.objects.create(
+    project_tickets_link, is_new = Link.objects.get_or_create(
         title=_("Tickets"),
         slug="project_tickets",
         url="{% url ticket_list object.slug %}",
         menu=project_menu
     )
 
-    project_timeline_link = Link.objects.create(
+    project_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="project_timeline",
         url="{% url project_timeline object.slug %}",
         menu=project_menu
     )
 
-    milestone_dashboard_link = Link.objects.create(
+    milestone_dashboard_link, is_new = Link.objects.get_or_create(
         title=_("Dashboard"),
         slug="milestone_dashboard",
         url="{{ object.get_absolute_url }}",
         menu=milestone_menu
     )
 
-    milestone_tickets_link = Link.objects.create(
+    milestone_tickets_link, is_new = Link.objects.get_or_create(
         title=_("Tickets"),
         slug="milestone_tickets",
         url="{% url milestone_tickets object.project.slug object.slug %}",
         menu=milestone_menu
     )
 
-    milestone_timeline_link = Link.objects.create(
+    milestone_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="milestone_timeline",
         url="{% url milestone_timeline object.project.slug object.slug %}",
         menu=milestone_menu
     )
 
-    ticket_details_link = Link.objects.create(
+    ticket_details_link, is_new = Link.objects.get_or_create(
         title=_("Details"),
         slug="ticket_details",
         url="{{ object.get_absolute_url }}",
         menu=ticket_menu
     )
 
-    ticket_tasks_link = Link.objects.create(
+    ticket_tasks_link, is_new = Link.objects.get_or_create(
         title=_("Tasks"),
         slug="ticket_tasks",
         url="{% url ticket_tasks object.project.slug object.pk %}",
         menu=ticket_menu
     )
 
-    ticket_timeline_link = Link.objects.create(
+    ticket_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="ticket_timeline",
         url="{% url ticket_timeline object.project.slug object.pk %}",
@@ -128,51 +126,51 @@ def fixtures(sender, **kwargs):
     )
 
     # Signatures.
-    project_created_signature = Signature.objects.create(
+    project_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Project created"),
         slug="project-created"
     )
 
-    project_changed_signature = Signature.objects.create(
+    project_changed_signature, is_new = Signature.objects.get_or_create(
         title=_("Project changed"),
         slug="project-changed"
     )
 
-    project_deleted_signature = Signature.objects.create(
+    project_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Project deleted"),
         slug="project-deleted"
     )
 
-    milestone_created_signature = Signature.objects.create(
+    milestone_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Milestone created"),
         slug="milestone-created"
     )
 
-    milestone_changed_signature = Signature.objects.create(
+    milestone_changed_signature, is_new = Signature.objects.get_or_create(
         title=_("Milestone changed"),
         slug="milestone-changed"
     )
 
-    milestone_deleted_signature = Signature.objects.create(
+    milestone_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Milestone deleted"),
         slug="milestone-deleted"
     )
 
-    ticket_created_signature = Signature.objects.create(
+    ticket_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Ticket created"),
         slug="ticket-created"
     )
 
-    ticket_changed_signature = Signature.objects.create(
+    ticket_changed_signature, is_new = Signature.objects.get_or_create(
         title=_("Ticket changed"),
         slug="ticket-changed"
     )
 
-    ticket_deleted_signature = Signature.objects.create(
+    ticket_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Ticket deleted"),
         slug="ticket-deleted"
     )
     
-    post_syncdb.disconnect(fixtures)
+    post_syncdb.disconnect(install)
 
-post_syncdb.connect(fixtures)
+post_syncdb.connect(install)

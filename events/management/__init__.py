@@ -27,24 +27,22 @@ from django.utils.translation import ugettext_noop as _
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
 
-def fixtures(sender, **kwargs):
-    """Installs fixtures for this application.
-    """
-    main_menu = Menu.objects.get(slug="main")
+def install(sender, **kwargs):
+    main_menu, is_new = Menu.objects.get_or_create(slug="main")
 
     # Menus.
-    events_menu = Menu.objects.create(
+    events_menu, is_new = Menu.objects.get_or_create(
         slug="events_menu",
         description=_("Main menu for events")
     )
 
-    event_menu = Menu.objects.create(
+    event_menu, is_new = Menu.objects.get_or_create(
         slug="event_menu",
         description=_("Main menu for event")
     )
     
     # Links.
-    events_link = Link.objects.create(
+    events_link, is_new = Link.objects.get_or_create(
         title=_("Events"),
         slug="events",
         description=_("Event planning"),
@@ -52,49 +50,49 @@ def fixtures(sender, **kwargs):
         menu=main_menu
     )
 
-    events_agenda_link = Link.objects.create(
+    events_agenda_link, is_new = Link.objects.get_or_create(
         title=_("Agenda"),
         slug="events_agenda",
         url="{% url event_list %}",
         menu=events_menu
     )
 
-    events_day_link = Link.objects.create(
+    events_day_link, is_new = Link.objects.get_or_create(
         title=_("Day"),
         slug="events_day",
         url="{% url event_day current_day.year current_day.month current_day.day %}",
         menu=events_menu
     )
 
-    events_week_link = Link.objects.create(
+    events_week_link, is_new = Link.objects.get_or_create(
         title=_("Week"),
         slug="events_week",
         url="{% url event_week current_day.year current_day|date:'W' %}",
         menu=events_menu
     )
 
-    events_month_link = Link.objects.create(
+    events_month_link, is_new = Link.objects.get_or_create(
         title=_("Month"),
         slug="events_month",
         url="{% url event_month current_day.year current_day.month %}",
         menu=events_menu
     )
 
-    events_year_link = Link.objects.create(
+    events_year_link, is_new = Link.objects.get_or_create(
         title=_("Year"),
         slug="events_year",
         url="{% url event_year current_day.year %}",
         menu=events_menu
     )
 
-    event_dashboard_link = Link.objects.create(
+    event_dashboard_link, is_new = Link.objects.get_or_create(
         title=_("Dashboard"),
         slug="event_dashboard",
         url="{{ object.get_absolute_url }}",
         menu=event_menu
     )
 
-    event_timeline_link = Link.objects.create(
+    event_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="event_timeline",
         url="{% url event_timeline object.pk %}",
@@ -102,21 +100,21 @@ def fixtures(sender, **kwargs):
     )
 
     # Signatures.
-    event_created_signature = Signature.objects.create(
+    event_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Event created"),
         slug="event-created"
     )
 
-    event_changed_signature = Signature.objects.create(
+    event_changed_signature, is_new = Signature.objects.get_or_create(
         title=_("Event changed"),
         slug="event-changed"
     )
 
-    event_deleted_signature = Signature.objects.create(
+    event_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Event deleted"),
         slug="event-deleted"
     )
     
-    post_syncdb.disconnect(fixtures)
+    post_syncdb.disconnect(install)
 
-post_syncdb.connect(fixtures)
+post_syncdb.connect(install)

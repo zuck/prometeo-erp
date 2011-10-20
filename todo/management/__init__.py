@@ -26,19 +26,17 @@ from django.utils.translation import ugettext_noop as _
 
 from prometeo.core.menus.models import *
 
-def fixtures(sender, **kwargs):
-    """Installs fixtures for this application.
-    """
-    main_menu = Menu.objects.get(slug="main")
+def install(sender, **kwargs):
+    main_menu, is_new = Menu.objects.get_or_create(slug="main")
 
     # Menus.
-    todo_menu = Menu.objects.create(
+    todo_menu, is_new = Menu.objects.get_or_create(
         slug="todo_menu",
         description=_("Main menu for tasks")
     )
     
     # Links.
-    tasks_link = Link.objects.create(
+    tasks_link, is_new = Link.objects.get_or_create(
         title=_("Tasks"),
         slug="tasks",
         description=_("List of tasks"),
@@ -46,27 +44,27 @@ def fixtures(sender, **kwargs):
         menu=main_menu
     )
 
-    planned_tasks_link = Link.objects.create(
+    planned_tasks_link, is_new = Link.objects.get_or_create(
         title=_("Planned"),
         slug="planned_tasks",
         url=reverse("task_list"),
         menu=todo_menu
     )
 
-    unplanned_tasks_link = Link.objects.create(
+    unplanned_tasks_link, is_new = Link.objects.get_or_create(
         title=_("Unplanned"),
         slug="unplanned_tasks",
         url=reverse("unplanned_task_list"),
         menu=todo_menu
     )
 
-    timesheets_link = Link.objects.create(
+    timesheets_link, is_new = Link.objects.get_or_create(
         title=_("Timesheets"),
         slug="timesheets",
         url=reverse("timesheet_list"),
         menu=todo_menu
     )
     
-    post_syncdb.disconnect(fixtures)
+    post_syncdb.disconnect(install)
 
-post_syncdb.connect(fixtures)
+post_syncdb.connect(install)

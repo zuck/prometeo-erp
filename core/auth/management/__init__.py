@@ -28,30 +28,30 @@ from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
 
-def fixtures(sender, **kwargs):
-    """Installs fixtures for this application.
-    """
-    main_menu = Menu.objects.get(slug="main")
-    sidebar_region = Region.objects.get(slug="sidebar")
+from ..models import *
+
+def install(sender, **kwargs):
+    main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    sidebar_region, is_new = Region.objects.get_or_create(slug="sidebar")
     
     # Menus.
-    user_area_not_logged_menu = Menu.objects.create(
+    user_area_not_logged_menu, is_new = Menu.objects.get_or_create(
         slug="user_area_not_logged",
         description=_("User area for anonymous users")
     )
     
-    user_area_logged_menu = Menu.objects.create(
+    user_area_logged_menu, is_new = Menu.objects.get_or_create(
         slug="user_area_logged",
         description=_("User area for logged users")
     )
 
-    user_profile_menu = Menu.objects.create(
+    user_profile_menu, is_new = Menu.objects.get_or_create(
         slug="user_profile_menu",
         description=_("Main menu for user profiles")
     )
     
     # Links.
-    dashboard_link = Link.objects.create(
+    dashboard_link, is_new = Link.objects.get_or_create(
         title=_("Dashboard"),
         slug="dashboard",
         description=_("Personal dashboard"),
@@ -59,7 +59,7 @@ def fixtures(sender, **kwargs):
         menu=main_menu
     )
     
-    users_link = Link.objects.create(
+    users_link, is_new = Link.objects.get_or_create(
         title=_("Users"),
         slug="users",
         description=_("Users management"),
@@ -67,7 +67,7 @@ def fixtures(sender, **kwargs):
         menu=main_menu
     )
     
-    login_link = Link.objects.create(
+    login_link, is_new = Link.objects.get_or_create(
         title=_("Login"),
         slug="login",
         description=_("Login"),
@@ -76,7 +76,7 @@ def fixtures(sender, **kwargs):
         menu=user_area_not_logged_menu
     )
     
-    administration_link = Link.objects.create(
+    administration_link, is_new = Link.objects.get_or_create(
         title=_("Administration"),
         slug="administration",
         description=_("Administration panel"),
@@ -85,7 +85,7 @@ def fixtures(sender, **kwargs):
         menu=user_area_logged_menu
     )
     
-    logout_link = Link.objects.create(
+    logout_link, is_new = Link.objects.get_or_create(
         title=_("Logout"),
         slug="logout",
         description=_("Logout"),
@@ -93,21 +93,21 @@ def fixtures(sender, **kwargs):
         menu=user_area_logged_menu
     )
     
-    user_profile_details_link = Link.objects.create(
+    user_profile_details_link, is_new = Link.objects.get_or_create(
         title=_("Details"),
         slug="user_profile_details",
         url="{{ object.get_absolute_url }}",
         menu=user_profile_menu
     )
     
-    user_profile_bookmarks_link = Link.objects.create(
+    user_profile_bookmarks_link, is_new = Link.objects.get_or_create(
         title=_("Bookmarks"),
         slug="user_profile_bookmarks",
         url="{% url bookmark_list object.username %}",
         menu=user_profile_menu
     )
     
-    user_profile_notifications_link = Link.objects.create(
+    user_profile_notifications_link, is_new = Link.objects.get_or_create(
         title=_("Notifications"),
         slug="user_profile_notifications",
         url="{% url notification_list object.username %}",
@@ -115,18 +115,23 @@ def fixtures(sender, **kwargs):
     )
 
     # Signatures.
-    comment_created_signature = Signature.objects.get_or_create(
+    comment_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Comment posted"),
         slug="comment-created"
     )
 
-    comment_deleted_signature = Signature.objects.get_or_create(
+    comment_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Comment deleted"),
         slug="comment-deleted"
     )
 
+    # Groups.
+    users_group, is_new = Group.objects.get_or_create(
+        name=_('Users')
+    )
+
     # Widgets.
-    profile_widget = Widget.objects.create(
+    profile_widget, is_new = Widget.objects.get_or_create(
         title=_("User Profile"),
         slug="user-profile",
         description=_("The user's profile"),
@@ -136,6 +141,6 @@ def fixtures(sender, **kwargs):
         region=sidebar_region
     )
     
-    post_syncdb.disconnect(fixtures)
+    post_syncdb.disconnect(install)
 
-post_syncdb.connect(fixtures)
+post_syncdb.connect(install)

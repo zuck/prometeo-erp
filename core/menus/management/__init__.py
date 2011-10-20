@@ -26,19 +26,17 @@ from django.utils.translation import ugettext_noop as _
 from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
 
-def fixtures(sender, **kwargs):
-    """Installs fixtures for this application.
-    """
-    sidebar_region = Region.objects.get(slug="sidebar")
+def install(sender, **kwargs):
+    sidebar_region, is_new = Region.objects.get_or_create(slug="sidebar")
     
     # Menus.
-    main_menu = Menu.objects.create(
+    main_menu, is_new = Menu.objects.get_or_create(
         slug="main",
         description=_("Main menu")
     )
     
     # Widgets.
-    main_menu_widget = Widget.objects.create(
+    main_menu_widget, is_new = Widget.objects.get_or_create(
         title=_("Main Menu"),
         slug="main-menu",
         description=_("The main menu"),
@@ -50,6 +48,6 @@ def fixtures(sender, **kwargs):
         region=sidebar_region
     )
     
-    post_syncdb.disconnect(fixtures)
+    post_syncdb.disconnect(install)
 
-post_syncdb.connect(fixtures)
+post_syncdb.connect(install)

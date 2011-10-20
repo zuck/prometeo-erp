@@ -27,13 +27,11 @@ from django.utils.translation import ugettext_noop as _
 from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
 
-def fixtures(sender, **kwargs):
-    """Installs fixtures for this application.
-    """
-    user_area_not_logged_menu = Menu.objects.get(slug="user_area_not_logged")
+def install(sender, **kwargs):
+    user_area_not_logged_menu, is_new = Menu.objects.get_or_create(slug="user_area_not_logged")
     
     # Links.
-    register_link = Link.objects.create(
+    register_link, is_new = Link.objects.get_or_create(
         title=_("Register"),
         slug="register",
         description=_("Register a new account"),
@@ -42,6 +40,6 @@ def fixtures(sender, **kwargs):
         menu=user_area_not_logged_menu
     )
     
-    post_syncdb.disconnect(fixtures)
+    post_syncdb.disconnect(install)
 
-post_syncdb.connect(fixtures)
+post_syncdb.connect(install)
