@@ -59,6 +59,31 @@ def _register_followers(instance):
 
 ## HANDLERS ##
 
+def update_partner_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given partner.
+    """
+    # Change partner.
+    can_change_this_partner, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_partner", "partners", "partner", instance.pk)
+    can_change_this_partner.users.add(instance.author)
+    if instance.assignee:
+        can_change_this_partner.users.add(instance.assignee)
+    # Delete partner.
+    can_delete_this_partner, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_partner", "partners", "partner", instance.pk)
+    can_delete_this_partner.users.add(instance.author)
+    if instance.assignee:
+        can_delete_this_partner.users.add(instance.assignee)
+
+def update_contact_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the user owned by of the given contact.
+    """
+    if instance.user:
+        # Change contact.
+        can_change_this_contact, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_contact", "partners", "contact", instance.pk)
+        can_change_this_contact.users.add(instance.user)
+        # Delete contact.
+        can_delete_this_contact, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_contact", "partners", "contact", instance.pk)
+        can_delete_this_contact.users.add(instance.user)
+
 def notify_object_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new object.
     """
@@ -183,6 +208,9 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
     [activity.streams.add(s) for s in _get_streams(obj)]
 
 ## CONNECTIONS ##
+
+post_save.connect(update_partner_permissions, Partner, dispatch_uid="update_partner_permissions")
+post_save.connect(update_contact_permissions, Contact, dispatch_uid="update_contact_permissions")
 
 post_save.connect(notify_object_created, Partner, dispatch_uid="partner_created")
 post_delete.connect(notify_object_deleted, Partner, dispatch_uid="partner_deleted")
