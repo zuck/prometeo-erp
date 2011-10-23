@@ -43,7 +43,7 @@ def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
     """Displays the list of all milestones of a specified project.
     """
     project = get_object_or_404(Project, slug=project)
-    return filetered_list_detail(
+    return filtered_list_detail(
         request,
         project.milestone_set.all(),
         fields=['title', 'parent', 'author', 'manager', 'created', 'deadline', 'closed'],
