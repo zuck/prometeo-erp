@@ -20,6 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
+from django import http
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _, check_for_language
 from django.views.generic import list_detail, create_update
@@ -48,15 +49,24 @@ def _get_comment(request, *args, **kwargs):
 def set_language(request):
     """Sets the current language.
     """
+    next = request.REQUEST.get('next', None)
+    if not next:
+        next = request.META.get('HTTP_REFERER', None)
+    if not next:
+        next = '/'
+    response = http.HttpResponseRedirect(next)
     lang_code = request.user.get_profile().language
     if lang_code and check_for_language(lang_code):
-        request.session['django_language'] = lang_code
+        if hasattr(request, 'session'):
+            request.session['django_language'] = lang_code
+        else:
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    return response
 
 def user_logged(request):
     """Sets the language selected by the logged user.
     """
-    set_language(request)
-    return redirect_to(request, url='/')
+    return set_language(request)
 
 @permission_required('auth.change_user') 
 def user_list(request, page=0, paginate_by=10, **kwargs):
