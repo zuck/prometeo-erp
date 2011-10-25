@@ -281,3 +281,9 @@ def property_table(parser, token):
     """
     tag_name, args, kwargs = parse_args_kwargs(parser, token)
     return PropertyTableNode(*args, **kwargs)
+
+@register.filter
+def default_empty(obj):
+    if not obj:
+        return value_to_string(obj)
+    return obj
