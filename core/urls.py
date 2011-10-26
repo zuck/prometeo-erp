@@ -31,8 +31,7 @@ urlpatterns = patterns('',
     # Home page.
     (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
     
-    # Media and static files.
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    # Static files.
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
     
     # Admin.
@@ -41,6 +40,9 @@ urlpatterns = patterns('',
     
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
+
+    # File browser.
+    (r'^', include('prometeo.core.filebrowser.urls')),
 
     # Widgets.
     (r'^', include('prometeo.core.widgets.urls')),

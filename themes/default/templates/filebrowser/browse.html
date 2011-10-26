@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block extrahead %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/filebrowser.css" />{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% if directory.path != '' %}
+    {% add_crumb 'Files' 'file_browse' '' %}
+    {% include "filebrowser/parent.html" %}
+    {% add_crumb directory.name %}
+    {% else %}
+    {% add_crumb 'Files' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if directory.name %}
+    <h1>{{ directory.name }}</h1>
+    {% else %}
+    <h1>{% trans "Files" %}</h1>
+    {% endif %}
+    <h2>{% block subtitle %}{% trans "Browse" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        <li class="add"><a title="{% trans 'Add directory' %}" href="{% url file_mkdir directory.url|slice:'1:' %}">{% trans 'Add directory' %}</a></li>
+        <li class="import"><a title="{% trans 'Upload file' %}" href="{% url file_upload directory.url|slice:'1:' %}">{% trans 'Upload file' %}</a></li>
+        <li class="refresh"><a title="{% trans 'Refresh' %}" href="{{ directory.url }}">{% trans 'Refresh' %}</a></li>
+    </ul>
+</div>
+<div class="details">
+    <table class="filebrowser">
+	    <tr>
+		    <th class="char">{% trans "Name" %}</th>
+		    <th class="filesize">{% trans "Size" %}</th>
+		    <th>{% trans "Created" %}</th>
+		    <th>{% trans "Modified" %}</th>
+	    </tr>
+        {% for file in files %}
+	    <tr{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
+            {% if file == directory.parent %}
+            <td>
+			    <a class="backlink" title="{{ file.name }}" href="{{ file.url }}">{% trans "Parent folder" %}</a>
+		    </td>
+		    <td class="number"></td>
+		    <td></td>
+		    <td></td>
+            {% else %}
+		    <td>
+		        {% if file.is_directory %}
+			    <span class="folder">[Folder]</span>
+		        {% else %}
+			    <span class="file{% if file.ext %} {{ file.ext|lower }}{% endif %}">[File]</span>
+		        {% endif %}
+
+		        {% if file.is_broken_link %}
+			    {{ file.name }}
+		        {% else %}
+			    <a title="{{ file.name }}" href="{{ file.url }}">{{ file.name }}</a>
+		        {% endif %}
+
+                {% if file.is_link %}
+			    <span class="{% if file.is_broken_link %}broken_{% endif %}link">[{% if file.is_broken_link %}Broken {% endif %}Link]</span>
+                {% endif %}
+		    </td>
+		    <td class="number">{{ file.size|filesizeformat }}</td>
+		    <td>{{ file.created|default_empty }}</td>
+		    <td>
+                {{ file.modified|default_empty }}
+                <span class="actions">
+                    <span class="move"><a title="{% trans 'Move' %}" href="{% url file_move file.url|slice:'1:' %}">{% trans 'Move' %}</a></span>
+                    <span class="copy"><a title="{% trans 'Copy' %}" href="{% url file_copy file.url|slice:'1:' %}">{% trans 'Copy' %}</a></span>
+                    <span class="add_link"><a title="{% trans 'Make link' %}" href="{% url file_mkln file.url|slice:'1:' %}">{% trans 'Make link' %}</a></span>
+                    <span class="edit"><a title="{% trans 'Rename' %}" href="{% url file_rename file.url|slice:'1:' %}">{% trans 'Rename' %}</a></span>
+                    <span class="delete"><a title="{% trans 'Delete' %}" href="{% url file_delete file.url|slice:'1:' %}">{% trans 'Delete' %}</a></span>
+                </span>
+            </td>
+            {% endif %}
+	    </tr>
+        {% endfor %}
+    </table>
+    <div class="folder_meta">
+        {% with num_items=files|length folder_size=directory.size|filesizeformat %}
+        <p>{% blocktrans %}<strong>{{ num_items }}</strong> element(s), {{ folder_size}}{% endblocktrans %}</p>
+        {% endwith %}
+    </div>
+</div>
+{% endblock %}

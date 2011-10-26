@@ -1,0 +1,31 @@
+{% extends "filebrowser/browse.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Files' 'file_browse' '' %}
+    {% with directory=object %}
+    {% if directory.path != '' %}
+    {% include "filebrowser/parent.html" %}
+    {% add_crumb directory.name directory.url %}
+    {% endif %}
+    {% endwith %}
+    {% add_crumb 'Copy' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Copy" %}{% endblock %}
+
+{% block main %}
+<div class="details">
+    <form method="POST" action="{% url file_copy object.url|slice:'1:' %}">
+        {% csrf_token %}
+        <table class="properties">
+            {{ form }}
+        </table>
+        <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+    </form>
+</div>
+{% endblock %}

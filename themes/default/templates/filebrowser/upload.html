@@ -1,0 +1,29 @@
+{% extends "filebrowser/browse.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Files' 'file_browse' '' %}
+    {% if directory.path != '' %}
+    {% include "filebrowser/parent.html" %}
+    {% add_crumb directory.name directory.url %}
+    {% endif %}
+    {% add_crumb 'Upload file' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Upload file" %}{% endblock %}
+
+{% block main %}
+<div class="details">
+    <form enctype="multipart/form-data" action="{% url file_upload directory.url|slice:'1:' %}" method="POST">
+        {% csrf_token %}
+        <table class="properties">
+            {{ form }}
+        </table>
+        <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+    </form>
+</div>
+{% endblock %}

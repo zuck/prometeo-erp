@@ -1,0 +1,82 @@
+/**
+ *
+ * This file is part of the prometeo project.
+ *
+ * Copyright (C) 2011 Emanuele Bertoldi.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#main .details .filebrowser .actions { width: 100px; }
+
+.filebrowser th.char { width: 37.5%; }
+
+.filebrowser th.filesize { width: 10%; }
+
+.filebrowser span.folder,
+.filebrowser span.file {
+    padding: 12px;
+    font-size: 0;
+    background: no-repeat left top;
+}
+
+.filebrowser a.backlink {
+    float: left;
+    padding: 0 30px 4px;
+    background: no-repeat left top;
+}
+
+.filebrowser span.broken_link, .filebrowser span.link {
+    float: right;
+    width: 15px;
+    height: 15px;
+    font-size: 0;
+    background: no-repeat center;
+}
+
+.filebrowser a.backlink { background-image: url(images/arrow_turn.png); }
+
+.filebrowser span.folder { background-image: url(images/folder.png); }
+
+.filebrowser span.link { background-image: url(images/link.png); }
+
+.filebrowser span.broken_link { background-image: url(images/link_break.png); }
+
+.filebrowser span.file { background-image: url(images/page_white.png); }
+
+.filebrowser span.css { background-image: url(images/page_white_code.png); }
+
+.filebrowser span.pdf { background-image: url(images/page_white_acrobat.png); }
+
+.filebrowser span.doc { background-image: url(images/page_white_word.png); }
+
+.filebrowser span.xlsx { background-image: url(images/page_white_excel.png); }
+
+.filebrowser span.jpg, .filebrowser span.jpeg,
+.filebrowser span.png, .filebrowser span.gif,
+.filebrowser span.bmp, .filebrowser span.tiff { background-image: url(images/image.png); }
+
+.filebrowser span.avi { background-image: url(images/video.png); }
+
+.folder_meta {
+    clear: both;
+    float: right;
+    width: 100%;
+    border-top: 2px solid #c0c0c0;
+    padding-top: 10px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    text-align: right;
+    color: #60625d;
+}
