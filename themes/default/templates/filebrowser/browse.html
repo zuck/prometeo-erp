@@ -33,7 +33,7 @@
     <ul>
         <li class="add"><a title="{% trans 'Add directory' %}" href="{% url file_mkdir directory.url|slice:'1:' %}">{% trans 'Add directory' %}</a></li>
         <li class="import"><a title="{% trans 'Upload file' %}" href="{% url file_upload directory.url|slice:'1:' %}">{% trans 'Upload file' %}</a></li>
-        <li class="refresh"><a title="{% trans 'Refresh' %}" href="{{ directory.url }}">{% trans 'Refresh' %}</a></li>
+        <li class="refresh"><a title="{% trans 'Refresh' %}" href="{{ request.path }}">{% trans 'Refresh' %}</a></li>
     </ul>
 </div>
 <div class="details">
