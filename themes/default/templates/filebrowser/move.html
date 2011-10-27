@@ -1,4 +1,4 @@
-{% extends "filebrowser/browse.html" %}
+{% extends "filebrowser/serve.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -6,7 +6,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Files' 'file_browse' '' %}
+    {% add_crumb 'Files' 'file_serve' '' %}
     {% if fileinfo.path != '' %}
     {% include "filebrowser/parent.html" %}
     {% add_crumb fileinfo.name fileinfo.url %}

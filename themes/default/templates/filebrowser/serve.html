@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load filebrowser %}
+{% load details %}
+
+{% block extrahead %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/filebrowser.css" />{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% if fileinfo.path != '' %}
+    {% add_crumb 'Files' 'file_serve' '' %}
+    {% include "filebrowser/parent.html" %}
+    {% add_crumb fileinfo.name %}
+    {% else %}
+    {% add_crumb 'Files' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if fileinfo.name %}
+    <h1>{{ fileinfo.name }}</h1>
+    {% else %}
+    <h1>{% trans "Files" %}</h1>
+    {% endif %}
+    <h2>{% block subtitle %}{% trans "Browse" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    {% filebrowser_actions fileinfo.abspath %}
+</div>
+<div class="details">
+    {% filebrowser fileinfo.abspath root %}
+</div>
+{% endblock %}

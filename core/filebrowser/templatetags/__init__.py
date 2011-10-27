@@ -19,18 +19,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
-
-from django.conf.urls.defaults import *
-from django.conf import settings
-
-urlpatterns = patterns('prometeo.core.filebrowser.views',
-
-    url(r'^mkdir/(?P<url>.*)$', 'mkdir', name='file_mkdir'),
-    url(r'^upload/(?P<url>.*)$', 'upload', name='file_upload'),
-    url(r'^move/(?P<url>.*)$', 'move', name='file_move'),
-    url(r'^copy/(?P<url>.*)$', 'copy', name='file_copy'),
-    url(r'^mkln/(?P<url>.*)$', 'mkln', name='file_mkln'),
-    url(r'^rename/(?P<url>.*)$', 'rename', name='file_rename'),
-    url(r'^delete/(?P<url>.*)$', 'delete', name='file_delete'),
-    url(r'^%s/(?P<url>.*)$' % settings.MEDIA_URL.strip('/'), 'serve', name='file_serve'),
-)

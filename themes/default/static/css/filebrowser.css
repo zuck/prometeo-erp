@@ -22,7 +22,7 @@
 
 .filebrowser th.char { width: 37.5%; }
 
-.filebrowser th.filesize { width: 10%; }
+.filebrowser th.size { width: 10%; }
 
 .filebrowser span.folder,
 .filebrowser span.file {

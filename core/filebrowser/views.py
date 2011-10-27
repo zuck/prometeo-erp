@@ -37,8 +37,8 @@ from forms import *
 if not os.access(settings.MEDIA_ROOT, os.F_OK):
     os.mkdir(settings.MEDIA_ROOT)
 
-def browse(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/browse.html', **kwargs):
-    """Shows list of files in a url inside of the upload fi.
+def serve(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/serve.html', **kwargs):
+    """Serves files or directories.
     """
     if request.GET:
         request.session['GET'] = request.GET
@@ -46,21 +46,14 @@ def browse(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/br
     fi = FileInfo(url_to_path(url or settings.MEDIA_URL))
 
     # The path points to a directory.
-    try:
-        listing = os.listdir(fi.abspath)
-
-        files = [FileInfo(os.path.join(fi.path, f)) for f in listing]
-        if fi.parent and fi.abspath != root:
-            files = [fi.parent] + files
-        files.sort()
-
-        extra_context = {'fileinfo': fi, 'root': root, 'files': files}
+    if fi.is_directory():
+        extra_context = {'fileinfo': fi, 'root': root}
         extra_context.update(kwargs.get('extra_context', {}))
         
         return render_to_response(template_name, RequestContext(request, extra_context))
 
     # The path points to a file.
-    except OSError:
+    else:
         fd = open(fi.abspath, 'rb')
         response = HttpResponse(fd.readlines(), mimetype=fi.mimetype)
         response['Content-Disposition'] = 'attachment; filename=%s' % fi.name
