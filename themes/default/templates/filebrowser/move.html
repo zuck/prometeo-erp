@@ -7,12 +7,10 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Files' 'file_browse' '' %}
-    {% with directory=object %}
-    {% if directory.path != '' %}
+    {% if fileinfo.path != '' %}
     {% include "filebrowser/parent.html" %}
-    {% add_crumb directory.name directory.url %}
+    {% add_crumb fileinfo.name fileinfo.url %}
     {% endif %}
-    {% endwith %}
     {% add_crumb 'Move' %}
 {% endblock %}
 
@@ -20,7 +18,7 @@
 
 {% block main %}
 <div class="details">
-    <form method="POST" action="{% url file_move object.url|slice:'1:' %}">
+    <form method="POST" action="{% url file_move fileinfo.url|slice:'1:' %}">
         {% csrf_token %}
         <table class="properties">
             {{ form }}

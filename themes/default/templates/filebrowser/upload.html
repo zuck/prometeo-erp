@@ -7,9 +7,9 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Files' 'file_browse' '' %}
-    {% if directory.path != '' %}
+    {% if fileinfo.path != '' %}
     {% include "filebrowser/parent.html" %}
-    {% add_crumb directory.name directory.url %}
+    {% add_crumb fileinfo.name fileinfo.url %}
     {% endif %}
     {% add_crumb 'Upload file' %}
 {% endblock %}
@@ -18,7 +18,7 @@
 
 {% block main %}
 <div class="details">
-    <form enctype="multipart/form-data" action="{% url file_upload directory.url|slice:'1:' %}" method="POST">
+    <form enctype="multipart/form-data" action="{% url file_upload fileinfo.url|slice:'1:' %}" method="POST">
         {% csrf_token %}
         <table class="properties">
             {{ form }}

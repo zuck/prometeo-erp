@@ -54,7 +54,7 @@ def browse(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/br
             files = [fi.parent] + files
         files.sort()
 
-        extra_context = {'directory': fi, 'files': files, 'root': root}
+        extra_context = {'fileinfo': fi, 'root': root, 'files': files}
         extra_context.update(kwargs.get('extra_context', {}))
         
         return render_to_response(template_name, RequestContext(request, extra_context))
@@ -86,7 +86,7 @@ def mkdir(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkd
     else:
         form = NameForm(fi.abspath)
 
-    extra_context = {'form': form, 'directory': fi, 'root': root}
+    extra_context = {'fileinfo': fi, 'root': root, 'form': form}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
@@ -111,7 +111,7 @@ def upload(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/up
     else:
         form = UploadForm(fi.abspath)
 
-    extra_context = {'form': form, 'directory': fi, 'root': root}
+    extra_context = {'fileinfo': fi, 'root': root, 'form': form}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
@@ -135,7 +135,7 @@ def move(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/move
     else:
         form = DestinationForm(fi.abspath, initial={'destination': get_parent(fi.abspath)})
 
-    extra_context = {'form': form, 'object': fi, 'root': root}
+    extra_context = {'fileinfo': fi, 'root': root, 'form': form}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
@@ -163,7 +163,7 @@ def copy(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/copy
     else:
         form = NameDestinationForm(fi.abspath, initial={'destination': get_parent(fi.abspath), 'name': fi.copy_name})
 
-    extra_context = {'form': form, 'object': fi, 'root': root}
+    extra_context = {'fileinfo': fi, 'root': root, 'form': form}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
@@ -188,7 +188,7 @@ def mkln(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkln
     else:
         form = NameDestinationForm(fi.abspath, initial={'name': "Link to %s" % fi.name, 'destination': get_parent(fi.abspath)})
 
-    extra_context = {'form': form, 'object': fi, 'root': root}
+    extra_context = {'fileinfo': fi, 'root': root, 'form': form}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
@@ -217,7 +217,7 @@ def rename(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/re
     else:
         form = NameForm(fi.parent.abspath, initial={'name': fi.name})
 
-    extra_context = {'form': form, 'object': fi, 'root': root}
+    extra_context = {'fileinfo': fi, 'root': root, 'form': form}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
@@ -242,7 +242,7 @@ def delete(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/de
             messages.success(request, _('The file has been deleted.'))
         return redirect(redirect_to)
 
-    extra_context = {'object': fi, 'root': root}
+    extra_context = {'fileinfo': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))

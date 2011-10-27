@@ -7,12 +7,10 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Files' 'file_browse' '' %}
-    {% with directory=object %}
-    {% if directory.path != '' %}
+    {% if fileinfo.path != '' %}
     {% include "filebrowser/parent.html" %}
-    {% add_crumb directory.name directory.url %}
+    {% add_crumb fileinfo.name fileinfo.url %}
     {% endif %}
-    {% endwith %}
     {% add_crumb 'Delete' %}
 {% endblock %}
 
@@ -20,12 +18,12 @@
 
 {% block main %}
 <div class="details">
-    <form method="post" action="{% url file_delete object.url|slice:'1:' %}">
+    <form method="post" action="{% url file_delete fileinfo.url|slice:'1:' %}">
         {% csrf_token %}
-        {% if object.is_link %}
+        {% if fileinfo.is_link %}
         <p>{% trans "Are you sure you want to delete this link?" %}</p>
         {% else %}
-        {% if object.is_directory %}
+        {% if fileinfo.is_directory %}
         <p>{% trans "Are you sure you want to delete this directory?" %}</p>
         {% else %}
         <p>{% trans "Are you sure you want to delete this file?" %}</p>

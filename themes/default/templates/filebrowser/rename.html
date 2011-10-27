@@ -7,12 +7,10 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Files' 'file_browse' '' %}
-    {% with directory=object %}
-    {% if directory.path != '' %}
+    {% if fileinfo.path != '' %}
     {% include "filebrowser/parent.html" %}
-    {% add_crumb directory.name directory.url %}
+    {% add_crumb fileinfo.name fileinfo.url %}
     {% endif %}
-    {% endwith %}
     {% add_crumb 'Rename' %}
 {% endblock %}
 
@@ -20,7 +18,7 @@
 
 {% block main %}
 <div class="details">
-    <form action="{% url file_rename object.url|slice:'1:' %}" method="POST">
+    <form action="{% url file_rename fileinfo.url|slice:'1:' %}" method="POST">
         {% csrf_token %}
         <table class="properties">
             {{ form }}

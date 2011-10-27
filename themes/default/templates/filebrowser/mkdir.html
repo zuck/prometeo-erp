@@ -7,18 +7,18 @@
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Files' 'file_browse' '' %}
-    {% if directory.path != '' %}
+    {% if fileinfo.path != '' %}
     {% include "filebrowser/parent.html" %}
-    {% add_crumb directory.name directory.url %}
+    {% add_crumb fileinfo.name fileinfo.url %}
     {% endif %}
-    {% add_crumb 'Add directory' %}
+    {% add_crumb 'Add fileinfo' %}
 {% endblock %}
 
-{% block subtitle %}{% trans "Add directory" %}{% endblock %}
+{% block subtitle %}{% trans "Add fileinfo" %}{% endblock %}
 
 {% block main %}
 <div class="details">
-    <form method="POST" action="{% url file_mkdir directory.url|slice:'1:' %}">
+    <form method="POST" action="{% url file_mkdir fileinfo.url|slice:'1:' %}">
         {% csrf_token %}
         <table class="properties">
             {{ form }}

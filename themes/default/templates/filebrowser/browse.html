@@ -8,10 +8,10 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% if directory.path != '' %}
+    {% if fileinfo.path != '' %}
     {% add_crumb 'Files' 'file_browse' '' %}
     {% include "filebrowser/parent.html" %}
-    {% add_crumb directory.name %}
+    {% add_crumb fileinfo.name %}
     {% else %}
     {% add_crumb 'Files' %}
     {% endif %}
@@ -19,8 +19,8 @@
 
 {% block title %}
 <div class="title">
-    {% if directory.name %}
-    <h1>{{ directory.name }}</h1>
+    {% if fileinfo.name %}
+    <h1>{{ fileinfo.name }}</h1>
     {% else %}
     <h1>{% trans "Files" %}</h1>
     {% endif %}
@@ -31,8 +31,8 @@
 {% block main %}
 <div class="actions">
     <ul>
-        <li class="add"><a title="{% trans 'Add directory' %}" href="{% url file_mkdir directory.url|slice:'1:' %}">{% trans 'Add directory' %}</a></li>
-        <li class="import"><a title="{% trans 'Upload file' %}" href="{% url file_upload directory.url|slice:'1:' %}">{% trans 'Upload file' %}</a></li>
+        <li class="add"><a title="{% trans 'Add fileinfo' %}" href="{% url file_mkdir fileinfo.url|slice:'1:' %}">{% trans 'Add fileinfo' %}</a></li>
+        <li class="import"><a title="{% trans 'Upload file' %}" href="{% url file_upload fileinfo.url|slice:'1:' %}">{% trans 'Upload file' %}</a></li>
         <li class="refresh"><a title="{% trans 'Refresh' %}" href="{{ request.path }}">{% trans 'Refresh' %}</a></li>
     </ul>
 </div>
@@ -46,7 +46,7 @@
 	    </tr>
         {% for file in files %}
 	    <tr{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
-            {% if file == directory.parent %}
+            {% if file == fileinfo.parent %}
             <td>
 			    <a class="backlink" title="{{ file.name }}" href="{{ file.url }}">{% trans "Parent folder" %}</a>
 		    </td>
@@ -88,7 +88,7 @@
         {% endfor %}
     </table>
     <div class="folder_meta">
-        {% with num_items=files|length folder_size=directory.size|filesizeformat %}
+        {% with num_items=files|length folder_size=fileinfo.size|filesizeformat %}
         <p>{% blocktrans %}<strong>{{ num_items }}</strong> element(s), {{ folder_size}}{% endblocktrans %}</p>
         {% endwith %}
     </div>
