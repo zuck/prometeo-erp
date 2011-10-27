@@ -54,12 +54,12 @@ class Link(models.Model):
     only_with_perms = models.ManyToManyField(Permission, blank=True, null=True, verbose_name=_('Only with following permissions'))
 
     class Meta:
-        ordering = ('sort_order', 'id',)
+        ordering = ('menu', 'sort_order', 'id',)
         verbose_name = _('link')
         verbose_name_plural = _('links')
 
     def __unicode__(self):
-        return self.title
+        return '%s | %s' % (self.menu, self.title)
 
     def get_absolute_url(self):
         return self.url

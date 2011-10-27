@@ -28,7 +28,7 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ('slug', 'description')
 
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ('title', 'url', 'description')
+    list_display = ('__unicode__', 'url', 'description')
     prepopulated_fields = {'slug': ('title',)}
 
 admin.site.register(Menu, MenuAdmin) 
