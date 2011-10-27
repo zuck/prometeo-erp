@@ -66,9 +66,9 @@
 
 .filebrowser span.ext-pdf { background-image: url(images/page_white_acrobat.png); }
 
-.filebrowser span.ext-doc { background-image: url(images/page_white_word.png); }
+.filebrowser span.ext-doc, .filebrowser span.ext-docx { background-image: url(images/page_white_word.png); }
 
-.filebrowser span.ext-xlsx { background-image: url(images/page_white_excel.png); }
+.filebrowser span.ext-xls, .filebrowser span.ext-xlsx { background-image: url(images/page_white_excel.png); }
 
 .filebrowser span.ext-jpg, .filebrowser span.ext-jpeg,
 .filebrowser span.ext-png, .filebrowser span.ext-gif,
