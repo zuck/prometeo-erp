@@ -35,7 +35,7 @@ from models import *
 from forms import *
 
 if not os.access(settings.MEDIA_ROOT, os.F_OK):
-    os.mkdir(settings.MEDIA_ROOT)
+    os.makedirs(settings.MEDIA_ROOT)
 
 def serve(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/serve.html', **kwargs):
     """Serves files or directories.
