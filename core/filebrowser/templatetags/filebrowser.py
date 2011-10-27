@@ -29,6 +29,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.conf import settings
 
+from prometeo.core.utils import value_to_string
 from prometeo.core.filebrowser.models import FileInfo
 
 register = template.Library()
@@ -105,8 +106,8 @@ def row_template(index, path, f, url_prefix):
                 output += ' <span class="link">[%s]</span>' % _('Link')
         output += '\n\t\t\t</td>\n'
         output += '\t\t\t<td class="number">%s</td>\n' % filesizeformat(f.size)
-        output += '\t\t\t<td>%s</td>\n' % f.created
-        output += '\t\t\t<td>%s %s</td>\n' % (f.modified, actions_template(f, url_prefix))
+        output += '\t\t\t<td>%s</td>\n' % value_to_string(f.created)
+        output += '\t\t\t<td>%s %s</td>\n' % (value_to_string(f.modified), actions_template(f, url_prefix))
     return output
 
 @register.simple_tag(takes_context=True)
