@@ -142,29 +142,23 @@ def filebrowser(context, path=settings.MEDIA_ROOT, root=settings.MEDIA_ROOT, url
         root = settings.MEDIA_ROOT
     request = context['request']
     url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
-    try:
-        order_by = request.GET['order_by']
-    except:
-        order_by = None
+    order_by = request.GET.get('order_by', None)
     fi = FileInfo(path)
-    files = []
-    try:
-        listing = os.listdir(fi.abspath)
-        files = [FileInfo(os.path.join(fi.path, f)) for f in listing]
+    if fi.is_directory():
+        files = [FileInfo(os.path.join(fi.path, f)) for f in os.listdir(fi.abspath)]
+        files = sort_files(files, order_by)
         if fi.parent and fi.abspath != root:
             files = [fi.parent] + files
-    except OSError:
-        pass
-    files = sort_files(files, order_by)
-    output = '<table class="filebrowser">\n'
-    output += '\t<tr>\n'
-    output += header_template('name', 'char', order_by, url, _('Name'))
-    output += header_template('size', 'size', order_by, url, _('Size'))
-    output += header_template('created', None, order_by, url, _('Created'))
-    output += header_template('modified', None, order_by, url, _('Modified'))
-    output += '\t</tr>\n'
-    for i, f in enumerate(files):
-        output += row_template(i, fi, f, url_prefix)
-    output += '</table>\n'
-    output += '<div class="folder_meta"><p><strong>%d</strong> %s, %s</p></div>' % (len(files), _('element(s)'), filesizeformat(fi.size))
-    return output
+        output = '<table class="filebrowser">\n'
+        output += '\t<tr>\n'
+        output += header_template('name', 'char', order_by, url, _('Name'))
+        output += header_template('size', 'size', order_by, url, _('Size'))
+        output += header_template('created', None, order_by, url, _('Created'))
+        output += header_template('modified', None, order_by, url, _('Modified'))
+        output += '\t</tr>\n'
+        for i, f in enumerate(files):
+            output += row_template(i, fi, f, url_prefix)
+        output += '</table>\n'
+        output += '<div class="folder_meta"><p><strong>%d</strong> %s, %s</p></div>' % (len(files), _('element(s)'), filesizeformat(fi.size))
+        return output
+    return ''
