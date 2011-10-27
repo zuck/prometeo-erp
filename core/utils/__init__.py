@@ -27,6 +27,7 @@ from django.utils.encoding import StrAndUnicode
 from django.utils.datastructures import SortedDict
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from django.utils.formats import localize
 from django.template.defaultfilters import date, time, striptags, truncatewords
 from django.conf import settings
 
@@ -41,7 +42,7 @@ def clean_referer(request, default_referer='/'):
 def value_to_string(value):
     """Tries to return a smart string representation of the given <value>.
     """
-    output = value
+    output = localize(value)
     if isinstance(value, (list, tuple)):
         output = ', '.join(value)
     elif isinstance(value, bool):
