@@ -55,19 +55,30 @@
 
 .filebrowser span.file { background-image: url(images/page_white.png); }
 
-.filebrowser span.css { background-image: url(images/page_white_code.png); }
+.filebrowser span.ext-css, .filebrowser span.ext-conf,
+.filebrowser span.ext-cpp, .filebrowser span.ext-c,
+.filebrowser span.ext-h, .filebrowser span.ext-hpp,
+.filebrowser span.ext-php, .filebrowser span.ext-py { background-image: url(images/page_white_code.png); }
 
-.filebrowser span.pdf { background-image: url(images/page_white_acrobat.png); }
+.filebrowser span.ext-zip, .filebrowser span.ext-gz,
+.filebrowser span.ext-tar, .filebrowser span.ext-tgz,
+.filebrowser span.ext-bz2, .filebrowser span.ext-7z { background-image: url(images/page_white_compressed.png); }
 
-.filebrowser span.doc { background-image: url(images/page_white_word.png); }
+.filebrowser span.ext-pdf { background-image: url(images/page_white_acrobat.png); }
 
-.filebrowser span.xlsx { background-image: url(images/page_white_excel.png); }
+.filebrowser span.ext-doc { background-image: url(images/page_white_word.png); }
 
-.filebrowser span.jpg, .filebrowser span.jpeg,
-.filebrowser span.png, .filebrowser span.gif,
-.filebrowser span.bmp, .filebrowser span.tiff { background-image: url(images/image.png); }
+.filebrowser span.ext-xlsx { background-image: url(images/page_white_excel.png); }
 
-.filebrowser span.avi { background-image: url(images/video.png); }
+.filebrowser span.ext-jpg, .filebrowser span.ext-jpeg,
+.filebrowser span.ext-png, .filebrowser span.ext-gif,
+.filebrowser span.ext-bmp, .filebrowser span.ext-tiff { background-image: url(images/image.png); }
+
+.filebrowser span.ext-avi { background-image: url(images/video.png); }
+
+.filebrowser span.ext-html { background-image: url(images/page_white_world.png); }
+
+.filebrowser span.ext-iso { background-image: url(images/page_white_cd.png); }
 
 .folder_meta {
     clear: both;

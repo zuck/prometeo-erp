@@ -58,7 +58,7 @@
 		        {% if file.is_directory %}
 			    <span class="folder">[Folder]</span>
 		        {% else %}
-			    <span class="file{% if file.ext %} {{ file.ext|lower }}{% endif %}">[File]</span>
+			    <span class="file{% if file.ext %} ext-{{ file.ext|lower }}{% endif %}">[File]</span>
 		        {% endif %}
 
 		        {% if file.is_broken_link %}
