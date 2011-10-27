@@ -40,30 +40,6 @@ urlpatterns = patterns('',
     
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
-
-    # File browser.
-    (r'^', include('prometeo.core.filebrowser.urls')),
-
-    # Widgets.
-    (r'^', include('prometeo.core.widgets.urls')),
-
-    # Menus.
-    (r'^', include('prometeo.core.menus.urls')),
-
-    # Registration.
-    (r'^', include('prometeo.core.registration.urls')),
-    
-    # Authentication.
-    (r'^', include('prometeo.core.auth.urls')),
-
-    # Notifications.
-    (r'^', include('prometeo.core.notifications.urls')),
-
-    # Streams.
-    (r'^', include('prometeo.core.streams.urls')),
-
-    # Taxonomy.
-    (r'^', include('prometeo.core.taxonomy.urls')),
 )
 
 LOADING = False
@@ -80,8 +56,8 @@ def autodiscover():
     import imp
     
     for app in settings.INSTALLED_APPS:
-        if app.startswith('django')\
-        or app.startswith('prometeo.core'):
+        if app.startswith('django') \
+        or app == 'prometeo.core':
             continue
             
         # Step 1: find out the app's __path__.
