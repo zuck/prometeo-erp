@@ -50,12 +50,12 @@ def get_name(uri):
     """
     return os.path.normpath(uri).rpartition('/')[2]
 
-def url_to_path(url):
+def url_to_path(url, root_path=settings.MEDIA_ROOT, root_url=settings.MEDIA_URL):
     """Converts a valid URL into the relative server-side path.
     """
-    return os.path.join(settings.MEDIA_ROOT, relative_to(url, settings.MEDIA_URL).lstrip('/'))
+    return os.path.join(root_path, relative_to(url, root_url).lstrip('/'))
 
-def path_to_url(path):
+def path_to_url(path, root_path=settings.MEDIA_ROOT, root_url=settings.MEDIA_URL):
     """Converts a valid server-side path into the relative URL.
     """
-    return os.path.join(settings.MEDIA_URL, relative_to(path, settings.MEDIA_ROOT).lstrip('/'))
+    return os.path.join(root_url, relative_to(path, root_path).lstrip('/'))
