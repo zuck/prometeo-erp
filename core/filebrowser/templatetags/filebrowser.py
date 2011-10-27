@@ -33,11 +33,29 @@ from prometeo.core.filebrowser.models import FileInfo
 
 register = template.Library()
 
+def sort_files(files, order_by):
+    if order_by:
+        field = order_by
+        verse = (order_by[0] == '-')
+        if verse:
+            field = order_by[1:]
+        if field == 'size': 
+            files.sort(key=FileInfo._get_size, reverse=verse)
+        elif field == 'name':
+            files.sort(key=FileInfo._get_name, reverse=verse)
+        elif field == 'created':
+            files.sort(key=FileInfo._get_created, reverse=verse)
+        elif field == 'modified':
+            files.sort(key=FileInfo._get_modified, reverse=verse)
+    else:
+        files.sort()
+    return files
+
 def header_template(field, css, order_by, url, label):
     output = '\t\t<th>'
     if css:
         output = '\t\t<th class="%s">' % css
-    if field in order_by:
+    if order_by and field in order_by:
         verse = "-"
         aclass = "asc"
         if "-%s" % field in order_by:
@@ -126,18 +144,17 @@ def filebrowser(context, path=settings.MEDIA_ROOT, root=settings.MEDIA_ROOT, url
     try:
         order_by = request.GET['order_by']
     except:
-        order_by = []
+        order_by = None
     fi = FileInfo(path)
     files = []
     try:
         listing = os.listdir(fi.abspath)
-
         files = [FileInfo(os.path.join(fi.path, f)) for f in listing]
         if fi.parent and fi.abspath != root:
             files = [fi.parent] + files
-        files.sort()
     except OSError:
         pass
+    files = sort_files(files, order_by)
     output = '<table class="filebrowser">\n'
     output += '\t<tr>\n'
     output += header_template('name', 'char', order_by, url, _('Name'))
