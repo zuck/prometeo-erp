@@ -21,8 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 from django.conf.urls.defaults import *
-
-from base import *
+from django.conf import settings
 
 urlpatterns = patterns('prometeo.core.filebrowser.views',
 
@@ -33,5 +32,5 @@ urlpatterns = patterns('prometeo.core.filebrowser.views',
     url(r'^mkln/(?P<url>.*)$', 'mkln', name='file_mkln'),
     url(r'^rename/(?P<url>.*)$', 'rename', name='file_rename'),
     url(r'^delete/(?P<url>.*)$', 'delete', name='file_delete'),
-    url(r'^%s/(?P<url>.*)$' % MEDIA_BASE_URL, 'browse', name='file_browse'),
+    url(r'^%s/(?P<url>.*)$' % settings.MEDIA_URL.strip('/'), 'browse', name='file_browse'),
 )

@@ -141,7 +141,7 @@ class FileInfo(object):
     size = property(_get_size)
 
     def _get_parent(self):
-        if self.abspath.strip('/') != MEDIA_BASE_ROOT:
+        if self.abspath.strip('/') != settings.MEDIA_ROOT.strip('/'):
             return FileInfo(get_parent(self.abspath))
         return None
     parent = property(_get_parent)

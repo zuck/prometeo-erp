@@ -37,86 +37,86 @@ from forms import *
 if not os.access(settings.MEDIA_ROOT, os.F_OK):
     os.mkdir(settings.MEDIA_ROOT)
 
-def browse(request, url, template_name='filebrowser/browse.html', **kwargs):
-    """Shows list of files in a url inside of the upload root.
+def browse(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/browse.html', **kwargs):
+    """Shows list of files in a url inside of the upload fi.
     """
     if request.GET:
         request.session['GET'] = request.GET
 
-    root = FileInfo(url_to_path(url or settings.MEDIA_URL))
+    fi = FileInfo(url_to_path(url or settings.MEDIA_URL))
 
     # The path points to a directory.
     try:
-        listing = os.listdir(root.abspath)
+        listing = os.listdir(fi.abspath)
 
-        files = [FileInfo(os.path.join(root.path, f)) for f in listing]
-        if root.parent:
-            files = [root.parent] + files
+        files = [FileInfo(os.path.join(fi.path, f)) for f in listing]
+        if fi.parent and fi.abspath != root:
+            files = [fi.parent] + files
         files.sort()
 
-        extra_context = {'directory': root, 'files': files}
+        extra_context = {'directory': fi, 'files': files, 'root': root}
         extra_context.update(kwargs.get('extra_context', {}))
         
         return render_to_response(template_name, RequestContext(request, extra_context))
 
     # The path points to a file.
     except OSError:
-        fd = open(root.abspath, 'rb')
-        response = HttpResponse(fd.readlines(), mimetype=root.mimetype)
-        response['Content-Disposition'] = 'attachment; filename=%s' % root.name
-        if root.size is not None:
-            response['Content-Length'] = root.size
+        fd = open(fi.abspath, 'rb')
+        response = HttpResponse(fd.readlines(), mimetype=fi.mimetype)
+        response['Content-Disposition'] = 'attachment; filename=%s' % fi.name
+        if fi.size is not None:
+            response['Content-Length'] = fi.size
 
         return response
 
-def mkdir(request, url, template_name='filebrowser/mkdir.html', **kwargs):
+def mkdir(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkdir.html', **kwargs):
     """Makes a new directory at the given url.
     """
-    root = FileInfo(url_to_path('/%s' % url))
+    fi = FileInfo(url_to_path('/%s' % url))
 
     if request.method == 'POST': 
-        form = NameForm(root.abspath, request.POST) 
+        form = NameForm(fi.abspath, request.POST) 
 
         if form.is_valid():
             name = form.cleaned_data['name']
-            os.mkdir(os.path.join(root.abspath, name))
+            os.mkdir(os.path.join(fi.abspath, name))
             messages.success(request, _('The directory "%(name)s" has been created.') % {'name': name})
 
-            return redirect(path_to_url(root.abspath))
+            return redirect(path_to_url(fi.abspath))
     else:
-        form = NameForm(root.abspath)
+        form = NameForm(fi.abspath)
 
-    extra_context = {'form': form, 'directory': root}
+    extra_context = {'form': form, 'directory': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
 
-def upload(request, url, template_name='filebrowser/upload.html', **kwargs):
+def upload(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/upload.html', **kwargs):
     """Uploads a new file to the given url.
     """
-    root = FileInfo(url_to_path('/%s' % url))
+    fi = FileInfo(url_to_path('/%s' % url))
 
     if request.method == 'POST': 
-        form = UploadForm(root.abspath, data=request.POST, files=request.FILES) 
+        form = UploadForm(fi.abspath, data=request.POST, files=request.FILES) 
 
         if form.is_valid(): 
             filename = form.cleaned_data['name'] or form.cleaned_data['file'].name
-            file_path = os.path.join(root.abspath, filename)
+            file_path = os.path.join(fi.abspath, filename)
             destination = open(file_path, 'wb+')
             for chunk in form.cleaned_data['file'].chunks():
                 destination.write(chunk)
             messages.success(request, _('File "%(filename)s" has been uploaded.') % {'filename': filename})
 
-            return redirect(path_to_url(root.abspath))
+            return redirect(path_to_url(fi.abspath))
     else:
-        form = UploadForm(root.abspath)
+        form = UploadForm(fi.abspath)
 
-    extra_context = {'form': form, 'directory': root}
+    extra_context = {'form': form, 'directory': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
 
-def move(request, url, template_name='filebrowser/move.html', **kwargs):
+def move(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/move.html', **kwargs):
     """Moves a file, directory or link to a new location.
     """
     fi = FileInfo(url_to_path('/%s' % url))
@@ -135,12 +135,12 @@ def move(request, url, template_name='filebrowser/move.html', **kwargs):
     else:
         form = DestinationForm(fi.abspath, initial={'destination': get_parent(fi.abspath)})
 
-    extra_context = {'form': form, 'object': fi}
+    extra_context = {'form': form, 'object': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
 
-def copy(request, url, template_name='filebrowser/copy.html', **kwargs):
+def copy(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/copy.html', **kwargs):
     """Copies a file, directory or link [to another location].
     """
     fi = FileInfo(url_to_path('/%s' % url))
@@ -163,12 +163,12 @@ def copy(request, url, template_name='filebrowser/copy.html', **kwargs):
     else:
         form = NameDestinationForm(fi.abspath, initial={'destination': get_parent(fi.abspath), 'name': fi.copy_name})
 
-    extra_context = {'form': form, 'object': fi}
+    extra_context = {'form': form, 'object': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
 
-def mkln(request, url, template_name='filebrowser/mkln.html', **kwargs):
+def mkln(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkln.html', **kwargs):
     """Makes a new link to the given url.
     """
     fi = FileInfo(url_to_path('/%s' % url))
@@ -188,12 +188,12 @@ def mkln(request, url, template_name='filebrowser/mkln.html', **kwargs):
     else:
         form = NameDestinationForm(fi.abspath, initial={'name': "Link to %s" % fi.name, 'destination': get_parent(fi.abspath)})
 
-    extra_context = {'form': form, 'object': fi}
+    extra_context = {'form': form, 'object': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
 
-def rename(request, url, template_name='filebrowser/rename.html', **kwargs):
+def rename(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/rename.html', **kwargs):
     """Renames a file, directory or link.
     """
     fi = FileInfo(url_to_path('/%s' % url))
@@ -217,12 +217,12 @@ def rename(request, url, template_name='filebrowser/rename.html', **kwargs):
     else:
         form = NameForm(fi.parent.abspath, initial={'name': fi.name})
 
-    extra_context = {'form': form, 'object': fi}
+    extra_context = {'form': form, 'object': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))
 
-def delete(request, url, template_name='filebrowser/delete.html', **kwargs):
+def delete(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/delete.html', **kwargs):
     """Deletes a file, directory or link.
     """
     fi = FileInfo(url_to_path('/%s' % url))
@@ -242,7 +242,7 @@ def delete(request, url, template_name='filebrowser/delete.html', **kwargs):
             messages.success(request, _('The file has been deleted.'))
         return redirect(redirect_to)
 
-    extra_context = {'object': fi}
+    extra_context = {'object': fi, 'root': root}
     extra_context.update(kwargs.get('extra_context', {}))
 
     return render_to_response(template_name, RequestContext(request, extra_context))

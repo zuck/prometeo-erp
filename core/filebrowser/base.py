@@ -28,10 +28,6 @@ from django.conf import settings
 # Default max upload size: 1024 x 1024 x 10 = 10485760 bytes = 10 MB.
 DEFAULT_FILE_MAX_UPLOAD_SIZE = 10485760
 
-# Base MEDIA url and path without the starting slash.
-MEDIA_BASE_ROOT = settings.MEDIA_ROOT.strip('/')
-MEDIA_BASE_URL = settings.MEDIA_URL.strip('/')
-
 def get_max_upload_size():
     """Pull the FILE_UPLOAD_MAX_SIZE from settings.
     
