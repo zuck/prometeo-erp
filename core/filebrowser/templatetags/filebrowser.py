@@ -114,9 +114,7 @@ def row_template(index, path, f, url_prefix):
 def filebrowser_actions(context, path=settings.MEDIA_ROOT, url_prefix=""):
     """Renders default file browser actions.
     """
-    if not path:
-        path = settings.MEDIA_ROOT
-    fi = FileInfo(path)
+    fi = FileInfo(path or settings.MEDIA_ROOT)
     output = '<ul>\n'
     output += '\t<li class="add"><a title="%(label)s" href="%(url_prefix)s%(url)s">%(label)s</a></li>\n' % {
         'label': _('Add directory'),
@@ -133,17 +131,14 @@ def filebrowser_actions(context, path=settings.MEDIA_ROOT, url_prefix=""):
     return output    
 
 @register.simple_tag(takes_context=True)
-def filebrowser(context, path=settings.MEDIA_ROOT, root=settings.MEDIA_ROOT, url_prefix=""):
+def filebrowser(context, path=settings.MEDIA_ROOT, root_path=settings.MEDIA_ROOT, url_prefix=""):
     """Renders a file browser.
     """
-    if not path:
-        path = settings.MEDIA_ROOT
-    if not root:
-        root = settings.MEDIA_ROOT
     request = context['request']
     url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
     order_by = request.GET.get('order_by', None)
-    fi = FileInfo(path)
+    fi = FileInfo(path or settings.MEDIA_ROOT)
+    root = FileInfo(root_path or settings.MEDIA_ROOT)
     if fi.is_directory():
         files = [FileInfo(os.path.join(fi.path, f)) for f in os.listdir(fi.abspath)]
         files = sort_files(files, order_by)
