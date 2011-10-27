@@ -74,7 +74,12 @@
 .filebrowser span.ext-png, .filebrowser span.ext-gif,
 .filebrowser span.ext-bmp, .filebrowser span.ext-tiff { background-image: url(images/image.png); }
 
-.filebrowser span.ext-avi { background-image: url(images/video.png); }
+.filebrowser span.ext-avi, .filebrowser span.ext-ogg,
+.filebrowser span.ext-mpeg, .filebrowser span.ext-mpg,
+.filebrowser span.ext-mpe { background-image: url(images/film.png); }
+
+.filebrowser span.ext-mp3, .filebrowser span.ext-wav,
+.filebrowser span.ext-wma, .filebrowser span.ext-mid  { background-image: url(images/music.png); }
 
 .filebrowser span.ext-html { background-image: url(images/page_white_world.png); }
 
