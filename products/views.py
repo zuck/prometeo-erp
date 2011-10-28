@@ -171,7 +171,7 @@ def product_supply_detail(request, product_id, id, **kwargs):
 def product_edit_supply(request, product_id, id, **kwargs):
     """Edits an supply of the given product.
     """
-    supply = get_object_or_404(Supply, product__pk=product_id, pk=product_id)
+    supply = get_object_or_404(Supply, product__pk=product_id, pk=id)
     
     return create_update.update_object(
         request,
@@ -185,7 +185,7 @@ def product_edit_supply(request, product_id, id, **kwargs):
 def product_delete_supply(request, product_id, id, **kwargs):
     """Deletes an supply of the given product.
     """
-    supply = get_object_or_404(Supply, product__pk=product_id, pk=product_id)
+    supply = get_object_or_404(Supply, product__pk=product_id, pk=id)
     
     return create_update.delete_object(
         request,
