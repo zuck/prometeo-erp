@@ -62,11 +62,23 @@ def partner_list(request, page=0, paginate_by=10, **kwargs):
 def partner_add(request, **kwargs):
     """Adds a new partner.
     """
-    return create_update.create_object(
-        request,
-        form_class=PartnerForm,
-        template_name='partners/partner_edit.html'
-    )
+    default_is_managed = (Partner.objects.filter(is_managed=True).count() == 0)
+    default_assignee = request.user
+    if default_is_managed:
+        default_assignee = None
+
+    partner = Partner(author=request.user, assignee=default_assignee, is_managed=default_is_managed)  
+      
+    if request.method == 'POST':
+        form = PartnerForm(request.POST, instance=partner)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("The partner has been saved."))
+            return redirect_to(request, url=partner.get_absolute_url())
+    else:
+        form = PartnerForm(instance=partner)
+
+    return render_to_response('partners/partner_edit.html', RequestContext(request, {'form': form, 'object': partner}))
 
 @permission_required('partners.change_partner', _get_partner)     
 def partner_detail(request, id, page=None, **kwargs):

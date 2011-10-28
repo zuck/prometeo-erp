@@ -23,6 +23,7 @@ __version__ = '0.0.2'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import User
 
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -166,7 +167,8 @@ def install(sender, created_models, **kwargs):
     )
 
     # Creates first managed company.
-    if Partner in created_models \
+    """if Partner in created_models \
+    and User.objects.count() \
     and kwargs.get('interactive', True):
         msg = "\nYou just installed Prometeo's partners system, which means you don't have " \
                 "a default managed company defined.\nWould you like to create one now? (yes/no): "
@@ -180,9 +182,9 @@ def install(sender, created_models, **kwargs):
                 vat = raw_input("Insert the VAT number (optional): ") or None
                 email = raw_input("Insert the main email address (optional): ") or None
                 url = raw_input("Insert the main URL address (optional): ") or None
-                if Partner.objects.create(name=name, vat_number=vat, email=email, url=url, is_managed=True):
+                if Partner.objects.create(author=User.objects.all()[0], name=name, vat_number=vat, email=email, url=url, is_managed=True):
                     print "Default managed company created successfully.\n"
-            break
+            break"""
     
     post_syncdb.disconnect(install)
 

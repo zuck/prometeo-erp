@@ -92,6 +92,7 @@ class Partner(Commentable):
     contacts = models.ManyToManyField(Contact, through='partners.Job', null=True, blank=True, verbose_name=_('contacts'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     assignee = models.ForeignKey('auth.User', related_name="assigned_partners", null=True, blank=True, verbose_name=_('assignee'))
+    author = models.ForeignKey('auth.User', related_name="created_partners", verbose_name=_('author'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))

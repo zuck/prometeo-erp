@@ -32,7 +32,7 @@ class ContactForm(forms.ModelForm):
     """
     class Meta:
         model = Contact
-        exclude = ['id', 'addresses', 'phone_numbers']
+        exclude = ['id', 'addresses', 'phone_numbers', 'created']
         widgets = {
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
@@ -52,7 +52,7 @@ class ContactJobForm(forms.ModelForm):
     """
     class Meta:
         model = Job
-        exclude = ['contact']
+        exclude = ['contact', 'created']
         widgets = {
             'partner': SelectAndAddWidget(add_url='/partners/add/'),
         }
@@ -62,7 +62,7 @@ class PartnerForm(forms.ModelForm):
     """
     class Meta:
         model = Partner
-        exclude = ['id', 'addresses', 'phone_numbers', 'contacts', 'dashboard', 'stream']
+        exclude = ['id', 'addresses', 'phone_numbers', 'contacts', 'dashboard', 'stream', 'author', 'created']
         widgets = {
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
@@ -84,7 +84,7 @@ class PartnerJobForm(forms.ModelForm):
     """
     class Meta:
         model = Job
-        exclude = ['partner']
+        exclude = ['partner', 'created']
         widgets = {
             'contact': SelectAndAddWidget(add_url='/partners/contacts/add/'),
         }
