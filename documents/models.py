@@ -38,9 +38,9 @@ def _get_upload_to(instance, filename):
 class Document(Commentable):
     """Document model.
     """
-    code = models.CharField(max_length=255, verbose_name=_('code'))
     title = models.CharField(max_length=255, verbose_name=_('title'))
-    summary = models.TextField(verbose_name=_('summary'))
+    code = models.CharField(max_length=255, verbose_name=_('code'))
+    summary = models.TextField(null=True, blank=True, verbose_name=_('summary'))
     owner = models.ForeignKey('partners.Partner', verbose_name=_('owner'))
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
