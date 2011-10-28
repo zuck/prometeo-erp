@@ -202,6 +202,19 @@ def detail_table(parser, token):
     tag_name, args, kwargs = parse_args_kwargs(parser, token)
     return DetailTableNode(*args, **kwargs)
 
+def form_error_template(index, form_or_instance):
+    output = ''
+    if index == 0 and isinstance(form_or_instance, forms.ModelForm) and form_or_instance.non_field_errors():
+        output += '<tr>\n'
+        output += '\t<td colspan="3">\n'
+        output += '\t\t<ul class="errorlist">\n'
+        for error in form_or_instance.non_field_errors():
+            output += '\t\t\t<li>%s</li>\n' % error
+        output += '\t\t</ul>\n'
+        output += '\t<td>\n'
+        output += '</tr>\n'
+    return output
+
 def get_object_field(name, fields, form_or_instance, attrs={}):
     name, sep, suffix = name.partition(':')
 
@@ -213,7 +226,7 @@ def get_object_field(name, fields, form_or_instance, attrs={}):
         field = getattr(form_or_instance, name)
         return field_template(name, field, form_or_instance, attrs, suffix)
 
-    return ""
+    return ''
 
 class PropertyTableNode(Node):
     def __init__(self, *args, **kwargs):
@@ -240,6 +253,8 @@ class PropertyTableNode(Node):
                 return ""
 
             for i, field in enumerate(layout):
+                output += form_error_template(i, form_or_instance)
+
                 output += row_template(i)
 
                 # Single field.

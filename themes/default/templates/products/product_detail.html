@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+{% load region %}
+{% load menu %}
+{% load details %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Products' 'product_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+    <h2>{% block subtitle %}{% trans "Details" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.products.add_product %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url product_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.products.change_product %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url product_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.products.delete_product %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url product_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.products.change_product %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url product_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+        {% if perms.products.change_product %}
+        {% if user not in object.stream.followers.all %}
+        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+        {% else %}
+        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% objects_from object %}
+{% with objects as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "product_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            <table class="properties">
+                {% property_table object "['ean13', ['uom', 'uos'], 'uom_to_uos', ['is_consumable', 'is_service'], ['sales_price', 'max_sales_discount:%'], 'description', 'categories', 'tags']" %}
+            </table>
+        </div>
+        {% region object.dashboard %}
+        {% include "elements/comments.html" %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

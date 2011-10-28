@@ -239,6 +239,7 @@ td.number { text-align: right; }
 td .actions {
     float: right;
     margin-right: -10px;
+    margin-left: 10px;
 }
 
 td .yes, td .no {
