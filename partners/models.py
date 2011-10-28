@@ -22,7 +22,6 @@ __version__ = '0.0.2'
 
 from django.db import models
 from django.db.models import permalink
-from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
@@ -44,6 +43,7 @@ class Contact(models.Model):
     main_address = models.ForeignKey('addressing.Address', null=True, blank=True, related_name=_('main_of_contact'), verbose_name=_('main address'))
     main_phone_number = models.ForeignKey('addressing.PhoneNumber', null=True, blank=True, related_name=_('main_of_contact'), verbose_name=_('main phone number'))
     user = models.ForeignKey('auth.User', blank=True, null=True, verbose_name=_('user account'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
 
@@ -92,6 +92,7 @@ class Partner(Commentable):
     contacts = models.ManyToManyField(Contact, through='partners.Job', null=True, blank=True, verbose_name=_('contacts'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     assignee = models.ForeignKey('auth.User', related_name="assigned_partners", null=True, blank=True, verbose_name=_('assignee'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
@@ -123,6 +124,7 @@ class Job(models.Model):
     partner = models.ForeignKey(Partner, verbose_name=_('partner'))
     role = models.CharField(max_length=30, choices=settings.ROLES, default=settings.DEFAULT_ROLE, verbose_name=_('role'))
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
         
     def __unicode__(self):
         return _("%(contact)s as %(role)s") % {'contact': self.contact, 'role': self.get_role_display()}
