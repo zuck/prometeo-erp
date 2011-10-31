@@ -1,0 +1,32 @@
+{% extends "stock/warehouse_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Movements" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Warehouses' '/warehouses/' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Movements' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Movements" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.stock.add_movement %}
+        <li class="import"><a title="{% trans 'Add ingoing' %}" href="{% url warehouse_add_ingoing_movement object.pk %}">{% trans 'Add ingoing' %}</a></li>
+        <li class="export"><a title="{% trans 'Add outgoing' %}" href="{% url warehouse_add_outgoing_movement object.pk %}">{% trans 'Add outgoing' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

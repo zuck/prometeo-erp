@@ -22,6 +22,7 @@ __version__ = '0.0.2'
 
 from django import forms
 from django.forms import ValidationError
+from django.core.urlresolvers import reverse
 
 from prometeo.core.forms import enrich_form
 from prometeo.core.forms.widgets import *
@@ -34,6 +35,13 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ['suppliers', 'dashboard', 'stream']
+
+class ProductEntryForm(forms.ModelForm):
+    """Form for product entry data.
+    """
+    class Meta:
+        model = ProductEntry
+        widgets = {'product': SelectAndAddWidget(add_url='/products/add')}
         
 class SupplyForm(forms.ModelForm):
     """Form for supply data.
@@ -53,4 +61,5 @@ class SupplyForm(forms.ModelForm):
             self._update_errors(e.message_dict)
 
 enrich_form(ProductForm)
+enrich_form(ProductEntryForm)
 enrich_form(SupplyForm)

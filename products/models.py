@@ -66,6 +66,19 @@ class Product(Commentable):
     @models.permalink
     def get_delete_url(self):
         return ('product_delete', (), {"id": self.pk})
+
+class ProductEntry(models.Model):
+    """A set of instances of the same product.
+    """
+    product = models.ForeignKey(Product, verbose_name=_('product'))
+    quantity = models.FloatField(default=1.0, verbose_name=_('quantity'))
+    unit_value = models.FloatField(default=1.0, verbose_name=_('unit value'))
+        
+    def __unicode__(self):
+        return '%s (%d %s)' % (self.product, self.quantity, self.product.uom)
+
+    def get_absolute_url(self):
+        return self.product.get_absolute_url()
         
 class Supply(models.Model):
     """Relation between a product and one of its supplier.
