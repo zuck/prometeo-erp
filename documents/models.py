@@ -42,6 +42,7 @@ class Document(Commentable):
     code = models.CharField(max_length=255, verbose_name=_('code'))
     summary = models.TextField(null=True, blank=True, verbose_name=_('summary'))
     owner = models.ForeignKey('partners.Partner', verbose_name=_('owner'))
+    status = models.CharField(max_length=20, choices=settings.DOCUMENT_STATUS_CHOICES, default=settings.DOCUMENT_DEFAULT_STATUS, verbose_name=_('status'))
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
