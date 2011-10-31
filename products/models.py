@@ -37,6 +37,7 @@ class Product(Commentable):
     uom = models.CharField(max_length=20, choices=settings.PRODUCT_UOM_CHOICES, default=settings.PRODUCT_DEFAULT_UOM, verbose_name=_('UOM'))
     uos = models.CharField(max_length=20, choices=settings.PRODUCT_UOM_CHOICES, default=settings.PRODUCT_DEFAULT_UOM, verbose_name=_('UOS'))
     uom_to_uos = models.FloatField(default=1.0, help_text=_('Conversion rate between UOM and UOS'), verbose_name=_('UOM to UOS'))
+    weight = models.FloatField(default=1.0, help_text=_('(Kg)'), verbose_name=_('unit weight'))
     is_consumable = models.BooleanField(default=False, verbose_name=_('consumable?'))
     is_service = models.BooleanField(default=False, verbose_name=_('service?'))
     sales_price = models.FloatField(default=0.0, verbose_name=_('sales price'))
