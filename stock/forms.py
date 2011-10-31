@@ -50,14 +50,6 @@ class MovementForm(forms.ModelForm):
             'destination': SelectAndAddWidget(add_url='/stock/warehouses/add')
         }
 
-    def clean_origin(self):
-        origin = self.cleaned_data['origin']
-
-        if origin == (self.cleaned_data.get('destination', None) or self.instance.destination):
-            raise forms.ValidationError(_("Origin and destination warehouses can't be the same."))
-
-        return origin
-
     def clean_destination(self):
         destination = self.cleaned_data['destination']
 
@@ -75,6 +67,14 @@ class IngoingMovementForm(MovementForm):
     def __init__(self, *args, **kwargs):
         super(IngoingMovementForm, self).__init__(*args, **kwargs)
         self.fields['origin'].queryset = Warehouse.objects.exclude(pk=self.instance.destination.pk)
+
+    def clean_origin(self):
+        origin = self.cleaned_data['origin']
+
+        if origin == (self.cleaned_data.get('destination', None) or self.instance.destination):
+            raise forms.ValidationError(_("Origin and destination warehouses can't be the same."))
+
+        return origin
         
 class OutgoingMovementForm(MovementForm):
     """Form for outgoing movement data.
