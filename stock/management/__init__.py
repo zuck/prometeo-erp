@@ -44,9 +44,9 @@ def install(sender, created_models, **kwargs):
     )
     
     # Links.
-    warehouses_link, is_new = Link.objects.get_or_create(
-        title=_("Warehouses"),
-        slug="stock-warehouses",
+    stock_link, is_new = Link.objects.get_or_create(
+        title=_("Stock"),
+        slug="stock",
         description=_("Stock management"),
         url=reverse("warehouse_list"),
         menu=main_menu
