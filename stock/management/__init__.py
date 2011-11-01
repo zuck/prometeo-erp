@@ -68,6 +68,14 @@ def install(sender, created_models, **kwargs):
         menu=stock_menu
     )
 
+    stock_delivery_notes_link, is_new = Link.objects.get_or_create(
+        title=_("Delivery notes"),
+        slug="delivery-note-list",
+        description=_("Delivery notes management"),
+        url=reverse("delivery_note_list"),
+        menu=stock_menu
+    )
+
     warehouse_details_link, is_new = Link.objects.get_or_create(
         title=_("Dashboard"),
         slug="warehouse-dashboard",

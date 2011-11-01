@@ -61,19 +61,18 @@ class SupplyForm(forms.ModelForm):
         except ValidationError, e:
             self._update_errors(e.message_dict)
 
-_ProductEntryFormset = modelformset_factory(ProductEntry, form=ProductEntryForm, can_delete=True, extra=2)
+_ProductEntryFormset = modelformset_factory(ProductEntry, form=ProductEntryForm, can_delete=True, extra=4)
 
 class ProductEntryFormset(_ProductEntryFormset):
     def __init__(self, *args, **kwargs):
-        super(ProductEntryFormset, self).__init__(*args, **kwargs)
-        if len(self.forms) > 2:
-            count = self.initial_form_count()+1
-            self.forms = self.forms[:count]
-            if count < self.total_form_count():
-                for field in self.forms[-1].fields.values():
+        queryset = kwargs.pop('queryset', ProductEntry.objects.none())
+        super(ProductEntryFormset, self).__init__(queryset=queryset, *args, **kwargs)
+        count = self.initial_form_count()
+        for i in range(0, self.total_form_count()-count):
+            if i != 0 or count > 0:
+                for field in self.forms[i+count].fields.values():
                     field.required = False
-                self.forms[-1].fields['DELETE'].initial = True
-            self.extra = 1
+                self.forms[i+count].fields['DELETE'].initial = True
 
 enrich_form(ProductForm)
 enrich_form(ProductEntryForm)

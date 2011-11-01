@@ -41,4 +41,11 @@ urlpatterns = patterns('stock.views',
     url(r'^warehouses/movements/(?P<id>\d+)/$', view='movements.movement_detail', name='movement_detail'),
     url(r'^warehouses/movements/(?P<id>\d+)/edit/$', view='movements.movement_edit', name='movement_edit'),
     url(r'^warehouses/movements/(?P<id>\d+)/delete/$', view='movements.movement_delete', name='movement_delete'),
+
+    # Delivery notes.
+    url(r'^warehouses/delivery-notes/$', view='delivery_notes.delivery_note_list', name='delivery_note_list'),
+    url(r'^warehouses/delivery-notes/add$', view='delivery_notes.delivery_note_add', name='delivery_note_add'),
+    url(r'^warehouses/delivery-notes/(?P<id>\d+)/$', view='delivery_notes.delivery_note_detail', name='delivery_note_detail'),
+    url(r'^warehouses/delivery-notes/(?P<id>\d+)/edit/$', view='delivery_notes.delivery_note_edit', name='delivery_note_edit'),
+    url(r'^warehouses/delivery-notes/(?P<id>\d+)/delete/$', view='delivery_notes.delivery_note_delete', name='delivery_note_delete'),
 )

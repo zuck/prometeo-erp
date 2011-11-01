@@ -104,8 +104,9 @@ form select {
 }
 
 form textarea {
-    width: 92%;
-    height: 250px;
+    width: 93%;
+    height: 150px;
+    max-width: 798px;
     padding: 2px;
 }
 

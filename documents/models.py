@@ -38,15 +38,13 @@ def _get_upload_to(instance, filename):
 class Document(Commentable):
     """Document model.
     """
-    title = models.CharField(max_length=255, verbose_name=_('title'))
     code = models.CharField(max_length=255, verbose_name=_('code'))
-    summary = models.TextField(null=True, blank=True, verbose_name=_('summary'))
     owner = models.ForeignKey('partners.Partner', verbose_name=_('owner'))
     status = models.CharField(max_length=20, choices=settings.DOCUMENT_STATUS_CHOICES, default=settings.DOCUMENT_DEFAULT_STATUS, verbose_name=_('status'))
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    author = models.ForeignKey('auth.User', verbose_name=_('author'))
+    author = models.ForeignKey('auth.User', verbose_name=_('created by'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
@@ -57,7 +55,7 @@ class Document(Commentable):
         verbose_name_plural = _('documents')
         
     def __unicode__(self):
-        return "#%s: %s" % (self.code, self.title)
+        return "#%s: %s" % (self.code, self.content_object)
 
     def get_absolute_url(self):
         return self.content_object.get_absolute_url()

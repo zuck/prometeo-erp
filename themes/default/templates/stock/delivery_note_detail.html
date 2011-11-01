@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+{% load details %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Warehouses' 'warehouse_list' %}
+    {% add_crumb 'Delivery notes' 'delivery_note_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.stock.add_delivery_note %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url delivery_note_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.stock.change_delivery_note %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url delivery_note_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.stock.delete_delivery_note %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url delivery_note_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.stock.change_delivery_note %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url delivery_note_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% objects_from object %}
+{% include 'elements/navigator.html' %}
+<div class="details">
+    <table class="properties">
+        {% property_table object "[['owner', 'status'], ['author', 'created']]" %}
+        {% property_table object.content_object "[['delivery_addressee', 'invoice_addressee'], ['order_ref_number', 'order_ref_date'], ['means_of_delivery', 'terms_of_payment'], ['reason_of_shipping', 'terms_of_shipping'], 'goods_appearance', 'notes']" %}
+        {% property_table object "['categories', 'tags']" %}
+    </table>
+    {% detail_table object.content_object.entries.all "['product', 'quantity', 'unit_value']" %}
+</div>
+{% endblock %}

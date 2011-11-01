@@ -86,5 +86,17 @@ class OutgoingMovementForm(MovementForm):
         super(OutgoingMovementForm, self).__init__(*args, **kwargs)
         self.fields['destination'].queryset = Warehouse.objects.exclude(pk=self.instance.origin.pk)
 
+class DeliveryNoteForm(forms.ModelForm):
+    """Form for delivery note data.
+    """
+    class Meta:
+        model = DeliveryNote
+        exclude = ['document', 'entries']
+        widgets = {
+            'delivery_addressee': SelectAndAddWidget(add_url='/partners/add'),
+            'invoice_addressee': SelectAndAddWidget(add_url='/partners/add')
+        }
+
 enrich_form(WarehouseForm)
 enrich_form(MovementForm)
+enrich_form(DeliveryNoteForm)
