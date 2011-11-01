@@ -13,6 +13,7 @@
 {% block subtitle %}{% trans "Unplanned" %}{% endblock %}
 
 {% block section %}
+{% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
         {% if perms.todo.add_task %}
@@ -20,7 +21,6 @@
         {% endif %}
     </ul>
 </div>
-{% include 'elements/filterbox.html' %}
 <div class="details">
     {% if object_list %}
     <ul class="tasks">

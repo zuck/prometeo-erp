@@ -4,6 +4,8 @@
 {% load breadcrumbs %}
 {% load details %}
 
+{% block meta_title %}{% trans "Timesheets" %}{% endblock %}
+
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Tasks' 'task_list' %}
@@ -13,6 +15,7 @@
 {% block subtitle %}{% trans "Timesheets" %}{% endblock %}
 
 {% block section %}
+{% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
         {% if perms.todo.add_timesheet %}
@@ -20,7 +23,6 @@
         {% endif %}
     </ul>
 </div>
-{% include 'elements/filterbox.html' %}
 <div class="details">
     {% detail_table object_list field_names %}
     {% include 'elements/paginator.html' %}

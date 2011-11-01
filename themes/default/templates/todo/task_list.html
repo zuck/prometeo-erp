@@ -26,6 +26,7 @@
     </div>
     <div class="section">
         {% block section %}
+        {% include 'elements/filterbox.html' %}
         <div class="actions">
             <ul>
                 {% if perms.todo.add_task %}
@@ -33,7 +34,6 @@
                 {% endif %}
             </ul>
         </div>
-        {% include 'elements/filterbox.html' %}
         <div class="details">
             {% regroup object_list by start.date as tasks_by_date %}
             {% if tasks_by_date %}
