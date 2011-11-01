@@ -60,7 +60,7 @@ def delivery_note_list(request, page=0, paginate_by=10, **kwargs):
 
 @permission_required('stock.add_delivery_note')     
 def delivery_note_add(request, **kwargs):
-    """Adds a new delivery_note.
+    """Adds a new delivery note.
     """
     delivery_note = DeliveryNote()
     doc = Document(author=request.user)
@@ -86,7 +86,7 @@ def delivery_note_add(request, **kwargs):
 
 @permission_required('stock.change_delivery_note', _get_delivery_note)     
 def delivery_note_detail(request, id, page=None, **kwargs):
-    """Shows delivery_note details.
+    """Shows delivery note details.
     """
     object_list = Document.objects.filter(content_type=ContentType.objects.get_for_model(DeliveryNote))
 
