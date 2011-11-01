@@ -3,20 +3,20 @@
 {% load i18n %}
 {% load breadcrumbs %}
 
-{% block meta_title %}{{ object }}{% endblock %}
+{% block meta_title %}{{ object.title }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
     {% add_crumb object_user object_user.get_absolute_url %}
     {% add_crumb 'Bookmarks' 'bookmark_list' object_user.username %}
-    {% add_crumb object %}
+    {% add_crumb object.title object.get_absolute_url %}
     {% add_crumb 'Delete' %}
 {% endblock %}
 
 {% block title %}
 <div class="title">
-    <h1>{{ object }}</h1>
+    <h1>{{ object.title }}</h1>
     <h2>{% trans 'Delete' %}</h2>
 </div>
 {% endblock %}

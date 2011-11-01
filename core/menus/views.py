@@ -41,7 +41,7 @@ from forms import *
 def _get_bookmark(request, *args, **kwargs):
     username = kwargs.get('username', None)
     slug = kwargs.get('slug', None)
-    return get_object_or_404(Link, menu__users__username=username, slug=slug)
+    return get_object_or_404(Link, menu__userprofile__user__username=username, slug=slug)
 
 @permission_required('auth.change_user', _get_user)
 def bookmark_list(request, username, page=0, paginate_by=10, **kwargs):
