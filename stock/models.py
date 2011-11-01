@@ -108,8 +108,8 @@ class Movement(models.Model):
 class DeliveryNote(models.Model):
     """Delivery note model.
     """
-    delivery_addressee = models.ForeignKey('partners.Partner', null=True, blank=True, help_text=_('Keep it blank to use the same as invoicing'), related_name='delivery_addressee_of_notes', verbose_name=_('delivery addressee'))
-    invoice_addressee = models.ForeignKey('partners.Partner', related_name='invoice_addressee_of_notes', verbose_name=_('invoice addressee'))
+    delivery_addressee = models.ForeignKey('partners.Partner', null=True, blank=True, help_text=_('Keep it blank to use the same as invoicing'), related_name='delivery_addressee_of_delivery_notes', verbose_name=_('delivery addressee'))
+    invoice_addressee = models.ForeignKey('partners.Partner', related_name='invoice_addressee_of_delivery_notes', verbose_name=_('invoice addressee'))
     order_ref_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('order ref. no.'))
     order_ref_date = models.DateField(null=True, blank=True, verbose_name=_('order ref. date'))
     means_of_delivery = models.CharField(max_length=20, choices=settings.MEANS_OF_DELIVERY, default=settings.DEFAULT_MEAN_OF_DELIVERY, verbose_name=_('mean of delivery'))
