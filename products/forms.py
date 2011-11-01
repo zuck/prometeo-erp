@@ -22,6 +22,7 @@ __version__ = '0.0.2'
 
 from django import forms
 from django.forms import ValidationError
+from django.forms.models import modelformset_factory
 from django.core.urlresolvers import reverse
 
 from prometeo.core.forms import enrich_form
@@ -59,6 +60,20 @@ class SupplyForm(forms.ModelForm):
             self.instance.validate_unique(exclude=exclude)
         except ValidationError, e:
             self._update_errors(e.message_dict)
+
+_ProductEntryFormset = modelformset_factory(ProductEntry, form=ProductEntryForm, can_delete=True, extra=2)
+
+class ProductEntryFormset(_ProductEntryFormset):
+    def __init__(self, *args, **kwargs):
+        super(ProductEntryFormset, self).__init__(*args, **kwargs)
+        if len(self.forms) > 2:
+            count = self.initial_form_count()+1
+            self.forms = self.forms[:count]
+            if count < self.total_form_count():
+                for field in self.forms[-1].fields.values():
+                    field.required = False
+                self.forms[-1].fields['DELETE'].initial = True
+            self.extra = 1
 
 enrich_form(ProductForm)
 enrich_form(ProductEntryForm)
