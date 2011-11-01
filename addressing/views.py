@@ -77,7 +77,8 @@ def address_add(request, owner, post_save_redirect, template_name, owner_field='
             elif isinstance(rel, models.ManyToManyField):
                 value.add(instance)
             owner.save()
-            messages.success(request, _("Address added to %(owner)s") % {'owner': owner})
+            if owner.pk:
+                messages.success(request, _("Address added to %(owner)s") % {'owner': owner})
             return redirect_to(request, url=post_save_redirect)
     else:
         form = AddressForm()
@@ -151,7 +152,8 @@ def phone_number_add(request, owner, post_save_redirect, template_name, owner_fi
             elif isinstance(rel, models.ManyToManyField):
                 value.add(instance)
             owner.save()
-            messages.success(request, _("Phone number added to %(owner)s") % {'owner': owner})
+            if owner.pk:
+                messages.success(request, _("Phone number added to %(owner)s") % {'owner': owner})
             return redirect_to(request, url=post_save_redirect)
     else:
         form = PhoneNumberForm()
