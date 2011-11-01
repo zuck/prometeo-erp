@@ -48,6 +48,7 @@ class Document(Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering = ('owner', '-created')

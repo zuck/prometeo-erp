@@ -33,7 +33,7 @@ class DocumentForm(forms.ModelForm):
     """
     class Meta:
         model = Document
-        exclude = ['object_id', 'content_type', 'author']
+        exclude = ['object_id', 'content_type', 'author', 'stream']
         widgets = {
             'owner': SelectAndAddWidget(add_url='/partners/add'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add'),
