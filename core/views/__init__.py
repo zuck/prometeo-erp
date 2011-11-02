@@ -34,13 +34,11 @@ def filtered_list_detail(request, model_or_queryset, fields=[], exclude=[], page
         exclude=exclude
     )
 
-    extra_context = {
+    extra_context = kwargs.pop('extra_context', {})
+    extra_context.update({
         'field_names': field_names,
         'filter_fields': filter_fields,
-    }
-
-    if 'extra_context' in kwargs:
-        extra_context.update(kwargs.pop('extra_context'))
+    })
 
     return list_detail.object_list(
         request,

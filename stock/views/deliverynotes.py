@@ -31,21 +31,25 @@ from django.contrib.contenttypes.models import ContentType
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
-from prometeo.documents.models import Document
-from prometeo.documents.forms import DocumentForm
+from prometeo.documents.models import *
+from prometeo.documents.forms import *
+from prometeo.documents.views import *
 from prometeo.products.forms import ProductEntryFormset
 
 from ..models import *
 from ..forms import *
 
-def _get_delivery_note(request, *args, **kwargs):
+def _get_deliverynote(request, *args, **kwargs):
+    note_id = kwargs.get('note_id', None)
+    if note_id:
+        return get_object_or_404(DeliveryNote, id=note_id)
     id = kwargs.get('id', None)
     if id:
         return get_object_or_404(DeliveryNote, id=id)
     return None
 
-@permission_required('stock.change_delivery_note')
-def delivery_note_list(request, page=0, paginate_by=10, **kwargs):
+@permission_required('stock.change_deliverynote')
+def deliverynote_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a delivery note list.
     """
     return filtered_list_detail(
@@ -54,38 +58,38 @@ def delivery_note_list(request, page=0, paginate_by=10, **kwargs):
         fields=['code', 'author', 'created'],
         page=page,
         paginate_by=paginate_by,
-        template_name='stock/delivery_note_list.html',
+        template_name='stock/deliverynote_list.html',
         **kwargs
     )
 
-@permission_required('stock.add_delivery_note')     
-def delivery_note_add(request, **kwargs):
+@permission_required('stock.add_deliverynote')     
+def deliverynote_add(request, **kwargs):
     """Adds a new delivery note.
     """
-    delivery_note = DeliveryNote()
+    deliverynote = DeliveryNote()
     doc = Document(author=request.user)
       
     if request.method == 'POST':
         dform = DocumentForm(request.POST, instance=doc)
-        form = DeliveryNoteForm(request.POST, instance=delivery_note)
+        form = DeliveryNoteForm(request.POST, instance=deliverynote)
         formset = ProductEntryFormset(request.POST)
         if form.is_valid() and dform.is_valid() and formset.is_valid():
             form.save()
-            doc.content_object = delivery_note 
+            doc.content_object = deliverynote 
             dform.save()
             for e in formset.save():
-                delivery_note.entries.add(e)
+                deliverynote.entries.add(e)
             messages.success(request, _("The delivery note has been saved."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
-        form = DeliveryNoteForm(instance=delivery_note)
+        form = DeliveryNoteForm(instance=deliverynote)
         formset = ProductEntryFormset()
 
-    return render_to_response('stock/delivery_note_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
+    return render_to_response('stock/deliverynote_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
-@permission_required('stock.change_delivery_note', _get_delivery_note)     
-def delivery_note_detail(request, id, page=None, **kwargs):
+@permission_required('stock.change_deliverynote', _get_deliverynote)     
+def deliverynote_detail(request, id, page=None, **kwargs):
     """Shows delivery note details.
     """
     object_list = Document.objects.filter(content_type=ContentType.objects.get_for_model(DeliveryNote))
@@ -97,44 +101,62 @@ def delivery_note_detail(request, id, page=None, **kwargs):
         extra_context={
             'object_list': object_list,
         },
-        template_name='stock/delivery_note_detail.html',
+        template_name=kwargs.pop('template_name', 'stock/deliverynote_detail.html'),
         **kwargs
     )
 
-@permission_required('stock.change_delivery_note', _get_delivery_note)     
-def delivery_note_edit(request, id, **kwargs):
+@permission_required('stock.change_deliverynote', _get_deliverynote)     
+def deliverynote_edit(request, id, **kwargs):
     """Edits a delivery note.
     """
     doc = get_object_or_404(Document, content_type=ContentType.objects.get_for_model(DeliveryNote), object_id=id)
-    delivery_note = doc.content_object
+    deliverynote = doc.content_object
       
     if request.method == 'POST':
         dform = DocumentForm(request.POST, instance=doc)
-        form = DeliveryNoteForm(request.POST, instance=delivery_note)
-        formset = ProductEntryFormset(request.POST, queryset=delivery_note.entries.all())
+        form = DeliveryNoteForm(request.POST, instance=deliverynote)
+        formset = ProductEntryFormset(request.POST, queryset=deliverynote.entries.all())
         if form.is_valid() and dform.is_valid() and formset.is_valid():
             form.save()
             dform.save()
             for e in formset.save():
-                delivery_note.entries.add(e)
+                deliverynote.entries.add(e)
             messages.success(request, _("The delivery note has been saved."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
-        form = DeliveryNoteForm(instance=delivery_note)
-        formset = ProductEntryFormset(queryset=delivery_note.entries.all())
+        form = DeliveryNoteForm(instance=deliverynote)
+        formset = ProductEntryFormset(queryset=deliverynote.entries.all())
 
-    return render_to_response('stock/delivery_note_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
+    return render_to_response('stock/deliverynote_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
-@permission_required('stock.delete_delivery_note', _get_delivery_note)    
-def delivery_note_delete(request, id, **kwargs):
+@permission_required('stock.delete_deliverynote', _get_deliverynote)    
+def deliverynote_delete(request, id, **kwargs):
     """Deletes a delivery note.
     """
     return create_update.delete_object(
         request,
-        model=DeliveryNote,
-        object_id=id,
-        post_delete_redirect=reverse('delivery_note_list'),
-        template_name='stock/delivery_note_delete.html',
+        model=Document,
+        object_id=Document.objects.get(object_id=id).pk,
+        post_delete_redirect=reverse('deliverynote_list'),
+        template_name='stock/deliverynote_delete.html',
         **kwargs
     )
+
+@permission_required('stock.change_deliverynote', _get_deliverynote)     
+def deliverynote_hardcopies(request, id, **kwargs):
+    """Shows delivery note hard copies.
+    """
+    return hardcopy_list(request, Document.objects.get(object_id=id).pk, **kwargs)
+
+@permission_required('stock.change_deliverynote', _get_deliverynote)     
+def deliverynote_add_hardcopy(request, id, **kwargs):
+    """Adds an hard copy to the given document.
+    """
+    return hardcopy_add(request, Document.objects.get(object_id=id).pk, **kwargs)
+
+@permission_required('stock.change_deliverynote', _get_deliverynote)     
+def deliverynote_delete_hardcopy(request, note_id, id, **kwargs):
+    """Deletes an hard copy of the given document.
+    """
+    return hardcopy_delete(request, Document.objects.get(object_id=note_id).pk, id, **kwargs)

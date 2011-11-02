@@ -72,7 +72,7 @@ def notify_object_created(sender, instance, *args, **kwargs):
         signature = "%s-created" % sender.__name__.lower()
         template = "streams/activities/object-created.html"
         context_pairs = {
-            "class": sender.content_object.__name__.lower(),
+            "class": sender.__name__.lower(),
             "name": "%s" % instance,
             "link": instance.get_absolute_url(),
             "author": "%s" % instance.author,

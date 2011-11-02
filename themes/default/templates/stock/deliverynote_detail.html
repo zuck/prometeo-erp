@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+{% load details %}
+{% load menu %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Delivery notes' 'deliverynote_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.stock.add_deliverynote %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url deliverynote_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.stock.change_deliverynote %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url deliverynote_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.stock.delete_deliverynote %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url deliverynote_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.stock.change_deliverynote %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url deliverynote_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+        {% if perms.stock.change_deliverynote %}
+        {% if user not in object.stream.followers.all %}
+        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+        {% else %}
+        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% include 'elements/navigator.html' %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "deliverynote_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            <table class="properties">
+                {% property_table object "[['owner', 'status'], ['author', 'created']]" %}
+                {% property_table object.content_object "[['invoice_addressee', 'delivery_addressee'], ['order_ref_number', 'order_ref_date'], ['means_of_delivery', 'terms_of_payment'], ['reason_of_shipping', 'terms_of_shipping'], ['goods_appearance', 'delivery_date'], 'notes']" %}
+                {% property_table object "['categories', 'tags']" %}
+            </table>
+            {% detail_table object.content_object.entries.all "['product', 'quantity', 'unit_value', 'notes']" %}
+        </div>
+        {% include "elements/comments.html" %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

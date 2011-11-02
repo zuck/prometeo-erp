@@ -130,12 +130,12 @@ class DeliveryNote(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('delivery_note_detail', (), {"id": self.pk})
+        return ('deliverynote_detail', (), {"id": self.pk})
 
     @models.permalink
     def get_edit_url(self):
-        return ('delivery_note_edit', (), {"id": self.pk})
+        return ('deliverynote_edit', (), {"id": self.pk})
 
     @models.permalink
     def get_delete_url(self):
-        return ('delivery_note_delete', (), {"id": self.pk})
+        return ('deliverynote_delete', (), {"id": self.pk})

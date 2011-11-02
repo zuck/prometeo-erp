@@ -9,7 +9,6 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Warehouses' 'warehouse_list' %}
     {% add_crumb 'Delivery notes' %}
 {% endblock %}
 
@@ -19,8 +18,8 @@
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
-        {% if perms.stock.add_delivery_note %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url delivery_note_add %}">{% trans 'Add' %}</a></li>
+        {% if perms.stock.add_deliverynote %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url deliverynote_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

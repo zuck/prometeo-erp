@@ -1,4 +1,4 @@
-{% extends "stock/warehouse_detail.html" %}
+{% extends "stock/deliverynote_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -9,7 +9,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Warehouses' 'warehouse_list' %}
+    {% add_crumb 'Delivery notes' 'deliverynote_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Timeline' %}
 {% endblock %}

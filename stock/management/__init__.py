@@ -42,6 +42,11 @@ def install(sender, created_models, **kwargs):
         slug="warehouse_menu",
         description=_("Main menu for warehouse model")
     )
+
+    deliverynote_menu, is_new = Menu.objects.get_or_create(
+        slug="deliverynote_menu",
+        description=_("Main menu for delivery note model")
+    )
     
     # Links.
     stock_link, is_new = Link.objects.get_or_create(
@@ -68,15 +73,15 @@ def install(sender, created_models, **kwargs):
         menu=stock_menu
     )
 
-    stock_delivery_notes_link, is_new = Link.objects.get_or_create(
+    stock_deliverynotes_link, is_new = Link.objects.get_or_create(
         title=_("Delivery notes"),
         slug="delivery-note-list",
         description=_("Delivery notes management"),
-        url=reverse("delivery_note_list"),
+        url=reverse("deliverynote_list"),
         menu=stock_menu
     )
 
-    warehouse_details_link, is_new = Link.objects.get_or_create(
+    warehouse_dashboard_link, is_new = Link.objects.get_or_create(
         title=_("Dashboard"),
         slug="warehouse-dashboard",
         url="{% url warehouse_detail object.pk %}",
@@ -95,6 +100,27 @@ def install(sender, created_models, **kwargs):
         slug="warehouse-timeline",
         url="{% url warehouse_timeline object.pk %}",
         menu=warehouse_menu
+    )
+
+    deliverynote_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="delivery-note-details",
+        url="{% url deliverynote_detail object.pk %}",
+        menu=deliverynote_menu
+    )
+
+    deliverynote_hard_copies_link, is_new = Link.objects.get_or_create(
+        title=_("Hard copies"),
+        slug="delivery-note-hard-copies",
+        url="{% url deliverynote_hardcopies object.pk %}",
+        menu=deliverynote_menu
+    )
+
+    deliverynote_timeline_link, is_new = Link.objects.get_or_create(
+        title=_("Timeline"),
+        slug="delivery-note-timeline",
+        url="{% url deliverynote_timeline object.pk %}",
+        menu=deliverynote_menu
     )
     
     # Signatures.

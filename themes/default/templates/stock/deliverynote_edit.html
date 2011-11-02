@@ -10,8 +10,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Warehouses' 'warehouse_list' %}
-    {% add_crumb 'Delivery notes' 'delivery_note_list' %}
+    {% add_crumb 'Delivery notes' 'deliverynote_list' %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Edit' %}
@@ -33,9 +32,9 @@
 
 {% block main %}
 {% if object.pk %}
-<form method="post" action="{% url delivery_note_edit object.pk %}">
+<form method="post" action="{% url deliverynote_edit object.pk %}">
 {% else %}
-<form method="post" action="{% url delivery_note_add %}">
+<form method="post" action="{% url deliverynote_add %}">
 {% endif %}
     {% csrf_token %}
     <table class="properties">

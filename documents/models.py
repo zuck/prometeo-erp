@@ -71,8 +71,8 @@ class HardCopy(models.Model):
     """A localized hard copy of a document.
     """
     document = models.ForeignKey(Document, verbose_name=_('document'))
-    file = models.FileField(upload_to=_get_upload_to, null=True, blank=True, verbose_name=_('file'))
-    language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
+    file = models.FileField(upload_to=_get_upload_to, verbose_name=_('file'))
+    language = models.CharField(max_length=5, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
 
     class Meta:
