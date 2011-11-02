@@ -45,6 +45,6 @@
         {% property_table object.content_object "[['delivery_addressee', 'invoice_addressee'], ['order_ref_number', 'order_ref_date'], ['means_of_delivery', 'terms_of_payment'], ['reason_of_shipping', 'terms_of_shipping'], 'goods_appearance', 'notes']" %}
         {% property_table object "['categories', 'tags']" %}
     </table>
-    {% detail_table object.content_object.entries.all "['product', 'quantity', 'unit_value']" %}
+    {% detail_table object.content_object.entries.all "['product', 'quantity', 'unit_value', 'notes']" %}
 </div>
 {% endblock %}
