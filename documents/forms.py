@@ -48,4 +48,4 @@ class HardCopyForm(forms.ModelForm):
         exclude = ['document']
 
 enrich_form(DocumentForm)
-enrich_form(HardCopy)
+enrich_form(HardCopyForm)
