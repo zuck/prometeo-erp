@@ -10,7 +10,6 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Partners' 'partner_list' %}
     {% add_crumb 'Contacts' 'contact_list' %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
