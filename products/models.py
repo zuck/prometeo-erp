@@ -74,6 +74,7 @@ class ProductEntry(models.Model):
     product = models.ForeignKey(Product, verbose_name=_('product'))
     quantity = models.FloatField(default=1.0, verbose_name=_('quantity'))
     unit_value = models.FloatField(default=1.0, verbose_name=_('unit value'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
 
     class Meta:
         verbose_name = _('product entry')

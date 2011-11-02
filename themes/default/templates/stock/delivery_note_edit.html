@@ -50,7 +50,7 @@
         <tr>
             {% for field in form.visible_fields %}
             {% if not forloop.last %}
-            <th{% if field.name != 'product' %} class="char"{% endif %}>{{ field.label }}</th>
+            <th {% if field.name == 'notes' %}class="text"{% else %}class="char"{% endif %}>{{ field.label }}</th>
             {% endif %}
             {% endfor %}
             <th class="actions">{% trans "Delete?" %}</th>
