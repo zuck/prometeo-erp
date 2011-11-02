@@ -108,14 +108,15 @@ class Movement(models.Model):
 class DeliveryNote(models.Model):
     """Delivery note model.
     """
-    delivery_addressee = models.ForeignKey('partners.Partner', null=True, blank=True, help_text=_('Keep it blank to use the same as invoicing'), related_name='delivery_addressee_of_delivery_notes', verbose_name=_('delivery addressee'))
     invoice_addressee = models.ForeignKey('partners.Partner', related_name='invoice_addressee_of_delivery_notes', verbose_name=_('invoice addressee'))
+    delivery_addressee = models.ForeignKey('partners.Partner', null=True, blank=True, help_text=_('Keep it blank to use the same as invoicing'), related_name='delivery_addressee_of_delivery_notes', verbose_name=_('delivery addressee'))
     order_ref_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('order ref. no.'))
     order_ref_date = models.DateField(null=True, blank=True, verbose_name=_('order ref. date'))
     means_of_delivery = models.CharField(max_length=20, choices=settings.MEANS_OF_DELIVERY, default=settings.DEFAULT_MEAN_OF_DELIVERY, verbose_name=_('mean of delivery'))
     terms_of_payment = models.CharField(max_length=100, choices=settings.TERMS_OF_PAYMENT, default=settings.DEFAULT_TERMS_OF_PAYMENT, verbose_name=_('terms of payment'))
     reason_of_shipping = models.CharField(max_length=20, choices=settings.REASONS_OF_SHIPPING, default=settings.DEFAULT_REASON_OF_SHIPPING, verbose_name=_('reason of shipping'))
     terms_of_shipping = models.CharField(max_length=100, choices=settings.TERMS_OF_SHIPPING, default=settings.DEFAULT_TERMS_OF_SHIPPING, verbose_name=_('terms of shipping'))
+    delivery_date = models.DateField(null=True, blank=True, verbose_name=_('delivery date'))
     goods_appearance = models.CharField(max_length=20, choices=settings.GOODS_APPEARANCES, default=settings.DEFAULT_GOODS_APPEARANCE, verbose_name=_('good appearance'))
     entries = models.ManyToManyField('products.ProductEntry', null=True, blank=True, verbose_name=_('entries'))
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))

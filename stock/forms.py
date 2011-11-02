@@ -94,7 +94,9 @@ class DeliveryNoteForm(forms.ModelForm):
         exclude = ['document', 'entries']
         widgets = {
             'delivery_addressee': SelectAndAddWidget(add_url='/partners/add'),
-            'invoice_addressee': SelectAndAddWidget(add_url='/partners/add')
+            'invoice_addressee': SelectAndAddWidget(add_url='/partners/add'),
+            'order_ref_date': DateWidget(),
+            'delivery_date': DateWidget()
         }
 
 enrich_form(WarehouseForm)
