@@ -144,10 +144,10 @@ def deliverynote_delete(request, id, **kwargs):
     )
 
 @permission_required('stock.change_deliverynote', _get_deliverynote)     
-def deliverynote_hardcopies(request, id, **kwargs):
+def deliverynote_hardcopies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows delivery note hard copies.
     """
-    return hardcopy_list(request, Document.objects.get(object_id=id).pk, **kwargs)
+    return hardcopy_list(request, Document.objects.get(object_id=id).pk, page, paginate_by, **kwargs)
 
 @permission_required('stock.change_deliverynote', _get_deliverynote)     
 def deliverynote_add_hardcopy(request, id, **kwargs):

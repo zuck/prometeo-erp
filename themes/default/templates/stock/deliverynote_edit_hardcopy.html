@@ -34,9 +34,9 @@
 
 {% block main %}
 {% if object.pk %}
-<form method="post" action="{% url deliverynote_edit_hardcopy object.document.object_id object.pk %}">
+<form enctype="multipart/form-data" method="post" action="{% url deliverynote_edit_hardcopy object.document.object_id object.pk %}">
 {% else %}
-<form method="post" action="{% url deliverynote_add_hardcopy object.document.object_id %}">
+<form enctype="multipart/form-data" method="post" action="{% url deliverynote_add_hardcopy object.document.object_id %}">
 {% endif %}
     {% csrf_token %}
     <table class="properties">

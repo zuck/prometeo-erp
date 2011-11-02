@@ -24,6 +24,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
 from django.core.urlresolvers import reverse
+from django.views.generic.simple import redirect_to
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -75,10 +76,6 @@ def hardcopy_add(request, id, **kwargs):
     if request.method == 'POST':
         form = HardCopyForm(request.POST, request.FILES, instance=hardcopy)
         if form.is_valid():
-            filename = form.cleaned_data['file']
-            destination = open(filename, 'wb+')
-            for chunk in form.cleaned_data['file'].chunks():
-                destination.write(chunk)
             form.save()
             messages.success(request, _("The hard copy has been saved."))
             return redirect_to(request, url=post_add_redirect)

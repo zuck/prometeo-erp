@@ -33,7 +33,14 @@ from prometeo.core.models import Commentable
 
 def _get_upload_to(instance, filename):
     today = date.today()
-    return os.path.join('documents', '%d' % instance.document.owner.pk, '%s' % today.year, '%s' % today.month, filename)
+    return os.path.join(
+        'documents',
+        '%d' % instance.document.owner.pk,
+        u'%s' % instance.document.content_type,
+        u'%s' % today.year,
+        u'%s' % today.month,
+        filename
+    )
 
 class Document(Commentable):
     """Document model.
