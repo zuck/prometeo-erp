@@ -26,7 +26,7 @@
     </ul>
 </div>
 <div class="details">
-    {% detail_table object_list field_names %}
+    {% detail_table object.hardcopy_set.all field_names %}
     {% include "elements/paginator.html" %}
 </div>
 {% endblock %}
