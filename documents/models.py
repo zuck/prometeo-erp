@@ -27,6 +27,7 @@ from django.db import models
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 from django.conf import settings
 
 from prometeo.core.models import Commentable
@@ -89,3 +90,6 @@ class HardCopy(models.Model):
         
     def __unicode__(self):
         return "%s | %s" % (self.document, self.language)
+
+    def get_absolute_url(self):
+        return self.file.url
