@@ -21,7 +21,6 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 import os
-from datetime import date
 
 from django.db import models
 from django.contrib.contenttypes import generic
@@ -33,13 +32,12 @@ from django.conf import settings
 from prometeo.core.models import Commentable
 
 def _get_upload_to(instance, filename):
-    today = date.today()
     return os.path.join(
         'documents',
         '%d' % instance.document.owner.pk,
         u'%s' % instance.document.content_type,
-        u'%s' % today.year,
-        u'%s' % today.month,
+        u'%s' % instance.document.created.year,
+        u'%s' % instance.document.created.month,
         filename
     )
 
