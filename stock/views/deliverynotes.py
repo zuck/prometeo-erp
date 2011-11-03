@@ -153,9 +153,3 @@ def deliverynote_add_hardcopy(request, id, **kwargs):
     """Adds an hard copy to the given document.
     """
     return hardcopy_add(request, Document.objects.get_for_content(DeliveryNote).get(object_id=id).pk, **kwargs)
-
-@permission_required('stock.change_deliverynote', _get_deliverynote)     
-def deliverynote_delete_hardcopy(request, note_id, id, **kwargs):
-    """Deletes an hard copy of the given document.
-    """
-    return hardcopy_delete(request, Document.objects.get_for_content(DeliveryNote).get(object_id=note_id).pk, id, **kwargs)

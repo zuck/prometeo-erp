@@ -50,6 +50,5 @@ urlpatterns = patterns('stock.views',
     url(r'^delivery-notes/(?P<id>\d+)/delete/$', view='deliverynotes.deliverynote_delete', name='deliverynote_delete'),
     url(r'^delivery-notes/(?P<id>\d+)/hard-copies/$', view='deliverynotes.deliverynote_hardcopies', name='deliverynote_hardcopies'),
     url(r'^delivery-notes/(?P<id>\d+)/hard-copies/add/$', view='deliverynotes.deliverynote_add_hardcopy', name='deliverynote_add_hardcopy'),
-    url(r'^delivery-notes/(?P<note_id>\d+)/hard-copies/(?P<id>\d+)/delete/$', view='deliverynotes.deliverynote_delete_hardcopy', name='deliverynote_delete_hardcopy'),
     url(r'^delivery-notes/(?P<id>\d+)/timeline/$', 'deliverynotes.deliverynote_detail', {'template_name': 'stock/deliverynote_timeline.html'}, 'deliverynote_timeline'),
 )
