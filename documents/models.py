@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.2'
 
 import os
+from datetime import date
 
 from django.db import models
 from django.contrib.contenttypes import generic
@@ -60,7 +61,19 @@ class Document(Commentable):
         ordering = ('owner', '-created')
         verbose_name = _('document')
         verbose_name_plural = _('documents')
-        
+
+    def __init__(self, *args, **kwargs):
+        super(Document, self).__init__(*args, **kwargs)
+        if self.content_type and not self.code:
+            year = date.today().year
+            uid = 1
+            try:
+                last_doc = Document.objects.filter(content_type=self.content_type).latest('created')
+                uid = int(last_doc.code.partition('-')[0]) + 1
+            except:
+                pass
+            self.code = '%d-%s' % (uid, year)
+
     def __unicode__(self):
         return "%s #%s" % (self.content_object, self.code)
 

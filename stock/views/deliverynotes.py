@@ -67,7 +67,7 @@ def deliverynote_add(request, **kwargs):
     """Adds a new delivery note.
     """
     deliverynote = DeliveryNote()
-    doc = Document(author=request.user)
+    doc = Document(author=request.user, content_object=deliverynote)
       
     if request.method == 'POST':
         dform = DocumentForm(request.POST, instance=doc)
