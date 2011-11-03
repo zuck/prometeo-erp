@@ -62,7 +62,7 @@ class Document(Commentable):
         verbose_name_plural = _('documents')
         
     def __unicode__(self):
-        return "#%s: %s" % (self.code, self.content_object)
+        return "%s #%s" % (self.content_object, self.code)
 
     def get_absolute_url(self):
         return self.content_object.get_absolute_url()

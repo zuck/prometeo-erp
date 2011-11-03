@@ -126,7 +126,7 @@ class DeliveryNote(models.Model):
         verbose_name_plural = _('delivery notes')
         
     def __unicode__(self):
-        return u'%s' % self._meta.verbose_name
+        return u'%s' % _('DN')
 
     @models.permalink
     def get_absolute_url(self):
