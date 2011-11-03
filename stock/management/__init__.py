@@ -143,6 +143,21 @@ def install(sender, created_models, **kwargs):
         title=_("Movement deleted"),
         slug="movement-deleted"
     )
+
+    deliverynote_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Delivery note created"),
+        slug="deliverynote-created"
+    )
+
+    deliverynote_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Delivery note changed"),
+        slug="deliverynote-changed"
+    )
+
+    deliverynote_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Delivery note deleted"),
+        slug="deliverynote-deleted"
+    )
     
     post_syncdb.disconnect(install)
 

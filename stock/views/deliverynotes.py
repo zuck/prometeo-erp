@@ -54,7 +54,7 @@ def deliverynote_list(request, page=0, paginate_by=10, **kwargs):
     return filtered_list_detail(
         request,
         Document.objects.get_for_content(DeliveryNote),
-        fields=['code', 'author', 'created'],
+        fields=['code', 'author', 'created', 'owner'],
         page=page,
         paginate_by=paginate_by,
         template_name='stock/deliverynote_list.html',
