@@ -152,25 +152,25 @@ class SelectAndAddWidget(forms.Select):
                 'add_url': self.add_url,
                 'label': _('Add')
             }
-            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>'        \
-                      '<script>'                                                                                            \
-                      '    $("#add-link-%(name)s")'                                                                         \
-                      '    .click('                                                                                         \
-                      '        function(e) {'                                                                               \
-                      '            e.preventDefault();'                                                                     \
-                      '            $("#add-%(name)s")'                                                                      \
-                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')'                    \
-                      '            .children("#add-dialog-%(name)s")'                                                       \
-                      '            .load("%(add_url)s #main")'                                                              \
-                      '            .dialog({'                                                                               \
-                      '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },'                 \
-                      '                modal: true,'                                                                        \
-                      '                width: 800'                                                                          \
-                      '             });'                                                                                    \
-                      '         }'                                                                                          \
-                      '    );'                                                                                              \
-                      '</script>' % tokens
-            output += '<br/>'
+            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>\n'      \
+                      '<script type="text/javascript">\n'                                                                   \
+                      '    $("#add-link-%(name)s")\n'                                                                       \
+                      '    .click(\n'                                                                                       \
+                      '        function(e) {\n'                                                                             \
+                      '            e.preventDefault();\n'                                                                   \
+                      '            $("#add-%(name)s")\n'                                                                    \
+                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')\n'                  \
+                      '            .children("#add-dialog-%(name)s")\n'                                                     \
+                      '            .load("%(add_url)s #main")\n'                                                            \
+                      '            .dialog({\n'                                                                             \
+                      '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },\n'               \
+                      '                modal: true,\n'                                                                      \
+                      '                width: 800\n'                                                                        \
+                      '             });\n'                                                                                  \
+                      '         }\n'                                                                                        \
+                      '    );\n'                                                                                            \
+                      '</script>\n' % tokens
+            output += '<br/>\n'
         return mark_safe('<span id="add-%(name)s" class="add">%(output)s</span>' % {'name': name, 'output': output})
 
 
@@ -203,25 +203,25 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
                 'add_url': self.add_url,
                 'label': _('Add')
             }
-            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>'        \
-                      '<script>'                                                                                            \
-                      '    $("#add-link-%(name)s")'                                                                         \
-                      '    .click('                                                                                         \
-                      '        function(e) {'                                                                               \
-                      '            e.preventDefault();'                                                                     \
-                      '            $("#add-%(name)s")'                                                                      \
-                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')'                    \
-                      '            .children("#add-dialog-%(name)s")'                                                       \
-                      '            .load("%(add_url)s #main")'                                                              \
-                      '            .dialog({'                                                                               \
-                      '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },'                 \
-                      '                modal: true,'                                                                        \
-                      '                width: 800'                                                                          \
-                      '             });'                                                                                    \
-                      '         }'                                                                                          \
-                      '    );'                                                                                              \
-                      '</script>' % tokens
-            output += '<br/>'
+            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>\n'      \
+                      '<script type="text/javascript">\n'                                                                   \
+                      '    $("#add-link-%(name)s")\n'                                                                       \
+                      '    .click(\n'                                                                                       \
+                      '        function(e) {\n'                                                                             \
+                      '            e.preventDefault();\n'                                                                   \
+                      '            $("#add-%(name)s")\n'                                                                    \
+                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')\n'                  \
+                      '            .children("#add-dialog-%(name)s")\n'                                                     \
+                      '            .load("%(add_url)s #main")\n'                                                            \
+                      '            .dialog({\n'                                                                             \
+                      '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },\n'               \
+                      '                modal: true,\n'                                                                      \
+                      '                width: 800\n'                                                                        \
+                      '             });\n'                                                                                  \
+                      '         }\n'                                                                                        \
+                      '    );\n'                                                                                            \
+                      '</script>\n' % tokens
+            output += '<br/>\n'
         return mark_safe('<span id="add-%(name)s" class="add"><span class="multiple">%(output)s</span></span>' % {'name': name, 'output': output})
 
 class JsonPairWidget(forms.Widget):
@@ -299,13 +299,13 @@ class CKEditor(forms.Textarea):
             'height': attrs.get('height', '220'),
             'width': attrs.get('width', '665'),
         }
-        rendered += mark_safe(u'<script type="text/javascript">'                                                \
-                              u'   CKEDITOR.replace("%(name)s",'                                                \
-                              u'       {'                                                                       \
-                              u'           toolbar: "%(toolbar)s",'                                             \
-                              u'           height: "%(height)s",'                                               \
-                              u'           width: "%(width)s",'                                                 \
-                              u'       }'                                                                       \
-                              u'   );'                                                                          \
-                              u'</script>' % tokens)
+        rendered += mark_safe(u'<script type="text/javascript">\n'                                              \
+                              u'   CKEDITOR.replace("%(name)s",\n'                                              \
+                              u'       {\n'                                                                     \
+                              u'           toolbar: "%(toolbar)s",\n'                                           \
+                              u'           height: "%(height)s",\n'                                             \
+                              u'           width: "%(width)s",\n'                                               \
+                              u'       }\n'                                                                     \
+                              u'   );\n'                                                                        \
+                              u'</script>\n' % tokens)
         return rendered
