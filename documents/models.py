@@ -68,7 +68,7 @@ class Document(Commentable):
             year = date.today().year
             uid = 1
             try:
-                last_doc = Document.objects.filter(content_type=self.content_type).latest('created')
+                last_doc = Document.objects.filter(content_type=self.content_type, code__endswith='-%s' % year).latest('created')
                 uid = int(last_doc.code.partition('-')[0]) + 1
             except:
                 pass
