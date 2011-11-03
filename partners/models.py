@@ -16,157 +16,131 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.db.models import permalink
+from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
-class Address(models.Model):
-    ADDRESS_TYPES = (
-        ('0', _('preferred')),
-        ('1', _('invoice')),
-        ('2', _('delivery')),
-        ('3', _('other'))
-    )
-    id = models.AutoField(primary_key=True)
-    type = models.CharField(max_length=1, choices=ADDRESS_TYPES, default='0', verbose_name=_('type'))
-    street = models.CharField(max_length=255, verbose_name=_('street'))
-    number = models.CharField(max_length=15, verbose_name=_('number'))
-    city = models.CharField(max_length=255, verbose_name=_('city'))
-    zip = models.CharField(max_length=255, verbose_name=_('zip'))
-    state = models.CharField(max_length=64, verbose_name=_('state/province'))
-    country = models.CharField(max_length=64, verbose_name=_('country'))
-    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
-        
-    def __unicode__(self):
-        return _('%(number)s, %(street)s - %(city)s, %(state)s %(zip)s - %(country)s') % {'number': self.number, 'street': self.street, 'city': self.city, 'state': self.state, 'zip': self.zip, 'country': self.country}
-
-class Telephone(models.Model):
-    PHONE_TYPES = (
-        ('0', _('land Line')),
-        ('1', _('mobile')),
-        ('2', _('fax'))
-    )
-    id = models.AutoField(primary_key=True)
-    type = models.CharField(max_length=1, choices=PHONE_TYPES, default='0', verbose_name=_('type'))
-    number = models.CharField(max_length=30, verbose_name=_('number'))
-    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
-        
-    def __unicode__(self):
-        return self.number
-    
-class Role(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255, verbose_name=_('name'))
-    
-    def get_absolute_url(self):
-        return '/partners/contacts/roles/view/%d/' % self.pk
-    
-    def get_edit_url(self):
-        return '/partners/contacts/roles/edit/%d/' % self.pk
-    
-    def get_delete_url(self):
-        return '/partners/contacts/roles/delete/%d/' % self.pk
-        
-    def __unicode__(self):
-        return self.name
+from prometeo.core.models import Commentable
 
 class Contact(models.Model):
-    id = models.AutoField(primary_key=True)
-    nickname = models.SlugField(null=True, blank=True, verbose_name=_('nickname'))
+    """Contact model.
+    """
     firstname = models.CharField(max_length=255, verbose_name=_('firstname'))
-    lastname = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('lastname'))
+    lastname = models.CharField(max_length=255, verbose_name=_('lastname'))
+    nickname = models.SlugField(null=True, blank=True, verbose_name=_('nickname'))
     ssn = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('SSN'))
+    language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
+    timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))
     email = models.EmailField(max_length=255, null=True, blank=True, verbose_name=_('email'))
     url = models.URLField(max_length=255, null=True, blank=True, verbose_name=_('url'))
-    addresses = models.ManyToManyField(Address, blank=True, verbose_name=_('addresses'))
-    telephones = models.ManyToManyField(Telephone, blank=True, verbose_name=_('telephone numbers'))
-    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
-    
-    def get_absolute_url(self):
-        return '/partners/contacts/view/%d/' % self.pk
-    
-    def get_edit_url(self):
-        return '/partners/contacts/edit/%d/' % self.pk
-    
-    def get_delete_url(self):
-        return '/partners/contacts/delete/%d/' % self.pk
-        
-    def get_telephones_url(self):
-        return self.get_absolute_url() + 'telephones/'
-        
-    def get_add_telephone_url(self):
-        return '/partners/contacts/%d/telephones/add/' % self.pk
-        
-    def get_addresses_url(self):
-        return self.get_absolute_url() + 'addresses/'
-        
-    def get_add_address_url(self):
-        return '/partners/contacts/%d/addresses/add/' % self.pk
-    
-    def get_jobs_url(self):
-        return self.get_absolute_url() + 'jobs/'
-    
-    def get_add_job_url(self):
-        return '/partners/contacts/%d/jobs/add/' % self.pk
+    addresses = models.ManyToManyField('addressing.Address', null=True, blank=True, verbose_name=_('addresses'))
+    phone_numbers = models.ManyToManyField('addressing.PhoneNumber', null=True, blank=True, verbose_name=_('phone numbers'))
+    main_address = models.ForeignKey('addressing.Address', null=True, blank=True, related_name=_('main_of_contact'), verbose_name=_('main address'))
+    main_phone_number = models.ForeignKey('addressing.PhoneNumber', null=True, blank=True, related_name=_('main_of_contact'), verbose_name=_('main phone number'))
+    user = models.ForeignKey('auth.User', blank=True, null=True, verbose_name=_('user account'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+
+    class Meta:
+        verbose_name = _('contact')
+        verbose_name_plural = _('contacts')
         
     def __unicode__(self):
-        if self.nickname:
-            return self.nickname
+        return self.get_full_name()   
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('contact_detail', (), {"id": self.pk})
+    
+    @models.permalink
+    def get_edit_url(self):
+        return ('contact_edit', (), {"id": self.pk})
+    
+    @models.permalink
+    def get_delete_url(self):
+        return ('contact_delete', (), {"id": self.pk})
+
+    def get_full_name(self):
         return ' '.join([self.firstname, self.lastname])
 
-class Partner(models.Model):
-    id = models.AutoField(primary_key=True)
+    full_name = property(get_full_name)
+
+class Partner(Commentable):
+    """Partner model.
+    """
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
-    is_managed = models.BooleanField(default=False, verbose_name=_('managed'))
-    is_customer = models.BooleanField(default=False, verbose_name=_('customer'))
-    is_supplier = models.BooleanField(default=False, verbose_name=_('supplier'))
-    vat_number = models.CharField(max_length=64, unique=True, verbose_name=_('VAT number'))
-    url = models.URLField(blank=True, verbose_name=_('url'))
-    email = models.EmailField(blank=True, verbose_name=_('email'))
-    addresses = models.ManyToManyField(Address, blank=True, verbose_name=_('addresses'))
-    telephones = models.ManyToManyField(Telephone, blank=True, verbose_name=_('telephone numbers'))
-    contacts = models.ManyToManyField(Contact, through='partners.Job', blank=True, verbose_name=_('contacts'))
-    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
-    
-    def get_absolute_url(self):
-        return '/partners/view/%d/' % self.pk
-    
-    def get_edit_url(self):
-        return '/partners/edit/%d/' % self.pk
-    
-    def get_delete_url(self):
-        return '/partners/delete/%d/' % self.pk
-        
-    def get_telephones_url(self):
-        return self.get_absolute_url() + 'telephones/'
-        
-    def get_add_telephone_url(self):
-        return '/partners/%d/telephones/add/' % self.pk
-        
-    def get_addresses_url(self):
-        return self.get_absolute_url() + 'addresses/'
-        
-    def get_add_address_url(self):
-        return '/partners/%d/addresses/add/' % self.pk
-        
-    def get_contacts_url(self):
-        return self.get_absolute_url() + 'contacts/'
-        
-    def get_add_contact_url(self):
-        return '/partners/%d/contacts/add/' % self.pk
+    is_managed = models.BooleanField(default=False, verbose_name=_('managed?'))
+    is_customer = models.BooleanField(default=False, verbose_name=_('customer?'))
+    is_supplier = models.BooleanField(default=False, verbose_name=_('supplier?'))
+    lead_status = models.CharField(max_length=10, null=True, blank=True, choices=settings.LEAD_STATUS_CHOICES, default=settings.LEAD_DEFAULT_STATUS, verbose_name=_('lead status'))
+    vat_number = models.CharField(max_length=64, null=True, blank=True, unique=True, verbose_name=_('VAT number'))
+    currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, null=True, blank=True, verbose_name=_('currency'))
+    language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_('language'))
+    timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_('timezone'))    
+    url = models.URLField(null=True, blank=True, verbose_name=_('url'))
+    email = models.EmailField(null=True, blank=True, verbose_name=_('email'))
+    addresses = models.ManyToManyField('addressing.Address', null=True, blank=True, verbose_name=_('addresses'))
+    phone_numbers = models.ManyToManyField('addressing.PhoneNumber', null=True, blank=True, verbose_name=_('phone numbers'))
+    main_address = models.ForeignKey('addressing.Address', null=True, blank=True, related_name=_('main_of_partner'), verbose_name=_('main address'))
+    main_phone_number = models.ForeignKey('addressing.PhoneNumber', null=True, blank=True, related_name=_('main_of_partner'), verbose_name=_('main phone number'))
+    contacts = models.ManyToManyField(Contact, through='partners.Job', null=True, blank=True, verbose_name=_('contacts'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    assignee = models.ForeignKey('auth.User', related_name="assigned_partners", null=True, blank=True, verbose_name=_('assignee'))
+    author = models.ForeignKey('auth.User', related_name="created_partners", verbose_name=_('author'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+
+    class Meta:
+        verbose_name = _('partner')
+        verbose_name_plural = _('partners')
         
     def __unicode__(self):
         return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('partner_detail', (), {"id": self.pk})
+    
+    @models.permalink
+    def get_edit_url(self):
+        return ('partner_edit', (), {"id": self.pk})
+    
+    @models.permalink
+    def get_delete_url(self):
+        return ('partner_delete', (), {"id": self.pk})
         
 class Job(models.Model):
-    id = models.AutoField(primary_key=True)
-    contact = models.ForeignKey(Contact)
-    partner = models.ForeignKey(Partner)
-    role = models.ForeignKey(Role)
+    """Job model.
+    """
+    contact = models.ForeignKey(Contact, verbose_name=_('contact'))
+    partner = models.ForeignKey(Partner, verbose_name=_('partner'))
+    role = models.CharField(max_length=30, choices=settings.ROLES, default=settings.DEFAULT_ROLE, verbose_name=_('role'))
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
         
     def __unicode__(self):
-        return _("%(contact)s as %(role)s for %(partner)s") % {'contact': self.contact, 'role': self.role, 'partner': self.partner}
+        return _("%(contact)s as %(role)s") % {'contact': self.contact, 'role': self.get_role_display()}
+
+    def get_absolute_url(self):
+        if self.contact:
+            return self.contact.get_absolute_url()
+        elif self.partner:
+            return self.partner.get_absolute_url()
+        return ""
+    
+    @models.permalink
+    def get_edit_url(self):
+        return ('contact_edit_job', (), {"contact_id": self.contact.pk, "id": self.pk})
+    
+    @models.permalink
+    def get_delete_url(self):
+        return ('contact_delete_job', (), {"contact_id": self.contact.pk, "id": self.pk})

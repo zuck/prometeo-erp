@@ -1,0 +1,29 @@
+{% extends "filebrowser/serve.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Files' 'file_serve' '' %}
+    {% if fileinfo.path != '' %}
+    {% include "filebrowser/parent.html" %}
+    {% add_crumb fileinfo.name fileinfo.url %}
+    {% endif %}
+    {% add_crumb 'Add link' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Add link" %}{% endblock %}
+
+{% block main %}
+<div class="details">
+    <form action="{% url file_mkln fileinfo.url|slice:'1:' %}" method="POST">
+        {% csrf_token %}
+        <table class="properties">
+            {{ form }}
+        </table>
+        <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+    </form>
+</div>
+{% endblock %}

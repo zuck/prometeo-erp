@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% if object.pk %}{% trans 'Edit address' %}{% else %}{% trans 'Add address' %}{% endif %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Partners' 'partner_list' %}
+    {% if owner_class == "Contact" %}
+    {% add_crumb 'Contacts' 'contact_list' %}
+    {% add_crumb owner owner.get_absolute_url %}
+    {% add_crumb 'Addresses' 'contact_addresses' owner.pk %}
+    {% else %}
+    {% add_crumb owner owner.get_absolute_url %}
+    {% add_crumb 'Addresses' 'partner_addresses' owner.pk %}
+    {% endif %}
+    {% if object.pk %}
+    {% add_crumb object %}
+    {% add_crumb "Edit" %}
+    {% else %}
+    {% add_crumb "Add" %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit address' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add address' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" action=".">
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form "['type', ['street', 'number'], ['city', 'zip'], ['state', 'country']]" %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

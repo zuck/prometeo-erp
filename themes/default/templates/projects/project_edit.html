@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit project' %}{% else %}{% trans 'Add project' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' 'project_list' %}
+    {% if object.pk %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object|striptags|capfirst }}</h1>
+    <h2>{% trans 'Edit project' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add project' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form method="post" action="{% url project_edit object.slug %}">
+{% else %}
+<form method="post" action="{% url project_add %}">
+{% endif %}
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form "['title', 'description', 'manager', 'status', 'categories', 'tags', 'allow_comments']" %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

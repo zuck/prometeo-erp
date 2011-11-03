@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% trans 'Import' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Events' 'event_list' %}
+    {% add_crumb 'Import' %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Import" %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" enctype="multipart/form-data" action="{% url event_import %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <span class="submit"><input type="submit" value="{% trans 'Import' %}"/></span>
+</form>
+{% endblock %}

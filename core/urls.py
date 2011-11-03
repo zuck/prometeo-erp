@@ -16,41 +16,30 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.contrib import admin
+
+admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    # Start page.
-    (r'^$', 'core.views.start'),
+    # Home page.
+    (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
     
-    # Media files.
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    # Static files.
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
+    
+    # Admin.
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^admin/', include(admin.site.urls)),
     
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
-    
-    # Accounts.
-    (r'^accounts/$', 'core.views.account_index'),
-    (r'^accounts/add/$', 'core.views.account_add'),
-    (r'^accounts/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'core.views.account_view'),
-    (r'^accounts/edit/(?P<id>\d+)/$', 'core.views.account_edit'),
-    (r'^accounts/delete/(?P<id>\d+)/$', 'core.views.account_delete'),
-    (r'^accounts/logged/$', 'core.views.account_logged'),
-
-    (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
-    (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
-    
-    # Groups.
-    (r'^accounts/groups/$', 'core.views.group_index'),
-    (r'^accounts/groups/add/$', 'core.views.group_add'),
-    (r'^accounts/groups/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'core.views.group_view'),
-    (r'^accounts/groups/edit/(?P<id>\d+)/$', 'core.views.group_edit'),
-    (r'^accounts/groups/delete/(?P<id>\d+)/$', 'core.views.group_delete'),
 )
 
 LOADING = False
@@ -67,8 +56,8 @@ def autodiscover():
     import imp
     
     for app in settings.INSTALLED_APPS:
-        if app.startswith('django')\
-        or app.startswith('prometeo.core'):
+        if app.startswith('django') \
+        or app == 'prometeo.core':
             continue
             
         # Step 1: find out the app's __path__.
@@ -86,6 +75,6 @@ def autodiscover():
         # Step 3: return the app's url patterns.
         pkg, sep, name = app.rpartition('.')
         global urlpatterns
-        urlpatterns += patterns("", (r'^%s/' % name, include('%s.urls' % app)))
+        urlpatterns += patterns("", (r'^', include('%s.urls' % app)))
         
     LOADING = False

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{{ object }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Tags' 'tag_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.taxonomy.add_tag %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url tag_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.taxonomy.change_tag %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url tag_edit object.slug %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.taxonomy.delete_tag %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url tag_delete object.slug %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.taxonomy.change_tag %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url tag_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% with tags as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+<div class="details">
+    {% include "taxonomy/results.html" %}
+    {% include "elements/paginator.html" %}
+</div>
+{% endblock %}

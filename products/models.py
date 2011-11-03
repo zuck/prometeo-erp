@@ -16,110 +16,113 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.db.models import permalink
+from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
-class UOMCategory(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=64, verbose_name=_('name'))
-    
-    def get_absolute_url(self):
-        return '/products/uoms/categories/view/%d/' % self.pk
-    
-    def get_edit_url(self):
-        return '/products/uoms/categories/edit/%d/' % self.pk
-    
-    def get_delete_url(self):
-        return '/products/uoms/categories/delete/%d/' % self.pk
-    
-    def get_uoms_url(self):
-        return self.get_absolute_url() + 'uoms/'
-                
-    def __unicode__(self):
-        return self.name
+from prometeo.core.models import Commentable
 
-class UOM(models.Model):
-    id = models.AutoField(primary_key=True)
-    initials = models.CharField(max_length=6, verbose_name=_('initials'))
-    name = models.CharField(max_length=64, verbose_name=_('name'))
-    category = models.ForeignKey(UOMCategory, verbose_name=_('category'))
-    
-    def get_absolute_url(self):
-        return '/products/uoms/view/%d/' % self.pk
-    
-    def get_edit_url(self):
-        return '/products/uoms/edit/%d/' % self.pk
-    
-    def get_delete_url(self):
-        return '/products/uoms/delete/%d/' % self.pk
-        
-    def __unicode__(self):
-        return self.initials
-        
-class Supply(models.Model):
-    id = models.AutoField(primary_key=True)
-    product = models.ForeignKey('products.Product')
-    supplier = models.ForeignKey('partners.Partner', verbose_name=_('supplier'))
-    name = models.CharField(max_length=255, blank=True, verbose_name=_('name'))
-    code = models.CharField(max_length=255, blank=True, verbose_name=_('code'))
-    price = models.FloatField(verbose_name=_('price'))
-    discount = models.FloatField(default=0, verbose_name=_('discount'))
-    delivery_delay = models.PositiveIntegerField(default=1, verbose_name=_('delivery delay'))
-    minimal_quantity = models.FloatField(default=1, verbose_name=_('minimal quantity'))
-    payment_delay = models.PositiveIntegerField(verbose_name=_('payment delay'))
-    
-    def final_price(self):
-        return self.price * (1 + self.discount / 100)
-        
-    def get_edit_url(self):
-        return '/products/%d/supplies/edit/%d/' % (self.product.pk, self.pk)
-    
-    def get_delete_url(self):
-        return '/products/%d/supplies/delete/%d/' % (self.product.pk, self.pk)
-        
-    def __unicode__(self):
-        return '%s (%s) (%s %s%%)' % (self.product, self.supplier, self.price, self.discount)
-
-class Product(models.Model):   
-    PRODUCT_TYPES = (
-        ('0', _('Consumable')),
-        ('1', _('Stockable'))
-    )
-
-    PRODUCT_SUPPLY_METHODS = (
-        ('0', _('Purchase')),
-        ('1', _('Production'))
-    )        
-    id = models.AutoField(primary_key=True)
+class Product(Commentable):
+    """Product model.
+    """
     name = models.CharField(max_length=255, verbose_name=_('name'))
     code = models.CharField(max_length=255, verbose_name=_('code'))
     ean13 = models.CharField(max_length=13, blank=True, verbose_name=_('EAN13'))
     description = models.TextField(blank=True, verbose_name=_('description'))
-    uom = models.ForeignKey(UOM, verbose_name=_('UOM'))
-    uos = models.ForeignKey(UOM, related_name='product_uos_set', verbose_name=_('UOS'))
-    uom_to_uos = models.FloatField(default=1, verbose_name=_('UOM to UOS'))
-    type = models.CharField(max_length=1, choices=PRODUCT_TYPES, verbose_name=_('type'))
-    supply_method = models.CharField(max_length=1, choices=PRODUCT_SUPPLY_METHODS, verbose_name=_('supply method'))
-    suppliers = models.ManyToManyField('partners.Partner', through=Supply, verbose_name=_('suppliers'))
-    
-    def get_absolute_url(self):
-        return '/products/view/%d/' % self.pk
-    
-    def get_edit_url(self):
-        return '/products/edit/%d/' % self.pk
-    
-    def get_delete_url(self):
-        return '/products/delete/%d/' % self.pk
-    
-    def get_supplies_url(self):
-        return self.get_absolute_url() + 'supplies/'
-    
-    def get_add_supply_url(self):
-        return '/products/%d/supplies/add' % self.pk
+    uom = models.CharField(max_length=20, choices=settings.PRODUCT_UOM_CHOICES, default=settings.PRODUCT_DEFAULT_UOM, verbose_name=_('UOM'))
+    uos = models.CharField(max_length=20, choices=settings.PRODUCT_UOM_CHOICES, default=settings.PRODUCT_DEFAULT_UOM, verbose_name=_('UOS'))
+    uom_to_uos = models.FloatField(default=1.0, help_text=_('Conversion rate between UOM and UOS'), verbose_name=_('UOM to UOS'))
+    weight = models.FloatField(default=1.0, help_text=_('(Kg)'), verbose_name=_('unit weight'))
+    is_consumable = models.BooleanField(default=False, verbose_name=_('consumable?'))
+    is_service = models.BooleanField(default=False, verbose_name=_('service?'))
+    sales_price = models.FloatField(default=0.0, verbose_name=_('sales price'))
+    sales_currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, verbose_name=_('sales currency'))
+    max_sales_discount = models.FloatField(default=0.0, help_text=_('Max discount percentage (%)'), verbose_name=_('max sales discount'))
+    suppliers = models.ManyToManyField('partners.Partner', through='products.Supply', null=True, blank=True, verbose_name=_('suppliers'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+
+    class Meta:
+        ordering = ('code',)
+        verbose_name = _('product')
+        verbose_name_plural = _('products')
         
     def __unicode__(self):
-        return self.name
+        return '#%s: %s' % (self.code, self.name)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('product_detail', (), {"id": self.pk})
+    
+    @models.permalink
+    def get_edit_url(self):
+        return ('product_edit', (), {"id": self.pk})
+    
+    @models.permalink
+    def get_delete_url(self):
+        return ('product_delete', (), {"id": self.pk})
+
+class ProductEntry(models.Model):
+    """A set of instances of the same product.
+    """
+    product = models.ForeignKey(Product, verbose_name=_('product'))
+    quantity = models.FloatField(default=1.0, verbose_name=_('quantity'))
+    unit_value = models.FloatField(default=1.0, verbose_name=_('unit value'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+
+    class Meta:
+        verbose_name = _('product entry')
+        verbose_name_plural = _('product entries')
+        
+    def __unicode__(self):
+        return '%s (%d %s)' % (self.product, self.quantity, self.product.uom)
+
+    def get_absolute_url(self):
+        return self.product.get_absolute_url()
+        
+class Supply(models.Model):
+    """Relation between a product and one of its supplier.
+    """
+    product = models.ForeignKey(Product, verbose_name=_('product'))
+    supplier = models.ForeignKey('partners.Partner', limit_choices_to = {'is_supplier': True}, verbose_name=_('supplier'))
+    supply_method = models.CharField(max_length=10, choices=settings.PRODUCT_SUPPLY_METHODS, default=settings.PRODUCT_DEFAULT_SUPPLY_METHOD, verbose_name=_('supply method'))
+    name = models.CharField(max_length=255, blank=True, verbose_name=_('ref. name'))
+    code = models.CharField(max_length=255, blank=True, verbose_name=_('ref. code'))
+    purchase_price = models.FloatField(default=0.0, verbose_name=_('purchase price'))
+    purchase_currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, verbose_name=_('purchase currency'))
+    max_purchase_discount = models.FloatField(default=0.0, help_text=_('Max discount percentage (%)'), verbose_name=_('max purchase discount'))
+    lead_time = models.PositiveIntegerField(default=1, verbose_name=_('lead time'))
+    minimal_quantity = models.FloatField(default=1.0, verbose_name=_('minimal quantity'))
+    payment_terms = models.PositiveIntegerField(default=settings.PRODUCT_DEFAULT_PAYMENT_TERMS, verbose_name=_('payment terms'))
+    warranty_period = models.PositiveIntegerField(default=settings.PRODUCT_DEFAULT_WARRANTY_PERIOD, verbose_name=_('warranty period'))
+    end_of_life = models.DateField(null=True, blank=True, verbose_name=_('end of life'))
+
+    class Meta:
+        ordering = ('product', 'supplier')
+        verbose_name = _('supply')
+        verbose_name_plural = _('supplies')
+        unique_together = (('product', 'supplier'),)
+        
+    def __unicode__(self):
+        code = self.code or self.product.code
+        name = self.name or self.product.name
+        return '%s (%s)' % (self.product, self.supplier)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('product_supply_detail', (), {"product_id": self.product.pk, "id": self.pk})
+    
+    @models.permalink
+    def get_edit_url(self):
+        return ('product_edit_supply', (), {"product_id": self.product.pk, "id": self.pk})
+    
+    @models.permalink
+    def get_delete_url(self):
+        return ('product_delete_supply', (), {"product_id": self.product.pk, "id": self.pk})

@@ -1,0 +1,82 @@
+{% load i18n %}
+{% load menu %}
+{% load region %}
+{% load breadcrumbs %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>{% block meta_title %}Prometeo{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/tripoli.simple.css" type="text/css" media="all"/>
+
+    <!--[if IE]>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/tripoli.simple.ie.css" type="text/css" media="all"/>
+    <![endif]-->
+    
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" media="all"/>
+    
+    <!--[if IE]>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.ie.css" type="text/css" media="all"/>
+    <![endif]-->
+
+    {% block extrahead %}
+    {% if form %}
+    {{ form.media }}
+    {% endif %}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div id="logo">
+                <h1 id="site-title">Prometeo</h1>
+                <h2 id="site-tagline">Free your business</h2>
+            </div>
+
+            <div id="nav">
+                <div id="search">{% include "elements/search.html" %}</div>
+                <div id="bookmarks">{% include "elements/bookmarks.html" %}</div>
+                <div id="userarea">{% include "auth/userarea.html" %}</div>
+            </div>
+
+            <div id="breadcrumbs"><span class="list">{% block breadcrumbs %}{% add_crumb 'Home' %}{% endblock %}{% render_breadcrumbs %}</span></div>
+        </div>
+        
+        <hr/>
+        
+        <div id="content">
+            <div id="sidebar">
+                {% region "sidebar" %} 
+            </div>
+
+            <div id="main">
+                {% block messages %}
+                {% if messages %}
+                <div class="messages">
+                    <ul>
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% endblock %}
+                {% block title %}{% endblock %}
+                {% block main %}{% endblock %}
+            </div>
+        </div>
+        
+        <hr/>
+        
+        <div id="footer">
+            {% region "footer" %}
+        </div>
+    </div>
+</body>
+
+</html>
+

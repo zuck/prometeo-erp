@@ -16,6 +16,22 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
+
+def parse_args_kwargs(parser, token):
+    contents = token.split_contents()
+    tag_name = contents[0]
+    args_list = contents[1:]
+    args = []
+    kwargs = {}
+    
+    for value in args_list:
+        if '=' in value:
+            k, v = value.split('=', 1)
+            kwargs[str(k)] = v
+        else:
+            args.append(value)
+    
+    return tag_name, args, kwargs

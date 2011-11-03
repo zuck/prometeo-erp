@@ -16,38 +16,24 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('products.views',
 
     # Products.
-    (r'^$', 'product_index'),
-    (r'^add/$', 'product_add'),
-    (r'^view/(?P<id>\d+)/(?P<page>\w*)/*$', 'product_view'),
-    (r'^edit/(?P<id>\d+)/$', 'product_edit'),
-    (r'^delete/(?P<id>\d+)/$', 'product_delete'),
-    (r'^(?P<id>\d+)/supplies/add/$', 'product_add_supply'),
-    (r'^(?P<id>\d+)/supplies/edit/(?P<supply_id>\d+)/$', 'product_edit_supply'),
-    (r'^(?P<id>\d+)/supplies/delete/(?P<supply_id>\d+)/$', 'product_delete_supply'),
-    
-    # Supplies.
-    (r'^supplies/$', 'supply_index'),
-
-    # UOMs.
-    (r'^uoms/$', 'uom_index'),
-    (r'^uoms/add/$', 'uom_add'),
-    (r'^uoms/view/(?P<id>\d+)/$', 'uom_view'),
-    (r'^uoms/edit/(?P<id>\d+)/$', 'uom_edit'),
-    (r'^uoms/delete/(?P<id>\d+)/$', 'uom_delete'),
-    
-    # UOM Categories.
-    (r'^uoms/categories/$', 'uom_category_index'),
-    (r'^uoms/categories/add/$', 'uom_category_add'),
-    (r'^uoms/categories/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'uom_category_view'),
-    (r'^uoms/categories/edit/(?P<id>\d+)/$', 'uom_category_edit'),
-    (r'^uoms/categories/delete/(?P<id>\d+)/$', 'uom_category_delete'),
+    url(r'^products/$', view='product_list', name='product_list'),
+    url(r'^products/add/$', view='product_add', name='product_add'),
+    url(r'^products/(?P<id>\d+)/$', view='product_detail', name='product_detail'),
+    url(r'^products/(?P<id>\d+)/edit/$', view='product_edit', name='product_edit'),
+    url(r'^products/(?P<id>\d+)/delete/$', view='product_delete', name='product_delete'),
+    url(r'^products/(?P<id>\d+)/supplies/$', view='product_supplies', name='product_supplies'),
+    url(r'^partners/(?P<id>\d+)/supplies/add/$', view='product_add_supply', name='product_add_supply'),
+    url(r'^partners/(?P<product_id>\d+)/supplies/(?P<id>\d+)/$', view='product_supply_detail', name='product_supply_detail'),
+    url(r'^partners/(?P<product_id>\d+)/supplies/(?P<id>\d+)/edit/$', view='product_edit_supply', name='product_edit_supply'),
+    url(r'^partners/(?P<product_id>\d+)/supplies/(?P<id>\d+)/delete/$', view='product_delete_supply', name='product_delete_supply'),
+    url(r'^products/(?P<id>\d+)/timeline/$', 'product_detail', {"template_name": "products/product_timeline.html"}, 'product_timeline'),
 )

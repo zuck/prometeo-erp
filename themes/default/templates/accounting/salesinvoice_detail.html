@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+{% load details %}
+{% load menu %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Sales invoices' 'salesinvoice_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.accounting.add_salesinvoice %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url salesinvoice_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.accounting.change_salesinvoice %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url salesinvoice_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.accounting.delete_salesinvoice %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url salesinvoice_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.accounting.change_salesinvoice %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url salesinvoice_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+        {% if perms.accounting.change_salesinvoice %}
+        {% if user not in object.stream.followers.all %}
+        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+        {% else %}
+        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% objects_from object %}
+{% with objects as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "salesinvoice_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            <table class="properties">
+                {% property_table object "[['owner', 'status'], ['author', 'created']]" %}
+                {% property_table object.content_object "[['invoice_addressee', 'shipping_addressee'], ['order_ref_number', 'order_ref_date'], ['terms_of_shipping', 'amount'], ['terms_of_payment', 'due_date'], 'bank_account', 'notes']" %}
+                {% property_table object "['categories', 'tags']" %}
+            </table>
+            {% detail_table object.content_object.entries.all "['product', 'quantity', 'unit_value', 'notes']" %}
+        </div>
+        {% include "elements/comments.html" %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "widgets/widget.html" %}
+
+{% load i18n %}
+{% load details %}
+
+{% block widget-content %}
+{% if project_list %}
+{% detail_table project_list "['id', 'title', 'status']" "['actions']" %}
+{% else %}
+<p class="disabled">{% trans "No results found." %}</p>
+{% endif %}
+{% endblock %}

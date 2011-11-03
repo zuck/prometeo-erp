@@ -1,0 +1,24 @@
+{% extends "widgets/widget.html" %}
+
+{% load i18n %}
+{% load details %}
+
+{% block widget-content %}
+{% if ticket_list %}
+{% detail_table ticket_list "['title', 'status', 'urgency']" "['actions']" %}
+{% else %}
+<p class="disabled">{% trans "No results found." %}</p>
+{% endif %}
+{% if project %}
+<p class="add"><a title="{% trans 'Add' %}" href="{% url ticket_add project.slug %}">{% trans "Add" %}</a></p>
+<p><a title="{% trans 'See all' %}" href="{% url ticket_list project.slug %}">{% trans "See all" %}</a></p>
+{% endif %}
+{% if area %}
+<p class="add"><a title="{% trans 'Add' %}" href="{% url area_ticket_add area.project.slug area.slug %}">{% trans "Add" %}</a></p>
+<p><a title="{% trans 'See all' %}" href="{% url area_tickets area.project.slug area.slug %}">{% trans "See all" %}</a></p>
+{% endif %}
+{% if milestone %}
+<p class="add"><a title="{% trans 'Add' %}" href="{% url milestone_ticket_add milestone.project.slug milestone.slug %}">{% trans "Add" %}</a></p>
+<p><a title="{% trans 'See all' %}" href="{% url milestone_tickets milestone.project.slug milestone.slug %}">{% trans "See all" %}</a></p>
+{% endif %}
+{% endblock %}

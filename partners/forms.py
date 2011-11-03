@@ -16,55 +16,80 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
 from django import forms
+
+from prometeo.core.forms import enrich_form
+from prometeo.core.forms.widgets import *
+
 from models import *
-        
-class TelephoneForm(forms.ModelForm):
-    """Form for a telephone number data.
-    """
-    class Meta:
-        model = Telephone
-        
-class AddressForm(forms.ModelForm):
-    """Form for a address data.
-    """
-    class Meta:
-        model = Address
-        
-class RoleForm(forms.ModelForm):
-    """Form for role data.
-    """
-    class Meta:
-        model = Role
 
 class ContactForm(forms.ModelForm):
     """Form for contact data.
     """
     class Meta:
         model = Contact
-        exclude = ['id', 'addresses', 'telephones']
+        exclude = ['id', 'addresses', 'phone_numbers', 'created']
+        widgets = {
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields['main_address'].queryset = self.instance.addresses.all()
+            self.fields['main_phone_number'].queryset = self.instance.phone_numbers.all()
+        else:
+            del self.fields['main_address']
+            del self.fields['main_phone_number']
 
 class ContactJobForm(forms.ModelForm):
     """Form for job data from a contact point of view.
     """
     class Meta:
         model = Job
-        exclude = ['contact']
+        exclude = ['contact', 'created']
+        widgets = {
+            'partner': SelectAndAddWidget(add_url='/partners/add/'),
+        }
 
 class PartnerForm(forms.ModelForm):
     """Form for partner data.
     """
     class Meta:
         model = Partner
-        exclude = ['id', 'addresses', 'telephones', 'contacts']
+        exclude = ['id', 'addresses', 'phone_numbers', 'contacts', 'dashboard', 'stream', 'author', 'created']
+        widgets = {
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PartnerForm, self).__init__(*args, **kwargs)
+        if Partner.objects.count() == 0:
+            self.fields['is_managed'].initial = True
+        if self.instance.pk:
+            self.fields['main_address'].queryset = self.instance.addresses.all()
+            self.fields['main_phone_number'].queryset = self.instance.phone_numbers.all()
+        else:
+            del self.fields['main_address']
+            del self.fields['main_phone_number']
         
 class PartnerJobForm(forms.ModelForm):
     """Form for job data from a partner point of view.
     """
     class Meta:
         model = Job
-        exclude = ['partner']
+        exclude = ['partner', 'created']
+        widgets = {
+            'contact': SelectAndAddWidget(add_url='/partners/contacts/add/'),
+        }
+
+enrich_form(ContactForm)
+enrich_form(ContactJobForm)
+enrich_form(PartnerForm)
+enrich_form(PartnerJobForm)

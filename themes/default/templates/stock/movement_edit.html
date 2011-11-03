@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit movement' %}{% else %}{% trans 'Add movement' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Movements' 'movement_list' %}
+    {% if object.pk %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit movement' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add movement' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form method="post" action="{% url movement_edit object.pk %}">
+{% else %}
+<form method="post" action="{% url movement_add %}">
+{% endif %}
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form %}
+        {% property_table pform %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

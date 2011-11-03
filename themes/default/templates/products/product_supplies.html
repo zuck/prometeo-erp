@@ -1,0 +1,31 @@
+{% extends "products/product_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Supplies" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Products' '/products/' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Supplies' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Supplies" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.products.add_supply %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url product_add_supply object.pk %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

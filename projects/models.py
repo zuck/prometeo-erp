@@ -1,190 +1,202 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """This file is part of the prometeo project.
+
+This program is free software: you can redistribute it and/or modify it 
+under the terms of the GNU Lesser General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <e.bertoldi@card-tech.it>'
-__copyright__ = 'Copyright (c) 2010 Card Tech srl'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
-from django.utils.translation import ugettext_lazy as _
+import datetime
+
 from django.db import models
+from django.db.models import permalink
+from django.template.defaultfilters import slugify
+from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+from django.conf import settings
 
-class Project(models.Model):
-    name = models.CharField(max_length=50, verbose_name=_('name'))
+from prometeo.core.models import Commentable
+
+from managers import *
+
+class Project(Commentable):
+    """Project model.
+    """
+    title = models.CharField(max_length=100, verbose_name=_('title'))
+    slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    author = models.ForeignKey('auth.User', related_name='created_projects', editable=False, verbose_name=_('author'))
-    pm = models.ForeignKey('auth.User', related_name='managed_projects', null=True, blank=True, verbose_name=_('project manager'))
-    members = models.ManyToManyField('auth.User', through='Membership', blank=True, verbose_name=_('members'))
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    date_closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
+    author = models.ForeignKey('auth.User', related_name='created_projects', null=True, blank=True, verbose_name=_('created by'))
+    manager = models.ForeignKey('auth.User', related_name='managed_projects', null=True, blank=True, verbose_name=_('project manager'))
+    status = models.CharField(_('status'), choices=settings.PROJECT_STATUS_CHOICES, default=settings.PROJECT_DEFAULT_STATUS, max_length=10)
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_('dashboard'))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     def __unicode__(self):
-        return self.name
+        return u'%s' % self.title
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/projects/view/%d/' % self.pk
+        return ('project_detail', (), {"slug": self.slug})
 
+    @models.permalink
     def get_edit_url(self):
-        return '/projects/edit/%d/' % self.pk
+        return ('project_edit', (), {"slug": self.slug})
 
+    @models.permalink
     def get_delete_url(self):
-        return '/projects/delete/%d/' % self.pk
+        return ('project_delete', (), {"slug": self.slug})
 
-    def get_areas_url(self):
-        return self.get_absolute_url() + 'areas/'
-        
-    def add_area_url(self):
-        return '/projects/%d/areas/add' % self.pk
+    def save(self):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        if self.status in settings.PROJECT_CLOSE_STATUSES:
+            if self.closed is None:
+                self.closed = datetime.datetime.now()
+        else:
+            self.closed = None
+        super(Project, self).save()
 
-    def get_milestones_url(self):
-        return self.get_absolute_url() + 'milestones/'
-        
-    def add_milestone_url(self):
-        return '/projects/%d/milestones/add' % self.pk
+    def working_hours(self):
+        count = 0
+        for ticket in self.tickets.all():
+            count += ticket.working_hours()
+        return count
 
-    def get_tickets_url(self):
-        return self.get_absolute_url() + 'tickets/'
-
-    def add_ticket_url(self):
-        return '/projects/%d/tickets/add' % self.pk
-
-    def get_members_url(self):
-        return self.get_absolute_url() + 'members/'
-        
-    def add_member_url(self):
-        return '/projects/%d/members/add' % self.pk
-
-    def get_timeline_url(self):
-        return self.get_absolute_url() + 'timeline/'
-        
-    @property
-    def project(self):
-        return self
-        
-class Area(models.Model):
+class Milestone(Commentable):
+    """Milestone model.
+    """
+    title = models.CharField(max_length=255, verbose_name=_('title'))
+    slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     project = models.ForeignKey(Project, verbose_name=_('project'))
-    name = models.CharField(max_length=50, verbose_name=_('name'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'))
-    author = models.ForeignKey('auth.User', related_name='created_areas', editable=False, verbose_name=_('author'))
-    manager = models.ForeignKey('auth.User', related_name='managed_areas', null=True, blank=True, verbose_name=_('manager'))
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    
-    def __unicode__(self):
-        return _('%(name)s of %(project)s') % {'name': self.name, 'project': self.project}
-
-    def get_absolute_url(self):
-        return '/projects/%d/areas/view/%d/' % (self.project.pk, self.pk)
-
-    def get_edit_url(self):
-        return '/projects/%d/areas/edit/%d/' % (self.project.pk, self.pk)
-
-    def get_delete_url(self):
-        return '/projects/%d/areas/delete/%d/' % (self.project.pk, self.pk)
-
-    def get_tickets_url(self):
-        return self.get_absolute_url() + 'tickets/'
-        
-    def add_ticket_url(self):
-        return '/projects/%d/areas/%d/tickets/add' % (self.project.id, self.pk)
-
-class Milestone(models.Model):
-    project = models.ForeignKey(Project, editable=False, verbose_name=_('project'))
-    name = models.CharField(max_length=255, verbose_name=_('name'))
-    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
-    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'))
-    author = models.ForeignKey('auth.User', related_name='created_milestones', editable=False, verbose_name=_('author'))
+    author = models.ForeignKey('auth.User', related_name='created_milestones', null=True, blank=True, verbose_name=_('created by'))
     manager = models.ForeignKey('auth.User', related_name='managed_milestones', null=True, blank=True, verbose_name=_('manager'))
-    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    date_completed = models.DateTimeField(null=True, blank=True, verbose_name=_('completed on'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    deadline = models.DateTimeField(null=True, blank=True, verbose_name=_('deadline'))
+    closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_('dashboard'))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
-        ordering = ['-date_due',]
+        ordering = ['deadline', 'created']
 
     def __unicode__(self):
-        return self.name
+        return u'%s' % self.title
+    
+    def _expired(self):
+        if self.deadline:
+            if self.closed:
+                return self.closed > self.deadline
+            else:
+                return datetime.datetime.now() > self.deadline
+        return False
+    expired = property(_expired)
+    
+    def _progress(self):
+        total = self.tickets.count()
+        if total > 0:
+            closed = self.tickets.closed().count()
+            return int(closed / float(total) * 100)
+        return 100
+    progress = property(_progress)
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/projects/%d/milestones/view/%d/' % (self.project.id, self.pk)
+        return ('milestone_detail', (), {"project": self.project.slug, "slug": self.slug})
 
+    @models.permalink
     def get_edit_url(self):
-        return '/projects/%d/milestones/edit/%d/' % (self.project.id, self.pk)
+        return ('milestone_edit', (), {"project": self.project.slug, "slug": self.slug})
 
+    @models.permalink
     def get_delete_url(self):
-        return '/projects/%d/milestones/delete/%d/' % (self.project.id, self.pk)
-
-    def get_tickets_url(self):
-        return self.get_absolute_url() + 'tickets/'
+        return ('milestone_delete', (), {"project": self.project.slug, "slug": self.slug})
         
-    def add_ticket_url(self):
-        return '/projects/%d/milestones/%d/tickets/add' % (self.project.id, self.pk)       
+    def save(self):
+        if not self.slug:
+            self.slug = slugify('%s_%s' % (self.project.pk, self.title))
+        super(Milestone, self).save()
 
-class Ticket(models.Model):
-    TICKET_URGENCY_CHOICES = (
-        ('low', _('low')),
-        ('medium', _('medium')),
-        ('high', _('high')),
-        ('critical', _('critical')),
-    )
-    
-    TICKET_TYPE_CHOICES = (
-        ('problem', _('problem')),
-        ('task', _('task')),
-        ('idea', _('idea')),
-    )
-    
-    TICKET_STATUS_CHOICES = (
-        ('new', _('new')),
-        ('invalid', _("invalid")),
-        ('duplicate', _('duplicated')),
-        ('accepted', _('accepted')),
-        ('inprogress', _('in progress')),
-        ('resolved', _('resolved')),
-        ('review', _('awaiting review')),
-    )
-    
-    project = models.ForeignKey(Project, editable=False, verbose_name=_('project'))
+    def working_hours(self):
+        count = 0
+        for ticket in self.tickets.all():
+            count += ticket.working_hours()
+        return count
+
+class Ticket(Commentable):
+    """Ticket model.
+    """    
+    project = models.ForeignKey(Project, related_name='tickets', verbose_name=_('project'))
     title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(verbose_name=_('description'))
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
-    date_closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
-    date_due = models.DateTimeField(null=True, blank=True, verbose_name=_('date due'))
-    area = models.ForeignKey(Area, null=True, blank=True, verbose_name=_('area'))
-    milestone = models.ForeignKey(Milestone, null=True, blank=True, verbose_name=_('milestone'))
-    author = models.ForeignKey('auth.User', related_name="created_tickets", editable=False, verbose_name=_('author'))
-    owners = models.ManyToManyField('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('owners'))
-    status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default='new', verbose_name=_('status'))
-    urgency = models.CharField(max_length=10, choices=TICKET_URGENCY_CHOICES, default='medium', verbose_name=_('urgency'))
-    type = models.CharField(max_length=11, choices=TICKET_TYPE_CHOICES, default='problem', verbose_name=_('type'))
+    author = models.ForeignKey('auth.User', related_name="created_tickets", verbose_name=_('created by'))
+    milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', on_delete=models.SET_NULL, verbose_name=_('milestone'))
+    type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default=settings.TICKET_DEFAULT_TYPE, verbose_name=_('type'))
+    urgency = models.CharField(max_length=10, choices=settings.TICKET_URGENCY_CHOICES, default=settings.TICKET_DEFAULT_URGENCY, verbose_name=_('urgency'))
+    status = models.CharField(max_length=10, choices=settings.TICKET_STATUS_CHOICES, default=settings.TICKET_DEFAULT_STATUS, verbose_name=_('status'))
+    assignee = models.ForeignKey('auth.User', related_name="assigned_tickets", null=True, blank=True, verbose_name=_('assigned to'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    modified = models.DateTimeField(auto_now=True, verbose_name=_('modified on'))
+    closed = models.DateTimeField(null=True, blank=True, verbose_name=_('closed on'))
+    categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
+    tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    tasks = models.ManyToManyField('todo.Task', null=True, blank=True, verbose_name=_('related tasks'))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+
+    objects = TicketManager()     
 
     class Meta:
-        ordering = ['-date_due', 'id']
-        
-    def get_absolute_url(self):
-        return '/projects/%d/tickets/view/%d/' % (self.project.id, self.id)
-        
-    def get_edit_url(self):
-        return '/projects/%d/tickets/edit/%d/' % (self.project.id, self.id)
-        
-    def get_delete_url(self):
-        return '/projects/%d/tickets/delete/%d/' % (self.project.id, self.id)
+        ordering = ('created', 'id')
+        get_latest_by = 'created'
+        permissions = (
+            ("change_assignee", "Can change assignee"),
+        )
 
     def __unicode__(self):
-        for i, t in enumerate(self.project.ticket_set.all()):
-            if t == self:
-                return u'#%d %s' % (i+1, self.title)
-                
-        return u''
-              
-class Membership(models.Model):
-    user = models.ForeignKey('auth.User', verbose_name=_('user'))
-    project = models.ForeignKey(Project, verbose_name=_('project'))
-    date_joined = models.DateTimeField(auto_now_add=True, verbose_name=_('joined at'))
+        return u'#%d %s' % (self.pk, self.title)
     
-    def __unicode__(self):
-        return "%s" % self.user
-
+    @models.permalink    
+    def get_absolute_url(self):
+        return ('ticket_detail', (), {"project": self.project.slug, "id": self.pk})
+    
+    @models.permalink    
+    def get_edit_url(self):
+        return ('ticket_edit', (), {"project": self.project.slug, "id": self.pk})
+    
+    @models.permalink    
     def get_delete_url(self):
-        return '/projects/%d/members/delete/%d/' % (self.project.pk, self.pk)
+        return ('ticket_delete', (), {"project": self.project.slug, "id": self.pk})
+        
+    def save(self):
+        if self.status in settings.TICKET_CLOSE_STATUSES:
+            if self.closed is None:
+                self.closed = datetime.datetime.now()
+        else:
+            self.closed = None
+        super(Ticket, self).save()
+
+    def working_hours(self):
+        count = 0
+        for task in self.tasks.all():
+            count += task.working_hours()
+        return count

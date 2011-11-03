@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+{% load menu %}
+
+{% block meta_title %}{% trans "Bank accounts" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Bank accounts' %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Accounting" %}</h1>
+    <h2>{% block subtitle %}{% trans "Bank accounts" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "accounting_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        {% include 'elements/filterbox.html' %}
+        <div class="actions">
+            <ul>
+                {% if perms.accounting.add_bankaccount %}
+                <li class="add"><a title="{% trans 'Add' %}" href="{% url bankaccount_add %}">{% trans 'Add' %}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="details">
+            {% detail_table object_list field_names %}
+            {% include 'elements/paginator.html' %}
+        </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

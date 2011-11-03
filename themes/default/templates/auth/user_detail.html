@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+{% load avatar %}
+{% load menu %}
+{% load details %}
+
+{% block meta_title %}{{ object }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' 'user_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+    <h2>{% block subtitle %}{% trans "Profile" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.auth.add_user %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url user_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if request.user == object or perms.auth.change_user %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url user_edit object.username %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if request.user == object or perms.auth.delete_user %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url user_delete object.username %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.auth.change_user %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url user_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% objects_from object %}
+{% with objects as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+<div class="sections">
+    <div class="menu">
+        {% menu "user_profile_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            {% avatar object 90 %}
+            <table class="properties">
+                {% property_table object "[['full_name', 'is_active'], ['is_staff', 'is_superuser'], ['date_joined', 'last_login'], 'groups']" %}
+            </table>
+        </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

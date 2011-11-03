@@ -1,0 +1,55 @@
+{% load i18n %}
+
+{% block extrahead %}<link rel="stylesheet" href="{{ STATIC_URL }}css/filterbox.css" type="text/css" media="all"/>{% endblock %}
+
+<div class="filterbox">
+    {% if filter_fields|length > 0 %}
+    <form action="." method="post">
+        {% csrf_token %}
+
+        {% if filter_fields|length > 1 %}
+
+        {% for field, value in filter_fields.items %}
+        {% if value %}
+        <label for="{{ field.attname }}">{{ field.verbose_name|capfirst }}</label>
+        <input class="query" type="text" name="{{ field.attname }}" value="{{ value }}"/>
+        <button class="delete" type="submit" name="sub_{{ field.attname }}"><span>-</span></button>
+        <br/>
+        {% endif %}
+        {% endfor %}    
+
+        {% if filter_fields.values|join:" "|cut:"None"|wordcount != filter_fields.keys|length %}
+        <select class="filter_field" name="filter_field">
+            {% for field, value in filter_fields.items %}
+            {% if not value %}
+            <option value="{{ field.name }}">{% trans field.verbose_name|capfirst %}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        {% if filter_fields.values|join:" "|cut:"None"|wordcount != filter_fields.keys|length %}
+        <input class="query" type="text" name="filter_query"/>
+
+        {% if filter_fields and filter_fields|length > 1 %}
+        <button class="add" type="submit" name="add_filter_field"><span>+</span></button>
+        <br/>
+        {% endif %}
+
+        {% endif %}
+
+        <span class="submit"><input type="submit" name="filter" value="{% trans 'Filter' %}"/></span>
+
+        {% else %}
+
+        {% with field=filter_fields.keys|first value=filter_fields.values|first %} 
+        <label for="{{ field.attname }}">{{ field.verbose_name|capfirst }}</label>
+        <input class="query" type="text" name="{{ field.attname }}"{% if value %} value="{{ value }}"{% endif %}/>
+        {% endwith %}
+
+        <span class="submit"><input class="alone" type="submit" name="filter" value="{% trans 'Filter' %}"/></span>
+
+        {% endif %}
+    </form>
+    {% endif %}
+</div>

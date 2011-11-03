@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Tasks' 'task_list' %}
+    {% if not object.planned %}
+    {% add_crumb 'Unplanned' 'unplanned_task_list' %}
+    {% endif %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.todo.add_task %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.todo.change_task %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url task_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.todo.delete_task %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url task_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.todo.change_task %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url task_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+        {% if perms.todo.change_task %}
+        {% if not object.closed %}
+        <li class="close"><a title="{% trans 'Close' %}" href="{% url task_close object.pk %}">{% trans 'Close' %}</a></li>
+        {% else %}
+        <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url task_reopen object.pk %}">{% trans 'Reopen' %}</a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% include 'elements/navigator.html' %}
+<div class="details">
+    <table class="properties">
+        {% property_table object "[['created', 'closed'], ['start', 'end'], 'description', 'working_hours', 'categories', 'tags']" %}
+    </table>
+</div>
+{% endblock %}

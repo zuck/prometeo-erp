@@ -16,52 +16,48 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('partners.views',
 
     # Partners.
-    (r'^$', 'partner_index'),
-    (r'^add/$', 'partner_add'),
-    (r'^view/(?P<id>\d+)/(?P<page>\w*)/*$', 'partner_view'),
-    (r'^edit/(?P<id>\d+)/$', 'partner_edit'),
-    (r'^delete/(?P<id>\d+)/$', 'partner_delete'),
-    (r'^suppliers/$', 'partner_suppliers'),
-    (r'^customers/$', 'partner_customers'),
-    (r'^(?P<id>\d+)/telephones/add/$', 'partner_add_telephone'),
-    (r'^(?P<id>\d+)/telephones/edit/(?P<telephone_id>\d+)/$', 'partner_edit_telephone'),
-    (r'^(?P<id>\d+)/telephones/delete/(?P<telephone_id>\d+)/$', 'partner_delete_telephone'),
-    (r'^(?P<id>\d+)/addresses/add/$', 'partner_add_address'),
-    (r'^(?P<id>\d+)/addresses/edit/(?P<address_id>\d+)/$', 'partner_edit_address'),
-    (r'^(?P<id>\d+)/addresses/delete/(?P<address_id>\d+)/$', 'partner_delete_address'),
-    (r'^(?P<id>\d+)/contacts/add/$', 'partner_add_contact'),
-    (r'^(?P<id>\d+)/contacts/edit/(?P<job_id>\d+)/$', 'partner_edit_contact'),
-    (r'^(?P<id>\d+)/contacts/delete/(?P<job_id>\d+)/$', 'partner_delete_contact'),
+    url(r'^partners/$', view='partners.partner_list', name='partner_list'),
+    url(r'^partners/add/$', view='partners.partner_add', name='partner_add'),
+    url(r'^partners/(?P<id>\d+)/$', view='partners.partner_detail', name='partner_detail'),
+    url(r'^partners/(?P<id>\d+)/edit/$', view='partners.partner_edit', name='partner_edit'),
+    url(r'^partners/(?P<id>\d+)/delete/$', view='partners.partner_delete', name='partner_delete'),
+    url(r'^partners/(?P<id>\d+)/addresses/$', view='partners.partner_addresses', name='partner_addresses'),
+    url(r'^partners/(?P<id>\d+)/addresses/add/$', view='partners.partner_add_address', name='partner_add_address'),
+    url(r'^partners/(?P<partner_id>\d+)/addresses/(?P<id>\d+)/edit/$', view='partners.partner_edit_address', name='partner_edit_address'),
+    url(r'^partners/(?P<partner_id>\d+)/addresses/(?P<id>\d+)/delete/$', view='partners.partner_delete_address', name='partner_delete_address'),
+    url(r'^partners/(?P<id>\d+)/phones/$', view='partners.partner_phones', name='partner_phones'),
+    url(r'^partners/(?P<id>\d+)/phones/add/$', view='partners.partner_add_phone', name='partner_add_phone'),
+    url(r'^partners/(?P<partner_id>\d+)/phones/(?P<id>\d+)/edit/$', view='partners.partner_edit_phone', name='partner_edit_phone'),
+    url(r'^partners/(?P<partner_id>\d+)/phones/(?P<id>\d+)/delete/$', view='partners.partner_delete_phone', name='partner_delete_phone'),
+    url(r'^partners/(?P<id>\d+)/contacts/$', view='partners.partner_contacts', name='partner_contacts'),
+    url(r'^partners/(?P<id>\d+)/contacts/add/$', view='partners.partner_add_contact', name='partner_add_contact'),
+    url(r'^partners/(?P<id>\d+)/timeline/$', 'partners.partner_detail', {"template_name": "partners/partner_timeline.html"}, 'partner_timeline'),
 
     # Contacts.
-    (r'^contacts/$', 'contact_index'),
-    (r'^contacts/add/$', 'contact_add'),
-    (r'^contacts/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'contact_view'),
-    (r'^contacts/edit/(?P<id>\d+)/$', 'contact_edit'),
-    (r'^contacts/delete/(?P<id>\d+)/$', 'contact_delete'),
-    (r'^contacts/(?P<id>\d+)/telephones/add/$', 'contact_add_telephone'),
-    (r'^contacts/(?P<id>\d+)/telephones/edit/(?P<telephone_id>\d+)/$', 'contact_edit_telephone'),
-    (r'^contacts/(?P<id>\d+)/telephones/delete/(?P<telephone_id>\d+)/$', 'contact_delete_telephone'),
-    (r'^contacts/(?P<id>\d+)/addresses/add/$', 'contact_add_address'),
-    (r'^contacts/(?P<id>\d+)/addresses/edit/(?P<address_id>\d+)/$', 'contact_edit_address'),
-    (r'^contacts/(?P<id>\d+)/addresses/delete/(?P<address_id>\d+)/$', 'contact_delete_address'),
-    (r'^contacts/(?P<id>\d+)/jobs/add/$', 'contact_add_job'),
-    (r'^contacts/(?P<id>\d+)/jobs/edit/(?P<job_id>\d+)/$', 'contact_edit_job'),
-    (r'^contacts/(?P<id>\d+)/jobs/delete/(?P<job_id>\d+)/$', 'contact_delete_job'),
-
-    # Roles.
-    (r'^contacts/roles/$', 'role_index'),
-    (r'^contacts/roles/add/$', 'role_add'),
-    (r'^contacts/roles/view/(?P<id>\d+)/$', 'role_view'),
-    (r'^contacts/roles/edit/(?P<id>\d+)/$', 'role_edit'),
-    (r'^contacts/roles/delete/(?P<id>\d+)/$', 'role_delete'),
+    url(r'^contacts/$', view='contacts.contact_list', name='contact_list'),
+    url(r'^contacts/add/$', view='contacts.contact_add', name='contact_add'),
+    url(r'^contacts/(?P<id>\d+)/$', view='contacts.contact_detail', name='contact_detail'),
+    url(r'^contacts/(?P<id>\d+)/edit/$', view='contacts.contact_edit', name='contact_edit'),
+    url(r'^contacts/(?P<id>\d+)/delete/$', view='contacts.contact_delete', name='contact_delete'),
+    url(r'^contacts/(?P<id>\d+)/addresses/$', view='contacts.contact_addresses', name='contact_addresses'),
+    url(r'^contacts/(?P<id>\d+)/addresses/add/$', view='contacts.contact_add_address', name='contact_add_address'),
+    url(r'^contacts/(?P<contact_id>\d+)/addresses/(?P<id>\d+)/edit/$', view='contacts.contact_edit_address', name='contact_edit_address'),
+    url(r'^contacts/(?P<contact_id>\d+)/addresses/(?P<id>\d+)/delete/$', view='contacts.contact_delete_address', name='contact_delete_address'),
+    url(r'^contacts/(?P<id>\d+)/phones/$', view='contacts.contact_phones', name='contact_phones'),
+    url(r'^contacts/(?P<id>\d+)/phones/add/$', view='contacts.contact_add_phone', name='contact_add_phone'),
+    url(r'^contacts/(?P<contact_id>\d+)/phones/(?P<id>\d+)/edit/$', view='contacts.contact_edit_phone', name='contact_edit_phone'),
+    url(r'^contacts/(?P<contact_id>\d+)/phones/(?P<id>\d+)/delete/$', view='contacts.contact_delete_phone', name='contact_delete_phone'),
+    url(r'^contacts/(?P<id>\d+)/jobs/$', view='contacts.contact_jobs', name='contact_jobs'),
+    url(r'^contacts/(?P<id>\d+)/jobs/add/$', view='contacts.contact_add_job', name='contact_add_job'),
+    url(r'^contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/edit/$', view='contacts.contact_edit_job', name='contact_edit_job'),
+    url(r'^contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/delete/$', view='contacts.contact_delete_job', name='contact_delete_job'),
 )

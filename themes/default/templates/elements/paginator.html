@@ -1,0 +1,49 @@
+{% load i18n %}
+
+<div class="paginator">
+    <span class="first">
+        {% if page_obj.has_previous %}
+        <a href="?page=1"><span>&lt;&lt;</span></a>
+        {% else %}
+        <span class="disabled">&lt;&lt;</span>
+        {% endif %}
+    </span>
+
+    <span class="previous">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span>&lt;</span></a>
+        {% else %}
+        <span class="disabled">&lt;</span>
+        {% endif %}
+    </span>
+    
+    <span class="current">
+        {% with page_obj.number as number %}
+        {% with paginator.num_pages as num_pages %}
+        {% blocktrans %}Page {{ number }} of {{ num_pages }}{% endblocktrans %}
+        {% endwith %}
+        {% endwith %}
+    </span>
+    
+    <span class="next">
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><span>&gt;</span></a>
+        {% else %}
+        <span class="disabled">&gt;</span>
+        {% endif %}
+    </span>
+    
+    <span class="last">
+        {% if page_obj.has_next %}
+        <a href="?page={{ paginator.num_pages }}"><span>&gt;&gt;</span></a>
+        {% else %}
+        <span class="disabled">&gt;&gt;</span>
+        {% endif %}
+    </span>
+
+    <span class="total">
+        {% with paginator.count as count %}
+        {% blocktrans %}<strong>{{ count }}</strong> element(s){% endblocktrans %}
+        {% endwith %}
+    </span>
+</div>

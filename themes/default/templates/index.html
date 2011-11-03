@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load region %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "My dashboard" %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        <li class="add"><a href="{% url widget_add %}">{% trans 'Add' %}</a></li>
+    </ul>
+</div>
+<div class="details">
+    {% region user.get_profile.dashboard.slug %}
+    {% if not user.get_profile.dashboard.widgets.all %}
+    <p class="disabled">{% trans "No widgets found." %}</p>
+    {% endif %}
+</div>
+{% endblock %}

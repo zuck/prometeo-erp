@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% if object.pk %}{% trans 'Edit contact' %}{% else %}{% trans 'Add contact' %}{% endif %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Partners' 'partner_list' %}
+    {% if object.partner %}
+    {% add_crumb object.partner object.partner.get_absolute_url %}
+    {% add_crumb 'Contacts' 'partner_contacts' object.partner.pk %}
+    {% if object.pk %}
+    {% add_crumb object object.contact.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+    {% else %}
+    {% add_crumb 'Contacts' 'contact_list' %}
+    {% add_crumb object.contact object.contact.get_absolute_url %}
+    {% add_crumb 'Jobs' 'contact_jobs' object.contact.pk %}
+    {% if object.pk %}
+    {% add_crumb object.partner object.partner.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    {% if object.partner %}
+    <h2>{% trans 'Edit contact' %}</h2>
+    {% else %}
+    <h2>{% trans 'Edit job' %}</h2>
+    {% endif %}
+    {% else %}
+    {% if object.partner %}
+    <h1>{% trans 'Add contact' %}</h1>
+    {% else %}
+    <h1>{% trans 'Add job' %}</h1>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" action=".">
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

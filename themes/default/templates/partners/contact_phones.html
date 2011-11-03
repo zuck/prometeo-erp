@@ -1,0 +1,56 @@
+{% extends "partners/contact_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% trans "Phone numbers" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Contacts' '/contacts/' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Phone numbers' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Phone numbers" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.addressing.add_phone_number %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url contact_add_phone object.pk %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% regroup object_list by type as object_by_type %}
+    {% if object_by_type %}
+    <dl class="phone_numbers">
+        {% for type in object_by_type %}
+        {% with type.list|first as first_object %}
+        <dt>{{ first_object.get_type_display|capfirst }}</dt>
+        {% endwith %}
+        <dd>
+            <ul>
+                {% for phone in type.list %}
+                <li>
+                    {{ phone }}
+                    <span class="actions">
+                        <ul>
+                            <li class="edit"><a title="{% trans 'Edit' %}" href="{% url contact_edit_phone object.pk phone.pk %}">{% trans 'Edit' %}</a></li>
+                            <li class="delete"><a title="{% trans 'Delete' %}" href="{% url contact_delete_phone object.pk phone.pk %}">{% trans 'Delete' %}</a></li>
+                        </ul>
+                    </span>
+                </li>                
+                {% endfor %}
+            </ul>
+        </dd>
+        {% endfor %}
+    </dl>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

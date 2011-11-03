@@ -1,0 +1,30 @@
+{% extends "stock/warehouse_list.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+{% load menu %}
+
+{% block meta_title %}{% trans "Movements" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Movements' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Movements" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.stock.add_movement %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url movement_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

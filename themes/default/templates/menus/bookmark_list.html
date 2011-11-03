@@ -1,0 +1,29 @@
+{% extends "auth/user_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Bookmarks" %}{% endblock %}
+
+{% block subtitle %}{% trans "Bookmarks" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' 'user_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Bookmarks' %}
+{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url bookmark_add object.username %}">{% trans 'Add' %}</a></li>
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

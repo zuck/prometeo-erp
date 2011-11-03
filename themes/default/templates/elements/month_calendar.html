@@ -1,0 +1,45 @@
+<table class="events">
+    {% for week, week_events in calendar.items %}
+    {% if forloop.first %}
+    <tr>
+        {% for week_day, day_events in week_events.items %}
+        <th>{{ week_day|date:"D" }}</th>
+        {% endfor %}
+    </tr>
+    {% endif %}
+    <tr>
+        {% for day, day_events in week_events.items %}
+        <td{% if day_events.values|join:""|cut:"[]" %} class="with_events"{% endif %}>
+            <span class="daynr">
+                {% if forloop.counter >= 6 %}
+                <span class="weekend">
+                {% endif %}
+                    {% if day.month != month %}
+                    <span class="disabled">{{ day.day }}</span>
+                    {% else %}
+                    {{ day.day }}
+                    {% endif %}
+                {% if forloop.counter >= 6 %}
+                </span>
+                {% endif %}
+            </span>
+            {% if day.weekday == 0 %}
+            <span class="weeknr">({{ day|date:"W" }})</span>
+            {% endif %}
+
+            {% if day_events.values|join:""|cut:"[]" %}
+            <ul>
+                {% for hour_events in day_events.values %}
+                {% for event in hour_events %}
+                {% with event.title|striptags as event_title %}
+                <li><a title="{{ event_title }}" href="{{ event.get_absolute_url }}">{{ event.start.time }}</a></li>
+                {% endwith %}
+                {% endfor %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>

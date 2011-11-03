@@ -1,0 +1,41 @@
+{% extends "projects/project_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Milestones" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' 'project_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Milestones' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Milestones" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.projects.add_milestone %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.slug %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% if object_list %}
+    <dl class="milestones">
+        {% for milestone in object_list %}
+        {% if not milestone.parent %}
+        {% include 'projects/milestone.html' %}
+        {% endif %}
+        {% endfor %}
+    </dl>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

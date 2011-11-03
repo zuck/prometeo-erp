@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit ticket' %}{% else %}{% trans 'Add ticket' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Projects' 'project_list' %}
+    {% add_crumb object.project object.project.get_absolute_url %}
+    {% add_crumb 'Tickets' 'ticket_list' object.project.slug %}
+    {% if object.pk %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object|striptags|capfirst }}</h1>
+    <h2>{% trans 'Edit ticket' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add ticket' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form method="post" action="{% url ticket_edit object.project.slug object.pk %}">
+{% else %}
+<form method="post" action=".">
+{% endif %}
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form "['title', ['milestone', 'assignee'],  ['type', 'urgency'], 'description', 'status', 'tasks', 'categories', 'tags', 'allow_comments']" %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

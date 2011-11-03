@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit hard copy' %}{% else %}{% trans 'Add hard copy' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Delivery notes' 'deliverynote_list' %}
+    {% add_crumb object.document object.document.get_absolute_url %}
+    {% add_crumb 'Hard copies' 'deliverynote_hardcopies' object.document.object_id %}
+    {% if object.pk %}
+    {% add_crumb object %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit hard copy' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add hard copy' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form enctype="multipart/form-data" method="post" action="{% url deliverynote_edit_hardcopy object.document.object_id object.pk %}">
+{% else %}
+<form enctype="multipart/form-data" method="post" action="{% url deliverynote_add_hardcopy object.document.object_id %}">
+{% endif %}
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

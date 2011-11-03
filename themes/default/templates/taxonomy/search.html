@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% blocktrans %}Search results for {{ query }}{% endblocktrans %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Search' %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if query %}
+    <h1>{% blocktrans %}Search results for &laquo;{{ query }}&raquo;{% endblocktrans %}</h1>
+    {% else %}
+    <h1>{% trans 'Search results' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="details">
+    {% include "taxonomy/results.html" %}
+    {% include "elements/paginator.html" %}
+</div>
+{% endblock %}

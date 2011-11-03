@@ -16,39 +16,50 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
-
-# Inspired by http://djangoadvent.com/1.2/object-permissions/
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 
-from ..models import Account, ObjectPermission
+from models import *
 
-class ObjectPermBackend(object):
+class ObjectPermissionBackend(object):
+    """Backend which enables support for row-level permissions.
+    """
     supports_object_permissions = True
     supports_anonymous_user = True
+    supports_inactive_user = True
 
     def authenticate(self, username, password):
         return None
 
-    def has_perm(self, account_obj, perm, obj=None):
-        if not account_obj.is_authenticated():
-            account_obj = Account.objects.get(pk=settings.ANONYMOUS_USER_ID)
+    def get_group_permissions(self, user_obj):
+        if not hasattr(user_obj, '_group_obj_perm_cache'):
+            perms = ObjectPermission.objects.get_group_permissions(user_obj)
+            perms = perms.values_list('perm__content_type__app_label', 'perm__codename', 'object_id').order_by()
+            user_obj._group_obj_perm_cache = set(["%s.%s.%s" % (ct, name, obj_id) for ct, name in perms])
+        return user_obj._group_obj_perm_cache
+
+    def get_all_permissions(self, user_obj):
+        if user_obj.is_anonymous():
+            return set()
+        if not hasattr(user_obj, '_obj_perm_cache'):
+            user_obj._obj_perm_cache = set([u"%s.%s.%s" % (p.perm.content_type.app_label, p.perm.codename, p.object_id) for p in user_obj.objectpermissions.all()])
+            user_obj._obj_perm_cache.update(self.get_group_permissions(user_obj))
+        return user_obj._obj_perm_cache
+
+    def has_perm(self, user_obj, perm, obj=None):
+        """This method checks if the user_obj has perm on obj.
+        """
+        if not user_obj.is_authenticated():
+            user_obj = User.objects.get(pk=settings.ANONYMOUS_USER_ID)
+
+        if not user_obj.is_active:
+            return False
 
         if obj is None:
             return False
 
-        ct = ContentType.objects.get_for_model(obj)
-
-        try:
-            perm = perm.split('.')[-1].split('_')[0]
-        except IndexError:
-            return False
-
-        p = ObjectPermission.objects.filter(content_type=ct, object_id=obj.id, account=account_obj)
-
-        return p.filter(**{'can_%s' % perm: True}).exists()
-
+        return "%s.%d" % (perm, obj.pk) in self.get_all_permissions(user_obj)

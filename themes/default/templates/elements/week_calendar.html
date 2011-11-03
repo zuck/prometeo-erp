@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<table class="events">
+    <tr>
+        <th class="hour">{% trans "Hour" %}</th>
+        {% for day, day_events in calendar.items %}
+        <th>{{ day|date:"D" }}, {{ day }}</th>
+        {% endfor %}
+    </tr>
+    {% for hour in hour_headers %}
+    <tr{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
+        <td>{{ hour|stringformat:"02d" }}:00</td>
+        {% for day, day_events in calendar.items %}
+        {% for day_hour, events in day_events.items %}
+        {% if day_hour.hour == hour %}
+        <td{% if events %} class="with_events"{% endif %}>
+        {% for event in events %}
+        <strong>:{{ event.start.minute|stringformat:"02d" }}</strong>
+        {% with event.title|striptags as event_title %}
+        <a title="{{ event_title }}" href="{{ event.get_absolute_url }}">{{ event_title|slice:":10" }}{% if event_title|length > 10 %}...{% endif %}</a>
+        {% endwith %}
+        <br/>
+        {% endfor %}
+        </td>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>

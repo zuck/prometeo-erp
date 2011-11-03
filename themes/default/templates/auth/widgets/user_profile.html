@@ -1,0 +1,16 @@
+{% extends "widgets/widget.html" %}
+
+{% load i18n %}
+{% load avatar %}
+
+{% block widget-body %}
+{% if request.user.is_authenticated %}
+<div class="body">
+    {% avatar request.user %}
+    <div class="info">
+        <p><strong>{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}</strong></p>
+        <p><a href="{{ request.user.get_absolute_url }}">{% trans "Profile" %}</a></p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% load i18n %}
+{% load menu %}
+
+{% if user.is_authenticated %}
+<span class="add"><a title="Bookmark this page." href="{% url bookmark_add user.username %}">{% trans '+' %}</a></span>
+{% menu user.get_profile.bookmarks.slug %}
+{% endif %}

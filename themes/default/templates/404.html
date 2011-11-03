@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load region %}
+
+{% block main %}
+<div class="title">
+    <h1>{% trans "Error 404: page not found" %}</h1>
+</div>
+<div class="entry">
+    <p>{% trans "Sorry, the requested page was not found on this site." %}</p>
+</div>
+{% endblock %}

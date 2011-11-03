@@ -16,13 +16,6 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <zuck@fastwebnet.it>'
-__copyright__ = 'Copyright (c) 2010 Emanuele Bertoldi'
-__version__ = '$Revision$'
-
-import os
-from django.conf import settings
-
-if not hasattr(settings, 'TEMPLATE_DIRS'):
-    settings.TEMPLATE_DIRS = []
-settings.TEMPLATE_DIRS += (os.path.join(os.path.dirname(__file__), "templates"),)
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'

@@ -1,0 +1,55 @@
+{% extends "auth/user_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Notifications" %}{% endblock %}
+
+{% block subtitle %}{% trans "Notifications" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' 'user_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Notifications' %}
+{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="details">
+    {% if object_list %}
+    <ul class="notifications">
+        {% for notification in object_list %}
+        <li{% if notification.read %} class="read"{% endif %}>
+            <strong>{{ notification.created }}</strong>
+            <a href="{{ notification.get_absolute_url }}">{{ notification.title|capfirst }}</a>
+            {% if notification.read %}<span class="read-on">({{ notification.read }})</span>{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include 'elements/paginator.html' %}
+    {% if form %}
+    <form class="subscription-form" method="post" action=".">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th class="signature">{% trans "Subscriptions" %}</th>
+                <th class="subscribe">{% trans "Subscribe?" %}</th>
+                <th class="email">{% trans "Email?" %}</th>
+            </tr>
+            {% for field in form %}
+            <tr{% if forloop.counter|divisibleby:2 %} class="altrow"{% endif %}>
+                <td>{{ field.label_tag }}</td>
+                {{ field }}
+            </tr>
+            {% endfor %}
+        </table>
+        <span class="submit"><input type="submit" value="{% trans 'Save' %}" /></span>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

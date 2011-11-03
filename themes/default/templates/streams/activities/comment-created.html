@@ -1,0 +1,8 @@
+{% load i18n %}
+
+{% with author|capfirst as author %}
+{% blocktrans %}
+<p><a href="{{ author_link }}">{{ author }}</a> has posted a comment to {{ class }} <a href="{{ link }}">{{ name }}</a>:</p>
+<blockquote>{{ comment }}</blockquote>
+{% endblocktrans %}
+{% endwith %}

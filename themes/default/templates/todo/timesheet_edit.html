@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit timesheet' %}{% else %}{% trans 'Add timesheet' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Tasks' 'task_list' %}
+    {% add_crumb 'Timesheets' 'timesheet_list' %}
+    {% if object.pk %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit timesheet' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add timesheet' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form method="post" action="{% url timesheet_edit object.pk %}">
+{% else %}
+<form method="post" action="{% url timesheet_add %}">
+{% endif %}
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form "['date', 'status']" %}
+    </table>
+    {{ formset.management_form }}
+    <table class="formset">
+        {% for form in formset %}
+        {% if forloop.counter0 == 0 %}
+        <tr>
+            {% for field in form.visible_fields %}
+            {% if not forloop.last %}
+            <th class="{% if field.name == 'description' %}text{% else %}char{% endif %}">{{ field.label }}</th>
+            {% endif %}
+            {% endfor %}
+            <th class="actions">{% trans "Delete?" %}</th>
+        </tr>
+        {% endif %}
+        <tr>
+            {% for field in form.visible_fields %}
+            <td{% if field.css_classes %} class="{{ field.css_classes }}"{% endif %}>
+                {% if forloop.counter0 == 0 %}
+                {% for hiddenfield in form.hidden_fields %}
+                {{ hiddenfield }}
+                {% endfor %}
+                {% endif %}
+                {{ field }}
+                {{ field.errors }}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

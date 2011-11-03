@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{% trans "Categories" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Categories' %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Categories" %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.taxonomy.add_category %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url category_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% if object_list %}
+    <ul>
+        {% for object in object_list %}
+        {% include "taxonomy/category.html" %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include "elements/paginator.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% load breadcrumbs %}
+
+{% if fileinfo.parent %}
+{% with fileinfo=fileinfo.parent %}
+{% include "filebrowser/parent.html" %}
+{% endwith %}
+{% if fileinfo.parent.path != '' %}
+{% add_crumb fileinfo.parent.name fileinfo.parent.url %}
+{% endif %}
+{% endif %}

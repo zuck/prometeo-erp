@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans 'Register' %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Users' 'user_list' %}
+    {% add_crumb 'Register' %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans 'Register' %}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" action="{% url user_register %}">
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table form "['username', 'email', ['password1', 'password2'], ['first_name', 'last_name'], 'tos', 'pp']" %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Sign up' %}" /></span>
+</form>
+{% endblock %}

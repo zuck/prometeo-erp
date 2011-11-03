@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit category' %}{% else %}{% trans 'Add category' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Categories' 'category_list' %}
+    {% if object.pk %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit category' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add category' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form method="post" action="{% url category_edit object.slug %}">
+{% else %}
+<form method="post" action="{% url category_add %}">
+{% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}" /></span>
+</form>
+{% endblock %}

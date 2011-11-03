@@ -1,0 +1,28 @@
+{% extends "widgets/widget.html" %}
+
+{% load i18n %}
+
+{% block widget-content %}
+{% regroup object_list by start_date as tasks_by_date %}
+{% if tasks_by_date %}
+<dl class="tasks">
+    {% for date in tasks_by_date %}
+    <dt><h5>{{ date.grouper }}</h5></dt>
+    <dd>
+        <ul>
+        {% for item in date.list %}
+            <li{% if item.closed %}{% if item.expired %} class="delayed"{% else %} class="closed"{% endif %}{% else %}{% if item.expired %} class="expired"{% endif %}{% endif %}>
+                <strong>{{ item.start_time }}</strong>
+                <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </dd>
+    {% endfor %}
+</dl>
+{% else %}
+<p class="disabled">{% trans "No results found." %}</p>
+{% endif %}
+<p class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans "Add" %}</a></p>
+<p><a title="{% trans 'See all' %}" href="{% url task_list %}">{% trans "See all" %}</a></p>
+{% endblock %}

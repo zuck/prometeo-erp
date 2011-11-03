@@ -1,44 +1,55 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """This file is part of the prometeo project.
+
+This program is free software: you can redistribute it and/or modify it 
+under the terms of the GNU Lesser General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-__author__ = 'Emanuele Bertoldi <e.bertoldi@card-tech.it>'
-__copyright__ = 'Copyright (c) 2010 Card Tech srl'
-__version__ = '$Revision$'
+__author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
+__copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
+__version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('projects.views',
 
     # Projects.
-    (r'^$', 'project_index'),
-    (r'^add/$', 'project_add'),
-    (r'^view/(?P<id>\d+)/(?P<page>\w*)/*$', 'project_view'),
-    (r'^edit/(?P<id>\d+)/$', 'project_edit'),
-    (r'^delete/(?P<id>\d+)/$', 'project_delete'),
-
-    # Areas.
-    (r'^(?P<project_id>\d+)/areas/add/$', 'area_add'),
-    (r'^(?P<project_id>\d+)/areas/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'area_view'),
-    (r'^(?P<project_id>\d+)/areas/edit/(?P<id>\d+)/$', 'area_edit'),
-    (r'^(?P<project_id>\d+)/areas/delete/(?P<id>\d+)/$', 'area_delete'),
-    (r'^(?P<project_id>\d+)/areas/(?P<id>\d+)/tickets/add/$', 'area_ticket_add'),
-
+    url(r'^projects/$', view='projects.project_list', name='project_list'),
+    url(r'^projects/add/$', view='projects.project_add', name='project_add'),
+    url(r'^projects/(?P<slug>[-\w]+)/$', view='projects.project_detail', name='project_detail'),
+    url(r'^projects/(?P<slug>[-\w]+)/edit/$', view='projects.project_edit', name='project_edit'),
+    url(r'^projects/(?P<slug>[-\w]+)/delete/$', view='projects.project_delete', name='project_delete'),
+    url(r'^projects/(?P<slug>[-\w]+)/timeline/$', 'projects.project_detail', {'template_name': 'projects/project_timeline.html'}, 'project_timeline'),
+    
     # Milestones.
-    (r'^(?P<project_id>\d+)/milestones/add/$', 'milestone_add'),
-    (r'^(?P<project_id>\d+)/milestones/view/(?P<id>\d+)/(?P<page>\w*)/*$', 'milestone_view'),
-    (r'^(?P<project_id>\d+)/milestones/edit/(?P<id>\d+)/$', 'milestone_edit'),
-    (r'^(?P<project_id>\d+)/milestones/delete/(?P<id>\d+)/$', 'milestone_delete'),
-    (r'^(?P<project_id>\d+)/milestones/(?P<id>\d+)/tickets/add/$', 'milestone_ticket_add'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/$', view='milestones.milestone_list', name='milestone_list'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/add/$', view='milestones.milestone_add', name='milestone_add'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/$', view='milestones.milestone_detail', name='milestone_detail'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/edit/$', view='milestones.milestone_edit', name='milestone_edit'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/delete/$', view='milestones.milestone_delete', name='milestone_delete'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/close/$', view='milestones.milestone_close', name='milestone_close'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/reopen/$', view='milestones.milestone_reopen', name='milestone_reopen'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/tickets/$', view='milestones.milestone_tickets', name='milestone_tickets'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<milestone>[-\w]+)/tickets/add/$', view='tickets.ticket_add', name='milestone_ticket_add'),
+    url(r'^projects/(?P<project>[-\w]+)/milestones/(?P<slug>[-\w]+)/timeline/$', 'milestones.milestone_detail', {'template_name': 'projects/milestone_timeline.html'}, 'milestone_timeline'),
 
     # Tickets.
-    (r'^(?P<project_id>\d+)/tickets/add/$', 'ticket_add'),
-    (r'^(?P<project_id>\d+)/tickets/view/(?P<id>\d+)/$', 'ticket_view'),
-    (r'^(?P<project_id>\d+)/tickets/edit/(?P<id>\d+)/$', 'ticket_edit'),
-    (r'^(?P<project_id>\d+)/tickets/delete/(?P<id>\d+)/$', 'ticket_delete'),
-
-    # Members.
-    (r'^(?P<project_id>\d+)/members/add/$', 'member_add'),
-    (r'^(?P<project_id>\d+)/members/delete/(?P<id>\d+)/$', 'member_delete'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/$', view='tickets.ticket_list', name='ticket_list'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/add/$', view='tickets.ticket_add', name='ticket_add'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/$', view='tickets.ticket_detail', name='ticket_detail'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/edit/$', view='tickets.ticket_edit', name='ticket_edit'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/delete/$', view='tickets.ticket_delete', name='ticket_delete'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/tasks/$', 'tickets.ticket_detail', {'template_name': 'projects/ticket_tasks.html'}, 'ticket_tasks'),
+    url(r'^projects/(?P<project>[-\w]+)/tickets/(?P<id>\d+)/timeline/$', 'tickets.ticket_detail', {'template_name': 'projects/ticket_timeline.html'}, 'ticket_timeline'),
 )
