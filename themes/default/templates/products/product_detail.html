@@ -58,7 +58,7 @@
         {% block section %}
         <div class="details">
             <table class="properties">
-                {% property_table object "['ean13', ['uom', 'uos'], ['uom_to_uos', 'weight: Kg'], ['is_consumable', 'is_service'], ['sales_price', 'max_sales_discount:%'], 'description', 'categories', 'tags']" %}
+                {% property_table object "['ean13', ['uom', 'uos'], ['uom_to_uos', 'weight: Kg'], ['is_consumable', 'is_service'], ['sales_price', 'sales_currency'], 'max_sales_discount:%', 'description', 'categories', 'tags']" %}
             </table>
         </div>
         {% region object.dashboard %}

@@ -41,6 +41,7 @@ class Product(Commentable):
     is_consumable = models.BooleanField(default=False, verbose_name=_('consumable?'))
     is_service = models.BooleanField(default=False, verbose_name=_('service?'))
     sales_price = models.FloatField(default=0.0, verbose_name=_('sales price'))
+    sales_currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, verbose_name=_('sales currency'))
     max_sales_discount = models.FloatField(default=0.0, help_text=_('Max discount percentage (%)'), verbose_name=_('max sales discount'))
     suppliers = models.ManyToManyField('partners.Partner', through='products.Supply', null=True, blank=True, verbose_name=_('suppliers'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
@@ -74,6 +75,7 @@ class ProductEntry(models.Model):
     product = models.ForeignKey(Product, verbose_name=_('product'))
     quantity = models.FloatField(default=1.0, verbose_name=_('quantity'))
     unit_value = models.FloatField(default=1.0, verbose_name=_('unit value'))
+    unit_currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, verbose_name=_('unit currency'))
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
 
     class Meta:
@@ -95,6 +97,7 @@ class Supply(models.Model):
     name = models.CharField(max_length=255, blank=True, verbose_name=_('ref. name'))
     code = models.CharField(max_length=255, blank=True, verbose_name=_('ref. code'))
     purchase_price = models.FloatField(default=0.0, verbose_name=_('purchase price'))
+    purchase_currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, verbose_name=_('purchase currency'))
     max_purchase_discount = models.FloatField(default=0.0, help_text=_('Max discount percentage (%)'), verbose_name=_('max purchase discount'))
     lead_time = models.PositiveIntegerField(default=1, verbose_name=_('lead time'))
     minimal_quantity = models.FloatField(default=1.0, verbose_name=_('minimal quantity'))

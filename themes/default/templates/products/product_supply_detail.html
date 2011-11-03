@@ -42,7 +42,7 @@
 {% include 'elements/navigator.html' %}
 <div class="details">
     <table class="properties">
-        {% property_table object "[['name', 'code'], ['supplier', 'supply_method'], ['purchase_price', 'max_purchase_discount:%'], ['minimal_quantity', 'lead_time'], 'payment_terms', ['warranty_period', 'end_of_life']]" %}
+        {% property_table object "[['name', 'code'], ['supplier', 'supply_method'], ['purchase_price', 'purchase_currency'], 'max_purchase_discount', ['minimal_quantity', 'lead_time'], 'payment_terms', ['warranty_period', 'end_of_life']]" %}
     </table>
 </div>
 {% endblock %}

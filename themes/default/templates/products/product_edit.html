@@ -38,7 +38,7 @@
 {% endif %}
     {% csrf_token %}
     <table class="properties">
-        {% property_table form "['name', ['code', 'ean13'], ['uom', 'uos'], ['uom_to_uos', 'weight'], ['is_consumable', 'is_service'], ['sales_price', 'max_sales_discount'], 'description', 'categories', 'tags', 'allow_comments']" %}
+        {% property_table form "['name', ['code', 'ean13'], ['uom', 'uos'], ['uom_to_uos', 'weight'], ['is_consumable', 'is_service'], ['sales_price', 'sales_currency'], 'max_sales_discount', 'description', 'categories', 'tags', 'allow_comments']" %}
     </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>
