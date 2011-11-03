@@ -110,4 +110,4 @@ class HardCopy(models.Model):
         return self.file.url
 
     def get_delete_url(self):
-        return reverse('file_delete', args=[self.get_absolute_url()])
+        return reverse('file_delete', args=[self.get_absolute_url().lstrip('/')])
