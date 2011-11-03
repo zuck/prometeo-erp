@@ -1,0 +1,32 @@
+{% extends "accounting/salesinvoice_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load paginator %}
+{% load details %}
+
+{% block meta_title %}{% trans "Hard copies" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Sales invoices' 'salesinvoice_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Hard copies' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Hard copies" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.documents.add_hard_copy %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url salesinvoice_add_hardcopy object.object_id %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object.hardcopy_set.all field_names %}
+    {% include "elements/paginator.html" %}
+</div>
+{% endblock %}

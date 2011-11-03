@@ -1,0 +1,29 @@
+{% extends "accounting/bankaccount_list.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Sales invoices" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Sales invoices' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Sales invoices" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.accounting.add_salesinvoice %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url salesinvoice_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}
