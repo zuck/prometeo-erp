@@ -105,21 +105,21 @@ def install(sender, created_models, **kwargs):
     deliverynote_details_link, is_new = Link.objects.get_or_create(
         title=_("Details"),
         slug="delivery-note-details",
-        url="{% url deliverynote_detail object.pk %}",
+        url="{% url deliverynote_detail object.object_id %}",
         menu=deliverynote_menu
     )
 
     deliverynote_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
         slug="delivery-note-hard-copies",
-        url="{% url deliverynote_hardcopies object.pk %}",
+        url="{% url deliverynote_hardcopies object.object_id %}",
         menu=deliverynote_menu
     )
 
     deliverynote_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="delivery-note-timeline",
-        url="{% url deliverynote_timeline object.pk %}",
+        url="{% url deliverynote_timeline object.object_id %}",
         menu=deliverynote_menu
     )
     
