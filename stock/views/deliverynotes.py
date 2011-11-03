@@ -27,7 +27,6 @@ from django.views.generic.simple import redirect_to
 from django.views.generic import list_detail, create_update
 from django.template import RequestContext
 from django.contrib import messages
-from django.contrib.contenttypes.models import ContentType
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
@@ -54,7 +53,7 @@ def deliverynote_list(request, page=0, paginate_by=10, **kwargs):
     """
     return filtered_list_detail(
         request,
-        Document.objects.filter(content_type=ContentType.objects.get_for_model(DeliveryNote)),
+        Document.objects.get_for_content(DeliveryNote),
         fields=['code', 'author', 'created'],
         page=page,
         paginate_by=paginate_by,
@@ -92,11 +91,11 @@ def deliverynote_add(request, **kwargs):
 def deliverynote_detail(request, id, page=None, **kwargs):
     """Shows delivery note details.
     """
-    object_list = Document.objects.filter(content_type=ContentType.objects.get_for_model(DeliveryNote))
+    object_list = Document.objects.get_for_content(DeliveryNote)
 
     return list_detail.object_detail(
         request,
-        object_id=Document.objects.get(object_id=id).pk,
+        object_id=object_list.get(object_id=id).pk,
         queryset=object_list,
         extra_context={
             'object_list': object_list,
@@ -109,7 +108,7 @@ def deliverynote_detail(request, id, page=None, **kwargs):
 def deliverynote_edit(request, id, **kwargs):
     """Edits a delivery note.
     """
-    doc = get_object_or_404(Document, content_type=ContentType.objects.get_for_model(DeliveryNote), object_id=id)
+    doc = get_object_or_404(Document.objects.get_for_content(DeliveryNote), object_id=id)
     deliverynote = doc.content_object
       
     if request.method == 'POST':
@@ -137,7 +136,7 @@ def deliverynote_delete(request, id, **kwargs):
     return create_update.delete_object(
         request,
         model=Document,
-        object_id=Document.objects.get(object_id=id).pk,
+        object_id=Document.objects.get_for_content(DeliveryNote).get(object_id=id).pk,
         post_delete_redirect=reverse('deliverynote_list'),
         template_name='stock/deliverynote_delete.html',
         **kwargs
@@ -147,16 +146,16 @@ def deliverynote_delete(request, id, **kwargs):
 def deliverynote_hardcopies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows delivery note hard copies.
     """
-    return hardcopy_list(request, Document.objects.get(object_id=id).pk, page, paginate_by, **kwargs)
+    return hardcopy_list(request, Document.objects.get_for_content(DeliveryNote).get(object_id=id).pk, page, paginate_by, **kwargs)
 
 @permission_required('stock.change_deliverynote', _get_deliverynote)     
 def deliverynote_add_hardcopy(request, id, **kwargs):
     """Adds an hard copy to the given document.
     """
-    return hardcopy_add(request, Document.objects.get(object_id=id).pk, **kwargs)
+    return hardcopy_add(request, Document.objects.get_for_content(DeliveryNote).get(object_id=id).pk, **kwargs)
 
 @permission_required('stock.change_deliverynote', _get_deliverynote)     
 def deliverynote_delete_hardcopy(request, note_id, id, **kwargs):
     """Deletes an hard copy of the given document.
     """
-    return hardcopy_delete(request, Document.objects.get(object_id=note_id).pk, id, **kwargs)
+    return hardcopy_delete(request, Document.objects.get_for_content(DeliveryNote).get(object_id=note_id).pk, id, **kwargs)
