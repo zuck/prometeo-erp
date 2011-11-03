@@ -32,6 +32,8 @@ from django.conf import settings
 
 from prometeo.core.models import Commentable
 
+from managers import *
+
 def _get_upload_to(instance, filename):
     return os.path.join(
         'documents',
@@ -56,6 +58,8 @@ class Document(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+
+    objects = DocumentManager()
 
     class Meta:
         ordering = ('owner', '-created')
