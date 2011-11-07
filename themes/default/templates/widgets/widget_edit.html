@@ -14,7 +14,7 @@
     {% add_crumb user user.get_absolute_url %}
     {% add_crumb 'Widgets' '/' %}
     {% if object.pk %}
-    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb object.title object.get_absolute_url %}
     {% add_crumb 'Edit' %}
     {% else %}
     {% add_crumb 'Add' %}
@@ -24,7 +24,7 @@
 {% block title %}
 <div class="title">
     {% if object.pk %}
-    <h1>{{ object }}</h1>
+    <h1>{{ object.title }}</h1>
     <h2>{% trans 'Edit widget' %}</h2>
     {% else %}
     <h1>{% trans 'Add widget' %}</h1>

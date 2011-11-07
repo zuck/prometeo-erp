@@ -33,7 +33,7 @@ class RegionAdmin(admin.ModelAdmin):
 
 class WidgetAdmin(admin.ModelAdmin):
     search_fields = ('title',)
-    list_display  = ('title', 'description')
+    list_display  = ('__unicode__', 'description')
     prepopulated_fields = {'slug': ('title',)}
     
 admin.site.register(Region, RegionAdmin)

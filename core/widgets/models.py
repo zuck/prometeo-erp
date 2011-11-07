@@ -53,12 +53,12 @@ class Widget(models.Model):
     sort_order = models.PositiveIntegerField(_('sort order'), default=0)
 
     class Meta:
-        ordering = ('sort_order', 'title',)
+        ordering = ('region', 'sort_order', 'title',)
         verbose_name = _('widget')
         verbose_name_plural = _('widgets')
 
     def __unicode__(self):
-        return self.title
+        return u"%s | %s" % (self.region, self.title)
 
     @models.permalink
     def get_edit_url(self):
