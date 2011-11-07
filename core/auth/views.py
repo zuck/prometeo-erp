@@ -22,7 +22,7 @@ __version__ = '0.0.5'
 
 from django import http
 from django.shortcuts import render_to_response, get_object_or_404
-from django.utils.translation import ugettext_lazy as _, check_for_language
+from django.utils.translation import ugettext_lazy as _, check_for_language, activate
 from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
@@ -61,6 +61,7 @@ def set_language(request):
             request.session['django_language'] = lang_code
         else:
             response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    activate(lang_code)
     return response
 
 def user_logged(request):
