@@ -35,6 +35,7 @@ class MyUser(User):
 
     def _full_name(self):
         return self.get_full_name()
+    _full_name.short_description = _('full name')
     full_name = property(_full_name)
     
     @models.permalink

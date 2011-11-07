@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:38+0100\n"
+"POT-Creation-Date: 2011-11-07 23:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,33 +38,38 @@ msgstr "Le due password non combaciano."
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
-msgstr "Questo indirizzo email è già in uso. Prego specificarne uno differente."
+msgstr ""
+"Questo indirizzo email è già in uso. Prego specificarne uno differente."
 
-#: auth/models.py:52
+#: auth/models.py:38
+msgid "full name"
+msgstr "nome completo"
+
+#: auth/models.py:53
 msgid "language"
 msgstr "lingua"
 
-#: auth/models.py:53
+#: auth/models.py:54
 msgid "timezone"
 msgstr "fuso orario"
 
-#: auth/models.py:54
+#: auth/models.py:55
 msgid "dashboard"
 msgstr "bacheca"
 
-#: auth/models.py:55
+#: auth/models.py:56
 msgid "bookmarks"
 msgstr "segnalibri"
 
-#: auth/models.py:61
+#: auth/models.py:62
 msgid "permission"
 msgstr "permesso"
 
-#: auth/models.py:62
+#: auth/models.py:63
 msgid "users"
 msgstr "utenti"
 
-#: auth/models.py:63
+#: auth/models.py:64
 msgid "groups"
 msgstr "gruppi"
 
@@ -306,8 +311,9 @@ msgstr "Aggiungi"
 msgid ""
 "We apologize, but your form has expired. Please continue filling out the "
 "form from this page."
-msgstr "Spiacenti, ma il tuo form è scaduto. Prego riempire nuovamente il form "
-"da questa pagina."
+msgstr ""
+"Spiacenti, ma il tuo form è scaduto. Prego riempire nuovamente il form da "
+"questa pagina."
 
 #: menus/models.py:32 menus/models.py:47 notifications/models.py:42
 #: streams/models.py:60 taxonomy/models.py:53 taxonomy/models.py:83
@@ -374,8 +380,7 @@ msgstr "Il collegamento è stato salvato"
 msgid "The link has been updated."
 msgstr "Il collegamento è stato aggiornato"
 
-#: menus/management/__init__.py:35
-#: menus/management/__init__.py:40
+#: menus/management/__init__.py:35 menus/management/__init__.py:40
 msgid "Main menu"
 msgstr "Menu principale"
 
@@ -447,14 +452,16 @@ msgstr "Non puoi leggere i dettagli di questa notifica"
 msgid ""
 "I have read and agree to the <a href=\"/terms-service\" target=\"_blank"
 "\">Terms of Service</a>"
-msgstr "Ho letto è accetto i <a href=\"/terms-service\" target=\"_blank"
-"\">Termini del Servizio</a>"
+msgstr ""
+"Ho letto è accetto i <a href=\"/terms-service\" target=\"_blank\">Termini "
+"del Servizio</a>"
 
 #: registration/forms.py:35
 msgid ""
 "I have read and agree to the <a href=\"/privacy\" target=\"_blank\">Privacy "
 "Policy</a>"
-msgstr "Ho letto è accetto le <a href=\"/terms-service\" target=\"_blank"
+msgstr ""
+"Ho letto è accetto le <a href=\"/terms-service\" target=\"_blank"
 "\">Condizioni sulla Privacy</a>"
 
 #: registration/models.py:29
@@ -481,8 +488,9 @@ msgstr "Sei già registrato"
 msgid ""
 "An email has been sent with an activation key. Please check your mail to "
 "complete the registration."
-msgstr "Un'email contenente la chiave di attivazione è stata spedita. Prego controlla la tua casella "
-" per completare la registrazione."
+msgstr ""
+"Un'email contenente la chiave di attivazione è stata spedita. Prego "
+"controlla la tua casella  per completare la registrazione."
 
 #: registration/views.py:64
 msgid "This account is already active."

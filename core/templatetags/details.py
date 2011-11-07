@@ -28,7 +28,7 @@ from django import template
 from django.template.loader import render_to_string
 from django.template import Node, NodeList, Variable, Library
 from django.template import TemplateSyntaxError, VariableDoesNotExist
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
 from prometeo.core.templatetags import parse_args_kwargs
@@ -67,7 +67,8 @@ def field_template(name, field, form_or_model, attrs={}, suffix=""):
             td_attrs['class'] = css_classes
 
     else:
-        label = u'%s' % pretty_name(name)
+        name = _(pretty_name(name).lower())
+        label = u'%s' % name.capitalize()
         if callable(field):
             value = value_to_string(field())
         else:
@@ -224,6 +225,8 @@ def get_object_field(name, fields, form_or_instance, attrs={}):
 
     elif hasattr(form_or_instance, name):
         field = getattr(form_or_instance, name)
+        if hasattr(field, 'short_description'):
+            name = field.short_description
         return field_template(name, field, form_or_instance, attrs, suffix)
 
     return ''
