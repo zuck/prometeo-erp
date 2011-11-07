@@ -36,7 +36,11 @@ from forms import *
 
 def _get_dashboard(request, *args, **kwargs):
     dashboard = kwargs.get('dashboard', None)
-    return get_object_or_404(Region, slug=dashboard)
+    if not dashboard:
+        dashboard = request.user.get_profile().dashboard
+    else:
+        dashboard = get_object_or_404(slug=dashboard)
+    return dashboard
 
 def _get_widget(request, *args, **kwargs):
     slug = kwargs.get('slug', None)
@@ -46,11 +50,8 @@ def _get_widget(request, *args, **kwargs):
 def widget_add(request, dashboard=None, **kwargs):
     """Adds a new widget for the current user's dashboard.
     """
-    if not dashboard:
-        dashboard = request.user.get_profile().dashboard
-    else:
-        dashboard = get_object_or_404(slug=dashboard)
-    widget = Widget(region=dashboard, sort_order=dashboard.widgets.count(), editable=True)
+    region = _get_dashboard(request, dashboard, **kwargs)
+    widget = Widget(region=region, sort_order=region.widgets.count(), editable=True)
     if request.method == 'POST':
         form = WidgetForm(request.POST, instance=widget)
         if form.is_valid():
