@@ -141,12 +141,12 @@ class TimesheetEntry(models.Model):
         verbose_name_plural = _('timesheet entries')
 
     def __unicode__(self):
-        return _('%s ~ %s on %s of %s') % (
-            field_to_string(self._meta.get_field_by_name('start_time')[0], self),
-            field_to_string(self._meta.get_field_by_name('end_time')[0], self),
-            field_to_string(self.timesheet._meta.get_field_by_name('date')[0], self.timesheet),
-            self.timesheet.user
-        )
+        return _('%(start_time)s ~ %(end_time)s on %(date)s of %(user)s') % {
+            'start_time': field_to_string(self._meta.get_field_by_name('start_time')[0], self),
+            'end_time': field_to_string(self._meta.get_field_by_name('end_time')[0], self),
+            'date': field_to_string(self.timesheet._meta.get_field_by_name('date')[0], self.timesheet),
+            'user': self.timesheet.user
+        }
 
     def working_hours(self):
         start = datetime.combine(self.timesheet.date, self.start_time)
