@@ -436,6 +436,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     float: left;
     width: 50%;
     background: #f2f2f2 url(images/bg_progressbar_right.jpg) no-repeat right center;
+    margin-right: 100%;
 }
 
 .progressbar p { display: none; }
