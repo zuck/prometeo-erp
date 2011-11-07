@@ -124,6 +124,7 @@ form .submit {
 }
 
 form .help_text {
+    clear: both;
     display: block;
     color: #c0c0c0;
     font-style: italic;
@@ -155,14 +156,16 @@ form .add a { margin-top: 4px; }
 form .add .multiple a { margin-top: 0; }
 
 form .json-key {
+    clear: left;
     float: left;
-    width: 100px; 
+    width: 100px;
     margin-right: 0;
 }
 
 form .json-val {
     clear: none;
-    width: 160px; 
+    float: left;
+    width: 160px;
     margin-right: 0;
 }
 
