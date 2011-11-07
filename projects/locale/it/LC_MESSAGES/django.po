@@ -1,0 +1,232 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-07 17:40+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:39 models.py:86 models.py:150
+msgid "title"
+msgstr "titolo"
+
+#: models.py:40 models.py:87
+msgid "slug"
+msgstr ""
+
+#: models.py:41 models.py:89 models.py:151
+msgid "description"
+msgstr "descrizione"
+
+#: models.py:42 models.py:90 models.py:152
+msgid "created by"
+msgstr "creato da"
+
+#: models.py:43
+msgid "project manager"
+msgstr ""
+
+#: models.py:44 models.py:156
+msgid "status"
+msgstr "stato"
+
+#: models.py:45 models.py:92 models.py:158
+msgid "created on"
+msgstr "creato il"
+
+#: models.py:46 models.py:94 models.py:160
+msgid "closed on"
+msgstr "chiuso il"
+
+#: models.py:47 models.py:95 models.py:161
+msgid "categories"
+msgstr "categorie"
+
+#: models.py:48 models.py:96 models.py:162
+msgid "tags"
+msgstr ""
+
+#: models.py:49 models.py:97
+msgid "dashboard"
+msgstr "bacheca"
+
+#: models.py:50 models.py:98 models.py:164
+msgid "stream"
+msgstr "cronologia"
+
+#: models.py:88 models.py:149
+msgid "project"
+msgstr "prodotto"
+
+#: models.py:91
+msgid "manager"
+msgstr ""
+
+#: models.py:93
+msgid "deadline"
+msgstr "scadenza"
+
+#: models.py:153
+msgid "milestone"
+msgstr ""
+
+#: models.py:154
+msgid "type"
+msgstr "tiplogia"
+
+#: models.py:155
+msgid "urgency"
+msgstr "urgenza"
+
+#: models.py:157
+msgid "assigned to"
+msgstr "assegnato a"
+
+#: models.py:159
+msgid "modified on"
+msgstr "modificato il"
+
+#: models.py:163
+msgid "related tasks"
+msgstr "attività associate"
+
+#: signals.py:114
+#, python-format
+msgid "%(class)s %(name)s created by %(author)s"
+msgstr "%(class)s %(name)s creato da %(author)s"
+
+#: signals.py:135
+#, python-format
+msgid "%(class)s %(name)s changed"
+msgstr "%(class)s %(name)s modificato"
+
+#: signals.py:153
+#, python-format
+msgid "%(class)s %(name)s deleted"
+msgstr "%(class)s %(name)s eliminato"
+
+#: signals.py:172
+#, python-format
+msgid "%(author)s commented %(class)s %(name)s"
+msgstr "%(author)s ha commentato %(class)s %(name)s"
+
+#: signals.py:193
+msgid "comment deleted"
+msgstr "commento eliminato"
+
+#: management/__init__.py:36
+msgid "Main menu for projects"
+msgstr "Menu principale per i progetti"
+
+#: management/__init__.py:41
+msgid "Main menu for milestones"
+msgstr "Menu principale per le milestones"
+
+#: management/__init__.py:46
+msgid "Main menu for tickets"
+msgstr "Menu principale per i tickets"
+
+#: management/__init__.py:51
+msgid "Projects"
+msgstr "Progetti"
+
+#: management/__init__.py:53
+msgid "Project management"
+msgstr "Gestione progetti"
+
+#: management/__init__.py:59 management/__init__.py:87
+msgid "Dashboard"
+msgstr "Bacheca"
+
+#: management/__init__.py:66
+msgid "Milestones"
+msgstr ""
+
+#: management/__init__.py:73 management/__init__.py:94
+msgid "Tickets"
+msgstr ""
+
+#: management/__init__.py:80 management/__init__.py:101
+#: management/__init__.py:122
+msgid "Timeline"
+msgstr "Cronologia"
+
+#: management/__init__.py:108
+msgid "Details"
+msgstr "Dettagli"
+
+#: management/__init__.py:115
+msgid "Tasks"
+msgstr "Attività"
+
+#: management/__init__.py:130
+msgid "Project created"
+msgstr "Creazione progetto"
+
+#: management/__init__.py:135
+msgid "Project changed"
+msgstr "Modifica progetto"
+
+#: management/__init__.py:140
+msgid "Project deleted"
+msgstr "Eliminazione progetto"
+
+#: management/__init__.py:145
+msgid "Milestone created"
+msgstr "Creazione milestone"
+
+#: management/__init__.py:150
+msgid "Milestone changed"
+msgstr "Modifica milestone"
+
+#: management/__init__.py:155
+msgid "Milestone deleted"
+msgstr "Eliminazione milestone"
+
+#: management/__init__.py:160
+msgid "Ticket created"
+msgstr "Creazione ticket"
+
+#: management/__init__.py:165
+msgid "Ticket changed"
+msgstr "Modifica ticket"
+
+#: management/__init__.py:170
+msgid "Ticket deleted"
+msgstr "Eliminazione ticket"
+
+#: views/milestones.py:80 views/milestones.py:97
+msgid "The milestone has been saved."
+msgstr "La milestone è stata salvata."
+
+#: views/milestones.py:127
+msgid "The milestone has been closed."
+msgstr "La milestone è stata chiusa."
+
+#: views/milestones.py:140
+msgid "The milestone has been reopened."
+msgstr "La milestone è stata riaperta."
+
+#: views/projects.py:73 views/projects.py:89
+msgid "The project has been saved."
+msgstr "Il progetto è stato salvato."
+
+#: views/tickets.py:93
+msgid "Your ticket has been registered."
+msgstr "Il tuo ticket è stato registrato."
+
+#: views/tickets.py:116
+msgid "The ticket has been updated."
+msgstr "Il ticket è stato aggiornato."

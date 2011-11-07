@@ -79,7 +79,7 @@ class SubscriptionsForm(forms.Form):
             name = signature.slug
             is_subscriber = (Subscription.objects.filter(signature=signature, user=self.user).count() > 0)
             send_email = (Subscription.objects.filter(signature=signature, user=self.user, send_email=True).count() > 0)
-            field = SubscriptionField(label=signature.title, initial={'subscribe': is_subscriber, 'email': send_email})
+            field = SubscriptionField(label=_(signature.title), initial={'subscribe': is_subscriber, 'email': send_email})
             self.fields[name] = field
             
     def save(self):

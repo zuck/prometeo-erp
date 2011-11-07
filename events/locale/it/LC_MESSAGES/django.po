@@ -1,0 +1,180 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-07 17:39+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: forms.py:35
+msgid "Select an .ics file"
+msgstr "Selezionare un file .ics"
+
+#: models.py:37
+msgid "title"
+msgstr "titolo"
+
+#: models.py:38
+msgid "description"
+msgstr "descrizione"
+
+#: models.py:39
+msgid "start date"
+msgstr "data di inizio"
+
+#: models.py:40
+msgid "end date"
+msgstr "data di fine"
+
+#: models.py:41
+msgid "location"
+msgstr "località"
+
+#: models.py:42
+msgid "status"
+msgstr "stato"
+
+#: models.py:43
+msgid "attendees"
+msgstr "partecipanti"
+
+#: models.py:44
+msgid "public?"
+msgstr "pubblico?"
+
+#: models.py:45
+msgid "created on"
+msgstr "creato il"
+
+#: models.py:46
+msgid "created by"
+msgstr "creato da"
+
+#: models.py:47
+msgid "categories"
+msgstr "categorie"
+
+#: models.py:48
+msgid "tags"
+msgstr ""
+
+#: models.py:49
+msgid "stream"
+msgstr "cronologia"
+
+#: models.py:56
+msgid "event"
+msgstr "evento"
+
+#: models.py:57
+msgid "events"
+msgstr "eventi"
+
+#: signals.py:87
+#, python-format
+msgid "%(class)s %(name)s created by %(author)s"
+msgstr "%(class)s %(name)s creato da %(author)s"
+
+#: signals.py:108
+#, python-format
+msgid "%(class)s %(name)s changed"
+msgstr "%(class)s %(name)s modificato"
+
+#: signals.py:126
+#, python-format
+msgid "%(class)s %(name)s deleted"
+msgstr "%(class)s %(name)s eliminato"
+
+#: signals.py:145
+#, python-format
+msgid "%(author)s commented %(class)s %(name)s"
+msgstr "%(author)s ha commentato %(class)s %(name)s"
+
+#: signals.py:166
+msgid "comment deleted"
+msgstr "commento eliminato"
+
+#: views.py:214 views.py:231
+msgid "The event has been saved."
+msgstr "L'evento è stato salvato."
+
+#: views.py:267
+msgid "Empty event"
+msgstr "Evento vuoto"
+
+#: views.py:275
+#, python-format
+msgid "Event \"%s\" has been imported."
+msgstr "L'evento \"%s\" è stato importato."
+
+#: views.py:278
+msgid "Sorry, an error has occurred during importing of events."
+msgstr "Spiacenti, si è verificato un errore durante l'importazione degli eventi."
+
+#: management/__init__.py:36
+msgid "Main menu for events"
+msgstr "Menu principale per gli eventi"
+
+#: management/__init__.py:41
+msgid "Main menu for event"
+msgstr "Menu principale per un evento"
+
+#: management/__init__.py:46
+msgid "Events"
+msgstr "Eventi"
+
+#: management/__init__.py:48
+msgid "Event planning"
+msgstr "Pianificazione eventi"
+
+#: management/__init__.py:54
+msgid "Agenda"
+msgstr ""
+
+#: management/__init__.py:61
+msgid "Day"
+msgstr "Giorno"
+
+#: management/__init__.py:68
+msgid "Week"
+msgstr "Settimana"
+
+#: management/__init__.py:75
+msgid "Month"
+msgstr "Mese"
+
+#: management/__init__.py:82
+msgid "Year"
+msgstr "Anno"
+
+#: management/__init__.py:89
+msgid "Dashboard"
+msgstr "Bacheca"
+
+#: management/__init__.py:96
+msgid "Timeline"
+msgstr "Cronologia"
+
+#: management/__init__.py:104
+msgid "Event created"
+msgstr "Creazione evento"
+
+#: management/__init__.py:109
+msgid "Event changed"
+msgstr "Modifica evento"
+
+#: management/__init__.py:114
+msgid "Event deleted"
+msgstr "Eliminazione evento"

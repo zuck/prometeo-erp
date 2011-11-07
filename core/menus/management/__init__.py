@@ -37,7 +37,7 @@ def install(sender, **kwargs):
     
     # Widgets.
     main_menu_widget, is_new = Widget.objects.get_or_create(
-        title=_("Main Menu"),
+        title=_("Main menu"),
         slug="main-menu",
         description=_("The main menu"),
         source="prometeo.core.widgets.base.dummy",

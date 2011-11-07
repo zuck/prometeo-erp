@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-07 17:39+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:30
+msgid "bank name"
+msgstr "nome banca"
+
+#: models.py:31
+msgid "BIC"
+msgstr ""
+
+#: models.py:32
+msgid "IBAN"
+msgstr ""
+
+#: models.py:33
+msgid "owner"
+msgstr "properietario"
+
+#: models.py:36 models.py:65
+msgid "bank account"
+msgstr "conto bancario"
+
+#: models.py:37
+msgid "bank accounts"
+msgstr "conti bancari"
+
+#: models.py:57
+msgid "Keep it blank to use the same as invoicing"
+msgstr "Lasciare bianco per usare lo stesso della fatturazione"
+
+#: models.py:57
+msgid "ship to"
+msgstr "spedito a"
+
+#: models.py:58
+msgid "bill to"
+msgstr "fatturato a"
+
+#: models.py:59
+msgid "order ref. no."
+msgstr "rif. ordine #"
+
+#: models.py:60
+msgid "order ref. date"
+msgstr "rif. ordine data"
+
+#: models.py:61
+msgid "terms of shipping"
+msgstr "termini di spedizione"
+
+#: models.py:62
+msgid "amount"
+msgstr "importo"
+
+#: models.py:63
+msgid "terms of payment"
+msgstr "termini di pagamento"
+
+#: models.py:64
+msgid "due date"
+msgstr "entro il"
+
+#: models.py:66
+msgid "entries"
+msgstr "voci"
+
+#: models.py:67
+msgid "notes"
+msgstr "note"
+
+#: models.py:70
+msgid "sales invoice"
+msgstr "fattura di vendita"
+
+#: models.py:71
+msgid "sales invoices"
+msgstr "fatture di vendita"
+
+#: models.py:74
+msgid "INV"
+msgstr "FAT"
+
+#: management/__init__.py:38
+msgid "Main menu for accounting management"
+msgstr "Menu principale per gestione contabilità"
+
+#: management/__init__.py:43
+msgid "Main menu for sales invoice model"
+msgstr "Menu principale per le fatture di vendita"
+
+#: management/__init__.py:48
+msgid "Accounting"
+msgstr "Contabilità"
+
+#: management/__init__.py:50
+msgid "Accounting management"
+msgstr "Gestione contabilità"
+
+#: management/__init__.py:56
+msgid "Bank accounts"
+msgstr "Conti bancari"
+
+#: management/__init__.py:58
+msgid "Bank accounts management"
+msgstr "Gestione conti bancari"
+
+#: management/__init__.py:64
+msgid "Sales invoices"
+msgstr "Fatture di vendita"
+
+#: management/__init__.py:66
+msgid "Sales invoices management"
+msgstr "Gestione fatture di vendita"
+
+#: management/__init__.py:72
+msgid "Details"
+msgstr "Dettagli"
+
+#: management/__init__.py:79
+msgid "Hard copies"
+msgstr "Copie cartacee"
+
+#: management/__init__.py:86
+msgid "Timeline"
+msgstr "Cronologia"
+
+#: management/__init__.py:94
+msgid "Bank account created"
+msgstr "Creazione conto bancario"
+
+#: management/__init__.py:99
+msgid "Bank account deleted"
+msgstr "Eliminazione conto bancario"
+
+#: management/__init__.py:104
+msgid "Sales invoice created"
+msgstr "Creazione fattura di vendita"
+
+#: management/__init__.py:109
+msgid "Sales invoice changed"
+msgstr "Modifica fattura di vendita"
+
+#: management/__init__.py:114
+msgid "Sales invoice deleted"
+msgstr "Eliminazione fattura di vendita"
+
+#: views/salesinvoices.py:81 views/salesinvoices.py:123
+msgid "The sales invoice has been saved."
+msgstr "La fattura di vendita è stata eliminata."

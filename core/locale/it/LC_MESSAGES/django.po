@@ -1,0 +1,653 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-07 17:38+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: auth/forms.py:35
+msgid "Password"
+msgstr ""
+
+#: auth/forms.py:36
+msgid "Password confirmation"
+msgstr "Conferma password"
+
+#: auth/forms.py:54 auth/forms.py:67
+msgid "This field is required."
+msgstr "Questo campo è richiesto."
+
+#: auth/forms.py:64
+msgid "The two password fields didn't match."
+msgstr "Le due password non combaciano."
+
+#: auth/forms.py:75
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr "Questo indirizzo email è già in uso. Prego specificarne uno differente."
+
+#: auth/models.py:52
+msgid "language"
+msgstr "lingua"
+
+#: auth/models.py:53
+msgid "timezone"
+msgstr "fuso orario"
+
+#: auth/models.py:54
+msgid "dashboard"
+msgstr "bacheca"
+
+#: auth/models.py:55
+msgid "bookmarks"
+msgstr "segnalibri"
+
+#: auth/models.py:61
+msgid "permission"
+msgstr "permesso"
+
+#: auth/models.py:62
+msgid "users"
+msgstr "utenti"
+
+#: auth/models.py:63
+msgid "groups"
+msgstr "gruppi"
+
+#: auth/views.py:111 notifications/views.py:58
+msgid "The user's profile has been saved."
+msgstr "Il profilo utente è stato salvato."
+
+#: auth/views.py:142
+msgid "The user's profile has been updated."
+msgstr "Il profilo utente è stato aggiornato."
+
+#: auth/management/__init__.py:40
+msgid "User area for anonymous users"
+msgstr "Area utente per utenti anonimi"
+
+#: auth/management/__init__.py:45
+msgid "User area for logged users"
+msgstr "Area utente per utenti autenticati"
+
+#: auth/management/__init__.py:50
+msgid "Main menu for user profiles"
+msgstr "Menu principale per profili utente"
+
+#: auth/management/__init__.py:55 widgets/signals.py:43
+msgid "Dashboard"
+msgstr "Bacheca"
+
+#: auth/management/__init__.py:57
+msgid "Personal dashboard"
+msgstr "Bacheca personale"
+
+#: auth/management/__init__.py:63 auth/management/__init__.py:130
+msgid "Users"
+msgstr "Utenti"
+
+#: auth/management/__init__.py:65
+msgid "Users management"
+msgstr "Gestione utenti"
+
+#: auth/management/__init__.py:71 auth/management/__init__.py:73
+msgid "Login"
+msgstr ""
+
+#: auth/management/__init__.py:80
+msgid "Administration"
+msgstr "Amministrazione"
+
+#: auth/management/__init__.py:82
+msgid "Administration panel"
+msgstr "Pannello di amministrazione"
+
+#: auth/management/__init__.py:89 auth/management/__init__.py:91
+msgid "Logout"
+msgstr ""
+
+#: auth/management/__init__.py:97
+msgid "Details"
+msgstr "Dettagli"
+
+#: auth/management/__init__.py:104 menus/signals.py:35
+msgid "Bookmarks"
+msgstr "Segnalibri"
+
+#: auth/management/__init__.py:111
+msgid "Notifications"
+msgstr "Notifiche"
+
+#: auth/management/__init__.py:119
+msgid "Comment posted"
+msgstr "Commento pubblicato"
+
+#: auth/management/__init__.py:124
+msgid "Comment deleted"
+msgstr "Commento eliminato"
+
+#: auth/management/__init__.py:135
+msgid "User profile"
+msgstr "Profilo utente"
+
+#: auth/management/__init__.py:137
+msgid "A summary of the user profile"
+msgstr "Un riepilogo del profilo utente"
+
+#: filebrowser/forms.py:64 filebrowser/forms.py:113 filebrowser/forms.py:132
+msgid "The name already exists."
+msgstr "Questo nome è già in uso."
+
+#: filebrowser/forms.py:83
+msgid "Can not write to this folder."
+msgstr "Non è possibile scrivere in questa cartella."
+
+#: filebrowser/forms.py:88
+msgid "The name already exists in this folder."
+msgstr "Il nome è già presente in questa cartella."
+
+#: filebrowser/forms.py:108
+msgid "Can not write to the given folder."
+msgstr "Non è possibile scrivere in questa cartella."
+
+#: filebrowser/forms.py:137
+msgid "The file exceeds the allowed upload size."
+msgstr "Il file eccede la massima dimensione consentita per il caricamento."
+
+#: filebrowser/views.py:76
+#, python-format
+msgid "The folder \"%(name)s\" has been created."
+msgstr "La cartella \"%(name)s\" è stata creata."
+
+#: filebrowser/views.py:101
+#, python-format
+msgid "File \"%(filename)s\" has been uploaded."
+msgstr "Il file \"%(filename)s\" è stato caricato."
+
+#: filebrowser/views.py:125
+#, python-format
+msgid "\"%(name)s\" has been moved to \"%(dest)s\"."
+msgstr "\"%(name)s\" è stato spostato in \"%(dest)s\"."
+
+#: filebrowser/views.py:153
+#, python-format
+msgid "A copy of \"%(name)s\" has been created."
+msgstr "Una copia di \"%(name)s\" è stata creata."
+
+#: filebrowser/views.py:178
+#, python-format
+msgid "The link to \"%(name)s\" has been created."
+msgstr "Il collegamento a \"%(name)s\" è stato creato."
+
+#: filebrowser/views.py:203
+msgid "The link has been renamed."
+msgstr "Il collegamento è stato rinominato."
+
+#: filebrowser/views.py:205
+msgid "The folder has been renamed."
+msgstr "La cartella è stata rinominata."
+
+#: filebrowser/views.py:207
+msgid "The file has been renamed."
+msgstr "Il file è stato rinominato."
+
+#: filebrowser/views.py:229
+msgid "The link has been deleted."
+msgstr "Il collegamento è stato eliminato."
+
+#: filebrowser/views.py:232
+msgid "The folder has been deleted."
+msgstr "La cartella è stata eliminata."
+
+#: filebrowser/views.py:235
+msgid "The file has been deleted."
+msgstr "Il file è stato eliminato."
+
+#: filebrowser/templatetags/filebrowser.py:76
+msgid "Move"
+msgstr "Sposta"
+
+#: filebrowser/templatetags/filebrowser.py:77
+msgid "Copy"
+msgstr "Copia"
+
+#: filebrowser/templatetags/filebrowser.py:78
+msgid "Make link"
+msgstr "Crea collegamento"
+
+#: filebrowser/templatetags/filebrowser.py:79
+msgid "Rename"
+msgstr "Rinomina"
+
+#: filebrowser/templatetags/filebrowser.py:80 templatetags/details.py:98
+msgid "Delete"
+msgstr "Elimina"
+
+#: filebrowser/templatetags/filebrowser.py:88
+msgid "Parent folder"
+msgstr "Cartella genitore"
+
+#: filebrowser/templatetags/filebrowser.py:95
+msgid "Folder"
+msgstr "Cartella"
+
+#: filebrowser/templatetags/filebrowser.py:97
+#: filebrowser/templatetags/filebrowser.py:99
+msgid "File"
+msgstr "File"
+
+#: filebrowser/templatetags/filebrowser.py:102
+msgid "Broken link"
+msgstr "Collegamento interrotto"
+
+#: filebrowser/templatetags/filebrowser.py:106
+msgid "Link"
+msgstr "Collegamento"
+
+#: filebrowser/templatetags/filebrowser.py:120
+msgid "Add folder"
+msgstr "Aggiungi cartella"
+
+#: filebrowser/templatetags/filebrowser.py:125
+msgid "Upload file"
+msgstr "Carica file"
+
+#: filebrowser/templatetags/filebrowser.py:129
+msgid "Refresh"
+msgstr "Aggiorna"
+
+#: filebrowser/templatetags/filebrowser.py:149
+msgid "Name"
+msgstr "Nome"
+
+#: filebrowser/templatetags/filebrowser.py:150
+msgid "Size"
+msgstr "Dimensione"
+
+#: filebrowser/templatetags/filebrowser.py:151
+msgid "Created"
+msgstr "Creato"
+
+#: filebrowser/templatetags/filebrowser.py:152
+msgid "Modified"
+msgstr "Modificato"
+
+#: filebrowser/templatetags/filebrowser.py:157
+msgid "element(s)"
+msgstr "elemento/i"
+
+#: forms/widgets.py:77
+msgid "AM"
+msgstr ""
+
+#: forms/widgets.py:77
+msgid "PM"
+msgstr ""
+
+#: forms/widgets.py:153 forms/widgets.py:204
+msgid "Add"
+msgstr "Aggiungi"
+
+#: forms/wizard.py:224
+msgid ""
+"We apologize, but your form has expired. Please continue filling out the "
+"form from this page."
+msgstr "Spiacenti, ma il tuo form è scaduto. Prego riempire nuovamente il form "
+"da questa pagina."
+
+#: menus/models.py:32 menus/models.py:47 notifications/models.py:42
+#: streams/models.py:60 taxonomy/models.py:53 taxonomy/models.py:83
+#: widgets/models.py:31 widgets/models.py:46
+msgid "slug"
+msgstr ""
+
+#: menus/models.py:33 menus/models.py:48 notifications/models.py:67
+#: widgets/models.py:32 widgets/models.py:47
+msgid "description"
+msgstr "descrizione"
+
+#: menus/models.py:36 menus/models.py:45
+msgid "menu"
+msgstr ""
+
+#: menus/models.py:37
+msgid "menus"
+msgstr "menu"
+
+#: menus/models.py:46 notifications/models.py:41 notifications/models.py:66
+#: streams/models.py:73 taxonomy/models.py:34 taxonomy/models.py:52
+#: taxonomy/models.py:82 widgets/models.py:45
+msgid "title"
+msgstr "titolo"
+
+#: menus/models.py:49
+msgid "url"
+msgstr ""
+
+#: menus/models.py:50 widgets/models.py:53
+msgid "sort order"
+msgstr "ordinamento"
+
+#: menus/models.py:51
+msgid "sub-menu"
+msgstr "sotto-menu"
+
+#: menus/models.py:52
+msgid "Only for authenticated users"
+msgstr "Solo per utenti autenticati"
+
+#: menus/models.py:53
+msgid "Only for staff users"
+msgstr "Solo per lo staff"
+
+#: menus/models.py:54
+msgid "Only with following permissions"
+msgstr "Solo con i seguenti permessi"
+
+#: menus/models.py:58
+msgid "link"
+msgstr "collegamento"
+
+#: menus/models.py:59
+msgid "links"
+msgstr "collegamenti"
+
+#: menus/views.py:80
+msgid "The link has been saved."
+msgstr "Il collegamento è stato salvato"
+
+#: menus/views.py:105
+msgid "The link has been updated."
+msgstr "Il collegamento è stato aggiornato"
+
+#: menus/management/__init__.py:35
+#: menus/management/__init__.py:40
+msgid "Main menu"
+msgstr "Menu principale"
+
+#: menus/management/__init__.py:42
+msgid "The main menu"
+msgstr "Il menu principale"
+
+#: models/__init__.py:37
+msgid "Ivalid JSON syntax"
+msgstr "Sintassi JSON invalida"
+
+#: models/__init__.py:44
+msgid "allow comments"
+msgstr "consenti commenti"
+
+#: notifications/forms.py:58
+msgid "subscribe"
+msgstr "sottoscrivi"
+
+#: notifications/forms.py:59 notifications/models.py:57
+msgid "send email"
+msgstr "spedisci email"
+
+#: notifications/models.py:43
+msgid "subscribers"
+msgstr "sottoscrittori"
+
+#: notifications/models.py:46 notifications/models.py:69 streams/models.py:74
+msgid "signature"
+msgstr "firma"
+
+#: notifications/models.py:47
+msgid "signatures"
+msgstr "firme"
+
+#: notifications/models.py:60
+msgid "subscription"
+msgstr "sottoscrizione"
+
+#: notifications/models.py:61
+msgid "subscriptions"
+msgstr "sottoscrizioni"
+
+#: notifications/models.py:68
+msgid "user"
+msgstr "utente"
+
+#: notifications/models.py:70
+msgid "created on"
+msgstr "creato il"
+
+#: notifications/models.py:71
+msgid "read on"
+msgstr "letto il"
+
+#: notifications/models.py:76
+msgid "notification"
+msgstr "notifica"
+
+#: notifications/models.py:77
+msgid "notifications"
+msgstr "notifiche"
+
+#: notifications/views.py:87
+msgid "You can't view this notification's detials."
+msgstr "Non puoi leggere i dettagli di questa notifica"
+
+#: registration/forms.py:34
+msgid ""
+"I have read and agree to the <a href=\"/terms-service\" target=\"_blank"
+"\">Terms of Service</a>"
+msgstr "Ho letto è accetto i <a href=\"/terms-service\" target=\"_blank"
+"\">Termini del Servizio</a>"
+
+#: registration/forms.py:35
+msgid ""
+"I have read and agree to the <a href=\"/privacy\" target=\"_blank\">Privacy "
+"Policy</a>"
+msgstr "Ho letto è accetto le <a href=\"/terms-service\" target=\"_blank"
+"\">Condizioni sulla Privacy</a>"
+
+#: registration/models.py:29
+msgid "user profile"
+msgstr "profilo utente"
+
+#: registration/models.py:30
+msgid "activation key"
+msgstr "chiave di attivazione"
+
+#: registration/models.py:31
+msgid "key expiration"
+msgstr "scadenza della chiave"
+
+#: registration/signals.py:59
+msgid "Account confirmation"
+msgstr "Conferma account"
+
+#: registration/views.py:42
+msgid "You are already registered."
+msgstr "Sei già registrato"
+
+#: registration/views.py:51
+msgid ""
+"An email has been sent with an activation key. Please check your mail to "
+"complete the registration."
+msgstr "Un'email contenente la chiave di attivazione è stata spedita. Prego controlla la tua casella "
+" per completare la registrazione."
+
+#: registration/views.py:64
+msgid "This account is already active."
+msgstr "Questo account è già attivo."
+
+#: registration/views.py:70
+msgid "Sorry, your account is expired."
+msgstr "Spiacenti, questo account è scaduto."
+
+#: registration/views.py:76
+msgid "Congratulations! Your account is now active."
+msgstr "Congratulazioni! Il tuo account è ora attivo."
+
+#: registration/management/__init__.py:35
+msgid "Register"
+msgstr "Registrati"
+
+#: registration/management/__init__.py:37
+msgid "Register a new account"
+msgstr "Registra un nuovo account"
+
+#: streams/models.py:61
+msgid "followers"
+msgstr "iscritti"
+
+#: streams/models.py:64
+msgid "stream"
+msgstr "cronologia"
+
+#: streams/models.py:65 streams/models.py:78
+msgid "streams"
+msgstr "cronologie"
+
+#: streams/models.py:75 widgets/models.py:49
+msgid "template"
+msgstr ""
+
+#: streams/models.py:76 widgets/models.py:50
+msgid "context"
+msgstr "contesto"
+
+#: streams/models.py:76 widgets/models.py:50
+msgid "Use the JSON syntax."
+msgstr "Usare la sintassi JSON."
+
+#: streams/models.py:77
+msgid "created"
+msgstr "creato"
+
+#: streams/models.py:79
+msgid "backlink"
+msgstr ""
+
+#: streams/models.py:82
+msgid "activity"
+msgstr "attività"
+
+#: streams/models.py:83
+msgid "activities"
+msgstr "attività"
+
+#: streams/views.py:40
+msgid "You're now following the stream."
+msgstr "Sei ora iscritto a questa cronologia."
+
+#: streams/views.py:53
+msgid "You don't follow this stream anymore."
+msgstr "Non sei più iscritto a questa cronologia."
+
+#: taxonomy/models.py:40
+msgid "result"
+msgstr "risultato"
+
+#: taxonomy/models.py:41
+msgid "results"
+msgstr "risultati"
+
+#: taxonomy/models.py:56
+msgid "tag"
+msgstr ""
+
+#: taxonomy/models.py:57
+msgid "tags"
+msgstr ""
+
+#: taxonomy/models.py:86
+msgid "category"
+msgstr "categoria"
+
+#: taxonomy/models.py:87
+msgid "categories"
+msgstr "categorie"
+
+#: taxonomy/views.py:121
+msgid "Please, specify a valid search query."
+msgstr "Per favore, specificare un criterio di ricerca valido."
+
+#: templatetags/details.py:91
+msgid "Edit"
+msgstr "Modifica"
+
+#: templatetags/details.py:136
+msgid "No results found."
+msgstr "Nessun risultato trovato."
+
+#: utils/__init__.py:50
+msgid "No"
+msgstr ""
+
+#: utils/__init__.py:52
+msgid "Yes"
+msgstr "Sì"
+
+#: utils/__init__.py:58
+msgid "empty"
+msgstr "vuoto"
+
+#: widgets/models.py:35
+msgid "region"
+msgstr "regione"
+
+#: widgets/models.py:36
+msgid "regions"
+msgstr "regioni"
+
+#: widgets/models.py:48
+msgid "source"
+msgstr "sorgente"
+
+#: widgets/models.py:51
+msgid "show title"
+msgstr "mostra titolo"
+
+#: widgets/models.py:52
+msgid "editable"
+msgstr "modificabile"
+
+#: widgets/models.py:57
+msgid "widget"
+msgstr ""
+
+#: widgets/models.py:58
+msgid "widgets"
+msgstr ""
+
+#: widgets/views.py:60
+msgid "The widget has been saved."
+msgstr "Il widget è stato salvato."
+
+#: widgets/views.py:77
+msgid "The widget has been updated."
+msgstr "Il widget è stato aggiornato."
+
+#: widgets/management/__init__.py:32
+msgid "Footer"
+msgstr "Piè pagina"
+
+#: widgets/management/__init__.py:37
+msgid "Sidebar"
+msgstr "Barra laterale"
+
+#: widgets/management/__init__.py:42
+msgid "Powered by"
+msgstr "Basato su"
+
+#: widgets/management/__init__.py:44
+msgid "Info about Prometeo"
+msgstr "Informazioni su Prometeo"

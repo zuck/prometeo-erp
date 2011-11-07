@@ -1,0 +1,157 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-07 17:40+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:37
+msgid "title"
+msgstr "titolo"
+
+#: models.py:38 models.py:136
+msgid "description"
+msgstr "descrizione"
+
+#: models.py:39 models.py:98
+msgid "owner"
+msgstr "proprietario"
+
+#: models.py:40
+msgid "start date"
+msgstr "data inizio"
+
+#: models.py:41
+msgid "end date"
+msgstr "data fine"
+
+#: models.py:42 models.py:100
+msgid "created on"
+msgstr "creato il"
+
+#: models.py:43
+msgid "closed on"
+msgstr "chiuso il"
+
+#: models.py:44
+msgid "categories"
+msgstr "categorie"
+
+#: models.py:45
+msgid "tags"
+msgstr ""
+
+#: models.py:52
+msgid "task"
+msgstr "attività"
+
+#: models.py:53
+msgid "tasks"
+msgstr "attività"
+
+#: models.py:97
+msgid "date"
+msgstr "data"
+
+#: models.py:99
+msgid "status"
+msgstr "stato"
+
+#: models.py:105 models.py:132
+msgid "timesheet"
+msgstr "foglio ore"
+
+#: models.py:106
+msgid "timesheets"
+msgstr "fogli ore"
+
+#: models.py:109
+#, python-format
+msgid "Timesheet of %s"
+msgstr "Foglio ore di %s"
+
+#: models.py:133
+msgid "start time"
+msgstr "orario inizio"
+
+#: models.py:134
+msgid "end time"
+msgstr "orario fine"
+
+#: models.py:135
+msgid "related to"
+msgstr "relativo a"
+
+#: models.py:140
+msgid "timesheet entry"
+msgstr "voce"
+
+#: models.py:141
+msgid "timesheet entries"
+msgstr "voci"
+
+#: models.py:144
+#, python-format
+msgid "%(start_time)s ~ %(end_time)s on %(date)s of %(user)s"
+msgstr "%(start_time)s ~ %(end_time)s il %(date)s di %(user)s"
+
+#: views.py:100
+msgid "The task has been saved."
+msgstr "L'attività è stata salvata."
+
+#: views.py:117
+msgid "The task has been updated."
+msgstr "L'attività è stata aggiornata."
+
+#: views.py:145
+msgid "The task has been closed."
+msgstr "L'attività è stata chiusa."
+
+#: views.py:157
+msgid "The task has been reopened."
+msgstr "L'attività è stata riaperta."
+
+#: views.py:200
+msgid "The timesheet has been saved."
+msgstr "Il foglio ore è stato salvato."
+
+#: views.py:220
+msgid "The timesheet has been updated."
+msgstr "Il foglio ore è stato aggiornato."
+
+#: management/__init__.py:35
+msgid "Main menu for tasks"
+msgstr "Menu principale per le attività"
+
+#: management/__init__.py:40
+msgid "Tasks"
+msgstr "Attività"
+
+#: management/__init__.py:42
+msgid "List of tasks"
+msgstr "Elenco delle attività"
+
+#: management/__init__.py:48
+msgid "Planned"
+msgstr "Pianificate"
+
+#: management/__init__.py:55
+msgid "Unplanned"
+msgstr "Non pianificate"
+
+#: management/__init__.py:62
+msgid "Timesheets"
+msgstr "Fogli ore"

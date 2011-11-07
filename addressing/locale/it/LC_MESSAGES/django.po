@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-07 17:51+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:30 models.py:55
+msgid "type"
+msgstr "tipologia"
+
+#: models.py:31
+msgid "street"
+msgstr "via/le"
+
+#: models.py:32 models.py:56
+msgid "number"
+msgstr "numero"
+
+#: models.py:33
+msgid "city"
+msgstr "città"
+
+#: models.py:34
+msgid "zip code"
+msgstr "CAP"
+
+#: models.py:35
+msgid "state/province"
+msgstr "stato/provincia"
+
+#: models.py:36
+msgid "country"
+msgstr "nazione"
+
+#: models.py:39
+msgid "address"
+msgstr "indirizzo"
+
+#: models.py:40
+msgid "addresses"
+msgstr "indirizzi"
+
+#: models.py:43
+#, python-format
+msgid "%(number)s, %(street)s - %(city)s, %(state)s %(zip)s - %(country)s"
+msgstr ""
+
+#: models.py:59
+msgid "phone number"
+msgstr "numero telefonico"
+
+#: models.py:60
+msgid "phone numbers"
+msgstr "numeri telefonici"
+
+#: views.py:81
+#, python-format
+msgid "Address added to %(owner)s"
+msgstr "Indirizzo aggiunto a %(owner)s"
+
+#: views.py:102
+msgid "Address updated"
+msgstr "Indirizzo aggiornato"
+
+#: views.py:156
+#, python-format
+msgid "Phone number added to %(owner)s"
+msgstr "Numero telefonico aggiunto a %(owner)s"
+
+#: views.py:177
+msgid "Phone number updated"
+msgstr "Numero telefonico aggiornato"
