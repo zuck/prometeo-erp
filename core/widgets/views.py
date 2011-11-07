@@ -36,7 +36,7 @@ from forms import *
 
 def _get_dashboard(request, *args, **kwargs):
     dashboard = kwargs.get('dashboard', None)
-    return get_object_or_404(Dashboard, slug=dashboard)
+    return get_object_or_404(Region, slug=dashboard)
 
 def _get_widget(request, *args, **kwargs):
     slug = kwargs.get('slug', None)
