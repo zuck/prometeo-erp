@@ -132,9 +132,9 @@ def install(sender, **kwargs):
 
     # Widgets.
     profile_widget, is_new = Widget.objects.get_or_create(
-        title=_("User Profile"),
+        title=_("User profile"),
         slug="user-profile",
-        description=_("The user's profile"),
+        description=_("A summary of the user profile"),
         source="prometeo.core.widgets.base.dummy",
         template="auth/widgets/user_profile.html",
         show_title=False,
