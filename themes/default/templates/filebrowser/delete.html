@@ -23,8 +23,8 @@
         {% if fileinfo.is_link %}
         <p>{% trans "Are you sure you want to delete this link?" %}</p>
         {% else %}
-        {% if fileinfo.is_directory %}
-        <p>{% trans "Are you sure you want to delete this directory?" %}</p>
+        {% if fileinfo.is_folder %}
+        <p>{% trans "Are you sure you want to delete this folder?" %}</p>
         {% else %}
         <p>{% trans "Are you sure you want to delete this file?" %}</p>
         {% endif %}

@@ -45,8 +45,8 @@ def serve(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/ser
 
     fi = FileInfo(url_to_path(url or settings.MEDIA_URL))
 
-    # The path points to a directory.
-    if fi.is_directory():
+    # The path points to a folder.
+    if fi.is_folder():
         extra_context = {'fileinfo': fi, 'root': root}
         extra_context.update(kwargs.get('extra_context', {}))
         
@@ -63,7 +63,7 @@ def serve(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/ser
         return response
 
 def mkdir(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkdir.html', **kwargs):
-    """Makes a new directory at the given url.
+    """Makes a new folder at the given url.
     """
     fi = FileInfo(url_to_path('/%s' % url))
 
@@ -73,7 +73,7 @@ def mkdir(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkd
         if form.is_valid():
             name = form.cleaned_data['name']
             os.mkdir(os.path.join(fi.abspath, name))
-            messages.success(request, _('The directory "%(name)s" has been created.') % {'name': name})
+            messages.success(request, _('The folder "%(name)s" has been created.') % {'name': name})
 
             return redirect(path_to_url(fi.abspath))
     else:
@@ -110,7 +110,7 @@ def upload(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/up
     return render_to_response(template_name, RequestContext(request, extra_context))
 
 def move(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/move.html', **kwargs):
-    """Moves a file, directory or link to a new location.
+    """Moves a file, folder or link to a new location.
     """
     fi = FileInfo(url_to_path('/%s' % url))
 
@@ -134,7 +134,7 @@ def move(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/move
     return render_to_response(template_name, RequestContext(request, extra_context))
 
 def copy(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/copy.html', **kwargs):
-    """Copies a file, directory or link [to another location].
+    """Copies a file, folder or link [to another location].
     """
     fi = FileInfo(url_to_path('/%s' % url))
 
@@ -146,7 +146,7 @@ def copy(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/copy
             new_path = os.path.join(destination, name)
 
             if new_path != fi.abspath:
-                if fi.is_directory():
+                if fi.is_folder():
                     shutil.copytree(fi.abspath, new_path)
                 else:
                     shutil.copy(fi.abspath, new_path)
@@ -187,7 +187,7 @@ def mkln(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkln
     return render_to_response(template_name, RequestContext(request, extra_context))
 
 def rename(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/rename.html', **kwargs):
-    """Renames a file, directory or link.
+    """Renames a file, folder or link.
     """
     fi = FileInfo(url_to_path('/%s' % url))
 
@@ -198,11 +198,11 @@ def rename(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/re
             new_path = os.path.join(fi.parent.abspath, form.cleaned_data['name'])
             os.rename(fi.abspath, new_path)
             islink = fi.is_link()
-            isdir = fi.is_directory()
+            isdir = fi.is_folder()
             if islink:
                 messages.success(request, _('The link has been renamed.'))
             elif isdir:
-                messages.success(request, _('The directory has been renamed.'))
+                messages.success(request, _('The folder has been renamed.'))
             else:
                 messages.success(request, _('The file has been renamed.'))
 
@@ -216,11 +216,11 @@ def rename(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/re
     return render_to_response(template_name, RequestContext(request, extra_context))
 
 def delete(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/delete.html', **kwargs):
-    """Deletes a file, directory or link.
+    """Deletes a file, folder or link.
     """
     fi = FileInfo(url_to_path('/%s' % url))
     islink = fi.is_link()
-    isdir = fi.is_directory()
+    isdir = fi.is_folder()
 
     if request.method == 'POST':
         redirect_to = fi.parent.url
@@ -229,7 +229,7 @@ def delete(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/de
             messages.success(request, _('The link has been deleted.'))
         elif isdir:
             shutil.rmtree(fi.abspath)
-            messages.success(request, _('The directory has been deleted.'))
+            messages.success(request, _('The folder has been deleted.'))
         else:
             os.remove(fi.abspath)
             messages.success(request, _('The file has been deleted.'))

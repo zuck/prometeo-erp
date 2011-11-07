@@ -40,9 +40,9 @@ class FileInfo(object):
 
     def __cmp__(self, other):
         if isinstance(other, FileInfo):
-            if self.is_directory() and not other.is_directory():
+            if self.is_folder() and not other.is_folder():
                 return -1
-            elif not self.is_directory() and other.is_directory():
+            elif not self.is_folder() and other.is_folder():
                 return 1
             if self.abspath > other.abspath:
                 return 1
@@ -129,7 +129,7 @@ class FileInfo(object):
         size = 0
         stats = self._stats()
         if stats:
-            if self.is_directory():
+            if self.is_folder():
                 for dirpath, dirnames, filenames in os.walk(self.abspath):
                     for f in filenames:
                         fp = os.path.join(dirpath, f)
@@ -152,7 +152,7 @@ class FileInfo(object):
     def is_broken_link(self):
         return self.is_link() and not self._stats()
 
-    def is_directory(self):
+    def is_folder(self):
         return os.path.isdir(self.abspath)
 
     def _stats(self):

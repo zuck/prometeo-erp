@@ -91,7 +91,7 @@ def row_template(index, path, f, url_prefix):
         output += '\t\t\t<td></td>\n'
     else:
         output += '\t\t\t<td>\n'
-        if f.is_directory():
+        if f.is_folder():
 		    output += '\t\t\t\t<span class="folder">[%s]</span> ' % _('Folder')
         elif f.ext:
 			output += '\t\t\t\t<span class="file ext-%s">[%s]</span> ' % (f.ext.lower(), _('File'))
@@ -117,7 +117,7 @@ def filebrowser_actions(context, path=settings.MEDIA_ROOT, url_prefix=""):
     fi = FileInfo(path or settings.MEDIA_ROOT)
     output = '<ul>\n'
     output += '\t<li class="add"><a title="%(label)s" href="%(url_prefix)s%(url)s">%(label)s</a></li>\n' % {
-        'label': _('Add directory'),
+        'label': _('Add folder'),
         'url_prefix': url_prefix,
         'url': reverse('file_mkdir', args=[fi.url[1:]])
     }
@@ -139,7 +139,7 @@ def filebrowser(context, path=settings.MEDIA_ROOT, root_path=settings.MEDIA_ROOT
     order_by = request.GET.get('order_by', None)
     fi = FileInfo(path or settings.MEDIA_ROOT)
     root = FileInfo(root_path or settings.MEDIA_ROOT)
-    if fi.is_directory():
+    if fi.is_folder():
         files = [FileInfo(os.path.join(fi.path, f)) for f in os.listdir(fi.abspath)]
         files = sort_files(files, order_by)
         if fi.parent and fi.abspath != root:

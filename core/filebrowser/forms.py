@@ -49,7 +49,7 @@ def _make_dest_choices(path, *args, **kwargs):
     return choices
 
 class NameForm(forms.Form):
-    """Form to select a name for a file, directory or link.
+    """Form to select a name for a file, folder or link.
     """
     name = forms.CharField()
 
@@ -66,7 +66,7 @@ class NameForm(forms.Form):
         return name
 
 class DestinationForm(forms.Form):
-    """Form to select a destination for a file, directory or link.
+    """Form to select a destination for a file, folder or link.
     """
     destination = forms.ChoiceField()
 
@@ -80,17 +80,17 @@ class DestinationForm(forms.Form):
 
         if destination != get_parent(self.source_path):
             if not os.access(destination, os.W_OK):
-                raise forms.ValidationError(_('Can not write to this directory.'))
+                raise forms.ValidationError(_('Can not write to this folder.'))
 
             name = get_name(self.source_path)
 
             if name and os.access(os.path.join(destination, name), os.F_OK):
-                raise forms.ValidationError(_('The name already exists in this directory.'))
+                raise forms.ValidationError(_('The name already exists in this folder.'))
 
         return destination
 
 class NameDestinationForm(forms.Form):
-    """Form to select destination and name for a file, directory or link.
+    """Form to select destination and name for a file, folder or link.
     """
     name = forms.CharField(required=False)
     destination = forms.ChoiceField()
@@ -105,7 +105,7 @@ class NameDestinationForm(forms.Form):
 
         if destination != get_parent(self.source_path):
             if not os.access(destination, os.W_OK):
-                raise forms.ValidationError(_('Can not write to the given directory.'))
+                raise forms.ValidationError(_('Can not write to the given folder.'))
 
             name = self.cleaned_data.get('name', None) or get_name(self.source_path)
 
