@@ -21,7 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 from django.shortcuts import render_to_response, get_object_or_404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.generic import list_detail, create_update
 from django.core.urlresolvers import reverse
 from django.views.generic.simple import redirect_to
@@ -30,7 +30,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
-from prometeo.core.views import filtered_list_detail, reports
+from prometeo.core.views import filtered_list_detail, set_language
+from prometeo.core.views.reports import render_to_pdf
 
 from models import *
 from forms import *
@@ -44,14 +45,19 @@ def _get_document(request, *args, **kwargs):
         return get_object_or_404(Document, id=id)
     return None
 
-def document_print(request, id, template_name=None, **kwargs):
+def document_print(request, id, lang=None, template_name=None, **kwargs):
     """Prints a document to a .pdf file.
     """
+    old_lang = get_language()
+    if lang:
+        set_language(request, lang)
     doc = get_object_or_404(Document, id=id)
     filename = "%s.pdf" % doc.filename
     if not template_name:
         template_name = "reports/%s/%s_pdf.html" % (doc.content_type.app_label, doc.content_type.model)
-    return reports.render_to_pdf(request, template_name, {'document': doc}, filename, **kwargs)
+    response = render_to_pdf(request, template_name, {'document': doc}, filename, **kwargs)
+    set_language(request, old_lang)
+    return response
 
 @permission_required('documents.change_document', _get_document) 
 def hardcopy_list(request, id, page=0, paginate_by=10, **kwargs):

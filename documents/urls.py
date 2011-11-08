@@ -25,5 +25,5 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('documents.views',
 
     # Documents.
-    url(r'^documents/(?P<id>\d+)/$', view='document_print', name='document_print'),
+    url(r'^documents/(?P<id>\d+)/(?P<lang>[-\w]+)/$', view='document_print', name='document_print'),
 )

@@ -36,7 +36,7 @@
         <li class="all"><a title="{% trans 'All' %}" href="{% url deliverynote_list %}">{% trans 'All' %}</a></li>
         {% endif %}
         {% if perms.stock.change_deliverynote %}
-        <li class="print"><a title="{% trans 'Print' %}" href="{% url document_print object.pk %}">{% trans 'Print' %}</a></li>
+        <li class="print"><a title="{% trans 'Print' %}" href="{% url document_print object.pk object.content_object.invoice_addressee.language %}">{% trans 'Print' %}</a></li>
         {% endif %}
         {% if perms.stock.change_deliverynote %}
         {% if user not in object.stream.followers.all %}

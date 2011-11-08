@@ -20,9 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from django import http
 from django.shortcuts import render_to_response, get_object_or_404
-from django.utils.translation import ugettext_lazy as _, check_for_language, activate
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
@@ -33,7 +32,7 @@ from django.contrib import messages
 from django.conf import settings
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
-from prometeo.core.views import filtered_list_detail
+from prometeo.core.views import filtered_list_detail, set_language
 
 from models import *
 from forms import *
@@ -46,28 +45,11 @@ def _get_comment(request, *args, **kwargs):
     id = kwargs.get('id', None)
     return get_object_or_404(Comment, id=id, site__pk=settings.SITE_ID)
 
-def set_language(request):
-    """Sets the current language.
-    """
-    next = request.REQUEST.get('next', None)
-    if not next:
-        next = request.META.get('HTTP_REFERER', None)
-    if not next:
-        next = '/'
-    response = http.HttpResponseRedirect(next)
-    lang_code = request.user.get_profile().language
-    if lang_code and check_for_language(lang_code):
-        if hasattr(request, 'session'):
-            request.session['django_language'] = lang_code
-        else:
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
-    activate(lang_code)
-    return response
-
 def user_logged(request):
     """Sets the language selected by the logged user.
     """
-    return set_language(request)
+    lang = request.user.get_profile().language
+    return set_language(request, lang)
 
 @permission_required('auth.change_user') 
 def user_list(request, page=0, paginate_by=10, **kwargs):
@@ -138,7 +120,7 @@ def user_edit(request, username, **kwargs):
         if form.is_valid() and pform.is_valid():
             user = form.save()
             profile = pform.save()
-            set_language(request)
+            set_language(request, profile.language)
             messages.success(request, _("The user's profile has been updated."))
             return redirect_to(request, url=user.get_absolute_url())
     else:
