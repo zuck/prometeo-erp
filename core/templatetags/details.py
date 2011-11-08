@@ -134,7 +134,7 @@ class DetailTableNode(Node):
             order_by = request.GET['order_by']
         except:
             order_by = []
-        output = '<p class="disabled">%s</p>' % _('No results found.')
+        output = u'<p class="disabled">%s</p>' % _('No results found.')
         if len(self.object_list) > 0:
             instance = self.object_list[0]
             meta = instance._meta
