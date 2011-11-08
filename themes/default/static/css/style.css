@@ -355,7 +355,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 .add a, .edit a, .delete a, .all a, .import a, .export a,
 .open a, .reopen a, .close a, .view a, .exit a, .follow a, .leave a,
-.move a, .copy a, .add_link a, .refresh a {
+.move a, .copy a, .add_link a, .refresh a, .print a {
     float: left;
     width: 16px;
     height: 16px;
@@ -433,6 +433,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 .refresh a { background-image: url(images/refresh.png); }
 
 .refresh a:hover { background-image: url(images/refresh_hover.png); }
+
+.print a { background-image: url(images/print.png); }
+
+.print a:hover { background-image: url(images/print_hover.png); }
 
 .progressbar {
     clear: both;

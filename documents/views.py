@@ -30,7 +30,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
-from prometeo.core.views import filtered_list_detail
+from prometeo.core.views import filtered_list_detail, reports
 
 from models import *
 from forms import *
@@ -43,6 +43,15 @@ def _get_document(request, *args, **kwargs):
     if id:
         return get_object_or_404(Document, id=id)
     return None
+
+def document_print(request, id, template_name=None, **kwargs):
+    """Prints a document to a .pdf file.
+    """
+    doc = get_object_or_404(Document, id=id)
+    filename = "%s.pdf" % doc.filename
+    if not template_name:
+        template_name = "reports/%s/%s_pdf.html" % (doc.content_type.app_label, doc.content_type.model)
+    return reports.render_to_pdf(request, template_name, {'document': doc}, filename, **kwargs)
 
 @permission_required('documents.change_document', _get_document) 
 def hardcopy_list(request, id, page=0, paginate_by=10, **kwargs):

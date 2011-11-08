@@ -81,6 +81,11 @@ class Document(Commentable):
     def __unicode__(self):
         return "%s #%s" % (self.content_object, self.code)
 
+    def _filename(self):
+        return ("%s" % self).replace('#', '').replace(' ', '_')
+    _filename.short_description = _('filename')
+    filename = property(_filename)
+
     def get_absolute_url(self):
         return self.content_object.get_absolute_url()
     
