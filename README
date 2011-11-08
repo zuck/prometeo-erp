@@ -28,6 +28,9 @@ Make sure you have the following pre-requisites installed:
  * python-markdown >= 2.0 (required)
    http://www.freewisdom.org/projects/python-markdown
 
+ * xhtml2pdf >= 0.0.3 (required)
+   http://www.xhtml2pdf.com
+
  * icalendar >= 2.2 (required)
    http://pypi.python.org/pypi/icalendar
 
