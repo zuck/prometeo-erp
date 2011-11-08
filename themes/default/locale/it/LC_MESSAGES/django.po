@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:40+0100\n"
+"POT-Creation-Date: 2011-11-08 18:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,26 +266,31 @@ msgstr "Contabilità"
 msgid "Are you sure you want to delete this sales invoice?"
 msgstr "Sei sicuro di voler eliminare questa fattura di vendita?"
 
-#: templates/accounting/salesinvoice_detail.html:40
+#: templates/accounting/salesinvoice_detail.html:39
+#: templates/stock/deliverynote_detail.html:39
+msgid "Print"
+msgstr "Stampa"
+
+#: templates/accounting/salesinvoice_detail.html:43
 #: templates/events/event_detail.html:48
 #: templates/partners/partner_detail.html:42
 #: templates/products/product_detail.html:42
 #: templates/projects/milestone_detail.html:52
 #: templates/projects/project_detail.html:42
 #: templates/projects/ticket_detail.html:43
-#: templates/stock/deliverynote_detail.html:40
+#: templates/stock/deliverynote_detail.html:43
 #: templates/stock/warehouse_detail.html:42
 msgid "Follow"
 msgstr "Segui"
 
-#: templates/accounting/salesinvoice_detail.html:42
+#: templates/accounting/salesinvoice_detail.html:45
 #: templates/events/event_detail.html:50
 #: templates/partners/partner_detail.html:44
 #: templates/products/product_detail.html:44
 #: templates/projects/milestone_detail.html:54
 #: templates/projects/project_detail.html:44
 #: templates/projects/ticket_detail.html:45
-#: templates/stock/deliverynote_detail.html:42
+#: templates/stock/deliverynote_detail.html:45
 #: templates/stock/warehouse_detail.html:44
 msgid "Leave"
 msgstr "Lascia"
@@ -402,7 +407,8 @@ msgstr ""
 msgid ""
 "Login using your <strong>username</strong> and <strong>password</strong>."
 msgstr ""
-"Effettua il login usando il tuo <strong>username</strong> e <strong>password</strong>."
+"Effettua il login usando il tuo <strong>username</strong> e "
+"<strong>password</strong>."
 
 #: templates/auth/user_delete.html:25
 msgid "Are you sure you want to delete this user?"
@@ -466,7 +472,8 @@ msgid ""
 "Use <a href=\"http://daringfireball.net/projects/markdown/syntax\">MarkDown "
 "syntax</a>."
 msgstr ""
-"Usare la <a href=\"http://daringfireball.net/projects/markdown/syntax\">sintassi MarkDown</a>."
+"Usare la <a href=\"http://daringfireball.net/projects/markdown/syntax"
+"\">sintassi MarkDown</a>."
 
 #: templates/elements/comments.html:51
 msgid "Post"
@@ -722,7 +729,8 @@ msgstr "Elimina impiego"
 msgid ""
 "Are you sure you want to remove %(contact)s as %(role)s from %(partner)s?"
 msgstr ""
-"Sei sicuro di voler rimuovere %(contact)s da %(partner)s nel ruolo di %(role)s?"
+"Sei sicuro di voler rimuovere %(contact)s da %(partner)s nel ruolo di "
+"%(role)s?"
 
 #: templates/partners/job_edit.html:41
 msgid "Edit job"
@@ -776,8 +784,8 @@ msgid ""
 "href=\"%(partner_link)s\">%(partner)s</a> as %(role)s.</p>\n"
 msgstr ""
 "\n"
-"<p>Il contatto <a href=\"%(link)s\">%(name)s</a> è stato aggiunto al partner <a "
-"href=\"%(partner_link)s\">%(partner)s</a> nel ruolo di %(role)s.</p>\n"
+"<p>Il contatto <a href=\"%(link)s\">%(name)s</a> è stato aggiunto al partner "
+"<a href=\"%(partner_link)s\">%(partner)s</a> nel ruolo di %(role)s.</p>\n"
 
 #: templates/partners/activities/contact-removed.html:3
 #, python-format
@@ -1053,8 +1061,8 @@ msgid ""
 "from %(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
 msgstr ""
 "\n"
-"<p>Un commento di <a href=\"%(author_link)s\">%(author)s</a> è stato eliminato "
-"da %(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
+"<p>Un commento di <a href=\"%(author_link)s\">%(author)s</a> è stato "
+"eliminato da %(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
 
 #: templates/streams/activities/object-changed.html:3
 #, python-format
@@ -1064,8 +1072,8 @@ msgid ""
 "has been changed:</p>\n"
 msgstr ""
 "\n"
-"<p>I seguenti attributi di %(class)s <a href=\"%(link)s\">%(name)s</a> "
-"sono stati modificati:</p>\n"
+"<p>I seguenti attributi di %(class)s <a href=\"%(link)s\">%(name)s</a> sono "
+"stati modificati:</p>\n"
 
 #: templates/streams/activities/object-changed.html:12
 #, python-format
