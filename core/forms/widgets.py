@@ -37,11 +37,11 @@ class DateWidget(forms.DateInput):
     """
     class Media:
         css = {
-            "screen": ("css/blitzer/jquery-ui-1.8.16.custom.css",)
+            "screen": ("css/blitzer/jquery-ui.custom.css",)
         }
         js = (
-            "js/jquery-1.6.2.min.js",
-            "js/jquery-ui-1.8.16.custom.min.js",
+            "js/jquery.min.js",
+            "js/jquery-ui.custom.min.js",
             "js/splitdatetime.js",
         )
 
@@ -130,11 +130,11 @@ class SelectAndAddWidget(forms.Select):
     """
     class Media:
         css = {
-            "screen": ("css/blitzer/jquery-ui-1.8.16.custom.css",)
+            "screen": ("css/blitzer/jquery-ui.custom.css",)
         }
         js = (
-            "js/jquery-1.6.2.min.js",
-            "js/jquery-ui-1.8.16.custom.min.js"
+            "js/jquery.min.js",
+            "js/jquery-ui.custom.min.js"
         )
 
     def __init__(self, *args, **kwargs):
@@ -181,11 +181,11 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple):
     """
     class Media:
         css = {
-            "screen": ("css/blitzer/jquery-ui-1.8.16.custom.css",)
+            "screen": ("css/blitzer/jquery-ui.custom.css",)
         }
         js = (
-            "js/jquery-1.6.2.min.js",
-            "js/jquery-ui-1.8.16.custom.min.js"
+            "js/jquery.min.js",
+            "js/jquery-ui.custom.min.js"
         )
 
     def __init__(self, *args, **kwargs):
