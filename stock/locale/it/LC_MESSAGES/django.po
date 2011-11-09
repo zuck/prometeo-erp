@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:40+0100\n"
+"POT-Creation-Date: 2011-11-09 10:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,24 +83,24 @@ msgid "movements"
 msgstr "movimenti"
 
 #: models.py:111
-msgid "invoice addressee"
-msgstr "destinatario di fatturazione"
+msgid "bill to"
+msgstr "fatturato a"
 
 #: models.py:112
 msgid "Keep it blank to use the same as invoicing"
 msgstr "Lasciare bianco per usare lo stesso della fatturazione"
 
 #: models.py:112
-msgid "delivery addressee"
-msgstr "Destinatario di consegna"
+msgid "delivered to"
+msgstr "consegnato a"
 
 #: models.py:113
 msgid "order ref. no."
 msgstr "rif. ordine #"
 
 #: models.py:114
-msgid "order ref. date"
-msgstr "rif. ordine data"
+msgid "on"
+msgstr "del"
 
 #: models.py:115
 msgid "mean of delivery"

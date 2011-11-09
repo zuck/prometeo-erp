@@ -57,7 +57,7 @@ class SalesInvoice(models.Model):
     shipping_addressee = models.ForeignKey('partners.Partner', null=True, blank=True, related_name='shipping_addressee_of_salesinvoices', help_text=_('Keep it blank to use the same as invoicing'), verbose_name=_('ship to'))
     invoice_addressee = models.ForeignKey('partners.Partner', related_name='invoice_addressee_of_salesinvoices', verbose_name=_('bill to'))
     order_ref_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('order ref. no.'))
-    order_ref_date = models.DateField(null=True, blank=True, verbose_name=_('order ref. date'))
+    order_ref_date = models.DateField(null=True, blank=True, verbose_name=_('on'))
     terms_of_shipping = models.CharField(max_length=100, choices=settings.TERMS_OF_SHIPPING, default=settings.DEFAULT_TERMS_OF_SHIPPING, verbose_name=_('terms of shipping'))
     amount = models.FloatField(default=0.0, verbose_name=_('amount'))
     terms_of_payment = models.CharField(max_length=100, choices=settings.TERMS_OF_PAYMENT, default=settings.DEFAULT_TERMS_OF_PAYMENT, verbose_name=_('terms of payment'))
