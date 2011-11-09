@@ -47,7 +47,7 @@ Make sure you have the following pre-requisites installed:
 INSTALLATION
 ============
 
- 1. cp settings.py.tmpl settings.py
+ 1. cp settings/base.py.tmpl settings/base.py
  
  2. Edit the settings.py content.
  

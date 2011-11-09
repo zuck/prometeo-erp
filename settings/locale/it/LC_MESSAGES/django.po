@@ -1,0 +1,1163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-09 10:45+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: base.py:277
+msgid "tentative"
+msgstr "tentativo"
+
+#: base.py:278 base.py:287 base.py:507
+msgid "confirmed"
+msgstr "confermato"
+
+#: base.py:279
+msgid "cancelled"
+msgstr "cancellato"
+
+#: base.py:286 base.py:506
+msgid "draft"
+msgstr "bozza"
+
+#: base.py:300
+msgid "preferred"
+msgstr "preferenziale"
+
+#: base.py:301
+msgid "invoice"
+msgstr "fatturazione"
+
+#: base.py:302
+msgid "delivery"
+msgstr "spedizione"
+
+#: base.py:303
+msgid "other"
+msgstr "altro"
+
+#: base.py:309
+msgid "land Line"
+msgstr "fisso"
+
+#: base.py:310
+msgid "mobile"
+msgstr "cellulare"
+
+#: base.py:311
+msgid "fax"
+msgstr ""
+
+#: base.py:318
+msgid "first contact"
+msgstr "primo contatto"
+
+#: base.py:324
+msgid "AED"
+msgstr ""
+
+#: base.py:325
+msgid "AFN"
+msgstr ""
+
+#: base.py:326
+msgid "ALL"
+msgstr ""
+
+#: base.py:327
+msgid "AMD"
+msgstr ""
+
+#: base.py:328
+msgid "ANG"
+msgstr ""
+
+#: base.py:329
+msgid "AOA"
+msgstr ""
+
+#: base.py:330
+msgid "ARS"
+msgstr ""
+
+#: base.py:331
+msgid "AUD"
+msgstr ""
+
+#: base.py:332
+msgid "AZN"
+msgstr ""
+
+#: base.py:333
+msgid "BAM"
+msgstr ""
+
+#: base.py:334
+msgid "BBD"
+msgstr ""
+
+#: base.py:335
+msgid "BDT"
+msgstr ""
+
+#: base.py:336
+msgid "BGN"
+msgstr ""
+
+#: base.py:337
+msgid "BHD"
+msgstr ""
+
+#: base.py:338
+msgid "BIF"
+msgstr ""
+
+#: base.py:339
+msgid "BMD"
+msgstr ""
+
+#: base.py:340
+msgid "BND"
+msgstr ""
+
+#: base.py:341
+msgid "BOB"
+msgstr ""
+
+#: base.py:342
+msgid "BRL"
+msgstr ""
+
+#: base.py:343
+msgid "BSD"
+msgstr ""
+
+#: base.py:344
+msgid "BTN"
+msgstr ""
+
+#: base.py:345
+msgid "BWP"
+msgstr ""
+
+#: base.py:346
+msgid "BYR"
+msgstr ""
+
+#: base.py:347
+msgid "BZD"
+msgstr ""
+
+#: base.py:348
+msgid "CAD"
+msgstr ""
+
+#: base.py:349
+msgid "CDF"
+msgstr ""
+
+#: base.py:350
+msgid "CFA"
+msgstr ""
+
+#: base.py:351
+msgid "CFP"
+msgstr ""
+
+#: base.py:352
+msgid "CHF"
+msgstr ""
+
+#: base.py:353
+msgid "CLP"
+msgstr ""
+
+#: base.py:354
+msgid "CNY"
+msgstr ""
+
+#: base.py:355
+msgid "COP"
+msgstr ""
+
+#: base.py:356
+msgid "CRC"
+msgstr ""
+
+#: base.py:357
+msgid "CUC"
+msgstr ""
+
+#: base.py:358
+msgid "CZK"
+msgstr ""
+
+#: base.py:359
+msgid "DJF"
+msgstr ""
+
+#: base.py:360
+msgid "DKK"
+msgstr ""
+
+#: base.py:361
+msgid "DOP"
+msgstr ""
+
+#: base.py:362
+msgid "DZD"
+msgstr ""
+
+#: base.py:363
+msgid "EEK"
+msgstr ""
+
+#: base.py:364
+msgid "EGP"
+msgstr ""
+
+#: base.py:365
+msgid "ERN"
+msgstr ""
+
+#: base.py:366
+msgid "ETB"
+msgstr ""
+
+#: base.py:367
+msgid "EUR"
+msgstr ""
+
+#: base.py:368
+msgid "FJD"
+msgstr ""
+
+#: base.py:369
+msgid "FKP"
+msgstr ""
+
+#: base.py:370
+msgid "FMG"
+msgstr ""
+
+#: base.py:371
+msgid "GBP"
+msgstr ""
+
+#: base.py:372
+msgid "GEL"
+msgstr ""
+
+#: base.py:373
+msgid "GHS"
+msgstr ""
+
+#: base.py:374
+msgid "GIP"
+msgstr ""
+
+#: base.py:375
+msgid "GMD"
+msgstr ""
+
+#: base.py:376
+msgid "GNF"
+msgstr ""
+
+#: base.py:377
+msgid "GQE"
+msgstr ""
+
+#: base.py:378
+msgid "GTQ"
+msgstr ""
+
+#: base.py:379
+msgid "GYD"
+msgstr ""
+
+#: base.py:380
+msgid "HKD"
+msgstr ""
+
+#: base.py:381
+msgid "HNL"
+msgstr ""
+
+#: base.py:382
+msgid "HRK"
+msgstr ""
+
+#: base.py:383
+msgid "HTG"
+msgstr ""
+
+#: base.py:384
+msgid "HUF"
+msgstr ""
+
+#: base.py:385
+msgid "IDR"
+msgstr ""
+
+#: base.py:386
+msgid "ILS"
+msgstr ""
+
+#: base.py:387
+msgid "INR"
+msgstr ""
+
+#: base.py:388
+msgid "IQD"
+msgstr ""
+
+#: base.py:389
+msgid "IRR"
+msgstr ""
+
+#: base.py:390
+msgid "ISK"
+msgstr ""
+
+#: base.py:391
+msgid "JMD"
+msgstr ""
+
+#: base.py:392
+msgid "JOD"
+msgstr ""
+
+#: base.py:393
+msgid "JPY"
+msgstr ""
+
+#: base.py:394
+msgid "KES"
+msgstr ""
+
+#: base.py:395
+msgid "KGS"
+msgstr ""
+
+#: base.py:396
+msgid "KHR"
+msgstr ""
+
+#: base.py:397
+msgid "KMF"
+msgstr ""
+
+#: base.py:398
+msgid "KPW"
+msgstr ""
+
+#: base.py:399
+msgid "KRW"
+msgstr ""
+
+#: base.py:400
+msgid "KWD"
+msgstr ""
+
+#: base.py:401
+msgid "KYD"
+msgstr ""
+
+#: base.py:402
+msgid "KZT"
+msgstr ""
+
+#: base.py:403
+msgid "LAK"
+msgstr ""
+
+#: base.py:404
+msgid "LBP"
+msgstr ""
+
+#: base.py:405
+msgid "LKR"
+msgstr ""
+
+#: base.py:406
+msgid "LRD"
+msgstr ""
+
+#: base.py:407
+msgid "LSL"
+msgstr ""
+
+#: base.py:408
+msgid "LTL"
+msgstr ""
+
+#: base.py:409
+msgid "LVL"
+msgstr ""
+
+#: base.py:410
+msgid "LYD"
+msgstr ""
+
+#: base.py:411
+msgid "MAD"
+msgstr ""
+
+#: base.py:412
+msgid "MDL"
+msgstr ""
+
+#: base.py:413
+msgid "MGA"
+msgstr ""
+
+#: base.py:414
+msgid "MKD"
+msgstr ""
+
+#: base.py:415
+msgid "MMK"
+msgstr ""
+
+#: base.py:416
+msgid "MNT"
+msgstr ""
+
+#: base.py:417
+msgid "MOP"
+msgstr ""
+
+#: base.py:418
+msgid "MRO"
+msgstr ""
+
+#: base.py:419
+msgid "MUR"
+msgstr ""
+
+#: base.py:420
+msgid "MVR"
+msgstr ""
+
+#: base.py:421
+msgid "MWK"
+msgstr ""
+
+#: base.py:422
+msgid "MXN"
+msgstr ""
+
+#: base.py:423
+msgid "MYR"
+msgstr ""
+
+#: base.py:424
+msgid "MZM"
+msgstr ""
+
+#: base.py:425
+msgid "NAD"
+msgstr ""
+
+#: base.py:426
+msgid "NGN"
+msgstr ""
+
+#: base.py:427
+msgid "NIO"
+msgstr ""
+
+#: base.py:428
+msgid "NOK"
+msgstr ""
+
+#: base.py:429
+msgid "NPR"
+msgstr ""
+
+#: base.py:430
+msgid "NRs"
+msgstr ""
+
+#: base.py:431
+msgid "NZD"
+msgstr ""
+
+#: base.py:432
+msgid "OMR"
+msgstr ""
+
+#: base.py:433
+msgid "PAB"
+msgstr ""
+
+#: base.py:434
+msgid "PEN"
+msgstr ""
+
+#: base.py:435
+msgid "PGK"
+msgstr ""
+
+#: base.py:436
+msgid "PHP"
+msgstr ""
+
+#: base.py:437
+msgid "PKR"
+msgstr ""
+
+#: base.py:438
+msgid "PLN"
+msgstr ""
+
+#: base.py:439
+msgid "PYG"
+msgstr ""
+
+#: base.py:440
+msgid "QAR"
+msgstr ""
+
+#: base.py:441
+msgid "RMB"
+msgstr ""
+
+#: base.py:442
+msgid "RON"
+msgstr ""
+
+#: base.py:443
+msgid "RSD"
+msgstr ""
+
+#: base.py:444
+msgid "RUB"
+msgstr ""
+
+#: base.py:445
+msgid "RWF"
+msgstr ""
+
+#: base.py:446
+msgid "SAR"
+msgstr ""
+
+#: base.py:447
+msgid "SCR"
+msgstr ""
+
+#: base.py:448
+msgid "SDG"
+msgstr ""
+
+#: base.py:449
+msgid "SDR"
+msgstr ""
+
+#: base.py:450
+msgid "SEK"
+msgstr ""
+
+#: base.py:451
+msgid "SGD"
+msgstr ""
+
+#: base.py:452
+msgid "SHP"
+msgstr ""
+
+#: base.py:453
+msgid "SOS"
+msgstr ""
+
+#: base.py:454
+msgid "SRD"
+msgstr ""
+
+#: base.py:455
+msgid "STD"
+msgstr ""
+
+#: base.py:456
+msgid "SYP"
+msgstr ""
+
+#: base.py:457
+msgid "SZL"
+msgstr ""
+
+#: base.py:458
+msgid "THB"
+msgstr ""
+
+#: base.py:459
+msgid "TJS"
+msgstr ""
+
+#: base.py:460
+msgid "TMT"
+msgstr ""
+
+#: base.py:461
+msgid "TND"
+msgstr ""
+
+#: base.py:462
+msgid "TRY"
+msgstr ""
+
+#: base.py:463
+msgid "TTD"
+msgstr ""
+
+#: base.py:464
+msgid "TWD"
+msgstr ""
+
+#: base.py:465
+msgid "TZS"
+msgstr ""
+
+#: base.py:466
+msgid "UAE"
+msgstr ""
+
+#: base.py:467
+msgid "UAH"
+msgstr ""
+
+#: base.py:468
+msgid "UGX"
+msgstr ""
+
+#: base.py:469
+msgid "USD"
+msgstr ""
+
+#: base.py:470
+msgid "UYU"
+msgstr ""
+
+#: base.py:471
+msgid "UZS"
+msgstr ""
+
+#: base.py:472
+msgid "VEB"
+msgstr ""
+
+#: base.py:473
+msgid "VND"
+msgstr ""
+
+#: base.py:474
+msgid "VUV"
+msgstr ""
+
+#: base.py:475
+msgid "WST"
+msgstr ""
+
+#: base.py:476
+msgid "XAF"
+msgstr ""
+
+#: base.py:477
+msgid "XCD"
+msgstr ""
+
+#: base.py:478
+msgid "XDR"
+msgstr ""
+
+#: base.py:479
+msgid "XOF"
+msgstr ""
+
+#: base.py:480
+msgid "XPF"
+msgstr ""
+
+#: base.py:481
+msgid "YEN"
+msgstr ""
+
+#: base.py:482
+msgid "YER"
+msgstr ""
+
+#: base.py:483
+msgid "YTL"
+msgstr ""
+
+#: base.py:484
+msgid "ZAR"
+msgstr ""
+
+#: base.py:485
+msgid "ZMK"
+msgstr ""
+
+#: base.py:486
+msgid "ZWR"
+msgstr ""
+
+#: base.py:492
+msgid "CEO"
+msgstr "Amm. delegato"
+
+#: base.py:493
+msgid "COO"
+msgstr "Dir. operativo"
+
+#: base.py:494
+msgid "CFO"
+msgstr "Dir. finanziario"
+
+#: base.py:495
+msgid "CTO"
+msgstr "Dir. tecnico"
+
+#: base.py:496
+msgid "Project Manager"
+msgstr "Resp. progetto"
+
+#: base.py:497
+msgid "Sales Manager"
+msgstr "Resp. vendite"
+
+#: base.py:498
+msgid "Salesman"
+msgstr "Commerciale"
+
+#: base.py:499
+msgid "Employee"
+msgstr "Impiegato"
+
+#: base.py:508
+msgid "reviewed"
+msgstr "revisionato"
+
+#: base.py:515
+msgid "Bag"
+msgstr ""
+
+#: base.py:516
+msgid "Barrel"
+msgstr ""
+
+#: base.py:517
+msgid "Block"
+msgstr ""
+
+#: base.py:518
+msgid "Board"
+msgstr ""
+
+#: base.py:519
+msgid "Board Feet"
+msgstr ""
+
+#: base.py:520
+msgid "Bottle"
+msgstr ""
+
+#: base.py:521
+msgid "Box"
+msgstr ""
+
+#: base.py:522
+msgid "Bulk"
+msgstr ""
+
+#: base.py:523
+msgid "Bundle"
+msgstr ""
+
+#: base.py:524
+msgid "Card"
+msgstr ""
+
+#: base.py:525
+msgid "Carton"
+msgstr ""
+
+#: base.py:526
+msgid "Cartridge"
+msgstr ""
+
+#: base.py:527
+msgid "Case"
+msgstr ""
+
+#: base.py:528
+msgid "Centigram"
+msgstr ""
+
+#: base.py:529
+msgid "Centiliter"
+msgstr ""
+
+#: base.py:530
+msgid "Count"
+msgstr ""
+
+#: base.py:531
+msgid "Cubic Centimeter"
+msgstr ""
+
+#: base.py:532
+msgid "Cubic Decimeter"
+msgstr ""
+
+#: base.py:533
+msgid "Cubic Feet"
+msgstr ""
+
+#: base.py:534
+msgid "Cubic Inches"
+msgstr ""
+
+#: base.py:535
+msgid "Cubic Meter"
+msgstr ""
+
+#: base.py:536
+msgid "Cubic Milimetre"
+msgstr ""
+
+#: base.py:537
+msgid "Days"
+msgstr ""
+
+#: base.py:538
+msgid "Decigram"
+msgstr ""
+
+#: base.py:539
+msgid "Deciliter"
+msgstr ""
+
+#: base.py:540
+msgid "Decimeter"
+msgstr ""
+
+#: base.py:541
+msgid "Degrees Celsius"
+msgstr ""
+
+#: base.py:542
+msgid "Degrees Fahrenheit"
+msgstr ""
+
+#: base.py:543
+msgid "Dozen"
+msgstr ""
+
+#: base.py:544
+msgid "Feet"
+msgstr ""
+
+#: base.py:545
+msgid "Fifty Count"
+msgstr ""
+
+#: base.py:546
+msgid "Fifty Square Feet"
+msgstr ""
+
+#: base.py:547
+msgid "Fluid Ounce"
+msgstr ""
+
+#: base.py:548
+msgid "Gallon"
+msgstr ""
+
+#: base.py:549
+msgid "Gram"
+msgstr ""
+
+#: base.py:550
+msgid "Gross Kilogram"
+msgstr ""
+
+#: base.py:551
+msgid "Half Dozen"
+msgstr ""
+
+#: base.py:552
+msgid "Houndred Count"
+msgstr ""
+
+#: base.py:553
+msgid "Houndred Feet"
+msgstr ""
+
+#: base.py:554
+msgid "Houndred Pounds"
+msgstr ""
+
+#: base.py:555
+msgid "Inches"
+msgstr ""
+
+#: base.py:556
+msgid "Jar"
+msgstr ""
+
+#: base.py:557
+msgid "Kilogram"
+msgstr ""
+
+#: base.py:558
+msgid "Kilometer"
+msgstr ""
+
+#: base.py:559
+msgid "Kit"
+msgstr ""
+
+#: base.py:560
+msgid "Liter"
+msgstr ""
+
+#: base.py:561
+msgid "Meter"
+msgstr ""
+
+#: base.py:562
+msgid "Metric Ton"
+msgstr ""
+
+#: base.py:563
+msgid "Microgram"
+msgstr ""
+
+#: base.py:564
+msgid "Microliter"
+msgstr ""
+
+#: base.py:565
+msgid "Miligram"
+msgstr ""
+
+#: base.py:566
+msgid "Mililiter"
+msgstr ""
+
+#: base.py:567
+msgid "Milimeter"
+msgstr ""
+
+#: base.py:568
+msgid "Ounces"
+msgstr ""
+
+#: base.py:569
+msgid "Pack"
+msgstr ""
+
+#: base.py:570
+msgid "Package"
+msgstr ""
+
+#: base.py:571
+msgid "Pail"
+msgstr ""
+
+#: base.py:572
+msgid "Pair"
+msgstr ""
+
+#: base.py:573
+msgid "Pallet"
+msgstr ""
+
+#: base.py:574
+msgid "Percent"
+msgstr ""
+
+#: base.py:575
+msgid "Piece"
+msgstr ""
+
+#: base.py:576
+msgid "Pint"
+msgstr ""
+
+#: base.py:577
+msgid "Portion"
+msgstr ""
+
+#: base.py:578
+msgid "Pouch"
+msgstr ""
+
+#: base.py:579
+msgid "Set"
+msgstr ""
+
+#: base.py:580
+msgid "Sheet"
+msgstr ""
+
+#: base.py:581
+msgid "Square Foot"
+msgstr ""
+
+#: base.py:582
+msgid "Square Meter"
+msgstr ""
+
+#: base.py:583
+msgid "Square Yard"
+msgstr ""
+
+#: base.py:584
+msgid "Tank"
+msgstr ""
+
+#: base.py:585
+msgid "Thousand Feet"
+msgstr ""
+
+#: base.py:586
+msgid "Unit"
+msgstr ""
+
+#: base.py:587
+msgid "Yard"
+msgstr ""
+
+#: base.py:593
+msgid "Purchase"
+msgstr "acquisto"
+
+#: base.py:594
+msgid "Production"
+msgstr "produzione"
+
+#: base.py:605
+msgid "sender"
+msgstr "mittente"
+
+#: base.py:606
+msgid "addressee"
+msgstr "destinatario"
+
+#: base.py:607
+msgid "carrier"
+msgstr "vettore"
+
+#: base.py:613
+msgid "30"
+msgstr ""
+
+#: base.py:614
+msgid "60"
+msgstr ""
+
+#: base.py:615
+msgid "90"
+msgstr ""
+
+#: base.py:621
+msgid "samples"
+msgstr "prototipi"
+
+#: base.py:627
+msgid "carriage payed"
+msgstr ""
+
+#: base.py:628
+msgid "retourn"
+msgstr "reso"
+
+#: base.py:634
+msgid "box"
+msgstr "scatola"
+
+#: base.py:641
+msgid "open"
+msgstr "aperto"
+
+#: base.py:642
+msgid "closed"
+msgstr "chiuso"
+
+#: base.py:650
+msgid "very low"
+msgstr "molto bassa"
+
+#: base.py:651
+msgid "low"
+msgstr "bassa"
+
+#: base.py:652
+msgid "medium"
+msgstr "media"
+
+#: base.py:653
+msgid "high"
+msgstr "alta"
+
+#: base.py:654
+msgid "critical"
+msgstr "critica"
+
+#: base.py:660
+msgid "bug"
+msgstr ""
+
+#: base.py:661
+msgid "task"
+msgstr "attività"
+
+#: base.py:662
+msgid "idea"
+msgstr ""
+
+#: base.py:668
+msgid "new"
+msgstr "nuovo"
+
+#: base.py:669
+msgid "needs tests"
+msgstr "richiesta test"
+
+#: base.py:670
+msgid "accepted"
+msgstr "accettato"
+
+#: base.py:671
+msgid "invalid"
+msgstr "invalido"
+
+#: base.py:672
+msgid "duplicated"
+msgstr "duplicato"
+
+#: base.py:673
+msgid "resolved"
+msgstr "risolto"
+
+#: base.py:674
+msgid "awaiting review"
+msgstr "in attesa di revisione"

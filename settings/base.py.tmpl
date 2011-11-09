@@ -25,9 +25,9 @@ import datetime
 
 from pytz import common_timezones
 
-_ = lambda x: x
+from django.utils.translation import ugettext_lazy as _
 
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+PROJECT_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.pardir))
 THEME_PATH = os.path.join(PROJECT_PATH, 'themes', 'default')
 
 DEBUG = True
@@ -75,6 +75,7 @@ USE_L10N = True
 
 # A tuple of directories where Django looks for translation files.
 LOCALE_PATHS = (
+    os.path.join(PROJECT_PATH, 'settings', 'locale'),
     os.path.join(THEME_PATH, 'locale'),
 )
 
