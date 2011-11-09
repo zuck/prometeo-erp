@@ -63,7 +63,7 @@
                 {% property_table object.content_object "[['invoice_addressee', 'shipping_addressee'], ['order_ref_number', 'order_ref_date'], ['terms_of_shipping', 'amount'], ['terms_of_payment', 'due_date'], 'bank_account', 'notes']" %}
                 {% property_table object "['categories', 'tags']" %}
             </table>
-            {% detail_table object.content_object.entries.all "['product', 'quantity', 'unit_value', 'notes']" %}
+            {% detail_table object.content_object.entries.all "['product', 'quantity', 'unit_price', 'notes']" %}
         </div>
         {% include "elements/comments.html" %}
         {% endblock %}
