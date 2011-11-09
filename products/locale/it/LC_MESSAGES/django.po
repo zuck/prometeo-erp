@@ -112,7 +112,7 @@ msgstr "quantità"
 
 #: models.py:78 models.py:79 models.py:80
 msgid "Keep it blank to use the product's default one"
-msgstr "Lasciare bianco per utilizzare il predefinito del prodotto"
+msgstr "Lasciare bianco per utilizzare il valore predefinito del prodotto"
 
 #: models.py:78
 msgid "unit price"
