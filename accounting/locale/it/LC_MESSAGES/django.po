@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:39+0100\n"
+"POT-Creation-Date: 2011-11-09 09:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,8 +31,8 @@ msgid "IBAN"
 msgstr ""
 
 #: models.py:33
-msgid "owner"
-msgstr "properietario"
+msgid "reg. to"
+msgstr "intestato a"
 
 #: models.py:36 models.py:65
 msgid "bank account"

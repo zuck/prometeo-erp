@@ -30,7 +30,7 @@ class BankAccount(models.Model):
     bank_name = models.CharField(max_length=255, verbose_name=_('bank name'))
     bic = models.CharField(max_length=20, verbose_name=_('BIC'))
     iban = models.CharField(max_length=30, verbose_name=_('IBAN'))
-    owner = models.ForeignKey('partners.Partner', verbose_name=_('owner'))
+    owner = models.ForeignKey('partners.Partner', verbose_name=_('reg. to'))
 
     class Meta:
         verbose_name = _('bank account')
