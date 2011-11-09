@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:40+0100\n"
+"POT-Creation-Date: 2011-11-09 10:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,15 +48,11 @@ msgstr "Tasso di conversione tra unità di misura e di vendita"
 
 #: models.py:39
 msgid "UOM to UOS"
-msgstr "Da unità di misura a unità di vendita"
+msgstr "Da UM a UV"
 
 #: models.py:40
-msgid "(Kg)"
-msgstr ""
-
-#: models.py:40
-msgid "unit weight"
-msgstr "peso unitario"
+msgid "unit weight (Kg)"
+msgstr "peso unitario (Kg)"
 
 #: models.py:41
 msgid "consumable?"
@@ -68,121 +64,145 @@ msgstr "servizio?"
 
 #: models.py:43
 msgid "sales price"
-msgstr "prezzo di vednita"
+msgstr "prezzo di vendita"
 
 #: models.py:44
 msgid "sales currency"
 msgstr "valuta di vendita"
 
-#: models.py:45 models.py:100
-msgid "Max discount percentage (%)"
-msgstr "Max sconto percentuale (%)"
-
 #: models.py:45
-msgid "max sales discount"
-msgstr "max sconto di vendita"
+msgid "max sales discount (%)"
+msgstr "max sconto di vendita (%)"
 
 #: models.py:46
+msgid "sales tax (%)"
+msgstr "tasse di vendita (%)"
+
+#: models.py:47
 msgid "suppliers"
 msgstr "fornitori"
 
-#: models.py:47
+#: models.py:48
 msgid "categories"
 msgstr "categorie"
 
-#: models.py:48
+#: models.py:49
 msgid "tags"
 msgstr ""
 
-#: models.py:49
+#: models.py:50
 msgid "dashboard"
 msgstr "bacheca"
 
-#: models.py:50
+#: models.py:51
 msgid "stream"
 msgstr "cronologia"
 
-#: models.py:54 models.py:75 models.py:93
+#: models.py:55 models.py:76 models.py:96
 msgid "product"
 msgstr "prodotto"
 
-#: models.py:55
+#: models.py:56
 msgid "products"
 msgstr "prodotti"
 
-#: models.py:76
+#: models.py:77
 msgid "quantity"
 msgstr "quantità"
 
-#: models.py:77
-msgid "unit value"
-msgstr "valore unitario"
+#: models.py:78 models.py:79 models.py:80
+msgid "Keep it blank to use the product's default one"
+msgstr "Lasciare bianco per utilizzare il predefinito del prodotto"
 
 #: models.py:78
+msgid "unit price"
+msgstr "prezzo unitario"
+
+#: models.py:79
+msgid "tax (%)"
+msgstr "tasse (%)"
+
+#: models.py:80
+msgid "discount (%)"
+msgstr "sconto (%)"
+
+#: models.py:81
 msgid "notes"
 msgstr "note"
 
-#: models.py:81
+#: models.py:84
 msgid "product entry"
 msgstr "voce prodotto"
 
-#: models.py:82
+#: models.py:85
 msgid "product entries"
 msgstr "voci prodotto"
 
-#: models.py:94
+#: models.py:97
 msgid "supplier"
 msgstr "fornitore"
 
-#: models.py:95
+#: models.py:98
 msgid "supply method"
 msgstr "metodo di fornitura"
 
-#: models.py:96
+#: models.py:99
+msgid "Product name used by the supplier"
+msgstr "Nome del prodotto usato dal fornitore"
+
+#: models.py:99
 msgid "ref. name"
-msgstr "nome rif."
+msgstr "rif. nome."
 
-#: models.py:97
+#: models.py:100
+msgid "Product code used by the supplier"
+msgstr "Codice del prodotto usato dal fornitore"
+
+#: models.py:100
 msgid "ref. code"
-msgstr "codice rif."
+msgstr "rif. codice"
 
-#: models.py:98
+#: models.py:101
 msgid "purchase price"
 msgstr "prezzo d'acquisto"
 
-#: models.py:99
+#: models.py:102
 msgid "purchase currency"
 msgstr "valuta d'acquisto"
 
-#: models.py:100
-msgid "max purchase discount"
-msgstr "max sconto d'acquisto"
+#: models.py:103
+msgid "max purchase discount (%)"
+msgstr "max sconto d'acquisto (%)"
 
-#: models.py:101
-msgid "lead time"
-msgstr "tempo di consegna"
+#: models.py:104
+msgid "purchase tax (%)"
+msgstr "tasse d'acquisto (%)"
 
-#: models.py:102
+#: models.py:105
+msgid "lead time (days)"
+msgstr "tempo di consegna (gg)"
+
+#: models.py:106
 msgid "minimal quantity"
 msgstr "quantità minima"
 
-#: models.py:103
+#: models.py:107
 msgid "payment terms"
 msgstr "termini di pagamento"
 
-#: models.py:104
-msgid "warranty period"
-msgstr "periodo di garanzia"
+#: models.py:108
+msgid "warranty period (days)"
+msgstr "periodo di garanzia (gg)"
 
-#: models.py:105
+#: models.py:109
 msgid "end of life"
 msgstr "fine ciclo di vita"
 
-#: models.py:109
+#: models.py:113
 msgid "supply"
 msgstr "fornitura"
 
-#: models.py:110
+#: models.py:114
 msgid "supplies"
 msgstr "forniture"
 
