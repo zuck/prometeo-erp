@@ -78,6 +78,12 @@ class PartnerForm(forms.ModelForm):
         else:
             del self.fields['main_address']
             del self.fields['main_phone_number']
+
+    def clean_vat_number(self):
+        vat_number = self.cleaned_data['vat_number']
+        if not vat_number:
+            vat_number = None
+        return vat_number       
         
 class PartnerJobForm(forms.ModelForm):
     """Form for job data from a partner point of view.
