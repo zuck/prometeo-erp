@@ -80,7 +80,7 @@ msgstr "termini di pagamento"
 
 #: models.py:64
 msgid "due date"
-msgstr "entro il"
+msgstr "scadenza"
 
 #: models.py:66
 msgid "entries"
