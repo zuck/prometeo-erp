@@ -50,7 +50,10 @@ class SupplyForm(forms.ModelForm):
     class Meta:
         model = Supply
         exclude = ['product']
-        widgets = {'end_of_life': DateWidget()}
+        widgets = {
+            'supplier': SelectAndAddWidget(add_url='/partners/add'),
+            'end_of_life': DateWidget()
+        }
 
     def validate_unique(self):
         exclude = self._get_validation_exclusions()
