@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-09 10:29+0100\n"
+"POT-Creation-Date: 2011-11-09 12:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: forms.py:57 forms.py:75
+#: forms.py:58 forms.py:76
 msgid "Origin and destination warehouses can't be the same."
 msgstr "I magazzini di origine e di destinazione non possono essere lo stesso."
 
@@ -36,7 +36,7 @@ msgstr "indirizzo"
 
 #: models.py:38
 msgid "manager"
-msgstr ""
+msgstr "responsabile"
 
 #: models.py:39 models.py:79
 msgid "Created by"
@@ -105,6 +105,10 @@ msgstr "del"
 #: models.py:115
 msgid "mean of delivery"
 msgstr "a mezzo"
+
+#: models.py:116
+msgid "Keep it blank to use the owner's default one"
+msgstr "Lasciare bianco per usare il valore predefinito del proprietario"
 
 #: models.py:116
 msgid "terms of payment"

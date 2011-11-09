@@ -25,6 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from prometeo.core.forms import enrich_form
 from prometeo.core.forms.widgets import *
+from prometeo.partners.models import Partner
 
 from models import *
 
@@ -98,6 +99,13 @@ class DeliveryNoteForm(forms.ModelForm):
             'order_ref_date': DateWidget(),
             'delivery_date': DateWidget()
         }
+
+    def clean_terms_of_payment(self):
+        owner = Partner.objects.get(id=self.data.get('owner', None))
+        terms = self.cleaned_data['terms_of_payment']
+        if not terms and owner:
+            terms = owner.terms_of_payment
+        return terms
 
 enrich_form(WarehouseForm)
 enrich_form(MovementForm)

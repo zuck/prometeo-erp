@@ -113,7 +113,7 @@ class DeliveryNote(models.Model):
     order_ref_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('order ref. no.'))
     order_ref_date = models.DateField(null=True, blank=True, verbose_name=_('on'))
     means_of_delivery = models.CharField(max_length=20, choices=settings.MEANS_OF_DELIVERY, default=settings.DEFAULT_MEAN_OF_DELIVERY, verbose_name=_('mean of delivery'))
-    terms_of_payment = models.CharField(max_length=100, choices=settings.TERMS_OF_PAYMENT, default=settings.DEFAULT_TERMS_OF_PAYMENT, verbose_name=_('terms of payment'))
+    terms_of_payment = models.CharField(max_length=100, blank=True, choices=settings.TERMS_OF_PAYMENT, help_text=_("Keep it blank to use the owner's default one"), verbose_name=_('terms of payment'))
     reason_of_shipping = models.CharField(max_length=20, choices=settings.REASONS_OF_SHIPPING, default=settings.DEFAULT_REASON_OF_SHIPPING, verbose_name=_('reason of shipping'))
     terms_of_shipping = models.CharField(max_length=100, choices=settings.TERMS_OF_SHIPPING, default=settings.DEFAULT_TERMS_OF_SHIPPING, verbose_name=_('terms of shipping'))
     delivery_date = models.DateField(null=True, blank=True, verbose_name=_('delivery date'))

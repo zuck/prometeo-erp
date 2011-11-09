@@ -60,7 +60,7 @@ class SalesInvoice(models.Model):
     order_ref_date = models.DateField(null=True, blank=True, verbose_name=_('on'))
     terms_of_shipping = models.CharField(max_length=100, choices=settings.TERMS_OF_SHIPPING, default=settings.DEFAULT_TERMS_OF_SHIPPING, verbose_name=_('terms of shipping'))
     amount = models.FloatField(default=0.0, verbose_name=_('amount'))
-    terms_of_payment = models.CharField(max_length=100, choices=settings.TERMS_OF_PAYMENT, default=settings.DEFAULT_TERMS_OF_PAYMENT, verbose_name=_('terms of payment'))
+    terms_of_payment = models.CharField(max_length=100, blank=True, choices=settings.TERMS_OF_PAYMENT, help_text=_("Keep it blank to use the owner's default one"), verbose_name=_('terms of payment'))
     due_date = models.DateField(null=True, blank=True, verbose_name=_('due date'))
     bank_account = models.ForeignKey(BankAccount, verbose_name=_('bank account'))
     entries = models.ManyToManyField('products.ProductEntry', null=True, blank=True, verbose_name=_('entries'))
