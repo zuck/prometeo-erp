@@ -46,7 +46,7 @@ class Warehouse(models.Model):
         verbose_name_plural = _('warehouses')
         
     def __unicode__(self):
-        return self.name
+        return _("%s (%s)") % (self.name, self.owner)
 
     @models.permalink
     def get_absolute_url(self):
@@ -102,7 +102,7 @@ class Movement(models.Model):
         return ('movement_delete', (), {"id": self.pk})
 
     def _value(self):
-        return self.product_entry.quantity * self.product_entry.unit_value
+        return self.product_entry.quantity * self.product_entry.unit_price
     value = property(_value)
 
 class DeliveryNote(models.Model):

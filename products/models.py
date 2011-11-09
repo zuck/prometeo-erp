@@ -89,6 +89,13 @@ class ProductEntry(models.Model):
 
     def get_absolute_url(self):
         return self.product.get_absolute_url()
+
+    def clean(self):
+        product = self.product
+        if not self.unit_price and product:
+            self.unit_price = product.sales_price
+        if not self.tax and product:
+            self.tax = product.sales_tax
         
 class Supply(models.Model):
     """Relation between a product and one of its supplier.

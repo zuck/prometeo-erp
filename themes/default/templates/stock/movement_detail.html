@@ -40,7 +40,9 @@
 {% include 'elements/navigator.html' %}
 <div class="details">
     <table class="properties">
-        {% property_table object "[['author', 'created'], ['origin', 'destination'], ['product_entry', 'value']]" %}
+        {% property_table object "[['author', 'created'], ['origin', 'destination']]" %}
+        {% property_table object.product_entry "['product', ['quantity', 'unit_price'], ['tax', 'discount']]" %}
+        {% property_table object "['value']" %}
     </table>
 </div>
 {% endblock %}

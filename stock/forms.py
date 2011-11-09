@@ -47,8 +47,8 @@ class MovementForm(forms.ModelForm):
         model = Movement
         exclude = ['product_entry', 'author']
         widgets = {
-            'origin': SelectAndAddWidget(add_url='/stock/warehouses/add'),
-            'destination': SelectAndAddWidget(add_url='/stock/warehouses/add')
+            'origin': SelectAndAddWidget(add_url='/warehouses/add'),
+            'destination': SelectAndAddWidget(add_url='/warehouses/add')
         }
 
     def clean_destination(self):
