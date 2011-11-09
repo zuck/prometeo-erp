@@ -39,9 +39,9 @@
     {% csrf_token %}
     <table class="properties">
         {% if object.pk %}
-        {% property_table form "['name', 'is_managed', ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], ['main_address', 'main_phone_number'], 'description', 'categories', 'tags', 'allow_comments']" %}
+        {% property_table form "['name', 'is_managed', ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], ['main_address', 'main_phone_number'], 'terms_of_payment', 'description', 'categories', 'tags', 'allow_comments']" %}
         {% else %}
-        {% property_table form "['name', 'is_managed', ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'description', 'categories', 'tags', 'allow_comments']" %}
+        {% property_table form "['name', 'is_managed', ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'currency'], ['language', 'timezone'], ['url', 'email'], 'terms_of_payment', 'description', 'categories', 'tags', 'allow_comments']" %}
         {% endif %}
     </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>

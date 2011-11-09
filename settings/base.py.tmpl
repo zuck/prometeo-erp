@@ -496,7 +496,17 @@ CURRENCIES = (
 
 DEFAULT_CURRENCY = 'EUR'
 
+TERMS_OF_PAYMENT = (
+    ('30', _('30 days')),
+    ('60', _('60 days')),
+    ('90', _('90 days')),
+    ('120', _('120 days')),
+)
+
+DEFAULT_TERMS_OF_PAYMENT = '30'
+
 ROLES = (
+    ('CHAIRMAN', _("Chairman")),
     ('CEO', _("CEO")),
     ('COO', _("COO")),
     ('CFO', _("CFO")),
@@ -622,14 +632,6 @@ MEANS_OF_DELIVERY = (
 )
 
 DEFAULT_MEAN_OF_DELIVERY = 'CARRIER'
-
-TERMS_OF_PAYMENT = (
-    ('30', _('30')),
-    ('60', _('60')),
-    ('90', _('90')),
-)
-
-DEFAULT_TERMS_OF_PAYMENT = '30'
 
 REASONS_OF_SHIPPING = (
     ('SAMPLES', _('samples')),

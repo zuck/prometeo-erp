@@ -91,6 +91,7 @@ class Partner(Commentable):
     main_phone_number = models.ForeignKey('addressing.PhoneNumber', null=True, blank=True, related_name='main_of_partner', verbose_name=_('main phone number'))
     contacts = models.ManyToManyField(Contact, through='partners.Job', null=True, blank=True, verbose_name=_('contacts'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    terms_of_payment = models.CharField(max_length=100, choices=settings.TERMS_OF_PAYMENT, default=settings.DEFAULT_TERMS_OF_PAYMENT, verbose_name=_('terms of payment'))
     assignee = models.ForeignKey('auth.User', related_name="assigned_partners", null=True, blank=True, verbose_name=_('assignee'))
     author = models.ForeignKey('auth.User', related_name="created_partners", verbose_name=_('author'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))

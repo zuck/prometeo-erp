@@ -104,7 +104,6 @@ class Supply(models.Model):
     purchase_tax = models.FloatField(default=0.0, verbose_name=_('purchase tax (%)'))
     lead_time = models.PositiveIntegerField(default=1, verbose_name=_('lead time (days)'))
     minimal_quantity = models.FloatField(default=1.0, verbose_name=_('minimal quantity'))
-    payment_terms = models.PositiveIntegerField(default=settings.PRODUCT_DEFAULT_PAYMENT_TERMS, verbose_name=_('payment terms'))
     warranty_period = models.PositiveIntegerField(default=settings.PRODUCT_DEFAULT_WARRANTY_PERIOD, verbose_name=_('warranty period (days)'))
     end_of_life = models.DateField(null=True, blank=True, verbose_name=_('end of life'))
 
