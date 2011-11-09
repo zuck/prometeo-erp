@@ -1,0 +1,63 @@
+{% load i18n %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>{% block meta_title %}{% endblock %}</title>
+    
+    <style type="text/css">
+        {% block style %}
+        {% endblock %}
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            {% block header %}
+            <table>
+                <tr>
+                    <th id="title">
+                        {% block title %}
+                        <h1>{{ document.content_type.name|upper }}</h1>
+                        {% endblock %}
+                    </th>
+                    <td id="owner">
+                        <h2>{{ document.owner }}<h2>
+                        <p>
+                            {{ document.owner.main_address|default:"" }}
+                            <br/>
+                            {{ document.owner.vat_number }}
+                            <br/>
+                            {{ document.owner.main_phone_number|default:"" }}
+                            <br/>
+                            {{ document.owner.url }} {{ document.owner.email }}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            {% endblock %}
+        </div>
+        
+        <hr/>
+        
+        <div id="content">
+            <div id="main">
+                {% block main %}
+                {% endblock %}
+            </div>
+        </div>
+        
+        <hr/>
+        
+        <div id="footer">
+            {% block footer %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>
+

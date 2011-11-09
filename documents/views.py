@@ -54,7 +54,7 @@ def document_print(request, id, lang=None, template_name=None, **kwargs):
     doc = get_object_or_404(Document, id=id)
     filename = "%s.pdf" % doc.filename
     if not template_name:
-        template_name = "reports/%s/%s_pdf.html" % (doc.content_type.app_label, doc.content_type.model)
+        template_name = "%s/%s_pdf.html" % (doc.content_type.app_label, doc.content_type.model)
     response = render_to_pdf(request, template_name, {'document': doc}, filename, **kwargs)
     set_language(request, old_lang)
     return response

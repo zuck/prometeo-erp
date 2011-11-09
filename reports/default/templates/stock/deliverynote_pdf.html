@@ -1,0 +1,74 @@
+{% extends "report_base.html" %}
+
+{% load i18n %}
+{% load details %}
+
+{% block meta_title %}{{ document|striptags|capfirst }}{% endblock %}
+
+{% block style %}
+@page {
+  margin: 1cm 2cm;
+}
+
+body {
+    color: #1f1f1f;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    text-size: 10px;
+}
+
+a {
+    text-decoration: normal;
+    color: #1f1f1f;
+}
+
+.disabled { display: none; }
+
+hr { display: none; }
+
+table { margin: 20px 0; }
+
+td, th {
+    border: 1px solid #1f1f1f;
+    padding: 5px 5px 0;
+    text-align: left;
+}
+
+#header td, #header th { border: none; }
+
+#header th { font-size: 26px; }
+ 
+#header td { text-align: right; }
+
+.shipping-list table {
+    margin-top: 40px;
+}
+
+.shipping-list table th {
+    background-color: #ce0600;
+    text-align: center;
+    color: #fff;
+}
+
+.shipping-list table th a { color: #fff; }
+{% endblock %}
+
+{% block main %}
+<div class="details">
+    <table>
+        {% property_table document "[['code', 'created']]" %}
+    </table>
+
+    <table>
+        {% property_table document.content_object "[['order_ref_number', 'order_ref_date'], ['means_of_delivery', 'terms_of_payment'], ['reason_of_shipping', 'terms_of_shipping']]" %}
+        {% property_table document.content_object "['notes']" %}
+    </table>
+
+    <table>
+        {% property_table document.content_object "[['invoice_addressee', 'delivery_addressee']]" %}
+    </table>
+
+    <div class="shipping-list">
+        {% detail_table document.content_object.entries.all "['product', 'quantity', 'unit_price', 'discount', 'tax']" %}
+    </div>
+</div>
+{% endblock %}

@@ -29,6 +29,7 @@ from django.utils.translation import ugettext_lazy as _
 
 PROJECT_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.pardir))
 THEME_PATH = os.path.join(PROJECT_PATH, 'themes', 'default')
+REPORT_PATH = os.path.join(PROJECT_PATH, 'reports', 'default')
 
 DEBUG = True
 
@@ -187,6 +188,7 @@ LOGGING = {
 # List of search path for templates.
 TEMPLATE_DIRS = (
     (os.path.join(THEME_PATH, "templates")),
+    (os.path.join(REPORT_PATH, "templates")),
 )
 
 # List of installed applications.

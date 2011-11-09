@@ -103,7 +103,7 @@ msgid "on"
 msgstr "del"
 
 #: models.py:115
-msgid "mean of delivery"
+msgid "means of delivery"
 msgstr "a mezzo"
 
 #: models.py:116
