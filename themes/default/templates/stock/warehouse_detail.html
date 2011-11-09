@@ -46,7 +46,10 @@
         {% endif %}
     </ul>
 </div>
+{% objects_from object %}
+{% with objects as object_list %}
 {% include 'elements/navigator.html' %}
+{% endwith %}
 <div class="sections">   
     <div class="menu">
         {% menu "warehouse_menu" %}
