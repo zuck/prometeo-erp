@@ -10,7 +10,7 @@
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
     {% add_crumb object.project object.project.get_absolute_url %}
-    {% add_crumb 'Milestones' 'milestone_list' object.project.slug %}
+    {% add_crumb 'Milestones' 'milestone_list' object.project.code %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Tickets' %}
 {% endblock %}
@@ -22,7 +22,7 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_ticket %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_ticket_add project.slug object.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_ticket_add project.code object.code %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

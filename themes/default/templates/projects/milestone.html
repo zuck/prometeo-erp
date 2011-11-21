@@ -6,9 +6,9 @@
         <ul>
             {% if perms.projects.change_milestone %}
             {% if not milestone.closed %}
-            <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close milestone.project.slug milestone.slug %}">{% trans 'Close' %}</a></li>
+            <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close milestone.project.code milestone.code %}">{% trans 'Close' %}</a></li>
             {% else %}
-            <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen milestone.project.slug milestone.slug %}">{% trans 'Reopen' %}</a></li>
+            <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen milestone.project.code milestone.code %}">{% trans 'Reopen' %}</a></li>
             {% endif %}
             {% endif %}
             {% if perms.projects.edit_milestone %}
@@ -39,7 +39,7 @@
         </span>
         -
         <strong>{% trans "Tickets" %}:</strong>
-        <span><a href="{% url milestone_tickets milestone.project.slug milestone.slug %}">{{ milestone.tickets.closed.count }}/{{ milestone.tickets.count }}</a></span>
+        <span><a href="{% url milestone_tickets milestone.project.code milestone.code %}">{{ milestone.tickets.closed.count }}/{{ milestone.tickets.count }}</a></span>
         {% if milestone.closed %}
         -
         <strong>{% trans "Closed" %}:</strong>

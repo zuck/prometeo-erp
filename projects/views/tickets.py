@@ -34,19 +34,19 @@ from ..models import *
 from ..forms import *
 
 def _get_ticket(request, *args, **kwargs):
-    id = kwargs.get('id', None)
-    project_slug = kwargs.get('project', None)
-    return get_object_or_404(Ticket, id=id, project__slug=project_slug)
+    code = kwargs.get('code', None)
+    project_code = kwargs.get('project', None)
+    return get_object_or_404(Ticket, code=code, project__code=project_code)
 
 @permission_required('projects.change_ticket') 
 def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tickets of a specified project.
     """
-    project = get_object_or_404(Project, slug=project)
+    project = get_object_or_404(Project, code=project)
     return filtered_list_detail(
         request,
         project.tickets.all(),
-        fields=['id', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
+        fields=['code', 'title', 'parent', 'author', 'manager', 'created', 'closed', 'urgency', 'status'],
         paginate_by=paginate_by,
         page=page,
         extra_context={
@@ -56,35 +56,32 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     )
 
 @permission_required('projects.change_ticket', _get_ticket)    
-def ticket_detail(request, project, id, **kwargs):
+def ticket_detail(request, project, code, **kwargs):
     """Show ticket details.
     """
-    project = get_object_or_404(Project, slug=project)
+    project = get_object_or_404(Project, code=project)
+    ticket = get_object_or_404(Ticket, project=project, code=code)
     object_list = project.tickets.all()
     return list_detail.object_detail(
         request,
-        object_id=id,
+        object_id=ticket.pk,
         queryset=object_list,
         extra_context={'object_list': object_list},
         **kwargs
     )
 
 @permission_required('projects.add_ticket')     
-def ticket_add(request, project, milestone=None, area=None, **kwargs):
+def ticket_add(request, project, milestone=None, **kwargs):
     """Adds a new ticket.
     """
-    project = get_object_or_404(Project, slug=project)
+    project = get_object_or_404(Project, code=project)
     ticket = Ticket(project=project, author=request.user)
 
     initial = {}
 
     if milestone is not None:
-        milestone = get_object_or_404(Milestone, slug=milestone, project=project)
+        milestone = get_object_or_404(Milestone, code=milestone, project=project)
         initial['milestone'] = milestone
-
-    if area is not None:
-        area = get_object_or_404(Area, slug=area, project=project)
-        initial['areas'] = [area]
 
     if request.method == 'POST':
         form = TicketForm(request.POST, instance=ticket, initial=initial)
@@ -104,11 +101,11 @@ def ticket_add(request, project, milestone=None, area=None, **kwargs):
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
 @permission_required('projects.change_ticket', _get_ticket)     
-def ticket_edit(request, project, id, **kwargs):
+def ticket_edit(request, project, code, **kwargs):
     """Edits a ticket.
     """
-    project = get_object_or_404(Project, slug=project)
-    ticket = get_object_or_404(Ticket, project=project, pk=id)
+    project = get_object_or_404(Project, code=project)
+    ticket = get_object_or_404(Ticket, project=project, code=code)
     if request.method == 'POST':
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
@@ -127,16 +124,16 @@ def ticket_edit(request, project, id, **kwargs):
     return render_to_response('projects/ticket_edit.html', RequestContext(request, {'form': form, 'object': ticket}))
 
 @permission_required('projects.delete_ticket', _get_ticket)     
-def ticket_delete(request, project, id, **kwargs):
+def ticket_delete(request, project, code, **kwargs):
     """Deletes a ticket.
     """
-    project = get_object_or_404(Project, slug=project)
-    ticket = get_object_or_404(Ticket, project=project, pk=id)
+    project = get_object_or_404(Project, code=project)
+    ticket = get_object_or_404(Ticket, project=project, code=code)
     return create_update.delete_object(
         request,
         model=Ticket,
         object_id=ticket.pk,
-        post_delete_redirect='/projects/%s/tickets' % project.slug,
+        post_delete_redirect='/projects/%s/tickets' % project.code,
         template_name='projects/ticket_delete.html',
         **kwargs
     )

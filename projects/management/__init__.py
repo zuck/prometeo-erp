@@ -65,21 +65,21 @@ def install(sender, **kwargs):
     project_milestones_link, is_new = Link.objects.get_or_create(
         title=_("Milestones"),
         slug="project_milestones",
-        url="{% url milestone_list object.slug %}",
+        url="{% url milestone_list object.code %}",
         menu=project_menu
     )
 
     project_tickets_link, is_new = Link.objects.get_or_create(
         title=_("Tickets"),
         slug="project_tickets",
-        url="{% url ticket_list object.slug %}",
+        url="{% url ticket_list object.code %}",
         menu=project_menu
     )
 
     project_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="project_timeline",
-        url="{% url project_timeline object.slug %}",
+        url="{% url project_timeline object.code %}",
         menu=project_menu
     )
 
@@ -93,14 +93,14 @@ def install(sender, **kwargs):
     milestone_tickets_link, is_new = Link.objects.get_or_create(
         title=_("Tickets"),
         slug="milestone_tickets",
-        url="{% url milestone_tickets object.project.slug object.slug %}",
+        url="{% url milestone_tickets object.project.code object.code %}",
         menu=milestone_menu
     )
 
     milestone_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="milestone_timeline",
-        url="{% url milestone_timeline object.project.slug object.slug %}",
+        url="{% url milestone_timeline object.project.code object.code %}",
         menu=milestone_menu
     )
 
@@ -114,14 +114,14 @@ def install(sender, **kwargs):
     ticket_tasks_link, is_new = Link.objects.get_or_create(
         title=_("Tasks"),
         slug="ticket_tasks",
-        url="{% url ticket_tasks object.project.slug object.pk %}",
+        url="{% url ticket_tasks object.project.code object.code %}",
         menu=ticket_menu
     )
 
     ticket_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
         slug="ticket_timeline",
-        url="{% url ticket_timeline object.project.slug object.pk %}",
+        url="{% url ticket_timeline object.project.code object.code %}",
         menu=ticket_menu
     )
 

@@ -11,7 +11,7 @@
     {% add_crumb 'Projects' 'project_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% if milestone %}
-    {% add_crumb 'Tickets' 'ticket_list' object.slug %}
+    {% add_crumb 'Tickets' 'ticket_list' object.code %}
     {% add_crumb milestone %}
     {% else %}
     {% add_crumb 'Tickets' %}
@@ -25,7 +25,7 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_ticket %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url ticket_add object.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url ticket_add object.code %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

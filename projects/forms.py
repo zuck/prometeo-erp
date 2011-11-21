@@ -34,7 +34,7 @@ class ProjectForm(forms.ModelForm):
     """
     class Meta:
         model = Project
-        exclude = ('author', 'slug', 'closed', 'dashboard', 'stream')
+        exclude = ('author', 'closed', 'dashboard', 'stream')
         widgets = {
             'description': CKEditor(),
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
@@ -48,7 +48,7 @@ class MilestoneForm(forms.ModelForm):
 
     class Meta:
         model = Milestone
-        exclude = ('project', 'slug', 'author', 'closed', 'dashboard', 'stream')
+        exclude = ('project', 'author', 'closed', 'dashboard', 'stream')
         widgets = {
             'description': CKEditor(),
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
@@ -60,7 +60,7 @@ class TicketForm(forms.ModelForm):
     """
     class Meta:
         model = Ticket
-        exclude = ('project', 'author', 'closed', 'stream')
+        exclude = ('project', 'code', 'author', 'closed', 'stream')
         widgets = {
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),

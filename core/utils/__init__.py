@@ -62,8 +62,10 @@ def field_to_value(field, instance):
     """Tries to convert a model field value in something smarter to render.
     """
     value = getattr(instance, field.name)
-    if field.primary_key:
+    if field.primary_key or isinstance(field, models.SlugField):
         return u'#%s' % value
+    elif isinstance(field, models.PositiveIntegerField):
+        return u'#%d' % value
     elif isinstance(field, (models.ForeignKey, models.OneToOneField)):
         try:
             return '<a href="%s">%s</a>' % (value.get_absolute_url(), value)
@@ -167,3 +169,21 @@ def filter_objects(request, model_or_queryset=None, fields=[], exclude=[]):
         pass
         
     return [f.name for f, value in filter_fields], SortedDict(filter_fields), matches
+
+def assign_code(instance, queryset=None, code_field_name='code', order_field_name='created'):
+    """Assignes an incremental code to the given model instance.
+    """
+    from datetime import date
+
+    if not queryset:
+        queryset = instance.__class__.objects.all()
+
+    if not getattr(instance, code_field_name):
+        year = date.today().year
+        uid = 1
+        try:
+            last_obj = queryset.filter(**{'%s__endswith' % code_field_name: '-%s' % year}).latest(order_field_name)
+            uid = int(getattr(last_obj, code_field_name).partition('-')[0]) + 1
+        except:
+            pass
+        setattr(instance, code_field_name, '%d-%s' % (uid, year))

@@ -21,7 +21,6 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 import os
-from datetime import date
 
 from django.db import models
 from django.contrib.contenttypes import generic
@@ -31,6 +30,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 
 from prometeo.core.models import Commentable
+from prometeo.core.utils import assign_code
 
 from managers import *
 
@@ -47,7 +47,7 @@ def _get_upload_to(instance, filename):
 class Document(Commentable):
     """Document model.
     """
-    code = models.CharField(max_length=255, verbose_name=_('code'))
+    code = models.SlugField(max_length=100, verbose_name=_('code'))
     owner = models.ForeignKey('partners.Partner', verbose_name=_('owner'))
     status = models.CharField(max_length=20, choices=settings.DOCUMENT_STATUS_CHOICES, default=settings.DOCUMENT_DEFAULT_STATUS, verbose_name=_('status'))
     content_type = models.ForeignKey(ContentType)
@@ -68,23 +68,11 @@ class Document(Commentable):
 
     def __init__(self, *args, **kwargs):
         super(Document, self).__init__(*args, **kwargs)
-        if self.content_type and not self.code:
-            year = date.today().year
-            uid = 1
-            try:
-                last_doc = Document.objects.filter(content_type=self.content_type, code__endswith='-%s' % year).latest('created')
-                uid = int(last_doc.code.partition('-')[0]) + 1
-            except:
-                pass
-            self.code = '%d-%s' % (uid, year)
+        if self.content_type:
+            assign_code(self, Document.objects.filter(content_type=self.content_type))
 
     def __unicode__(self):
         return "%s #%s" % (self.content_object, self.code)
-
-    def _filename(self):
-        return ("%s" % self).replace('#', '').replace(' ', '_')
-    _filename.short_description = _('filename')
-    filename = property(_filename)
 
     def get_absolute_url(self):
         return self.content_object.get_absolute_url()
@@ -94,6 +82,11 @@ class Document(Commentable):
     
     def get_delete_url(self):
         return self.content_object.get_delete_url()
+
+    def _filename(self):
+        return ("%s" % self).replace('#', '').replace(' ', '_')
+    _filename.short_description = _('filename')
+    filename = property(_filename)
 
 class HardCopy(models.Model):
     """A localized hard copy of a document.

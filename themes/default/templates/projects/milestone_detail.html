@@ -14,7 +14,7 @@
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
     {% add_crumb object.project object.project.get_absolute_url %}
-    {% add_crumb 'Milestones' 'milestone_list' object.project.slug %}
+    {% add_crumb 'Milestones' 'milestone_list' object.project.code %}
     {% add_crumb object %}
 {% endblock %}
 
@@ -29,22 +29,22 @@
 <div class="actions">
     <ul>
         {% if perms.projects.add_milestone %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.project.slug %}">{% trans 'Add' %}</a></li>
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.project.code %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.projects.change_milestone %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url milestone_edit object.project.slug object.slug %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url milestone_edit object.project.code object.code %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.projects.delete_milestone %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url milestone_delete object.project.slug object.slug %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url milestone_delete object.project.code object.code %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.projects.change_milestone %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.slug %}">{% trans 'All' %}</a></li>
+        <li class="all"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.code %}">{% trans 'All' %}</a></li>
         {% endif %}
         {% if perms.projects.change_milestone %}
         {% if not object.closed %}
-        <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close object.project.slug object.slug %}">{% trans 'Close' %}</a></li>
+        <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close object.project.code object.code %}">{% trans 'Close' %}</a></li>
         {% else %}
-        <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen object.project.slug object.slug %}">{% trans 'Reopen' %}</a></li>
+        <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen object.project.code object.code %}">{% trans 'Reopen' %}</a></li>
         {% endif %}
         {% endif %}
         {% if perms.projects.change_milestone %}

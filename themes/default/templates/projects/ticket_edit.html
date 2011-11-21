@@ -12,7 +12,7 @@
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Projects' 'project_list' %}
     {% add_crumb object.project object.project.get_absolute_url %}
-    {% add_crumb 'Tickets' 'ticket_list' object.project.slug %}
+    {% add_crumb 'Tickets' 'ticket_list' object.project.code %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Edit' %}
@@ -34,7 +34,7 @@
 
 {% block main %}
 {% if object.pk %}
-<form method="post" action="{% url ticket_edit object.project.slug object.pk %}">
+<form method="post" action="{% url ticket_edit object.project.code object.code %}">
 {% else %}
 <form method="post" action=".">
 {% endif %}

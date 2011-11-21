@@ -20,7 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-import datetime
+from datetime import datetime
 
 from django.db import models
 from django.db.models import permalink
@@ -30,14 +30,15 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 
 from prometeo.core.models import Commentable
+from prometeo.core.utils import assign_code
 
 from managers import *
 
 class Project(Commentable):
     """Project model.
     """
+    code = models.SlugField(max_length=100, verbose_name=_('code'))
     title = models.CharField(max_length=100, verbose_name=_('title'))
-    slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name='created_projects', null=True, blank=True, verbose_name=_('created by'))
     manager = models.ForeignKey('auth.User', related_name='managed_projects', null=True, blank=True, verbose_name=_('project manager'))
@@ -49,27 +50,34 @@ class Project(Commentable):
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_('dashboard'))
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
+    class Meta:
+        ordering = ['code']
+        verbose_name = _('project')
+        verbose_name_plural = _('projects')
+
+    def __init__(self, *args, **kwargs):
+        super(Project, self).__init__(*args, **kwargs)
+        assign_code(self)
+
     def __unicode__(self):
-        return u'%s' % self.title
+        return u'#%s %s' % (self.code, self.title)
 
     @models.permalink
     def get_absolute_url(self):
-        return ('project_detail', (), {"slug": self.slug})
+        return ('project_detail', (), {"code": self.code})
 
     @models.permalink
     def get_edit_url(self):
-        return ('project_edit', (), {"slug": self.slug})
+        return ('project_edit', (), {"code": self.code})
 
     @models.permalink
     def get_delete_url(self):
-        return ('project_delete', (), {"slug": self.slug})
+        return ('project_delete', (), {"code": self.code})
 
     def save(self):
-        if not self.slug:
-            self.slug = slugify(self.title)
         if self.status in settings.PROJECT_CLOSE_STATUSES:
             if self.closed is None:
-                self.closed = datetime.datetime.now()
+                self.closed = datetime.now()
         else:
             self.closed = None
         super(Project, self).save()
@@ -83,8 +91,8 @@ class Project(Commentable):
 class Milestone(Commentable):
     """Milestone model.
     """
+    code = models.SlugField(max_length=100, verbose_name=_('code'))
     title = models.CharField(max_length=255, verbose_name=_('title'))
-    slug = models.SlugField(max_length=100, verbose_name=_('slug'))
     project = models.ForeignKey(Project, verbose_name=_('project'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name='created_milestones', null=True, blank=True, verbose_name=_('created by'))
@@ -98,17 +106,23 @@ class Milestone(Commentable):
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
-        ordering = ['deadline', 'created']
+        ordering = ['project', 'deadline', 'code']
+        verbose_name = _('milestone')
+        verbose_name_plural = _('milestones')
+
+    def __init__(self, *args, **kwargs):
+        super(Milestone, self).__init__(*args, **kwargs)
+        assign_code(self)
 
     def __unicode__(self):
-        return u'%s' % self.title
+        return u'#%s %s' % (self.code, self.title)
     
     def _expired(self):
         if self.deadline:
             if self.closed:
                 return self.closed > self.deadline
             else:
-                return datetime.datetime.now() > self.deadline
+                return datetime.now() > self.deadline
         return False
     expired = property(_expired)
     
@@ -122,20 +136,15 @@ class Milestone(Commentable):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('milestone_detail', (), {"project": self.project.slug, "slug": self.slug})
+        return ('milestone_detail', (), {"project": self.project.code, "code": self.code})
 
     @models.permalink
     def get_edit_url(self):
-        return ('milestone_edit', (), {"project": self.project.slug, "slug": self.slug})
+        return ('milestone_edit', (), {"project": self.project.code, "code": self.code})
 
     @models.permalink
     def get_delete_url(self):
-        return ('milestone_delete', (), {"project": self.project.slug, "slug": self.slug})
-        
-    def save(self):
-        if not self.slug:
-            self.slug = slugify('%s_%s' % (self.project.pk, self.title))
-        super(Milestone, self).save()
+        return ('milestone_delete', (), {"project": self.project.code, "code": self.code})
 
     def working_hours(self):
         count = 0
@@ -145,8 +154,9 @@ class Milestone(Commentable):
 
 class Ticket(Commentable):
     """Ticket model.
-    """    
+    """
     project = models.ForeignKey(Project, related_name='tickets', verbose_name=_('project'))
+    code = models.PositiveIntegerField(verbose_name=_('code'))
     title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name="created_tickets", verbose_name=_('created by'))
@@ -166,31 +176,43 @@ class Ticket(Commentable):
     objects = TicketManager()     
 
     class Meta:
-        ordering = ('created', 'id')
-        get_latest_by = 'created'
+        ordering = ('project', '-code')
         permissions = (
             ("change_assignee", "Can change assignee"),
         )
+        verbose_name = _('ticket')
+        verbose_name_plural = _('tickets')
+
+    def __init__(self, *args, **kwargs):
+        super(Ticket, self).__init__(*args, **kwargs)
+        if not self.code:
+            uid = 1
+            try:
+                last_ticket = Ticket.objects.filter(project=self.project).latest('created')
+                uid = int(last_ticket.code) + 1
+            except:
+                pass
+            self.code = uid
 
     def __unicode__(self):
-        return u'#%d %s' % (self.pk, self.title)
+        return u'#%d %s' % (self.code, self.title)
     
     @models.permalink    
     def get_absolute_url(self):
-        return ('ticket_detail', (), {"project": self.project.slug, "id": self.pk})
+        return ('ticket_detail', (), {"project": self.project.code, "code": self.code})
     
     @models.permalink    
     def get_edit_url(self):
-        return ('ticket_edit', (), {"project": self.project.slug, "id": self.pk})
+        return ('ticket_edit', (), {"project": self.project.code, "code": self.code})
     
     @models.permalink    
     def get_delete_url(self):
-        return ('ticket_delete', (), {"project": self.project.slug, "id": self.pk})
+        return ('ticket_delete', (), {"project": self.project.code, "code": self.code})
         
     def save(self):
         if self.status in settings.TICKET_CLOSE_STATUSES:
             if self.closed is None:
-                self.closed = datetime.datetime.now()
+                self.closed = datetime.now()
         else:
             self.closed = None
         super(Ticket, self).save()

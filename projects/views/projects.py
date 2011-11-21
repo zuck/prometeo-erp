@@ -34,8 +34,8 @@ from ..models import *
 from ..forms import *
 
 def _get_project(request, *args, **kwargs):
-    slug = kwargs.get('slug', None)
-    return get_object_or_404(Project, slug=slug)
+    code = kwargs.get('code', None)
+    return get_object_or_404(Project, code=code)
 
 @permission_required('projects.change_project') 
 def project_list(request, page=0, paginate_by=5, **kwargs):
@@ -44,19 +44,20 @@ def project_list(request, page=0, paginate_by=5, **kwargs):
     return filtered_list_detail(
         request,
         Project,
-        fields=['id', 'title', 'author', 'manager', 'created', 'status'],
+        fields=['code', 'title', 'author', 'manager', 'created', 'status'],
         paginate_by=paginate_by,
         page=page,
         **kwargs
     )   
     
 @permission_required('projects.change_project', _get_project) 
-def project_detail(request, slug, **kwargs):
+def project_detail(request, code, **kwargs):
     """Displays the selected project.
     """
+    project = get_object_or_404(Project, code=code)
     return list_detail.object_detail(
         request,
-        slug=slug,
+        object_id=project.pk,
         queryset=Project.objects.all(),
         **kwargs
     )
@@ -78,10 +79,10 @@ def project_add(request, **kwargs):
     return render_to_response('projects/project_edit.html', RequestContext(request, {'form': form, 'object': project}))
 
 @permission_required('projects.change_project', _get_project)     
-def project_edit(request, slug, **kwargs):
+def project_edit(request, code, **kwargs):
     """Edits a project.
     """
-    project = get_object_or_404(Project, slug=slug)
+    project = get_object_or_404(Project, code=code)
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
@@ -94,14 +95,15 @@ def project_edit(request, slug, **kwargs):
     return render_to_response('projects/project_edit.html', RequestContext(request, {'form': form, 'object': project}))
 
 @permission_required('projects.delete_project', _get_project)     
-def project_delete(request, slug, **kwargs):
+def project_delete(request, code, **kwargs):
     """Deletes a project.
     """
+    project = get_object_or_404(Project, code=code)
     return create_update.delete_object(
-            request,
-            model=Project,
-            slug=slug,
-            post_delete_redirect='/projects/',
-            template_name='projects/project_delete.html',
-            **kwargs
-        )
+        request,
+        model=Project,
+        object_id=project.pk,
+        post_delete_redirect='/projects/',
+        template_name='projects/project_delete.html',
+        **kwargs
+    )
