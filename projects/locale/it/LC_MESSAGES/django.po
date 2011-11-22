@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:40+0100\n"
+"POT-Creation-Date: 2011-11-22 16:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,89 +18,105 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: models.py:39 models.py:86 models.py:150
+#: models.py:40 models.py:94 models.py:159
+msgid "code"
+msgstr "codice"
+
+#: models.py:41 models.py:95 models.py:160
 msgid "title"
 msgstr "titolo"
 
-#: models.py:40 models.py:87
-msgid "slug"
-msgstr ""
-
-#: models.py:41 models.py:89 models.py:151
+#: models.py:42 models.py:97 models.py:161
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:42 models.py:90 models.py:152
+#: models.py:43 models.py:98 models.py:162
 msgid "created by"
 msgstr "creato da"
 
-#: models.py:43
+#: models.py:44
 msgid "project manager"
-msgstr ""
+msgstr "responsabile progetto"
 
-#: models.py:44 models.py:156
+#: models.py:45 models.py:166
 msgid "status"
 msgstr "stato"
 
-#: models.py:45 models.py:92 models.py:158
+#: models.py:46 models.py:100 models.py:168
 msgid "created on"
 msgstr "creato il"
 
-#: models.py:46 models.py:94 models.py:160
+#: models.py:47 models.py:102 models.py:170
 msgid "closed on"
 msgstr "chiuso il"
 
-#: models.py:47 models.py:95 models.py:161
+#: models.py:48 models.py:103 models.py:171
 msgid "categories"
 msgstr "categorie"
 
-#: models.py:48 models.py:96 models.py:162
+#: models.py:49 models.py:104 models.py:172
 msgid "tags"
 msgstr ""
 
-#: models.py:49 models.py:97
+#: models.py:50 models.py:105
 msgid "dashboard"
 msgstr "bacheca"
 
-#: models.py:50 models.py:98 models.py:164
+#: models.py:51 models.py:106 models.py:174
 msgid "stream"
 msgstr "cronologia"
 
-#: models.py:88 models.py:149
+#: models.py:55 models.py:96 models.py:158
 msgid "project"
-msgstr "prodotto"
+msgstr "progetto"
 
-#: models.py:91
+#: models.py:56
+msgid "projects"
+msgstr "progetti"
+
+#: models.py:99
 msgid "manager"
-msgstr ""
+msgstr "responsabile"
 
-#: models.py:93
+#: models.py:101
 msgid "deadline"
 msgstr "scadenza"
 
-#: models.py:153
+#: models.py:110 models.py:163
 msgid "milestone"
 msgstr ""
 
-#: models.py:154
+#: models.py:111
+msgid "milestones"
+msgstr ""
+
+#: models.py:164
 msgid "type"
 msgstr "tiplogia"
 
-#: models.py:155
+#: models.py:165
 msgid "urgency"
 msgstr "urgenza"
 
-#: models.py:157
+#: models.py:167
 msgid "assigned to"
 msgstr "assegnato a"
 
-#: models.py:159
+#: models.py:169
 msgid "modified on"
 msgstr "modificato il"
 
-#: models.py:163
+#: models.py:173
 msgid "related tasks"
 msgstr "attività associate"
+
+#: models.py:183
+msgid "ticket"
+msgstr ""
+
+#: models.py:184
+msgid "tickets"
+msgstr ""
 
 #: signals.py:114
 #, python-format
@@ -207,26 +223,26 @@ msgstr "Modifica ticket"
 msgid "Ticket deleted"
 msgstr "Eliminazione ticket"
 
-#: views/milestones.py:80 views/milestones.py:97
+#: views/milestones.py:81 views/milestones.py:98
 msgid "The milestone has been saved."
 msgstr "La milestone è stata salvata."
 
-#: views/milestones.py:127
+#: views/milestones.py:129
 msgid "The milestone has been closed."
 msgstr "La milestone è stata chiusa."
 
-#: views/milestones.py:140
+#: views/milestones.py:142
 msgid "The milestone has been reopened."
 msgstr "La milestone è stata riaperta."
 
-#: views/projects.py:73 views/projects.py:89
+#: views/projects.py:74 views/projects.py:90
 msgid "The project has been saved."
 msgstr "Il progetto è stato salvato."
 
-#: views/tickets.py:93
+#: views/tickets.py:90
 msgid "Your ticket has been registered."
 msgstr "Il tuo ticket è stato registrato."
 
-#: views/tickets.py:116
+#: views/tickets.py:113
 msgid "The ticket has been updated."
 msgstr "Il ticket è stato aggiornato."
