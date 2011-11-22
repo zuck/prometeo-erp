@@ -620,8 +620,6 @@ PRODUCT_SUPPLY_METHODS = (
 
 PRODUCT_DEFAULT_SUPPLY_METHOD = 'PUR'
 
-PRODUCT_DEFAULT_PAYMENT_TERMS = 30
-
 PRODUCT_DEFAULT_WARRANTY_PERIOD = 730
 """
 
@@ -635,18 +633,21 @@ MEANS_OF_DELIVERY = (
 
 DEFAULT_MEAN_OF_DELIVERY = 'CARRIER'
 
-REASONS_OF_SHIPPING = (
-    ('SAMPLES', _('samples')),
-)
-
-DEFAULT_REASON_OF_SHIPPING = 'SAMPLES'
-
 TERMS_OF_SHIPPING = (
-    ('CARRIAGEPAYED', _('carriage payed')),
-    ('RETOURN', _('retourn')),
+    ('EXW', _('EXW')),
+    ('FCA', _('FCA')),
+    ('CPT', _('CPT')),
+    ('CIP', _('CIP')),
+    ('DAT', _('DAT')),
+    ('DAP', _('DAP')),
+    ('DDP', _('DDP')),
+    ('FAS', _('FAS')),
+    ('FOB', _('FOB')),
+    ('CFR', _('CFR')),
+    ('CIF', _('CIF')),
 )
 
-DEFAULT_TERMS_OF_SHIPPING = 'CARRIAGEPAYED'
+DEFAULT_TERMS_OF_SHIPPING = 'CPT'
 
 GOODS_APPEARANCES = (
     ('BOX', _('box')),
