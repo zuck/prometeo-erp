@@ -175,7 +175,7 @@ def assign_code(instance, queryset=None, code_field_name='code', order_field_nam
     """
     from datetime import date
 
-    if not queryset:
+    if not isinstance(queryset, query.QuerySet):
         queryset = instance.__class__.objects.all()
 
     if not getattr(instance, code_field_name):
