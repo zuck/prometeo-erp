@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 16:38+0100\n"
+"POT-Creation-Date: 2011-11-22 16:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "tentative"
 msgstr "tentativo"
 
-#: base.py:285 base.py:294 base.py:524
+#: base.py:285 base.py:294 base.py:526
 msgid "confirmed"
 msgstr "confermato"
 
@@ -30,7 +30,7 @@ msgstr "confermato"
 msgid "cancelled"
 msgstr "cancellato"
 
-#: base.py:293 base.py:523
+#: base.py:293 base.py:525
 msgid "draft"
 msgstr "bozza"
 
@@ -734,470 +734,478 @@ msgstr "90 gg"
 msgid "120 days"
 msgstr "120 gg"
 
-#: base.py:508
+#: base.py:503
+msgid "cash in advance"
+msgstr "pagamento anticipato"
+
+#: base.py:504
+msgid "cash on delivery"
+msgstr "pagamento alla consegna"
+
+#: base.py:510
 msgid "Chairman"
 msgstr "Presidente"
 
-#: base.py:509
+#: base.py:511
 msgid "CEO"
 msgstr "Amm. delegato"
 
-#: base.py:510
+#: base.py:512
 msgid "COO"
 msgstr "Dir. operativo"
 
-#: base.py:511
+#: base.py:513
 msgid "CFO"
 msgstr "Dir. finanziario"
 
-#: base.py:512
+#: base.py:514
 msgid "CTO"
 msgstr "Dir. tecnico"
 
-#: base.py:513
+#: base.py:515
 msgid "Project Manager"
 msgstr "Resp. progetto"
 
-#: base.py:514
+#: base.py:516
 msgid "Sales Manager"
 msgstr "Resp. vendite"
 
-#: base.py:515
+#: base.py:517
 msgid "Salesman"
 msgstr "Commerciale"
 
-#: base.py:516
+#: base.py:518
 msgid "Employee"
 msgstr "Impiegato"
 
-#: base.py:525
+#: base.py:527
 msgid "reviewed"
 msgstr "revisionato"
 
-#: base.py:532
+#: base.py:534
 msgid "Bag"
 msgstr ""
 
-#: base.py:533
+#: base.py:535
 msgid "Barrel"
 msgstr ""
 
-#: base.py:534
+#: base.py:536
 msgid "Block"
 msgstr ""
 
-#: base.py:535
+#: base.py:537
 msgid "Board"
 msgstr ""
 
-#: base.py:536
+#: base.py:538
 msgid "Board Feet"
 msgstr ""
 
-#: base.py:537
+#: base.py:539
 msgid "Bottle"
 msgstr ""
 
-#: base.py:538
+#: base.py:540
 msgid "Box"
 msgstr ""
 
-#: base.py:539
+#: base.py:541
 msgid "Bulk"
 msgstr ""
 
-#: base.py:540
+#: base.py:542
 msgid "Bundle"
 msgstr ""
 
-#: base.py:541
+#: base.py:543
 msgid "Card"
 msgstr ""
 
-#: base.py:542
+#: base.py:544
 msgid "Carton"
 msgstr ""
 
-#: base.py:543
+#: base.py:545
 msgid "Cartridge"
 msgstr ""
 
-#: base.py:544
+#: base.py:546
 msgid "Case"
 msgstr ""
 
-#: base.py:545
+#: base.py:547
 msgid "Centigram"
 msgstr ""
 
-#: base.py:546
+#: base.py:548
 msgid "Centiliter"
 msgstr ""
 
-#: base.py:547
+#: base.py:549
 msgid "Count"
 msgstr ""
 
-#: base.py:548
+#: base.py:550
 msgid "Cubic Centimeter"
 msgstr ""
 
-#: base.py:549
+#: base.py:551
 msgid "Cubic Decimeter"
 msgstr ""
 
-#: base.py:550
+#: base.py:552
 msgid "Cubic Feet"
 msgstr ""
 
-#: base.py:551
+#: base.py:553
 msgid "Cubic Inches"
 msgstr ""
 
-#: base.py:552
+#: base.py:554
 msgid "Cubic Meter"
 msgstr ""
 
-#: base.py:553
+#: base.py:555
 msgid "Cubic Milimetre"
 msgstr ""
 
-#: base.py:554
+#: base.py:556
 msgid "Days"
 msgstr ""
 
-#: base.py:555
+#: base.py:557
 msgid "Decigram"
 msgstr ""
 
-#: base.py:556
+#: base.py:558
 msgid "Deciliter"
 msgstr ""
 
-#: base.py:557
+#: base.py:559
 msgid "Decimeter"
 msgstr ""
 
-#: base.py:558
+#: base.py:560
 msgid "Degrees Celsius"
 msgstr ""
 
-#: base.py:559
+#: base.py:561
 msgid "Degrees Fahrenheit"
 msgstr ""
 
-#: base.py:560
+#: base.py:562
 msgid "Dozen"
 msgstr ""
 
-#: base.py:561
+#: base.py:563
 msgid "Feet"
 msgstr ""
 
-#: base.py:562
+#: base.py:564
 msgid "Fifty Count"
 msgstr ""
 
-#: base.py:563
+#: base.py:565
 msgid "Fifty Square Feet"
 msgstr ""
 
-#: base.py:564
+#: base.py:566
 msgid "Fluid Ounce"
 msgstr ""
 
-#: base.py:565
+#: base.py:567
 msgid "Gallon"
 msgstr ""
 
-#: base.py:566
+#: base.py:568
 msgid "Gram"
 msgstr ""
 
-#: base.py:567
+#: base.py:569
 msgid "Gross Kilogram"
 msgstr ""
 
-#: base.py:568
+#: base.py:570
 msgid "Half Dozen"
 msgstr ""
 
-#: base.py:569
+#: base.py:571
 msgid "Houndred Count"
 msgstr ""
 
-#: base.py:570
+#: base.py:572
 msgid "Houndred Feet"
 msgstr ""
 
-#: base.py:571
+#: base.py:573
 msgid "Houndred Pounds"
 msgstr ""
 
-#: base.py:572
+#: base.py:574
 msgid "Inches"
 msgstr ""
 
-#: base.py:573
+#: base.py:575
 msgid "Jar"
 msgstr ""
 
-#: base.py:574
+#: base.py:576
 msgid "Kilogram"
 msgstr ""
 
-#: base.py:575
+#: base.py:577
 msgid "Kilometer"
 msgstr ""
 
-#: base.py:576
+#: base.py:578
 msgid "Kit"
 msgstr ""
 
-#: base.py:577
+#: base.py:579
 msgid "Liter"
 msgstr ""
 
-#: base.py:578
+#: base.py:580
 msgid "Meter"
 msgstr ""
 
-#: base.py:579
+#: base.py:581
 msgid "Metric Ton"
 msgstr ""
 
-#: base.py:580
+#: base.py:582
 msgid "Microgram"
 msgstr ""
 
-#: base.py:581
+#: base.py:583
 msgid "Microliter"
 msgstr ""
 
-#: base.py:582
+#: base.py:584
 msgid "Miligram"
 msgstr ""
 
-#: base.py:583
+#: base.py:585
 msgid "Mililiter"
 msgstr ""
 
-#: base.py:584
+#: base.py:586
 msgid "Milimeter"
 msgstr ""
 
-#: base.py:585
+#: base.py:587
 msgid "Ounces"
 msgstr ""
 
-#: base.py:586
+#: base.py:588
 msgid "Pack"
 msgstr ""
 
-#: base.py:587
+#: base.py:589
 msgid "Package"
 msgstr ""
 
-#: base.py:588
+#: base.py:590
 msgid "Pail"
 msgstr ""
 
-#: base.py:589
+#: base.py:591
 msgid "Pair"
 msgstr ""
 
-#: base.py:590
+#: base.py:592
 msgid "Pallet"
 msgstr ""
 
-#: base.py:591
+#: base.py:593
 msgid "Percent"
 msgstr ""
 
-#: base.py:592
+#: base.py:594
 msgid "Piece"
 msgstr ""
 
-#: base.py:593
+#: base.py:595
 msgid "Pint"
 msgstr ""
 
-#: base.py:594
+#: base.py:596
 msgid "Portion"
 msgstr ""
 
-#: base.py:595
+#: base.py:597
 msgid "Pouch"
 msgstr ""
 
-#: base.py:596
+#: base.py:598
 msgid "Set"
 msgstr ""
 
-#: base.py:597
+#: base.py:599
 msgid "Sheet"
 msgstr ""
 
-#: base.py:598
+#: base.py:600
 msgid "Square Foot"
 msgstr ""
 
-#: base.py:599
+#: base.py:601
 msgid "Square Meter"
 msgstr ""
 
-#: base.py:600
+#: base.py:602
 msgid "Square Yard"
 msgstr ""
 
-#: base.py:601
+#: base.py:603
 msgid "Tank"
 msgstr ""
 
-#: base.py:602
+#: base.py:604
 msgid "Thousand Feet"
 msgstr ""
 
-#: base.py:603
+#: base.py:605
 msgid "Unit"
 msgstr ""
 
-#: base.py:604
+#: base.py:606
 msgid "Yard"
 msgstr ""
 
-#: base.py:610
+#: base.py:612
 msgid "Purchase"
 msgstr "acquisto"
 
-#: base.py:611
+#: base.py:613
 msgid "Production"
 msgstr "produzione"
 
-#: base.py:620
+#: base.py:622
 msgid "sender"
 msgstr "mittente"
 
-#: base.py:621
+#: base.py:623
 msgid "addressee"
 msgstr "destinatario"
 
-#: base.py:622
+#: base.py:624
 msgid "carrier"
 msgstr "vettore"
 
-#: base.py:628
+#: base.py:630
 msgid "EXW"
 msgstr ""
 
-#: base.py:629
+#: base.py:631
 msgid "FCA"
 msgstr ""
 
-#: base.py:630
+#: base.py:632
 msgid "CPT"
 msgstr ""
 
-#: base.py:631
+#: base.py:633
 msgid "CIP"
 msgstr ""
 
-#: base.py:632
+#: base.py:634
 msgid "DAT"
 msgstr ""
 
-#: base.py:633
+#: base.py:635
 msgid "DAP"
 msgstr ""
 
-#: base.py:634
+#: base.py:636
 msgid "DDP"
 msgstr ""
 
-#: base.py:635
+#: base.py:637
 msgid "FAS"
 msgstr ""
 
-#: base.py:636
+#: base.py:638
 msgid "FOB"
 msgstr ""
 
-#: base.py:637
+#: base.py:639
 msgid "CFR"
 msgstr ""
 
-#: base.py:638
+#: base.py:640
 msgid "CIF"
 msgstr ""
 
-#: base.py:644
+#: base.py:646
 msgid "box"
 msgstr "scatola"
 
-#: base.py:651
+#: base.py:653
 msgid "open"
 msgstr "aperto"
 
-#: base.py:652
+#: base.py:654
 msgid "closed"
 msgstr "chiuso"
 
-#: base.py:660
+#: base.py:662
 msgid "very low"
 msgstr "molto bassa"
 
-#: base.py:661
+#: base.py:663
 msgid "low"
 msgstr "bassa"
 
-#: base.py:662
+#: base.py:664
 msgid "medium"
 msgstr "media"
 
-#: base.py:663
+#: base.py:665
 msgid "high"
 msgstr "alta"
 
-#: base.py:664
+#: base.py:666
 msgid "critical"
 msgstr "critica"
 
-#: base.py:670
+#: base.py:672
 msgid "bug"
 msgstr ""
 
-#: base.py:671
+#: base.py:673
 msgid "task"
 msgstr "attività"
 
-#: base.py:672
+#: base.py:674
 msgid "idea"
 msgstr ""
 
-#: base.py:678
+#: base.py:680
 msgid "new"
 msgstr "nuovo"
 
-#: base.py:679
+#: base.py:681
 msgid "needs tests"
 msgstr "richiesta test"
 
-#: base.py:680
+#: base.py:682
 msgid "accepted"
 msgstr "accettato"
 
-#: base.py:681
+#: base.py:683
 msgid "invalid"
 msgstr "invalido"
 
-#: base.py:682
+#: base.py:684
 msgid "duplicated"
 msgstr "duplicato"
 
-#: base.py:683
+#: base.py:685
 msgid "resolved"
 msgstr "risolto"
 
-#: base.py:684
+#: base.py:686
 msgid "awaiting review"
 msgstr "in attesa di revisione"
