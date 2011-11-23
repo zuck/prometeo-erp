@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 23:55+0100\n"
+"POT-Creation-Date: 2011-11-23 15:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,11 +73,19 @@ msgstr "utenti"
 msgid "groups"
 msgstr "gruppi"
 
-#: auth/views.py:111 notifications/views.py:58
+#: auth/models.py:69
+msgid "object permission"
+msgstr "permesso per singolo oggetto"
+
+#: auth/models.py:70
+msgid "object permissions"
+msgstr "permessi per singolo oggetto"
+
+#: auth/views.py:93 notifications/views.py:58
 msgid "The user's profile has been saved."
 msgstr "Il profilo utente è stato salvato."
 
-#: auth/views.py:142
+#: auth/views.py:124
 msgid "The user's profile has been updated."
 msgstr "Il profilo utente è stato aggiornato."
 
@@ -238,7 +246,7 @@ msgstr "Crea collegamento"
 msgid "Rename"
 msgstr "Rinomina"
 
-#: filebrowser/templatetags/filebrowser.py:80 templatetags/details.py:98
+#: filebrowser/templatetags/filebrowser.py:80 templatetags/details.py:99
 msgid "Delete"
 msgstr "Elimina"
 
@@ -542,7 +550,7 @@ msgstr "creato"
 
 #: streams/models.py:79
 msgid "backlink"
-msgstr ""
+msgstr "link di ritorno"
 
 #: streams/models.py:82
 msgid "activity"
@@ -588,11 +596,11 @@ msgstr "categorie"
 msgid "Please, specify a valid search query."
 msgstr "Per favore, specificare un criterio di ricerca valido."
 
-#: templatetags/details.py:91
+#: templatetags/details.py:92
 msgid "Edit"
 msgstr "Modifica"
 
-#: templatetags/details.py:136
+#: templatetags/details.py:137
 msgid "No results found."
 msgstr "Nessun risultato trovato."
 
@@ -607,6 +615,10 @@ msgstr "Sì"
 #: utils/__init__.py:58
 msgid "empty"
 msgstr "vuoto"
+
+#: views/reports.py:59
+msgid "An error has occurred during the PDF conversion"
+msgstr "Si è verificato un errore durante la conversione PDF"
 
 #: widgets/models.py:35
 msgid "region"

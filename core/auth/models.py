@@ -65,5 +65,9 @@ class ObjectPermission(models.Model):
 
     objects = ObjectPermissionManager()
 
+    class Meta:
+        verbose_name = _('object permission')
+        verbose_name_plural = _('object permissions')
+
     def __unicode__(self):
         return "%s | %d" % (self.perm, self.object_id)
