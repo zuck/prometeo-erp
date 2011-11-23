@@ -62,6 +62,7 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         exclude = ('project', 'code', 'author', 'closed', 'stream')
         widgets = {
+            'tasks': SelectMultipleAndAddWidget(add_url='/tasks/add/'),
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
