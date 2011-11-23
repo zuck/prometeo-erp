@@ -22,7 +22,7 @@ __version__ = '0.0.5'
 
 from django.forms.fields import *
 from django.forms.widgets import *
-from django.forms.models import model_to_dict, inlineformset_factory
+from django.forms.models import inlineformset_factory
 from django.conf import settings
 
 from prometeo.core.forms import enrich_form
