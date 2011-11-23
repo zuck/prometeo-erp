@@ -49,7 +49,7 @@ INSTALLATION
 
  1. cp settings/base.py.tmpl settings/base.py
  
- 2. Edit the settings.py content.
+ 2. Edit the settings/base.py content.
  
  3. python manage.py syncdb
    
