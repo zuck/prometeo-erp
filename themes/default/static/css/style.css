@@ -335,7 +335,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     color: #60625d;
 }
 
-.meta {
+.meta, .categories, .tags {
     color: #60625d;
     font-style: italic;
 }
@@ -1023,6 +1023,16 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-top: 5px;
     margin-left: 0;
 }
+
+#content .choices { border-top: 1px solid #c0c0c0; }
+
+#content .choices li {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 10px 15px 10px 30px;
+    background-position: 13px 13px;
+}
+
+#content .choices .counter  { float: right; }
 
 #sidebar {
     float: left;

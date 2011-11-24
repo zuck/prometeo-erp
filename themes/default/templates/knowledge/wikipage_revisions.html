@@ -1,0 +1,24 @@
+{% extends "knowledge/wikipage_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}{% trans "Revisions" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Wiki' '/wiki/' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Revisions' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Revisions" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include "elements/paginator.html" %}
+</div>
+{% endblock %}

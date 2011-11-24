@@ -20,27 +20,18 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-SEARCH_IN_MODELS = (
-    'auth.User',
-    'taxonomy.Category',
-    'taxonomy.Tag',
-    'events.Event',
-    'todo.Task',
-    'addressing.Address',
-    'addressing.PhoneNumber',
-    'partners.Contact',
-    'partners.Partner',
-    'documents.Document',
-    'products.Product',
-    'products.Supply',
-    'stock.Warehouse',
-    'stock.Movement',
-    'accounting.BankAccount',
-    'projects.Project',
-    'projects.Area',
-    'projects.Milestone',
-    'projects.Ticket',
-    'knowledge.WikiPage',
-    'knowledge.Faq',
-    'knowledge.Poll',
-)
+import re
+
+from django import template
+from django.core.urlresolvers import reverse
+
+register = template.Library()
+
+wikilink = re.compile("\\b([A-Z][a-z]+[A-Z][a-z]+)\\b")
+
+@register.filter
+def wikify(value):
+    def create_link(matchobj):
+        slug = matchobj.group(0)
+        return r'<a href="%s">%s</a>' % (reverse("wiki_page_detail", args=[slug]), slug)
+    return wikilink.sub(create_link, value)

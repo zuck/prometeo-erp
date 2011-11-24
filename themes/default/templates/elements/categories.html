@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% if object.categories.all %}
+<span class="categories">
+    {% trans "Posted in" %}{% for category in object.categories.all %} <a class="category" href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %},{% endif %}{% endfor %}.
+</span>
+{% endif %}

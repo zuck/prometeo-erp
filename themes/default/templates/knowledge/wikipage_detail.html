@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markup %}
+{% load breadcrumbs %}
+{% load menu %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Wiki' '/wiki/' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+    <h2>{% block subtitle %}{% trans "Details" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="sections">
+    <div class="actions">
+        <ul>
+            {% if perms.knoweldge.add_wikipage %}
+            <li class="add"><a title="{% trans 'Add' %}" href="{% url wikipage_add %}">{% trans 'Add' %}</a></li>
+            {% endif %}
+            {% if perms.knoweldge.change_wikipage %}
+            <li class="edit"><a title="{% trans 'Edit' %}" href="{% url wikipage_edit object.slug %}">{% trans 'Edit' %}</a></li>
+            {% endif %}
+            {% if perms.knoweldge.delete_wikipage %}
+            <li class="delete"><a title="{% trans 'Delete' %}" href="{% url wikipage_delete object.slug %}">{% trans 'Delete' %}</a></li>
+            {% endif %}
+            {% if perms.knoweldge.change_wikipage %}
+            <li class="all"><a title="{% trans 'All' %}" href="{% url wikipage_home %}">{% trans 'All' %}</a></li>
+            {% endif %}
+            {% if perms.knoweldge.change_wikipage %}
+            {% if user not in object.stream.followers.all %}
+            <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+            {% else %}
+            <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+            {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+    <div class="menu">
+        {% menu "wikipage_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            {{ object.body|markdown }}
+            <p>
+                {% include "elements/categories.html" %}
+                {% include "elements/tags.html" %}
+            </p>
+        </div>
+        {% include "elements/comments.html" %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

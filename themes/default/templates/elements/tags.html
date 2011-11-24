@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% if object.tags.all %}
+<span class="tags">
+    {% trans "Tagged as" %}{% for tag in object.tags.all %} <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}{% endfor %}.
+</span>
+{% endif %}

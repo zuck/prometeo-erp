@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+
+{% block meta_title %}{{ slug|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Wiki' '/wiki/' %}
+    {% add_crumb slug %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ slug|escape|capfirst }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="details">
+    <p>{% trans "This wiki page does not exist." %}</p>
+    <span class="add"><a title="{% trans 'Add' %}" href="{% url wikipage_edit slug %}">{% trans "Add" %}</a></span>
+</div>
+{% endblock %}

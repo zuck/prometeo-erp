@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load markup %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Wiki' '/wiki/' %}
+    {% add_crumb object.page object.page.get_absolute_url %}
+    {% add_crumb 'Revisions' 'wikipage_revisions' object.page.slug %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|escape|capfirst }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+{{ object.body|markdown }}
+{% endblock %}
