@@ -63,7 +63,8 @@ def field_to_value(field, instance):
     """
     value = getattr(instance, field.name)
     if field.primary_key or isinstance(field, models.SlugField):
-        return u'#%s' % value
+        if value:
+            return u'#%s' % value
     elif isinstance(field, models.PositiveIntegerField):
         return u'#%d' % value
     elif isinstance(field, (models.ForeignKey, models.OneToOneField)):
