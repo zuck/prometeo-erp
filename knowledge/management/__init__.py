@@ -149,19 +149,9 @@ def install(sender, **kwargs):
         slug="wikipage-deleted"
     )
 
-    wikirevision_created_signature, is_new = Signature.objects.get_or_create(
-        title=_("Wiki page revision created"),
-        slug="wikirevision-created"
-    )
-
     faq_created_signature, is_new = Signature.objects.get_or_create(
         title=_("FAQ created"),
         slug="faq-created"
-    )
-
-    faq_changed_signature, is_new = Signature.objects.get_or_create(
-        title=_("FAQ changed"),
-        slug="faq-changed"
     )
 
     faq_deleted_signature, is_new = Signature.objects.get_or_create(
@@ -169,19 +159,29 @@ def install(sender, **kwargs):
         slug="faq-deleted"
     )
 
+    answer_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Answer created"),
+        slug="answer-created"
+    )
+
+    answer_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Answer deleted"),
+        slug="answer-deleted"
+    )
+
     poll_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Poll created"),
         slug="poll-created"
     )
 
-    poll_changed_signature, is_new = Signature.objects.get_or_create(
-        title=_("Poll changed"),
-        slug="poll-changed"
-    )
-
     poll_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Poll deleted"),
         slug="poll-deleted"
+    )
+
+    poll_closed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Poll closed"),
+        slug="poll-closed"
     )
     
     post_syncdb.disconnect(install)

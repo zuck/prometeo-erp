@@ -1,0 +1,8 @@
+{% load i18n %}
+
+{% with author|capfirst as author %}
+{% blocktrans %}
+<p><a href="{{ author_link }}">{{ author }}</a> has answered to the {{ class }} <a href="{{ link }}">{{ name }}</a>:</p>
+<blockquote>{{ answer }}</blockquote>
+{% endblocktrans %}
+{% endwith %}

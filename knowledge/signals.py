@@ -170,7 +170,7 @@ def notify_comment_created(sender, instance, *args, **kwargs):
     if kwargs['created']:
         obj = instance.content_object
 
-        if isinstance(obj, (WikiPage, Faq, Poll)):
+        if isinstance(obj, (WikiPage, Poll)):
             activity = Activity.objects.create(
                 title=_("%(author)s commented %(class)s %(name)s"),
                 signature="comment-created",
@@ -206,6 +206,50 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
 
     [activity.streams.add(s) for s in _get_streams(obj)]
 
+def notify_answer_created(sender, instance, *args, **kwargs):
+    """Generates an activity related to the creation of a new answer.
+    """
+    if kwargs['created']:
+        obj = instance.content_object
+
+        if isinstance(obj, Faq):
+            activity = Activity.objects.create(
+                title=_("%(author)s answered to the %(class)s %(name)s"),
+                signature="answer-created",
+                template="knowledge/activities/answer-created.html",
+                context=json.dumps({
+                    "class": obj.__class__.__name__.lower(),
+                    "name": "%s" % obj,
+                    "link": instance.get_absolute_url(),
+                    "author": "%s" % instance.user,
+                    "author_link": instance.user.get_absolute_url(),
+                    "answer": instance.comment
+                }),
+                backlink=obj.get_absolute_url()
+            )
+
+            [activity.streams.add(s) for s in _get_streams(obj)]
+
+def notify_answer_deleted(sender, instance, *args, **kwargs):
+    """Generates an activity related to the deletion of an existing answer.
+    """
+    obj = instance.content_object
+
+    activity = Activity.objects.create(
+        title=_("answer deleted"),
+        signature="answer-deleted",
+        template="knowledge/activities/answer-deleted.html",
+        context=json.dumps({
+            "class": obj.__class__.__name__.lower(),
+            "name": "%s" % obj,
+            "link": instance.get_absolute_url(),
+            "author": "%s" % instance.user,
+            "author_link": instance.user.get_absolute_url()
+        })
+    )
+
+    [activity.streams.add(s) for s in _get_streams(obj)]
+
 ## CONNECTIONS ##
 
 post_save.connect(update_wikipage_permissions, WikiPage, dispatch_uid="update_wikipage_permissions")
@@ -223,6 +267,8 @@ post_delete.connect(notify_object_deleted, Poll, dispatch_uid="poll_deleted")
 
 post_save.connect(notify_comment_created, Comment, dispatch_uid="knowledge_comment_created")
 post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="knowledge_comment_deleted")
+post_save.connect(notify_answer_created, Comment, dispatch_uid="knowledge_answer_created")
+post_delete.connect(notify_answer_deleted, Comment, dispatch_uid="knowledge_answer_deleted")
 
 manage_stream(WikiPage)
 manage_stream(Faq)
