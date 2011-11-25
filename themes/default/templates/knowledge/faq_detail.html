@@ -5,6 +5,7 @@
 {% load comments %}
 {% load breadcrumbs %}
 {% load navigator %}
+{% load menu %}
 {% load avatar %}
 
 {% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
@@ -22,81 +23,97 @@
 {% endblock %}
 
 {% block main %}
-<div class="actions">
-    <ul>
-        {% if perms.knowledge.add_faq %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url faq_add %}">{% trans 'Add' %}</a></li>
+<div class="sections">
+    <div class="actions">
+        <ul>
+            {% if perms.knowledge.add_faq %}
+            <li class="add"><a title="{% trans 'Add' %}" href="{% url faq_add %}">{% trans 'Add' %}</a></li>
+            {% endif %}
+            {% if perms.knowledge.change_faq %}
+            <li class="edit"><a title="{% trans 'Edit' %}" href="{% url faq_edit object.pk %}">{% trans 'Edit' %}</a></li>
+            {% endif %}
+            {% if perms.knowledge.delete_faq %}
+            <li class="delete"><a title="{% trans 'Delete' %}" href="{% url faq_delete object.pk %}">{% trans 'Delete' %}</a></li>
+            {% endif %}
+            {% if perms.knowledge.change_faq %}
+            <li class="all"><a title="{% trans 'All' %}" href="{% url faq_list %}">{% trans 'All' %}</a></li>
+            {% endif %}
+            {% if perms.knoweldge.change_faq %}
+            {% if user not in object.stream.followers.all %}
+            <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+            {% else %}
+            <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+            {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+    {% objects_from object %}
+    {% with objects as object_list %}
+    {% include 'elements/navigator.html' %}
+    {% endwith %}
+    <div class="menu">
+        {% menu "faq_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            {{ object.question|markdown }}
+            <p>
+                {% include "elements/categories.html" %}
+                {% include "elements/tags.html" %}
+            </p>
+        </div>
+        {% get_comment_list for object as comment_list %}
+        {% if comment_list or object.allow_comments %}
+        <div id="comments">
+            <h3>{% trans "Answers" %}</h3>
+            {% if comment_list %}
+            <ul>
+                {% for comment in comment_list %}
+                <li{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
+                    <div class="meta">
+                        {% with comment.user_name as user_name %}
+                        {% with comment.user.get_absolute_url as user_link %}
+                        {% with comment.submit_date as submit_date %}
+                        {% avatar comment.user %}
+                        <p>{% blocktrans %}Posted on {{ submit_date }}{% endblocktrans %}{% if comment.user %}{% blocktrans %} by <a href="{{ user_link }}">{{ user_name }}</a>{% endblocktrans %}{% endif %}</p>
+                        {% endwith %}
+                        {% endwith %}
+                        {% endwith %}
+                        <ul class="actions">
+                            {% if perms.comments.can_delete %}
+                            <li class="delete"><a title="{% trans 'Delete' %}" href="{% url comment_delete comment.id %}">{% trans "Delete" %}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    {{ comment.comment|markdown }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% get_comment_count for object as comment_count %}
+            <p class="comment-counter">{% blocktrans %}<strong>{{ comment_count }}</strong> answer(s){% endblocktrans %}</p>
+            {% else %}
+            <p class="disabled">{% trans "No answers." %}</p>
+            {% endif %}
+            {% if object.allow_comments and user.is_authenticated %}
+            <h3>{% trans "Add answer" %}</h3>
+            {% get_comment_form for object as form %}
+            <form action="{% comment_form_target %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ object.get_absolute_url }}" />
+                {% for field in form.hidden_fields %}
+                {{ field }}
+                {% endfor %}
+                <p>
+                    {{ form.comment }}
+                    {% blocktrans %}Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.{% endblocktrans %}
+                </p>
+                <span class="submit"><input type="submit" name="post" value="{% trans 'Post' %}"></span>
+            </form>
+            {% endif %}
+        </div>
         {% endif %}
-        {% if perms.knowledge.change_faq %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url faq_edit object.pk %}">{% trans 'Edit' %}</a></li>
-        {% endif %}
-        {% if perms.knowledge.delete_faq %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url faq_delete object.pk %}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        {% if perms.knowledge.change_faq %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url faq_list %}">{% trans 'All' %}</a></li>
-        {% endif %}
-    </ul>
+        {% endblock %}
+    </div>
 </div>
-{% objects_from object %}
-{% with objects as object_list %}
-{% include 'elements/navigator.html' %}
-{% endwith %}
-<div class="details">
-    {{ object.question|markdown }}
-    <p>
-        {% include "elements/categories.html" %}
-        {% include "elements/tags.html" %}
-    </p>
-</div>
-{% get_comment_list for object as comment_list %}
-{% if comment_list or object.allow_comments %}
-<div id="comments">
-    <h3>{% trans "Answers" %}</h3>
-    {% if comment_list %}
-    <ul>
-        {% for comment in comment_list %}
-        <li{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
-            <div class="meta">
-                {% with comment.user_name as user_name %}
-                {% with comment.user.get_absolute_url as user_link %}
-                {% with comment.submit_date as submit_date %}
-                {% avatar comment.user %}
-                <p>{% blocktrans %}Posted on {{ submit_date }}{% endblocktrans %}{% if comment.user %}{% blocktrans %} by <a href="{{ user_link }}">{{ user_name }}</a>{% endblocktrans %}{% endif %}</p>
-                {% endwith %}
-                {% endwith %}
-                {% endwith %}
-                <ul class="actions">
-                    {% if perms.comments.can_delete %}
-                    <li class="delete"><a title="{% trans 'Delete' %}" href="{% url comment_delete comment.id %}">{% trans "Delete" %}</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-            {{ comment.comment|markdown }}
-        </li>
-        {% endfor %}
-    </ul>
-    {% get_comment_count for object as comment_count %}
-    <p class="comment-counter">{% blocktrans %}<strong>{{ comment_count }}</strong> answer(s){% endblocktrans %}</p>
-    {% else %}
-    <p class="disabled">{% trans "No answers." %}</p>
-    {% endif %}
-    {% if object.allow_comments and user.is_authenticated %}
-    <h3>{% trans "Add answer" %}</h3>
-    {% get_comment_form for object as form %}
-    <form action="{% comment_form_target %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ object.get_absolute_url }}" />
-        {% for field in form.hidden_fields %}
-        {{ field }}
-        {% endfor %}
-        <p>
-            {{ form.comment }}
-            {% blocktrans %}Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.{% endblocktrans %}
-        </p>
-        <span class="submit"><input type="submit" name="post" value="{% trans 'Post' %}"></span>
-    </form>
-    {% endif %}
-</div>
-{% endif %}
 {% endblock %}

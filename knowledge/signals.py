@@ -21,7 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 from django.utils.translation import ugettext_noop as _
-from django.db.models.signals import pre_save, post_save, post_delete
+from django.db.models.signals import post_save, post_delete
 from django.contrib.comments.models import Comment
 
 from prometeo.core.widgets.signals import *
@@ -40,6 +40,16 @@ def _get_streams(instance):
 
     try:
         streams.append(instance.page.stream)
+    except:
+        pass
+
+    try:
+        streams.append(instance.faq.stream)
+    except:
+        pass
+
+    try:
+        streams.append(instance.poll.stream)
     except:
         pass
 
@@ -70,6 +80,26 @@ def update_wikipage_permissions(sender, instance, *args, **kwargs):
     # Delete wiki page.
     can_delete_this_wikipage, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_wikipage", "knowledge", "wikipage", instance.pk)
     can_delete_this_wikipage.users.add(instance.author)
+
+def update_faq_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given FAQ.
+    """
+    # Change FAQ.
+    can_change_this_faq, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_faq", "knowledge", "faq", instance.pk)
+    can_change_this_faq.users.add(instance.author)
+    # Delete FAQ.
+    can_delete_this_faq, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_faq", "knowledge", "faq", instance.pk)
+    can_delete_this_faq.users.add(instance.author)
+
+def update_poll_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given poll.
+    """
+    # Change poll.
+    can_change_this_poll, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_poll", "knowledge", "poll", instance.pk)
+    can_change_this_poll.users.add(instance.author)
+    # Delete poll.
+    can_delete_this_poll, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_poll", "knowledge", "poll", instance.pk)
+    can_delete_this_poll.users.add(instance.author)
 
 def save_wiki_revision(sender, instance, *args, **kwargs):
     """Saves a revision of the given wiki page.
@@ -140,7 +170,7 @@ def notify_comment_created(sender, instance, *args, **kwargs):
     if kwargs['created']:
         obj = instance.content_object
 
-        if isinstance(obj, WikiPage):
+        if isinstance(obj, (WikiPage, Faq, Poll)):
             activity = Activity.objects.create(
                 title=_("%(author)s commented %(class)s %(name)s"),
                 signature="comment-created",
@@ -179,15 +209,23 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
 ## CONNECTIONS ##
 
 post_save.connect(update_wikipage_permissions, WikiPage, dispatch_uid="update_wikipage_permissions")
+post_save.connect(update_faq_permissions, Faq, dispatch_uid="update_faq_permissions")
+post_save.connect(update_poll_permissions, Poll, dispatch_uid="update_poll_permissions")
 
 post_save.connect(save_wiki_revision, WikiPage, dispatch_uid="save_wiki_revision")
 post_save.connect(notify_object_created, WikiPage, dispatch_uid="wikipage_created")
 post_change.connect(notify_object_change, WikiPage, dispatch_uid="wikipage_changed")
 post_delete.connect(notify_object_deleted, WikiPage, dispatch_uid="wikipage_deleted")
+post_save.connect(notify_object_created, Faq, dispatch_uid="faq_created")
+post_delete.connect(notify_object_deleted, Faq, dispatch_uid="faq_deleted")
+post_save.connect(notify_object_created, Poll, dispatch_uid="poll_created")
+post_delete.connect(notify_object_deleted, Poll, dispatch_uid="poll_deleted")
 
-post_save.connect(notify_comment_created, Comment, dispatch_uid="wikipage_comment_created")
-post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="wikipage_comment_deleted")
+post_save.connect(notify_comment_created, Comment, dispatch_uid="knowledge_comment_created")
+post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="knowledge_comment_deleted")
 
 manage_stream(WikiPage)
+manage_stream(Faq)
+manage_stream(Poll)
 
 make_observable(WikiPage)

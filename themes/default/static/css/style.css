@@ -1024,15 +1024,23 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-left: 0;
 }
 
-#content .choices { border-top: 1px solid #c0c0c0; }
+#content .choices { margin: 0; }
 
 #content .choices li {
-    border-bottom: 1px solid #c0c0c0;
+    border-top: 1px solid #c0c0c0;
     padding: 10px 15px 10px 30px;
     background-position: 13px 13px;
 }
 
 #content .choices .counter  { float: right; }
+
+#content .vote-counter {
+    float: right;
+    width: 100%;
+    text-align: right;
+    border-top: 2px solid #c0c0c0;
+    color: #60625d;
+}
 
 #sidebar {
     float: left;

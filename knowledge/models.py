@@ -102,6 +102,7 @@ class Faq(Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering  = ('-created',)
@@ -135,6 +136,7 @@ class Poll(Commentable):
     due_date = models.DateTimeField(null=True, blank=True, verbose_name=_('due date'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
+    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering  = ('-created',)
@@ -170,19 +172,26 @@ class Choice(models.Model):
     """    
     poll = models.ForeignKey(Poll, related_name='choices', verbose_name=_('poll'))
     description = models.CharField(max_length=255, verbose_name=_('description'))
-    sort_order = models.PositiveIntegerField(default=0, verbose_name=_('sort order'))
 
     class Meta:
-        ordering  = ('poll', 'sort_order',)
+        ordering  = ('poll', 'id',)
         verbose_name = _('choice')
         verbose_name_plural = _('choices')
 
-    @models.permalink
-    def get_absolute_url(self):
-        return ("poll_vote", (), {"id": self.poll.pk, "choice": self.sort_order})
-
     def __unicode__(self):
         return u'%s' % self.description
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ("poll_vote", (), {"id": self.poll.pk, "choice": self.index})
+
+    def _index(self):
+        for i, choice in enumerate(self.poll.choices.all()):
+            if choice == self:
+                return i
+        return self.poll.choices.count()
+    _index.short_description = _('index')
+    index = property(_index)
         
 class Vote(models.Model):
     """Vote model.

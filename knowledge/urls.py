@@ -40,6 +40,7 @@ urlpatterns = patterns('knowledge.views',
     url(r'^faq/(?P<id>\d+)/$', view='faq.faq_detail', name='faq_detail'),
     url(r'^faq/(?P<id>\d+)/edit$', view='faq.faq_edit', name='faq_edit'),
     url(r'^faq/(?P<id>\d+)/delete$', view='faq.faq_delete', name='faq_delete'),
+    url(r'^faq/(?P<id>\d+)/timeline/$', 'faq.faq_detail', {'template_name': 'knowledge/faq_timeline.html'}, 'faq_timeline'),
 
     # Polls.
     url(r'^polls/$', view='polls.poll_list', name='poll_list'),
@@ -48,4 +49,5 @@ urlpatterns = patterns('knowledge.views',
     url(r'^polls/(?P<id>\d+)/edit/$', view='polls.poll_edit', name='poll_edit'),
     url(r'^polls/(?P<id>\d+)/delete/$', view='polls.poll_delete', name='poll_delete'),
     url(r'^polls/(?P<id>\d+)/vote/(?P<choice>\d+)/$', view='polls.poll_vote', name='poll_vote'),
+    url(r'^polls/(?P<id>\d+)/timeline/$', 'polls.poll_detail', {'template_name': 'knowledge/poll_timeline.html'}, 'poll_timeline'),
 )

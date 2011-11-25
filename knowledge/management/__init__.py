@@ -40,6 +40,16 @@ def install(sender, **kwargs):
         slug="wikipage_menu",
         description=_("Main menu for a wiki page")
     )
+
+    faq_menu, is_new = Menu.objects.get_or_create(
+        slug="faq_menu",
+        description=_("Main menu for a FAQ")
+    )
+
+    poll_menu, is_new = Menu.objects.get_or_create(
+        slug="poll_menu",
+        description=_("Main menu for a poll")
+    )
     
     # Links.
     knowledge_link, is_new = Link.objects.get_or_create(
@@ -93,6 +103,34 @@ def install(sender, **kwargs):
         slug="wikipage_timeline",
         url="{% url wikipage_timeline object.slug %}",
         menu=wikipage_menu
+    )
+
+    faq_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="faq_details",
+        url="{{ object.get_absolute_url }}",
+        menu=faq_menu
+    )
+
+    faq_timeline_link, is_new = Link.objects.get_or_create(
+        title=_("Timeline"),
+        slug="faq_timeline",
+        url="{% url faq_timeline object.pk %}",
+        menu=faq_menu
+    )
+
+    poll_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="poll_details",
+        url="{{ object.get_absolute_url }}",
+        menu=poll_menu
+    )
+
+    poll_timeline_link, is_new = Link.objects.get_or_create(
+        title=_("Timeline"),
+        slug="poll_timeline",
+        url="{% url poll_timeline object.pk %}",
+        menu=poll_menu
     )
 
     # Signatures.
