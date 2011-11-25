@@ -78,7 +78,7 @@ def page_edit(request, slug=None, **kwargs):
     try:
         page = WikiPage.objects.get(slug=slug)
     except WikiPage.DoesNotExist:
-        page = WikiPage(slug=slug, author=request.user)
+        page = WikiPage(slug=slug, author=request.user, language=request.user.get_profile().language)
 
     if request.method == 'POST':
         form = WikiPageForm(request.POST, instance=page)
