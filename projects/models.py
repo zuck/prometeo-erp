@@ -158,7 +158,7 @@ class Ticket(Commentable):
     project = models.ForeignKey(Project, related_name='tickets', verbose_name=_('project'))
     code = models.PositiveIntegerField(verbose_name=_('code'))
     title = models.CharField(max_length=255, verbose_name=_('title'))
-    description = models.TextField(verbose_name=_('description'))
+    description = models.TextField(help_text=_('Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.'), verbose_name=_('description'))
     author = models.ForeignKey('auth.User', related_name="created_tickets", verbose_name=_('created by'))
     milestone = models.ForeignKey(Milestone, null=True, blank=True, related_name='tickets', on_delete=models.SET_NULL, verbose_name=_('milestone'))
     type = models.CharField(max_length=11, choices=settings.TICKET_TYPE_CHOICES, default=settings.TICKET_DEFAULT_TYPE, verbose_name=_('type'))
