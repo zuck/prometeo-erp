@@ -52,7 +52,7 @@ def contact_list(request, page=0, paginate_by=10, **kwargs):
     return filtered_list_detail(
         request,
         Contact,
-        exclude=['language', 'timezone', 'url', 'notes', 'user'],
+        fields=['id', 'firstname', 'lastname', 'language', 'timezone', 'email', 'main_phone_number'],
         paginate_by=paginate_by,
         page=page,
         **kwargs
