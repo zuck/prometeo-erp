@@ -38,7 +38,7 @@ class WikiPage(Commentable):
     """Wiki page model.
     """
     slug = models.SlugField(verbose_name=_('slug'))
-    body = models.TextField(help_text=_('Use MarkDown syntax.'), verbose_name=_('body'))
+    body = models.TextField(help_text=_('Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.'), verbose_name=_('body'))
     language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_('language'))
     author = models.ForeignKey('auth.User', verbose_name=_('created by'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
