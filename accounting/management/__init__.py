@@ -49,6 +49,7 @@ def install(sender, created_models, **kwargs):
         slug="accounting",
         description=_("Accounting management"),
         url=reverse("bankaccount_list"),
+        submenu=accounting_menu,
         menu=main_menu
     )
 

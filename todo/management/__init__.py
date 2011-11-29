@@ -41,6 +41,7 @@ def install(sender, **kwargs):
         slug="tasks",
         description=_("List of tasks"),
         url=reverse("task_list"),
+        submenu=todo_menu,
         menu=main_menu
     )
 

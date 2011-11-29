@@ -55,6 +55,7 @@ def install(sender, created_models, **kwargs):
         slug="partners",
         description=_("Customer & Supplier relationship management"),
         url=reverse("partner_list"),
+        submenu=partners_menu,
         menu=main_menu
     )
 

@@ -54,6 +54,7 @@ def install(sender, created_models, **kwargs):
         slug="stock",
         description=_("Stock management"),
         url=reverse("warehouse_list"),
+        submenu=stock_menu,
         menu=main_menu
     )
 

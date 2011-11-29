@@ -688,7 +688,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background: url(images/bullet.png) no-repeat 10px center;
 }
 
-#content .menu li a.active {
+#content .menu li.active a {
     color: #1f1f1f;
     background-image: url(images/bullet_hover.png);
 }
@@ -698,7 +698,13 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     background-color: #f8f8f8;
 }
 
-#content .menu li li a { padding-left: 40px; }
+#content .menu li .menu li a {
+    color: #ce0600;
+    padding-left: 25px;
+    background-image: none;
+}
+
+#content .menu li .menu li.active a { color: #1f1f1f; }
 
 #content .messages {
     width: 100%;
@@ -1048,6 +1054,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     padding: 20px;
 }
 
+#sidebar ul.menu ul.menu { display: none; }
+
+#sidebar ul.menu li:hover ul.menu, #sidebar ul.menu li.active ul.menu { display: block; }
+
 #user-profile-widget {
     float: left;
     width: 100%;
@@ -1112,7 +1122,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     font-weight: bold;
 }
 
-#main .sections .menu li a.active, #main .sections .menu li span.active {
+#main .sections .menu li.active a {
     background: #fff;
     border-bottom: 1px solid #fff;
     margin-bottom: -1px;

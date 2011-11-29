@@ -57,6 +57,7 @@ def install(sender, **kwargs):
         slug="knowledge",
         description=_("Knowledge management"),
         url=reverse("wikipage_home"),
+        submenu=knowledge_menu,
         menu=main_menu
     )
 
