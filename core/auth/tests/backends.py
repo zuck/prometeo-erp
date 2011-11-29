@@ -28,6 +28,7 @@ class ObjectPermissionBackendTestCase(unittest.TestCase):
     def test_has_perm(self):
         b = ObjectPermissionBackend()
         p = Permission.objects.get_by_natural_key("delete_user", "auth", "user")
+        p_name = "auth.delete_user"
         u = User.objects.get(username="u")
         u1 = User.objects.get(username="u1")
         u2 = User.objects.get(username="u2")
@@ -37,3 +38,6 @@ class ObjectPermissionBackendTestCase(unittest.TestCase):
         self.assertFalse(b.has_perm(u1, p, u))
         self.assertTrue(b.has_perm(u2, p, u))
         self.assertFalse(b.has_perm(u, p, u))
+        self.assertFalse(b.has_perm(u, p_name, u))
+        self.assertTrue(b.has_perm(u2, p_name, u))
+        self.assertFalse(b.has_perm(u, p_name, u))

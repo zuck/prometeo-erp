@@ -62,4 +62,7 @@ class ObjectPermissionBackend(object):
         if obj is None:
             return False
 
-        return "%s.%s.%d" % (perm.content_type.app_label, perm.codename, obj.pk) in self.get_all_permissions(user_obj)
+        if isinstance(perm, Permission):
+            perm = "%s.%s" % (perm.content_type.app_label, perm.codename)
+
+        return "%s.%d" % (perm, obj.pk) in self.get_all_permissions(user_obj)
