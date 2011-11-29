@@ -100,17 +100,20 @@ def matchlink(context, link, ref_url, css_class="active"):
 
     Example tag usage: {% matchlink link ref_url %}
     """
-    links = link.menu.links.all()
-    score = len(ref_url)
-    matched_link = None
-    for l in links:
-        url = template.Template(l.url).render(context)
-        if url == ref_url or ref_url.startswith(url):
-            remainder = ref_url[len(url):]
-            current_score = len(remainder)
-            if current_score < score:
-                score = current_score
-                matched_link = l                    
+    def best_match(menu, parent=None, score=len(ref_url), matched_link=None):
+        if menu:
+            for l in menu.links.all():
+                url = template.Template(l.url).render(context)
+                if url == ref_url or ref_url.startswith(url):
+                    remainder = ref_url[len(url):]
+                    current_score = len(remainder)
+                    if current_score < score:
+                        score = current_score
+                        matched_link = parent or l
+                        continue
+                score, matched_link = best_match(l.submenu, parent or l, score, matched_link)
+        return score, matched_link
+    score, matched_link = best_match(link.menu)                              
     if matched_link == link:
         return " class=\"%s\"" % css_class
     return ""
