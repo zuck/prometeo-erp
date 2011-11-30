@@ -47,7 +47,7 @@
         {% endif %}
     </ul>
 </div>
-{% objects_from object %}
+{% objects_from object "get_for_content" object.content_object %}
 {% with objects as object_list %}
 {% include 'elements/navigator.html' %}
 {% endwith %}

@@ -27,4 +27,6 @@ class DocumentManager(models.Manager):
     """Custom manager for Document model.
     """
     def get_for_content(self, content_class):
+        if isinstance(content_class, models.Model):
+            content_class = content_class.__class__
         return self.filter(content_type=ContentType.objects.get_for_model(content_class))
