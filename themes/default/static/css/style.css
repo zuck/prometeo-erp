@@ -685,7 +685,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .menu li a {
     display: block;
     padding: 5px 25px;
-    background: url(images/bullet.png) no-repeat 10px center;
+    background: url(images/bullet.png) no-repeat 8px 8px;
 }
 
 #content .menu li.active a {
@@ -701,10 +701,14 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #content .menu li .menu li a {
     color: #ce0600;
     padding-left: 25px;
-    background-image: none;
+    background-image: url(images/right_disabled.png);
 }
 
-#content .menu li .menu li.active a { color: #1f1f1f; }
+#content .menu li .menu li a:hover,
+#content .menu li .menu li.active a {
+    color: #1f1f1f;
+    background-image: url(images/right.png)
+}
 
 #content .messages {
     width: 100%;
@@ -1057,10 +1061,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #sidebar ul.menu ul.menu { display: none; }
 
 #sidebar ul.menu li.active ul.menu { display: block; }
-
-#sidebar ul.menu li.active ul.menu a { background-image: url(images/right_disabled.png) }
-
-#sidebar ul.menu li.active ul.menu a:hover, #sidebar ul.menu li.active ul.menu li.active a { background-image: url(images/right.png) }
 
 #user-profile-widget {
     float: left;
