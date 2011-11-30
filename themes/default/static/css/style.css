@@ -1056,7 +1056,11 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #sidebar ul.menu ul.menu { display: none; }
 
-#sidebar ul.menu li:hover ul.menu, #sidebar ul.menu li.active ul.menu { display: block; }
+#sidebar ul.menu li.active ul.menu { display: block; }
+
+#sidebar ul.menu li.active ul.menu a { background-image: url(images/right_disabled.png) }
+
+#sidebar ul.menu li.active ul.menu a:hover, #sidebar ul.menu li.active ul.menu li.active a { background-image: url(images/right.png) }
 
 #user-profile-widget {
     float: left;
