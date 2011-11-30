@@ -23,7 +23,7 @@ __version__ = '0.0.5'
 import json
 
 from django.utils.translation import ugettext_noop as _
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, pre_delete, post_delete
 from django.contrib.comments.models import Comment
 
 from prometeo.core.widgets.signals import *
@@ -40,7 +40,10 @@ def _get_streams(instance):
     """
     streams = []
 
-    streams.append(instance.stream)
+    try:
+        streams.append(instance.document.stream)
+    except:
+        streams.append(instance.stream)
 
     return streams
 
@@ -171,6 +174,12 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
 
     [activity.streams.add(s) for s in _get_streams(obj)]
 
+def delete_hard_copy(sender, instance, *args, **kwargs):
+    """Deletes the file associated to the given hard copy.
+    """
+    f = instance.file
+    f.delete()
+
 ## CONNECTIONS ##
 
 post_save.connect(update_document_permissions, Document, dispatch_uid="update_document_permissions")
@@ -178,6 +187,10 @@ post_save.connect(update_document_permissions, Document, dispatch_uid="update_do
 post_save.connect(notify_object_created, Document, dispatch_uid="document_created")
 post_change.connect(notify_object_change, Document, dispatch_uid="document_changed")
 post_delete.connect(notify_object_deleted, Document, dispatch_uid="document_deleted")
+
+post_save.connect(notify_object_created, HardCopy, dispatch_uid="hardcopy_created")
+post_delete.connect(notify_object_deleted, HardCopy, dispatch_uid="hardcopy_deleted")
+pre_delete.connect(delete_hard_copy, HardCopy, dispatch_uid="hardcopy_deleted")
 
 post_save.connect(notify_comment_created, Comment, dispatch_uid="documents_comment_created")
 post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="documents_comment_deleted")

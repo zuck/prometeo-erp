@@ -1,4 +1,4 @@
-{% extends "documents/hardcopy_edit.html" %}
+{% extends "documents/hardcopy_delete.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -8,10 +8,6 @@
     {% add_crumb 'Sales invoices' 'salesinvoice_list' %}
     {% add_crumb object.document object.document.get_absolute_url %}
     {% add_crumb 'Hard copies' 'salesinvoice_hardcopies' object.document.object_id %}
-    {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
-    {% add_crumb 'Edit' %}
-    {% else %}
-    {% add_crumb 'Add' %}
-    {% endif %}
+    {% add_crumb 'Delete' %}
 {% endblock %}

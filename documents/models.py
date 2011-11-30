@@ -94,6 +94,7 @@ class HardCopy(models.Model):
     document = models.ForeignKey(Document, verbose_name=_('document'))
     file = models.FileField(upload_to=_get_upload_to, verbose_name=_('file'))
     language = models.CharField(max_length=5, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
+    author = models.ForeignKey('auth.User', verbose_name=_('created by'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
 
     class Meta:
@@ -108,4 +109,4 @@ class HardCopy(models.Model):
         return self.file.url
 
     def get_delete_url(self):
-        return reverse('file_delete', args=[self.get_absolute_url().lstrip('/')])
+        return reverse('hardcopy_delete', args=[self.document.pk, self.pk])

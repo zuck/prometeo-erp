@@ -83,7 +83,7 @@ def hardcopy_add(request, id, **kwargs):
     """Deletes a delivery note.
     """
     document = get_object_or_404(Document, id=id)
-    hardcopy = HardCopy(document=document)
+    hardcopy = HardCopy(document=document, author=request.user)
 
     template_name = kwargs.pop('template_name', '%s/%s_edit_hardcopy.html' % (document.content_type.app_label, document.content_type.model))
     post_add_redirect = kwargs.pop('post_add_redirect', reverse('%s_hardcopies' % document.content_type.model, args=[document.object_id]))

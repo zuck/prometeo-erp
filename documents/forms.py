@@ -45,7 +45,7 @@ class HardCopyForm(forms.ModelForm):
     """
     class Meta:
         model = HardCopy
-        exclude = ['document']
+        exclude = ['document', 'author']
 
 enrich_form(DocumentForm)
 enrich_form(HardCopyForm)
