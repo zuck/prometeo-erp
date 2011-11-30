@@ -35,9 +35,9 @@ urlpatterns = patterns('todo.views',
     url(r'^tasks/(?P<id>\d+)/reopen/$', view='task_reopen', name='task_reopen'),
 
     # Timesheets.
-    url(r'^tasks/timesheets/$', view='timesheet_list', name='timesheet_list'),
-    url(r'^tasks/timesheets/add/$', view='timesheet_add', name='timesheet_add'),
-    url(r'^tasks/timesheets/(?P<id>\d+)/$', view='timesheet_detail', name='timesheet_detail'),
-    url(r'^tasks/timesheets/(?P<id>\d+)/edit/$', view='timesheet_edit', name='timesheet_edit'),
-    url(r'^tasks/timesheets/(?P<id>\d+)/delete/$', view='timesheet_delete', name='timesheet_delete'),
+    url(r'^timesheets/$', view='timesheet_list', name='timesheet_list'),
+    url(r'^timesheets/add/$', view='timesheet_add', name='timesheet_add'),
+    url(r'^timesheets/(?P<id>\d+)/$', view='timesheet_detail', name='timesheet_detail'),
+    url(r'^timesheets/(?P<id>\d+)/edit/$', view='timesheet_edit', name='timesheet_edit'),
+    url(r'^timesheets/(?P<id>\d+)/delete/$', view='timesheet_delete', name='timesheet_delete'),
 )

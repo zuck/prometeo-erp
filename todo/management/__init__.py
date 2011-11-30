@@ -20,7 +20,6 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
@@ -40,7 +39,7 @@ def install(sender, **kwargs):
         title=_("Tasks"),
         slug="tasks",
         description=_("List of tasks"),
-        url=reverse("task_list"),
+        url="{% url task_list %}",
         submenu=todo_menu,
         menu=main_menu
     )
@@ -48,21 +47,21 @@ def install(sender, **kwargs):
     planned_tasks_link, is_new = Link.objects.get_or_create(
         title=_("Planned"),
         slug="planned_tasks",
-        url=reverse("task_list"),
+        url="{% url task_list %}",
         menu=todo_menu
     )
 
     unplanned_tasks_link, is_new = Link.objects.get_or_create(
         title=_("Unplanned"),
         slug="unplanned_tasks",
-        url=reverse("unplanned_task_list"),
+        url="{% url unplanned_task_list %}",
         menu=todo_menu
     )
 
     timesheets_link, is_new = Link.objects.get_or_create(
         title=_("Timesheets"),
         slug="timesheets",
-        url=reverse("timesheet_list"),
+        url="{% url timesheet_list %}",
         menu=todo_menu
     )
     
