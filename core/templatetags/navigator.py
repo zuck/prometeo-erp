@@ -21,18 +21,57 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 from django import template
+from django.template import Node, NodeList, Variable, Library
+from django.template import TemplateSyntaxError, VariableDoesNotExist
+
+from prometeo.core.templatetags import parse_args_kwargs
 
 register = template.Library()
 
-@register.simple_tag(takes_context=True)
-def objects_from(context, obj):
+class ObjectsFromNode(Node):
+    def __init__(self, *args, **kwargs):
+        self.args = [Variable(arg) for arg in args]
+        self.kwargs = dict([(k, Variable(arg)) for k, arg in kwargs.items()])
+        
+    def render_with_args(self, context, obj, filter_name="all", *args, **kwargs):
+        method = getattr(obj.__class__._default_manager, filter_name)
+        if callable(method):
+            context['objects'] = method(*args, **kwargs)
+        else:
+            context['objects'] = method
+        return ''
+    
+    def render(self, context):
+        args = []
+        for arg in self.args:
+            try:
+                args.append(arg.resolve(context)) 
+            except VariableDoesNotExist:
+                args.append(None)
+        
+        kwargs = {}
+        for k, arg in self.kwargs.items():
+            try:
+                kwargs[k] = arg.resolve(context)
+            except VariableDoesNotExist:
+                kwargs[k] = None
+        
+        return self.render_with_args(context, *args, **kwargs)
+
+@register.tag
+def objects_from(parser, token):
     """
     Adds the "objects" variable to the context.
 
-    Example tag usage: {% objects_from object %}
+    Example tag usages:
+
+    {% objects_from object %}
+
+    {% objects_from object "custom_filter" arg1 arg2 %}
     """
-    context['objects'] = obj.__class__._default_manager.all()
-    return ''
+    tag_name, args, kwargs = parse_args_kwargs(parser, token)
+
+    return ObjectsFromNode(*args, **kwargs)
 
 @register.filter
 def index_of(obj_list, obj):
