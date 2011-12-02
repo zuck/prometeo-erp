@@ -28,8 +28,8 @@ from prometeo.core.models import validate_json
 class Region(models.Model):
     """Region model.
     """
-    slug = models.SlugField(_('slug'), max_length=100, unique=True)
-    description = models.TextField(_('description'), blank=True, null=True)
+    slug = models.SlugField(max_length=100, unique=True, verbose_name=_('slug'))
+    description = models.TextField(blank=True, null=True, verbose_name=_('description'))
 
     class Meta:
         verbose_name = _('region')
@@ -41,16 +41,16 @@ class Region(models.Model):
 class Widget(models.Model):
     """Widget model.
     """
-    region = models.ForeignKey(Region, related_name='widgets')
-    title = models.CharField(_('title'), max_length=100)
-    slug = models.SlugField(_('slug'), unique=True)
-    description = models.TextField(_('description'), blank=True, null=True)
-    source = models.CharField(_('source'), blank=False, null=False, max_length=200)
-    template = models.CharField(_('template'), blank=True, null=True, max_length=200, default="widgets/widget.html")
-    context = models.TextField(_('context'), blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'))
-    show_title = models.BooleanField(_('show title'), default=True)
-    editable = models.BooleanField(_('editable'), default=False)
-    sort_order = models.PositiveIntegerField(_('sort order'), default=0)
+    region = models.ForeignKey(Region, related_name='widgets', verbose_name=_('region'))
+    title = models.CharField(max_length=100, verbose_name=_('title'))
+    slug = models.SlugField(unique=True, verbose_name=_('slug'))
+    description = models.TextField(blank=True, null=True, verbose_name=_('description'))
+    source = models.CharField(blank=False, null=False, max_length=200, verbose_name=_('source'))
+    template = models.CharField(blank=True, null=True, max_length=200, default="widgets/widget.html", verbose_name=_('template'))
+    context = models.TextField(blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'), verbose_name=_('context'))
+    show_title = models.BooleanField(default=True, verbose_name=_('show title'))
+    editable = models.BooleanField(default=False, verbose_name=_('editable'))
+    sort_order = models.PositiveIntegerField(default=0, verbose_name=_('sort order'))
 
     class Meta:
         ordering = ('region', 'sort_order', 'title',)
