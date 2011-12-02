@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-25 14:59+0100\n"
+"POT-Creation-Date: 2011-12-02 17:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,11 +49,13 @@ msgstr "Bacheca personale"
 #: templates/partners/contact_jobs.html:23
 #: templates/partners/contact_list.html:21
 #: templates/partners/contact_phones.html:22
+#: templates/partners/contact_profiles.html:22
 #: templates/partners/partner_addresses.html:22
 #: templates/partners/partner_contacts.html:23
 #: templates/partners/partner_detail.html:29
 #: templates/partners/partner_list.html:33
 #: templates/partners/partner_phones.html:22
+#: templates/partners/partner_profiles.html:22
 #: templates/products/product_detail.html:29
 #: templates/products/product_list.html:26
 #: templates/products/product_supplies.html:23
@@ -95,9 +97,11 @@ msgstr "Nessun widget trovato."
 #: templates/accounting/salesinvoice_delete.html:18
 #: templates/accounting/salesinvoice_detail.html:33
 #: templates/auth/comment_delete.html:17 templates/auth/user_delete.html:18
-#: templates/auth/user_detail.html:35 templates/elements/comments.html:25
-#: templates/events/event_delete.html:18 templates/events/event_detail.html:35
-#: templates/filebrowser/delete.html:17 templates/knowledge/faq_delete.html:18
+#: templates/auth/user_detail.html:35
+#: templates/documents/hardcopy_delete.html:10
+#: templates/elements/comments.html:25 templates/events/event_delete.html:18
+#: templates/events/event_detail.html:35 templates/filebrowser/delete.html:17
+#: templates/knowledge/faq_delete.html:18
 #: templates/knowledge/faq_detail.html:36
 #: templates/knowledge/faq_detail.html:85
 #: templates/knowledge/poll_delete.html:18
@@ -112,12 +116,15 @@ msgstr "Nessun widget trovato."
 #: templates/partners/contact_delete.html:18
 #: templates/partners/contact_detail.html:35
 #: templates/partners/contact_phones.html:42
+#: templates/partners/contact_profiles.html:42
 #: templates/partners/job_delete.html:20
 #: templates/partners/partner_addresses.html:42
 #: templates/partners/partner_delete.html:18
 #: templates/partners/partner_detail.html:35
 #: templates/partners/partner_phones.html:42
+#: templates/partners/partner_profiles.html:42
 #: templates/partners/phone_delete.html:26
+#: templates/partners/profile_delete.html:26
 #: templates/products/product_delete.html:18
 #: templates/products/product_delete_supply.html:20
 #: templates/products/product_detail.html:35
@@ -152,6 +159,7 @@ msgstr "Sei sicuro di voler eliminare questo conto bancario?"
 #: templates/accounting/bankaccount_delete.html:26
 #: templates/accounting/salesinvoice_delete.html:26
 #: templates/auth/comment_delete.html:25 templates/auth/user_delete.html:26
+#: templates/documents/hardcopy_delete.html:18
 #: templates/events/event_delete.html:26 templates/filebrowser/delete.html:32
 #: templates/knowledge/faq_delete.html:26
 #: templates/knowledge/poll_delete.html:26
@@ -163,6 +171,7 @@ msgstr "Sei sicuro di voler eliminare questo conto bancario?"
 #: templates/partners/job_delete.html:30
 #: templates/partners/partner_delete.html:26
 #: templates/partners/phone_delete.html:34
+#: templates/partners/profile_delete.html:34
 #: templates/products/product_delete.html:26
 #: templates/products/product_delete_supply.html:28
 #: templates/projects/milestone_delete.html:28
@@ -195,9 +204,11 @@ msgstr "Dettagli"
 #: templates/partners/contact_addresses.html:41
 #: templates/partners/contact_detail.html:32
 #: templates/partners/contact_phones.html:41
+#: templates/partners/contact_profiles.html:41
 #: templates/partners/partner_addresses.html:41
 #: templates/partners/partner_detail.html:32
 #: templates/partners/partner_phones.html:41
+#: templates/partners/partner_profiles.html:41
 #: templates/products/product_detail.html:32
 #: templates/products/product_supply_detail.html:31
 #: templates/projects/milestone.html:15
@@ -248,12 +259,12 @@ msgstr "Aggiungi conto bancario"
 
 #: templates/accounting/bankaccount_edit.html:43
 #: templates/accounting/salesinvoice_edit.html:73
-#: templates/accounting/salesinvoice_edit_hardcopy.html:45
-#: templates/auth/user_edit.html:47 templates/events/event_edit.html:43
-#: templates/filebrowser/copy.html:26 templates/filebrowser/mkdir.html:26
-#: templates/filebrowser/mkln.html:26 templates/filebrowser/move.html:26
-#: templates/filebrowser/rename.html:26 templates/filebrowser/upload.html:26
-#: templates/knowledge/faq_edit.html:41 templates/knowledge/poll_edit.html:69
+#: templates/auth/user_edit.html:47 templates/documents/hardcopy_edit.html:27
+#: templates/events/event_edit.html:43 templates/filebrowser/copy.html:26
+#: templates/filebrowser/mkdir.html:26 templates/filebrowser/mkln.html:26
+#: templates/filebrowser/move.html:26 templates/filebrowser/rename.html:26
+#: templates/filebrowser/upload.html:26 templates/knowledge/faq_edit.html:41
+#: templates/knowledge/poll_edit.html:69
 #: templates/knowledge/wikipage_edit.html:38
 #: templates/menus/bookmark_edit.html:45
 #: templates/notifications/notification_list.html:51
@@ -261,13 +272,13 @@ msgstr "Aggiungi conto bancario"
 #: templates/partners/contact_edit.html:47 templates/partners/job_edit.html:59
 #: templates/partners/partner_edit.html:47
 #: templates/partners/phone_edit.html:45
+#: templates/partners/profile_edit.html:45
 #: templates/products/product_edit.html:43
 #: templates/products/product_edit_supply.html:45
 #: templates/projects/milestone_edit.html:45
 #: templates/projects/project_edit.html:43
 #: templates/projects/ticket_edit.html:45
 #: templates/stock/deliverynote_edit.html:73
-#: templates/stock/deliverynote_edit_hardcopy.html:45
 #: templates/stock/movement_edit.html:44
 #: templates/stock/warehouse_edit.html:43
 #: templates/stock/warehouse_edit_movement.html:39
@@ -342,20 +353,6 @@ msgstr "Aggiungi fattura di vendita"
 msgid "Delete?"
 msgstr "Cancellare?"
 
-#: templates/accounting/salesinvoice_edit_hardcopy.html:8
-#: templates/accounting/salesinvoice_edit_hardcopy.html:28
-#: templates/stock/deliverynote_edit_hardcopy.html:8
-#: templates/stock/deliverynote_edit_hardcopy.html:28
-msgid "Edit hard copy"
-msgstr "Modifica copia cartacea"
-
-#: templates/accounting/salesinvoice_edit_hardcopy.html:8
-#: templates/accounting/salesinvoice_edit_hardcopy.html:30
-#: templates/stock/deliverynote_edit_hardcopy.html:8
-#: templates/stock/deliverynote_edit_hardcopy.html:30
-msgid "Add hard copy"
-msgstr "Aggiungi copia cartacea"
-
 #: templates/accounting/salesinvoice_hardcopies.html:8
 #: templates/accounting/salesinvoice_hardcopies.html:17
 #: templates/stock/deliverynote_hardcopies.html:8
@@ -419,8 +416,10 @@ msgstr "%(timesince)s fa"
 #: templates/notifications/notification_list.html:32
 #: templates/partners/contact_addresses.html:52
 #: templates/partners/contact_phones.html:52
+#: templates/partners/contact_profiles.html:52
 #: templates/partners/partner_addresses.html:52
 #: templates/partners/partner_phones.html:52
+#: templates/partners/partner_profiles.html:52
 #: templates/partners/partner_timeline.html:51
 #: templates/products/product_timeline.html:51
 #: templates/projects/milestone_list.html:37
@@ -478,6 +477,20 @@ msgstr "Utenti"
 #, python-format
 msgid "%(notification_count)s unread notification(s)"
 msgstr "%(notification_count)s notifiche non lette"
+
+#: templates/documents/hardcopy_delete.html:17
+msgid "Are you sure you want to delete this hard copy?"
+msgstr "Sei sicuro di voler eliminare questa copia cartacea?"
+
+#: templates/documents/hardcopy_edit.html:7
+#: templates/documents/hardcopy_edit.html:14
+msgid "Edit hard copy"
+msgstr "Modifica copia cartacea"
+
+#: templates/documents/hardcopy_edit.html:7
+#: templates/documents/hardcopy_edit.html:16
+msgid "Add hard copy"
+msgstr "Aggiungi copia cartacea"
 
 #: templates/elements/bookmarks.html:5
 msgid "+"
@@ -778,8 +791,8 @@ msgid ""
 "<blockquote>%(answer)s</blockquote>\n"
 msgstr ""
 "\n"
-"<p><a href=\"%(author_link)s\">%(author)s</a> ha risposto alla "
-"%(class)s <a href=\"%(link)s\">%(name)s</a>:</p>\n"
+"<p><a href=\"%(author_link)s\">%(author)s</a> ha risposto alla %(class)s <a "
+"href=\"%(link)s\">%(name)s</a>:</p>\n"
 "<blockquote>%(answer)s</blockquote>\n"
 
 #: templates/knowledge/activities/answer-deleted.html:3
@@ -890,6 +903,13 @@ msgstr "Contatti"
 msgid "Phone numbers"
 msgstr "Numeri telefonici"
 
+#: templates/partners/contact_profiles.html:6
+#: templates/partners/contact_profiles.html:15
+#: templates/partners/partner_profiles.html:6
+#: templates/partners/partner_profiles.html:15
+msgid "Social profiles"
+msgstr "Profili social"
+
 #: templates/partners/job_delete.html:6
 msgid "Delete job"
 msgstr "Elimina impiego"
@@ -945,6 +965,24 @@ msgstr "Modifica numero telefonico"
 #: templates/partners/phone_edit.html:7 templates/partners/phone_edit.html:34
 msgid "Add phone number"
 msgstr "Aggiungi numero telefonico"
+
+#: templates/partners/profile_delete.html:6
+msgid "Delete social profile"
+msgstr ""
+
+#: templates/partners/profile_delete.html:33
+msgid "Are you sure you want to delete this social profile?"
+msgstr "Sei sicuro di voler eliminare questo profilo social?"
+
+#: templates/partners/profile_edit.html:7
+#: templates/partners/profile_edit.html:32
+msgid "Edit social profile"
+msgstr "Modifica profilo social"
+
+#: templates/partners/profile_edit.html:7
+#: templates/partners/profile_edit.html:34
+msgid "Add social profile"
+msgstr "Aggiungi profilo social"
 
 #: templates/partners/activities/contact-added.html:3
 #, python-format

@@ -1010,6 +1010,29 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content .phone_numbers li .actions li { border: none; }
 
+#content .social_profiles dt {
+    border-bottom: 2px solid #c0c0c0;
+    background: none;
+    padding-left: 0;
+}
+
+#content .social_profiles dd { margin: 0; }
+
+#content .social_profiles li {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 10px 15px 10px 35px;
+    background: no-repeat 10px 10px;
+    background-image: url(images/social.png);
+}
+
+#content .social_profiles li .actions ul {
+    float: right;
+    margin: 2px -15px 0 0;
+    padding: 0;
+}
+
+#content .social_profiles li .actions li { border: none; }
+
 #content .milestones dt {
     border-bottom: 2px solid #c0c0c0;
     background: none;

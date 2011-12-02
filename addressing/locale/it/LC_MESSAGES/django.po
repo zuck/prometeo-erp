@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:51+0100\n"
+"POT-Creation-Date: 2011-12-02 17:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgstr "indirizzi"
 #: models.py:43
 #, python-format
 msgid "%(number)s, %(street)s - %(city)s, %(state)s %(zip)s - %(country)s"
-msgstr ""
+msgstr "%(street)s %(number)s - %(zip)s %(city)s %(state)s - %(country)s"
 
 #: models.py:59
 msgid "phone number"
@@ -67,20 +67,45 @@ msgstr "numero telefonico"
 msgid "phone numbers"
 msgstr "numeri telefonici"
 
-#: views.py:81
+#: models.py:68
+msgid "social network"
+msgstr ""
+
+#: models.py:69
+msgid "profile"
+msgstr "profilo"
+
+#: models.py:72
+msgid "social profile"
+msgstr "profilo social"
+
+#: models.py:73
+msgid "social profiles"
+msgstr "profili social"
+
+#: views.py:84
 #, python-format
 msgid "Address added to %(owner)s"
 msgstr "Indirizzo aggiunto a %(owner)s"
 
-#: views.py:102
+#: views.py:105
 msgid "Address updated"
 msgstr "Indirizzo aggiornato"
 
-#: views.py:156
+#: views.py:159
 #, python-format
 msgid "Phone number added to %(owner)s"
 msgstr "Numero telefonico aggiunto a %(owner)s"
 
-#: views.py:177
+#: views.py:180
 msgid "Phone number updated"
 msgstr "Numero telefonico aggiornato"
+
+#: views.py:234
+#, python-format
+msgid "Social profile added to %(owner)s"
+msgstr "Profilo social aggiunto a %(owner)s"
+
+#: views.py:255
+msgid "Social profile updated"
+msgstr "Profilo social aggiornato"

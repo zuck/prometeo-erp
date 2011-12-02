@@ -28,6 +28,7 @@ SEARCH_IN_MODELS = (
     'todo.Task',
     'addressing.Address',
     'addressing.PhoneNumber',
+    'addressing.SocialAccount',
     'partners.Contact',
     'partners.Partner',
     'documents.Document',

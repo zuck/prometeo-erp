@@ -62,14 +62,9 @@ def contact_list(request, page=0, paginate_by=10, **kwargs):
 def contact_add(request, **kwargs):
     """Adds a new contact.
     """
-    referer = clean_referer(request)
-    if referer == reverse("contact_list"):
-        referer = None
-
     return create_update.create_object(
         request,
         form_class=ContactForm,
-        post_save_redirect=referer,
         template_name='partners/contact_edit.html'
     )
 
@@ -219,6 +214,61 @@ def contact_delete_phone(request, contact_id, id, **kwargs):
         object_id=id,
         post_delete_redirect=reverse('contact_phones', args=[id]),
         template_name='partners/phone_delete.html',
+        extra_context={'owner': contact, 'owner_class': Contact.__name__}
+    )
+
+@permission_required('partners.change_contact', _get_contact)  
+def contact_profiles(request, id, page=0, paginate_by=10, **kwargs):
+    """Shows the contact's social profiles.
+    """
+    contact = get_object_or_404(Contact, pk=id)
+
+    return social_profile_list(
+        request,
+        owner=contact,
+        page=page,
+        paginate_by=paginate_by,
+        template_name='partners/contact_profiles.html',
+        extra_context={'object': contact, 'owner_class': Contact.__name__}
+    )
+
+@permission_required('partners.change_contact', _get_contact)   
+def contact_add_profile(request, id, **kwargs):
+    """Adds a new social profile to the given contact.
+    """
+    return social_profile_add(
+        request,
+        owner=get_object_or_404(Contact, pk=id),
+        post_save_redirect=reverse('contact_profiles', args=[id]),
+        template_name='partners/profile_edit.html',
+        extra_context={'owner_class': Contact.__name__}
+    )
+
+@permission_required('partners.change_contact', _get_contact)
+def contact_edit_profile(request, contact_id, id, **kwargs):
+    """Edits a social profile of the given contact.
+    """
+    contact = get_object_or_404(Contact, pk=contact_id)
+
+    return social_profile_edit(
+        request,
+        object_id=id,
+        post_save_redirect=reverse('contact_profiles', args=[id]),
+        template_name='partners/profile_edit.html',
+        extra_context={'owner': contact, 'owner_class': Contact.__name__}
+    )
+
+@permission_required('partners.change_contact', _get_contact)
+def contact_delete_profile(request, contact_id, id, **kwargs):
+    """Deletes a social profile of the given contact.
+    """
+    contact = get_object_or_404(Contact, pk=contact_id)
+
+    return social_profile_delete(
+        request,
+        object_id=id,
+        post_delete_redirect=reverse('contact_profiles', args=[id]),
+        template_name='partners/profile_delete.html',
         extra_context={'owner': contact, 'owner_class': Contact.__name__}
     )
 

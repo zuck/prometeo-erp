@@ -32,7 +32,7 @@ class ContactForm(forms.ModelForm):
     """
     class Meta:
         model = Contact
-        exclude = ['id', 'addresses', 'phone_numbers', 'created']
+        exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'created']
         widgets = {
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
@@ -62,7 +62,7 @@ class PartnerForm(forms.ModelForm):
     """
     class Meta:
         model = Partner
-        exclude = ['id', 'addresses', 'phone_numbers', 'contacts', 'dashboard', 'stream', 'author', 'created']
+        exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'contacts', 'dashboard', 'stream', 'author', 'created']
         widgets = {
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),

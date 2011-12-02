@@ -61,3 +61,16 @@ class PhoneNumber(models.Model):
         
     def __unicode__(self):
         return self.number
+
+class SocialProfile(models.Model):
+    """SocialProfile model.
+    """
+    network = models.CharField(max_length=5, choices=settings.SOCIAL_NETWORKS, default=settings.DEFAULT_SOCIAL_NETWORK, verbose_name=_('social network'))
+    profile = models.CharField(max_length=30, verbose_name=_('profile'))
+
+    class Meta:
+        verbose_name = _('social profile')
+        verbose_name_plural = _('social profiles')
+        
+    def __unicode__(self):
+        return self.profile

@@ -23,18 +23,27 @@ __version__ = '0.0.5'
 from django.utils.translation import ugettext_lazy as _
 
 ADDRESS_TYPES = (
-    ('0', _('preferred')),
-    ('1', _('invoice')),
-    ('2', _('delivery')),
-    ('3', _('other'))
+    ('PRE', _('preferred')),
+    ('INV', _('invoice')),
+    ('DEL', _('delivery')),
+    ('OTH', _('other'))
 )
 
 DEFAULT_ADDRESS_TYPE = '0'
 
 PHONE_TYPES = (
-    ('0', _('land Line')),
-    ('1', _('mobile')),
-    ('2', _('fax'))
+    ('LL', _('land Line')),
+    ('MOB', _('mobile')),
+    ('FAX', _('fax'))
 )
 
 DEFAULT_PHONE_TYPE = '0'
+
+SOCIAL_NETWORKS = {
+    ('TW', _('twitter')),
+    ('LI', _('linkedin')),
+    ('FB', _('facebook')),
+    ('G+', _('google+'))
+}
+
+DEFAULT_SOCIAL_NETWORK = 'TW'

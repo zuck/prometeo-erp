@@ -94,6 +94,13 @@ def install(sender, created_models, **kwargs):
         menu=partner_menu
     )
 
+    partner_profiles_link, is_new = Link.objects.get_or_create(
+        title=_("Social profiles"),
+        slug="partner-profiles",
+        url="{% url partner_profiles object.pk %}",
+        menu=partner_menu
+    )
+
     partner_contacts_link, is_new = Link.objects.get_or_create(
         title=_("Contacts"),
         slug="partner-contacts",
@@ -126,6 +133,13 @@ def install(sender, created_models, **kwargs):
         title=_("Phone numbers"),
         slug="contact-phones",
         url="{% url contact_phones object.pk %}",
+        menu=contact_menu
+    )
+
+    contact_profiles_link, is_new = Link.objects.get_or_create(
+        title=_("Social profiles"),
+        slug="contact-profiles",
+        url="{% url contact_profiles object.pk %}",
         menu=contact_menu
     )
 

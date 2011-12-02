@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 16:58+0100\n"
+"POT-Creation-Date: 2011-12-02 17:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,1194 +18,1210 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: base.py:284
-msgid "tentative"
-msgstr "tentativo"
-
-#: base.py:285 base.py:294 base.py:526
-msgid "confirmed"
-msgstr "confermato"
-
-#: base.py:286
-msgid "cancelled"
-msgstr "cancellato"
-
-#: base.py:293 base.py:525
-msgid "draft"
-msgstr "bozza"
-
-#: base.py:307
+#: addressing.py:26
 msgid "preferred"
 msgstr "preferenziale"
 
-#: base.py:308
+#: addressing.py:27
 msgid "invoice"
 msgstr "fatturazione"
 
-#: base.py:309
+#: addressing.py:28
 msgid "delivery"
 msgstr "spedizione"
 
-#: base.py:310
+#: addressing.py:29
 msgid "other"
 msgstr "altro"
 
-#: base.py:316
+#: addressing.py:35
 msgid "land Line"
 msgstr "fisso"
 
-#: base.py:317
+#: addressing.py:36
 msgid "mobile"
 msgstr "cellulare"
 
-#: base.py:318
+#: addressing.py:37
 msgid "fax"
 msgstr ""
 
-#: base.py:325
-msgid "first contact"
-msgstr "primo contatto"
-
-#: base.py:331
-msgid "AED"
-msgstr ""
-
-#: base.py:332
-msgid "AFN"
-msgstr ""
-
-#: base.py:333
-msgid "ALL"
-msgstr ""
-
-#: base.py:334
-msgid "AMD"
-msgstr ""
-
-#: base.py:335
-msgid "ANG"
-msgstr ""
-
-#: base.py:336
-msgid "AOA"
-msgstr ""
-
-#: base.py:337
-msgid "ARS"
-msgstr ""
-
-#: base.py:338
-msgid "AUD"
-msgstr ""
-
-#: base.py:339
-msgid "AZN"
-msgstr ""
-
-#: base.py:340
-msgid "BAM"
-msgstr ""
-
-#: base.py:341
-msgid "BBD"
-msgstr ""
-
-#: base.py:342
-msgid "BDT"
-msgstr ""
-
-#: base.py:343
-msgid "BGN"
-msgstr ""
-
-#: base.py:344
-msgid "BHD"
-msgstr ""
-
-#: base.py:345
-msgid "BIF"
-msgstr ""
-
-#: base.py:346
-msgid "BMD"
-msgstr ""
-
-#: base.py:347
-msgid "BND"
-msgstr ""
-
-#: base.py:348
-msgid "BOB"
-msgstr ""
-
-#: base.py:349
-msgid "BRL"
-msgstr ""
-
-#: base.py:350
-msgid "BSD"
-msgstr ""
-
-#: base.py:351
-msgid "BTN"
-msgstr ""
-
-#: base.py:352
-msgid "BWP"
-msgstr ""
-
-#: base.py:353
-msgid "BYR"
-msgstr ""
-
-#: base.py:354
-msgid "BZD"
-msgstr ""
-
-#: base.py:355
-msgid "CAD"
-msgstr ""
-
-#: base.py:356
-msgid "CDF"
-msgstr ""
-
-#: base.py:357
-msgid "CFA"
-msgstr ""
-
-#: base.py:358
-msgid "CFP"
-msgstr ""
-
-#: base.py:359
-msgid "CHF"
-msgstr ""
-
-#: base.py:360
-msgid "CLP"
-msgstr ""
-
-#: base.py:361
-msgid "CNY"
-msgstr ""
-
-#: base.py:362
-msgid "COP"
-msgstr ""
-
-#: base.py:363
-msgid "CRC"
-msgstr ""
-
-#: base.py:364
-msgid "CUC"
-msgstr ""
-
-#: base.py:365
-msgid "CZK"
-msgstr ""
-
-#: base.py:366
-msgid "DJF"
-msgstr ""
-
-#: base.py:367
-msgid "DKK"
-msgstr ""
-
-#: base.py:368
-msgid "DOP"
-msgstr ""
-
-#: base.py:369
-msgid "DZD"
-msgstr ""
-
-#: base.py:370
-msgid "EEK"
-msgstr ""
-
-#: base.py:371
-msgid "EGP"
-msgstr ""
-
-#: base.py:372
-msgid "ERN"
-msgstr ""
-
-#: base.py:373
-msgid "ETB"
-msgstr ""
-
-#: base.py:374
-msgid "EUR"
-msgstr ""
-
-#: base.py:375
-msgid "FJD"
-msgstr ""
-
-#: base.py:376
-msgid "FKP"
-msgstr ""
-
-#: base.py:377
-msgid "FMG"
-msgstr ""
-
-#: base.py:378
-msgid "GBP"
-msgstr ""
-
-#: base.py:379
-msgid "GEL"
-msgstr ""
-
-#: base.py:380
-msgid "GHS"
-msgstr ""
-
-#: base.py:381
-msgid "GIP"
-msgstr ""
-
-#: base.py:382
-msgid "GMD"
-msgstr ""
-
-#: base.py:383
-msgid "GNF"
-msgstr ""
-
-#: base.py:384
-msgid "GQE"
-msgstr ""
-
-#: base.py:385
-msgid "GTQ"
-msgstr ""
-
-#: base.py:386
-msgid "GYD"
-msgstr ""
-
-#: base.py:387
-msgid "HKD"
-msgstr ""
-
-#: base.py:388
-msgid "HNL"
-msgstr ""
-
-#: base.py:389
-msgid "HRK"
-msgstr ""
-
-#: base.py:390
-msgid "HTG"
-msgstr ""
-
-#: base.py:391
-msgid "HUF"
-msgstr ""
-
-#: base.py:392
-msgid "IDR"
-msgstr ""
-
-#: base.py:393
-msgid "ILS"
-msgstr ""
-
-#: base.py:394
-msgid "INR"
-msgstr ""
-
-#: base.py:395
-msgid "IQD"
-msgstr ""
-
-#: base.py:396
-msgid "IRR"
-msgstr ""
-
-#: base.py:397
-msgid "ISK"
-msgstr ""
-
-#: base.py:398
-msgid "JMD"
-msgstr ""
-
-#: base.py:399
-msgid "JOD"
-msgstr ""
-
-#: base.py:400
-msgid "JPY"
-msgstr ""
-
-#: base.py:401
-msgid "KES"
-msgstr ""
-
-#: base.py:402
-msgid "KGS"
-msgstr ""
-
-#: base.py:403
-msgid "KHR"
-msgstr ""
-
-#: base.py:404
-msgid "KMF"
-msgstr ""
-
-#: base.py:405
-msgid "KPW"
-msgstr ""
-
-#: base.py:406
-msgid "KRW"
-msgstr ""
-
-#: base.py:407
-msgid "KWD"
-msgstr ""
-
-#: base.py:408
-msgid "KYD"
-msgstr ""
-
-#: base.py:409
-msgid "KZT"
-msgstr ""
-
-#: base.py:410
-msgid "LAK"
-msgstr ""
-
-#: base.py:411
-msgid "LBP"
-msgstr ""
-
-#: base.py:412
-msgid "LKR"
-msgstr ""
-
-#: base.py:413
-msgid "LRD"
-msgstr ""
-
-#: base.py:414
-msgid "LSL"
-msgstr ""
-
-#: base.py:415
-msgid "LTL"
-msgstr ""
-
-#: base.py:416
-msgid "LVL"
-msgstr ""
-
-#: base.py:417
-msgid "LYD"
-msgstr ""
-
-#: base.py:418
-msgid "MAD"
-msgstr ""
-
-#: base.py:419
-msgid "MDL"
-msgstr ""
-
-#: base.py:420
-msgid "MGA"
-msgstr ""
-
-#: base.py:421
-msgid "MKD"
-msgstr ""
-
-#: base.py:422
-msgid "MMK"
-msgstr ""
-
-#: base.py:423
-msgid "MNT"
-msgstr ""
-
-#: base.py:424
-msgid "MOP"
-msgstr ""
-
-#: base.py:425
-msgid "MRO"
-msgstr ""
-
-#: base.py:426
-msgid "MUR"
-msgstr ""
-
-#: base.py:427
-msgid "MVR"
-msgstr ""
-
-#: base.py:428
-msgid "MWK"
-msgstr ""
-
-#: base.py:429
-msgid "MXN"
-msgstr ""
-
-#: base.py:430
-msgid "MYR"
-msgstr ""
-
-#: base.py:431
-msgid "MZM"
-msgstr ""
-
-#: base.py:432
-msgid "NAD"
-msgstr ""
-
-#: base.py:433
-msgid "NGN"
-msgstr ""
-
-#: base.py:434
-msgid "NIO"
-msgstr ""
-
-#: base.py:435
-msgid "NOK"
-msgstr ""
-
-#: base.py:436
-msgid "NPR"
-msgstr ""
-
-#: base.py:437
-msgid "NRs"
-msgstr ""
-
-#: base.py:438
-msgid "NZD"
-msgstr ""
-
-#: base.py:439
-msgid "OMR"
-msgstr ""
-
-#: base.py:440
-msgid "PAB"
-msgstr ""
-
-#: base.py:441
-msgid "PEN"
-msgstr ""
-
-#: base.py:442
-msgid "PGK"
-msgstr ""
-
-#: base.py:443
-msgid "PHP"
-msgstr ""
-
-#: base.py:444
-msgid "PKR"
-msgstr ""
-
-#: base.py:445
-msgid "PLN"
-msgstr ""
-
-#: base.py:446
-msgid "PYG"
-msgstr ""
-
-#: base.py:447
-msgid "QAR"
-msgstr ""
-
-#: base.py:448
-msgid "RMB"
-msgstr ""
-
-#: base.py:449
-msgid "RON"
-msgstr ""
-
-#: base.py:450
-msgid "RSD"
-msgstr ""
-
-#: base.py:451
-msgid "RUB"
-msgstr ""
-
-#: base.py:452
-msgid "RWF"
-msgstr ""
-
-#: base.py:453
-msgid "SAR"
-msgstr ""
-
-#: base.py:454
-msgid "SCR"
-msgstr ""
-
-#: base.py:455
-msgid "SDG"
+#: addressing.py:43
+msgid "twitter"
 msgstr ""
 
-#: base.py:456
-msgid "SDR"
+#: addressing.py:44
+msgid "linkedin"
 msgstr ""
 
-#: base.py:457
-msgid "SEK"
+#: addressing.py:45
+msgid "facebook"
 msgstr ""
 
-#: base.py:458
-msgid "SGD"
+#: addressing.py:46
+msgid "google+"
 msgstr ""
-
-#: base.py:459
-msgid "SHP"
-msgstr ""
-
-#: base.py:460
-msgid "SOS"
-msgstr ""
-
-#: base.py:461
-msgid "SRD"
-msgstr ""
-
-#: base.py:462
-msgid "STD"
-msgstr ""
-
-#: base.py:463
-msgid "SYP"
-msgstr ""
-
-#: base.py:464
-msgid "SZL"
-msgstr ""
-
-#: base.py:465
-msgid "THB"
-msgstr ""
-
-#: base.py:466
-msgid "TJS"
-msgstr ""
-
-#: base.py:467
-msgid "TMT"
-msgstr ""
-
-#: base.py:468
-msgid "TND"
-msgstr ""
-
-#: base.py:469
-msgid "TRY"
-msgstr ""
-
-#: base.py:470
-msgid "TTD"
-msgstr ""
-
-#: base.py:471
-msgid "TWD"
-msgstr ""
-
-#: base.py:472
-msgid "TZS"
-msgstr ""
-
-#: base.py:473
-msgid "UAE"
-msgstr ""
-
-#: base.py:474
-msgid "UAH"
-msgstr ""
-
-#: base.py:475
-msgid "UGX"
-msgstr ""
-
-#: base.py:476
-msgid "USD"
-msgstr ""
-
-#: base.py:477
-msgid "UYU"
-msgstr ""
-
-#: base.py:478
-msgid "UZS"
-msgstr ""
-
-#: base.py:479
-msgid "VEB"
-msgstr ""
-
-#: base.py:480
-msgid "VND"
-msgstr ""
-
-#: base.py:481
-msgid "VUV"
-msgstr ""
-
-#: base.py:482
-msgid "WST"
-msgstr ""
-
-#: base.py:483
-msgid "XAF"
-msgstr ""
-
-#: base.py:484
-msgid "XCD"
-msgstr ""
-
-#: base.py:485
-msgid "XDR"
-msgstr ""
-
-#: base.py:486
-msgid "XOF"
-msgstr ""
-
-#: base.py:487
-msgid "XPF"
-msgstr ""
-
-#: base.py:488
-msgid "YEN"
-msgstr ""
-
-#: base.py:489
-msgid "YER"
-msgstr ""
-
-#: base.py:490
-msgid "YTL"
-msgstr ""
-
-#: base.py:491
-msgid "ZAR"
-msgstr ""
-
-#: base.py:492
-msgid "ZMK"
-msgstr ""
-
-#: base.py:493
-msgid "ZWR"
-msgstr ""
-
-#: base.py:499
-msgid "30 days"
-msgstr "30 gg"
-
-#: base.py:500
-msgid "60 days"
-msgstr "60 gg"
-
-#: base.py:501
-msgid "90 days"
-msgstr "90 gg"
-
-#: base.py:502
-msgid "120 days"
-msgstr "120 gg"
-
-#: base.py:503
-msgid "cash in advance"
-msgstr "pagamento anticipato"
-
-#: base.py:504
-msgid "cash on delivery"
-msgstr "pagamento alla consegna"
-
-#: base.py:510
-msgid "Chairman"
-msgstr "Presidente"
-
-#: base.py:511
-msgid "CEO"
-msgstr "Amm. delegato"
-
-#: base.py:512
-msgid "COO"
-msgstr "Dir. operativo"
-
-#: base.py:513
-msgid "CFO"
-msgstr "Dir. finanziario"
-
-#: base.py:514
-msgid "CTO"
-msgstr "Dir. tecnico"
-
-#: base.py:515
-msgid "Project Manager"
-msgstr "Resp. progetto"
-
-#: base.py:516
-msgid "Sales Manager"
-msgstr "Resp. vendite"
 
-#: base.py:517
-msgid "Salesman"
-msgstr "Commerciale"
+#: documents.py:26 todo.py:28
+msgid "draft"
+msgstr "bozza"
 
-#: base.py:518
-msgid "Employee"
-msgstr "Impiegato"
+#: documents.py:27 events.py:27 todo.py:29
+msgid "confirmed"
+msgstr "confermato"
 
-#: base.py:527
+#: documents.py:28
 msgid "reviewed"
 msgstr "revisionato"
 
-#: base.py:534
+#: events.py:26
+msgid "tentative"
+msgstr "tentativo"
+
+#: events.py:28
+msgid "cancelled"
+msgstr "cancellato"
+
+#: partners.py:26
+msgid "first contact"
+msgstr "primo contatto"
+
+#: partners.py:32
+msgid "AED"
+msgstr ""
+
+#: partners.py:33
+msgid "AFN"
+msgstr ""
+
+#: partners.py:34
+msgid "ALL"
+msgstr ""
+
+#: partners.py:35
+msgid "AMD"
+msgstr ""
+
+#: partners.py:36
+msgid "ANG"
+msgstr ""
+
+#: partners.py:37
+msgid "AOA"
+msgstr ""
+
+#: partners.py:38
+msgid "ARS"
+msgstr ""
+
+#: partners.py:39
+msgid "AUD"
+msgstr ""
+
+#: partners.py:40
+msgid "AZN"
+msgstr ""
+
+#: partners.py:41
+msgid "BAM"
+msgstr ""
+
+#: partners.py:42
+msgid "BBD"
+msgstr ""
+
+#: partners.py:43
+msgid "BDT"
+msgstr ""
+
+#: partners.py:44
+msgid "BGN"
+msgstr ""
+
+#: partners.py:45
+msgid "BHD"
+msgstr ""
+
+#: partners.py:46
+msgid "BIF"
+msgstr ""
+
+#: partners.py:47
+msgid "BMD"
+msgstr ""
+
+#: partners.py:48
+msgid "BND"
+msgstr ""
+
+#: partners.py:49
+msgid "BOB"
+msgstr ""
+
+#: partners.py:50
+msgid "BRL"
+msgstr ""
+
+#: partners.py:51
+msgid "BSD"
+msgstr ""
+
+#: partners.py:52
+msgid "BTN"
+msgstr ""
+
+#: partners.py:53
+msgid "BWP"
+msgstr ""
+
+#: partners.py:54
+msgid "BYR"
+msgstr ""
+
+#: partners.py:55
+msgid "BZD"
+msgstr ""
+
+#: partners.py:56
+msgid "CAD"
+msgstr ""
+
+#: partners.py:57
+msgid "CDF"
+msgstr ""
+
+#: partners.py:58
+msgid "CFA"
+msgstr ""
+
+#: partners.py:59
+msgid "CFP"
+msgstr ""
+
+#: partners.py:60
+msgid "CHF"
+msgstr ""
+
+#: partners.py:61
+msgid "CLP"
+msgstr ""
+
+#: partners.py:62
+msgid "CNY"
+msgstr ""
+
+#: partners.py:63
+msgid "COP"
+msgstr ""
+
+#: partners.py:64
+msgid "CRC"
+msgstr ""
+
+#: partners.py:65
+msgid "CUC"
+msgstr ""
+
+#: partners.py:66
+msgid "CZK"
+msgstr ""
+
+#: partners.py:67
+msgid "DJF"
+msgstr ""
+
+#: partners.py:68
+msgid "DKK"
+msgstr ""
+
+#: partners.py:69
+msgid "DOP"
+msgstr ""
+
+#: partners.py:70
+msgid "DZD"
+msgstr ""
+
+#: partners.py:71
+msgid "EEK"
+msgstr ""
+
+#: partners.py:72
+msgid "EGP"
+msgstr ""
+
+#: partners.py:73
+msgid "ERN"
+msgstr ""
+
+#: partners.py:74
+msgid "ETB"
+msgstr ""
+
+#: partners.py:75
+msgid "EUR"
+msgstr ""
+
+#: partners.py:76
+msgid "FJD"
+msgstr ""
+
+#: partners.py:77
+msgid "FKP"
+msgstr ""
+
+#: partners.py:78
+msgid "FMG"
+msgstr ""
+
+#: partners.py:79
+msgid "GBP"
+msgstr ""
+
+#: partners.py:80
+msgid "GEL"
+msgstr ""
+
+#: partners.py:81
+msgid "GHS"
+msgstr ""
+
+#: partners.py:82
+msgid "GIP"
+msgstr ""
+
+#: partners.py:83
+msgid "GMD"
+msgstr ""
+
+#: partners.py:84
+msgid "GNF"
+msgstr ""
+
+#: partners.py:85
+msgid "GQE"
+msgstr ""
+
+#: partners.py:86
+msgid "GTQ"
+msgstr ""
+
+#: partners.py:87
+msgid "GYD"
+msgstr ""
+
+#: partners.py:88
+msgid "HKD"
+msgstr ""
+
+#: partners.py:89
+msgid "HNL"
+msgstr ""
+
+#: partners.py:90
+msgid "HRK"
+msgstr ""
+
+#: partners.py:91
+msgid "HTG"
+msgstr ""
+
+#: partners.py:92
+msgid "HUF"
+msgstr ""
+
+#: partners.py:93
+msgid "IDR"
+msgstr ""
+
+#: partners.py:94
+msgid "ILS"
+msgstr ""
+
+#: partners.py:95
+msgid "INR"
+msgstr ""
+
+#: partners.py:96
+msgid "IQD"
+msgstr ""
+
+#: partners.py:97
+msgid "IRR"
+msgstr ""
+
+#: partners.py:98
+msgid "ISK"
+msgstr ""
+
+#: partners.py:99
+msgid "JMD"
+msgstr ""
+
+#: partners.py:100
+msgid "JOD"
+msgstr ""
+
+#: partners.py:101
+msgid "JPY"
+msgstr ""
+
+#: partners.py:102
+msgid "KES"
+msgstr ""
+
+#: partners.py:103
+msgid "KGS"
+msgstr ""
+
+#: partners.py:104
+msgid "KHR"
+msgstr ""
+
+#: partners.py:105
+msgid "KMF"
+msgstr ""
+
+#: partners.py:106
+msgid "KPW"
+msgstr ""
+
+#: partners.py:107
+msgid "KRW"
+msgstr ""
+
+#: partners.py:108
+msgid "KWD"
+msgstr ""
+
+#: partners.py:109
+msgid "KYD"
+msgstr ""
+
+#: partners.py:110
+msgid "KZT"
+msgstr ""
+
+#: partners.py:111
+msgid "LAK"
+msgstr ""
+
+#: partners.py:112
+msgid "LBP"
+msgstr ""
+
+#: partners.py:113
+msgid "LKR"
+msgstr ""
+
+#: partners.py:114
+msgid "LRD"
+msgstr ""
+
+#: partners.py:115
+msgid "LSL"
+msgstr ""
+
+#: partners.py:116
+msgid "LTL"
+msgstr ""
+
+#: partners.py:117
+msgid "LVL"
+msgstr ""
+
+#: partners.py:118
+msgid "LYD"
+msgstr ""
+
+#: partners.py:119
+msgid "MAD"
+msgstr ""
+
+#: partners.py:120
+msgid "MDL"
+msgstr ""
+
+#: partners.py:121
+msgid "MGA"
+msgstr ""
+
+#: partners.py:122
+msgid "MKD"
+msgstr ""
+
+#: partners.py:123
+msgid "MMK"
+msgstr ""
+
+#: partners.py:124
+msgid "MNT"
+msgstr ""
+
+#: partners.py:125
+msgid "MOP"
+msgstr ""
+
+#: partners.py:126
+msgid "MRO"
+msgstr ""
+
+#: partners.py:127
+msgid "MUR"
+msgstr ""
+
+#: partners.py:128
+msgid "MVR"
+msgstr ""
+
+#: partners.py:129
+msgid "MWK"
+msgstr ""
+
+#: partners.py:130
+msgid "MXN"
+msgstr ""
+
+#: partners.py:131
+msgid "MYR"
+msgstr ""
+
+#: partners.py:132
+msgid "MZM"
+msgstr ""
+
+#: partners.py:133
+msgid "NAD"
+msgstr ""
+
+#: partners.py:134
+msgid "NGN"
+msgstr ""
+
+#: partners.py:135
+msgid "NIO"
+msgstr ""
+
+#: partners.py:136
+msgid "NOK"
+msgstr ""
+
+#: partners.py:137
+msgid "NPR"
+msgstr ""
+
+#: partners.py:138
+msgid "NRs"
+msgstr ""
+
+#: partners.py:139
+msgid "NZD"
+msgstr ""
+
+#: partners.py:140
+msgid "OMR"
+msgstr ""
+
+#: partners.py:141
+msgid "PAB"
+msgstr ""
+
+#: partners.py:142
+msgid "PEN"
+msgstr ""
+
+#: partners.py:143
+msgid "PGK"
+msgstr ""
+
+#: partners.py:144
+msgid "PHP"
+msgstr ""
+
+#: partners.py:145
+msgid "PKR"
+msgstr ""
+
+#: partners.py:146
+msgid "PLN"
+msgstr ""
+
+#: partners.py:147
+msgid "PYG"
+msgstr ""
+
+#: partners.py:148
+msgid "QAR"
+msgstr ""
+
+#: partners.py:149
+msgid "RMB"
+msgstr ""
+
+#: partners.py:150
+msgid "RON"
+msgstr ""
+
+#: partners.py:151
+msgid "RSD"
+msgstr ""
+
+#: partners.py:152
+msgid "RUB"
+msgstr ""
+
+#: partners.py:153
+msgid "RWF"
+msgstr ""
+
+#: partners.py:154
+msgid "SAR"
+msgstr ""
+
+#: partners.py:155
+msgid "SCR"
+msgstr ""
+
+#: partners.py:156
+msgid "SDG"
+msgstr ""
+
+#: partners.py:157
+msgid "SDR"
+msgstr ""
+
+#: partners.py:158
+msgid "SEK"
+msgstr ""
+
+#: partners.py:159
+msgid "SGD"
+msgstr ""
+
+#: partners.py:160
+msgid "SHP"
+msgstr ""
+
+#: partners.py:161
+msgid "SOS"
+msgstr ""
+
+#: partners.py:162
+msgid "SRD"
+msgstr ""
+
+#: partners.py:163
+msgid "STD"
+msgstr ""
+
+#: partners.py:164
+msgid "SYP"
+msgstr ""
+
+#: partners.py:165
+msgid "SZL"
+msgstr ""
+
+#: partners.py:166
+msgid "THB"
+msgstr ""
+
+#: partners.py:167
+msgid "TJS"
+msgstr ""
+
+#: partners.py:168
+msgid "TMT"
+msgstr ""
+
+#: partners.py:169
+msgid "TND"
+msgstr ""
+
+#: partners.py:170
+msgid "TRY"
+msgstr ""
+
+#: partners.py:171
+msgid "TTD"
+msgstr ""
+
+#: partners.py:172
+msgid "TWD"
+msgstr ""
+
+#: partners.py:173
+msgid "TZS"
+msgstr ""
+
+#: partners.py:174
+msgid "UAE"
+msgstr ""
+
+#: partners.py:175
+msgid "UAH"
+msgstr ""
+
+#: partners.py:176
+msgid "UGX"
+msgstr ""
+
+#: partners.py:177
+msgid "USD"
+msgstr ""
+
+#: partners.py:178
+msgid "UYU"
+msgstr ""
+
+#: partners.py:179
+msgid "UZS"
+msgstr ""
+
+#: partners.py:180
+msgid "VEB"
+msgstr ""
+
+#: partners.py:181
+msgid "VND"
+msgstr ""
+
+#: partners.py:182
+msgid "VUV"
+msgstr ""
+
+#: partners.py:183
+msgid "WST"
+msgstr ""
+
+#: partners.py:184
+msgid "XAF"
+msgstr ""
+
+#: partners.py:185
+msgid "XCD"
+msgstr ""
+
+#: partners.py:186
+msgid "XDR"
+msgstr ""
+
+#: partners.py:187
+msgid "XOF"
+msgstr ""
+
+#: partners.py:188
+msgid "XPF"
+msgstr ""
+
+#: partners.py:189
+msgid "YEN"
+msgstr ""
+
+#: partners.py:190
+msgid "YER"
+msgstr ""
+
+#: partners.py:191
+msgid "YTL"
+msgstr ""
+
+#: partners.py:192
+msgid "ZAR"
+msgstr ""
+
+#: partners.py:193
+msgid "ZMK"
+msgstr ""
+
+#: partners.py:194
+msgid "ZWR"
+msgstr ""
+
+#: partners.py:200
+msgid "30 days"
+msgstr "30 gg"
+
+#: partners.py:201
+msgid "60 days"
+msgstr "60 gg"
+
+#: partners.py:202
+msgid "90 days"
+msgstr "90 gg"
+
+#: partners.py:203
+msgid "120 days"
+msgstr "120 gg"
+
+#: partners.py:204
+msgid "cash in advance"
+msgstr "pagamento anticipato"
+
+#: partners.py:205
+msgid "cash on delivery"
+msgstr "pagamento alla consegna"
+
+#: partners.py:211
+msgid "Chairman"
+msgstr "Presidente"
+
+#: partners.py:212
+msgid "CEO"
+msgstr "Amm. delegato"
+
+#: partners.py:213
+msgid "COO"
+msgstr "Dir. operativo"
+
+#: partners.py:214
+msgid "CFO"
+msgstr "Dir. finanziario"
+
+#: partners.py:215
+msgid "CTO"
+msgstr "Dir. tecnico"
+
+#: partners.py:216
+msgid "Project Manager"
+msgstr "Resp. progetto"
+
+#: partners.py:217
+msgid "Sales Manager"
+msgstr "Resp. vendite"
+
+#: partners.py:218
+msgid "Salesman"
+msgstr "Commerciale"
+
+#: partners.py:219
+msgid "Employee"
+msgstr "Impiegato"
+
+#: products.py:26
 msgid "Bag"
 msgstr ""
 
-#: base.py:535
+#: products.py:27
 msgid "Barrel"
 msgstr ""
 
-#: base.py:536
+#: products.py:28
 msgid "Block"
 msgstr ""
 
-#: base.py:537
+#: products.py:29
 msgid "Board"
 msgstr ""
 
-#: base.py:538
+#: products.py:30
 msgid "Board Feet"
 msgstr ""
 
-#: base.py:539
+#: products.py:31
 msgid "Bottle"
 msgstr ""
 
-#: base.py:540
+#: products.py:32
 msgid "Box"
 msgstr ""
 
-#: base.py:541
+#: products.py:33
 msgid "Bulk"
 msgstr ""
 
-#: base.py:542
+#: products.py:34
 msgid "Bundle"
 msgstr ""
 
-#: base.py:543
+#: products.py:35
 msgid "Card"
 msgstr ""
 
-#: base.py:544
+#: products.py:36
 msgid "Carton"
 msgstr ""
 
-#: base.py:545
+#: products.py:37
 msgid "Cartridge"
 msgstr ""
 
-#: base.py:546
+#: products.py:38
 msgid "Case"
 msgstr ""
 
-#: base.py:547
+#: products.py:39
 msgid "Centigram"
 msgstr ""
 
-#: base.py:548
+#: products.py:40
 msgid "Centiliter"
 msgstr ""
 
-#: base.py:549
+#: products.py:41
 msgid "Count"
 msgstr ""
 
-#: base.py:550
+#: products.py:42
 msgid "Cubic Centimeter"
 msgstr ""
 
-#: base.py:551
+#: products.py:43
 msgid "Cubic Decimeter"
 msgstr ""
 
-#: base.py:552
+#: products.py:44
 msgid "Cubic Feet"
 msgstr ""
 
-#: base.py:553
+#: products.py:45
 msgid "Cubic Inches"
 msgstr ""
 
-#: base.py:554
+#: products.py:46
 msgid "Cubic Meter"
 msgstr ""
 
-#: base.py:555
+#: products.py:47
 msgid "Cubic Milimetre"
 msgstr ""
 
-#: base.py:556
+#: products.py:48
 msgid "Days"
 msgstr ""
 
-#: base.py:557
+#: products.py:49
 msgid "Decigram"
 msgstr ""
 
-#: base.py:558
+#: products.py:50
 msgid "Deciliter"
 msgstr ""
 
-#: base.py:559
+#: products.py:51
 msgid "Decimeter"
 msgstr ""
 
-#: base.py:560
+#: products.py:52
 msgid "Degrees Celsius"
 msgstr ""
 
-#: base.py:561
+#: products.py:53
 msgid "Degrees Fahrenheit"
 msgstr ""
 
-#: base.py:562
+#: products.py:54
 msgid "Dozen"
 msgstr ""
 
-#: base.py:563
+#: products.py:55
 msgid "Feet"
 msgstr ""
 
-#: base.py:564
+#: products.py:56
 msgid "Fifty Count"
 msgstr ""
 
-#: base.py:565
+#: products.py:57
 msgid "Fifty Square Feet"
 msgstr ""
 
-#: base.py:566
+#: products.py:58
 msgid "Fluid Ounce"
 msgstr ""
 
-#: base.py:567
+#: products.py:59
 msgid "Gallon"
 msgstr ""
 
-#: base.py:568
+#: products.py:60
 msgid "Gram"
 msgstr ""
 
-#: base.py:569
+#: products.py:61
 msgid "Gross Kilogram"
 msgstr ""
 
-#: base.py:570
+#: products.py:62
 msgid "Half Dozen"
 msgstr ""
 
-#: base.py:571
+#: products.py:63
 msgid "Houndred Count"
 msgstr ""
 
-#: base.py:572
+#: products.py:64
 msgid "Houndred Feet"
 msgstr ""
 
-#: base.py:573
+#: products.py:65
 msgid "Houndred Pounds"
 msgstr ""
 
-#: base.py:574
+#: products.py:66
 msgid "Inches"
 msgstr ""
 
-#: base.py:575
+#: products.py:67
 msgid "Jar"
 msgstr ""
 
-#: base.py:576
+#: products.py:68
 msgid "Kilogram"
 msgstr ""
 
-#: base.py:577
+#: products.py:69
 msgid "Kilometer"
 msgstr ""
 
-#: base.py:578
+#: products.py:70
 msgid "Kit"
 msgstr ""
 
-#: base.py:579
+#: products.py:71
 msgid "Liter"
 msgstr ""
 
-#: base.py:580
+#: products.py:72
 msgid "Meter"
 msgstr ""
 
-#: base.py:581
+#: products.py:73
 msgid "Metric Ton"
 msgstr ""
 
-#: base.py:582
+#: products.py:74
 msgid "Microgram"
 msgstr ""
 
-#: base.py:583
+#: products.py:75
 msgid "Microliter"
 msgstr ""
 
-#: base.py:584
+#: products.py:76
 msgid "Miligram"
 msgstr ""
 
-#: base.py:585
+#: products.py:77
 msgid "Mililiter"
 msgstr ""
 
-#: base.py:586
+#: products.py:78
 msgid "Milimeter"
 msgstr ""
 
-#: base.py:587
+#: products.py:79
 msgid "Ounces"
 msgstr ""
 
-#: base.py:588
+#: products.py:80
 msgid "Pack"
 msgstr ""
 
-#: base.py:589
+#: products.py:81
 msgid "Package"
 msgstr ""
 
-#: base.py:590
+#: products.py:82
 msgid "Pail"
 msgstr ""
 
-#: base.py:591
+#: products.py:83
 msgid "Pair"
 msgstr ""
 
-#: base.py:592
+#: products.py:84
 msgid "Pallet"
 msgstr ""
 
-#: base.py:593
+#: products.py:85
 msgid "Percent"
 msgstr ""
 
-#: base.py:594
+#: products.py:86
 msgid "Piece"
 msgstr ""
 
-#: base.py:595
+#: products.py:87
 msgid "Pint"
 msgstr ""
 
-#: base.py:596
+#: products.py:88
 msgid "Portion"
 msgstr ""
 
-#: base.py:597
+#: products.py:89
 msgid "Pouch"
 msgstr ""
 
-#: base.py:598
+#: products.py:90
 msgid "Set"
 msgstr ""
 
-#: base.py:599
+#: products.py:91
 msgid "Sheet"
 msgstr ""
 
-#: base.py:600
+#: products.py:92
 msgid "Square Foot"
 msgstr ""
 
-#: base.py:601
+#: products.py:93
 msgid "Square Meter"
 msgstr ""
 
-#: base.py:602
+#: products.py:94
 msgid "Square Yard"
 msgstr ""
 
-#: base.py:603
+#: products.py:95
 msgid "Tank"
 msgstr ""
 
-#: base.py:604
+#: products.py:96
 msgid "Thousand Feet"
 msgstr ""
 
-#: base.py:605
+#: products.py:97
 msgid "Unit"
 msgstr ""
 
-#: base.py:606
+#: products.py:98
 msgid "Yard"
 msgstr ""
 
-#: base.py:612
+#: products.py:104
 msgid "Purchase"
 msgstr "acquisto"
 
-#: base.py:613
+#: products.py:105
 msgid "Production"
 msgstr "produzione"
 
-#: base.py:622
-msgid "sender"
-msgstr "mittente"
-
-#: base.py:623
-msgid "addressee"
-msgstr "destinatario"
-
-#: base.py:624
-msgid "carrier"
-msgstr "vettore"
-
-#: base.py:630
-msgid "EXW"
-msgstr ""
-
-#: base.py:631
-msgid "FCA"
-msgstr ""
-
-#: base.py:632
-msgid "CPT"
-msgstr ""
-
-#: base.py:633
-msgid "CIP"
-msgstr ""
-
-#: base.py:634
-msgid "DAT"
-msgstr ""
-
-#: base.py:635
-msgid "DAP"
-msgstr ""
-
-#: base.py:636
-msgid "DDP"
-msgstr ""
-
-#: base.py:637
-msgid "FAS"
-msgstr ""
-
-#: base.py:638
-msgid "FOB"
-msgstr ""
-
-#: base.py:639
-msgid "CFR"
-msgstr ""
-
-#: base.py:640
-msgid "CIF"
-msgstr ""
-
-#: base.py:646
-msgid "box"
-msgstr "scatola"
-
-#: base.py:653
+#: projects.py:26
 msgid "open"
 msgstr "aperto"
 
-#: base.py:654
+#: projects.py:27
 msgid "closed"
 msgstr "chiuso"
 
-#: base.py:662
+#: projects.py:35
 msgid "very low"
 msgstr "molto bassa"
 
-#: base.py:663
+#: projects.py:36
 msgid "low"
 msgstr "bassa"
 
-#: base.py:664
+#: projects.py:37
 msgid "medium"
 msgstr "media"
 
-#: base.py:665
+#: projects.py:38
 msgid "high"
 msgstr "alta"
 
-#: base.py:666
+#: projects.py:39
 msgid "critical"
 msgstr "critica"
 
-#: base.py:672
+#: projects.py:45
 msgid "bug"
 msgstr ""
 
-#: base.py:673
+#: projects.py:46
 msgid "task"
 msgstr "attività"
 
-#: base.py:674
+#: projects.py:47
 msgid "idea"
 msgstr ""
 
-#: base.py:680
+#: projects.py:53
 msgid "new"
 msgstr "nuovo"
 
-#: base.py:681
+#: projects.py:54
 msgid "needs tests"
 msgstr "richiesta test"
 
-#: base.py:682
+#: projects.py:55
 msgid "accepted"
 msgstr "accettato"
 
-#: base.py:683
+#: projects.py:56
 msgid "invalid"
 msgstr "invalido"
 
-#: base.py:684
+#: projects.py:57
 msgid "duplicated"
 msgstr "duplicato"
 
-#: base.py:685
+#: projects.py:58
 msgid "resolved"
 msgstr "risolto"
 
-#: base.py:686
+#: projects.py:59
 msgid "awaiting review"
 msgstr "in attesa di revisione"
+
+#: stock.py:26
+msgid "sender"
+msgstr "mittente"
+
+#: stock.py:27
+msgid "addressee"
+msgstr "destinatario"
+
+#: stock.py:28
+msgid "carrier"
+msgstr "vettore"
+
+#: stock.py:34
+msgid "EXW"
+msgstr ""
+
+#: stock.py:35
+msgid "FCA"
+msgstr ""
+
+#: stock.py:36
+msgid "CPT"
+msgstr ""
+
+#: stock.py:37
+msgid "CIP"
+msgstr ""
+
+#: stock.py:38
+msgid "DAT"
+msgstr ""
+
+#: stock.py:39
+msgid "DAP"
+msgstr ""
+
+#: stock.py:40
+msgid "DDP"
+msgstr ""
+
+#: stock.py:41
+msgid "FAS"
+msgstr ""
+
+#: stock.py:42
+msgid "FOB"
+msgstr ""
+
+#: stock.py:43
+msgid "CFR"
+msgstr ""
+
+#: stock.py:44
+msgid "CIF"
+msgstr ""
+
+#: stock.py:50
+msgid "box"
+msgstr "scatola"

@@ -37,6 +37,13 @@ class PhoneNumberForm(forms.ModelForm):
     """
     class Meta:
         model = PhoneNumber
+        
+class SocialProfileForm(forms.ModelForm):
+    """Form for a social profile data.
+    """
+    class Meta:
+        model = SocialProfile
 
 enrich_form(AddressForm)
 enrich_form(PhoneNumberForm)
+enrich_form(SocialProfile)

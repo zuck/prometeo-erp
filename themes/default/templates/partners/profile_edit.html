@@ -4,7 +4,7 @@
 {% load breadcrumbs %}
 {% load details %}
 
-{% block meta_title %}{% if object.pk %}{% trans 'Edit phone number' %}{% else %}{% trans 'Add phone number' %}{% endif %}{% endblock %}
+{% block meta_title %}{% if object.pk %}{% trans 'Edit social profile' %}{% else %}{% trans 'Add social profile' %}{% endif %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -12,10 +12,10 @@
     {% if owner_class == "Contact" %}
     {% add_crumb 'Contacts' 'contact_list' %}
     {% add_crumb owner owner.get_absolute_url %}
-    {% add_crumb 'Phone numbers' 'contact_phones' owner.pk %}
+    {% add_crumb 'Social profiles' 'contact_profiles' owner.pk %}
     {% else %}
     {% add_crumb owner owner.get_absolute_url %}
-    {% add_crumb 'Phone numbers' 'partner_phones' owner.pk %}
+    {% add_crumb 'Social profiles' 'partner_profiles' owner.pk %}
     {% endif %}
     {% if object.pk %}
     {% add_crumb object %}
@@ -29,9 +29,9 @@
 <div class="title">
     {% if object.pk %}
     <h1>{{ object }}</h1>
-    <h2>{% trans 'Edit phone number' %}</h2>
+    <h2>{% trans 'Edit social profile' %}</h2>
     {% else %}
-    <h1>{% trans 'Add phone number' %}</h1>
+    <h1>{% trans 'Add social profile' %}</h1>
     {% endif %}
 </div>
 {% endblock %}
@@ -40,7 +40,7 @@
 <form method="post" action=".">
     {% csrf_token %}
     <table class="properties">
-        {% property_table form "[['type', 'number']]" %}
+        {% property_table form "[['network', 'profile']]" %}
     </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>

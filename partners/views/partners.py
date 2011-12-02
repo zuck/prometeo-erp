@@ -230,6 +230,61 @@ def partner_delete_phone(request, partner_id, id, **kwargs):
         extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
+@permission_required('partners.change_partner', _get_partner)  
+def partner_profiles(request, id, page=0, paginate_by=10, **kwargs):
+    """Shows the partner's social profiles.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+
+    return social_profile_list(
+        request,
+        owner=partner,
+        page=page,
+        paginate_by=paginate_by,
+        template_name='partners/partner_profiles.html',
+        extra_context={'object': partner, 'owner_class': Partner.__name__}
+    )
+
+@permission_required('partners.change_partner', _get_partner)   
+def partner_add_profile(request, id, **kwargs):
+    """Adds a new social profile to the given partner.
+    """
+    return social_profile_add(
+        request,
+        owner=get_object_or_404(Partner, pk=id),
+        post_save_redirect=reverse('partner_profiles', args=[id]),
+        template_name='partners/profile_edit.html',
+        extra_context={'owner_class': Partner.__name__}
+    )
+
+@permission_required('partners.change_partner', _get_partner)
+def partner_edit_profile(request, partner_id, id, **kwargs):
+    """Edits a social profile of the given partner.
+    """
+    partner = get_object_or_404(Partner, pk=partner_id)
+
+    return social_profile_edit(
+        request,
+        object_id=id,
+        post_save_redirect=reverse('partner_profiles', args=[id]),
+        template_name='partners/profile_edit.html',
+        extra_context={'owner': partner, 'owner_class': Partner.__name__}
+    )
+
+@permission_required('partners.change_partner', _get_partner)
+def partner_delete_profile(request, partner_id, id, **kwargs):
+    """Deletes a social profile of the given partner.
+    """
+    partner = get_object_or_404(Partner, pk=partner_id)
+
+    return social_profile_delete(
+        request,
+        object_id=id,
+        post_delete_redirect=reverse('partner_profiles', args=[id]),
+        template_name='partners/profile_delete.html',
+        extra_context={'owner': partner, 'owner_class': Partner.__name__}
+    )
+
 @permission_required('partners.change_partner', _get_partner)
 @permission_required('partners.change_contact')    
 def partner_contacts(request, id, page=0, paginate_by=10, **kwargs):

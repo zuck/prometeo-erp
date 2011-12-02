@@ -40,6 +40,9 @@ def _get_address(request, *args, **kwargs):
 def _get_phone_num(request, *args, **kwargs):
     return get_object_or_404(PhoneNumber, id=kwargs.get('object_id', None))
 
+def _get_social_profile(request, *args, **kwargs):
+    return get_object_or_404(SocialProfile, id=kwargs.get('object_id', None))
+
 def _get_field_and_value(owner, owner_field):
     """Returns the field object and the value of the given field.
     """
@@ -192,6 +195,81 @@ def phone_number_delete(request, object_id, post_delete_redirect, template_name,
     return create_update.delete_object(
         request,
         model=PhoneNumber,
+        object_id=object_id,
+        post_delete_redirect=post_delete_redirect,
+        template_name=template_name,
+        **kwargs
+    )
+
+@permission_required('addressing.change_social_profile')
+def social_profile_list(request, template_name, page=0, paginate_by=10, owner=None, owner_field='social_profiles', **kwargs):
+    """Returns the filtered list of [the given owner's] social profiles.
+    """
+    queryset = SocialProfile.objects.all()
+
+    if owner:
+        rel, value = _get_field_and_value(owner, owner_field)
+        if isinstance(rel, models.ForeignKey):
+            queryset = SocialProfile.objects.filter(id=value.pk)
+        elif isinstance(rel, models.ManyToManyField):
+            queryset = value.all()
+    
+    return filtered_list_detail(request, queryset, exclude=['id'], template_name=template_name, **kwargs)
+
+@permission_required('addressing.add_social_profile')    
+def social_profile_add(request, owner, post_save_redirect, template_name, owner_field='social_profiles', **kwargs):
+    """Adds a new social profile to the given owner.
+    """
+    if request.method == 'POST':
+        form = SocialProfileForm(request.POST)
+        if form.is_valid():
+            instance = form.save()
+            rel, value = _get_field_and_value(owner, owner_field)
+            if isinstance(rel, models.ForeignKey):
+                setattr(owner, owner_field, instance)
+            elif isinstance(rel, models.ManyToManyField):
+                value.add(instance)
+            owner.save()
+            if owner.pk:
+                messages.success(request, _("Social profile added to %(owner)s") % {'owner': owner})
+            return redirect_to(request, url=post_save_redirect)
+    else:
+        form = SocialProfileForm()
+
+    context = {'owner': owner, 'form': form}
+    if 'extra_context' in kwargs:
+        context.update(kwargs['extra_context'])
+
+    return render_to_response(template_name, RequestContext(request, context))
+
+@permission_required('addressing.change_social_profile', _get_social_profile)    
+def social_profile_edit(request, object_id, post_save_redirect, template_name, **kwargs):
+    """Edits a social profile.
+    """
+    instance = get_object_or_404(SocialProfile, id=object_id)
+
+    if request.method == 'POST':
+        form = SocialProfileForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Social profile updated"))
+            return redirect_to(request, url=post_save_redirect)
+    else:
+        form = SocialProfileForm(instance=instance)
+
+    context = {'object': instance, 'form': form}
+    if 'extra_context' in kwargs:
+        context.update(kwargs['extra_context'])
+
+    return render_to_response(template_name, RequestContext(request, context))
+
+@permission_required('addressing.delete_social_profile', _get_social_profile)    
+def social_profile_delete(request, object_id, post_delete_redirect, template_name, **kwargs):
+    """Deletes a social profile.
+    """
+    return create_update.delete_object(
+        request,
+        model=SocialProfile,
         object_id=object_id,
         post_delete_redirect=post_delete_redirect,
         template_name=template_name,
