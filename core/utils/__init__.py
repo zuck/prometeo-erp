@@ -78,7 +78,7 @@ def field_to_value(field, instance):
             try:
                 items.append('<a href="%s">%s</a>' % (item.get_absolute_url(), item))
             except AttributeError:
-                items.append(item)
+                items.append(u'%s' % item)
         return items
     elif isinstance(field, models.DateTimeField):
         return date(value, settings.DATETIME_FORMAT)

@@ -25,6 +25,7 @@ from django.contrib.auth.models import User
 
 from prometeo.core.menus.signals import manage_bookmarks
 from prometeo.core.widgets.signals import manage_dashboard
+from prometeo.core.events.signals import manage_calendar
 
 from models import *
 
@@ -42,3 +43,4 @@ models.signals.post_save.connect(user_post_save, User)
 
 manage_bookmarks(UserProfile)
 manage_dashboard(UserProfile)
+manage_calendar(UserProfile)
