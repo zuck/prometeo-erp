@@ -26,6 +26,7 @@ from prometeo.core.forms import enrich_form
 from prometeo.core.forms.widgets import JsonPairWidget
 
 from models import *
+from loading import registry
 
 class WidgetForm(forms.ModelForm):
     """Form for widget data.
@@ -33,6 +34,10 @@ class WidgetForm(forms.ModelForm):
     class Meta:
         model = Widget
         exclude = ['region', 'slug', 'show_title', 'editable', 'sort_order']
-        widgets = {'context': JsonPairWidget()}
+        widgets = {'context': JsonPairWidget(), 'source': forms.Select()}
+
+    def __init__(self, *args, **kwargs):
+        super(WidgetForm, self).__init__(*args, **kwargs)
+        self.fields['source'].widget.choices = registry.sources
 
 enrich_form(WidgetForm)

@@ -20,7 +20,7 @@ __version__ = '0.0.5'
 
 from datetime import date
 
-from models import *
+from models import Task
 
 def latest_tasks(context):
     """The list of latest planned and unplanned tasks.

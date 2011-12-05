@@ -236,6 +236,7 @@ tr.altrow td { background-color: #f8f8f8; }
 th.auto { width: 6%; }
 th.boolean { width: 8%; }
 th.char, th.email, th.url { width: 20%; }
+th.char_choices { width: 10%; }
 th.actions { width: 16px; }
 
 td.number { text-align: right; }
@@ -1243,17 +1244,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .widget .title h2 { color: #c0c0c0; }
 
-#main .widget .wrapper {
-    clear: both;
+#main .widget .wrapper, #main .widget .wrapper-altrow {
     float: left;
     width: 387px;
-    margin: 10px 5px 0 0;
-} 
-
-#main .widget .wrapper-altrow {
-    float: right;
-    width: 387px;
-    margin: 10px 0 10px 5px;
+    margin: 10px 20px 0 0;
 }
 
 #main .widget .actions {

@@ -22,7 +22,7 @@ __version__ = '0.0.5'
 
 from django.db.models import Q
 
-from models import *
+from models import Project, Milestone, Ticket
 
 def my_projects(context):
     user = context['user']
@@ -51,8 +51,6 @@ def latest_tickets(context):
             context['ticket_list'] = obj.ticket_set.all()[0:count]
         if isinstance(obj, Project):
             context['project'] = obj
-        elif isinstance(obj, Area):
-            context['area'] = obj
         elif isinstance(obj, Milestone):
             context['milestone'] = obj
     except:

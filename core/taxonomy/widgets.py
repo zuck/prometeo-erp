@@ -22,7 +22,7 @@ __version__ = '0.0.5'
 
 import random
 
-from models import *
+from models import Category, Tag
 
 def categories(context):
     """Returns the category hierarchy.
