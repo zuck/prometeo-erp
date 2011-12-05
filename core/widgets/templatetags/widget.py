@@ -21,6 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 import re
+from copy import copy
 
 from django import template
 from django.utils.translation import ugettext as _
@@ -44,6 +45,7 @@ class WidgetNode(template.Node):
 
     def render(self, context):
         output = ''
+        context = copy(context)
         if self.widget:
             if self.widget.context:
                 context.update(json.loads(self.widget.context))
