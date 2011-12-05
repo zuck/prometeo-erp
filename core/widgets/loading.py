@@ -35,7 +35,6 @@ class WidgetCache(object):
     sources = property(__get_sources)
 
     def __discover_widgets(self):
-        print "Discovering..."
         if self.__discovered:
             return
         for app in settings.INSTALLED_APPS:
@@ -50,7 +49,6 @@ class WidgetCache(object):
                         self.__sources.append((source, source))
             except ImportError:
                 pass
-        print self.__sources
         self.__discovered = True
 
 registry = WidgetCache()
