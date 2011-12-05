@@ -6,10 +6,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ LANGUAGE_CODE }}">
 
-<head>
+<head profile="http://www.w3.org/2005/10/profile">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title>{% block meta_title %}Prometeo{% endblock %}</title>
-    
+
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}css/images/favicon.png" />
+
     <link rel="stylesheet" href="{{ STATIC_URL }}css/tripoli.simple.css" type="text/css" media="all"/>
 
     <!--[if IE]>
