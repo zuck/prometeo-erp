@@ -31,6 +31,16 @@ from prometeo.core.models import Commentable
 
 from managers import *
 
+class Calendar(models.Model):
+    """Calendar model.
+    """
+    title = models.CharField(max_length=100, default=_('Calendar'), verbose_name=_('title'))
+    slug = models.SlugField(max_length=100, unique=True, verbose_name=_('slug'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    
+    def __unicode__(self):
+        return u'%s' % self.title
+        
 class Event(Commentable):
     """Event model.
     """
@@ -41,12 +51,12 @@ class Event(Commentable):
     location = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('location'))
     status = models.CharField(max_length=100, choices=settings.EVENT_STATUS_CHOICES, default=settings.EVENT_DEFAULT_STATUS, verbose_name=_('status'))
     attendees = models.ManyToManyField('auth.User', null=True, blank=True, verbose_name=_('attendees'))
-    public = models.BooleanField(default=False, verbose_name=_('public?'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     author = models.ForeignKey('auth.User', related_name='created_events', null=True, blank=True, verbose_name=_('created by'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+    calendars = models.ManyToManyField(Calendar, null=True, verbose_name=_('calendars'))
 
     objects = EventManager()
 

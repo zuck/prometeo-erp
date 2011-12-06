@@ -57,6 +57,13 @@ def _register_followers(instance):
         except:
             pass
 
+def manage_calendar(cls):
+    """Connects handlers for calendar management.
+    """
+    models.signals.pre_save.connect(create_calendar, cls)
+    models.signals.post_save.connect(update_calendar, cls)
+    models.signals.post_delete.connect(delete_calendar, cls)
+
 ## HANDLERS ##
 
 def update_author_event_permissions(sender, instance, *args, **kwargs):
@@ -175,6 +182,27 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
     )
 
     [activity.streams.add(s) for s in _get_streams(obj)]
+
+def create_calendar(sender, instance, *args, **kwargs):
+    """Creates a new calendar for the given object.
+    """
+    if not instance.calendar:
+        instance.calendar = Calendar.objects.create(title="%s's calendar" % instance, slug="%s_calendar" % sender.__name__.lower(), description=_("Calendar for %s") % instance)
+
+def update_calendar(sender, instance, *args, **kwargs):
+    """Updates the calendar field of the object's stream.
+    """
+    calendar = instance.calendar
+    if calendar:
+        calendar.slug = "%s_%d_calendar" % (sender.__name__.lower(), instance.pk)
+        calendar.save()
+
+def delete_calendar(sender, instance, *args, **kwargs):
+    """Deletes the calendar of the given object.
+    """
+    calendar = instance.calendar
+    if calendar:
+        calendar.delete()
 
 ## CONNECTIONS ##
 

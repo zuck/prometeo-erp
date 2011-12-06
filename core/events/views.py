@@ -211,6 +211,7 @@ def event_add(request, **kwargs):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
+            event.calendars.add(request.user.get_profile().calendar)
             messages.success(request, _("The event has been saved."))
             return redirect_to(request, url=event.get_absolute_url())
     else:

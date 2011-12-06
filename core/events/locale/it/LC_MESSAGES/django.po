@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:39+0100\n"
+"POT-Creation-Date: 2011-12-06 10:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,105 +23,119 @@ msgid "Select an .ics file"
 msgstr "Selezionare un file .ics"
 
 #: models.py:37
+msgid "Calendar"
+msgstr "Calendario"
+
+#: models.py:37 models.py:47
 msgid "title"
 msgstr "titolo"
 
 #: models.py:38
+msgid "slug"
+msgstr ""
+
+#: models.py:39 models.py:48
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:39
+#: models.py:49
 msgid "start date"
 msgstr "data di inizio"
 
-#: models.py:40
+#: models.py:50
 msgid "end date"
 msgstr "data di fine"
 
-#: models.py:41
+#: models.py:51
 msgid "location"
 msgstr "località"
 
-#: models.py:42
+#: models.py:52
 msgid "status"
 msgstr "stato"
 
-#: models.py:43
+#: models.py:53
 msgid "attendees"
 msgstr "partecipanti"
 
-#: models.py:44
-msgid "public?"
-msgstr "pubblico?"
-
-#: models.py:45
+#: models.py:54
 msgid "created on"
 msgstr "creato il"
 
-#: models.py:46
+#: models.py:55
 msgid "created by"
 msgstr "creato da"
 
-#: models.py:47
+#: models.py:56
 msgid "categories"
 msgstr "categorie"
 
-#: models.py:48
+#: models.py:57
 msgid "tags"
 msgstr ""
 
-#: models.py:49
+#: models.py:58
 msgid "stream"
 msgstr "cronologia"
 
-#: models.py:56
+#: models.py:59
+msgid "calendars"
+msgstr "calendari"
+
+#: models.py:66
 msgid "event"
 msgstr "evento"
 
-#: models.py:57
+#: models.py:67
 msgid "events"
 msgstr "eventi"
 
-#: signals.py:87
+#: signals.py:94
 #, python-format
 msgid "%(class)s %(name)s created by %(author)s"
 msgstr "%(class)s %(name)s creato da %(author)s"
 
-#: signals.py:108
+#: signals.py:115
 #, python-format
 msgid "%(class)s %(name)s changed"
 msgstr "%(class)s %(name)s modificato"
 
-#: signals.py:126
+#: signals.py:133
 #, python-format
 msgid "%(class)s %(name)s deleted"
 msgstr "%(class)s %(name)s eliminato"
 
-#: signals.py:145
+#: signals.py:152
 #, python-format
 msgid "%(author)s commented %(class)s %(name)s"
 msgstr "%(author)s ha commentato %(class)s %(name)s"
 
-#: signals.py:166
+#: signals.py:173
 msgid "comment deleted"
 msgstr "commento eliminato"
 
-#: views.py:214 views.py:231
+#: signals.py:190
+#, python-format
+msgid "Calendar for %s"
+msgstr "Calendario per %s"
+
+#: views.py:215 views.py:232
 msgid "The event has been saved."
 msgstr "L'evento è stato salvato."
 
-#: views.py:267
+#: views.py:268
 msgid "Empty event"
 msgstr "Evento vuoto"
 
-#: views.py:275
+#: views.py:276
 #, python-format
 msgid "Event \"%s\" has been imported."
 msgstr "L'evento \"%s\" è stato importato."
 
-#: views.py:278
+#: views.py:279
 msgid "Sorry, an error has occurred during importing of events."
-msgstr "Spiacenti, si è verificato un errore durante l'importazione degli eventi."
+msgstr ""
+"Spiacenti, si è verificato un errore durante l'importazione degli eventi."
 
 #: management/__init__.py:36
 msgid "Main menu for events"

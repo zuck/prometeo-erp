@@ -22,7 +22,7 @@ __version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('events.views',
+urlpatterns = patterns('prometeo.core.events.views',
 
     url(r'^events/$', view='event_list', name='event_list'),
     url(r'^events/day/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/$', view='event_day', name='event_day'),

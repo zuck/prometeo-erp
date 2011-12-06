@@ -20,11 +20,33 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from django.db import models
-from django.db.models import Q
+from django import forms as forms
+from django.utils.translation import ugettext_lazy as _
 
-class EventManager(models.Manager):
-    """Custom manager for Event model.
+from prometeo.core.forms import enrich_form
+from prometeo.core.forms.fields import *
+from prometeo.core.forms.widgets import *
+
+from models import *
+
+class ImportEventsForm(forms.Form):
+    """Form to input an .ics file.
     """
-    def for_user(self, user):
-        return self.filter(Q(author=user) | Q(attendees=user) | Q(public=True)).distinct()
+    file  = forms.FileField(label=_("Select an .ics file"))
+
+class EventForm(forms.ModelForm):
+    """Form for event data.
+    """
+    start = DateTimeField()
+    end = DateTimeField(required=False)
+
+    class Meta:
+        model = Event
+        exclude = ('author', 'stream', 'calendars')
+        widgets = {
+            'description': CKEditor(),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+        }
+
+enrich_form(EventForm)

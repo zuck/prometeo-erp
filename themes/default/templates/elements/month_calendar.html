@@ -9,7 +9,11 @@
     {% endif %}
     <tr>
         {% for day, day_events in week_events.items %}
-        <td{% if day_events.values|join:""|cut:"[]" %} class="with_events"{% endif %}>
+        {% if day_events.values|join:""|cut:"[]" %}
+        <td class="{% if day == day.today %}today_with_events{% else %}with_events{% endif %}">
+        {% else %}
+        <td{% if day == day.today %} class="today"{% endif %}>
+        {% endif %}
             <span class="daynr">
                 {% if forloop.counter >= 6 %}
                 <span class="weekend">
