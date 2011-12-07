@@ -38,15 +38,31 @@ class Region(models.Model):
     def __unicode__(self):
         return self.slug
 
-class Widget(models.Model):
-    """Widget model.
+class WidgetTemplate(models.Model):
+    """WidgetTemplate model.
     """
-    region = models.ForeignKey(Region, related_name='widgets', verbose_name=_('region'))
     title = models.CharField(max_length=100, verbose_name=_('title'))
     slug = models.SlugField(unique=True, verbose_name=_('slug'))
     description = models.TextField(blank=True, null=True, verbose_name=_('description'))
     source = models.CharField(blank=False, null=False, max_length=200, verbose_name=_('source'))
-    template = models.CharField(blank=True, null=True, max_length=200, default="widgets/widget.html", verbose_name=_('template'))
+    template_name = models.CharField(blank=True, null=True, max_length=200, default="widgets/widget.html", verbose_name=_('template name'))
+    context = models.TextField(blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'), verbose_name=_('context'))
+
+    class Meta:
+        ordering = ('title',)
+        verbose_name = _('widget template')
+        verbose_name_plural = _('widget templates')
+
+    def __unicode__(self):
+        return u"%s" % self.title
+
+class Widget(models.Model):
+    """Widget model.
+    """
+    title = models.CharField(max_length=100, verbose_name=_('title'))
+    slug = models.SlugField(unique=True, verbose_name=_('slug'))
+    region = models.ForeignKey(Region, related_name='widgets', verbose_name=_('region'))
+    template = models.ForeignKey(WidgetTemplate, related_name='instances', verbose_name=_('template'))
     context = models.TextField(blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'), verbose_name=_('context'))
     show_title = models.BooleanField(default=True, verbose_name=_('show title'))
     editable = models.BooleanField(default=False, verbose_name=_('editable'))

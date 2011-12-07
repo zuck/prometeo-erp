@@ -36,12 +36,19 @@ def install(sender, **kwargs):
     )
     
     # Widgets.
+    menu_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Menu"),
+        slug="menu-widget-template",
+        description=_("It renders a menu."),
+        source="prometeo.core.widgets.base.dummy",
+        template_name="menus/widgets/menu.html",
+        context="{\"name\": \"\"}"
+    )
+
     main_menu_widget, is_new = Widget.objects.get_or_create(
         title=_("Main menu"),
         slug="main-menu",
-        description=_("The main menu"),
-        source="prometeo.core.widgets.base.dummy",
-        template="menus/widgets/menu.html",
+        template=menu_widget_template,
         context="{\"name\": \"main\"}",
         show_title=False,
         sort_order=1,

@@ -47,16 +47,18 @@ class WidgetNode(template.Node):
         output = ''
         context = copy(context)
         if self.widget:
+            if self.widget.template.context:
+                context.update(json.loads(self.widget.template.context))
             if self.widget.context:
                 context.update(json.loads(self.widget.context))
-            pkg, sep, name = self.widget.source.rpartition('.')
+            pkg, sep, name = self.widget.template.source.rpartition('.')
             try:
                 m = __import__(pkg, {}, {}, [name])
                 func = getattr(m, name)
                 context = func(context)
             except:
                 pass
-            output += render_to_string(self.template, {'widget': self.widget}, context)
+            output += render_to_string(self.template.template_name, {'widget': self.widget}, context)
         return output
         
 @register.tag

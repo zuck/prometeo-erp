@@ -23,6 +23,7 @@ __version__ = '0.0.5'
 from django.contrib import admin
 
 from models import *
+from forms import WidgetTemplateForm
     
 class WidgetInlineAdmin(admin.StackedInline):
     model = Widget
@@ -31,10 +32,16 @@ class RegionAdmin(admin.ModelAdmin):
     list_display  = ('slug', 'description')
     inlines = [WidgetInlineAdmin,]
 
+class WidgetTemplateAdmin(admin.ModelAdmin):
+    form = WidgetTemplateForm
+    list_display  = ('title', 'description')
+    prepopulated_fields = {'slug': ('title',)}
+
 class WidgetAdmin(admin.ModelAdmin):
     search_fields = ('title',)
-    list_display  = ('__unicode__', 'description')
+    list_display  = ('__unicode__',)
     prepopulated_fields = {'slug': ('title',)}
     
 admin.site.register(Region, RegionAdmin)
+admin.site.register(WidgetTemplate, WidgetTemplateAdmin)
 admin.site.register(Widget, WidgetAdmin)

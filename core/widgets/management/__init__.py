@@ -38,13 +38,28 @@ def install(sender, **kwargs):
     )
     
     # Widgets.
+    text_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Simple text"),
+        slug="text-widget-template",
+        description=_("It renders a text message."),
+        source="prometeo.core.widgets.base.dummy",
+        template_name="widgets/widget.html",
+        context="{\"text\": \"\"}",
+    )
+
+    powered_by_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Powered by"),
+        slug="powered-by-widget-template",
+        description=_("Info about Prometeo."),
+        source="prometeo.core.widgets.base.dummy",
+        template_name="widgets/powered-by.html",
+        context="{\"text\": \"Prometeo\", \"url\": \"http://code.google.com/p/prometeo-erp/\"}",
+    )
+
     powered_by_widget, is_new = Widget.objects.get_or_create(
         title=_("Powered by"),
         slug="powered-by",
-        description=_("Info about Prometeo"),
-        source="prometeo.core.widgets.base.dummy",
-        template="widgets/powered-by.html",
-        context="{\"text\": \"Prometeo\", \"url\": \"http://code.google.com/p/prometeo-erp/\"}",
+        template=powered_by_widget_template,
         show_title=False,
         region=footer_region
     )
