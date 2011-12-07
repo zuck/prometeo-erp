@@ -57,13 +57,6 @@ def install(sender, **kwargs):
         url="{% url unplanned_task_list %}",
         menu=todo_menu
     )
-
-    timesheets_link, is_new = Link.objects.get_or_create(
-        title=_("Timesheets"),
-        slug="timesheets",
-        url="{% url timesheet_list %}",
-        menu=todo_menu
-    )
     
     post_syncdb.disconnect(install)
 

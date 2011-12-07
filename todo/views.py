@@ -40,12 +40,6 @@ from forms import *
 def _get_task(request, *args, **kwargs):
     return get_object_or_404(Task, id=kwargs.get('id', None))
 
-def _get_timesheet(request, *args, **kwargs):
-    return get_object_or_404(Timesheet, id=kwargs.get('id', None))
-
-def _get_timesheetentry(request, *args, **kwargs):
-    return get_object_or_404(TimesheetEntry, timesheet__id=kwargs.get('timesheet_id', None), id=kwargs.get('id', None))
-
 @permission_required('todo.change_task') 
 def task_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered tasks.
@@ -157,96 +151,3 @@ def task_reopen(request, id, **kwargs):
     messages.success(request, _("The task has been reopened."))
 
     return redirect_to(request, permanent=False, url=task.get_absolute_url())
-
-@permission_required('todo.change_timesheet') 
-def timesheet_list(request, page=0, paginate_by=10, **kwargs):
-    """Displays the list of all filtered timesheets.
-    """
-    return filtered_list_detail(
-        request,
-        Timesheet.objects.filter(user=request.user),
-        paginate_by=paginate_by,
-        page=page,
-        fields=['date', 'status', 'created'],
-        **kwargs
-    )
-
-@permission_required('todo.change_timesheet', _get_timesheet)  
-def timesheet_detail(request, id, **kwargs):
-    """Displays a timesheet.
-    """
-    object_list = Timesheet.objects.filter(user=request.user)
-    return list_detail.object_detail(
-        request,
-        object_id=id,
-        queryset=object_list,
-        template_name='todo/timesheet_detail.html',
-        extra_context={'object_list': object_list},
-        **kwargs
-    )
- 
-@permission_required('todo.add_timesheet')    
-def timesheet_add(request, **kwargs):
-    """Adds a new timesheet.
-    """
-    timesheet = Timesheet(user=request.user, date=datetime.now().date())  
-      
-    if request.method == 'POST':
-        form = TimesheetForm(request.POST, instance=timesheet)
-        formset = TimesheetEntryFormset(request.POST, instance=timesheet)
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            messages.success(request, _("The timesheet has been saved."))
-            return redirect_to(request, url=timesheet.get_absolute_url())
-    else:
-        form = TimesheetForm(instance=timesheet)
-        formset = TimesheetEntryFormset(instance=timesheet)
-
-    return render_to_response('todo/timesheet_edit.html', RequestContext(request, {'form': form, 'formset': formset, 'object': timesheet}))
-
-@permission_required('todo.change_timesheet', _get_timesheet)  
-def timesheet_edit(request, id, **kwargs):
-    """Edits a timesheet.
-    """
-    timesheet = get_object_or_404(Timesheet, id=id)
-        
-    if request.method == 'POST':
-        form = TimesheetForm(request.POST, instance=timesheet)
-        formset = TimesheetEntryFormset(request.POST, instance=timesheet, queryset=timesheet.entries.all())
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            messages.success(request, _("The timesheet has been updated."))
-            return redirect_to(request, url=timesheet.get_absolute_url())
-    else:
-        form = TimesheetForm(instance=timesheet)
-        formset = TimesheetEntryFormset(instance=timesheet, queryset=timesheet.entries.all())
-
-    return render_to_response('todo/timesheet_edit.html', RequestContext(request, {'form': form, 'formset': formset, 'object': timesheet}))
-
-@permission_required('todo.delete_timesheet', _get_timesheet) 
-def timesheet_delete(request, id, **kwargs):
-    """Deletes a timesheet.
-    """
-    return create_update.delete_object(
-            request,
-            model=Timesheet,
-            object_id=id,
-            post_delete_redirect=reverse('timesheet_list'),
-            template_name='todo/timesheet_delete.html',
-            **kwargs
-        )
-
-@permission_required('todo.change_timesheetentry', _get_timesheetentry)
-def timesheetentry_delete(request, timesheet_id, id, **kwargs):
-    """Deletes a timesheet entry.
-    """
-    return create_update.delete_object(
-            request,
-            model=TimesheetEntry,
-            object_id=id,
-            post_delete_redirect=timesheet.get_absolute_url(),
-            template_name='todo/timesheetentry_delete.html',
-            **kwargs
-        )

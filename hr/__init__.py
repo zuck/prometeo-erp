@@ -19,20 +19,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
-
-import datetime
-
-from django.utils.translation import ugettext_lazy as _
-
-TIMESHEET_STATUS_CHOICES = (
-    ('DRAFT', _('draft')),
-    ('CONFIRMED', _('confirmed'))
-)
-
-TIMESHEET_DEFAULT_STATUS = 'DRAFT'
-
-WORKING_DAY_START = datetime.time(9, 0)
-WORKING_DAY_END = datetime.time(18, 30)
-
-LAUNCH_TIME_START = datetime.time(13, 0)
-LAUNCH_TIME_END = datetime.time(14, 30)

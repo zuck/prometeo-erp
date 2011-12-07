@@ -22,8 +22,6 @@ __version__ = '0.0.5'
 
 from django.forms.fields import *
 from django.forms.widgets import *
-from django.forms.models import inlineformset_factory
-from django.conf import settings
 
 from prometeo.core.forms import enrich_form
 from prometeo.core.forms.fields import *
@@ -46,45 +44,4 @@ class TaskForm(forms.ModelForm):
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
 
-class TimesheetForm(forms.ModelForm):
-    """Form for Timesheet data.
-    """
-    class Meta:
-        model = Timesheet
-        exclude = ('user',)
-        widgets = {
-            'date': DateWidget(),
-        }
-
-class TimesheetEntryForm(forms.ModelForm):
-    """Form for TimesheetEntry data.
-    """
-    class Meta:
-        model = TimesheetEntry
-        widgets = {
-            'start_time': TimeWidget(),
-            'end_time': TimeWidget(),
-        }
-
-_TimesheetEntryFormset = inlineformset_factory(Timesheet, TimesheetEntry, form=TimesheetEntryForm, extra=2)
-
-class TimesheetEntryFormset(_TimesheetEntryFormset):
-    def __init__(self, *args, **kwargs):
-        super(TimesheetEntryFormset, self).__init__(*args, **kwargs)
-        if not self.instance or not self.instance.pk:
-            self.forms[0].fields['start_time'].initial = settings.WORKING_DAY_START
-            self.forms[0].fields['end_time'].initial = settings.LAUNCH_TIME_START
-            self.forms[1].fields['start_time'].initial = settings.LAUNCH_TIME_END
-            self.forms[1].fields['end_time'].initial = settings.WORKING_DAY_END
-        elif len(self.forms) > 2:
-            count = self.initial_form_count()+1
-            self.forms = self.forms[:count]
-            if count < self.total_form_count():
-                self.forms[-1].fields['start_time'].required = False
-                self.forms[-1].fields['end_time'].required = False
-                self.forms[-1].fields['DELETE'].initial = True
-            self.extra = 1
-
 enrich_form(TaskForm)
-enrich_form(TimesheetForm)
-enrich_form(TimesheetEntryForm)

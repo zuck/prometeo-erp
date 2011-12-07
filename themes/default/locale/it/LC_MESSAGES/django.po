@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 10:57+0100\n"
+"POT-Creation-Date: 2011-12-07 16:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,10 @@ msgstr "Bacheca personale"
 #: templates/accounting/salesinvoice_list.html:21
 #: templates/auth/user_detail.html:29 templates/auth/user_list.html:25
 #: templates/events/event_detail.html:29 templates/events/event_list.html:26
-#: templates/knowledge/faq_detail.html:30 templates/knowledge/faq_list.html:21
+#: templates/hr/timesheet_detail.html:25
+#: templates/hr/timesheet_hardcopies.html:24
+#: templates/hr/timesheet_list.html:21 templates/knowledge/faq_detail.html:30
+#: templates/knowledge/faq_list.html:21
 #: templates/knowledge/poll_detail.html:28
 #: templates/knowledge/poll_list.html:21
 #: templates/knowledge/wikipage_404.html:23
@@ -81,8 +84,6 @@ msgstr "Bacheca personale"
 #: templates/taxonomy/category_list.html:24
 #: templates/taxonomy/tag_detail.html:24 templates/taxonomy/tag_list.html:25
 #: templates/todo/task_detail.html:26 templates/todo/task_list.html:33
-#: templates/todo/timesheet_detail.html:24
-#: templates/todo/timesheet_list.html:22
 #: templates/todo/unplanned_task_list.html:20
 #: templates/todo/widgets/latest_tasks.html:26
 msgid "Add"
@@ -101,6 +102,7 @@ msgstr "Nessun widget trovato."
 #: templates/documents/hardcopy_delete.html:10
 #: templates/elements/comments.html:25 templates/events/event_delete.html:18
 #: templates/events/event_detail.html:35 templates/filebrowser/delete.html:17
+#: templates/hr/timesheet_delete.html:18 templates/hr/timesheet_detail.html:31
 #: templates/knowledge/faq_delete.html:18
 #: templates/knowledge/faq_detail.html:36
 #: templates/knowledge/faq_detail.html:85
@@ -146,9 +148,7 @@ msgstr "Nessun widget trovato."
 #: templates/taxonomy/category_detail.html:30
 #: templates/taxonomy/tag_delete.html:18 templates/taxonomy/tag_detail.html:30
 #: templates/todo/task_delete.html:18 templates/todo/task_detail.html:32
-#: templates/todo/timesheet_delete.html:19
-#: templates/todo/timesheet_detail.html:30 templates/widgets/widget.html:14
-#: templates/widgets/widget_delete.html:20
+#: templates/widgets/widget.html:14 templates/widgets/widget_delete.html:20
 msgid "Delete"
 msgstr "Elimina"
 
@@ -161,6 +161,7 @@ msgstr "Sei sicuro di voler eliminare questo conto bancario?"
 #: templates/auth/comment_delete.html:25 templates/auth/user_delete.html:26
 #: templates/documents/hardcopy_delete.html:18
 #: templates/events/event_delete.html:26 templates/filebrowser/delete.html:32
+#: templates/hr/timesheet_delete.html:26
 #: templates/knowledge/faq_delete.html:26
 #: templates/knowledge/poll_delete.html:26
 #: templates/knowledge/wikipage_delete.html:26
@@ -182,7 +183,6 @@ msgstr "Sei sicuro di voler eliminare questo conto bancario?"
 #: templates/stock/warehouse_delete.html:26
 #: templates/taxonomy/category_delete.html:26
 #: templates/taxonomy/tag_delete.html:26 templates/todo/task_delete.html:26
-#: templates/todo/timesheet_delete.html:27
 #: templates/widgets/widget_delete.html:28
 msgid "Yes, I'm sure."
 msgstr "Sì, sono sicuro."
@@ -199,6 +199,7 @@ msgstr "Dettagli"
 #: templates/accounting/bankaccount_detail.html:32
 #: templates/accounting/salesinvoice_detail.html:30
 #: templates/auth/user_detail.html:32 templates/events/event_detail.html:32
+#: templates/hr/timesheet_detail.html:28
 #: templates/knowledge/faq_detail.html:33
 #: templates/knowledge/poll_detail.html:31
 #: templates/knowledge/wikipage_detail.html:31
@@ -221,13 +222,14 @@ msgstr "Dettagli"
 #: templates/stock/warehouse_detail.html:32
 #: templates/taxonomy/category_detail.html:27
 #: templates/taxonomy/tag_detail.html:27 templates/todo/task_detail.html:29
-#: templates/todo/timesheet_detail.html:27 templates/widgets/widget.html:13
+#: templates/widgets/widget.html:13
 msgid "Edit"
 msgstr "Modifica"
 
 #: templates/accounting/bankaccount_detail.html:38
 #: templates/accounting/salesinvoice_detail.html:36
 #: templates/auth/user_detail.html:38 templates/events/event_detail.html:38
+#: templates/hr/timesheet_detail.html:34
 #: templates/knowledge/faq_detail.html:39
 #: templates/knowledge/poll_detail.html:37
 #: templates/knowledge/wikipage_detail.html:37
@@ -244,7 +246,6 @@ msgstr "Modifica"
 #: templates/stock/warehouse_detail.html:38
 #: templates/taxonomy/category_detail.html:33
 #: templates/taxonomy/tag_detail.html:33 templates/todo/task_detail.html:35
-#: templates/todo/timesheet_detail.html:33
 msgid "All"
 msgstr "Tutti"
 
@@ -264,8 +265,8 @@ msgstr "Aggiungi conto bancario"
 #: templates/events/event_edit.html:43 templates/filebrowser/copy.html:26
 #: templates/filebrowser/mkdir.html:26 templates/filebrowser/mkln.html:26
 #: templates/filebrowser/move.html:26 templates/filebrowser/rename.html:26
-#: templates/filebrowser/upload.html:26 templates/knowledge/faq_edit.html:41
-#: templates/knowledge/poll_edit.html:69
+#: templates/filebrowser/upload.html:26 templates/hr/timesheet_edit.html:73
+#: templates/knowledge/faq_edit.html:41 templates/knowledge/poll_edit.html:69
 #: templates/knowledge/wikipage_edit.html:38
 #: templates/menus/bookmark_edit.html:45
 #: templates/notifications/notification_list.html:51
@@ -285,7 +286,7 @@ msgstr "Aggiungi conto bancario"
 #: templates/stock/warehouse_edit_movement.html:39
 #: templates/taxonomy/category_edit.html:40
 #: templates/taxonomy/tag_edit.html:40 templates/todo/task_edit.html:43
-#: templates/todo/timesheet_edit.html:72 templates/widgets/widget_edit.html:45
+#: templates/widgets/widget_edit.html:45
 msgid "Save"
 msgstr "Salva"
 
@@ -295,6 +296,7 @@ msgid "Bank accounts"
 msgstr "Conti bancari"
 
 #: templates/accounting/bankaccount_list.html:17
+#: templates/accounting/base.html:8
 msgid "Accounting"
 msgstr "Contabilità"
 
@@ -303,12 +305,13 @@ msgid "Are you sure you want to delete this sales invoice?"
 msgstr "Sei sicuro di voler eliminare questa fattura di vendita?"
 
 #: templates/accounting/salesinvoice_detail.html:39
+#: templates/hr/timesheet_detail.html:37
 #: templates/stock/deliverynote_detail.html:39
 msgid "Print"
 msgstr "Stampa"
 
 #: templates/accounting/salesinvoice_detail.html:43
-#: templates/events/event_detail.html:48
+#: templates/events/event_detail.html:48 templates/hr/timesheet_detail.html:41
 #: templates/knowledge/faq_detail.html:43
 #: templates/knowledge/poll_detail.html:41
 #: templates/knowledge/wikipage_detail.html:41
@@ -323,7 +326,7 @@ msgid "Follow"
 msgstr "Segui"
 
 #: templates/accounting/salesinvoice_detail.html:45
-#: templates/events/event_detail.html:50
+#: templates/events/event_detail.html:50 templates/hr/timesheet_detail.html:43
 #: templates/knowledge/faq_detail.html:45
 #: templates/knowledge/poll_detail.html:43
 #: templates/knowledge/wikipage_detail.html:43
@@ -348,14 +351,15 @@ msgid "Add sales invoice"
 msgstr "Aggiungi fattura di vendita"
 
 #: templates/accounting/salesinvoice_edit.html:55
-#: templates/knowledge/poll_edit.html:51
+#: templates/hr/timesheet_edit.html:55 templates/knowledge/poll_edit.html:51
 #: templates/stock/deliverynote_edit.html:55
-#: templates/todo/timesheet_edit.html:54
 msgid "Delete?"
 msgstr "Cancellare?"
 
 #: templates/accounting/salesinvoice_hardcopies.html:8
 #: templates/accounting/salesinvoice_hardcopies.html:17
+#: templates/hr/timesheet_hardcopies.html:8
+#: templates/hr/timesheet_hardcopies.html:17
 #: templates/stock/deliverynote_hardcopies.html:8
 #: templates/stock/deliverynote_hardcopies.html:17
 msgid "Hard copies"
@@ -370,6 +374,8 @@ msgstr "Fatture di vendita"
 #: templates/accounting/salesinvoice_timeline.html:17
 #: templates/events/event_timeline.html:7
 #: templates/events/event_timeline.html:16
+#: templates/hr/timesheet_timeline.html:8
+#: templates/hr/timesheet_timeline.html:17
 #: templates/knowledge/faq_timeline.html:8
 #: templates/knowledge/faq_timeline.html:17
 #: templates/knowledge/poll_timeline.html:8
@@ -395,6 +401,7 @@ msgstr "Cronologia"
 
 #: templates/accounting/salesinvoice_timeline.html:39
 #: templates/events/event_timeline.html:38
+#: templates/hr/timesheet_timeline.html:39
 #: templates/knowledge/faq_timeline.html:39
 #: templates/knowledge/poll_timeline.html:39
 #: templates/knowledge/wikipage_timeline.html:39
@@ -411,6 +418,7 @@ msgstr "%(timesince)s fa"
 
 #: templates/accounting/salesinvoice_timeline.html:51
 #: templates/events/event_list.html:62 templates/events/event_timeline.html:50
+#: templates/hr/timesheet_timeline.html:51
 #: templates/knowledge/faq_timeline.html:51
 #: templates/knowledge/poll_timeline.html:51
 #: templates/knowledge/wikipage_timeline.html:51
@@ -679,6 +687,26 @@ msgstr "Naviga"
 #: templates/filebrowser/upload.html:17
 msgid "Upload file"
 msgstr "Carica file"
+
+#: templates/hr/base.html:8
+msgid "Human resources"
+msgstr "Risorse umane"
+
+#: templates/hr/timesheet_delete.html:25
+msgid "Are you sure you want to delete this timesheet?"
+msgstr "Sei sicuro di voler eliminare questo foglio ore?"
+
+#: templates/hr/timesheet_edit.html:8 templates/hr/timesheet_edit.html:26
+msgid "Edit timesheet"
+msgstr "Modifica foglio ore"
+
+#: templates/hr/timesheet_edit.html:8 templates/hr/timesheet_edit.html:28
+msgid "Add timesheet"
+msgstr "Aggiungi foglio ore"
+
+#: templates/hr/timesheet_list.html:7 templates/hr/timesheet_list.html:14
+msgid "Timesheets"
+msgstr "Fogli ore"
 
 #: templates/knowledge/faq_delete.html:25
 msgid "Are you sure you want to delete this FAQ?"
@@ -1381,22 +1409,6 @@ msgstr "Aggiungi attività"
 #: templates/todo/task_list.html:18
 msgid "Planned"
 msgstr "Pianificate"
-
-#: templates/todo/timesheet_delete.html:26
-msgid "Are you sure you want to delete this timesheet?"
-msgstr "Sei sicuro di voler eliminare questo foglio ore?"
-
-#: templates/todo/timesheet_edit.html:8 templates/todo/timesheet_edit.html:27
-msgid "Edit timesheet"
-msgstr "Modifica foglio ore"
-
-#: templates/todo/timesheet_edit.html:8 templates/todo/timesheet_edit.html:29
-msgid "Add timesheet"
-msgstr "Aggiungi foglio ore"
-
-#: templates/todo/timesheet_list.html:7 templates/todo/timesheet_list.html:15
-msgid "Timesheets"
-msgstr "Fogli ore"
 
 #: templates/todo/unplanned_task_list.html:13
 msgid "Unplanned"

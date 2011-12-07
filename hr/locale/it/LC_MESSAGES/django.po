@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-07 16:56+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:35
+msgid "date"
+msgstr "data"
+
+#: models.py:36
+msgid "owner"
+msgstr "proprietario"
+
+#: models.py:41 models.py:68
+msgid "timesheet"
+msgstr "foglio ore"
+
+#: models.py:42
+msgid "timesheets"
+msgstr "fogli ore"
+
+#: models.py:45
+msgid "TS"
+msgstr "FO"
+
+#: models.py:69
+msgid "start time"
+msgstr "orario inizio"
+
+#: models.py:70
+msgid "end time"
+msgstr "orario fine"
+
+#: models.py:71
+msgid "related to"
+msgstr "relativo a"
+
+#: models.py:72
+msgid "description"
+msgstr "descrizione"
+
+#: models.py:76
+msgid "timesheet entry"
+msgstr "voce"
+
+#: models.py:77
+msgid "timesheet entries"
+msgstr "voci"
+
+#: models.py:80
+#, python-format
+msgid "%(start_time)s ~ %(end_time)s on %(date)s of %(user)s"
+msgstr "%(start_time)s ~ %(end_time)s il %(date)s di %(user)s"
+
+#: views.py:93
+msgid "The timesheet has been saved."
+msgstr "Il foglio ore è stato salvato."
+
+#: views.py:116
+msgid "The timesheet has been updated."
+msgstr "Il foglio ore è stato aggiornato."
+
+#: management/__init__.py:34
+msgid "Main menu for human resources"
+msgstr "Menu principale per le risorse umane"
+
+#: management/__init__.py:39
+msgid "Main menu for timesheet"
+msgstr "Menu principale per i fogli ore"
+
+#: management/__init__.py:44
+msgid "Human resources"
+msgstr "Risorse umane"
+
+#: management/__init__.py:46
+msgid "Human resources management"
+msgstr "Gestione risorse umane"
+
+#: management/__init__.py:53
+msgid "Timesheets"
+msgstr "Fogli ore"
+
+#: management/__init__.py:60
+msgid "Details"
+msgstr ""
+
+#: management/__init__.py:67
+msgid "Hard copies"
+msgstr "Copie cartacee"
+
+#: management/__init__.py:74
+msgid "Timeline"
+msgstr "Cronologia"

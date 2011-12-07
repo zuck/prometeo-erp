@@ -20,17 +20,12 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from django.conf.urls.defaults import *
+import datetime
 
-urlpatterns = patterns('todo.views',
+from django.utils.translation import ugettext_lazy as _
 
-    # Tasks.
-    url(r'^tasks/$', view='task_list', name='task_list'),
-    url(r'^tasks/unplanned/$', view='unplanned_task_list', name='unplanned_task_list'),
-    url(r'^tasks/add/$', view='task_add', name='task_add'),
-    url(r'^tasks/(?P<id>\d+)/$', view='task_detail', name='task_detail'),
-    url(r'^tasks/(?P<id>\d+)/edit/$', view='task_edit', name='task_edit'),
-    url(r'^tasks/(?P<id>\d+)/delete/$', view='task_delete', name='task_delete'),
-    url(r'^tasks/(?P<id>\d+)/close/$', view='task_close', name='task_close'),
-    url(r'^tasks/(?P<id>\d+)/reopen/$', view='task_reopen', name='task_reopen'),
-)
+WORKING_DAY_START = datetime.time(9, 0)
+WORKING_DAY_END = datetime.time(18, 30)
+
+LAUNCH_TIME_START = datetime.time(13, 0)
+LAUNCH_TIME_END = datetime.time(14, 30)

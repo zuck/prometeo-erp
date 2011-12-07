@@ -22,15 +22,15 @@ __version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('todo.views',
+urlpatterns = patterns('',
 
-    # Tasks.
-    url(r'^tasks/$', view='task_list', name='task_list'),
-    url(r'^tasks/unplanned/$', view='unplanned_task_list', name='unplanned_task_list'),
-    url(r'^tasks/add/$', view='task_add', name='task_add'),
-    url(r'^tasks/(?P<id>\d+)/$', view='task_detail', name='task_detail'),
-    url(r'^tasks/(?P<id>\d+)/edit/$', view='task_edit', name='task_edit'),
-    url(r'^tasks/(?P<id>\d+)/delete/$', view='task_delete', name='task_delete'),
-    url(r'^tasks/(?P<id>\d+)/close/$', view='task_close', name='task_close'),
-    url(r'^tasks/(?P<id>\d+)/reopen/$', view='task_reopen', name='task_reopen'),
+    # Timesheets.
+    url(r'^timesheets/$', view='hr.views.timesheet_list', name='timesheet_list'),
+    url(r'^timesheets/add/$', view='hr.views.timesheet_add', name='timesheet_add'),
+    url(r'^timesheets/(?P<id>\d+)/$', view='hr.views.timesheet_detail', name='timesheet_detail'),
+    url(r'^timesheets/(?P<id>\d+)/edit/$', view='hr.views.timesheet_edit', name='timesheet_edit'),
+    url(r'^timesheets/(?P<id>\d+)/delete/$', view='hr.views.timesheet_delete', name='timesheet_delete'),
+    url(r'^timesheets/(?P<id>\d+)/timeline/$', 'hr.views.timesheet_detail', {'template_name': 'hr/timesheet_timeline.html'}, 'timesheet_timeline'),
+    url(r'^timesheets/(?P<id>\d+)/hard-copies/$', view='documents.views.hardcopy_list', name='timesheet_hardcopies'),
+    url(r'^timesheets/(?P<id>\d+)/hard-copies/add/$', view='documents.views.hardcopy_add', name='timesheet_add_hardcopy'),
 )

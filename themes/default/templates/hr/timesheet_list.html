@@ -1,4 +1,4 @@
-{% extends "todo/task_list.html" %}
+{% extends "hr/base.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -8,7 +8,6 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Tasks' 'task_list' %}
     {% add_crumb 'Timesheets' %}
 {% endblock %}
 
@@ -18,7 +17,7 @@
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
-        {% if perms.todo.add_timesheet %}
+        {% if perms.hr.add_timesheet %}
         <li class="add"><a title="{% trans 'Add' %}" href="{% url timesheet_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>

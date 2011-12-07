@@ -10,7 +10,6 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Tasks' 'task_list' %}
     {% add_crumb 'Timesheets' 'timesheet_list' %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
@@ -39,7 +38,9 @@
 {% endif %}
     {% csrf_token %}
     <table class="properties">
-        {% property_table form "['date', 'status']" %}
+        {% property_table dform "['code', ['owner', 'status']]" %}
+        {% property_table form "['date']" %}
+        {% property_table dform "['categories', 'tags']" %}
     </table>
     {{ formset.management_form }}
     <table class="formset">
