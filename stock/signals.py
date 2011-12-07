@@ -130,28 +130,6 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
 
     [activity.streams.add(s) for s in _get_streams(instance)]
 
-def notify_comment_created(sender, instance, *args, **kwargs):
-    """Generates an activity related to the creation of a new comment.
-    """
-    if kwargs['created']:
-        obj = instance.content_object
-
-        activity = Activity.objects.create(
-            title=_("%(author)s commented %(class)s %(name)s"),
-            signature="comment-created",
-            context=json.dumps({
-                "class": obj.__class__.__name__.lower(),
-                "name": "%s" % obj,
-                "link": instance.get_absolute_url(),
-                "author": "%s" % instance.user,
-                "author_link": instance.user.get_absolute_url(),
-                "comment": instance.comment
-            }),
-            backlink=obj.get_absolute_url()
-        )
-
-        [activity.streams.add(s) for s in _get_streams(obj)]
-
 def notify_comment_deleted(sender, instance, *args, **kwargs):
     """Generates an activity related to the deletion of an existing comment.
     """
@@ -180,9 +158,6 @@ post_save.connect(notify_object_created, Warehouse, dispatch_uid="warehouse_crea
 post_delete.connect(notify_object_deleted, Warehouse, dispatch_uid="warehouse_deleted")
 post_save.connect(notify_object_created, Movement, dispatch_uid="movement_created")
 post_delete.connect(notify_object_deleted, Movement, dispatch_uid="movement_deleted")
-
-post_save.connect(notify_comment_created, Comment, dispatch_uid="warehouses_comment_created")
-post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="warehouses_comment_deleted")
 
 manage_stream(Warehouse)
 
