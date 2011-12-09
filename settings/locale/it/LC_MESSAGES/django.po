@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-02 17:14+0100\n"
+"POT-Creation-Date: 2011-12-09 14:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,11 +62,11 @@ msgstr ""
 msgid "google+"
 msgstr ""
 
-#: documents.py:26 todo.py:28
+#: documents.py:26
 msgid "draft"
 msgstr "bozza"
 
-#: documents.py:27 events.py:27 todo.py:29
+#: documents.py:27 events.py:27
 msgid "confirmed"
 msgstr "confermato"
 
@@ -797,6 +797,14 @@ msgstr "Commerciale"
 #: partners.py:219
 msgid "Employee"
 msgstr "Impiegato"
+
+#: partners.py:225
+msgid "Male"
+msgstr "Maschio"
+
+#: partners.py:226
+msgid "Female"
+msgstr "Femmina"
 
 #: products.py:26
 msgid "Bag"
