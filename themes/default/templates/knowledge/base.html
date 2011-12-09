@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load details %}
+{% load menu %}
+
+{% block meta_title %}{% trans "Wiki" %}{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Knowledge" %}</h1>
+    <h2>{% block subtitle %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "knowledge_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
