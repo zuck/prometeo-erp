@@ -165,7 +165,7 @@ class Letter(models.Model):
     date = models.DateField(verbose_name=_('date'))
     target_ref_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('your ref'))
     target_ref_date = models.DateField(null=True, blank=True, verbose_name=_('on'))
-    object = models.CharField(max_length=255, verbose_name=_('object'))
+    subject = models.CharField(max_length=255, verbose_name=_('subject'))
     body = models.TextField(verbose_name=_('body'))
     signed_by = models.ForeignKey(Contact, related_name='letters', verbose_name=_('signed by'))
 

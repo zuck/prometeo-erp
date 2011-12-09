@@ -60,7 +60,7 @@
         <div class="details">
             <table class="properties">
                 {% property_table object "[['owner', 'status'], ['author', 'created']]" %}
-                {% property_table object.content_object "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], 'object', 'body', 'signed_by']" %}
+                {% property_table object.content_object "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], 'subject', 'body', 'signed_by']" %}
                 {% property_table object "['categories', 'tags']" %}
             </table>
         </div>
