@@ -39,7 +39,7 @@
     {% csrf_token %}
     <table class="properties">
         {% if object.pk %}
-        {% property_table form "[['firstname', 'lastname'], ['nickname', 'date_of_birth'], ['gender', 'ssn'], ['language', 'timezone'], ['email', 'url'], 'user', ['main_address', 'main_phone_number'], 'tags', 'categories']" %}
+        {% property_table form "[['firstname', 'lastname'], ['nickname', 'date_of_birth'], ['gender', 'ssn'], ['language', 'timezone'], ['email', 'url'], ['main_address', 'main_phone_number'], 'user', 'tags', 'categories']" %}
         {% else %}
         {% property_table form "[['firstname', 'lastname'], ['nickname', 'date_of_birth'], ['gender', 'ssn'], ['language', 'timezone'], ['email', 'url'], 'user', 'tags', 'categories']" %}
         {% endif %}

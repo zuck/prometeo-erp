@@ -35,6 +35,9 @@ class ContactForm(forms.ModelForm):
         exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'created']
         widgets = {
             'date_of_birth': DateWidget(),
+            'main_address': SelectAndAddWidget(add_url='/addresses/add/'),
+            'main_phone_number': SelectAndAddWidget(add_url='/addresses/add/'),
+            'user': SelectAndAddWidget(add_url='/users/add/'),
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
