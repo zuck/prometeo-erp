@@ -220,3 +220,8 @@ ROLES = (
 )
 
 DEFAULT_ROLE = 'EMPLOYEE'
+
+GENDERS = (
+    ('M', _("Male")),
+    ('F', _("Female")),
+)

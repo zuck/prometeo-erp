@@ -54,7 +54,7 @@
 <form method="post" action=".">
     {% csrf_token %}
     <table class="properties">
-        {% property_table form %}
+        {% property_table form "[['partner', 'contact', 'role'], ['started', 'ended'], 'notes']" %}
     </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
 </form>

@@ -33,6 +33,8 @@ class Contact(models.Model):
     firstname = models.CharField(max_length=255, verbose_name=_('firstname'))
     lastname = models.CharField(max_length=255, verbose_name=_('lastname'))
     nickname = models.SlugField(null=True, blank=True, verbose_name=_('nickname'))
+    gender = models.CharField(max_length=2, null=True, blank=True, choices=settings.GENDERS, verbose_name=_('gender'))
+    date_of_birth = models.DateField(null=True, blank=True, verbose_name=_('date of birth'))
     ssn = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('SSN'))
     language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_("language"))
     timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))
@@ -127,8 +129,10 @@ class Job(models.Model):
     contact = models.ForeignKey(Contact, verbose_name=_('contact'))
     partner = models.ForeignKey(Partner, verbose_name=_('partner'))
     role = models.CharField(max_length=30, choices=settings.ROLES, default=settings.DEFAULT_ROLE, verbose_name=_('role'))
-    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+    started = models.DateField(null=True, blank=True, verbose_name=_('started on'))
+    ended = models.DateField(null=True, blank=True, verbose_name=_('ended on'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
         
     def __unicode__(self):
         return _("%(contact)s as %(role)s") % {'contact': self.contact, 'role': self.get_role_display()}

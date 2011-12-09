@@ -34,6 +34,7 @@ class ContactForm(forms.ModelForm):
         model = Contact
         exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'created']
         widgets = {
+            'date_of_birth': DateWidget(),
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
@@ -54,6 +55,8 @@ class ContactJobForm(forms.ModelForm):
         model = Job
         exclude = ['contact', 'created']
         widgets = {
+            'started': DateWidget(),
+            'ended': DateWidget(),
             'partner': SelectAndAddWidget(add_url='/partners/add/'),
         }
 
@@ -92,6 +95,8 @@ class PartnerJobForm(forms.ModelForm):
         model = Job
         exclude = ['partner', 'created']
         widgets = {
+            'started': DateWidget(),
+            'ended': DateWidget(),
             'contact': SelectAndAddWidget(add_url='/partners/contacts/add/'),
         }
 
