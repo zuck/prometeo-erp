@@ -24,6 +24,7 @@ from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
 from prometeo.core.menus.models import *
+from prometeo.core.notifications.models import Signature
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
@@ -75,6 +76,22 @@ def install(sender, **kwargs):
         slug="timesheet-timeline",
         url="{% url timesheet_timeline object.object_id %}",
         menu=timesheet_menu
+    )
+
+    # Signatures.
+    timesheet_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Timesheet created"),
+        slug="timesheet-created"
+    )
+
+    timesheet_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Timesheet changed"),
+        slug="timesheet-changed"
+    )
+
+    timesheet_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Timesheet deleted"),
+        slug="timesheet-deleted"
     )
     
     post_syncdb.disconnect(install)

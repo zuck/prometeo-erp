@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-07 16:56+0100\n"
+"POT-Creation-Date: 2011-12-09 08:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,7 +97,7 @@ msgstr "Fogli ore"
 
 #: management/__init__.py:60
 msgid "Details"
-msgstr ""
+msgstr "Dettagli"
 
 #: management/__init__.py:67
 msgid "Hard copies"
@@ -106,3 +106,15 @@ msgstr "Copie cartacee"
 #: management/__init__.py:74
 msgid "Timeline"
 msgstr "Cronologia"
+
+#: management/__init__.py:82
+msgid "Timesheet created"
+msgstr "Creazione foglio ore"
+
+#: management/__init__.py:87
+msgid "Timesheet changed"
+msgstr "Modifica foglio ore"
+
+#: management/__init__.py:92
+msgid "Timesheet deleted"
+msgstr "Eliminazione foglio ore"

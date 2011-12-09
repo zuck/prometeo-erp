@@ -36,6 +36,7 @@ SEARCH_IN_MODELS = (
     'products.Supply',
     'stock.Warehouse',
     'stock.Movement',
+    'hr.Timesheet',
     'accounting.BankAccount',
     'projects.Project',
     'projects.Area',
