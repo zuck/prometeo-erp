@@ -33,7 +33,7 @@ class Timesheet(models.Model):
     """Timesheet model.
     """
     date = models.DateField(verbose_name=_('date'))
-    user = models.ForeignKey('auth.User', null=True, blank=True, verbose_name=_('owner'))
+    employee = models.ForeignKey('partners.Contact', verbose_name=_('employee'))
 
     class Meta:
         ordering = ('-date',)

@@ -58,7 +58,7 @@
         <div class="details">
             <table class="properties">
                 {% property_table object "[['owner', 'status'], ['author', 'created']]" %}
-                {% property_table object.content_object "[['date', 'user'], 'working_hours']" %}
+                {% property_table object.content_object "[['employee', 'date'], 'working_hours']" %}
                 {% property_table object "['categories', 'tags']" %}
             </table>
             {% detail_table object.content_object.entries.all "['start_time', 'end_time', 'task', 'description']" %}

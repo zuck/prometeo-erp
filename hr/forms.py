@@ -36,9 +36,9 @@ class TimesheetForm(forms.ModelForm):
     """
     class Meta:
         model = Timesheet
-        exclude = ('user',)
         widgets = {
             'date': DateWidget(),
+            'employee': SelectAndAddWidget(add_url='contacts/add'),
         }
 
 class TimesheetEntryForm(forms.ModelForm):

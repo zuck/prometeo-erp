@@ -39,7 +39,7 @@
     {% csrf_token %}
     <table class="properties">
         {% property_table dform "['code', ['owner', 'status']]" %}
-        {% property_table form "['date']" %}
+        {% property_table form "[['employee', 'date']]" %}
         {% property_table dform "['categories', 'tags']" %}
     </table>
     {{ formset.management_form }}

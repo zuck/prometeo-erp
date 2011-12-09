@@ -78,7 +78,7 @@ def timesheet_detail(request, id, **kwargs):
 def timesheet_add(request, **kwargs):
     """Adds a new timesheet.
     """
-    timesheet = Timesheet(user=request.user, date=datetime.now().date())  
+    timesheet = Timesheet(date=datetime.now().date())  
     doc = Document(author=request.user, content_object=timesheet)
       
     if request.method == 'POST':
