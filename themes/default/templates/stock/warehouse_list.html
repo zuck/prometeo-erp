@@ -1,9 +1,8 @@
-{% extends "base.html" %}
+{% extends "stock/base.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
-{% load menu %}
 
 {% block meta_title %}{% trans "Warehouses" %}{% endblock %}
 
@@ -12,33 +11,19 @@
     {% add_crumb 'Warehouses' %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{% trans "Stock" %}</h1>
-    <h2>{% block subtitle %}{% trans "Warehouses" %}{% endblock %}</h2>
-</div>
-{% endblock %}
+{% block subtitle %}{% trans "Warehouses" %}{% endblock %}
 
-{% block main %}
-<div class="sections">   
-    <div class="menu">
-        {% menu "stock_menu" %}
-    </div>
-    <div class="section">
-        {% block section %}
-        {% include 'elements/filterbox.html' %}
-        <div class="actions">
-            <ul>
-                {% if perms.stock.add_warehouse %}
-                <li class="add"><a title="{% trans 'Add' %}" href="{% url warehouse_add %}">{% trans 'Add' %}</a></li>
-                {% endif %}
-            </ul>
-        </div>
-        <div class="details">
-            {% detail_table object_list field_names %}
-            {% include 'elements/paginator.html' %}
-        </div>
-        {% endblock %}
-    </div>
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="actions">
+    <ul>
+        {% if perms.stock.add_warehouse %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url warehouse_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="details">
+    {% detail_table object_list field_names %}
+    {% include 'elements/paginator.html' %}
 </div>
 {% endblock %}
