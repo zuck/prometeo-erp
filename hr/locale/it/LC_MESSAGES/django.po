@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-09 08:53+0100\n"
+"POT-Creation-Date: 2011-12-09 12:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,8 +23,8 @@ msgid "date"
 msgstr "data"
 
 #: models.py:36
-msgid "owner"
-msgstr "proprietario"
+msgid "employee"
+msgstr "impiegato"
 
 #: models.py:41 models.py:68
 msgid "timesheet"
@@ -75,46 +75,46 @@ msgstr "Il foglio ore è stato salvato."
 msgid "The timesheet has been updated."
 msgstr "Il foglio ore è stato aggiornato."
 
-#: management/__init__.py:34
+#: management/__init__.py:35
 msgid "Main menu for human resources"
 msgstr "Menu principale per le risorse umane"
 
-#: management/__init__.py:39
+#: management/__init__.py:40
 msgid "Main menu for timesheet"
 msgstr "Menu principale per i fogli ore"
 
-#: management/__init__.py:44
+#: management/__init__.py:45
 msgid "Human resources"
 msgstr "Risorse umane"
 
-#: management/__init__.py:46
+#: management/__init__.py:47
 msgid "Human resources management"
 msgstr "Gestione risorse umane"
 
-#: management/__init__.py:53
+#: management/__init__.py:54
 msgid "Timesheets"
 msgstr "Fogli ore"
 
-#: management/__init__.py:60
+#: management/__init__.py:61
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:67
+#: management/__init__.py:68
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:74
+#: management/__init__.py:75
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:82
+#: management/__init__.py:83
 msgid "Timesheet created"
 msgstr "Creazione foglio ore"
 
-#: management/__init__.py:87
+#: management/__init__.py:88
 msgid "Timesheet changed"
 msgstr "Modifica foglio ore"
 
-#: management/__init__.py:92
+#: management/__init__.py:93
 msgid "Timesheet deleted"
 msgstr "Eliminazione foglio ore"
