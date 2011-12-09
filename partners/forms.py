@@ -89,7 +89,7 @@ class PartnerForm(forms.ModelForm):
         vat_number = self.cleaned_data['vat_number']
         if not vat_number:
             vat_number = None
-        return vat_number       
+        return vat_number    
         
 class PartnerJobForm(forms.ModelForm):
     """Form for job data from a partner point of view.
@@ -100,10 +100,24 @@ class PartnerJobForm(forms.ModelForm):
         widgets = {
             'started': DateWidget(),
             'ended': DateWidget(),
-            'contact': SelectAndAddWidget(add_url='/partners/contacts/add/'),
+            'contact': SelectAndAddWidget(add_url='/contacts/add/'),
+        }     
+        
+class LetterForm(forms.ModelForm):
+    """Form for letter data.
+    """
+    class Meta:
+        model = Letter
+        widgets = {
+            'date': DateWidget(),
+            'target_ref_date': DateWidget(),
+            'target': SelectAndAddWidget(add_url='/partners/add/'),
+            'to': SelectAndAddWidget(add_url='/contacts/add/'),
+            'signed_by': SelectAndAddWidget(add_url='/contacts/add/'),
         }
 
 enrich_form(ContactForm)
 enrich_form(ContactJobForm)
 enrich_form(PartnerForm)
 enrich_form(PartnerJobForm)
+enrich_form(LetterForm)

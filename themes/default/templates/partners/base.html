@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+{% load menu %}
+
+{% block meta_title %}{% trans "Partners" %}{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Partners" %}</h1>
+    <h2>{% block subtitle %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "partners_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

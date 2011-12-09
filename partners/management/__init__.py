@@ -48,6 +48,11 @@ def install(sender, created_models, **kwargs):
         slug="contact_menu",
         description=_("Main menu for contact model")
     )
+
+    letter_menu, is_new = Menu.objects.get_or_create(
+        slug="letter_menu",
+        description=_("Main menu for letter model")
+    )
     
     # Links.
     partners_link, is_new = Link.objects.get_or_create(
@@ -70,6 +75,13 @@ def install(sender, created_models, **kwargs):
         title=_("Contacts"),
         slug="contact-list",
         url=reverse("contact_list"),
+        menu=partners_menu
+    )
+
+    letter_list_link, is_new = Link.objects.get_or_create(
+        title=_("Letters"),
+        slug="letter-list",
+        url=reverse("letter_list"),
         menu=partners_menu
     )
 
@@ -149,6 +161,27 @@ def install(sender, created_models, **kwargs):
         url="{% url contact_jobs object.pk %}",
         menu=contact_menu
     )
+
+    letter_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="letter-details",
+        url="{% url letter_detail object.object_id %}",
+        menu=letter_menu
+    )
+
+    letter_hard_copies_link, is_new = Link.objects.get_or_create(
+        title=_("Hard copies"),
+        slug="letter-hard-copies",
+        url="{% url letter_hardcopies object.object_id %}",
+        menu=letter_menu
+    )
+
+    letter_timeline_link, is_new = Link.objects.get_or_create(
+        title=_("Timeline"),
+        slug="letter-timeline",
+        url="{% url letter_timeline object.object_id %}",
+        menu=letter_menu
+    )
     
     # Signatures.
     partner_created_signature, is_new = Signature.objects.get_or_create(
@@ -179,6 +212,21 @@ def install(sender, created_models, **kwargs):
     contact_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Contact deleted"),
         slug="contact-deleted"
+    )
+
+    letter_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Letter created"),
+        slug="letter-created"
+    )
+
+    letter_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Letter changed"),
+        slug="letter-changed"
+    )
+
+    letter_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Letter deleted"),
+        slug="letter-deleted"
     )
 
     # Creates first managed company.

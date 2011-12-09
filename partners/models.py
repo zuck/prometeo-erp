@@ -133,6 +133,10 @@ class Job(models.Model):
     ended = models.DateField(null=True, blank=True, verbose_name=_('ended on'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+
+    class Meta:
+        verbose_name = _('job')
+        verbose_name_plural = _('jobs')
         
     def __unicode__(self):
         return _("%(contact)s as %(role)s") % {'contact': self.contact, 'role': self.get_role_display()}
@@ -151,3 +155,35 @@ class Job(models.Model):
     @models.permalink
     def get_delete_url(self):
         return ('contact_delete_job', (), {"contact_id": self.contact.pk, "id": self.pk})
+
+class Letter(models.Model):
+    """Letter model.
+    """
+    target = models.ForeignKey(Partner, verbose_name=_('target'))
+    to = models.ForeignKey(Contact, related_name='target_of_letters', verbose_name=_('to the attention of'))
+    location = models.CharField(max_length=100, verbose_name=_('location'))
+    date = models.DateField(verbose_name=_('date'))
+    target_ref_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('your ref'))
+    target_ref_date = models.DateField(null=True, blank=True, verbose_name=_('on'))
+    object = models.CharField(max_length=255, verbose_name=_('object'))
+    body = models.TextField(verbose_name=_('body'))
+    signed_by = models.ForeignKey(Contact, related_name='letters', verbose_name=_('signed by'))
+
+    class Meta:
+        verbose_name = _('letter')
+        verbose_name_plural = _('letters')
+        
+    def __unicode__(self):
+        return u'%s' % _('LT')
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('letter_detail', (), {"id": self.pk})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('letter_edit', (), {"id": self.pk})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('letter_delete', (), {"id": self.pk})

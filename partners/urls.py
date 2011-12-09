@@ -68,4 +68,14 @@ urlpatterns = patterns('partners.views',
     url(r'^contacts/(?P<id>\d+)/jobs/add/$', view='contacts.contact_add_job', name='contact_add_job'),
     url(r'^contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/edit/$', view='contacts.contact_edit_job', name='contact_edit_job'),
     url(r'^contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/delete/$', view='contacts.contact_delete_job', name='contact_delete_job'),
+
+    # Letters.
+    url(r'^letters/$', view='letters.letter_list', name='letter_list'),
+    url(r'^letters/add/$', view='letters.letter_add', name='letter_add'),
+    url(r'^letters/(?P<id>\d+)/$', view='letters.letter_detail', name='letter_detail'),
+    url(r'^letters/(?P<id>\d+)/edit/$', view='letters.letter_edit', name='letter_edit'),
+    url(r'^letters/(?P<id>\d+)/delete/$', view='letters.letter_delete', name='letter_delete'),
+    url(r'^letters/(?P<id>\d+)/hard-copies/$', view='letters.letter_hardcopies', name='letter_hardcopies'),
+    url(r'^letters/(?P<id>\d+)/hard-copies/add/$', view='letters.letter_add_hardcopy', name='letter_add_hardcopy'),
+    url(r'^letters/(?P<id>\d+)/timeline/$', 'letters.letter_detail', {'template_name': 'partners/letter_timeline.html'}, 'letter_timeline'),
 )

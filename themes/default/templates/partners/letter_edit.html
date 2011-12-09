@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block meta_title %}
+{% if object.pk %}{% trans 'Edit letter' %}{% else %}{% trans 'Add letter' %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Letters' 'letter_list' %}
+    {% if object.pk %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Edit' %}
+    {% else %}
+    {% add_crumb 'Add' %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% if object.pk %}
+    <h1>{{ object }}</h1>
+    <h2>{% trans 'Edit letter' %}</h2>
+    {% else %}
+    <h1>{% trans 'Add letter' %}</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main %}
+{% if object.pk %}
+<form method="post" action="{% url letter_edit object.pk %}">
+{% else %}
+<form method="post" action="{% url letter_add %}">
+{% endif %}
+    {% csrf_token %}
+    <table class="properties">
+        {% property_table dform "['code', ['owner', 'status']]" %}
+        {% property_table form "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], 'object', 'body', 'signed_by']" %}
+        {% property_table dform "['categories', 'tags']" %}
+    </table>
+    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+</form>
+{% endblock %}

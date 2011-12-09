@@ -4,19 +4,21 @@
 {% load breadcrumbs %}
 {% load details %}
 
+{% block meta_title %}{% trans "Letters" %}{% endblock %}
+
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Partners' %}
+    {% add_crumb 'Letters' %}
 {% endblock %}
 
-{% block subtitle %}{% trans "Partners" %}{% endblock %}
+{% block subtitle %}{% trans "Letters" %}{% endblock %}
 
 {% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
-        {% if perms.partners.add_partner %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url partner_add %}">{% trans 'Add' %}</a></li>
+        {% if perms.partners.add_letter %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url letter_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

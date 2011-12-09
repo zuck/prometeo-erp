@@ -1,0 +1,56 @@
+{% extends "partners/letter_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load paginator %}
+{% load details %}
+
+{% block meta_title %}{% trans "Timeline" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Letters' 'letter_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Timeline' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Timeline" %}{% endblock %}
+
+{% block section %}
+<div class="details">
+    {% with object.stream.activity_set.all as object_list %}
+    {% paginate object_list %}
+    {% regroup object_list by created.date as activities_by_date %}
+    {% if activities_by_date %}
+    <dl class="activities">
+    {% for date in activities_by_date %}
+        <dt><h3>{{ date.grouper }}</h3></dt>
+        <dd>
+            <ul>
+            {% for item in date.list %}
+                <li class="{{ item.signature }}">
+                    <strong>{{ item.created.time }}</strong>
+                    {% if item.get_absolute_url %}
+                    <a href="{{ item.get_absolute_url }}">{{ item|capfirst }}</a>
+                    {% else %}
+                    {{ item|capfirst }}
+                    {% endif %}
+                    {% with item.created|timesince as timesince %}
+                    <span class="timesince">({% blocktrans %}{{ timesince }} ago{% endblocktrans %})</span>
+                    {% endwith %}
+                    <div class="description">
+                        {{ item.get_content|safe }}
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        </dd>
+    {% endfor %}
+    </dl>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include 'elements/paginator.html' %}
+    {% endwith %}
+</div>
+{% endblock %}
