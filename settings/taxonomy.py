@@ -31,6 +31,7 @@ SEARCH_IN_MODELS = (
     'addressing.SocialAccount',
     'partners.Contact',
     'partners.Partner',
+    'partners.Letter',
     'documents.Document',
     'products.Product',
     'products.Supply',
