@@ -30,6 +30,7 @@ from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
 from prometeo.core.streams.models import Activity
 from prometeo.core.auth.models import ObjectPermission
+from prometeo.documents.models import Document
 
 from models import *
 
@@ -81,6 +82,18 @@ def update_movement_permissions(sender, instance, *args, **kwargs):
     # Delete warehouse.
     can_delete_this_movement, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_movement", "stock", "movement", instance.pk)
     can_delete_this_movement.users.add(instance.author)
+
+def update_deliverynote_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given delivery note.
+    """
+    doc = get_object_or_404(Document.objects.get_for_content(DeliveryNote), object_id=id)
+
+    # Change delivery note.
+    can_change_this_deliverynote, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_deliverynote", "stock", "deliverynote", instance.pk)
+    can_change_this_deliverynote.users.add(doc.author)
+    # Delete delivery note.
+    can_delete_this_deliverynote, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_deliverynote", "stock", "deliverynote", instance.pk)
+    can_delete_this_deliverynote.users.add(doc.author)
 
 def notify_object_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new object.
@@ -153,6 +166,7 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
 
 post_save.connect(update_warehouse_permissions, Warehouse, dispatch_uid="update_warehouse_permissions")
 post_save.connect(update_movement_permissions, Movement, dispatch_uid="update_movement_permissions")
+post_save.connect(update_deliverynote_permissions, DeliveryNote, dispatch_uid="update_deliverynote_permissions")
 
 post_save.connect(notify_object_created, Warehouse, dispatch_uid="warehouse_created")
 post_delete.connect(notify_object_deleted, Warehouse, dispatch_uid="warehouse_deleted")

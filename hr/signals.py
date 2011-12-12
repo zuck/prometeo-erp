@@ -23,21 +23,28 @@ __version__ = '0.0.5'
 from django.db.models.signals import post_save
 
 from prometeo.core.auth.models import ObjectPermission
+from prometeo.documents.models import Document
 
 from models import *
 
 ## HANDLERS ##
 
-def update_owner_timesheet_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the owner of the given timesheet.
+def update_timesheet_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given timesheet.
     """
+    doc = get_object_or_404(Document.objects.get_for_content(Timesheet), object_id=id)
+
     # Change timesheet.
-    can_change_this_timesheet, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_timesheet", "todo", "timesheet", instance.pk)
-    can_change_this_timesheet.users.add(instance.user)
+    can_change_this_timesheet, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_timesheet", "hr", "timesheet", instance.pk)
+    can_change_this_timesheet.users.add(doc.author)
+    if instance.employee.user:
+        can_change_this_timesheet.users.add(instance.employee.user)
     # Delete timesheet.
-    can_delete_this_timesheet, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_timesheet", "todo", "timesheet", instance.pk)
-    can_delete_this_timesheet.users.add(instance.user)
+    can_delete_this_timesheet, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_timesheet", "hr", "timesheet", instance.pk)
+    can_delete_this_timesheet.users.add(doc.author)
+    if instance.employee.user:
+        can_delete_this_timesheet.users.add(instance.employee.user)
 
 ## CONNECTIONS ##
 
-post_save.connect(update_owner_timesheet_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
+post_save.connect(update_timesheet_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
