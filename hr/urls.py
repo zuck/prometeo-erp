@@ -31,6 +31,6 @@ urlpatterns = patterns('',
     url(r'^timesheets/(?P<id>\d+)/edit/$', view='hr.views.timesheet_edit', name='timesheet_edit'),
     url(r'^timesheets/(?P<id>\d+)/delete/$', view='hr.views.timesheet_delete', name='timesheet_delete'),
     url(r'^timesheets/(?P<id>\d+)/timeline/$', 'hr.views.timesheet_detail', {'template_name': 'hr/timesheet_timeline.html'}, 'timesheet_timeline'),
-    url(r'^timesheets/(?P<id>\d+)/hard-copies/$', view='documents.views.hardcopy_list', name='timesheet_hardcopies'),
-    url(r'^timesheets/(?P<id>\d+)/hard-copies/add/$', view='documents.views.hardcopy_add', name='timesheet_add_hardcopy'),
+    url(r'^timesheets/(?P<id>\d+)/hard-copies/$', view='hr.views.timesheet_hardcopies', name='timesheet_hardcopies'),
+    url(r'^timesheets/(?P<id>\d+)/hard-copies/add/$', view='hr.views.timesheet_add_hardcopy', name='timesheet_add_hardcopy'),
 )
