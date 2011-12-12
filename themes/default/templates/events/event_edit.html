@@ -31,11 +31,7 @@
 {% endblock %}
 
 {% block main %}
-{% if object.pk %}
-<form method="post" action="{% url event_edit object.pk %}">
-{% else %}
-<form method="post" action="{% url event_add %}">
-{% endif %}
+<form method="post" action=".">
     {% csrf_token %}
     <table class="properties">
         {% property_table form "['title', ['start', 'end'], 'description', ['status', 'public'], 'location', 'attendees', 'categories', 'tags', 'allow_comments']" %}

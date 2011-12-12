@@ -202,10 +202,13 @@ def event_detail(request, id, **kwargs):
     )
 
 @permission_required('events.add_event') 
-def event_add(request, **kwargs):
+def event_add(request, year=None, month=None, day=None, **kwargs):
     """Adds a new event.
     """
     event = Event(author=request.user)
+
+    if year and month and day:
+        event.start = datetime.date(int(year), int(month), int(day))
 
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)

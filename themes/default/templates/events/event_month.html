@@ -13,7 +13,9 @@
             <span class="current"><h3>{{ current_day|date:"F" }}, {{ current_day.year }}</h3></span>
             <span class="next"><a href="{% url event_month next_month.year next_month.month %}">&gt;&gt;</a></span>
         </div>
+        {% with day_link="/events/add" %}
         {% month_calendar current_day.year current_day.month object_list %}
+        {% endwith %}
     </div>
 </div>
 {% endblock %}
