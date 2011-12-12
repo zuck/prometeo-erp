@@ -1,24 +1,24 @@
-{% extends "accounting/base.html" %}
+{% extends "sales/base.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
 
-{% block meta_title %}{% trans "Sales invoices" %}{% endblock %}
+{% block meta_title %}{% trans "Bank accounts" %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Sales invoices' %}
+    {% add_crumb 'Bank accounts' %}
 {% endblock %}
 
-{% block subtitle %}{% trans "Sales invoices" %}{% endblock %}
+{% block subtitle %}{% trans "Bank accounts" %}{% endblock %}
 
 {% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
-        {% if perms.accounting.add_salesinvoice %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url salesinvoice_add %}">{% trans 'Add' %}</a></li>
+        {% if perms.sales.add_bankaccount %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url bankaccount_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

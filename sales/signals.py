@@ -35,10 +35,10 @@ def update_salesinvoice_permissions(sender, instance, *args, **kwargs):
     doc = get_object_or_404(Document.objects.get_for_content(SalesInvoice), object_id=id)
 
     # Change sales invoice.
-    can_change_this_salesinvoice, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_salesinvoice", "accounting", "salesinvoice", instance.pk)
+    can_change_this_salesinvoice, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_salesinvoice", "sales", "salesinvoice", instance.pk)
     can_change_this_salesinvoice.users.add(doc.author)
     # Delete sales invoice.
-    can_delete_this_salesinvoice, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_salesinvoice", "accounting", "salesinvoice", instance.pk)
+    can_delete_this_salesinvoice, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_salesinvoice", "sales", "salesinvoice", instance.pk)
     can_delete_this_salesinvoice.users.add(doc.author)
 
 ## CONNECTIONS ##

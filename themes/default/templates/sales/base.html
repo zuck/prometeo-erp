@@ -3,11 +3,11 @@
 {% load i18n %}
 {% load menu %}
 
-{% block meta_title %}{% trans "Accounting" %}{% endblock %}
+{% block meta_title %}{% trans "Sales" %}{% endblock %}
 
 {% block title %}
 <div class="title">
-    <h1>{% trans "Accounting" %}</h1>
+    <h1>{% trans "Sales" %}</h1>
     <h2>{% block subtitle %}{% endblock %}</h2>
 </div>
 {% endblock %}
@@ -15,7 +15,7 @@
 {% block main %}
 <div class="sections">   
     <div class="menu">
-        {% menu "accounting_menu" %}
+        {% menu "sales_menu" %}
     </div>
     <div class="section">
         {% block section %}

@@ -40,7 +40,7 @@ def _get_bankaccount(request, *args, **kwargs):
         return get_object_or_404(BankAccount, id=id)
     return None
 
-@permission_required('accounting.change_bankaccount')
+@permission_required('sales.change_bankaccount')
 def bankaccount_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a bank account list.
     """
@@ -50,21 +50,21 @@ def bankaccount_list(request, page=0, paginate_by=10, **kwargs):
         fields=['bank_name', 'bic', 'iban', 'owner'],
         page=page,
         paginate_by=paginate_by,
-        template_name='accounting/bankaccount_list.html',
+        template_name='sales/bankaccount_list.html',
         **kwargs
     )
 
-@permission_required('accounting.add_bankaccount')     
+@permission_required('sales.add_bankaccount')     
 def bankaccount_add(request, **kwargs):
     """Adds a new bank account.
     """
     return create_update.create_object(
         request,
         form_class=BankAccountForm,
-        template_name='accounting/bankaccount_edit.html'
+        template_name='sales/bankaccount_edit.html'
     )
 
-@permission_required('accounting.change_bankaccount', _get_bankaccount)     
+@permission_required('sales.change_bankaccount', _get_bankaccount)     
 def bankaccount_detail(request, id, page=None, **kwargs):
     """Shows bank account details.
     """
@@ -77,11 +77,11 @@ def bankaccount_detail(request, id, page=None, **kwargs):
         extra_context={
             'object_list': object_list,
         },
-        template_name='accounting/bankaccount_detail.html',
+        template_name='sales/bankaccount_detail.html',
         **kwargs
     )
 
-@permission_required('accounting.change_bankaccount', _get_bankaccount)     
+@permission_required('sales.change_bankaccount', _get_bankaccount)     
 def bankaccount_edit(request, id, **kwargs):
     """Edits a bank account.
     """
@@ -89,10 +89,10 @@ def bankaccount_edit(request, id, **kwargs):
         request,
         object_id=id,
         form_class=BankAccountForm,
-        template_name='accounting/bankaccount_edit.html'
+        template_name='sales/bankaccount_edit.html'
     )
 
-@permission_required('accounting.delete_bankaccount', _get_bankaccount)    
+@permission_required('sales.delete_bankaccount', _get_bankaccount)    
 def bankaccount_delete(request, id, **kwargs):
     """Deletes a bank account.
     """
@@ -101,6 +101,6 @@ def bankaccount_delete(request, id, **kwargs):
         model=BankAccount,
         object_id=id,
         post_delete_redirect=reverse('bankaccount_list'),
-        template_name='accounting/bankaccount_delete.html',
+        template_name='sales/bankaccount_delete.html',
         **kwargs
     )

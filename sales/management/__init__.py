@@ -33,9 +33,9 @@ def install(sender, created_models, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
 
     # Menus.
-    accounting_menu, is_new = Menu.objects.get_or_create(
-        slug="accounting_menu",
-        description=_("Main menu for accounting management")
+    sales_menu, is_new = Menu.objects.get_or_create(
+        slug="sales_menu",
+        description=_("Main menu for sales management")
     )
 
     salesinvoice_menu, is_new = Menu.objects.get_or_create(
@@ -44,12 +44,12 @@ def install(sender, created_models, **kwargs):
     )
     
     # Links.
-    accounting_link, is_new = Link.objects.get_or_create(
-        title=_("Accounting"),
-        slug="accounting",
-        description=_("Accounting management"),
+    sales_link, is_new = Link.objects.get_or_create(
+        title=_("Sales"),
+        slug="sales",
+        description=_("Sales management"),
         url=reverse("bankaccount_list"),
-        submenu=accounting_menu,
+        submenu=sales_menu,
         menu=main_menu
     )
 
@@ -58,7 +58,7 @@ def install(sender, created_models, **kwargs):
         slug="bank-account-list",
         description=_("Bank accounts management"),
         url=reverse("bankaccount_list"),
-        menu=accounting_menu
+        menu=sales_menu
     )
 
     salesinvoices_link, is_new = Link.objects.get_or_create(
@@ -66,7 +66,7 @@ def install(sender, created_models, **kwargs):
         slug="sales-invoice-list",
         description=_("Sales invoices management"),
         url=reverse("salesinvoice_list"),
-        menu=accounting_menu
+        menu=sales_menu
     )
 
     salesinvoice_details_link, is_new = Link.objects.get_or_create(

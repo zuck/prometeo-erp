@@ -22,7 +22,7 @@ __version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('accounting.views',
+urlpatterns = patterns('sales.views',
 
     # Bank accounts.
     url(r'^bank-accounts/$', view='bankaccounts.bankaccount_list', name='bankaccount_list'),
@@ -39,5 +39,5 @@ urlpatterns = patterns('accounting.views',
     url(r'^sales-invoices/(?P<id>\d+)/delete/$', view='salesinvoices.salesinvoice_delete', name='salesinvoice_delete'),
     url(r'^sales-invoices/(?P<id>\d+)/hard-copies/$', view='salesinvoices.salesinvoice_hardcopies', name='salesinvoice_hardcopies'),
     url(r'^sales-invoices/(?P<id>\d+)/hard-copies/add/$', view='salesinvoices.salesinvoice_add_hardcopy', name='salesinvoice_add_hardcopy'),
-    url(r'^sales-invoices/(?P<id>\d+)/timeline/$', 'salesinvoices.salesinvoice_detail', {'template_name': 'accounting/salesinvoice_timeline.html'}, 'salesinvoice_timeline')
+    url(r'^sales-invoices/(?P<id>\d+)/timeline/$', 'salesinvoices.salesinvoice_detail', {'template_name': 'sales/salesinvoice_timeline.html'}, 'salesinvoice_timeline')
 )

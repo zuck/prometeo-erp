@@ -25,16 +25,16 @@
 {% block main %}
 <div class="actions">
     <ul>
-        {% if perms.accounting.add_bankaccount %}
+        {% if perms.sales.add_bankaccount %}
         <li class="add"><a title="{% trans 'Add' %}" href="{% url bankaccount_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
-        {% if perms.accounting.change_bankaccount %}
+        {% if perms.sales.change_bankaccount %}
         <li class="edit"><a title="{% trans 'Edit' %}" href="{% url bankaccount_edit object.pk %}">{% trans 'Edit' %}</a></li>
         {% endif %}
-        {% if perms.accounting.delete_bankaccount %}
+        {% if perms.sales.delete_bankaccount %}
         <li class="delete"><a title="{% trans 'Delete' %}" href="{% url bankaccount_delete object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
-        {% if perms.accounting.change_bankaccount %}
+        {% if perms.sales.change_bankaccount %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url bankaccount_list %}">{% trans 'All' %}</a></li>
         {% endif %}
     </ul>

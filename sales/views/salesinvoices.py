@@ -47,7 +47,7 @@ def _get_salesinvoice(request, *args, **kwargs):
         return get_object_or_404(SalesInvoice, id=id)
     return None
 
-@permission_required('accounting.change_salesinvoice')
+@permission_required('sales.change_salesinvoice')
 def salesinvoice_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a sales invoice list.
     """
@@ -57,11 +57,11 @@ def salesinvoice_list(request, page=0, paginate_by=10, **kwargs):
         fields=['code', 'author', 'created', 'owner'],
         page=page,
         paginate_by=paginate_by,
-        template_name='accounting/salesinvoice_list.html',
+        template_name='sales/salesinvoice_list.html',
         **kwargs
     )
 
-@permission_required('accounting.add_salesinvoice')     
+@permission_required('sales.add_salesinvoice')     
 def salesinvoice_add(request, **kwargs):
     """Adds a new sales invoice.
     """
@@ -85,9 +85,9 @@ def salesinvoice_add(request, **kwargs):
         form = SalesInvoiceForm(instance=salesinvoice)
         formset = ProductEntryFormset()
 
-    return render_to_response('accounting/salesinvoice_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
+    return render_to_response('sales/salesinvoice_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
-@permission_required('accounting.change_salesinvoice', _get_salesinvoice)     
+@permission_required('sales.change_salesinvoice', _get_salesinvoice)     
 def salesinvoice_detail(request, id, page=None, **kwargs):
     """Shows sales invoice details.
     """
@@ -100,11 +100,11 @@ def salesinvoice_detail(request, id, page=None, **kwargs):
         extra_context={
             'object_list': object_list,
         },
-        template_name=kwargs.pop('template_name', 'accounting/salesinvoice_detail.html'),
+        template_name=kwargs.pop('template_name', 'sales/salesinvoice_detail.html'),
         **kwargs
     )
 
-@permission_required('accounting.change_salesinvoice', _get_salesinvoice)     
+@permission_required('sales.change_salesinvoice', _get_salesinvoice)     
 def salesinvoice_edit(request, id, **kwargs):
     """Edits a sales invoice.
     """
@@ -127,9 +127,9 @@ def salesinvoice_edit(request, id, **kwargs):
         form = SalesInvoiceForm(instance=salesinvoice)
         formset = ProductEntryFormset(queryset=salesinvoice.entries.all())
 
-    return render_to_response('accounting/salesinvoice_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
+    return render_to_response('sales/salesinvoice_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
-@permission_required('accounting.delete_salesinvoice', _get_salesinvoice)    
+@permission_required('sales.delete_salesinvoice', _get_salesinvoice)    
 def salesinvoice_delete(request, id, **kwargs):
     """Deletes a sales invoice.
     """
@@ -138,17 +138,17 @@ def salesinvoice_delete(request, id, **kwargs):
         model=Document,
         object_id=Document.objects.get_for_content(SalesInvoice).get(object_id=id).pk,
         post_delete_redirect=reverse('salesinvoice_list'),
-        template_name='accounting/salesinvoice_delete.html',
+        template_name='sales/salesinvoice_delete.html',
         **kwargs
     )
 
-@permission_required('accounting.change_salesinvoice', _get_salesinvoice)     
+@permission_required('sales.change_salesinvoice', _get_salesinvoice)     
 def salesinvoice_hardcopies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows sales invoice hard copies.
     """
     return hardcopy_list(request, Document.objects.get_for_content(SalesInvoice).get(object_id=id).pk, page, paginate_by, **kwargs)
 
-@permission_required('accounting.change_salesinvoice', _get_salesinvoice)     
+@permission_required('sales.change_salesinvoice', _get_salesinvoice)     
 def salesinvoice_add_hardcopy(request, id, **kwargs):
     """Adds an hard copy to the given document.
     """

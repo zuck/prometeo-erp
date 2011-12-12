@@ -23,22 +23,22 @@
 {% block main %}
 <div class="actions">
     <ul>
-        {% if perms.accounting.add_salesinvoice %}
+        {% if perms.sales.add_salesinvoice %}
         <li class="add"><a title="{% trans 'Add' %}" href="{% url salesinvoice_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
-        {% if perms.accounting.change_salesinvoice %}
+        {% if perms.sales.change_salesinvoice %}
         <li class="edit"><a title="{% trans 'Edit' %}" href="{% url salesinvoice_edit object.pk %}">{% trans 'Edit' %}</a></li>
         {% endif %}
-        {% if perms.accounting.delete_salesinvoice %}
+        {% if perms.sales.delete_salesinvoice %}
         <li class="delete"><a title="{% trans 'Delete' %}" href="{% url salesinvoice_delete object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
-        {% if perms.accounting.change_salesinvoice %}
+        {% if perms.sales.change_salesinvoice %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url salesinvoice_list %}">{% trans 'All' %}</a></li>
         {% endif %}
-        {% if perms.accounting.change_salesinvoice %}
+        {% if perms.sales.change_salesinvoice %}
         <li class="print"><a title="{% trans 'Print' %}" href="{% url document_print object.pk object.content_object.invoice_addressee.language %}">{% trans 'Print' %}</a></li>
         {% endif %}
-        {% if perms.accounting.change_salesinvoice %}
+        {% if perms.sales.change_salesinvoice %}
         {% if user not in object.stream.followers.all %}
         <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
         {% else %}
