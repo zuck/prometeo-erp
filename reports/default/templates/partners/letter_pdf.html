@@ -1,7 +1,6 @@
 {% extends "report_base.html" %}
 
 {% load i18n %}
-{% load markup %}
 {% load details %}
 
 {% block meta_title %}{{ document|striptags|capfirst }}{% endblock %}
@@ -32,33 +31,29 @@ td, th {
     padding: 5px 5px 0;
     text-align: left;
 }
-
-#header td, #header th { border: none; }
-
-#header th { font-size: 26px; }
  
-#header td { text-align: right; }
+#header { text-align: right; }
 
 #header h2 { font-size: 1.5em; }
-
-.entry-list table {
-    margin-top: 40px;
-}
-
-.entry-list table th {
-    background-color: #ce0600;
-    text-align: center;
-    color: #fff;
-}
-
-.entry-list table th a { color: #fff; }
 {% endblock %}
 
 {% block header %}
-{{ block.super }}
-{% if document.content_object.to %}
-<p style="text-align: right;">{% blocktrans with to=document.content_object.to %}To the attention of {{ to }}{% endblocktrans %}</p>
-{% endif %}
+<div id="header">
+    <h2>{{ document.content_object.target }}<h2>
+    <p>
+        {{ document.content_object.target.main_address|default:"" }}
+        <br/>
+        {{ document.content_object.target.vat_number|default:"" }}
+        <br/>
+        {{ document.content_object.target.main_phone_number|default:"" }}
+        <br/>
+        {{ document.content_object.target.url|default:"" }} {{ document.content_object.target.email|default:"" }}
+        {% if document.content_object.to %}
+        <br/>
+        <p style="text-align: right;">{% blocktrans with to=document.content_object.to %}To the attention of {{ to }}{% endblocktrans %}</p>
+        {% endif %}
+    </p>
+</div>
 {% endblock %}
 
 {% block main %}
@@ -75,8 +70,6 @@ td, th {
 
     <div style="text-align: right;">{{ document.content_object.location }}, {{ document.content_object.date }}</div>
 
-    <div>{{ document.content_object.body|markdown }}</div>
-
-    <div style="margin: 0 200px; text-align: right;">{{ document.content_object.signed_by }}</div>
+    <div>{{ document.content_object.body|safe }}</div>
 </div>
 {% endblock %}

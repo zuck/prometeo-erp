@@ -39,7 +39,7 @@
     {% csrf_token %}
     <table class="properties">
         {% property_table dform "['code', ['owner', 'status']]" %}
-        {% property_table form "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], 'subject', 'body', 'signed_by']" %}
+        {% property_table form "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], 'subject', 'body']" %}
         {% property_table dform "['categories', 'tags']" %}
     </table>
     <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>

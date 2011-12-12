@@ -25,16 +25,20 @@
                         {% endblock %}
                     </th>
                     <td id="owner">
+                        {% block owner %}
                         <h2>{{ document.owner }}<h2>
                         <p>
                             {{ document.owner.main_address|default:"" }}
                             <br/>
-                            {{ document.owner.vat_number }}
+                            {{ document.owner.vat_number|default:"" }}
                             <br/>
                             {{ document.owner.main_phone_number|default:"" }}
                             <br/>
-                            {{ document.owner.url }} {{ document.owner.email }}
+                            {{ document.owner.url|default:"" }} {{ document.owner.email|default:"" }}
+                            {% block extraowner %}
+                            {% endblock %}
                         </p>
+                        {% endblock %}
                     </td>
                 </tr>
             </table>

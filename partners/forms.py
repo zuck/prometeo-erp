@@ -113,7 +113,7 @@ class LetterForm(forms.ModelForm):
             'target_ref_date': DateWidget(),
             'target': SelectAndAddWidget(add_url='/partners/add/'),
             'to': SelectAndAddWidget(add_url='/contacts/add/'),
-            'signed_by': SelectAndAddWidget(add_url='/contacts/add/'),
+            'body': CKEditor(),
         }
 
 enrich_form(ContactForm)
