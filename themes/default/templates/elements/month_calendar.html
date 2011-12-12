@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <table class="events">
     {% for week, week_events in calendar.items %}
     {% if forloop.first %}
@@ -21,7 +23,13 @@
                     {% if day.month != month %}
                     <span class="disabled">{{ day.day }}</span>
                     {% else %}
+                    {% with day_link="/events/add" %}
+                    {% if day_link %}
+                    <a title="{% trans 'Add' %}" href="{{ day_link }}/{{ day.year }}/{{ day.month }}/{{ day.day }}/">{{ day.day }}</a>
+                    {% else %}
                     {{ day.day }}
+                    {% endif %}
+                    {% endwith %}
                     {% endif %}
                 {% if forloop.counter >= 6 %}
                 </span>

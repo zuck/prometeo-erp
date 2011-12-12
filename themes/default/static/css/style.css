@@ -895,7 +895,12 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     color: #c0c0c0;
 }
 
-#content .calendar .events .daynr .weekend { color: #d21717; }
+#content .calendar .events .daynr a {
+    color: #1f1f1f;
+    font-weight: normal;
+}
+
+#content .calendar .events .daynr .weekend, #content .calendar .events .daynr .weekend a { color: #d21717; }
 
 #content .calendar .events .daynr .weekend .disabled { color: #ffc0c0; }
 
