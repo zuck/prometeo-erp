@@ -72,6 +72,7 @@ class PartnerForm(forms.ModelForm):
         widgets = {
             'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'description': CKEditor(),
         }
 
     def __init__(self, *args, **kwargs):

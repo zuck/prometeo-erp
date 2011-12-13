@@ -83,6 +83,7 @@ class Partner(Commentable):
     is_supplier = models.BooleanField(default=False, verbose_name=_('supplier?'))
     lead_status = models.CharField(max_length=10, null=True, blank=True, choices=settings.LEAD_STATUS_CHOICES, default=settings.LEAD_DEFAULT_STATUS, verbose_name=_('lead status'))
     vat_number = models.CharField(max_length=64, null=True, blank=True, unique=True, verbose_name=_('VAT number'))
+    ssn = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('SSN'))
     currency = models.CharField(max_length=3, choices=settings.CURRENCIES, default=settings.DEFAULT_CURRENCY, null=True, blank=True, verbose_name=_('currency'))
     language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_('language'))
     timezone = models.CharField(max_length=20, null=True, blank=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_('timezone'))    
