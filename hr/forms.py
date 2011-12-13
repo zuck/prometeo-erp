@@ -70,5 +70,38 @@ class TimesheetEntryFormset(_TimesheetEntryFormset):
                 self.forms[-1].fields['DELETE'].initial = True
             self.extra = 1
 
+class ExpenseVoucherForm(forms.ModelForm):
+    """Form for ExpenseVoucher data.
+    """
+    class Meta:
+        model = ExpenseVoucher
+        widgets = {
+            'date': DateWidget(),
+            'employee': SelectAndAddWidget(add_url='contacts/add'),
+        }
+
+class ExpenseEntryForm(forms.ModelForm):
+    """Form for ExpenseEntry data.
+    """
+    class Meta:
+        model = ExpenseEntry
+        widgets = {
+            'date': DateWidget(),
+        }
+
+_ExpenseEntryFormset = inlineformset_factory(ExpenseVoucher, ExpenseEntry, form=ExpenseEntryForm, extra=5)
+
+class ExpenseEntryFormset(_ExpenseEntryFormset):
+    def __init__(self, *args, **kwargs):
+        super(ExpenseEntryFormset, self).__init__(*args, **kwargs)
+        count = self.initial_form_count()
+        for i in range(0, self.total_form_count()-count):
+            if i != 0 or count > 0:
+                for field in self.forms[i+count].fields.values():
+                    field.required = False
+                self.forms[i+count].fields['DELETE'].initial = True
+
 enrich_form(TimesheetForm)
 enrich_form(TimesheetEntryForm)
+enrich_form(ExpenseVoucherForm)
+enrich_form(ExpenseEntryForm)

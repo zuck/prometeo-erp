@@ -39,6 +39,11 @@ def install(sender, **kwargs):
         slug="timesheet_menu",
         description=_("Main menu for timesheet")
     )
+
+    expensevoucher_menu, is_new = Menu.objects.get_or_create(
+        slug="expensevoucher_menu",
+        description=_("Main menu for expense voucher")
+    )
     
     # Links.
     hr_link, is_new = Link.objects.get_or_create(
@@ -54,6 +59,13 @@ def install(sender, **kwargs):
         title=_("Timesheets"),
         slug="timesheets",
         url="{% url timesheet_list %}",
+        menu=hr_menu
+    )
+
+    expensevouchers_link, is_new = Link.objects.get_or_create(
+        title=_("Expense vouchers"),
+        slug="expensevouchers",
+        url="{% url expensevoucher_list %}",
         menu=hr_menu
     )
 
@@ -78,6 +90,28 @@ def install(sender, **kwargs):
         menu=timesheet_menu
     )
 
+    expensevoucher_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="expensevoucher-details",
+        url="{% url expensevoucher_detail object.object_id %}",
+        menu=expensevoucher_menu
+    )
+
+    expensevoucher_hard_copies_link, is_new = Link.objects.get_or_create(
+        title=_("Hard copies"),
+        slug="expensevoucher-hard-copies",
+        url="{% url expensevoucher_hardcopies object.object_id %}",
+        menu=expensevoucher_menu
+    )
+
+    expensevoucher_timeline_link, is_new = Link.objects.get_or_create(
+        title=_("Timeline"),
+        slug="expensevoucher-timeline",
+        url="{% url expensevoucher_timeline object.object_id %}",
+        menu=expensevoucher_menu
+    )
+
+
     # Signatures.
     timesheet_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Timesheet created"),
@@ -92,6 +126,21 @@ def install(sender, **kwargs):
     timesheet_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Timesheet deleted"),
         slug="timesheet-deleted"
+    )
+
+    expensevoucher_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Expense voucher created"),
+        slug="expensevoucher-created"
+    )
+
+    expensevoucher_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Expense voucher changed"),
+        slug="expensevoucher-changed"
+    )
+
+    expensevoucher_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Expense voucher deleted"),
+        slug="expensevoucher-deleted"
     )
     
     post_syncdb.disconnect(install)

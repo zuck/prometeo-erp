@@ -38,7 +38,7 @@ from prometeo.documents.models import *
 from prometeo.documents.forms import *
 from prometeo.documents.views import *
 
-from forms import *
+from ..forms import *
 
 def _get_timesheet(request, *args, **kwargs):
     return get_object_or_404(Timesheet, id=kwargs.get('id', None))

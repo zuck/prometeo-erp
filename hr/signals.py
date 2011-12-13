@@ -20,6 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
+from django.shortcuts import get_object_or_404
 from django.db.models.signals import post_save
 
 from prometeo.core.auth.models import ObjectPermission
@@ -32,7 +33,7 @@ from models import *
 def update_timesheet_permissions(sender, instance, *args, **kwargs):
     """Updates the permissions assigned to the stakeholders of the given timesheet.
     """
-    doc = get_object_or_404(Document.objects.get_for_content(Timesheet), object_id=id)
+    doc = get_object_or_404(Document.objects.get_for_content(Timesheet), object_id=instance.pk)
 
     # Change timesheet.
     can_change_this_timesheet, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_timesheet", "hr", "timesheet", instance.pk)
@@ -45,6 +46,23 @@ def update_timesheet_permissions(sender, instance, *args, **kwargs):
     if instance.employee.user:
         can_delete_this_timesheet.users.add(instance.employee.user)
 
+def update_expensevoucher_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the stakeholders of the given expense voucher.
+    """
+    doc = get_object_or_404(Document.objects.get_for_content(ExpenseVoucher), object_id=instance.pk)
+
+    # Change expense voucher.
+    can_change_this_expensevoucher, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_expensevoucher", "hr", "expensevoucher", instance.pk)
+    can_change_this_expensevoucher.users.add(doc.author)
+    if instance.employee.user:
+        can_change_this_expensevoucher.users.add(instance.employee.user)
+    # Delete expense voucher.
+    can_delete_this_expensevoucher, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_expensevoucher", "hr", "expensevoucher", instance.pk)
+    can_delete_this_expensevoucher.users.add(doc.author)
+    if instance.employee.user:
+        can_delete_this_expensevoucher.users.add(instance.employee.user)
+
 ## CONNECTIONS ##
 
-post_save.connect(update_timesheet_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
+#post_save.connect(update_timesheet_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
+#post_save.connect(update_expensevoucher_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_permissions")

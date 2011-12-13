@@ -29,3 +29,11 @@ WORKING_DAY_END = datetime.time(18, 30)
 
 LAUNCH_TIME_START = datetime.time(13, 0)
 LAUNCH_TIME_END = datetime.time(14, 30)
+
+EXPENSE_TYPE_CHOICES = (
+    ('TRV', _('travel')),
+    ('MDC', _('medical')),
+    ('FOD', _('food')),
+    ('CAL', _('call')),
+    ('OTH', _('others')),
+)

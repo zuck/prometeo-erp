@@ -65,7 +65,7 @@ td, th {
     </p>
 
     <div class="entry-list">
-        {% detail_table document.content_object.entries.all "['start_time', 'end_time']" %}
+        {% detail_table document.content_object.entries.all "['date', 'type', 'description', 'amount']" %}
     </div>
 </div>
 {% endblock %}

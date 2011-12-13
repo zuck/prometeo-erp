@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-09 12:29+0100\n"
+"POT-Creation-Date: 2011-12-13 11:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: models.py:35
+#: models.py:35 models.py:95 models.py:131
 msgid "date"
 msgstr "data"
 
-#: models.py:36
+#: models.py:36 models.py:96
 msgid "employee"
 msgstr "impiegato"
 
@@ -50,7 +50,7 @@ msgstr "orario fine"
 msgid "related to"
 msgstr "relativo a"
 
-#: models.py:72
+#: models.py:72 models.py:133
 msgid "description"
 msgstr "descrizione"
 
@@ -67,13 +67,46 @@ msgstr "voci"
 msgid "%(start_time)s ~ %(end_time)s on %(date)s of %(user)s"
 msgstr "%(start_time)s ~ %(end_time)s il %(date)s di %(user)s"
 
-#: views.py:93
-msgid "The timesheet has been saved."
-msgstr "Il foglio ore è stato salvato."
+#: models.py:101
+msgid "expense voucher"
+msgstr "nota spese"
 
-#: views.py:116
-msgid "The timesheet has been updated."
-msgstr "Il foglio ore è stato aggiornato."
+#: models.py:102
+msgid "expense vouchers"
+msgstr "note spese"
+
+#: models.py:105
+msgid "EV"
+msgstr "NS"
+
+#: models.py:124
+msgid "total amount"
+msgstr "Totale"
+
+#: models.py:130
+msgid "voucher"
+msgstr "nota"
+
+#: models.py:132
+msgid "type"
+msgstr "tipologia"
+
+#: models.py:134
+msgid "amount"
+msgstr "importo"
+
+#: models.py:138
+msgid "expense entry"
+msgstr "voce di spesa"
+
+#: models.py:139
+msgid "expense entries"
+msgstr "voci di spesa"
+
+#: models.py:142
+#, python-format
+msgid "%(type)s ~ %(amount)s on %(date)s"
+msgstr "%(type)s ~ %(amount)s il %(date)s"
 
 #: management/__init__.py:35
 msgid "Main menu for human resources"
@@ -84,37 +117,73 @@ msgid "Main menu for timesheet"
 msgstr "Menu principale per i fogli ore"
 
 #: management/__init__.py:45
+msgid "Main menu for expense voucher"
+msgstr "Menu principale per le note spese"
+
+#: management/__init__.py:50
 msgid "Human resources"
 msgstr "Risorse umane"
 
-#: management/__init__.py:47
+#: management/__init__.py:52
 msgid "Human resources management"
 msgstr "Gestione risorse umane"
 
-#: management/__init__.py:54
+#: management/__init__.py:59
 msgid "Timesheets"
 msgstr "Fogli ore"
 
-#: management/__init__.py:61
+#: management/__init__.py:66
+msgid "Expense vouchers"
+msgstr "Note spese"
+
+#: management/__init__.py:73 management/__init__.py:94
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:68
+#: management/__init__.py:80 management/__init__.py:101
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:75
+#: management/__init__.py:87 management/__init__.py:108
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:83
+#: management/__init__.py:117
 msgid "Timesheet created"
 msgstr "Creazione foglio ore"
 
-#: management/__init__.py:88
+#: management/__init__.py:122
 msgid "Timesheet changed"
 msgstr "Modifica foglio ore"
 
-#: management/__init__.py:93
+#: management/__init__.py:127
 msgid "Timesheet deleted"
 msgstr "Eliminazione foglio ore"
+
+#: management/__init__.py:132
+msgid "Expense voucher created"
+msgstr "Creazione nota spese"
+
+#: management/__init__.py:137
+msgid "Expense voucher changed"
+msgstr "Modifica nota spese"
+
+#: management/__init__.py:142
+msgid "Expense voucher deleted"
+msgstr "Eliminazione nota spese"
+
+#: views/expensevouchers.py:93
+msgid "The expense voucher has been saved."
+msgstr "La nota spese è stata salvata."
+
+#: views/expensevouchers.py:116
+msgid "The expense voucher has been updated."
+msgstr "La nota spese è stata aggiornata."
+
+#: views/timesheets.py:93
+msgid "The timesheet has been saved."
+msgstr "Il foglio ore è stato salvato."
+
+#: views/timesheets.py:116
+msgid "The timesheet has been updated."
+msgstr "Il foglio ore è stato aggiornato."

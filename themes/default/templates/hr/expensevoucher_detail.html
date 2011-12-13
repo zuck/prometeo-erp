@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load navigator %}
+{% load details %}
+{% load menu %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Expense vouchers' 'expensevoucher_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object }}</h1>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.hr.add_expensevoucher %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url expensevoucher_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.hr.change_expensevoucher %}
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url expensevoucher_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        {% endif %}
+        {% if perms.hr.delete_expensevoucher %}
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url expensevoucher_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        {% endif %}
+        {% if perms.hr.change_expensevoucher %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url expensevoucher_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
+        {% if perms.hr.change_expensevoucher %}
+        <li class="print"><a title="{% trans 'Print' %}" href="{% url document_print object.pk object.owner.language %}">{% trans 'Print' %}</a></li>
+        {% endif %}
+        {% if perms.hr.change_expensevoucher %}
+        {% if user not in object.stream.followers.all %}
+        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+        {% else %}
+        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% objects_from object "get_for_content" object.content_object %}
+{% with objects as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+<div class="sections">   
+    <div class="menu">
+        {% menu "expensevoucher_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            <table class="properties">
+                {% property_table object "[['owner', 'status'], ['author', 'created']]" %}
+                {% property_table object.content_object "[['employee', 'date'], 'total_amount']" %}
+                {% property_table object "['categories', 'tags']" %}
+            </table>
+            {% detail_table object.content_object.entries.all "['date', 'type', 'description', 'amount']" %}
+        </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

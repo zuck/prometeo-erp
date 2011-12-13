@@ -88,3 +88,59 @@ class TimesheetEntry(models.Model):
         start = datetime.combine(self.timesheet.date, self.start_time)
         end = datetime.combine(self.timesheet.date, self.end_time)
         return (end - start).total_seconds() / 3600
+
+class ExpenseVoucher(models.Model):
+    """Expense voucher model.
+    """
+    date = models.DateField(verbose_name=_('date'))
+    employee = models.ForeignKey('partners.Contact', verbose_name=_('employee'))
+
+    class Meta:
+        ordering = ('-date',)
+        get_latest_by = '-date'
+        verbose_name = _('expense voucher')
+        verbose_name_plural = _('expense vouchers')
+
+    def __unicode__(self):
+        return u"%s" % _('EV')
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('expensevoucher_detail', (), {"id": self.pk})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('expensevoucher_edit', (), {"id": self.pk})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('expensevoucher_delete', (), {"id": self.pk})
+
+    def _total_amount(self):
+        amount = 0
+        for entry in self.entries.all():
+            amount += entry.amount
+        return amount
+    _total_amount.short_description = _('total amount')
+    total_amount = property(_total_amount)
+
+class ExpenseEntry(models.Model):
+    """Expense entry model.
+    """
+    voucher = models.ForeignKey(ExpenseVoucher, related_name='entries', verbose_name=_('voucher'))
+    date = models.DateField(verbose_name=_('date'))
+    type = models.CharField(max_length=10, choices=settings.EXPENSE_TYPE_CHOICES, verbose_name=_('type'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('description'))
+    amount = models.FloatField(default=0.0, verbose_name=_('amount'))
+    
+    class Meta:
+        ordering = ('voucher', 'date')
+        verbose_name = _('expense entry')
+        verbose_name_plural = _('expense entries')
+
+    def __unicode__(self):
+        return _('%(type)s ~ %(amount)s on %(date)s') % {
+            'type': field_to_string(self._meta.get_field_by_name('type')[0], self),
+            'amount': field_to_string(self._meta.get_field_by_name('amount')[0], self),
+            'date': field_to_string(self._meta.get_field_by_name('date')[0], self),
+        }
