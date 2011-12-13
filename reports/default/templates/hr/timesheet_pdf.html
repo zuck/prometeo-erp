@@ -67,5 +67,9 @@ td, th {
     <div class="entry-list">
         {% detail_table document.content_object.entries.all "['start_time', 'end_time']" %}
     </div>
+
+    <p style="text-align: right;">
+        {% trans "Total hours" %}: {{ document.content_object.working_hours }}
+    </p>
 </div>
 {% endblock %}

@@ -67,5 +67,9 @@ td, th {
     <div class="entry-list">
         {% detail_table document.content_object.entries.all "['date', 'type', 'description', 'amount']" %}
     </div>
+
+    <p style="text-align: right;">
+        {% trans "Total amount" %}: {{ document.content_object.total_amount }}
+    </p>
 </div>
 {% endblock %}
