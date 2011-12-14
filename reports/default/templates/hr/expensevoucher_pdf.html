@@ -69,7 +69,7 @@ td, th {
     </div>
 
     <p style="text-align: right;">
-        {% trans "Total amount" %}: {{ document.content_object.total_amount }}
+        {% trans "Total amount" %}: {{ document.content_object.total_amount|floatformat:2 }} {{ document.owner.get_currency_display }}
     </p>
 </div>
 {% endblock %}
