@@ -74,6 +74,7 @@ def employee_add(request, **kwargs):
       
     if request.method == 'POST':
         jform = JobForm(request.POST, instance=job)
+        form = EmployeeForm(request.POST, instance=employee)
         if jform.is_valid():
             jform.save()
             employee = job.employee
