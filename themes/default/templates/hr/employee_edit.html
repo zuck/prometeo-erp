@@ -38,7 +38,11 @@
 {% endif %}
     {% csrf_token %}
     <table class="properties">
+        {% if object.pk %}
         {% property_table jform "['partner', 'role']" %}
+        {% else %}
+        {% property_table jform "[['contact', 'partner'], 'role']" %}
+        {% endif %}
         {% property_table form "['type', ['start', 'end']]" %}
         {% property_table jform "['notes']" %}
     </table>
