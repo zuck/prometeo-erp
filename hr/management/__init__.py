@@ -35,6 +35,11 @@ def install(sender, **kwargs):
         description=_("Main menu for human resources")
     )
 
+    employee_menu, is_new = Menu.objects.get_or_create(
+        slug="employee_menu",
+        description=_("Main menu for employee")
+    )
+
     timesheet_menu, is_new = Menu.objects.get_or_create(
         slug="timesheet_menu",
         description=_("Main menu for timesheet")
@@ -50,9 +55,16 @@ def install(sender, **kwargs):
         title=_("Human resources"),
         slug="hr",
         description=_("Human resources management"),
-        url="{% url timesheet_list %}",
+        url="{% url employee_list %}",
         submenu=hr_menu,
         menu=main_menu
+    )
+
+    employees_link, is_new = Link.objects.get_or_create(
+        title=_("Employees"),
+        slug="employees",
+        url="{% url employee_list %}",
+        menu=hr_menu
     )
 
     timesheets_link, is_new = Link.objects.get_or_create(
@@ -67,6 +79,13 @@ def install(sender, **kwargs):
         slug="expensevouchers",
         url="{% url expensevoucher_list %}",
         menu=hr_menu
+    )
+
+    employee_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="employee-details",
+        url="{% url employee_detail object.pk %}",
+        menu=employee_menu
     )
 
     timesheet_details_link, is_new = Link.objects.get_or_create(
@@ -111,8 +130,22 @@ def install(sender, **kwargs):
         menu=expensevoucher_menu
     )
 
-
     # Signatures.
+    employee_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Employee created"),
+        slug="employee-created"
+    )
+
+    employee_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Employee changed"),
+        slug="employee-changed"
+    )
+
+    employee_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Employee deleted"),
+        slug="employee-deleted"
+    )
+
     timesheet_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Timesheet created"),
         slug="timesheet-created"

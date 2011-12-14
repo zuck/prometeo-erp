@@ -29,11 +29,42 @@ from django.conf import settings
 
 from prometeo.core.utils import field_to_string
 
+from managers import *
+
+class Employee(models.Model):
+    """Employee model.
+    """
+    job = models.OneToOneField('partners.Job', verbose_name=_('job'))
+    type = models.CharField(max_length=10, null=True, blank=True, choices=settings.EMPLOYMENT_TYPE_CHOICES, verbose_name=_('type'))
+    start = models.DateField(null=True, blank=True, verbose_name=_('started on'))
+    end = models.DateField(null=True, blank=True, verbose_name=_('ended on'))
+
+    objects = EmployeeManager()
+
+    class Meta:
+        verbose_name = _('employee')
+        verbose_name_plural = _('employees')
+
+    def __unicode__(self):
+        return u"%s" % self.job.contact.full_name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('employee_detail', (), {"id": self.pk})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('employee_edit', (), {"id": self.pk})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('employee_delete', (), {"id": self.pk})
+
 class Timesheet(models.Model):
     """Timesheet model.
     """
     date = models.DateField(verbose_name=_('date'))
-    employee = models.ForeignKey('partners.Contact', verbose_name=_('employee'))
+    employee = models.ForeignKey(Employee, verbose_name=_('employee'))
 
     class Meta:
         ordering = ('-date',)
@@ -93,7 +124,7 @@ class ExpenseVoucher(models.Model):
     """Expense voucher model.
     """
     date = models.DateField(verbose_name=_('date'))
-    employee = models.ForeignKey('partners.Contact', verbose_name=_('employee'))
+    employee = models.ForeignKey(Employee, verbose_name=_('employee'))
 
     class Meta:
         ordering = ('-date',)

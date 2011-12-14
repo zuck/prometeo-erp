@@ -27,6 +27,8 @@ from django.conf import settings
 
 from prometeo.core.models import Commentable
 
+from managers import *
+
 class Contact(models.Model):
     """Contact model.
     """
@@ -130,10 +132,10 @@ class Job(models.Model):
     contact = models.ForeignKey(Contact, verbose_name=_('contact'))
     partner = models.ForeignKey(Partner, verbose_name=_('partner'))
     role = models.CharField(max_length=30, choices=settings.ROLES, default=settings.DEFAULT_ROLE, verbose_name=_('role'))
-    started = models.DateField(null=True, blank=True, verbose_name=_('started on'))
-    ended = models.DateField(null=True, blank=True, verbose_name=_('ended on'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+
+    objects = JobManager()
 
     class Meta:
         verbose_name = _('job')

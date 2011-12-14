@@ -20,26 +20,10 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-import datetime
+from django.db import models
 
-from django.utils.translation import ugettext_lazy as _
-
-EMPLOYMENT_TYPE_CHOICES = (
-    ('FT', _('fixed-term')),
-    ('PT', _('part-time')),
-    ('OE', _('open-ended')),
-)
-
-WORKING_DAY_START = datetime.time(9, 0)
-WORKING_DAY_END = datetime.time(18, 30)
-
-LAUNCH_TIME_START = datetime.time(13, 0)
-LAUNCH_TIME_END = datetime.time(14, 30)
-
-EXPENSE_TYPE_CHOICES = (
-    ('TRV', _('travel')),
-    ('MDC', _('medical')),
-    ('FOD', _('food')),
-    ('CAL', _('call')),
-    ('OTH', _('others')),
-)
+class EmployeeManager(models.Manager):
+    """Custom manager for Employee model.
+    """
+    def get_query_set(self):
+        return super(EmployeeManager, self).get_query_set().filter(job__partner__is_managed=True)

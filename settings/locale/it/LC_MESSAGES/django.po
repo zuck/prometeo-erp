@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-13 11:33+0100\n"
+"POT-Creation-Date: 2011-12-14 12:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,23 +82,35 @@ msgstr "tentativo"
 msgid "cancelled"
 msgstr "cancellato"
 
-#: hr.py:34
+#: hr.py:28
+msgid "fixed-term"
+msgstr "tempo determinato"
+
+#: hr.py:29
+msgid "part-time"
+msgstr ""
+
+#: hr.py:30
+msgid "open-ended"
+msgstr "tempo indeterminato"
+
+#: hr.py:40
 msgid "travel"
 msgstr "viaggio"
 
-#: hr.py:35
+#: hr.py:41
 msgid "medical"
 msgstr "mediche"
 
-#: hr.py:36
+#: hr.py:42
 msgid "food"
 msgstr "pasto"
 
-#: hr.py:37
+#: hr.py:43
 msgid "call"
 msgstr "chiamata"
 
-#: hr.py:38
+#: hr.py:44
 msgid "others"
 msgstr "altro"
 

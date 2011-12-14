@@ -28,8 +28,34 @@ from django.conf import settings
 from prometeo.core.forms import enrich_form
 from prometeo.core.forms.fields import *
 from prometeo.core.forms.widgets import *
+from prometeo.partners.models import Job, Partner
 
 from models import *
+
+class JobForm(forms.ModelForm):
+    """Form for Job data.
+    """
+    class Meta:
+        model = Job
+        widgets = {
+            'contact': SelectAndAddWidget(add_url='/contacts/add'),
+            'partner': SelectAndAddWidget(add_url='/partners/add'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(JobForm, self).__init__(*args, **kwargs)
+        self.fields['partner'].queryset = Partner.objects.filter(is_managed=True)
+
+class EmployeeForm(forms.ModelForm):
+    """Form for Employee data.
+    """
+    class Meta:
+        model = Employee
+        exclude = {'job'}
+        widgets = {
+            'start': DateWidget(),
+            'end': DateWidget(),
+        }
 
 class TimesheetForm(forms.ModelForm):
     """Form for Timesheet data.
@@ -38,7 +64,7 @@ class TimesheetForm(forms.ModelForm):
         model = Timesheet
         widgets = {
             'date': DateWidget(),
-            'employee': SelectAndAddWidget(add_url='contacts/add'),
+            'employee': SelectAndAddWidget(add_url='employees/add'),
         }
 
 class TimesheetEntryForm(forms.ModelForm):
@@ -101,6 +127,8 @@ class ExpenseEntryFormset(_ExpenseEntryFormset):
                     field.required = False
                 self.forms[i+count].fields['DELETE'].initial = True
 
+enrich_form(JobForm)
+enrich_form(EmployeeForm)
 enrich_form(TimesheetForm)
 enrich_form(TimesheetEntryForm)
 enrich_form(ExpenseVoucherForm)

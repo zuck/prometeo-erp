@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-13 11:34+0100\n"
+"POT-Creation-Date: 2011-12-14 12:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,6 +33,7 @@ msgstr "Bacheca personale"
 #: templates/index.html:15 templates/auth/user_detail.html:29
 #: templates/auth/user_list.html:25 templates/elements/month_calendar.html:28
 #: templates/events/event_detail.html:29 templates/events/event_list.html:26
+#: templates/hr/employee_detail.html:25 templates/hr/employee_list.html:21
 #: templates/hr/expensevoucher_detail.html:25
 #: templates/hr/expensevoucher_hardcopies.html:24
 #: templates/hr/expensevoucher_list.html:21
@@ -105,6 +106,7 @@ msgstr "Nessun widget trovato."
 #: templates/documents/hardcopy_delete.html:10
 #: templates/elements/comments.html:25 templates/events/event_delete.html:18
 #: templates/events/event_detail.html:35 templates/filebrowser/delete.html:17
+#: templates/hr/employee_delete.html:18 templates/hr/employee_detail.html:31
 #: templates/hr/expensevoucher_delete.html:18
 #: templates/hr/expensevoucher_detail.html:31
 #: templates/hr/timesheet_delete.html:18 templates/hr/timesheet_detail.html:31
@@ -170,6 +172,7 @@ msgstr "Sei sicuro di voler eliminare questo commento?"
 #: templates/auth/comment_delete.html:25 templates/auth/user_delete.html:26
 #: templates/documents/hardcopy_delete.html:18
 #: templates/events/event_delete.html:26 templates/filebrowser/delete.html:32
+#: templates/hr/employee_delete.html:26
 #: templates/hr/expensevoucher_delete.html:26
 #: templates/hr/timesheet_delete.html:26
 #: templates/knowledge/faq_delete.html:26
@@ -222,6 +225,7 @@ msgid "Profile"
 msgstr "Profilo"
 
 #: templates/auth/user_detail.html:32 templates/events/event_detail.html:32
+#: templates/hr/employee_detail.html:28
 #: templates/hr/expensevoucher_detail.html:28
 #: templates/hr/timesheet_detail.html:28
 #: templates/knowledge/faq_detail.html:33
@@ -254,6 +258,7 @@ msgid "Edit"
 msgstr "Modifica"
 
 #: templates/auth/user_detail.html:38 templates/events/event_detail.html:38
+#: templates/hr/employee_detail.html:34
 #: templates/hr/expensevoucher_detail.html:34
 #: templates/hr/timesheet_detail.html:34
 #: templates/knowledge/faq_detail.html:39
@@ -290,7 +295,7 @@ msgstr "Aggiungi utente"
 #: templates/events/event_edit.html:39 templates/filebrowser/copy.html:26
 #: templates/filebrowser/mkdir.html:26 templates/filebrowser/mkln.html:26
 #: templates/filebrowser/move.html:26 templates/filebrowser/rename.html:26
-#: templates/filebrowser/upload.html:26
+#: templates/filebrowser/upload.html:26 templates/hr/employee_edit.html:45
 #: templates/hr/expensevoucher_edit.html:73
 #: templates/hr/timesheet_edit.html:73 templates/knowledge/faq_edit.html:41
 #: templates/knowledge/poll_edit.html:69
@@ -661,6 +666,22 @@ msgstr "Carica file"
 #: templates/hr/base.html:8
 msgid "Human resources"
 msgstr "Risorse umane"
+
+#: templates/hr/employee_delete.html:25
+msgid "Are you sure you want to delete this employee?"
+msgstr "Sei sicuro di voler eliminare questo dipendente?"
+
+#: templates/hr/employee_edit.html:8 templates/hr/employee_edit.html.py:26
+msgid "Edit employee"
+msgstr "Modifica dipendente"
+
+#: templates/hr/employee_edit.html:8 templates/hr/employee_edit.html.py:28
+msgid "Add employee"
+msgstr "Aggiungi dipendente"
+
+#: templates/hr/employee_list.html:7 templates/hr/employee_list.html.py:14
+msgid "Employees"
+msgstr "Dipendenti"
 
 #: templates/hr/expensevoucher_delete.html:25
 msgid "Are you sure you want to delete this expense voucher?"

@@ -21,14 +21,27 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 from django.shortcuts import get_object_or_404
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 
 from prometeo.core.auth.models import ObjectPermission
 from prometeo.documents.models import Document
+from prometeo.partners.models import Job
 
 from models import *
 
 ## HANDLERS ##
+
+def create_employee(sender, instance, *args, **kwargs):
+    """Creates a new employee record for the given job.
+    """
+    if kwargs['created']:
+        employee = Employee.objects.create(job=instance)
+
+def delete_employee(sender, instance, *args, **kwargs):
+    """Deletes the employee record related to the given job.
+    """
+    if instance.employee:
+        instance.employee.delete()
 
 def update_timesheet_permissions(sender, instance, *args, **kwargs):
     """Updates the permissions assigned to the stakeholders of the given timesheet.
@@ -64,5 +77,7 @@ def update_expensevoucher_permissions(sender, instance, *args, **kwargs):
 
 ## CONNECTIONS ##
 
+post_save.connect(create_employee, Job, dispatch_uid="create_employee")
+pre_delete.connect(delete_employee, Job, dispatch_uid="delete_employee")
 #post_save.connect(update_timesheet_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
 #post_save.connect(update_expensevoucher_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_permissions")

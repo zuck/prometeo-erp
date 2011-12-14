@@ -24,6 +24,13 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('hr.views',
 
+    # Employees.
+    url(r'^employees/$', view='employees.employee_list', name='employee_list'),
+    url(r'^employees/add/$', view='employees.employee_add', name='employee_add'),
+    url(r'^employees/(?P<id>\d+)/$', view='employees.employee_detail', name='employee_detail'),
+    url(r'^employees/(?P<id>\d+)/edit/$', view='employees.employee_edit', name='employee_edit'),
+    url(r'^employees/(?P<id>\d+)/delete/$', view='employees.employee_delete', name='employee_delete'),
+
     # Timesheets.
     url(r'^timesheets/$', view='timesheets.timesheet_list', name='timesheet_list'),
     url(r'^timesheets/add/$', view='timesheets.timesheet_add', name='timesheet_add'),
