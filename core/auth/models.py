@@ -54,7 +54,7 @@ class UserProfile(models.Model):
     timezone = models.CharField(max_length=20, null=True, choices=settings.TIME_ZONES, default=settings.TIME_ZONE, verbose_name=_("timezone"))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
     bookmarks = models.OneToOneField('menus.Menu', null=True, verbose_name=_("bookmarks"))
-    calendar = models.OneToOneField('events.Calendar', null=True, verbose_name=_("calendar"))
+    calendar = models.OneToOneField('calendar.Calendar', null=True, verbose_name=_("calendar"))
     
     def __unicode__(self):
         return self.user.username

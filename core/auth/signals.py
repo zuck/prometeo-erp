@@ -25,7 +25,7 @@ from django.contrib.auth.models import User
 
 from prometeo.core.menus.signals import manage_bookmarks
 from prometeo.core.widgets.signals import manage_dashboard
-from prometeo.core.events.signals import manage_calendar
+from prometeo.core.calendar.signals import manage_calendar
 
 from models import *
 

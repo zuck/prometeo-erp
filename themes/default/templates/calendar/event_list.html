@@ -1,0 +1,39 @@
+{% extends "calendar/base.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Events' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Agenda" %}{% endblock %}
+
+{% block section %}
+{% include 'elements/filterbox.html' %}
+<div class="details">
+    {% regroup object_list by start.date as events_by_date %}
+    {% if events_by_date %}
+    <dl class="events">
+    {% for date in events_by_date %}
+        <dt><h3>{{ date.grouper }}</h3></dt>
+        <dd>
+            <ul>
+            {% for item in date.list %}
+                <li>
+                    <strong>{{ item.start.time }}</strong>
+                    <a title="{{ item.description }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </dd>
+    {% endfor %}
+    </dl>
+    {% else %}
+    <p class="disabled">{% trans "No results found." %}</p>
+    {% endif %}
+    {% include 'elements/paginator.html' %}
+</div>
+{% endblock %}

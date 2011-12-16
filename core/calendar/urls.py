@@ -22,7 +22,7 @@ __version__ = '0.0.5'
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('prometeo.core.events.views',
+urlpatterns = patterns('prometeo.core.calendar.views',
 
     url(r'^events/$', view='event_list', name='event_list'),
     url(r'^events/day/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/$', view='event_day', name='event_day'),
@@ -37,5 +37,5 @@ urlpatterns = patterns('prometeo.core.events.views',
     url(r'^events/(?P<id>\d+)/export/$', view='event_export', name='event_export'),
     url(r'^events/(?P<id>\d+)/edit/$', view='event_edit', name='event_edit'),
     url(r'^events/(?P<id>\d+)/delete/$', view='event_delete', name='event_delete'),
-    url(r'^events/(?P<id>\d+)/timeline/$', 'event_detail', {'template_name': 'events/event_timeline.html'}, 'event_timeline'),
+    url(r'^events/(?P<id>\d+)/timeline/$', 'event_detail', {'template_name': 'calendar/event_timeline.html'}, 'event_timeline'),
 )

@@ -1,7 +1,13 @@
-{% extends "events/event_list.html" %}
+{% extends "calendar/base.html" %}
 
 {% load i18n %}
+{% load breadcrumbs %}
 {% load calendar %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Events' %}
+{% endblock %}
 
 {% block subtitle %}{% trans "Month" %}{% endblock %}
 

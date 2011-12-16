@@ -31,9 +31,9 @@ def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
 
     # Menus.
-    events_menu, is_new = Menu.objects.get_or_create(
-        slug="events_menu",
-        description=_("Main menu for events")
+    calendar_menu, is_new = Menu.objects.get_or_create(
+        slug="calendar_menu",
+        description=_("Main menu for calendar")
     )
 
     event_menu, is_new = Menu.objects.get_or_create(
@@ -42,11 +42,11 @@ def install(sender, **kwargs):
     )
     
     # Links.
-    events_link, is_new = Link.objects.get_or_create(
-        title=_("Events"),
-        slug="events",
-        description=_("Event planning"),
-        url=reverse("event_list"),
+    calendar_link, is_new = Link.objects.get_or_create(
+        title=_("Calendar"),
+        slug="calendar",
+        description=_("Events and tasks planning"),
+        url="{% url event_list %}",
         menu=main_menu
     )
 
@@ -54,35 +54,35 @@ def install(sender, **kwargs):
         title=_("Agenda"),
         slug="events_agenda",
         url="{% url event_list %}",
-        menu=events_menu
+        menu=calendar_menu
     )
 
     events_day_link, is_new = Link.objects.get_or_create(
         title=_("Day"),
         slug="events_day",
         url="{% url event_day current_day.year current_day.month current_day.day %}",
-        menu=events_menu
+        menu=calendar_menu
     )
 
     events_week_link, is_new = Link.objects.get_or_create(
         title=_("Week"),
         slug="events_week",
         url="{% url event_week current_day.year current_day|date:'W' %}",
-        menu=events_menu
+        menu=calendar_menu
     )
 
     events_month_link, is_new = Link.objects.get_or_create(
         title=_("Month"),
         slug="events_month",
         url="{% url event_month current_day.year current_day.month %}",
-        menu=events_menu
+        menu=calendar_menu
     )
 
     events_year_link, is_new = Link.objects.get_or_create(
         title=_("Year"),
         slug="events_year",
         url="{% url event_year current_day.year %}",
-        menu=events_menu
+        menu=calendar_menu
     )
 
     event_dashboard_link, is_new = Link.objects.get_or_create(

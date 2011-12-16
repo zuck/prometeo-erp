@@ -72,9 +72,9 @@ def _current_day(year=None, month=None, day=None, week=None):
 
     return result
 
-@permission_required('events.change_event') 
+@permission_required('calendar.change_event') 
 def event_list(request, year=None, month=None, day=None, page=0, paginate_by=10, **kwargs):
-    """Displays the list of all events for the request user.
+    """Displays the list of all calendar for the request user.
     """
     return filtered_list_detail(
         request,
@@ -88,9 +88,9 @@ def event_list(request, year=None, month=None, day=None, page=0, paginate_by=10,
         **kwargs
     )
 
-@permission_required('events.change_event') 
+@permission_required('calendar.change_event') 
 def event_day(request, year=None, month=None, day=None, **kwargs):
-    """Displays the list of events for the given day.
+    """Displays the list of calendar for the given day.
     """
     current_day = _current_day(year, month, day)
     previous_day = current_day - datetime.timedelta(1)
@@ -106,7 +106,7 @@ def event_day(request, year=None, month=None, day=None, **kwargs):
         month_format="%m",
         allow_empty=True,
         allow_future=True,
-        template_name="events/event_day.html",
+        template_name="calendar/event_day.html",
         extra_context={
             'previous_day': previous_day,
             'next_day': next_day,
@@ -115,9 +115,9 @@ def event_day(request, year=None, month=None, day=None, **kwargs):
         **kwargs
     )
 
-@permission_required('events.change_event') 
+@permission_required('calendar.change_event') 
 def event_week(request, year=None, week=None, **kwargs):
-    """Displays the list of events for the given week.
+    """Displays the list of calendar for the given week.
     """
     current_day = _current_day(year, week=week)
     previous_week = current_day - datetime.timedelta(weeks=1)
@@ -131,7 +131,7 @@ def event_week(request, year=None, week=None, **kwargs):
         date_field="start",
         allow_empty=True,
         allow_future=True,
-        template_name="events/event_week.html",
+        template_name="calendar/event_week.html",
         extra_context={
             'previous_week': previous_week,
             'next_week': next_week,
@@ -140,9 +140,9 @@ def event_week(request, year=None, week=None, **kwargs):
         **kwargs
     )
 
-@permission_required('events.change_event') 
+@permission_required('calendar.change_event') 
 def event_month(request, year=None, month=None, **kwargs):
-    """Displays the list of events for the given month.
+    """Displays the list of calendar for the given month.
     """
     current_day = _current_day(year, month)
     previous_month = current_day - datetime.timedelta(days=30)
@@ -157,7 +157,7 @@ def event_month(request, year=None, month=None, **kwargs):
         month_format="%m",
         allow_empty=True,
         allow_future=True,
-        template_name="events/event_month.html",
+        template_name="calendar/event_month.html",
         extra_context={
             'previous_year': previous_month,
             'next_year': next_month,
@@ -166,9 +166,9 @@ def event_month(request, year=None, month=None, **kwargs):
         **kwargs
     )
 
-@permission_required('events.change_event') 
+@permission_required('calendar.change_event') 
 def event_year(request, year=None, **kwargs):
-    """Displays the list of events for the given year.
+    """Displays the list of calendar for the given year.
     """
     current_day = _current_day(year)
     previous_year = current_day - datetime.timedelta(days=365)
@@ -181,7 +181,7 @@ def event_year(request, year=None, **kwargs):
         date_field="start",
         allow_empty=True,
         allow_future=True,
-        template_name="events/event_year.html",
+        template_name="calendar/event_year.html",
         extra_context={
             'previous_year': previous_year,
             'next_year': next_year,
@@ -190,7 +190,7 @@ def event_year(request, year=None, **kwargs):
         **kwargs
     )
 
-@permission_required('events.change_event', _get_event)
+@permission_required('calendar.change_event', _get_event)
 def event_detail(request, id, **kwargs):
     """Displays an event.
     """
@@ -201,7 +201,7 @@ def event_detail(request, id, **kwargs):
         **kwargs
     )
 
-@permission_required('events.add_event') 
+@permission_required('calendar.add_event') 
 def event_add(request, year=None, month=None, day=None, **kwargs):
     """Adds a new event.
     """
@@ -220,9 +220,9 @@ def event_add(request, year=None, month=None, day=None, **kwargs):
     else:
         form = EventForm(instance=event)
 
-    return render_to_response('events/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
+    return render_to_response('calendar/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
 
-@permission_required('events.change_event', _get_event) 
+@permission_required('calendar.change_event', _get_event) 
 def event_edit(request, id, **kwargs):
     """Edits an event.
     """
@@ -237,9 +237,9 @@ def event_edit(request, id, **kwargs):
     else:
         form = EventForm(instance=event)
 
-    return render_to_response('events/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
+    return render_to_response('calendar/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
 
-@permission_required('events.delete_event', _get_event) 
+@permission_required('calendar.delete_event', _get_event) 
 def event_delete(request, id, **kwargs):
     """Deletes an event.
     """
@@ -247,17 +247,17 @@ def event_delete(request, id, **kwargs):
             request,
             model=Event,
             object_id=id,
-            post_delete_redirect='/events/',
-            template_name='events/event_delete.html',
+            post_delete_redirect='/calendar/',
+            template_name='calendar/event_delete.html',
             **kwargs
         )
 
-@permission_required('events.add_event') 
+@permission_required('calendar.add_event') 
 def event_import(request, **kwargs):
-    """Imports one or more events from an .ics file.
+    """Imports one or more calendar from an .ics file.
     """
     if request.method == 'POST':
-        form = ImportEventsForm(request.POST, request.FILES)
+        form = ImportcalendarForm(request.POST, request.FILES)
         if form.is_valid():
             f = request.FILES['file']
             stream = ""
@@ -279,32 +279,32 @@ def event_import(request, **kwargs):
                         messages.success(request, _("Event \"%s\" has been imported.") % event.title)
                 return redirect_to(request, url=reverse("event_list"))
             except ValueError:
-                messages.error(request, _("Sorry, an error has occurred during importing of events."))
+                messages.error(request, _("Sorry, an error has occurred during importing of calendar."))
     else:
-        form = ImportEventsForm()
+        form = ImportcalendarForm()
 
-    return render_to_response('events/event_import.html', RequestContext(request, {'form': form}))
+    return render_to_response('calendar/event_import.html', RequestContext(request, {'form': form}))
 
-@permission_required('events.change_event', _get_event)
+@permission_required('calendar.change_event', _get_event)
 def event_export(request, id=None, **kwargs):
-    """Exports one or more events as an .ics file.
+    """Exports one or more calendar as an .ics file.
     """
-    filename = "%s-events.ics" % (request.user)
+    filename = "%s-calendar.ics" % (request.user)
 
     queryset = Event.objects.for_user(request.user)
 
     if id:
-        events = [get_object_or_404(queryset, id=id)]
-        filename = u'%s.ics' % slugify(events[0].title)
+        calendar = [get_object_or_404(queryset, id=id)]
+        filename = u'%s.ics' % slugify(calendar[0].title)
     else:
-        events = list(queryset)
+        calendar = list(queryset)
 
     cal = icalendar.Calendar()
     cal.add('prodid', '-//Prometeo ERP//')
     cal.add('method', 'PUBLISH')  # IE/Outlook needs this.
     cal.add('version', '2.0')
 
-    for event in events:
+    for event in calendar:
         evt = icalendar.Event()
 
         evt['uid'] = event.pk

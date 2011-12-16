@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load menu %}
+
+{% block meta_title %}{% trans "Calendar" %}{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{% trans "Calendar" %}</h1>
+    <h2>{% block subtitle %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% if perms.events.add_event %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url event_add %}">{% trans 'Add' %}</a></li>
+        {% endif %}
+        {% if perms.events.add_event %}
+        <li class="import"><a title="{% trans 'Import events from an .ics file' %}" href="{% url event_import %}">{% trans 'Import' %}</a></li>
+        {% endif %}
+        {% if perms.events.change_event %}
+        <li class="export"><a title="{% trans 'Export events as an .ics file' %}" href="{% url event_export_all %}">{% trans 'Export' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="sections">   
+    <div class="menu">
+        {% menu "calendar_menu" %}
+    </div>
+    <div class="section">
+        {% block section %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

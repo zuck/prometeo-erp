@@ -70,17 +70,17 @@ def update_author_event_permissions(sender, instance, *args, **kwargs):
     """Updates the permissions assigned to the author of the given event.
     """
     # Change event.
-    can_change_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_event", "events", "event", instance.pk)
+    can_change_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_event", "calendar", "event", instance.pk)
     can_change_this_event.users.add(instance.author)
     # Delete event.
-    can_delete_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_event", "events", "event", instance.pk)
+    can_delete_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_event", "calendar", "event", instance.pk)
     can_delete_this_event.users.add(instance.author)
 
 def update_attendees_event_permissions(sender, instance, *args, **kwargs):
     """Updates the permissions assigned to the attendees of the given event.
     """
     # Change event.
-    can_change_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_event", "events", "event", instance.pk)
+    can_change_this_event, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_event", "calendar", "event", instance.pk)
     for att in instance.attendees.all():
         can_change_this_event.users.add(att)
 
@@ -213,8 +213,8 @@ post_save.connect(notify_event_created, Event, dispatch_uid="event_created")
 post_change.connect(notify_event_change, Event, dispatch_uid="event_changed")
 post_delete.connect(notify_event_deleted, Event, dispatch_uid="event_deleted")
 
-post_save.connect(notify_comment_created, Comment, dispatch_uid="events_comment_created")
-post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="events_comment_deleted")
+post_save.connect(notify_comment_created, Comment, dispatch_uid="calendar_comment_created")
+post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="calendar_comment_deleted")
 
 manage_stream(Event)
 
