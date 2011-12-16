@@ -20,37 +20,4 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from base import DEBUG, TEMPLATE_CONTEXT_PROCESSORS, MIDDLEWARE_CLASSES
-
-AUTH_PROFILE_MODULE = 'auth.UserProfile'
-
-LOGIN_URL = '/users/login'
-LOGOUT_URL = '/users/logout'
-LOGIN_REDIRECT_URL = '/users/logged/'
-
-LOGIN_REQUIRED_URLS = (
-    r'/(.*)$',
-)
-
-LOGIN_REQUIRED_URLS_EXCEPTIONS = (
-    r'/static/(.*)$',
-    r'/users/login/$',
-    r'/users/register/$',
-    r'/users/activate/(.*)$',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'prometeo.core.auth.context_processors.auth',
-)
-
-MIDDLEWARE_CLASSES += (
-    'prometeo.core.auth.middleware.RequireLoginMiddleware',
-)
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'prometeo.core.auth.backends.ObjectPermissionBackend',
-)
-
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+AUTH_EXPIRATION_DAYS = 2
