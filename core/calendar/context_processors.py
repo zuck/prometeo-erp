@@ -20,18 +20,11 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from django.utils.translation import ugettext_lazy as _
+from datetime import date
 
-from base import TEMPLATE_CONTEXT_PROCESSORS
-
-EVENT_STATUS_CHOICES = (
-    ('TENTATIVE', _('tentative')),
-    ('CONFIRMED', _('confirmed')),
-    ('CANCELLED', _('cancelled')),
-)
-
-EVENT_DEFAULT_STATUS = 'CONFIRMED'
-
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'prometeo.core.calendar.context_processors.today',
-)
+def today(request):
+    """Adds a 'today' date attribute to the request.
+    """
+    return {
+        'today':  date.today(),
+    }

@@ -47,7 +47,8 @@ def install(sender, **kwargs):
         slug="calendar",
         description=_("Events and tasks planning"),
         url="{% url event_list %}",
-        menu=main_menu
+        menu=main_menu,
+        submenu=calendar_menu
     )
 
     events_agenda_link, is_new = Link.objects.get_or_create(
@@ -60,28 +61,28 @@ def install(sender, **kwargs):
     events_day_link, is_new = Link.objects.get_or_create(
         title=_("Day"),
         slug="events_day",
-        url="{% url event_day current_day.year current_day.month current_day.day %}",
+        url="{% url event_day current_day.year|default:today.year current_day.month|default:today.month current_day.day|default:today.day %}",
         menu=calendar_menu
     )
 
     events_week_link, is_new = Link.objects.get_or_create(
         title=_("Week"),
         slug="events_week",
-        url="{% url event_week current_day.year current_day|date:'W' %}",
+        url="{% url event_week current_day.year|default:today.year current_day|default:today|date:'W' %}",
         menu=calendar_menu
     )
 
     events_month_link, is_new = Link.objects.get_or_create(
         title=_("Month"),
         slug="events_month",
-        url="{% url event_month current_day.year current_day.month %}",
+        url="{% url event_month current_day.year|default:today.year current_day.month|default:today.month %}",
         menu=calendar_menu
     )
 
     events_year_link, is_new = Link.objects.get_or_create(
         title=_("Year"),
         slug="events_year",
-        url="{% url event_year current_day.year %}",
+        url="{% url event_year current_day.year|default:today.year %}",
         menu=calendar_menu
     )
 
