@@ -51,7 +51,7 @@ def _get_field_and_value(owner, owner_field):
 
     return rel, value  
 
-@permission_required('addressing.change_address')
+@permission_required('addressing.view_address')
 def address_list(request, template_name, page=0, paginate_by=10, owner=None, owner_field='addresses', **kwargs):
     """Returns the filtered list of [the given owner's] addresses.
     """
@@ -126,7 +126,7 @@ def address_delete(request, object_id, post_delete_redirect, template_name, **kw
         **kwargs
     )
 
-@permission_required('addressing.change_phone_number')
+@permission_required('addressing.view_phonenumber')
 def phone_number_list(request, template_name, page=0, paginate_by=10, owner=None, owner_field='phone_numbers', **kwargs):
     """Returns the filtered list of [the given owner's] phone numbers.
     """
@@ -141,7 +141,7 @@ def phone_number_list(request, template_name, page=0, paginate_by=10, owner=None
     
     return filtered_list_detail(request, queryset, exclude=['id'], template_name=template_name, **kwargs)
 
-@permission_required('addressing.add_phone_number')    
+@permission_required('addressing.add_phonenumber')    
 def phone_number_add(request, owner, post_save_redirect, template_name, owner_field='phone_numbers', **kwargs):
     """Adds a new phone number to the given owner.
     """
@@ -167,7 +167,7 @@ def phone_number_add(request, owner, post_save_redirect, template_name, owner_fi
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.change_phone_number', _get_phone_num)    
+@permission_required('addressing.change_phonenumber', _get_phone_num)    
 def phone_number_edit(request, object_id, post_save_redirect, template_name, **kwargs):
     """Edits a phone number.
     """
@@ -188,7 +188,7 @@ def phone_number_edit(request, object_id, post_save_redirect, template_name, **k
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.delete_phone_number', _get_phone_num)    
+@permission_required('addressing.delete_phonenumber', _get_phone_num)    
 def phone_number_delete(request, object_id, post_delete_redirect, template_name, **kwargs):
     """Deletes a phone number.
     """
@@ -201,7 +201,7 @@ def phone_number_delete(request, object_id, post_delete_redirect, template_name,
         **kwargs
     )
 
-@permission_required('addressing.change_social_profile')
+@permission_required('addressing.view_socialprofile')
 def social_profile_list(request, template_name, page=0, paginate_by=10, owner=None, owner_field='social_profiles', **kwargs):
     """Returns the filtered list of [the given owner's] social profiles.
     """
@@ -216,7 +216,7 @@ def social_profile_list(request, template_name, page=0, paginate_by=10, owner=No
     
     return filtered_list_detail(request, queryset, exclude=['id'], template_name=template_name, **kwargs)
 
-@permission_required('addressing.add_social_profile')    
+@permission_required('addressing.add_socialprofile')    
 def social_profile_add(request, owner, post_save_redirect, template_name, owner_field='social_profiles', **kwargs):
     """Adds a new social profile to the given owner.
     """
@@ -242,7 +242,7 @@ def social_profile_add(request, owner, post_save_redirect, template_name, owner_
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.change_social_profile', _get_social_profile)    
+@permission_required('addressing.change_socialprofile', _get_social_profile)    
 def social_profile_edit(request, object_id, post_save_redirect, template_name, **kwargs):
     """Edits a social profile.
     """
@@ -263,7 +263,7 @@ def social_profile_edit(request, object_id, post_save_redirect, template_name, *
 
     return render_to_response(template_name, RequestContext(request, context))
 
-@permission_required('addressing.delete_social_profile', _get_social_profile)    
+@permission_required('addressing.delete_socialprofile', _get_social_profile)    
 def social_profile_delete(request, object_id, post_delete_redirect, template_name, **kwargs):
     """Deletes a social profile.
     """

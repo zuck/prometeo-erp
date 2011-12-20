@@ -38,7 +38,7 @@ def _get_ticket(request, *args, **kwargs):
     project_code = kwargs.get('project', None)
     return get_object_or_404(Ticket, code=code, project__code=project_code)
 
-@permission_required('projects.change_ticket') 
+@permission_required('projects.view_ticket') 
 def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tickets of a specified project.
     """
@@ -55,7 +55,7 @@ def ticket_list(request, project, page=0, paginate_by=5, **kwargs):
         **kwargs
     )
 
-@permission_required('projects.change_ticket', _get_ticket)    
+@permission_required('projects.view_ticket', _get_ticket)    
 def ticket_detail(request, project, code, **kwargs):
     """Show ticket details.
     """

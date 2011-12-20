@@ -59,7 +59,7 @@ def document_print(request, id, lang=None, template_name=None, **kwargs):
     set_language(request, old_lang)
     return response
 
-@permission_required('documents.change_document', _get_document) 
+@permission_required('documents.view_document', _get_document) 
 def hardcopy_list(request, id, page=0, paginate_by=10, **kwargs):
     """Displays the list of all hard copies of the given document.
     """

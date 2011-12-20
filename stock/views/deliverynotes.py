@@ -47,7 +47,7 @@ def _get_deliverynote(request, *args, **kwargs):
         return get_object_or_404(DeliveryNote, id=id)
     return None
 
-@permission_required('stock.change_deliverynote')
+@permission_required('stock.view_deliverynote')
 def deliverynote_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a delivery note list.
     """
@@ -87,7 +87,7 @@ def deliverynote_add(request, **kwargs):
 
     return render_to_response('stock/deliverynote_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
-@permission_required('stock.change_deliverynote', _get_deliverynote)     
+@permission_required('stock.view_deliverynote', _get_deliverynote)     
 def deliverynote_detail(request, id, page=None, **kwargs):
     """Shows delivery note details.
     """
@@ -142,7 +142,7 @@ def deliverynote_delete(request, id, **kwargs):
         **kwargs
     )
 
-@permission_required('stock.change_deliverynote', _get_deliverynote)     
+@permission_required('stock.view_deliverynote', _get_deliverynote)     
 def deliverynote_hardcopies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows delivery note hard copies.
     """

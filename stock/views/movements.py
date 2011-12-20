@@ -41,7 +41,7 @@ def _get_movement(request, *args, **kwargs):
         return get_object_or_404(Movement, id=id)
     return None
 
-@permission_required('stock.change_movement')
+@permission_required('stock.view_movement')
 def movement_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a movement list.
     """
@@ -76,7 +76,7 @@ def movement_add(request, **kwargs):
 
     return render_to_response('stock/movement_edit.html', RequestContext(request, {'form': form, 'pform': pform, 'object': movement}))
 
-@permission_required('stock.change_movement', _get_movement)     
+@permission_required('stock.view_movement', _get_movement)     
 def movement_detail(request, id, page=None, **kwargs):
     """Shows movement details.
     """

@@ -39,7 +39,7 @@ def _get_poll(request, *args, **kwargs):
         return get_object_or_404(Poll, id=id)
     return None
 
-@permission_required('knowledge.change_poll')
+@permission_required('knowledge.view_poll')
 def poll_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all polls.
     """
@@ -72,7 +72,7 @@ def poll_add(request, **kwargs):
 
     return render_to_response('knowledge/poll_edit.html', RequestContext(request, {'form': form, 'formset': formset, 'object': poll}))
 
-@permission_required('knowledge.change_poll', _get_poll)
+@permission_required('knowledge.view_poll', _get_poll)
 def poll_detail(request, id, **kwargs):
     """Displays the selected poll.
     """

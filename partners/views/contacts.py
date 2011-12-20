@@ -45,7 +45,7 @@ def _get_contact(request, *args, **kwargs):
         return get_object_or_404(Contact, id=id)
     return None
 
-@permission_required('partners.change_contact')
+@permission_required('partners.view_contact')
 def contact_list(request, page=0, paginate_by=10, **kwargs):
     """Show all registered contacts.
     """
@@ -68,7 +68,7 @@ def contact_add(request, **kwargs):
         template_name='partners/contact_edit.html'
     )
 
-@permission_required('partners.change_contact', _get_contact)     
+@permission_required('partners.view_contact', _get_contact)     
 def contact_detail(request, id, page=None, **kwargs):
     """Shows contact details.
     """
@@ -107,7 +107,7 @@ def contact_delete(request, id, **kwargs):
             **kwargs
         )
 
-@permission_required('partners.change_contact', _get_contact)   
+@permission_required('partners.view_contact', _get_contact)   
 def contact_addresses(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the contact's addresses.
     """
@@ -162,7 +162,7 @@ def contact_delete_address(request, contact_id, id, **kwargs):
         extra_context={'owner': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact', _get_contact)  
+@permission_required('partners.view_contact', _get_contact)  
 def contact_phones(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the contact's phone numbers.
     """
@@ -217,7 +217,7 @@ def contact_delete_phone(request, contact_id, id, **kwargs):
         extra_context={'owner': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_contact', _get_contact)  
+@permission_required('partners.view_contact', _get_contact)  
 def contact_profiles(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the contact's social profiles.
     """
@@ -272,8 +272,8 @@ def contact_delete_profile(request, contact_id, id, **kwargs):
         extra_context={'owner': contact, 'owner_class': Contact.__name__}
     )
 
-@permission_required('partners.change_partner')
-@permission_required('partners.change_contact', _get_contact)    
+@permission_required('partners.view_partner')
+@permission_required('partners.view_contact', _get_contact)    
 def contact_jobs(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the contact's jobs.
     """

@@ -41,7 +41,7 @@ def _get_page(request, *args, **kwargs):
     except:
         return None
 
-@permission_required('knowledge.change_wikipage')
+@permission_required('knowledge.view_wikipage')
 def page_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all wiki pages.
     """
@@ -54,7 +54,7 @@ def page_list(request, page=0, paginate_by=5, **kwargs):
         **kwargs
     )
 
-@permission_required('knowledge.change_wikipage', _get_page)        
+@permission_required('knowledge.view_wikipage', _get_page)        
 def page_detail(request, slug, **kwargs):
     """Displays the selected page.
     """
@@ -91,7 +91,7 @@ def page_edit(request, slug=None, **kwargs):
 
     return render_to_response('knowledge/wikipage_edit.html', RequestContext(request, {'form': form, 'object': page}))
 
-@permission_required('knowledge.change_wikipage', _get_page)        
+@permission_required('knowledge.view_wikipage', _get_page)        
 def page_revisions(request, slug, page=0, paginate_by=10, **kwargs):
     """Displays the list of revisions for the selected page.
     """
@@ -107,7 +107,7 @@ def page_revisions(request, slug, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('knowledge.change_wikipage', _get_page)    
+@permission_required('knowledge.view_wikipage', _get_page)    
 def page_revision_detail(request, slug, created, **kwargs):
     """Displays the revision details.
     """

@@ -44,7 +44,7 @@ def _get_warehouse(request, *args, **kwargs):
         return get_object_or_404(Warehouse, id=id)
     return None
 
-@permission_required('stock.change_warehouse')
+@permission_required('stock.view_warehouse')
 def warehouse_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a warehouse list.
     """
@@ -75,7 +75,7 @@ def warehouse_add(request, **kwargs):
 
     return render_to_response('stock/warehouse_edit.html', RequestContext(request, {'form': form, 'object': warehouse}))
 
-@permission_required('stock.change_warehouse', _get_warehouse)     
+@permission_required('stock.view_warehouse', _get_warehouse)     
 def warehouse_detail(request, id, page=None, **kwargs):
     """Shows warehouse details.
     """
@@ -115,7 +115,7 @@ def warehouse_delete(request, id, **kwargs):
         **kwargs
     )
 
-@permission_required('stock.change_warehouse', _get_warehouse) 
+@permission_required('stock.view_warehouse', _get_warehouse) 
 def warehouse_movements(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the warehouse's movements.
     """
@@ -133,6 +133,7 @@ def warehouse_movements(request, id, page=0, paginate_by=10, **kwargs):
     )
 
 @permission_required('stock.change_warehouse', _get_warehouse)
+@permission_required('stock.add_movement')
 def warehouse_add_ingoing_movement(request, id, **kwargs):
     """Adds a new movement to the given warehouse.
     """
@@ -154,6 +155,7 @@ def warehouse_add_ingoing_movement(request, id, **kwargs):
     return render_to_response('stock/warehouse_edit_movement.html', RequestContext(request, {'form': form, 'pform': pform, 'object': movement}))
 
 @permission_required('stock.change_warehouse', _get_warehouse)
+@permission_required('stock.add_movement')
 def warehouse_add_outgoing_movement(request, id, **kwargs):
     """Adds a new movement from the given warehouse.
     """

@@ -33,9 +33,9 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
 
 from prometeo.core.utils import clean_referer
+from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
 
 from models import *
@@ -101,6 +101,14 @@ def _get_query(query_string, search_fields):
             query = query & or_query
     return query
 
+def _get_category(request, *args, **kwargs):
+    slug = kwargs.get('slug', None)
+    return get_object_or_404(Category, slug=slug)
+
+def _get_tag(request, *args, **kwargs):
+    slug = kwargs.get('slug', None)
+    return get_object_or_404(Tag, slug=slug)
+
 def search(request, query_string="", page=0, paginate_by=10, **kwargs):
     """Displays the list of results for the current search query.
     """
@@ -130,7 +138,7 @@ def search(request, query_string="", page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('taxonomy.change_category') 
+@permission_required('taxonomy.view_category') 
 def category_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all categories.
     """
@@ -158,7 +166,7 @@ def category_add(request, **kwargs):
         template_name='taxonomy/category_edit.html'
     )
 
-@permission_required('taxonomy.change_category') 
+@permission_required('taxonomy.view_category', _get_category) 
 def category_detail(request, slug, page=0, paginate_by=10, **kwargs):
     """Displays the selected category.
     """
@@ -178,7 +186,7 @@ def category_detail(request, slug, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('taxonomy.change_category')    
+@permission_required('taxonomy.change_category', _get_category)    
 def category_edit(request, slug, **kwargs):
     """Edits a category.
     """
@@ -189,7 +197,7 @@ def category_edit(request, slug, **kwargs):
         template_name='taxonomy/category_edit.html'
     )
 
-@permission_required('taxonomy.delete_category')     
+@permission_required('taxonomy.delete_category', _get_category)     
 def category_delete(request, slug, **kwargs):
     """Deletes a category.
     """
@@ -202,7 +210,7 @@ def category_delete(request, slug, **kwargs):
             **kwargs
         )
 
-@permission_required('taxonomy.change_tag') 
+@permission_required('taxonomy.view_tag') 
 def tag_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tags.
     """
@@ -230,7 +238,7 @@ def tag_add(request, **kwargs):
         template_name='taxonomy/tag_edit.html'
     )
 
-@permission_required('taxonomy.change_tag')  
+@permission_required('taxonomy.view_tag', _get_tag)  
 def tag_detail(request, slug, page=0, paginate_by=10, **kwargs):
     """Displays the selected tag.
     """
@@ -250,7 +258,7 @@ def tag_detail(request, slug, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('taxonomy.change_tag')    
+@permission_required('taxonomy.change_tag', _get_tag)    
 def tag_edit(request, slug, **kwargs):
     """Edits a tag.
     """
@@ -261,7 +269,7 @@ def tag_edit(request, slug, **kwargs):
         template_name='taxonomy/tag_edit.html'
     )
 
-@permission_required('taxonomy.delete_tag')     
+@permission_required('taxonomy.delete_tag', _get_tag)     
 def tag_delete(request, slug, **kwargs):
     """Deletes a tag.
     """

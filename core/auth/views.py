@@ -51,7 +51,7 @@ def user_logged(request):
     lang = request.user.get_profile().language
     return set_language(request, lang)
 
-@permission_required('auth.change_user') 
+@permission_required('auth.view_user') 
 def user_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all active users.
     """
@@ -65,7 +65,7 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('auth.change_user', _get_user)  
+@permission_required('auth.view_user', _get_user)  
 def user_detail(request, username, **kwargs):
     """Displays a user's profile.
     """

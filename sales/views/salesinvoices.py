@@ -47,7 +47,7 @@ def _get_salesinvoice(request, *args, **kwargs):
         return get_object_or_404(SalesInvoice, id=id)
     return None
 
-@permission_required('sales.change_salesinvoice')
+@permission_required('sales.view_salesinvoice')
 def salesinvoice_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a sales invoice list.
     """
@@ -87,7 +87,7 @@ def salesinvoice_add(request, **kwargs):
 
     return render_to_response('sales/salesinvoice_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
-@permission_required('sales.change_salesinvoice', _get_salesinvoice)     
+@permission_required('sales.view_salesinvoice', _get_salesinvoice)     
 def salesinvoice_detail(request, id, page=None, **kwargs):
     """Shows sales invoice details.
     """
@@ -142,7 +142,7 @@ def salesinvoice_delete(request, id, **kwargs):
         **kwargs
     )
 
-@permission_required('sales.change_salesinvoice', _get_salesinvoice)     
+@permission_required('sales.view_salesinvoice', _get_salesinvoice)     
 def salesinvoice_hardcopies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows sales invoice hard copies.
     """

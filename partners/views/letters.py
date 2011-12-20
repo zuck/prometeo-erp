@@ -47,7 +47,7 @@ def _get_letter(request, *args, **kwargs):
         return get_object_or_404(Letter, id=id)
     return None
 
-@permission_required('partners.change_letter')
+@permission_required('partners.view_letter')
 def letter_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a letter list.
     """
@@ -83,7 +83,7 @@ def letter_add(request, **kwargs):
 
     return render_to_response('partners/letter_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'object': doc}))
 
-@permission_required('partners.change_letter', _get_letter)     
+@permission_required('partners.view_letter', _get_letter)     
 def letter_detail(request, id, page=None, **kwargs):
     """Shows letter details.
     """
@@ -134,7 +134,7 @@ def letter_delete(request, id, **kwargs):
         **kwargs
     )
 
-@permission_required('partners.change_letter', _get_letter)     
+@permission_required('partners.view_letter', _get_letter)     
 def letter_hardcopies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows letter hard copies.
     """

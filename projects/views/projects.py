@@ -37,7 +37,7 @@ def _get_project(request, *args, **kwargs):
     code = kwargs.get('code', None)
     return get_object_or_404(Project, code=code)
 
-@permission_required('projects.change_project') 
+@permission_required('projects.view_project') 
 def project_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all published projects.
     """
@@ -50,7 +50,7 @@ def project_list(request, page=0, paginate_by=5, **kwargs):
         **kwargs
     )   
     
-@permission_required('projects.change_project', _get_project) 
+@permission_required('projects.view_project', _get_project) 
 def project_detail(request, code, **kwargs):
     """Displays the selected project.
     """

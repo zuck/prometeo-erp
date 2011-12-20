@@ -43,7 +43,7 @@ def _get_product(request, *args, **kwargs):
         return get_object_or_404(Product, id=id)
     return None
 
-@permission_required('products.change_product')
+@permission_required('products.view_product')
 def product_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a product list.
     """
@@ -74,7 +74,7 @@ def product_add(request, **kwargs):
 
     return render_to_response('products/product_edit.html', RequestContext(request, {'form': form, 'object': product}))
 
-@permission_required('products.change_product', _get_product)     
+@permission_required('products.view_product', _get_product)     
 def product_detail(request, id, page=None, **kwargs):
     """Shows product details.
     """
@@ -114,7 +114,7 @@ def product_delete(request, id, **kwargs):
         **kwargs
     )
 
-@permission_required('products.change_product', _get_product) 
+@permission_required('products.view_product', _get_product) 
 def product_supplies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the product's supplies.
     """
@@ -148,7 +148,7 @@ def product_add_supply(request, id, **kwargs):
 
     return render_to_response('products/product_edit_supply.html', RequestContext(request, {'form': form, 'object': supply}))
 
-@permission_required('products.change_product', _get_product)
+@permission_required('products.view_product', _get_product)
 def product_supply_detail(request, product_id, id, **kwargs):
     """Show details of the given product supply.
     """

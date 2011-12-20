@@ -40,7 +40,7 @@ def _get_bankaccount(request, *args, **kwargs):
         return get_object_or_404(BankAccount, id=id)
     return None
 
-@permission_required('sales.change_bankaccount')
+@permission_required('sales.view_bankaccount')
 def bankaccount_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a bank account list.
     """
@@ -64,7 +64,7 @@ def bankaccount_add(request, **kwargs):
         template_name='sales/bankaccount_edit.html'
     )
 
-@permission_required('sales.change_bankaccount', _get_bankaccount)     
+@permission_required('sales.view_bankaccount', _get_bankaccount)     
 def bankaccount_detail(request, id, page=None, **kwargs):
     """Shows bank account details.
     """

@@ -38,7 +38,7 @@ def _get_milestone(request, *args, **kwargs):
     milestone_code = kwargs.get('code', None)
     return get_object_or_404(Milestone, code=milestone_code, project__code=project_code)
 
-@permission_required('projects.change_milestone') 
+@permission_required('projects.view_milestone') 
 def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
     """Displays the list of all milestones of a specified project.
     """
@@ -53,7 +53,7 @@ def milestone_list(request, project, page=0, paginate_by=5, **kwargs):
         **kwargs
     )
  
-@permission_required('projects.change_milestone', _get_milestone)    
+@permission_required('projects.view_milestone', _get_milestone)    
 def milestone_detail(request, project, code, **kwargs):
     """Show milestone details.
     """
@@ -143,8 +143,8 @@ def milestone_reopen(request, project, code, **kwargs):
 
     return redirect_to(request, permanent=False, url=milestone.get_absolute_url())
 
-@permission_required('projects.change_milestone', _get_milestone)
-@permission_required('projects.change_ticket')  
+@permission_required('projects.view_milestone', _get_milestone)
+@permission_required('projects.view_ticket')  
 def milestone_tickets(request, project, code, page=0, paginate_by=5, **kwargs):
     """Displays the list of all tickets of a specified milestone.
     """

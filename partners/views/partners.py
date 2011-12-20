@@ -44,7 +44,7 @@ def _get_partner(request, *args, **kwargs):
         return get_object_or_404(Partner, id=id)
     return None
 
-@permission_required('partners.change_partner')
+@permission_required('partners.view_partner')
 def partner_list(request, page=0, paginate_by=10, **kwargs):
     """Shows a partner list.
     """
@@ -80,7 +80,7 @@ def partner_add(request, **kwargs):
 
     return render_to_response('partners/partner_edit.html', RequestContext(request, {'form': form, 'object': partner}))
 
-@permission_required('partners.change_partner', _get_partner)     
+@permission_required('partners.view_partner', _get_partner)     
 def partner_detail(request, id, page=None, **kwargs):
     """Shows partner details.
     """
@@ -120,7 +120,7 @@ def partner_delete(request, id, **kwargs):
         **kwargs
     )
 
-@permission_required('partners.change_partner', _get_partner) 
+@permission_required('partners.view_partner', _get_partner) 
 def partner_addresses(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's addresses.
     """
@@ -175,7 +175,7 @@ def partner_delete_address(request, partner_id, id, **kwargs):
         extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
-@permission_required('partners.change_partner', _get_partner)  
+@permission_required('partners.view_partner', _get_partner)  
 def partner_phones(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's phone numbers.
     """
@@ -230,7 +230,7 @@ def partner_delete_phone(request, partner_id, id, **kwargs):
         extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
-@permission_required('partners.change_partner', _get_partner)  
+@permission_required('partners.view_partner', _get_partner)  
 def partner_profiles(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's social profiles.
     """
@@ -285,8 +285,8 @@ def partner_delete_profile(request, partner_id, id, **kwargs):
         extra_context={'owner': partner, 'owner_class': Partner.__name__}
     )
 
-@permission_required('partners.change_partner', _get_partner)
-@permission_required('partners.change_contact')    
+@permission_required('partners.view_partner', _get_partner)
+@permission_required('partners.view_contact')    
 def partner_contacts(request, id, page=0, paginate_by=10, **kwargs):
     """Shows the partner's contacts.
     """

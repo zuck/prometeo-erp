@@ -46,7 +46,7 @@ def _get_timesheet(request, *args, **kwargs):
 def _get_timesheetentry(request, *args, **kwargs):
     return get_object_or_404(TimesheetEntry, timesheet__id=kwargs.get('timesheet_id', None), id=kwargs.get('id', None))
 
-@permission_required('hr.change_timesheet') 
+@permission_required('hr.view_timesheet') 
 def timesheet_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered timesheets.
     """
@@ -60,7 +60,7 @@ def timesheet_list(request, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('hr.change_timesheet', _get_timesheet)  
+@permission_required('hr.view_timesheet', _get_timesheet)  
 def timesheet_detail(request, id, **kwargs):
     """Displays a timesheet.
     """

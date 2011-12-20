@@ -45,6 +45,7 @@ def _get_notification(request, *args, **kwargs):
     return get_object_or_404(Notification, user__username=username, id=id)
 
 @permission_required('auth.change_user', _get_user)
+@permission_required('notifications.view_notification')
 def notification_list(request, username, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered notifications.
     """
@@ -76,7 +77,7 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
     )
 
 @permission_required('auth.change_user', _get_user)
-@permission_required('notifications.change_notification', _get_notification)
+@permission_required('notifications.view_notification', _get_notification)
 def notification_detail(request, username, id, **kwargs):
     """Displays the details of the selected notification.
     """

@@ -38,7 +38,7 @@ from ..forms import *
 def _get_employee(request, *args, **kwargs):
     return get_object_or_404(Employee, id=kwargs.get('id', None))
 
-@permission_required('hr.change_employee') 
+@permission_required('hr.view_employee') 
 def employee_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered employees.
     """
@@ -51,7 +51,7 @@ def employee_list(request, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('hr.change_employee', _get_employee)  
+@permission_required('hr.view_employee', _get_employee)  
 def employee_detail(request, id, **kwargs):
     """Displays a employee.
     """

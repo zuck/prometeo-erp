@@ -39,7 +39,7 @@ def _get_faq(request, *args, **kwargs):
         return get_object_or_404(Faq, id=id)
     return None
 
-@permission_required('knowledge.change_faq')
+@permission_required('knowledge.view_faq')
 def faq_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all FAQs.
     """
@@ -69,7 +69,7 @@ def faq_add(request, **kwargs):
 
     return render_to_response('knowledge/faq_edit.html', RequestContext(request, {'form': form, 'object': faq}))
 
-@permission_required('knowledge.change_faq', _get_faq)    
+@permission_required('knowledge.view_faq', _get_faq)    
 def faq_detail(request, id, **kwargs):
     """Displays the given FAQ.
     """

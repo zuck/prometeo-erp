@@ -40,7 +40,7 @@ from forms import *
 def _get_task(request, *args, **kwargs):
     return get_object_or_404(Task, id=kwargs.get('id', None))
 
-@permission_required('todo.change_task') 
+@permission_required('todo.view_task') 
 def task_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered tasks.
     """
@@ -53,7 +53,7 @@ def task_list(request, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('todo.change_task') 
+@permission_required('todo.view_task') 
 def unplanned_task_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered tasks.
     """
@@ -67,7 +67,7 @@ def unplanned_task_list(request, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('todo.change_task', _get_task)
+@permission_required('todo.view_task', _get_task)
 def task_detail(request, id, **kwargs):
     """Displays a task.
     """

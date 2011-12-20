@@ -46,7 +46,7 @@ def _get_expensevoucher(request, *args, **kwargs):
 def _get_expenseentry(request, *args, **kwargs):
     return get_object_or_404(ExpenseEntry, voucher__id=kwargs.get('voucher_id', None), id=kwargs.get('id', None))
 
-@permission_required('hr.change_expensevoucher') 
+@permission_required('hr.view_expensevoucher') 
 def expensevoucher_list(request, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered expensevouchers.
     """
@@ -60,7 +60,7 @@ def expensevoucher_list(request, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('hr.change_expensevoucher', _get_expensevoucher)  
+@permission_required('hr.view_expensevoucher', _get_expensevoucher)  
 def expensevoucher_detail(request, id, **kwargs):
     """Displays a expensevoucher.
     """
@@ -135,7 +135,7 @@ def expensevoucher_delete(request, id, **kwargs):
             **kwargs
         )
 
-@permission_required('hr.change_expensevoucher', _get_expensevoucher)     
+@permission_required('hr.view_expensevoucher', _get_expensevoucher)     
 def expensevoucher_hardcopies(request, id, page=0, paginate_by=10, **kwargs):
     """Shows expensevoucher hard copies.
     """
