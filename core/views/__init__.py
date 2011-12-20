@@ -27,12 +27,11 @@ from django.conf import settings
 
 from prometeo.core.utils import filter_objects
 
-def set_language(request, lang):
+def set_language(request, lang, next=None):
     """Sets the current language.
     """
-    next = request.REQUEST.get('next', None)
     if not next:
-        next = request.META.get('HTTP_REFERER', None)
+        next = request.REQUEST.get('next', None)
     if not next:
         next = '/'
     response = HttpResponseRedirect(next)
