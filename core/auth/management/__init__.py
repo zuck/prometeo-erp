@@ -21,8 +21,10 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_syncdb
+from django.db.models.signals import post_syncdb, post_save
 from django.utils.translation import ugettext_noop as _
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Permission
 
 from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
@@ -149,4 +151,12 @@ def install(sender, **kwargs):
     
     post_syncdb.disconnect(install)
 
+def add_view_permission(sender, instance, **kwargs):
+    """Adds a view permission for each new ContentType instance.
+    """
+    if isinstance(instance, ContentType):
+        codename = "view_%s" % instance.model
+        Permission.objects.get_or_create(content_type=instance, codename=codename, name="Can view %s" % instance.name)
+
 post_syncdb.connect(install)
+post_save.connect(add_view_permission, ContentType)
