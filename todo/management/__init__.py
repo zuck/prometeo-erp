@@ -24,6 +24,7 @@ from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
 from prometeo.core.menus.models import *
+from prometeo.core.notifications.models import Signature
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
@@ -56,6 +57,22 @@ def install(sender, **kwargs):
         slug="unplanned_tasks",
         url="{% url unplanned_task_list %}",
         menu=todo_menu
+    )
+
+    # Signatures.
+    task_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Task created"),
+        slug="task-created"
+    )
+
+    task_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Task changed"),
+        slug="task-changed"
+    )
+
+    task_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Task deleted"),
+        slug="task-deleted"
     )
     
     post_syncdb.disconnect(install)
