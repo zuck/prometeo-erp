@@ -36,6 +36,10 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ['suppliers', 'dashboard', 'stream']
+        widgets = {
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add'),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add'),
+        }
 
 class ProductEntryForm(forms.ModelForm):
     """Form for product entry data.
