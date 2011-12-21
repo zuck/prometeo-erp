@@ -54,6 +54,7 @@ def _register_followers(instance):
     """
     for stream in _get_streams(instance):
         try:
+            register_follower_to_stream(instance.author, stream)
             register_follower_to_stream(instance.assignee, stream)
         except:
             pass
@@ -101,11 +102,11 @@ def notify_object_created(sender, instance, *args, **kwargs):
         }
         backlink = instance.get_absolute_url()
 
-        if isinstance(instance, Partner) and instance.assignee:
+        if isinstance(instance, Partner):
             title = _("%(class)s %(name)s created by %(author)s")
             context_pairs.update({
-                "author": "%s" % instance.assignee,
-                "author_link": instance.assignee.get_absolute_url()
+                "author": "%s" % instance.author,
+                "author_link": instance.author.get_absolute_url()
             })
 
         elif isinstance(instance, Job):
