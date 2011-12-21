@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load region %}
 
 {% block title %}
 <div class="title">
@@ -16,9 +15,8 @@
     </ul>
 </div>
 <div class="details">
-    {% region user.get_profile.dashboard.slug %}
-    {% if not user.get_profile.dashboard.widgets.all %}
-    <p class="disabled">{% trans "No widgets found." %}</p>
-    {% endif %}
+    {% with dashboard=user.get_profile.dashboard %}
+    {% include "elements/dashboard.html" %}
+    {% endwith %}
 </div>
 {% endblock %}

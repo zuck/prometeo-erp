@@ -1237,7 +1237,20 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .properties td .yes, #main .properties td .no { margin: 0; }
 
-#main .widget { width: 814px; }
+#main .dashboard {
+    clear: both;
+    float: left;
+    width: 808px;
+}
+
+#main .widget {
+    float: left;
+    width: 387px;
+    margin: 0 15px 10px 0;
+    border: 1px solid #c0c0c0;
+}
+
+#main .altwidget { float: right; }
 
 #main .widget .title {
     width: 367px;
@@ -1256,15 +1269,6 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .widget .title h2 { color: #c0c0c0; }
 
-#main .widget .wrapper, #main .widget .wrapper-altrow {
-    width: 387px;
-    margin: 10px 20px 0 0;
-}
-
-#main .widget .wrapper { float: left; }
-
-#main .widget .wrapper-altrow { float: right; }
-
 #main .widget .actions {
     position: relative;
     float: right;
@@ -1272,6 +1276,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-bottom: -32px;
     margin-right: 5px;
 }
+
+#main .text-widget-template .body { padding: 10px; }
 
 #main .milestones .actions {
     position: relative;
