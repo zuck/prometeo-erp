@@ -20,38 +20,34 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from base import DEBUG, TEMPLATE_CONTEXT_PROCESSORS, MIDDLEWARE_CLASSES
+# Inspired by http://stackoverflow.com/a/7469395/1063729
 
-AUTH_PROFILE_MODULE = 'auth.UserProfile'
+class _Singleton(type):
+    """Singleton pattern.
+    """
+    def __init__(cls, name, bases, dicts):
+        cls.instance = None
 
-LOGIN_URL = '/users/login'
-LOGOUT_URL = '/users/logout'
-LOGIN_REDIRECT_URL = '/users/logged/'
+    def __call__(cls, *args, **kwargs):
+        if cls.instance is None:
+            cls.instance = super(_Singleton, cls).__call__(*args, **kwargs)
+        return cls.instance
 
-LOGIN_REQUIRED_URLS = (
-    r'/(.*)$',
-)
+class LoggedInUserCache(object):
+    """Stores the current user as a member attribute of a singleton.
+    """
+    __metaclass__ = _Singleton
 
-LOGIN_REQUIRED_URLS_EXCEPTIONS = (
-    r'/static/(.*)$',
-    r'/users/login/$',
-    r'/users/register/$',
-    r'/users/activate/(.*)$',
-)
+    user = None
 
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'prometeo.core.auth.context_processors.auth',
-)
+    def set_user(self, request):
+        if request.user.is_authenticated():
+            self.user = request.user
 
-MIDDLEWARE_CLASSES += (
-    'prometeo.core.auth.middleware.RequireLoginMiddleware',
-    'prometeo.core.auth.middleware.LoggedInUserCacheMiddleware',
-)
+    @property
+    def current_user(self):
+        return self.user
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'prometeo.core.auth.backends.ObjectPermissionBackend',
-)
-
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    @property
+    def has_user(self):
+        return user is not None

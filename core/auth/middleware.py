@@ -25,6 +25,8 @@ import re
 from django.conf import settings  
 from django.contrib.auth.decorators import login_required
 
+from prometeo.core.auth.cache import LoggedInUserCache
+
 # Inspired by http://www.djangosnippets.org/snippets/1220/
 
 class RequireLoginMiddleware(object):
@@ -64,3 +66,15 @@ class RequireLoginMiddleware(object):
             if url.match(request.path): return login_required(view_func)(request,*view_args,**view_kwargs)
         # Explicitly return None for all non-matching requests
         return None
+
+# Inspired by http://stackoverflow.com/a/7469395/1063729
+
+class LoggedInUserCacheMiddleware(object):
+    """Initialize the user attribute of the LoggedInUserCache class.
+    """
+    def process_request(self, request):
+        logged_in_user = LoggedInUserCache()
+        logged_in_user.set_user(request)
+
+        return None
+
