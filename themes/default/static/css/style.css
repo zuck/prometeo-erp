@@ -1237,6 +1237,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .properties td .yes, #main .properties td .no { margin: 0; }
 
+#main .widget { width: 814px; }
+
 #main .widget .title {
     width: 367px;
     padding: 5px 10px;
@@ -1255,10 +1257,13 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .widget .title h2 { color: #c0c0c0; }
 
 #main .widget .wrapper, #main .widget .wrapper-altrow {
-    float: left;
     width: 387px;
     margin: 10px 20px 0 0;
 }
+
+#main .widget .wrapper { float: left; }
+
+#main .widget .wrapper-altrow { float: right; }
 
 #main .widget .actions {
     position: relative;
