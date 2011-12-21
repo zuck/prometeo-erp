@@ -32,7 +32,7 @@
 
 {% block main %}
 {% if object.pk %}
-<form method="post" action="{% url project_edit object.slug %}">
+<form method="post" action="{% url project_edit object.code %}">
 {% else %}
 <form method="post" action="{% url project_add %}">
 {% endif %}
