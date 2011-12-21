@@ -58,6 +58,7 @@ class Stream(models.Model):
     """Stream model.
     """
     slug = models.SlugField(_('slug'), max_length=100, unique=True)
+    linked_streams = models.ManyToManyField('self', null=True, blank=True, symmetrical=False, verbose_name=_('linked streams'))
     followers = models.ManyToManyField('auth.User', null=True, verbose_name=_('followers'))
     
     class Meta:

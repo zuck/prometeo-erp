@@ -20,8 +20,6 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from datetime import datetime
-
 from django.db import models
 from django.utils.translation import ugettext_noop as _
 import django.dispatch
@@ -71,6 +69,20 @@ def notify_changes(sender, instance, *args, **kwargs):
         except AttributeError:
             pass
 
+def forward_activity(sender, instance, action, reverse, model, pk_set, **kwargs):
+    """Forwards a new activity to all the linked streams.
+    """
+    print sender, instance, action, reverse, model, pk_set
+
+    if not isinstance(instance, Activity):
+        return
+
+    if action == "post_add":
+        for stream_id in pk_set:
+            stream = Stream.objects.get(id=stream_id)
+            for s in stream.linked_streams.all():
+                s.activity_set.add(instance)            
+
 def notify_activity(sender, instance, action, *args, **kwargs):
     """Notifies a new activity to all the followers of the related streams.
     """
@@ -87,20 +99,13 @@ def notify_activity(sender, instance, action, *args, **kwargs):
         for subscription in subscriptions:
             for stream in streams:
                 if subscription.user in stream.followers.all():
-                    notifications = Notification.objects.filter(
+                    notification, is_new = Notification.objects.get_or_create(
                         signature=subscription.signature,
                         user=subscription.user,
                         description=content,
                         title=u"%s" % activity,
-                        created__startswith=activity.created.replace(microsecond=0),
+                        dispatch_uid="%d" % activity.id,
                     )
-                    if not notifications:
-                        notification = Notification.objects.create(
-                            signature=subscription.signature,
-                            user=subscription.user,
-                            description=content,
-                            title=u"%s" % activity,
-                        )
                     break
 
     # Deletes orphans.
@@ -148,5 +153,6 @@ post_change = django.dispatch.Signal(providing_args=["instance", "changes"])
 
 ## CONNECTIONS ##
 
+models.signals.m2m_changed.connect(forward_activity, sender=Activity.streams.through, dispatch_uid="forward_activities")
 models.signals.m2m_changed.connect(notify_activity, sender=Activity.streams.through, dispatch_uid="change_activities")
-models.signals.pre_delete.connect(clear_orphans, sender=Stream)
+models.signals.pre_delete.connect(clear_orphans, sender=Stream, dispatch_uid="clear_orphans")

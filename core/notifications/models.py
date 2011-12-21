@@ -20,6 +20,9 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
+import hashlib
+from datetime import datetime
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -63,12 +66,13 @@ class Subscription(models.Model):
 class Notification(models.Model):
     """Notification model.
     """
-    title = models.CharField(_('title'), max_length=100)
-    description = models.TextField(_('description'), blank=True, null=True)
+    title = models.CharField(max_length=100, verbose_name=_('title'))
+    description = models.TextField(blank=True, null=True, verbose_name=_('description'))
     user = models.ForeignKey('auth.User', verbose_name=_('user'))
     signature = models.ForeignKey(Signature, verbose_name=_('signature'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     read = models.DateTimeField(blank=True, null=True, verbose_name=_('read on'))
+    dispatch_uid = models.CharField(max_length=32, verbose_name=_('dispatch UID'))
 
     objects = NotificationManager()
 
@@ -93,6 +97,11 @@ class Notification(models.Model):
         if self.user.subscription_set.filter(signature=self.signature).count() == 0:
             raise ValidationError('The user is not subscribed for this kind of notification.')
         super(Notification, self).clean()
+
+    def save(self, *args, **kwargs):
+        if self.dispatch_uid is None:
+            self.dispatch_uid = hashlib.md5(self.title + self.description + datetime.now()).hexdigest()
+        super(Notification, self).save(*args, **kwargs)
 
 def send_notification_email(sender, instance, signal, *args, **kwargs):
     if Subscription.objects.filter(signature=instance.signature, user=instance.user, send_email=True).count() > 0:
