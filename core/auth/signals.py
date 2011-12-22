@@ -22,25 +22,49 @@ __version__ = '0.0.5'
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 
 from prometeo.core.menus.signals import manage_bookmarks
 from prometeo.core.widgets.signals import manage_dashboard
-from prometeo.core.calendar.signals import manage_calendar
 
+from cache import LoggedInUserCache
 from models import *
 
+## HANDLERS ##
+
 def user_post_save(sender, instance, signal, *args, **kwargs):
+    """Creates a profile for the given user.
+    """
     profile, is_new = UserProfile.objects.get_or_create(user=instance)
     if is_new:
-        # Change user.
+        can_view_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user", instance.pk)
         can_change_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_user", "auth", "user", instance.pk)
-        can_change_this_user.users.add(instance)
-        # Delete user.
         can_delete_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_user", "auth", "user", instance.pk)
+
+        can_view_this_user.users.add(instance)
+        can_change_this_user.users.add(instance)
         can_delete_this_user.users.add(instance)
+
+def update_author_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the author of the given object.
+    """
+    author = LoggedInUserCache().current_user
+    content_type = ContentType.objects.get_for_model(sender)
+    app_label = content_type.app_label
+    model_name = content_type.model
+
+    if author:
+        can_view_this_object, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_%s" % model_name, app_label, model_name, instance.pk)
+        can_change_this_object, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_%s" % model_name, app_label, model_name, instance.pk)
+        can_delete_this_object, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_%s" % model_name, app_label, model_name, instance.pk)
+
+        can_view_this_object.users.add(author)
+        can_change_this_object.users.add(author)
+        can_delete_this_object.users.add(author)
+
+## CONNECTIONS ##
 
 models.signals.post_save.connect(user_post_save, User)
 
 manage_bookmarks(UserProfile)
 manage_dashboard(UserProfile)
-manage_calendar(UserProfile)

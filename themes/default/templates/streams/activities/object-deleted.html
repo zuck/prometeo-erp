@@ -1,7 +1,13 @@
 {% load i18n %}
 
 {% with class|capfirst as class %}
+{% if author and author_link %}
 {% blocktrans %}
-<p>{{ class }} {{ name }} has been deleted.</p>
+<p>{{ class }} <a href="{{ link }}">{{ name }}</a> has been deleted by <a href="{{ author_link }}">{{ author }}</a>.</p>
 {% endblocktrans %}
+{% else %}
+{% blocktrans %}
+<p>{{ class }} <a href="{{ link }}">{{ name }}</a> has been deleted.</p>
+{% endblocktrans %}
+{% endif %}
 {% endwith %}
