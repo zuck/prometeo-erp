@@ -24,7 +24,6 @@ import json
 
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, pre_delete, post_delete
-from django.contrib.comments.models import Comment
 
 from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
@@ -133,48 +132,6 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
 
     [activity.streams.add(s) for s in _get_streams(instance)]
 
-def notify_comment_created(sender, instance, *args, **kwargs):
-    """Generates an activity related to the creation of a new comment.
-    """
-    if kwargs['created']:
-        obj = instance.content_object
-
-        if isinstance(obj, Document):
-            activity = Activity.objects.create(
-                title=_("%(author)s commented %(class)s %(name)s"),
-                signature="comment-created",
-                context=json.dumps({
-                    "class": obj.__class__.__name__.lower(),
-                    "name": "%s" % obj,
-                    "link": instance.get_absolute_url(),
-                    "author": "%s" % instance.user,
-                    "author_link": instance.user.get_absolute_url(),
-                    "comment": instance.comment
-                }),
-                backlink=obj.get_absolute_url()
-            )
-
-            [activity.streams.add(s) for s in _get_streams(obj)]
-
-def notify_comment_deleted(sender, instance, *args, **kwargs):
-    """Generates an activity related to the deletion of an existing comment.
-    """
-    obj = instance.content_object
-
-    activity = Activity.objects.create(
-        title=_("comment deleted"),
-        signature="comment-deleted",
-        context=json.dumps({
-            "class": obj.__class__.__name__.lower(),
-            "name": "%s" % obj,
-            "link": instance.get_absolute_url(),
-            "author": "%s" % instance.user,
-            "author_link": instance.user.get_absolute_url()
-        })
-    )
-
-    [activity.streams.add(s) for s in _get_streams(obj)]
-
 def delete_hard_copy(sender, instance, *args, **kwargs):
     """Deletes the file associated to the given hard copy.
     """
@@ -192,9 +149,6 @@ post_delete.connect(notify_object_deleted, Document, dispatch_uid="document_dele
 post_save.connect(notify_object_created, HardCopy, dispatch_uid="hardcopy_created")
 post_delete.connect(notify_object_deleted, HardCopy, dispatch_uid="hardcopy_deleted")
 pre_delete.connect(delete_hard_copy, HardCopy, dispatch_uid="hardcopy_deleted")
-
-post_save.connect(notify_comment_created, Comment, dispatch_uid="documents_comment_created")
-post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="documents_comment_deleted")
 
 manage_stream(Document)
 make_observable(Document)

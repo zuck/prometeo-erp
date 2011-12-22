@@ -22,7 +22,6 @@ __version__ = '0.0.5'
 
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete
-from django.contrib.comments.models import Comment
 
 from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
@@ -265,10 +264,8 @@ post_delete.connect(notify_object_deleted, Faq, dispatch_uid="faq_deleted")
 post_save.connect(notify_object_created, Poll, dispatch_uid="poll_created")
 post_delete.connect(notify_object_deleted, Poll, dispatch_uid="poll_deleted")
 
-post_save.connect(notify_comment_created, Comment, dispatch_uid="knowledge_comment_created")
-post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="knowledge_comment_deleted")
-post_save.connect(notify_answer_created, Comment, dispatch_uid="knowledge_answer_created")
-post_delete.connect(notify_answer_deleted, Comment, dispatch_uid="knowledge_answer_deleted")
+#post_save.connect(notify_answer_created, Comment, dispatch_uid="knowledge_answer_created")
+#post_delete.connect(notify_answer_deleted, Comment, dispatch_uid="knowledge_answer_deleted")
 
 manage_stream(WikiPage)
 manage_stream(Faq)

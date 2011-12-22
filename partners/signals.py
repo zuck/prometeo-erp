@@ -24,7 +24,6 @@ import json
 
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete
-from django.contrib.comments.models import Comment
 
 from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
@@ -221,9 +220,6 @@ post_save.connect(notify_object_created, Contact, dispatch_uid="contact_created"
 post_delete.connect(notify_object_deleted, Contact, dispatch_uid="contact_deleted")
 post_save.connect(notify_object_created, Job, dispatch_uid="contact_added")
 post_delete.connect(notify_object_deleted, Job, dispatch_uid="contact_removed")
-
-post_save.connect(notify_comment_created, Comment, dispatch_uid="partners_comment_created")
-post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="partners_comment_deleted")
 
 manage_stream(Partner)
 
