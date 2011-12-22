@@ -24,7 +24,9 @@ import json
 
 from django.db import models
 from django.db.models.signals import pre_delete
+from django.db.models.fields import FieldDoesNotExist
 from django.contrib.comments.models import Comment
+from django.contrib.comments.moderation import CommentModerator, moderator, AlreadyModerated
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.dispatch import receiver
@@ -39,10 +41,27 @@ def validate_json(value):
 
 ## MODELS ##
 
+class CommentableModelModerator(CommentModerator):
+    email_notification = False
+    enable_field = 'allow_comments'
+
+class CommentableModelBase(models.base.ModelBase):
+    def __new__(cls, name, bases, attrs):
+        model = super(CommentableModelBase, cls).__new__(cls, name, bases, attrs)
+
+        try:
+            moderator.register(model, CommentableModelModerator)
+        except AlreadyModerated:
+            pass
+            
+        return model
+
 class Commentable(models.Model):
     """Mix-in for all commentable resources.
     """
-    allow_comments = models.BooleanField(_('allow comments'), default=True)
+    __metaclass__ = CommentableModelBase
+
+    allow_comments = models.BooleanField(default=True, verbose_name=_('allow comments'))
 
     class Meta:
         abstract=True
