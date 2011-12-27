@@ -43,9 +43,10 @@ Make sure you have the following pre-requisites installed:
  * mod_wsgi (optional)
    http://code.google.com/p/modwsgi
 
-
 INSTALLATION
 ============
+
+ WARNING: at the moment the package MUST be installed in a folder called "prometeo".
 
  1. cp settings/base.py.tmpl settings/base.py
  
