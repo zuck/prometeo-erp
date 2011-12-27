@@ -30,8 +30,7 @@ from models import *
 def manage_dashboard(cls):
     """Connects handlers for dashboard management.
     """
-    models.signals.pre_save.connect(create_dashboard, cls)
-    models.signals.post_save.connect(update_dashboard, cls)
+    models.signals.post_save.connect(create_dashboard, cls)
     models.signals.post_delete.connect(delete_dashboard, cls)
 
 ## HANDLERS ##
@@ -39,16 +38,9 @@ def manage_dashboard(cls):
 def create_dashboard(sender, instance, *args, **kwargs):
     """Creates a new dashboard for the given object.
     """
-    if not instance.dashboard:
-        instance.dashboard = Region.objects.create(slug="%s_dashboard" % sender.__name__.lower(), description=_("Dashboard"))
-
-def update_dashboard(sender, instance, *args, **kwargs):
-    """Updates the slug field of the object's dashboard.
-    """
-    dashboard = instance.dashboard
-    if dashboard:
-        dashboard.slug = "%s_%d_dashboard" % (sender.__name__.lower(), instance.pk)
-        dashboard.save()
+    if hasattr(instance, "dashboard") and not instance.dashboard:
+        instance.dashboard, is_new = Region.objects.get_or_create(slug="%s_%d_dashboard" % (sender.__name__.lower(), instance.pk), description=_("Dashboard"))
+        instance.save()
 
 def delete_dashboard(sender, instance, *args, **kwargs):
     """Deletes the dashboard of the given object.
@@ -56,3 +48,4 @@ def delete_dashboard(sender, instance, *args, **kwargs):
     dashboard = instance.dashboard
     if dashboard:
         dashboard.delete()
+        instance.dashboard = None

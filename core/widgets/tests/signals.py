@@ -20,5 +20,26 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from prometeo.core.widgets.tests import *
-from prometeo.core.auth.tests import *
+from django.utils import unittest
+
+from ..models import *
+from ..signals import *
+
+class DashboardTestPseudoModel(object):
+    def __init__(self, pk):
+        self.dashboard = None
+        self.pk = pk
+
+    def save(self):
+        pass
+
+class RegionTestCase(unittest.TestCase):
+    def test_dashboard(self):
+        d = DashboardTestPseudoModel(1)
+        self.assertEqual(d.dashboard, None)
+        create_dashboard(DashboardTestPseudoModel, d)
+        self.assertTrue(isinstance(d.dashboard, Region))
+        self.assertEqual(d.dashboard.slug, "dashboardtestpseudomodel_1_dashboard")
+        delete_dashboard(DashboardTestPseudoModel, d)
+        self.assertEqual(Region.objects.filter(slug="dashboardtestpseudomodel_1_dashboard").count(), 0)
+        self.assertEqual(d.dashboard, None)
