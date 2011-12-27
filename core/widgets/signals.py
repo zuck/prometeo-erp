@@ -40,6 +40,9 @@ def create_dashboard(sender, instance, *args, **kwargs):
     """
     if hasattr(instance, "dashboard") and not instance.dashboard:
         instance.dashboard, is_new = Region.objects.get_or_create(slug="%s_%d_dashboard" % (sender.__name__.lower(), instance.pk), description=_("Dashboard"))
+        if not is_new:
+            for w in instance.dashboard.widgets.all():
+                w.delete()
         instance.save()
 
 def delete_dashboard(sender, instance, *args, **kwargs):

@@ -43,3 +43,12 @@ class RegionTestCase(unittest.TestCase):
         delete_dashboard(DashboardTestPseudoModel, d)
         self.assertEqual(Region.objects.filter(slug="dashboardtestpseudomodel_1_dashboard").count(), 0)
         self.assertEqual(d.dashboard, None)
+
+    def test_unique_dashboard(self):
+        d1 = DashboardTestPseudoModel(1)
+        create_dashboard(DashboardTestPseudoModel, d1)
+        self.assertEqual(d1.dashboard.slug, "dashboardtestpseudomodel_1_dashboard")
+        d2 = DashboardTestPseudoModel(1)
+        create_dashboard(DashboardTestPseudoModel, d2)
+        self.assertEqual(d2.dashboard.slug, "dashboardtestpseudomodel_1_dashboard")
+        self.assertEqual(d1.dashboard, d2.dashboard)
