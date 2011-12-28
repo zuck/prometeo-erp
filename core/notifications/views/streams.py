@@ -26,7 +26,7 @@ from django.views.generic.simple import redirect_to
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from models import *
+from ..models import *
 
 @login_required
 def stream_follow(request, slug, path='/', **kwargs):

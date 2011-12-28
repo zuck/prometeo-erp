@@ -44,7 +44,7 @@ class WikiPage(Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering  = ('-created',)
@@ -106,7 +106,7 @@ class Faq(Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering  = ('-created',)
@@ -140,7 +140,7 @@ class Poll(Commentable):
     due_date = models.DateTimeField(null=True, blank=True, verbose_name=_('due date'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering  = ('-created',)

@@ -23,9 +23,9 @@ __version__ = '0.0.5'
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete
 
-from prometeo.core.streams.signals import *
-from prometeo.core.widgets.signals import *
 from prometeo.core.auth.signals import *
+from prometeo.core.widgets.signals import *
+from prometeo.core.notifications.signals import *
 
 from models import *
 

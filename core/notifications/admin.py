@@ -28,4 +28,8 @@ class SignatureAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug')
     prepopulated_fields = {'slug': ('title',)}
 
+class StreamAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Signature, SignatureAdmin)
+admin.site.register(Stream, StreamAdmin)

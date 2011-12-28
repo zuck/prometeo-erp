@@ -51,7 +51,7 @@ class Contact(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         verbose_name = _('contact')
@@ -106,7 +106,7 @@ class Partner(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         verbose_name = _('partner')

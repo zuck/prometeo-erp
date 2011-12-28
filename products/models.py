@@ -48,7 +48,7 @@ class Product(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
-    stream = models.OneToOneField('streams.Stream', null=True, verbose_name=_('stream'))
+    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering = ('code',)

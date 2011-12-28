@@ -36,8 +36,8 @@ from prometeo.core.auth.views import _get_user
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
 
-from models import *
-from forms import *
+from ..models import *
+from ..forms import *
 
 def _get_notification(request, *args, **kwargs):
     username = kwargs.get('username', None)

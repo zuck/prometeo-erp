@@ -25,7 +25,7 @@ from django.db.models.signals import post_save, post_delete, m2m_changed
 
 from prometeo.core.auth.models import *
 from prometeo.core.auth.signals import *
-from prometeo.core.streams.signals import *
+from prometeo.core.notifications.signals import *
 
 from models import *
 

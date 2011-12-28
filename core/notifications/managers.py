@@ -20,11 +20,13 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from django.contrib import admin
+from django.db import models
 
-from models import *
+class NotificationManager(models.Manager):
+    """Manager for notifications.
+    """
+    def read(self):
+        return self.filter(read__isnull=False)
 
-class StreamAdmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Stream, StreamAdmin)
+    def unread(self):
+        return self.filter(read__isnull=True)

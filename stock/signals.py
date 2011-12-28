@@ -27,8 +27,8 @@ from django.db.models.signals import post_save, post_delete
 
 from prometeo.core.auth.models import ObjectPermission
 from prometeo.core.auth.signals import *
-from prometeo.core.streams.signals import *
 from prometeo.core.widgets.signals import *
+from prometeo.core.notifications.signals import *
 
 from models import *
 
