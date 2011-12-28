@@ -672,7 +672,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #content {
     padding-bottom: 20px;
-    background: #fff url(images/menu.jpg) repeat-y 220px -5px;
+    background: #fff url(images/content.jpg) repeat-y 220px -5px;
 }
 
 #content li, #content dt { background: url(images/bullet.png) no-repeat left 8px; }
