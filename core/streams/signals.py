@@ -34,10 +34,21 @@ from models import *
 ## UTILS ##
 
 def register_follower_to_stream(follower, stream):
-    """Registers the given follower to the given stream.
+    """Registers the given follower to the given stream(s).
     """
     if follower:
-        stream.followers.add(follower)
+        try:
+            [s.followers.add(follower) for s in stream]
+        except:
+            stream.followers.add(follower)
+
+def register_activity_to_stream(activity, stream):
+    """Registers the given activity to the given stream(s).
+    """
+    try:
+        [activity.streams.add(s) for s in stream]
+    except:
+        activity.streams.add(stream)
 
 def manage_stream(cls):
     """Connects handlers for stream management.
@@ -90,7 +101,7 @@ def notify_object_created(sender, instance, *args, **kwargs):
                 backlink=instance.get_absolute_url()
             )
 
-            activity.streams.add(stream)
+            register_activity_to_stream(activity, stream)
 
         except:
             pass
@@ -129,7 +140,7 @@ def notify_object_changed(sender, instance, changes, *args, **kwargs):
             backlink=instance.get_absolute_url()
         )
 
-        activity.streams.add(stream)
+        register_activity_to_stream(activity, stream)
 
     except:
         pass
@@ -165,12 +176,10 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
             context=json.dumps(context)
         )
 
-        activity.streams.add(stream)
+        register_activity_to_stream(activity, stream)
 
     except:
         pass
-    
-    delete_stream(sender, instance)
 
 def notify_m2m_changed(sender, instance, action, reverse, model, pk_set, *args, **kwargs):
     """Generates one or more activities related to the change of an existing many-to-many relationship.
@@ -220,7 +229,7 @@ def notify_comment_created(sender, instance, *args, **kwargs):
                 backlink=obj.get_absolute_url()
             )
 
-            activity.streams.add(stream)
+            register_activity_to_stream(activity, stream)
 
         except:
             pass
@@ -251,7 +260,7 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
             })
         )
 
-        activity.streams.add(stream)
+        register_activity_to_stream(activity, stream)
 
     except:
         pass

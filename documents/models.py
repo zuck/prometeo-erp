@@ -110,3 +110,7 @@ class HardCopy(models.Model):
 
     def get_delete_url(self):
         return reverse('hardcopy_delete', args=[self.document.pk, self.pk])
+
+    def _stream(self):
+        return self.document.stream
+    stream = property(_stream)

@@ -91,6 +91,10 @@ class WikiRevision(models.Model):
     def get_absolute_url(self):
         return ("wikipage_revision_detail", (), {"slug": self.page.slug, "created": self.created})
 
+    def _stream(self):
+        return self.page.stream
+    stream = property(_stream)
+
 class Faq(Commentable):
     """Frequently Asked Question model.
     """
@@ -184,6 +188,10 @@ class Choice(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ("poll_vote", (), {"id": self.poll.pk, "choice": self.index})
+
+    def _stream(self):
+        return self.poll.stream
+    stream = property(_stream)
 
     def _index(self):
         for i, choice in enumerate(self.poll.choices.all()):

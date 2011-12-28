@@ -136,3 +136,7 @@ class Supply(models.Model):
     @models.permalink
     def get_delete_url(self):
         return ('product_delete_supply', (), {"product_id": self.product.pk, "id": self.pk})
+
+    def _stream(self):
+        return [self.product.stream, self.supplier.stream]
+    stream = property(_stream)
