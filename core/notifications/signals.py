@@ -20,7 +20,20 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+from django.core.mail import EmailMessage
 from django.conf import settings
 
-if __name__ in settings.INSTALLED_APPS:
-    from signals import *
+from models import *
+
+def send_notification_email(sender, instance, signal, *args, **kwargs):
+    if Subscription.objects.filter(signature=instance.signature, user=instance.user, send_email=True).count() > 0:
+        email_subject = instance.title
+        email_body = instance.description
+        email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
+        email = EmailMessage(email_subject, email_body, email_from, [instance.user.email,])
+        email.content_subtype = "html"
+        email.send()
+
+models.signals.post_save.connect(send_notification_email, Notification)

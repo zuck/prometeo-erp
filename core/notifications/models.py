@@ -26,8 +26,6 @@ from datetime import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
-from django.core.mail import EmailMessage
-from django.conf import settings
 
 class NotificationManager(models.Manager):
     """Manager for notifications.
@@ -102,14 +100,3 @@ class Notification(models.Model):
         if self.dispatch_uid is None:
             self.dispatch_uid = hashlib.md5(self.title + self.description + datetime.now()).hexdigest()
         super(Notification, self).save(*args, **kwargs)
-
-def send_notification_email(sender, instance, signal, *args, **kwargs):
-    if Subscription.objects.filter(signature=instance.signature, user=instance.user, send_email=True).count() > 0:
-        email_subject = instance.title
-        email_body = instance.description
-        email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
-        email = EmailMessage(email_subject, email_body, email_from, [instance.user.email,])
-        email.content_subtype = "html"
-        email.send()
-
-models.signals.post_save.connect(send_notification_email, Notification)
