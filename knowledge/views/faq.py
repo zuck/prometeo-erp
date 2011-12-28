@@ -39,6 +39,12 @@ def _get_faq(request, *args, **kwargs):
         return get_object_or_404(Faq, id=id)
     return None
 
+def _get_answer(request, *args, **kwargs):
+    id = kwargs.get('id', None)
+    if id:
+        return get_object_or_404(Answer, id=id)
+    return None
+
 @permission_required('knowledge.view_faq')
 def faq_list(request, page=0, paginate_by=5, **kwargs):
     """Displays the list of all FAQs.
@@ -73,10 +79,22 @@ def faq_add(request, **kwargs):
 def faq_detail(request, id, **kwargs):
     """Displays the given FAQ.
     """
+    faq = get_object_or_404(Faq, id=id)
+    answer = Answer(question=faq, author=request.user)
+
+    if request.method == 'POST':
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Thank you. Your answer has been saved."))
+    else:
+        form = AnswerForm(instance=answer)
+
     return list_detail.object_detail(
         request,
         object_id=id,
         queryset=Faq.objects.all(),
+        extra_context={'form': form},
         **kwargs
     )
 
@@ -102,5 +120,19 @@ def faq_delete(request, id, **kwargs):
         object_id=id,
         post_delete_redirect=reverse('faq_list'),
         template_name='knowledge/faq_delete.html',
+        **kwargs
+    )
+
+@permission_required('knowledge.delete_answer', _get_answer)
+def answer_delete(request, faq_id, id, **kwargs):
+    """Deletes the given answer.
+    """
+    answer = get_object_or_404(Answer, id=id, question__id=faq_id)
+    return create_update.delete_object(
+        request,
+        model=Answer,
+        object_id=id,
+        post_delete_redirect=reverse('faq_detail', args=[faq_id]),
+        template_name='knowledge/answer_delete.html',
         **kwargs
     )

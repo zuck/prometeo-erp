@@ -1287,40 +1287,40 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-bottom: -22px;
 }
 
-#main #comments {
+#main #comments, #main #answers {
     float: left;
     width: 100%;
 }
 
-#main #comments li {
+#main #comments li, #main #answers li {
     padding: 10px; 
     background: none;
     min-height: 47px;
 }
 
-#main #comments li.altrow { background: #f8f8f8; }
+#main #comments li.altrow, #main #answers li.altrow { background: #f8f8f8; }
 
-#main #comments li .meta p { margin: 0 0 -10px; }
+#main #comments li .meta p, #main #answers li .meta p { margin: 0 0 -10px; }
 
-#main #comments li .meta .avatar {
+#main #comments li .meta .avatar, #main #answers li .meta .avatar {
     float: left;
     margin-right: 10px;
     margin-bottom: 0;
 }
 
-#main #comments li .actions {
+#main #comments li .actions, #main #answers li .actions {
     clear: none;
     float: right;
     margin: -10px -25px 0 0;
 }
 
-#main #comments li .actions li { padding: 0; }
+#main #comments li .actions li, #main #answers li .actions li { padding: 0; }
 
-#main #comments li .body { overflow: auto; }
+#main #comments li .body, #main #answers li .body { overflow: auto; }
 
-#main #comments li .body p { margin: 10px 0 0; }
+#main #comments li .body p, #main #answers li .body p { margin: 10px 0 0; }
 
-#main #comments .comment-counter {
+#main #comments .comment-counter, #main #answers .answer-counter {
     float: right;
     width: 100%;
     text-align: right;

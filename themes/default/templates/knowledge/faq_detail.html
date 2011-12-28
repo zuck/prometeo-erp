@@ -63,56 +63,48 @@
                 {% include "elements/tags.html" %}
             </p>
         </div>
-        {% get_comment_list for object as comment_list %}
-        {% if comment_list or object.allow_comments %}
-        <div id="comments">
+        <div id="answers">
             <h3>{% trans "Answers" %}</h3>
-            {% if comment_list %}
+            {% with answers=object.answer_set.all %}
+            {% if answers %}
             <ul>
-                {% for comment in comment_list %}
+                {% for answer in answers %}
                 <li{% if forloop.counter|divisibleby:"2" %} class="altrow"{% endif %}>
                     <div class="meta">
-                        {% with comment.user_name as user_name %}
-                        {% with comment.user.get_absolute_url as user_link %}
-                        {% with comment.submit_date as submit_date %}
-                        {% avatar comment.user %}
-                        <p>{% blocktrans %}Posted on {{ submit_date }}{% endblocktrans %}{% if comment.user %}{% blocktrans %} by <a href="{{ user_link }}">{{ user_name }}</a>{% endblocktrans %}{% endif %}</p>
-                        {% endwith %}
-                        {% endwith %}
+                        {% with user_name=answer.author user_link=answer.author.get_absolute_url submit_date=answer.created %}
+                        {% avatar answer.author %}
+                        <p>{% blocktrans %}Posted on {{ submit_date }}{% endblocktrans %}{% if answer.author %}{% blocktrans %} by <a href="{{ user_link }}">{{ user_name }}</a>{% endblocktrans %}{% endif %}</p>
                         {% endwith %}
                         <ul class="actions">
-                            {% if perms.comments.can_delete %}
-                            <li class="delete"><a title="{% trans 'Delete' %}" href="{% url comment_delete comment.id %}">{% trans "Delete" %}</a></li>
+                            {% if perms.answers.can_delete %}
+                            <li class="delete"><a title="{% trans 'Delete' %}" href="{% url answer_delete object.id answer.id %}">{% trans "Delete" %}</a></li>
                             {% endif %}
                         </ul>
                     </div>
-                    {{ comment.comment|markdown }}
+                    <div class="body">
+                        {{ answer.answer|markdown }}
+                    </div>
                 </li>
                 {% endfor %}
             </ul>
-            {% get_comment_count for object as comment_count %}
-            <p class="comment-counter">{% blocktrans %}<strong>{{ comment_count }}</strong> answer(s){% endblocktrans %}</p>
+            {% with answer_count=answers.count %}
+            <p class="answer-counter">{% blocktrans %}<strong>{{ answer_count }}</strong> answer(s){% endblocktrans %}</p>
+            {% endwith %}
             {% else %}
             <p class="disabled">{% trans "No answers." %}</p>
             {% endif %}
-            {% if object.allow_comments and user.is_authenticated %}
+            {% endwith %}
+            {% if user.is_authenticated %}
             <h3>{% trans "Add answer" %}</h3>
-            {% get_comment_form for object as form %}
-            <form action="{% comment_form_target %}" method="post">
+            <form action="." method="post">
                 {% csrf_token %}
-                <input type="hidden" name="next" value="{{ object.get_absolute_url }}" />
-                {% for field in form.hidden_fields %}
-                {{ field }}
+                {% for field in form %}
+                <p>{{ field }}</p>
                 {% endfor %}
-                <p>
-                    {{ form.comment }}
-                    {% blocktrans %}Use <a href="http://daringfireball.net/projects/markdown/syntax">MarkDown syntax</a>.{% endblocktrans %}
-                </p>
                 <span class="submit"><input type="submit" name="post" value="{% trans 'Post' %}"></span>
             </form>
             {% endif %}
         </div>
-        {% endif %}
         {% endblock %}
     </div>
 </div>

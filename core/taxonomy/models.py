@@ -28,6 +28,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.conf import settings
 
+from managers import *
+
 class Result(models.Model):
     """Query result model.
     """
@@ -104,3 +106,19 @@ class Category(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ("category_detail", (), {"slug": self.slug})
+        
+class Vote(models.Model):
+    """Vote model.
+    """
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    owner = models.ForeignKey('auth.User', related_name='poll_votes', verbose_name=_('owner'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created'))
+
+    objects = VoteManager()
+
+    class Meta:
+        verbose_name = _('vote')
+        verbose_name_plural = _('votes')
+        unique_together = (("owner", "content_type", "object_id"),)

@@ -52,6 +52,13 @@ class FaqForm(forms.ModelForm):
             'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
         }
 
+class AnswerForm(forms.ModelForm):
+    """Form for answer data.
+    """
+    class Meta:
+        model = Answer
+        exclude = ['question', 'author', 'created', 'allow_comments']
+
 class PollForm(forms.ModelForm):
     """Form for poll data.
     """

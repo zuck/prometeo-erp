@@ -26,6 +26,8 @@ from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
+from django.template.defaultfilters import truncatewords
 from django.core.urlresolvers import reverse
 from django.conf import settings
 
@@ -101,12 +103,12 @@ class Faq(Commentable):
     title = models.CharField(max_length=200, unique=True, verbose_name=_('title'))
     question = models.TextField(verbose_name=_('question'))
     language = models.CharField(max_length=5, null=True, blank=True, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, verbose_name=_('language'))
-    best_answer = models.ForeignKey('comments.Comment', null=True, blank=True, verbose_name=_('best answer'))
     author = models.ForeignKey('auth.User', verbose_name=_('created by'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
+    votes = generic.GenericRelation('taxonomy.Vote')
 
     class Meta:
         ordering  = ('-created',)
@@ -128,6 +130,24 @@ class Faq(Commentable):
 
     def __unicode__(self):
         return u'%s' % self.title
+
+class Answer(Commentable):
+    """Answer model.
+    """
+    question = models.ForeignKey(Faq, verbose_name=_('question'))
+    answer = models.TextField(verbose_name=_('answer'))
+    author = models.ForeignKey('auth.User', verbose_name=_('created by'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    votes = generic.GenericRelation('taxonomy.Vote')
+
+    class Meta:
+        ordering  = ('created',)
+        get_latest_by = 'created'
+        verbose_name = _('answer')
+        verbose_name_plural = _('answers')
+
+    def __unicode__(self):
+        return truncatewords(u'%s' % self.answer, 15)
 
 class Poll(Commentable):
     """Poll model.
@@ -176,6 +196,7 @@ class Choice(models.Model):
     """    
     poll = models.ForeignKey(Poll, related_name='choices', verbose_name=_('poll'))
     description = models.CharField(max_length=255, verbose_name=_('description'))
+    votes = generic.GenericRelation('taxonomy.Vote')
 
     class Meta:
         ordering  = ('poll', 'id',)
@@ -200,14 +221,3 @@ class Choice(models.Model):
         return self.poll.choices.count()
     _index.short_description = _('index')
     index = property(_index)
-        
-class Vote(models.Model):
-    """Vote model.
-    """    
-    choice = models.ForeignKey(Choice, related_name='votes', verbose_name=_('choice'))
-    owner = models.ForeignKey(User, related_name='poll_votes', verbose_name=_('owner'))
-    created = models.DateTimeField(auto_now_add=True, verbose_name=_('created'))
-
-    class Meta:
-        verbose_name = _('vote')
-        verbose_name_plural = _('votes')

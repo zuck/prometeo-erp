@@ -29,6 +29,7 @@ from django.contrib import messages
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
+from prometeo.core.taxonomy.models import Vote
 
 from ..models import *
 from ..forms import *
@@ -95,15 +96,15 @@ def poll_vote(request, id, choice, **kwargs):
 
     try:
         owner = request.user
-        choice_obj = poll.choices.all()[int(choice)]
-        previous_vote = Vote.objects.select_related().filter(owner=owner, choice__poll=poll)
+        choices = poll.choices.all()
+        choice_obj = choices[int(choice)]
+        previous_vote = Vote.objects.get_for_models(choices).filter(owner=owner)
         if previous_vote.count() == 0:
             messages.success(request, _("Thank you for your vote."))
         else:
             previous_vote.delete()
             messages.success(request, _("Thank you. Your vote has been updated."))
-        new_vote = Vote(owner=owner, choice=choice_obj)
-        new_vote.save()
+        new_vote = Vote.objects.create(owner=owner, content_object=choice_obj)
 
     except IndexError:
         messages.error(request, _("Sorry, you've selected an invalid choice."))
