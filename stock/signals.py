@@ -25,131 +25,36 @@ import json
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete
 
-from prometeo.core.widgets.signals import *
-from prometeo.core.streams.signals import *
-from prometeo.core.streams.models import Activity
 from prometeo.core.auth.models import ObjectPermission
-from prometeo.documents.models import Document
+from prometeo.core.auth.signals import *
+from prometeo.core.streams.signals import *
+from prometeo.core.widgets.signals import *
 
 from models import *
 
-## UTILS ##
-
-def _get_streams(instance):
-    """Returns all available streams for the given object.
-    """
-    streams = []
-
-    if isinstance(instance, Warehouse):
-        streams.append(instance.stream)
-    if isinstance(instance, Movement):
-        streams.append(instance.origin.stream)
-        streams.append(instance.destination.stream)
-
-    return streams
-
-def _register_followers(instance):
-    """Registers all available followers to all available streams.
-    """
-    for stream in _get_streams(instance):
-        register_follower_to_stream(instance.author, stream)
-        if isinstance(instance, Warehouse):
-            register_follower_to_stream(instance.manager, stream)
-
 ## HANDLERS ##
 
-def update_warehouse_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the stakeholders of the given warehouse.
+def update_manager_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the manager of the given warehouse.
     """
-    # Change warehouse.
+    can_view_this_warehouse, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_warehouse", "stock", "warehouse", instance.pk)
     can_change_this_warehouse, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_warehouse", "stock", "warehouse", instance.pk)
-    can_change_this_warehouse.users.add(instance.author)
-    if instance.manager:
-        can_change_this_warehouse.users.add(instance.manager)
-    # Delete warehouse.
     can_delete_this_warehouse, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_warehouse", "stock", "warehouse", instance.pk)
-    can_delete_this_warehouse.users.add(instance.author)
+
     if instance.manager:
+        can_view_this_warehouse.users.add(instance.manager)
+        can_change_this_warehouse.users.add(instance.manager)
         can_delete_this_warehouse.users.add(instance.manager)
-
-def update_movement_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the stakeholders of the given movement.
-    """
-    # Change warehouse.
-    can_change_this_movement, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_movement", "stock", "movement", instance.pk)
-    can_change_this_movement.users.add(instance.author)
-    # Delete warehouse.
-    can_delete_this_movement, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_movement", "stock", "movement", instance.pk)
-    can_delete_this_movement.users.add(instance.author)
-
-def update_deliverynote_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the stakeholders of the given delivery note.
-    """
-    doc = get_object_or_404(Document.objects.get_for_content(DeliveryNote), object_id=id)
-
-    # Change delivery note.
-    can_change_this_deliverynote, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_deliverynote", "stock", "deliverynote", instance.pk)
-    can_change_this_deliverynote.users.add(doc.author)
-    # Delete delivery note.
-    can_delete_this_deliverynote, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_deliverynote", "stock", "deliverynote", instance.pk)
-    can_delete_this_deliverynote.users.add(doc.author)
-
-def notify_object_created(sender, instance, *args, **kwargs):
-    """Generates an activity related to the creation of a new object.
-    """
-    if kwargs['created']:
-        _register_followers(instance)
-        
-        title = _("%(class)s %(name)s created")
-        signature = "%s-created" % sender.__name__.lower()
-        template = "streams/activities/object-created.html"
-        context_pairs = {
-            "class": sender.__name__.lower(),
-            "name": "%s" % instance,
-            "link": instance.get_absolute_url(),
-            "author": "%s" % instance.author,
-            "author_link": instance.author.get_absolute_url(),
-        }
-        backlink = instance.get_absolute_url()
-
-        activity = Activity.objects.create(
-            title=title,
-            signature=signature,
-            template=template,
-            context=json.dumps(context_pairs),
-            backlink=backlink
-        ) 
-
-        [activity.streams.add(s) for s in _get_streams(instance)]
-
-def notify_object_deleted(sender, instance, *args, **kwargs):
-    """Generates an activity related to the deletion of an existing object.
-    """
-    title = _("%(class)s %(name)s deleted")
-    signature = "%s-deleted" % sender.__name__.lower()
-    template = "streams/activities/object-deleted.html"
-    context_pairs = {
-        "class": sender.__name__.lower(),
-        "name": "%s" % instance
-    }
-
-    activity = Activity.objects.create(
-        title=title,
-        signature=signature,
-        template=template,
-        context=json.dumps(context_pairs)
-    )
-
-    [activity.streams.add(s) for s in _get_streams(instance)]
 
 ## CONNECTIONS ##
 
-post_save.connect(update_warehouse_permissions, Warehouse, dispatch_uid="update_warehouse_permissions")
-post_save.connect(update_movement_permissions, Movement, dispatch_uid="update_movement_permissions")
-post_save.connect(update_deliverynote_permissions, DeliveryNote, dispatch_uid="update_deliverynote_permissions")
+post_save.connect(update_author_permissions, Warehouse, dispatch_uid="update_warehouse_permissions")
+post_save.connect(update_manager_permissions, Warehouse, dispatch_uid="update_warehouse_permissions")
+post_save.connect(update_author_permissions, Movement, dispatch_uid="update_movement_permissions")
 
 post_save.connect(notify_object_created, Warehouse, dispatch_uid="warehouse_created")
 post_delete.connect(notify_object_deleted, Warehouse, dispatch_uid="warehouse_deleted")
+
 post_save.connect(notify_object_created, Movement, dispatch_uid="movement_created")
 post_delete.connect(notify_object_deleted, Movement, dispatch_uid="movement_deleted")
 

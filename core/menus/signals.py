@@ -26,21 +26,24 @@ import django.dispatch
 
 from models import *
 
+## UTILS ##
+
+def manage_bookmarks(cls):
+    models.signals.post_save.connect(create_bookmarks, cls)
+    models.signals.post_delete.connect(delete_bookmarks, cls)
+
 ## HANDLERS ##
 
 def create_bookmarks(sender, instance, *args, **kwargs):
     """Creates a new bookmarks list for the given object.
     """
-    if not instance.bookmarks:
-        instance.bookmarks = Menu.objects.create(slug="%s_bookmarks" % sender.__name__.lower(), description=_("Bookmarks"))
-
-def update_bookmarks(sender, instance, *args, **kwargs):
-    """Updates the slug field of the object's bookmarks list.
-    """
-    bookmarks = instance.bookmarks
-    if bookmarks:
-        bookmarks.slug = "%s_%d_bookmarks" % (sender.__name__.lower(), instance.pk)
-        bookmarks.save()
+    if hasattr(instance, "bookmarks") and not instance.bookmarks:
+        bookmarks, is_new = Menu.objects.get_or_create(slug="%s_%d_bookmarks" % (sender.__name__.lower(), instance.pk), description=_("Bookmarks"))
+        if not is_new:
+            for l in bookmarks.links.all():
+                l.delete()
+        instance.bookmarks = bookmarks
+        instance.save()
 
 def delete_bookmarks(sender, instance, *args, **kwargs):
     """Deletes the bookmarks list of the given object.
@@ -48,10 +51,4 @@ def delete_bookmarks(sender, instance, *args, **kwargs):
     bookmarks = instance.bookmarks
     if bookmarks:
         bookmarks.delete()
-
-## CONNECTORS ##
-
-def manage_bookmarks(cls):
-    models.signals.pre_save.connect(create_bookmarks, cls)
-    models.signals.post_save.connect(update_bookmarks, cls)
-    models.signals.post_delete.connect(delete_bookmarks, cls)
+        instance.bookmarks = None

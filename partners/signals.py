@@ -25,202 +25,47 @@ import json
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete
 
+from prometeo.core.auth.models import ObjectPermission
+from prometeo.core.auth.signals import *
 from prometeo.core.widgets.signals import *
 from prometeo.core.streams.signals import *
-from prometeo.core.streams.models import Activity
-from prometeo.core.auth.models import ObjectPermission
 
 from models import *
 
-## UTILS ##
-
-def _get_streams(instance):
-    """Returns all available streams for the given object.
-    """
-    streams = []
-
-    if isinstance(instance, Partner):
-        streams.append(instance.stream)
-    elif isinstance(instance, Contact):
-        streams += [p.stream for p in instance.partner_set.all()]
-    elif isinstance(instance, Job):
-        streams.append(instance.partner.stream)
-
-    return streams
-
-def _register_followers(instance):
-    """Registers all available followers to all available streams.
-    """
-    for stream in _get_streams(instance):
-        try:
-            register_follower_to_stream(instance.author, stream)
-            register_follower_to_stream(instance.assignee, stream)
-        except:
-            pass
-
 ## HANDLERS ##
 
-def update_partner_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the stakeholders of the given partner.
+def update_assignee_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions of the assignee of the given partner.
     """
-    # Change partner.
+    can_view_this_partner, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_partner", "partners", "partner", instance.pk)
     can_change_this_partner, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_partner", "partners", "partner", instance.pk)
-    can_change_this_partner.users.add(instance.author)
-    if instance.assignee:
-        can_change_this_partner.users.add(instance.assignee)
-    # Delete partner.
     can_delete_this_partner, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_partner", "partners", "partner", instance.pk)
-    can_delete_this_partner.users.add(instance.author)
+
     if instance.assignee:
+        can_view_this_partner.users.add(instance.assignee)
+        can_change_this_partner.users.add(instance.assignee)
         can_delete_this_partner.users.add(instance.assignee)
-
-def update_contact_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the user owned by of the given contact.
-    """
-    if instance.user:
-        # Change contact.
-        can_change_this_contact, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_contact", "partners", "contact", instance.pk)
-        can_change_this_contact.users.add(instance.user)
-        # Delete contact.
-        can_delete_this_contact, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_contact", "partners", "contact", instance.pk)
-        can_delete_this_contact.users.add(instance.user)
-
-def notify_object_created(sender, instance, *args, **kwargs):
-    """Generates an activity related to the creation of a new object.
-    """
-    if kwargs['created']:
-        _register_followers(instance)
-        
-        title = _("%(class)s %(name)s created")
-        signature = "%s-created" % sender.__name__.lower()
-        template = "streams/activities/object-created.html"
-        context_pairs = {
-            "class": sender.__name__.lower(),
-            "name": "%s" % instance,
-            "link": instance.get_absolute_url()
-        }
-        backlink = instance.get_absolute_url()
-
-        if isinstance(instance, Partner):
-            title = _("%(class)s %(name)s created by %(author)s")
-            context_pairs.update({
-                "author": "%s" % instance.author,
-                "author_link": instance.author.get_absolute_url()
-            })
-
-        elif isinstance(instance, Job):
-            title = _("Contact added to partner %(partner)s")
-            signature = "contact-added"
-            template = "partners/activities/contact-added.html"
-            context_pairs.update({
-                'name':  "%s" % instance.contact,
-                'link':  "%s" % instance.contact.get_absolute_url(),
-                'partner':  "%s" % instance.partner,
-                'partner_link':  "%s" % instance.partner.get_absolute_url(),
-                'role':  instance.get_role_display()
-            })
-            backlink = instance.partner.get_absolute_url()
-
-        activity = Activity.objects.create(
-            title=title,
-            signature=signature,
-            template=template,
-            context=json.dumps(context_pairs),
-            backlink=backlink
-        ) 
-
-        [activity.streams.add(s) for s in _get_streams(instance)]
-
-def notify_object_deleted(sender, instance, *args, **kwargs):
-    """Generates an activity related to the deletion of an existing object.
-    """
-    title = _("%(class)s %(name)s deleted")
-    signature = "%s-deleted" % sender.__name__.lower()
-    template = "streams/activities/object-deleted.html"
-    context_pairs = {
-        "class": sender.__name__.lower(),
-    }
-
-    if isinstance(instance, Job):
-        try:
-            title = _("Contact removed from partner %(partner)s")
-            signature = "contact-removed"
-            template = "partners/activities/contact-removed.html"
-            context_pairs.update({
-                'name':  "%s" % instance.contact,
-                'link':  "%s" % instance.contact.get_absolute_url(),
-                'partner':  "%s" % instance.partner,
-                'partner_link':  "%s" % instance.partner.get_absolute_url(),
-                'role':  instance.get_role_display()
-            })
-        except:
-            return
-    else:
-        context_pairs.update({"name": "%s" % instance})
-
-    activity = Activity.objects.create(
-        title=title,
-        signature=signature,
-        template=template,
-        context=json.dumps(context_pairs)
-    )
-
-    [activity.streams.add(s) for s in _get_streams(instance)]
-
-def notify_comment_created(sender, instance, *args, **kwargs):
-    """Generates an activity related to the creation of a new comment.
-    """
-    if kwargs['created']:
-        obj = instance.content_object
-
-        if isinstance(obj, Partner):
-            activity = Activity.objects.create(
-                title=_("%(author)s commented %(class)s %(name)s"),
-                signature="comment-created",
-                context=json.dumps({
-                    "class": obj.__class__.__name__.lower(),
-                    "name": "%s" % obj,
-                    "link": instance.get_absolute_url(),
-                    "author": "%s" % instance.user,
-                    "author_link": instance.user.get_absolute_url(),
-                    "comment": instance.comment
-                }),
-                backlink=obj.get_absolute_url()
-            )
-
-            [activity.streams.add(s) for s in _get_streams(obj)]
-
-def notify_comment_deleted(sender, instance, *args, **kwargs):
-    """Generates an activity related to the deletion of an existing comment.
-    """
-    obj = instance.content_object
-
-    activity = Activity.objects.create(
-        title=_("comment deleted"),
-        signature="comment-deleted",
-        context=json.dumps({
-            "class": obj.__class__.__name__.lower(),
-            "name": "%s" % obj,
-            "link": instance.get_absolute_url(),
-            "author": "%s" % instance.user,
-            "author_link": instance.user.get_absolute_url()
-        })
-    )
-
-    [activity.streams.add(s) for s in _get_streams(obj)]
 
 ## CONNECTIONS ##
 
-post_save.connect(update_partner_permissions, Partner, dispatch_uid="update_partner_permissions")
-post_save.connect(update_contact_permissions, Contact, dispatch_uid="update_contact_permissions")
+post_save.connect(update_author_permissions, Partner, dispatch_uid="update_partner_permissions")
+post_save.connect(update_assignee_permissions, Partner, dispatch_uid="update_partner_permissions")
+post_save.connect(update_author_permissions, Contact, dispatch_uid="update_contact_permissions")
 
 post_save.connect(notify_object_created, Partner, dispatch_uid="partner_created")
+post_change.connect(notify_object_changed, Partner, dispatch_uid="partner_changed")
 post_delete.connect(notify_object_deleted, Partner, dispatch_uid="partner_deleted")
+
 post_save.connect(notify_object_created, Contact, dispatch_uid="contact_created")
+post_change.connect(notify_object_changed, Contact, dispatch_uid="contact_changed")
 post_delete.connect(notify_object_deleted, Contact, dispatch_uid="contact_deleted")
+
 post_save.connect(notify_object_created, Job, dispatch_uid="contact_added")
 post_delete.connect(notify_object_deleted, Job, dispatch_uid="contact_removed")
 
 manage_stream(Partner)
+
+make_observable(Partner)
+make_observable(Contact)
 
 manage_dashboard(Partner)

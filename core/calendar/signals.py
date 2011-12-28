@@ -23,8 +23,8 @@ __version__ = '0.0.5'
 from django.utils.translation import ugettext_noop as _
 from django.db.models.signals import post_save, post_delete, m2m_changed
 
-from prometeo.core.auth.models import ObjectPermission, UserProfile
-from prometeo.core.auth.signals import update_author_permissions
+from prometeo.core.auth.models import *
+from prometeo.core.auth.signals import *
 from prometeo.core.streams.signals import *
 
 from models import *
@@ -34,8 +34,7 @@ from models import *
 def manage_calendar(cls):
     """Connects handlers for calendar management.
     """
-    models.signals.pre_save.connect(create_calendar, cls)
-    models.signals.post_save.connect(update_calendar, cls)
+    models.signals.post_save.connect(create_calendar, cls)
     models.signals.post_delete.connect(delete_calendar, cls)
 
 ## HANDLERS ##
@@ -51,22 +50,19 @@ def update_attendees_event_permissions(sender, instance, *args, **kwargs):
         can_change_this_event.users.add(att)
 
 def create_calendar(sender, instance, *args, **kwargs):
-    """Creates a new calendar for the given object.
-    """
-    if not instance.calendar:
-        instance.calendar = Calendar.objects.create(
-            title="%s's calendar" % instance,
-            slug="%s_calendar" % sender.__name__.lower(),
-            description=_("Calendar for %s") % instance
-        )
-
-def update_calendar(sender, instance, *args, **kwargs):
     """Updates the calendar field of the object's stream.
     """
-    calendar = instance.calendar
-    if calendar:
-        calendar.slug = "%s_%d_calendar" % (sender.__name__.lower(), instance.pk)
-        calendar.save()
+    if hasattr(instance, "calendar") and not instance.calendar:
+        calendar, is_new = Calendar.objects.get_or_create(
+            title="%s's calendar" % instance,
+            slug="%s_%d_calendar" % (sender.__name__.lower(), instance.pk),
+            description=_("Calendar for %s") % instance
+        )
+        if not is_new:
+            for e in calendar.events.all():
+                e.delete()
+        instance.calendar = calendar
+        instance.save()
 
 def delete_calendar(sender, instance, *args, **kwargs):
     """Deletes the calendar of the given object.
@@ -74,6 +70,7 @@ def delete_calendar(sender, instance, *args, **kwargs):
     calendar = instance.calendar
     if calendar:
         calendar.delete()
+        instance.calendar = None
 
 ## CONNECTIONS ##
 
@@ -83,6 +80,8 @@ m2m_changed.connect(update_attendees_event_permissions, Event.attendees.through,
 post_save.connect(notify_object_created, Event, dispatch_uid="event_created")
 post_change.connect(notify_object_changed, Event, dispatch_uid="event_changed")
 post_delete.connect(notify_object_deleted, Event, dispatch_uid="event_deleted")
+
+m2m_changed.connect(notify_m2m_changed, Event.attendees.through, dispatch_uid="attendees_changed")
 
 manage_stream(Event)
 make_observable(Event)

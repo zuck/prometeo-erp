@@ -43,41 +43,24 @@ def delete_employee(sender, instance, *args, **kwargs):
     if instance.employee:
         instance.employee.delete()
 
-def update_timesheet_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the stakeholders of the given timesheet.
+def update_employee_permissions(sender, instance, *args, **kwargs):
+    """Updates the permissions assigned to the employee associated with the given document.
     """
-    doc = get_object_or_404(Document.objects.get_for_content(Timesheet), object_id=instance.pk)
+    doc = get_object_or_404(Document.objects.get_for_content(sender), object_id=instance.pk)
 
-    # Change timesheet.
-    can_change_this_timesheet, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_timesheet", "hr", "timesheet", instance.pk)
-    can_change_this_timesheet.users.add(doc.author)
-    if instance.employee.user:
-        can_change_this_timesheet.users.add(instance.employee.user)
-    # Delete timesheet.
-    can_delete_this_timesheet, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_timesheet", "hr", "timesheet", instance.pk)
-    can_delete_this_timesheet.users.add(doc.author)
-    if instance.employee.user:
-        can_delete_this_timesheet.users.add(instance.employee.user)
+    can_view_this_doc, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_document", "documents", "document", doc.pk)
+    can_change_this_doc, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_document", "documents", "document", doc.pk)
+    can_delete_this_doc, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_document", "documents", "document", doc.pk)
 
-def update_expensevoucher_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the stakeholders of the given expense voucher.
-    """
-    doc = get_object_or_404(Document.objects.get_for_content(ExpenseVoucher), object_id=instance.pk)
-
-    # Change expense voucher.
-    can_change_this_expensevoucher, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_expensevoucher", "hr", "expensevoucher", instance.pk)
-    can_change_this_expensevoucher.users.add(doc.author)
     if instance.employee.user:
-        can_change_this_expensevoucher.users.add(instance.employee.user)
-    # Delete expense voucher.
-    can_delete_this_expensevoucher, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_expensevoucher", "hr", "expensevoucher", instance.pk)
-    can_delete_this_expensevoucher.users.add(doc.author)
-    if instance.employee.user:
-        can_delete_this_expensevoucher.users.add(instance.employee.user)
+        can_view_this_doc.users.add(instance.employee.user)
+        can_change_this_doc.users.add(instance.employee.user)
+        can_delete_this_doc.users.add(instance.employee.user)
 
 ## CONNECTIONS ##
 
+post_save.connect(update_employee_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
+post_save.connect(update_employee_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_permissions")
+
 post_save.connect(create_employee, Job, dispatch_uid="create_employee")
 pre_delete.connect(delete_employee, Job, dispatch_uid="delete_employee")
-#post_save.connect(update_timesheet_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
-#post_save.connect(update_expensevoucher_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_permissions")

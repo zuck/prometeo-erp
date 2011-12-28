@@ -22,22 +22,10 @@ __version__ = '0.0.5'
 
 from django.db.models.signals import post_save
 
-from prometeo.core.auth.models import ObjectPermission
+from prometeo.core.auth.signals import *
 
 from models import *
 
-## HANDLERS ##
-
-def update_owner_task_permissions(sender, instance, *args, **kwargs):
-    """Updates the permissions assigned to the owner of the given task.
-    """
-    # Change task.
-    can_change_this_task, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_task", "todo", "task", instance.pk)
-    can_change_this_task.users.add(instance.user)
-    # Delete task.
-    can_delete_this_task, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_task", "todo", "task", instance.pk)
-    can_delete_this_task.users.add(instance.user)
-
 ## CONNECTIONS ##
 
-post_save.connect(update_owner_task_permissions, Task, dispatch_uid="update_task_permissions")
+post_save.connect(update_author_permissions, Task, dispatch_uid="update_task_permissions")

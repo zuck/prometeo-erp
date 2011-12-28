@@ -38,17 +38,18 @@ class Observable(object):
 
     def __setattr__(self, name, value):
         try:
-            if self.pk and name != 'modified' and name in self.__field_cache:
+            if self.pk and name in self.__field_cache:
                 field = self.__field_cache[name]
                 label = u"%s" % field.verbose_name
-                old_value = field_to_string(field, self)
-                if label in self.__changes:
-                    old_value = self.__changes[label][0]
-                super(Observable, self).__setattr__(name, value)
-                value = field_to_string(field, self)
-                if value != old_value:
-                    self.__changes[label] = (u"%s" % old_value, u"%s" % value)
-                return
+                if label not in self.__change_exclude:
+                    old_value = field_to_string(field, self)
+                    if label in self.__changes:
+                        old_value = self.__changes[label][0]
+                    super(Observable, self).__setattr__(name, value)
+                    value = field_to_string(field, self)
+                    if value != old_value:
+                        self.__changes[label] = (u"%s" % old_value, u"%s" % value)
+                    return
         except AttributeError:
             pass
 
