@@ -23,7 +23,7 @@ __version__ = '0.0.5'
 import json
 
 from django.utils.translation import ugettext_noop as _
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import pre_save, post_save, post_delete
 
 from prometeo.core.auth.models import ObjectPermission
 from prometeo.core.auth.signals import *
@@ -60,6 +60,18 @@ def update_assignee_permissions(sender, instance, *args, **kwargs):
         can_change_this_ticket.users.add(instance.assignee)
         can_delete_this_ticket.users.add(instance.assignee)
 
+def link_project_stream(sender, instance, **kwargs):
+    """Links the given stream to the parent project's one.
+    """
+    if instance.stream and instance.project:
+        instance.stream.linked_streams.add(instance.project.stream)
+
+def link_milestone_stream(sender, instance, **kwargs):
+    """Links the given stream to the parent milestone's one.
+    """
+    if instance.stream and instance.milestone:
+        instance.stream.linked_streams.add(instance.milestone.stream)
+
 ## CONNECTIONS ##
 
 post_save.connect(update_author_permissions, Project, dispatch_uid="update_project_permissions")
@@ -75,10 +87,13 @@ post_save.connect(notify_object_created, Project, dispatch_uid="project_created"
 post_change.connect(notify_object_changed, Project, dispatch_uid="project_changed")
 post_delete.connect(notify_object_deleted, Project, dispatch_uid="project_deleted")
 
+pre_save.connect(link_project_stream, Milestone, dispatch_uid="link_project_stream")
 post_save.connect(notify_object_created, Milestone, dispatch_uid="milestone_created")
 post_change.connect(notify_object_changed, Milestone, dispatch_uid="milestone_changed")
 post_delete.connect(notify_object_deleted, Milestone, dispatch_uid="milestone_deleted")
 
+pre_save.connect(link_project_stream, Ticket, dispatch_uid="link_project_stream")
+pre_save.connect(link_milestone_stream, Ticket, dispatch_uid="link_milestone_stream")
 post_save.connect(notify_object_created, Ticket, dispatch_uid="ticket_created")
 post_change.connect(notify_object_changed, Ticket, dispatch_uid="ticket_changed")
 post_delete.connect(notify_object_deleted, Ticket, dispatch_uid="ticket_deleted")
