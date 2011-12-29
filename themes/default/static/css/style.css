@@ -1286,7 +1286,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     margin-right: 5px;
 }
 
-#main .text-widget-template .body { padding: 10px; }
+#main .text-widget-template .body,
+#main .categories-widget-template .body { padding: 10px; }
 
 #main .milestones .actions {
     position: relative;
