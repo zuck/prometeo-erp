@@ -24,8 +24,12 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
+from prometeo.core.utils import check_dependency
 from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
+
+check_dependency('prometeo.core.menus')
+check_dependency('prometeo.core.auth')
 
 def install(sender, **kwargs):
     user_area_not_logged_menu, is_new = Menu.objects.get_or_create(slug="user_area_not_logged")
@@ -39,7 +43,5 @@ def install(sender, **kwargs):
         only_authenticated=False,
         menu=user_area_not_logged_menu
     )
-    
-    post_syncdb.disconnect(install)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_notifications")

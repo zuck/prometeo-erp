@@ -23,8 +23,11 @@ __version__ = '0.0.5'
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
+from prometeo.core.utils import check_dependency
 from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
+
+check_dependency('prometeo.core.widgets')
 
 def install(sender, **kwargs):
     sidebar_region, is_new = Region.objects.get_or_create(slug="sidebar")
@@ -54,7 +57,5 @@ def install(sender, **kwargs):
         sort_order=1,
         region=sidebar_region
     )
-    
-    post_syncdb.disconnect(install)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_menus")

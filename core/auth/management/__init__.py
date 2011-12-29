@@ -26,11 +26,20 @@ from django.utils.translation import ugettext_noop as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 
+from prometeo.core.utils import check_dependency
 from prometeo.core.widgets.models import *
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
 
 from ..models import *
+
+check_dependency('django.contrib.auth')
+check_dependency('django.contrib.contenttypes')
+check_dependency('django.contrib.comments')
+check_dependency('prometeo.core.widgets')
+check_dependency('prometeo.core.menus')
+check_dependency('prometeo.core.taxonomy')
+check_dependency('prometeo.core.notifications')
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
@@ -148,8 +157,6 @@ def install(sender, **kwargs):
         show_title=False,
         region=sidebar_region
     )
-    
-    post_syncdb.disconnect(install)
 
 def add_view_permission(sender, instance, **kwargs):
     """Adds a view permission for each new ContentType instance.
@@ -158,5 +165,5 @@ def add_view_permission(sender, instance, **kwargs):
         codename = "view_%s" % instance.model
         Permission.objects.get_or_create(content_type=instance, codename=codename, name="Can view %s" % instance.name)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_auth")
 post_save.connect(add_view_permission, ContentType)

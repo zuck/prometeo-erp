@@ -23,8 +23,16 @@ __version__ = '0.0.5'
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
+from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
+
+check_dependency('prometeo.core.widgets')
+check_dependency('prometeo.core.menus')
+check_dependency('prometeo.core.taxonomy')
+check_dependency('prometeo.core.auth')
+check_dependency('prometeo.partners')
+check_dependency('prometeo.documents')
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
@@ -175,7 +183,5 @@ def install(sender, **kwargs):
         title=_("Expense voucher deleted"),
         slug="expensevoucher-deleted"
     )
-    
-    post_syncdb.disconnect(install)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_hr")

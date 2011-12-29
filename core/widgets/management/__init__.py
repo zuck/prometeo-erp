@@ -63,7 +63,5 @@ def install(sender, **kwargs):
         show_title=False,
         region=footer_region
     )
-    
-    post_syncdb.disconnect(install)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_widgets")

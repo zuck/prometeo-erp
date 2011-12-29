@@ -25,10 +25,17 @@ from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 from django.contrib.auth.models import User
 
+from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
 
 from ..models import *
+
+check_dependency('prometeo.core.widgets')
+check_dependency('prometeo.core.menus')
+check_dependency('prometeo.core.taxonomy')
+check_dependency('prometeo.core.auth')
+check_dependency('prometeo.documents')
 
 def install(sender, created_models, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
@@ -248,7 +255,5 @@ def install(sender, created_models, **kwargs):
                 if Partner.objects.create(author=User.objects.all()[0], name=name, vat_number=vat, email=email, url=url, is_managed=True):
                     print "Default managed company created successfully.\n"
             break"""
-    
-    post_syncdb.disconnect(install)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_partners")

@@ -31,6 +31,17 @@ from django.utils.formats import localize
 from django.template.defaultfilters import date, time, striptags, truncatewords
 from django.conf import settings
 
+class DependencyError(Exception):
+    def __init__(self, app_name):
+        self._app_name = app_name
+
+    def __str__(self):
+        return u"A dependency is not satisfied: %s" % app_name
+
+def check_dependency(app_name):
+    if app_name not in settings.INSTALLED_APPS:
+        raise DependencyError(app_name)
+
 def clean_referer(request, default_referer='/'):
     """Returns the HTTP referer of the given <request>.
     

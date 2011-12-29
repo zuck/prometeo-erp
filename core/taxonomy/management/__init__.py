@@ -23,7 +23,10 @@ __version__ = '0.0.5'
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
+from prometeo.core.utils import check_dependency
 from prometeo.core.widgets.models import *
+
+check_dependency('prometeo.core.widgets')
 
 def install(sender, **kwargs):    
     # Widgets.
@@ -42,7 +45,5 @@ def install(sender, **kwargs):
         source="prometeo.core.taxonomy.widgets.tag_cloud",
         template_name="taxonomy/widgets/tag_cloud.html",
     )
-    
-    post_syncdb.disconnect(install)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_taxonomy")

@@ -24,10 +24,18 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
 
+from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
 
 from ..models import *
+
+check_dependency('prometeo.core.widgets')
+check_dependency('prometeo.core.menus')
+check_dependency('prometeo.core.taxonomy')
+check_dependency('prometeo.core.auth')
+check_dependency('prometeo.documents')
+check_dependency('prometeo.partners')
 
 def install(sender, created_models, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
@@ -115,7 +123,5 @@ def install(sender, created_models, **kwargs):
         title=_("Sales invoice deleted"),
         slug="salesinvoice-deleted"
     )
-    
-    post_syncdb.disconnect(install)
 
-post_syncdb.connect(install)
+post_syncdb.connect(install, dispatch_uid="install_sales")
