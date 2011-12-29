@@ -209,7 +209,7 @@ thead td { border-bottom: none; }
 
 thead td, th {
     color: #fff;
-    background: #1f1f1f;
+    background: #1f1f1f url(images/footer.jpg) repeat-x top;
     border-right: 1px solid #fff;
     border-bottom: 1px solid #fff;
     padding: 5px 10px;
@@ -539,7 +539,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
  * Layout.
  */
 
-#logo, #nav, #breadcrumbs, #content, #footer {
+#header, #logo, #nav, #breadcrumbs, #content, #footer {
     clear: both;
     float: left;
     padding: 0;
@@ -547,12 +547,16 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
     min-width: 1024px;
 }
 
+#header {
+    margin-top: 28px;
+    background: #ce0600 url(images/header.jpg) repeat-x bottom;
+    border-top: 1px solid #ec7672;
+}
+
 #logo {
     height: 60px;
-    margin-top: 28px;
-    background: #ce0600 url(images/logo.png) no-repeat 20px center;
-    border-top: 1px solid #ec7672;
-    border-bottom: 1px solid #7d0400;
+    background: url(images/logo.png) no-repeat 20px center;
+    border-bottom: 1px solid #1f1f1f;
     color: #fff;
 }
 
@@ -663,7 +667,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #breadcrumbs {
     padding: 6px 0;
-    background: #f8f8f8;
+    background: #f8f8f8 url(images/menu.jpg) repeat-x bottom;
     border-top: 1px solid #fff;
     border-bottom: 1px solid #c0c0c0;
 }
@@ -1151,7 +1155,7 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .sections .menu li a, #main .sections .menu li span {
     display: block;
-    background: #f8f8f8;
+    background: #f8f8f8 url(images/menu.jpg) repeat-x bottom;
     border: none;
     border-top: 1px solid #c0c0c0;
     border-right: 1px solid #c0c0c0;
