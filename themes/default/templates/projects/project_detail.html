@@ -61,7 +61,9 @@
                 {% property_table object "['manager', ['author', 'created'], ['status', 'closed'], 'description', 'working_hours', 'categories', 'tags']" %}
             </table>
         </div>
-        {% region object.dashboard %}
+        {% with dashboard=object.dashboard %}
+        {% include "elements/dashboard.html" %}
+        {% endwith %}
         {% include "elements/comments.html" %}
         {% endblock %}
     </div>

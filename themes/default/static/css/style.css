@@ -1241,10 +1241,16 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 
 #main .properties td .yes, #main .properties td .no { margin: 0; }
 
-#main .dashboard {
+#main .region {
     clear: both;
     float: left;
     width: 808px;
+}
+
+#main .region p.disabled {
+    padding: 10px;
+    border: 1px dashed #c0c0c0;
+    margin-bottom: 20px;
 }
 
 #main .widget {
@@ -1259,9 +1265,8 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f; }
 #main .widget .title {
     width: 367px;
     padding: 5px 10px;
-    background: #1f1f1f;
-    color: #fff;
-    border-bottom: none;
+    background: #f8f8f8 url(images/menu.jpg) repeat-x bottom;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 #main .widget .title h1,

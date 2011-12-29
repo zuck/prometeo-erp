@@ -61,7 +61,9 @@
                 {% property_table object "['ean13', ['uom', 'uos'], ['uom_to_uos', 'weight'], ['is_consumable', 'is_service'], ['sales_price', 'sales_currency'], ['max_sales_discount', 'sales_tax'], 'description', 'categories', 'tags']" %}
             </table>
         </div>
-        {% region object.dashboard %}
+        {% with dashboard=object.dashboard %}
+        {% include "elements/dashboard.html" %}
+        {% endwith %}
         {% include "elements/comments.html" %}
         {% endblock %}
     </div>

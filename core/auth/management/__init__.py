@@ -147,7 +147,8 @@ def install(sender, **kwargs):
         slug="user-profile-widget-template",
         description=_("It renders the current user's profile."),
         source="prometeo.core.widgets.base.dummy",
-        template_name="auth/widgets/user_profile.html"
+        template_name="auth/widgets/user_profile.html",
+        public=False,
     )
 
     profile_widget, is_new = Widget.objects.get_or_create(

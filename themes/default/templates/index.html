@@ -9,11 +9,6 @@
 {% endblock %}
 
 {% block main %}
-<div class="actions">
-    <ul>
-        <li class="add"><a href="{% url widget_add %}">{% trans 'Add' %}</a></li>
-    </ul>
-</div>
 <div class="details">
     {% with dashboard=user.get_profile.dashboard %}
     {% include "elements/dashboard.html" %}

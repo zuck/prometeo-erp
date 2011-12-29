@@ -61,7 +61,9 @@
                 {% property_table object "[['owner', 'address'], 'value']" %}
             </table>
         </div>
-        {% region object.dashboard %}
+        {% with dashboard=object.dashboard %}
+        {% include "elements/dashboard.html" %}
+        {% endwith %}
         {% include "elements/comments.html" %}
         {% endblock %}
     </div>

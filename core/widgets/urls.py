@@ -24,7 +24,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('prometeo.core.widgets.views',
 
-    url(r'^widgets/add/$', view='widget_add', name='widget_add'),
+    url(r'^widgets/add/(?P<slug>[-\w]+)/$', view='widget_add', name='widget_add'),
     url(r'^widgets/(?P<slug>[-\w]+)/edit/$', view='widget_edit', name='widget_edit'),
     url(r'^widgets/(?P<slug>[-\w]+)/delete/$', view='widget_delete', name='widget_delete'),
 )

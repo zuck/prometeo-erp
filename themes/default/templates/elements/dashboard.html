@@ -1,8 +1,17 @@
 {% load i18n %}
 {% load region %}
 
-{% if dashboard.widgets.all %}
-<div class="dashboard">{% region dashboard.slug %}</div>
-{% else %}
-<p class="disabled">{% trans "No widgets found." %}</p>
-{% endif %}
+<div class="dashboard">
+    <div class="actions">
+        <ul>
+            <li class="add"><a title="{% trans 'Add widget' %}" href="{% url widget_add dashboard.slug %}">{% trans 'Add' %}</a></li>
+        </ul>
+    </div>
+    <div class="region">
+        {% if dashboard.widgets.all %}
+        {% region dashboard.slug %}</div>
+        {% else %}
+        <p class="disabled">{% trans "No widgets found." %}</p>
+        {% endif %}
+    </div>
+</div>

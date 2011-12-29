@@ -47,7 +47,8 @@ class WidgetTemplate(models.Model):
     source = models.CharField(blank=False, null=False, max_length=200, verbose_name=_('source'))
     template_name = models.CharField(blank=True, null=True, max_length=200, default="widgets/widget.html", verbose_name=_('template name'))
     context = models.TextField(blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'), verbose_name=_('context'))
-
+    public = models.BooleanField(default=True, verbose_name=_('public?'))
+    
     class Meta:
         ordering = ('title',)
         verbose_name = _('widget template')

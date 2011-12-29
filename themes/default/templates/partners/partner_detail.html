@@ -61,7 +61,9 @@
                 {% property_table object "['is_managed', ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'ssn'], ['language', 'timezone'], ['url', 'email'], ['main_address', 'main_phone_number'], ['terms_of_payment', 'currency'], 'description', 'categories', 'tags']" %}
             </table>
         </div>
-        {% region object.dashboard %}
+        {% with dashboard=object.dashboard %}
+        {% include "elements/dashboard.html" %}
+        {% endwith %}
         {% include "elements/comments.html" %}
         {% endblock %}
     </div>

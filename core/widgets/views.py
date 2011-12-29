@@ -29,45 +29,48 @@ from django.template import RequestContext
 from django.template.defaultfilters import slugify
 from django.contrib import messages
 
+from prometeo.core.utils import clean_referer
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 
 from models import *
 from forms import *
 
-def _get_dashboard(request, *args, **kwargs):
-    dashboard = kwargs.get('dashboard', None)
-    if not dashboard:
-        dashboard = request.user.get_profile().dashboard
-    else:
-        dashboard = get_object_or_404(slug=dashboard)
-    return dashboard
+def _get_region(request, *args, **kwargs):
+    slug = kwargs.get('slug', None)
+    return get_object_or_404(Region, slug=slug)
 
 def _get_widget(request, *args, **kwargs):
     slug = kwargs.get('slug', None)
     return get_object_or_404(Widget, slug=slug)
 
-@permission_required('widgets.change_dashboard', _get_dashboard)
-def widget_add(request, dashboard=None, **kwargs):
-    """Adds a new widget for the current user's dashboard.
+@permission_required('widgets.add_widget')
+@permission_required('widgets.change_region', _get_region)
+def widget_add(request, slug, **kwargs):
+    """Adds a new widget to the given region.
     """
-    region = _get_dashboard(request, dashboard, **kwargs)
+    next = request.GET.get('next', clean_referer(request))
+
+    region = get_object_or_404(Region, slug=slug)
     widget = Widget(region=region, sort_order=region.widgets.count(), editable=True)
+
     if request.method == 'POST':
         form = WidgetForm(request.POST, instance=widget)
         if form.is_valid():
             widget.slug = slugify("%s_%s" % (widget.title, request.user.pk))
             widget = form.save()
             messages.success(request, _("The widget has been saved."))
-            return redirect_to(request, url="/")
+            return redirect_to(request, url=next)
     else:
         form = WidgetForm(instance=widget)
 
-    return render_to_response('widgets/widget_edit.html', RequestContext(request, {'form': form, 'object': widget}))
+    return render_to_response('widgets/widget_edit.html', RequestContext(request, {'form': form, 'object': widget, 'next': next}))
 
 @permission_required('widgets.change_widget', _get_widget)
 def widget_edit(request, slug, **kwargs):
-    """Edits an existing widget for the current user's dashboard.
+    """Edits an existing widget.
     """
+    next = request.GET.get('next', clean_referer(request))
+
     widget = get_object_or_404(Widget, slug=slug)
 
     if request.method == 'POST':
@@ -75,21 +78,24 @@ def widget_edit(request, slug, **kwargs):
         if form.is_valid():
             widget = form.save()
             messages.success(request, _("The widget has been updated."))
-            return redirect_to(request, url="/")
+            return redirect_to(request, url=next)
     else:
         form = WidgetForm(instance=widget)
 
-    return render_to_response('widgets/widget_edit.html', RequestContext(request, {'form': form, 'object': widget}))
+    return render_to_response('widgets/widget_edit.html', RequestContext(request, {'form': form, 'object': widget, 'next': next}))
 
 @permission_required('widgets.delete_widget', _get_widget)
 def widget_delete(request, slug, **kwargs):
-    """Deletes an existing widget from the current user's dashboard.
+    """Deletes an existing widget.
     """
+    next = request.GET.get('next', clean_referer(request))
+
     return create_update.delete_object(
         request,
         model=Widget,
         slug=slug,
-        post_delete_redirect='/',
+        post_delete_redirect=next,
         template_name='widgets/widget_delete.html',
+        extra_context={'next': next},
         **kwargs
      )

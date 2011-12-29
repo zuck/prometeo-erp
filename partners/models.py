@@ -29,7 +29,7 @@ from prometeo.core.models import Commentable
 
 from managers import *
 
-class Contact(models.Model):
+class Contact(Commentable):
     """Contact model.
     """
     firstname = models.CharField(max_length=255, verbose_name=_('firstname'))

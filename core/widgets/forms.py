@@ -47,5 +47,9 @@ class WidgetForm(forms.ModelForm):
         exclude = ['region', 'slug', 'show_title', 'editable', 'sort_order']
         widgets = {'context': JsonPairWidget()}
 
+    def __init__(self, *args, **kwargs):
+        super(WidgetForm, self).__init__(*args, **kwargs)
+        self.fields['template'].queryset = WidgetTemplate.objects.filter(public=True)
+
 enrich_form(WidgetForm)
 enrich_form(WidgetTemplateForm)

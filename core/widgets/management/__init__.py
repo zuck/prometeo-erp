@@ -54,6 +54,7 @@ def install(sender, **kwargs):
         source="prometeo.core.widgets.base.dummy",
         template_name="widgets/powered-by.html",
         context="{\"text\": \"Prometeo\", \"url\": \"http://code.google.com/p/prometeo-erp/\"}",
+        public=False,
     )
 
     powered_by_widget, is_new = Widget.objects.get_or_create(
