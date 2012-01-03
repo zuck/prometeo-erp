@@ -268,19 +268,33 @@ td .yes, td .no {
 
 .avatar img { margin: 0; }
 
-form .submit input, .submit a {
-    float: right;
+form .submit input, .submit a, .cancel a {
     width: auto;
     padding: 6px 16px;
     margin: 0;
-    color: #fff;
     font-weight: bold;
-    background: #ce0600 url(images/button.jpg) repeat-x bottom;
-    border: 1px solid #1f1f1f;
     text-align: center;
 }
 
-form .submit input:hover, .submit a:hover { background: #1f1f1f url(images/footer.jpg) repeat-x top; }
+form .submit input, .submit a {
+    float: right;
+    background: #ce0600 url(images/button.jpg) repeat-x bottom;
+    border: 1px solid #1f1f1f;
+    color: #fff;
+}
+
+.cancel a {
+    float: left;
+    background: #f8f8f8 url(images/menu.jpg) repeat-x bottom;
+    border: 1px solid #c0c0c0;
+    color: #000;
+}
+
+form .submit input:hover, .submit a:hover, .cancel a:hover {
+    background: #1f1f1f url(images/footer.jpg) repeat-x top;
+    border: 1px solid #1f1f1f;
+    color: #fff;
+}
 
 .paginator {
     clear: both;

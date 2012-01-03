@@ -1,9 +1,6 @@
-{% extends "base.html" %}
+{% extends "base_delete.html" %}
 
-{% load i18n %}
 {% load breadcrumbs %}
-
-{% block meta_title %}{% trans 'Delete job' %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -12,21 +9,4 @@
     {% add_crumb 'Contacts' 'partner_contacts' object.partner.pk %}
     {% add_crumb object 'contact_jobs' object.contact.pk %}
     {% add_crumb 'Delete' %}
-{% endblock %}
-
-{% block title %}
-<div class="title">
-    <h1>{{ object }}</h1>
-    <h2>{% trans 'Delete' %}</h2>
-</div>
-{% endblock %}
-
-{% block main %}
-<form method="post" action="{% url contact_delete_job object.contact.pk object.pk %}">
-    {% csrf_token %}
-    {% with contact=object.contact role=object.get_role_display partner=object.partner %}
-    <p>{% blocktrans %}Are you sure you want to remove {{ contact }} as {{ role }} from {{ partner }}?{% endblocktrans %}</p>
-    {% endwith %}
-    <span class="submit"><input type="submit" value="{% trans "Yes, I'm sure." %}" /></span>
-</form>
 {% endblock %}

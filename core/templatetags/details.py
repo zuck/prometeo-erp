@@ -20,6 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
+import re
+
 from django.db import models
 from django import forms
 from django.forms.forms import BoundField, pretty_name
@@ -34,7 +36,35 @@ from django.utils.safestring import mark_safe
 from prometeo.core.templatetags import parse_args_kwargs
 from prometeo.core.utils import is_visible, value_to_string, field_to_value, field_to_string
 
-register = template.Library()   
+register = template.Library()
+
+class ModelNameNode(template.Node):
+    def __init__(self, instance, var_name):
+        self.instance = instance
+        self.var_name = var_name
+
+    def render(self, context):
+        instance = self.instance.resolve(context)
+        context[self.var_name] = u"%s" % (instance._meta.verbose_name or _(instance.__class__.__name__.lower()))
+        return ''
+
+@register.tag
+def model_name(parser, token):
+    """This templatetag can be rewritten for Django 1.4 as:
+
+    @register.assignment_tag
+    def model_name(instance):
+         return instance._meta.verbose_name or _(instance.__class__.__name__)
+    """
+    try:
+        tag_name, arg = token.contents.split(None, 1)
+    except ValueError:
+        raise template.TemplateSyntaxError("%r tag requires arguments" % token.contents.split()[0])
+    m = re.search(r'(.*?) as (\w+)', arg)
+    if not m:
+        raise template.TemplateSyntaxError("%r tag had invalid arguments" % tag_name)
+    instance, var_name = m.groups()
+    return ModelNameNode(Variable(instance), var_name)
         
 def row_template(index):
     if (index % 2) == 1:

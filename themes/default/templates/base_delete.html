@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load details %}
+
+{% block meta_title %}{% trans "Delete" %}{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|striptags|capfirst }}</h1>
+    <h2>{% trans 'Delete' %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+{% model_name object as model %}
+<form method="post" action="{{ request.path }}">
+    {% csrf_token %}
+    {% block message %}<p>{% blocktrans %}Are you sure you want to delete this {{ model }}?{% endblocktrans %}</p>{% endblock %}
+    {% block buttons %}
+    <span class="submit"><input title="{% trans 'Confirm' %}" type="submit" value="{% trans "Yes, I'm sure." %}" /></span>
+    <span class="cancel"><a title="{% trans 'Cancel' %}" href="{{ backlink|default:object.get_absolute_url|default:"/" }}">{% trans "No, I'm not." %}</a></span>
+    {% endblock %}
+</form>
+{% endblock %}
