@@ -32,7 +32,7 @@ class ContactForm(forms.ModelForm):
     """
     class Meta:
         model = Contact
-        exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'created']
+        exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'created', 'stream']
         widgets = {
             'date_of_birth': DateWidget(),
             'main_address': SelectAndAddWidget(add_url='/addresses/add/'),
