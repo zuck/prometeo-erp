@@ -1287,7 +1287,10 @@ form .submit input:hover, .submit a:hover { background: #1f1f1f url(images/foote
 }
 
 #main .text-widget-template .body,
-#main .categories-widget-template .body { padding: 10px; }
+#main .categories-widget-template .body,
+#main .tag-cloud-widget-template .body { padding: 10px; }
+
+#main .categories-widget-template ul { margin-bottom: 0; }
 
 #main .milestones .actions {
     position: relative;
