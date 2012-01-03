@@ -11,8 +11,8 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Projects' '/projects/' %}
-    {% add_crumb object.title %}
+    {% add_crumb 'Projects' 'project_list' %}
+    {% add_crumb object %}
 {% endblock %}
 
 {% block title %}
