@@ -56,7 +56,7 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
         if form.is_valid():
             form.save()
             form = SubscriptionsForm(user=user)
-            messages.success(request, _("The user's profile was updated successfully."))
+            messages.success(request, _("The user was updated successfully."))
     else:
         if Signature.objects.count() > 0:
             form = SubscriptionsForm(user=user)
