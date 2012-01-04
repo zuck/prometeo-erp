@@ -215,7 +215,7 @@ def event_add(request, year=None, month=None, day=None, **kwargs):
         if form.is_valid():
             form.save()
             event.calendars.add(request.user.get_profile().calendar)
-            messages.success(request, _("The event has been saved."))
+            messages.success(request, _("The event was created successfully."))
             return redirect_to(request, url=event.get_absolute_url())
     else:
         form = EventForm(instance=event)
@@ -226,18 +226,13 @@ def event_add(request, year=None, month=None, day=None, **kwargs):
 def event_edit(request, id, **kwargs):
     """Edits an event.
     """
-    event = get_object_or_404(Event, id=id)
-
-    if request.method == 'POST':
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _("The event has been saved."))
-            return redirect_to(request, url=event.get_absolute_url())
-    else:
-        form = EventForm(instance=event)
-
-    return render_to_response('calendar/event_edit.html', RequestContext(request, {'form': form, 'object': event}))
+    return create_update.update_object(
+        request,
+        form_class=EventForm,
+        object_id=id,
+        template_name='calendar/event_edit.html',
+        **kwargs
+    )
 
 @permission_required('calendar.delete_event', _get_event) 
 def event_delete(request, id, **kwargs):

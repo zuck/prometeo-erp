@@ -68,7 +68,7 @@ def movement_add(request, **kwargs):
             pe = pform.save()
             movement.product_entry = pe
             form.save()
-            messages.success(request, _("The movement has been saved."))
+            messages.success(request, _("The movement was created successfully."))
             return redirect_to(request, url=movement.get_absolute_url())
     else:
         form = MovementForm(instance=movement)
@@ -105,7 +105,7 @@ def movement_edit(request, id, **kwargs):
             pe = pform.save()
             movement.product_entry = pe
             form.save()
-            messages.success(request, _("The movement has been saved."))
+            messages.success(request, _("The movement was updated successfully."))
             return redirect_to(request, url=movement.get_absolute_url())
     else:
         form = MovementForm(instance=movement)

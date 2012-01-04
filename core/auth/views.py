@@ -90,7 +90,7 @@ def user_add(request, **kwargs):
         form = UserEditForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, _("The user's profile has been saved."))
+            messages.success(request, _("The user was created successfully."))
             return redirect_to(request, url=user.get_absolute_url())
     else:
         form = UserEditForm(instance=user)
@@ -121,7 +121,7 @@ def user_edit(request, username, **kwargs):
             user = form.save()
             profile = pform.save()
             set_language(request, profile.language)
-            messages.success(request, _("The user's profile has been updated."))
+            messages.success(request, _("The user was updated successfully."))
             return redirect_to(request, url=user.get_absolute_url())
     else:
         form = UserEditForm(instance=user)

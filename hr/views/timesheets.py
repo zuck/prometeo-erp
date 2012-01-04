@@ -90,7 +90,7 @@ def timesheet_add(request, **kwargs):
             doc.content_object = timesheet 
             dform.save()
             formset.save()
-            messages.success(request, _("The timesheet has been saved."))
+            messages.success(request, _("The timesheet was created successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
@@ -113,7 +113,7 @@ def timesheet_edit(request, id, **kwargs):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
-            messages.success(request, _("The timesheet has been updated."))
+            messages.success(request, _("The timesheet was updated successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)

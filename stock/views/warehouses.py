@@ -68,7 +68,7 @@ def warehouse_add(request, **kwargs):
         form = WarehouseForm(request.POST, instance=warehouse)
         if form.is_valid():
             form.save()
-            messages.success(request, _("The warehouse has been saved."))
+            messages.success(request, _("The warehouse was created successfully."))
             return redirect_to(request, url=warehouse.get_absolute_url())
     else:
         form = WarehouseForm(instance=warehouse)
@@ -146,7 +146,7 @@ def warehouse_add_ingoing_movement(request, id, **kwargs):
             pe = pform.save()
             movement.product_entry = pe
             form.save()
-            messages.success(request, _("The movement has been saved."))
+            messages.success(request, _("The movement was created successfully."))
             return redirect_to(request, url=movement.get_absolute_url())
     else:
         form = IngoingMovementForm(instance=movement)
@@ -168,7 +168,7 @@ def warehouse_add_outgoing_movement(request, id, **kwargs):
             pe = pform.save()
             movement.product_entry = pe
             form.save()
-            messages.success(request, _("The movement has been saved."))
+            messages.success(request, _("The movement was created successfully."))
             return redirect_to(request, url=movement.get_absolute_url())
     else:
         form = OutgoingMovementForm(instance=movement)

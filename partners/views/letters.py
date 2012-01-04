@@ -75,7 +75,7 @@ def letter_add(request, **kwargs):
             form.save()
             doc.content_object = letter 
             dform.save()
-            messages.success(request, _("The letter has been saved."))
+            messages.success(request, _("The letter was created successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
@@ -113,7 +113,7 @@ def letter_edit(request, id, **kwargs):
         if form.is_valid() and dform.is_valid():
             form.save()
             dform.save()
-            messages.success(request, _("The letter has been updated."))
+            messages.success(request, _("The letter was updated successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)

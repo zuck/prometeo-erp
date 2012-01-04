@@ -78,7 +78,7 @@ def deliverynote_add(request, **kwargs):
             dform.save()
             for e in formset.save():
                 deliverynote.entries.add(e)
-            messages.success(request, _("The delivery note has been saved."))
+            messages.success(request, _("The delivery note was created successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
@@ -120,7 +120,7 @@ def deliverynote_edit(request, id, **kwargs):
             dform.save()
             for e in formset.save():
                 deliverynote.entries.add(e)
-            messages.success(request, _("The delivery note has been saved."))
+            messages.success(request, _("The delivery note was updated successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)

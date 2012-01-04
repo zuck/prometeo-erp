@@ -73,7 +73,7 @@ def partner_add(request, **kwargs):
         form = PartnerForm(request.POST, instance=partner)
         if form.is_valid():
             form.save()
-            messages.success(request, _("The partner has been saved."))
+            messages.success(request, _("The partner was created successfully."))
             return redirect_to(request, url=partner.get_absolute_url())
     else:
         form = PartnerForm(instance=partner)

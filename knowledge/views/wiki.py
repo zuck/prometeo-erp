@@ -83,8 +83,12 @@ def page_edit(request, slug=None, **kwargs):
     if request.method == 'POST':
         form = WikiPageForm(request.POST, instance=page)
         if form.is_valid():
+            is_new = (not page.pk)
             form.save()
-            messages.success(request, _("The page has been saved."))
+            if is_new:
+                messages.success(request, _("The page was created successfully."))
+            else:
+                messages.success(request, _("The page was updated successfully."))
             return redirect_to(request, url=page.get_absolute_url())
     else:
         form = WikiPageForm(instance=page)

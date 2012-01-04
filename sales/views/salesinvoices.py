@@ -78,7 +78,7 @@ def salesinvoice_add(request, **kwargs):
             dform.save()
             for e in formset.save():
                 salesinvoice.entries.add(e)
-            messages.success(request, _("The sales invoice has been saved."))
+            messages.success(request, _("The sales invoice was created successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
@@ -120,7 +120,7 @@ def salesinvoice_edit(request, id, **kwargs):
             dform.save()
             for e in formset.save():
                 salesinvoice.entries.add(e)
-            messages.success(request, _("The sales invoice has been saved."))
+            messages.success(request, _("The sales invoice was updated successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)

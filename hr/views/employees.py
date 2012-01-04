@@ -81,7 +81,7 @@ def employee_add(request, **kwargs):
             form = EmployeeForm(request.POST, instance=employee)
             if form.is_valid():
                 form.save()
-                messages.success(request, _("The employee has been saved."))
+                messages.success(request, _("The employee was created successfully."))
                 return redirect_to(request, url=employee.get_absolute_url())
             else:
                 job.delete()
@@ -106,7 +106,7 @@ def employee_edit(request, id, **kwargs):
         if jform.is_valid() and form.is_valid():
             jform.save()
             form.save()
-            messages.success(request, _("The employee has been updated."))
+            messages.success(request, _("The employee was updated successfully."))
             return redirect_to(request, url=employee.get_absolute_url())
     else:
         jform = JobForm(instance=job)

@@ -78,7 +78,7 @@ def milestone_add(request, project, **kwargs):
         form = MilestoneForm(request.POST, instance=milestone)
         if form.is_valid():
             milestone = form.save()
-            messages.success(request, _("The milestone has been saved."))
+            messages.success(request, _("The milestone was created successfully."))
             return redirect_to(request, url=milestone.get_absolute_url())
     else:
         form = MilestoneForm(instance=milestone)
@@ -95,7 +95,7 @@ def milestone_edit(request, project, code, **kwargs):
         form = MilestoneForm(request.POST, instance=milestone)
         if form.is_valid():
             milestone = form.save()
-            messages.success(request, _("The milestone has been saved."))
+            messages.success(request, _("The milestone was updated successfully."))
             return redirect_to(request, url=milestone.get_absolute_url())
     else:
         form = MilestoneForm(instance=milestone)

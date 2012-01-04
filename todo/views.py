@@ -91,7 +91,7 @@ def task_add(request, **kwargs):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             task = form.save()
-            messages.success(request, _("The task has been saved."))
+            messages.success(request, _("The task was created successfully."))
             return redirect_to(request, url=task.get_absolute_url())
     else:
         form = TaskForm(instance=task)
@@ -108,7 +108,7 @@ def task_edit(request, id, **kwargs):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             task = form.save()
-            messages.success(request, _("The task has been updated."))
+            messages.success(request, _("The task was updated successfully."))
             return redirect_to(request, url=task.get_absolute_url())
     else:
         form = TaskForm(instance=task)
@@ -136,7 +136,7 @@ def task_close(request, id, **kwargs):
 
     task.closed = datetime.now()
     task.save()
-    messages.success(request, _("The task has been closed."))
+    messages.success(request, _("The task was closed succesfully."))
 
     return redirect_to(request, permanent=False, url=task.get_absolute_url())
 
@@ -148,6 +148,6 @@ def task_reopen(request, id, **kwargs):
 
     task.closed = None
     task.save()
-    messages.success(request, _("The task has been reopened."))
+    messages.success(request, _("The task was reopened succesfully."))
 
     return redirect_to(request, permanent=False, url=task.get_absolute_url())

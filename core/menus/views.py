@@ -77,7 +77,7 @@ def bookmark_add(request, username, **kwargs):
         if form.is_valid():
             link.slug = slugify("%s_%s" % (link.title, user.pk))
             link = form.save()
-            messages.success(request, _("The link has been saved."))
+            messages.success(request, _("The link was created successfully."))
             return redirect_to(request, url=reverse('bookmark_list', args=[user.username]))
     else:
         url = clean_referer(request)
@@ -102,7 +102,7 @@ def bookmark_edit(request, username, slug, **kwargs):
         form = LinkForm(request.POST, instance=link)
         if form.is_valid():
             link = form.save()
-            messages.success(request, _("The link has been updated."))
+            messages.success(request, _("The link was updated successfully."))
             return redirect_to(request, url=reverse('bookmark_list', args=[user.username]))
     else:
         form = LinkForm(instance=link)

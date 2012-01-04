@@ -67,7 +67,7 @@ def product_add(request, **kwargs):
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            messages.success(request, _("The product has been saved."))
+            messages.success(request, _("The product was created successfully."))
             return redirect_to(request, url=product.get_absolute_url())
     else:
         form = ProductForm(instance=product)
@@ -141,7 +141,7 @@ def product_add_supply(request, id, **kwargs):
         form = SupplyForm(request.POST, instance=supply)
         if form.is_valid():
             form.save()
-            messages.success(request, _("The supply has been saved."))
+            messages.success(request, _("The supply was created successfully."))
             return redirect_to(request, url=supply.get_absolute_url())
     else:
         form = SupplyForm(instance=supply)

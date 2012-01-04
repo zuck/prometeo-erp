@@ -2,11 +2,11 @@
 
 {% if author and author_link %}
 {% blocktrans %}
-<p>The following attributes of {{ class }} <a href="{{ link }}">{{ name }}</a> has been changed by <a href="{{ author_link }}">{{ author }}</a>:</p>
+<p>The following attributes of {{ class }} <a href="{{ link }}">{{ name }}</a> was changed by <a href="{{ author_link }}">{{ author }}</a>:</p>
 {% endblocktrans %}
 {% else %}
 {% blocktrans %}
-<p>The following attributes of {{ class }} <a href="{{ link }}">{{ name }}</a> has been changed:</p>
+<p>The following attributes of {{ class }} <a href="{{ link }}">{{ name }}</a> was changed:</p>
 {% endblocktrans %}
 {% endif %}
 <dl>

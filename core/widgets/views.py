@@ -58,7 +58,7 @@ def widget_add(request, slug, **kwargs):
         if form.is_valid():
             widget.slug = slugify("%s_%s" % (widget.title, request.user.pk))
             widget = form.save()
-            messages.success(request, _("The widget has been saved."))
+            messages.success(request, _("The widget was created successfully."))
             return redirect_to(request, url=next)
     else:
         form = WidgetForm(instance=widget)
@@ -77,7 +77,7 @@ def widget_edit(request, slug, **kwargs):
         form = WidgetForm(request.POST, instance=widget)
         if form.is_valid():
             widget = form.save()
-            messages.success(request, _("The widget has been updated."))
+            messages.success(request, _("The widget was updated successfully."))
             return redirect_to(request, url=next)
     else:
         form = WidgetForm(instance=widget)

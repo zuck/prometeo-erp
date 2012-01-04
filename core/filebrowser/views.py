@@ -73,7 +73,7 @@ def mkdir(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkd
         if form.is_valid():
             name = form.cleaned_data['name']
             os.mkdir(os.path.join(fi.abspath, name))
-            messages.success(request, _('The folder "%(name)s" has been created.') % {'name': name})
+            messages.success(request, _('The folder "%(name)s" was created succesfully.') % {'name': name})
 
             return redirect(path_to_url(fi.abspath))
     else:
@@ -98,7 +98,7 @@ def upload(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/up
             destination = open(file_path, 'wb+')
             for chunk in form.cleaned_data['file'].chunks():
                 destination.write(chunk)
-            messages.success(request, _('File "%(filename)s" has been uploaded.') % {'filename': filename})
+            messages.success(request, _('The file "%(filename)s" was uploaded succesfully.') % {'filename': filename})
 
             return redirect(path_to_url(fi.abspath))
     else:
@@ -122,7 +122,7 @@ def move(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/move
             
             if new_path != fi.abspath:
                 shutil.move(fi.abspath, new_path)
-                messages.success(request, _('"%(name)s" has been moved to "%(dest)s".') % {'name': fi.name, 'dest': path_to_url(destination)})
+                messages.success(request, _('"%(name)s" was moved succesfully to "%(dest)s".') % {'name': fi.name, 'dest': path_to_url(destination)})
 
             return redirect(path_to_url(destination))
     else:
@@ -150,7 +150,7 @@ def copy(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/copy
                     shutil.copytree(fi.abspath, new_path)
                 else:
                     shutil.copy(fi.abspath, new_path)
-                messages.success(request, _('A copy of "%(name)s" has been created.') % {'name': fi.name})
+                messages.success(request, _('A copy of "%(name)s" was created succesfully.') % {'name': fi.name})
 
             return redirect(path_to_url(destination))
     else:
@@ -175,7 +175,7 @@ def mkln(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/mkln
 
             if new_path != fi.abspath:
                 os.symlink(fi.abspath, new_path)
-                messages.success(request, _('The link to "%(name)s" has been created.') % {'name': fi.name})
+                messages.success(request, _('The link to "%(name)s" was created succesfully.') % {'name': fi.name})
 
             return redirect(path_to_url(destination))
     else:
@@ -200,11 +200,11 @@ def rename(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/re
             islink = fi.is_link()
             isdir = fi.is_folder()
             if islink:
-                messages.success(request, _('The link has been renamed.'))
+                messages.success(request, _('The link was renamed succesfully.'))
             elif isdir:
-                messages.success(request, _('The folder has been renamed.'))
+                messages.success(request, _('The folder was renamed succesfully.'))
             else:
-                messages.success(request, _('The file has been renamed.'))
+                messages.success(request, _('The file was renamed succesfully.'))
 
             return redirect(redirect_to)
     else:
@@ -226,13 +226,13 @@ def delete(request, url, root=settings.MEDIA_ROOT, template_name='filebrowser/de
         redirect_to = fi.parent.url
         if islink:
             os.remove(fi.abspath)
-            messages.success(request, _('The link has been deleted.'))
+            messages.success(request, _('The link was deleted successfully.'))
         elif isdir:
             shutil.rmtree(fi.abspath)
-            messages.success(request, _('The folder has been deleted.'))
+            messages.success(request, _('The folder was deleted successfully.'))
         else:
             os.remove(fi.abspath)
-            messages.success(request, _('The file has been deleted.'))
+            messages.success(request, _('The file was deleted successfully.'))
         return redirect(redirect_to)
 
     extra_context = {'fileinfo': fi, 'root': root}

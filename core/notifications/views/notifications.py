@@ -56,7 +56,7 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
         if form.is_valid():
             form.save()
             form = SubscriptionsForm(user=user)
-            messages.success(request, _("The user's profile has been saved."))
+            messages.success(request, _("The user's profile was updated successfully."))
     else:
         if Signature.objects.count() > 0:
             form = SubscriptionsForm(user=user)
@@ -83,10 +83,6 @@ def notification_detail(request, username, id, **kwargs):
     """
     user = get_object_or_404(User, username=username)
     notification = get_object_or_404(Notification, pk=id, user=user)
-    
-    if not (request.user.is_authenticated() and (request.user.has_perm('notifications.change_notification') or request.user == user)):
-        messages.error(request, _("You can't view this notification's detials."))
-        return redirect_to(request, url=reverse('user_login'))
 
     if request.user == notification.user:
         notification.read = datetime.now()

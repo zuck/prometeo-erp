@@ -90,7 +90,7 @@ def expensevoucher_add(request, **kwargs):
             doc.content_object = expensevoucher
             dform.save()
             formset.save()
-            messages.success(request, _("The expense voucher has been saved."))
+            messages.success(request, _("The expense voucher was created successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
@@ -113,7 +113,7 @@ def expensevoucher_edit(request, id, **kwargs):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
-            messages.success(request, _("The expense voucher has been updated."))
+            messages.success(request, _("The expense voucher was updated successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)

@@ -68,7 +68,7 @@ def faq_add(request, **kwargs):
         form = FaqForm(request.POST, instance=faq)
         if form.is_valid():
             form.save()
-            messages.success(request, _("The FAQ has been saved."))
+            messages.success(request, _("The FAQ was created successfully."))
             return redirect_to(request, url=faq.get_absolute_url())
     else:
         form = FaqForm(instance=faq)
@@ -86,7 +86,7 @@ def faq_detail(request, id, **kwargs):
         form = AnswerForm(request.POST, instance=answer)
         if form.is_valid():
             form.save()
-            messages.success(request, _("Thank you. Your answer has been saved."))
+            messages.success(request, _("Thank you. Your answer was created successfully."))
     else:
         form = AnswerForm(instance=answer)
 

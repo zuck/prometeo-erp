@@ -3,11 +3,11 @@
 {% with class|capfirst as class %}
 {% if author and author_link %}
 {% blocktrans %}
-<p>{{ class }} <a href="{{ link }}">{{ name }}</a> has been created by <a href="{{ author_link }}">{{ author }}</a>.</p>
+<p>{{ class }} <a href="{{ link }}">{{ name }}</a> was created by <a href="{{ author_link }}">{{ author }}</a>.</p>
 {% endblocktrans %}
 {% else %}
 {% blocktrans %}
-<p>{{ class }} <a href="{{ link }}">{{ name }}</a> has been created.</p>
+<p>{{ class }} <a href="{{ link }}">{{ name }}</a> was created.</p>
 {% endblocktrans %}
 {% endif %}
 {% endwith %}

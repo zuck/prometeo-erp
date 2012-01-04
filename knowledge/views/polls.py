@@ -65,7 +65,7 @@ def poll_add(request, **kwargs):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
-            messages.success(request, _("The poll has been saved."))
+            messages.success(request, _("The poll was created successfully."))
             return redirect_to(request, url=poll.get_absolute_url())
     else:
         form = PollForm(instance=poll)
@@ -103,11 +103,11 @@ def poll_vote(request, id, choice, **kwargs):
             messages.success(request, _("Thank you for your vote."))
         else:
             previous_vote.delete()
-            messages.success(request, _("Thank you. Your vote has been updated."))
+            messages.success(request, _("Thank you. Your vote was updated successfully."))
         new_vote = Vote.objects.create(owner=owner, content_object=choice_obj)
 
     except IndexError:
-        messages.error(request, _("Sorry, you've selected an invalid choice."))
+        messages.error(request, _("Sorry, you selected an invalid choice."))
 
     return redirect_to(request, permanent=False, url=poll.get_absolute_url())
 
@@ -123,7 +123,7 @@ def poll_edit(request, id, **kwargs):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
-            messages.success(request, _("The poll has been saved."))
+            messages.success(request, _("The poll was updated successfully."))
             return redirect_to(request, url=poll.get_absolute_url())
     else:
         form = PollForm(instance=poll)

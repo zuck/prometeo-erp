@@ -110,7 +110,7 @@ def ticket_edit(request, project, code, **kwargs):
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
             ticket = form.save()
-            messages.success(request, _("The ticket has been updated."))
+            messages.success(request, _("The ticket was updated successfully."))
             return redirect_to(request, url=ticket.get_absolute_url())
     else:
         form = TicketForm(instance=ticket)

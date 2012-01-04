@@ -92,7 +92,7 @@ def hardcopy_add(request, id, **kwargs):
         form = HardCopyForm(request.POST, request.FILES, instance=hardcopy)
         if form.is_valid():
             form.save()
-            messages.success(request, _("The hard copy has been saved."))
+            messages.success(request, _("The hard copy was created successfully."))
             return redirect_to(request, url=post_add_redirect)
     else:
         form = HardCopyForm(instance=hardcopy)

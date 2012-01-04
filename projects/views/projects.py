@@ -71,7 +71,7 @@ def project_add(request, **kwargs):
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             project = form.save()
-            messages.success(request, _("The project has been saved."))
+            messages.success(request, _("The project was created successfully."))
             return redirect_to(request, url=project.get_absolute_url())
     else:
         form = ProjectForm(instance=project)
@@ -87,7 +87,7 @@ def project_edit(request, code, **kwargs):
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             project = form.save()
-            messages.success(request, _("The project has been saved."))
+            messages.success(request, _("The project was updated successfully."))
             return redirect_to(request, url=project.get_absolute_url())
     else:
         form = ProjectForm(instance=project)
