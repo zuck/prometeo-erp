@@ -1,9 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-
-{% block meta_title %}{{ object }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -11,32 +9,24 @@
     {% add_crumb object %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{{ object }}</h1>
-</div>
+{% block subtitle %}{% trans "Search results" %}{% endblock %}
+
+{% block objectactions %}
+{% if perms.taxonomy.add_category %}
+<li class="add"><a title="{% trans 'Add' %}" href="{% url category_add %}">{% trans 'Add' %}</a></li>
+{% endif %}
+{% if perms.taxonomy.change_category %}
+<li class="edit"><a title="{% trans 'Edit' %}" href="{% url category_edit object.slug %}">{% trans 'Edit' %}</a></li>
+{% endif %}
+{% if perms.taxonomy.delete_category %}
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url category_delete object.slug %}">{% trans 'Delete' %}</a></li>
+{% endif %}
+{% if perms.taxonomy.change_category %}
+<li class="all"><a title="{% trans 'All' %}" href="{% url category_list %}">{% trans 'All' %}</a></li>
+{% endif %}
 {% endblock %}
 
-{% block main %}
-<div class="actions">
-    <ul>
-        {% if perms.taxonomy.add_category %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url category_add %}">{% trans 'Add' %}</a></li>
-        {% endif %}
-        {% if perms.taxonomy.change_category %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url category_edit object.slug %}">{% trans 'Edit' %}</a></li>
-        {% endif %}
-        {% if perms.taxonomy.delete_category %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url category_delete object.slug %}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        {% if perms.taxonomy.change_category %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url category_list %}">{% trans 'All' %}</a></li>
-        {% endif %}
-    </ul>
-</div>
-{% with categories as object_list %}
-{% include 'elements/navigator.html' %}
-{% endwith %}
+{% block sections %}
 <div class="details">
     {% include "taxonomy/results.html" %}
     {% include "elements/paginator.html" %}

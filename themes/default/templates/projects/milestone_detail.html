@@ -1,14 +1,11 @@
-{% extends "base.html" %}
+{% extends "base_detail.html" %}
 
 {% load i18n %}
 {% load markup %}
 {% load breadcrumbs %}
-{% load navigator %}
 {% load region %}
 {% load menu %}
 {% load details %}
-
-{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -18,64 +15,45 @@
     {% add_crumb object %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{{ object|striptags|capfirst }}</h1>
-    <h2>{% block subtitle %}{% trans "Dashboard" %}{% endblock %}</h2>
-</div>
+{% block objectactions %}
+{% if perms.projects.add_milestone %}
+<li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.project.code %}">{% trans 'Add' %}</a></li>
+{% endif %}
+{% if perms.projects.change_milestone %}
+<li class="edit"><a title="{% trans 'Edit' %}" href="{% url milestone_edit object.project.code object.code %}">{% trans 'Edit' %}</a></li>
+{% endif %}
+{% if perms.projects.delete_milestone %}
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url milestone_delete object.project.code object.code %}">{% trans 'Delete' %}</a></li>
+{% endif %}
+{% if perms.projects.change_milestone %}
+<li class="all"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.code %}">{% trans 'All' %}</a></li>
+{% endif %}
+{% if perms.projects.change_milestone %}
+{% if not object.closed %}
+<li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close object.project.code object.code %}">{% trans 'Close' %}</a></li>
+{% else %}
+<li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen object.project.code object.code %}">{% trans 'Reopen' %}</a></li>
+{% endif %}
+{% endif %}
+{% if perms.projects.change_milestone %}
+{% if user not in object.stream.followers.all %}
+<li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+{% else %}
+<li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+{% endif %}
+{% endif %}
 {% endblock %}
 
-{% block main %}
-<div class="actions">
-    <ul>
-        {% if perms.projects.add_milestone %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.project.code %}">{% trans 'Add' %}</a></li>
-        {% endif %}
-        {% if perms.projects.change_milestone %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url milestone_edit object.project.code object.code %}">{% trans 'Edit' %}</a></li>
-        {% endif %}
-        {% if perms.projects.delete_milestone %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url milestone_delete object.project.code object.code %}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        {% if perms.projects.change_milestone %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.code %}">{% trans 'All' %}</a></li>
-        {% endif %}
-        {% if perms.projects.change_milestone %}
-        {% if not object.closed %}
-        <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close object.project.code object.code %}">{% trans 'Close' %}</a></li>
-        {% else %}
-        <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen object.project.code object.code %}">{% trans 'Reopen' %}</a></li>
-        {% endif %}
-        {% endif %}
-        {% if perms.projects.change_milestone %}
-        {% if user not in object.stream.followers.all %}
-        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
-        {% else %}
-        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
-        {% endif %}
-        {% endif %}
-    </ul>
+{% block objectmenu %}{% menu "milestone_menu" %}{% endblock %}
+
+{% block section %}
+<div class="details">
+    <table class="properties">
+        {% property_table object "[['manager', 'deadline'], ['author', 'created'], ['progress:%', 'closed'], 'description', 'working_hours', 'categories', 'tags']" %}
+    </table>
 </div>
-{% objects_from object %}
-{% with objects as object_list %}
-{% include 'elements/navigator.html' %}
+{% with dashboard=object.dashboard %}
+{% include "elements/dashboard.html" %}
 {% endwith %}
-<div class="sections">
-    <div class="menu">
-        {% menu "milestone_menu" %}
-    </div>
-    <div class="section">
-        {% block section %}
-        <div class="details">
-            <table class="properties">
-                {% property_table object "[['manager', 'deadline'], ['author', 'created'], ['progress:%', 'closed'], 'description', 'working_hours', 'categories', 'tags']" %}
-            </table>
-        </div>
-        {% with dashboard=object.dashboard %}
-        {% include "elements/dashboard.html" %}
-        {% endwith %}
-        {% include "elements/comments.html" %}
-        {% endblock %}
-    </div>
-</div>
+{% include "elements/comments.html" %}
 {% endblock %}

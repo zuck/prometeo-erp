@@ -1,11 +1,8 @@
-{% extends "base.html" %}
+{% extends "base_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-{% load navigator %}
 {% load details %}
-
-{% block meta_title %}{{ object }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -17,22 +14,20 @@
 
 {% block title %}
 <div class="title">
-    <h1>{{ object|capfirst }}</h1>
+    <h1>{{ object|striptags|capfirst }}</h1>
 </div>
 {% endblock %}
 
-{% block main %}
-<div class="actions">
-    <ul>
-        {% if request.user == object.user or perms.notifications.delete_notification %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url notification_delete object.user.username object.pk %}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        {% if perms.notifications.change_notification %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url notification_list object.user.username %}">{% trans 'All' %}</a></li>
-        {% endif %}
-    </ul>
-</div>
-{% include 'elements/navigator.html' %}
+{% block objectactions %}
+{% if request.user == object.user or perms.notifications.delete_notification %}
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url notification_delete object.user.username object.pk %}">{% trans 'Delete' %}</a></li>
+{% endif %}
+{% if perms.notifications.change_notification %}
+<li class="all"><a title="{% trans 'All' %}" href="{% url notification_list object.user.username %}">{% trans 'All' %}</a></li>
+{% endif %}
+{% endblock %}
+
+{% block section %}
 <div class="details">
     <table class="properties">
         {% property_table object "[['created', 'read'], 'description']" %}

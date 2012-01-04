@@ -1,13 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-{% load navigator %}
 {% load avatar %}
 {% load menu %}
 {% load details %}
-
-{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -15,48 +12,29 @@
     {% add_crumb object %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{{ object|escape|capfirst }}</h1>
-    <h2>{% block subtitle %}{% trans "Dashboard" %}{% endblock %}</h2>
-</div>
+{% block objectactions %}
+{% if perms.partners.add_contact %}
+<li class="add"><a title="{% trans 'Add' %}" href="{% url contact_add %}">{% trans 'Add' %}</a></li>
+{% endif %}
+{% if perms.partners.change_contact %}
+<li class="edit"><a title="{% trans 'Edit' %}" href="{% url contact_edit object.pk %}">{% trans 'Edit' %}</a></li>
+{% endif %}
+{% if perms.partners.delete_contact %}
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url contact_delete object.pk %}">{% trans 'Delete' %}</a></li>
+{% endif %}
+{% if perms.partners.change_contact %}
+<li class="all"><a title="{% trans 'All' %}" href="{% url contact_list %}">{% trans 'All' %}</a></li>
+{% endif %}
 {% endblock %}
 
-{% block main %}
-<div class="actions">
-    <ul>
-        {% if perms.partners.add_contact %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url contact_add %}">{% trans 'Add' %}</a></li>
-        {% endif %}
-        {% if perms.partners.change_contact %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url contact_edit object.pk %}">{% trans 'Edit' %}</a></li>
-        {% endif %}
-        {% if perms.partners.delete_contact %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url contact_delete object.pk %}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        {% if perms.partners.change_contact %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url contact_list %}">{% trans 'All' %}</a></li>
-        {% endif %}
-    </ul>
+{% block objectmenu %}{% menu "contact_menu" %}{% endblock %}
+
+{% block section %}
+<div class="details">
+    {% avatar object 90 %}
+    <table class="properties">
+        {% property_table object "['full_name', ['nickname', 'date_of_birth'], ['gender', 'ssn'], ['language', 'timezone'], ['email', 'url'],  ['main_address', 'main_phone_number'], 'user', 'tags', 'categories']" %}
+    </table>
 </div>
-{% objects_from object %}
-{% with objects as object_list %}
-{% include 'elements/navigator.html' %}
-{% endwith %}
-<div class="sections">   
-    <div class="menu">
-        {% menu "contact_menu" %}
-    </div>
-    <div class="section">
-        {% block section %}
-        <div class="details">
-            {% avatar object 90 %}
-            <table class="properties">
-                {% property_table object "['full_name', ['nickname', 'date_of_birth'], ['gender', 'ssn'], ['language', 'timezone'], ['email', 'url'],  ['main_address', 'main_phone_number'], 'user', 'tags', 'categories']" %}
-            </table>
-        </div>
-        {% include "elements/comments.html" %}
-        {% endblock %}
-    </div>
-</div>
+{% include "elements/comments.html" %}
 {% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base_detail.html" %}
+
+{% load navigator %}
+
+{% block navigator %}
+{% with object=object.content_object %}
+{{ block.super }}
+{% endwith %}
+{% endblock %}

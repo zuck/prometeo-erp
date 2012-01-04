@@ -1,11 +1,8 @@
-{% extends "base.html" %}
+{% extends "base_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-{% load navigator %}
 {% load details %}
-
-{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -13,31 +10,22 @@
     {% add_crumb object %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{{ object|escape|capfirst }}</h1>
-</div>
+{% block objectactions %}
+{% if perms.stock.add_movement %}
+<li class="add"><a title="{% trans 'Add' %}" href="{% url movement_add %}">{% trans 'Add' %}</a></li>
+{% endif %}
+{% if perms.stock.change_movement %}
+<li class="edit"><a title="{% trans 'Edit' %}" href="{% url movement_edit object.pk %}">{% trans 'Edit' %}</a></li>
+{% endif %}
+{% if perms.stock.delete_movement %}
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url movement_delete object.pk %}">{% trans 'Delete' %}</a></li>
+{% endif %}
+{% if perms.stock.change_movement %}
+<li class="all"><a title="{% trans 'All' %}" href="{% url movement_list %}">{% trans 'All' %}</a></li>
+{% endif %}
 {% endblock %}
 
-{% block main %}
-<div class="actions">
-    <ul>
-        {% if perms.stock.add_movement %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url movement_add %}">{% trans 'Add' %}</a></li>
-        {% endif %}
-        {% if perms.stock.change_movement %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url movement_edit object.pk %}">{% trans 'Edit' %}</a></li>
-        {% endif %}
-        {% if perms.stock.delete_movement %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url movement_delete object.pk %}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        {% if perms.stock.change_movement %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url movement_list %}">{% trans 'All' %}</a></li>
-        {% endif %}
-    </ul>
-</div>
-{% objects_from object %}
-{% include 'elements/navigator.html' %}
+{% block sections %}
 <div class="details">
     <table class="properties">
         {% property_table object "[['author', 'created'], ['origin', 'destination']]" %}

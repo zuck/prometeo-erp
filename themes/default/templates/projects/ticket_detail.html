@@ -1,11 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 {% load menu %}
 {% load details %}
-
-{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -23,44 +21,35 @@
 </div>
 {% endblock %}
 
-{% block main %}
-<div class="actions">
-    <ul>
-        {% if perms.projects.add_ticket %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url ticket_add object.project.code %}">{% trans 'Add' %}</a></li>
-        {% endif %}
-        {% if perms.projects.change_ticket %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url ticket_edit object.project.code object.code %}">{% trans 'Edit' %}</a></li>
-        {% endif %}
-        {% if perms.projects.delete_ticket %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url ticket_delete object.project.code object.code %}">{% trans 'Delete' %}</a></li>
-        {% endif %}
-        {% if perms.projects.change_ticket %}
-        <li class="all"><a title="{% trans 'All' %}" href="{% url ticket_list object.project.code %}">{% trans 'All' %}</a></li>
-        {% endif %}
-        {% if perms.projects.change_ticket %}
-        {% if user not in object.stream.followers.all %}
-        <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
-        {% else %}
-        <li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
-        {% endif %}
-        {% endif %}
-    </ul>
+{% block objectactions %}
+{% if perms.projects.add_ticket %}
+<li class="add"><a title="{% trans 'Add' %}" href="{% url ticket_add object.project.code %}">{% trans 'Add' %}</a></li>
+{% endif %}
+{% if perms.projects.change_ticket %}
+<li class="edit"><a title="{% trans 'Edit' %}" href="{% url ticket_edit object.project.code object.code %}">{% trans 'Edit' %}</a></li>
+{% endif %}
+{% if perms.projects.delete_ticket %}
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url ticket_delete object.project.code object.code %}">{% trans 'Delete' %}</a></li>
+{% endif %}
+{% if perms.projects.change_ticket %}
+<li class="all"><a title="{% trans 'All' %}" href="{% url ticket_list object.project.code %}">{% trans 'All' %}</a></li>
+{% endif %}
+{% if perms.projects.change_ticket %}
+{% if user not in object.stream.followers.all %}
+<li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+{% else %}
+<li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block objectmenu %}{% menu "ticket_menu" %}{% endblock %}
+
+{% block section %}
+<div class="details">
+    <table class="properties">
+        {% property_table object "[['author', 'assignee'], ['created', 'modified'], ['status', 'type'], ['milestone', 'urgency'], 'description', 'working_hours', 'categories', 'tags']" %}
+    </table>
 </div>
-{% include 'elements/navigator.html' %}
-<div class="sections">
-    <div class="menu">
-        {% menu "ticket_menu" %}
-    </div>
-    <div class="section">
-        {% block section %}
-        <div class="details">
-            <table class="properties">
-                {% property_table object "[['author', 'assignee'], ['created', 'modified'], ['status', 'type'], ['milestone', 'urgency'], 'description', 'working_hours', 'categories', 'tags']" %}
-            </table>
-        </div>
-        {% include "elements/comments.html" %}
-        {% endblock %}
-    </div>
-</div>
+{% include "elements/comments.html" %}
 {% endblock %}

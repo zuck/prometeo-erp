@@ -1,8 +1,7 @@
-{% extends "base.html" %}
+{% extends "documents/document_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
-{% load navigator %}
 {% load details %}
 {% load menu %}
 
@@ -10,12 +9,6 @@
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Expense vouchers' 'expensevoucher_list' %}
     {% add_crumb object %}
-{% endblock %}
-
-{% block title %}
-<div class="title">
-    <h1>{{ object }}</h1>
-</div>
 {% endblock %}
 
 {% block main %}

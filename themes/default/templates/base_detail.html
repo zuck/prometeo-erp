@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load navigator %}
+{% load details %}
+
+{% block meta_title %}{{ object|striptags|capfirst }}{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|striptags|capfirst }}</h1>
+    <h2>{% block subtitle %}{% trans "Details" %}{% endblock %}</h2>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="actions">
+    <ul>
+        {% block objectactions %}
+        {% endblock %}
+    </ul>
+</div>
+{% block navigator %}
+{% objects_from object %}
+{% with objects as object_list %}
+{% include 'elements/navigator.html' %}
+{% endwith %}
+{% endblock %}
+{% block sections %}
+<div class="sections">
+    <div class="menu">
+        {% block objectmenu %}{% endblock %}
+    </div>
+    <div class="section">
+        {% block section %}
+        <div class="details">
+            <table class="properties">
+                {% property_table object %}
+            </table>
+            {% include "elements/comments.html" %}
+        </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+{% endblock %}
