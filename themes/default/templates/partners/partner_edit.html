@@ -1,12 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_edit.html" %}
 
-{% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
-
-{% block meta_title %}
-{% if object.pk %}{% trans 'Edit partner' %}{% else %}{% trans 'Add partner' %}{% endif %}
-{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -19,31 +14,12 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
+{% block editform %}
+<table class="properties">
     {% if object.pk %}
-    <h1>{{ object }}</h1>
-    <h2>{% trans 'Edit partner' %}</h2>
+    {% property_table form "[['name', 'is_managed'], ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'ssn'], ['language', 'timezone'], ['url', 'email'], ['main_address', 'main_phone_number'], ['terms_of_payment', 'currency'], 'description', 'categories', 'tags', 'allow_comments']" %}
     {% else %}
-    <h1>{% trans 'Add partner' %}</h1>
+    {% property_table form "[['name', 'is_managed'], ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'ssn'], ['language', 'timezone'], ['url', 'email'], ['terms_of_payment', 'currency'], 'description', 'categories', 'tags', 'allow_comments']" %}
     {% endif %}
-</div>
-{% endblock %}
-
-{% block main %}
-{% if object.pk %}
-<form method="post" action="{% url partner_edit object.pk %}">
-{% else %}
-<form method="post" action="{% url partner_add %}">
-{% endif %}
-    {% csrf_token %}
-    <table class="properties">
-        {% if object.pk %}
-        {% property_table form "[['name', 'is_managed'], ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'ssn'], ['language', 'timezone'], ['url', 'email'], ['main_address', 'main_phone_number'], ['terms_of_payment', 'currency'], 'description', 'categories', 'tags', 'allow_comments']" %}
-        {% else %}
-        {% property_table form "[['name', 'is_managed'], ['assignee', 'lead_status'], ['is_customer', 'is_supplier'], ['vat_number', 'ssn'], ['language', 'timezone'], ['url', 'email'], ['terms_of_payment', 'currency'], 'description', 'categories', 'tags', 'allow_comments']" %}
-        {% endif %}
-    </table>
-    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
-</form>
+</table>
 {% endblock %}

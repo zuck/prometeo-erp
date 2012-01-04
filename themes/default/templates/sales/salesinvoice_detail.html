@@ -27,10 +27,10 @@
         <li class="add"><a title="{% trans 'Add' %}" href="{% url salesinvoice_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.sales.change_salesinvoice %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url salesinvoice_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url salesinvoice_edit object.content_object.pk %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.sales.delete_salesinvoice %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url salesinvoice_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url salesinvoice_delete object.content_object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.sales.change_salesinvoice %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url salesinvoice_list %}">{% trans 'All' %}</a></li>

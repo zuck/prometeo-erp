@@ -5,24 +5,37 @@
 
 {% block meta_title %}
 {% model_name object as model %}
-{% blocktrans %}Delete {{ model }}{% endblocktrans %}
+{% if object.pk %}
+{% blocktrans %}Edit {{ model }}{% endblocktrans %}
+{% else %}
+{% blocktrans %}Add {{ model }}{% endblocktrans %}
+{% endif %}
 {% endblock %}
 
 {% block title %}
 <div class="title">
-    <h1>{{ object|striptags|capfirst }}</h1>
     {% model_name object as model %}
-    <h2>{% blocktrans %}Delete {{ model }}{% endblocktrans %}</h2>
+    {% if object.pk %}
+    <h1>{{ object|striptags|capfirst }}</h1>
+    <h2>{% blocktrans %}Edit {{ model }}{% endblocktrans %}</h2>
+    {% else %}
+    <h1>{% blocktrans %}Add {{ model }}{% endblocktrans %}</h1>
+    {% endif %}
 </div>
 {% endblock %}
 
 {% block main %}
-<form method="post" action="{ request.path }}{% if next %}?next={{ next }}{% endif %}">
+{% block editformheader %}
+<form method="post" action="{{ request.path }}{% if next %}?next={{ next }}{% endif %}">
+{% endblock %}
     {% csrf_token %}
-    {% model_name object as model %}
-    {% block message %}<p>{% blocktrans %}Are you sure you want to delete this {{ model }}?{% endblocktrans %}</p>{% endblock %}
+    {% block editform %}
+    <table class="properties">
+        {% property_table form %}
+    </table>
+    {% endblock %}
     {% block buttons %}
-    <span class="submit"><input title="{% trans 'Confirm' %}" type="submit" value="{% trans "Yes, I'm sure." %}" /></span>
+    <span class="submit"><input title="{% trans 'Confirm' %}" type="submit" value="{% trans "Save" %}" /></span>
     {% with index=request.path|slice:':-1'|split:'/'|slice:':-1'|join:'/' %}
     {% if object.pk %}
     <span class="cancel"><a title="{% trans 'Cancel' %}" href="{{ next|default:object.get_absolute_url|default:index|default:'/' }}">{% trans "Cancel" %}</a></span>

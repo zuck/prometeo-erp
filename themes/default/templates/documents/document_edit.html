@@ -1,0 +1,27 @@
+{% extends "base_edit.html" %}
+
+{% load i18n %}
+{% load details %}
+
+{% block meta_title %}
+{% with model=object.content_type.name %}
+{% if object.pk %}
+{% blocktrans %}Edit {{ model }}{% endblocktrans %}
+{% else %}
+{% blocktrans %}Add {{ model }}{% endblocktrans %}
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    {% with model=object.content_type.name %}
+    {% if object.pk %}
+    <h1>{{ object|striptags|capfirst }}</h1>
+    <h2>{% blocktrans %}Edit {{ model }}{% endblocktrans %}</h2>
+    {% else %}
+    <h1>{% blocktrans %}Add {{ model }}{% endblocktrans %}</h1>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}

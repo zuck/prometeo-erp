@@ -1,12 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_edit.html" %}
 
-{% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
-
-{% block meta_title %}
-{% if object.pk %}{% trans 'Edit supply' %}{% else %}{% trans 'Add supply' %}{% endif %}
-{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -21,27 +16,8 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    {% if object.pk %}
-    <h1>{{ object }}</h1>
-    <h2>{% trans 'Edit supply' %}</h2>
-    {% else %}
-    <h1>{% trans 'Add supply' %}</h1>
-    {% endif %}
-</div>
-{% endblock %}
-
-{% block main %}
-{% if object.pk %}
-<form method="post" action="{% url product_edit_supply object.product.pk object.pk %}">
-{% else %}
-<form method="post" action="{% url product_add_supply object.product.pk %}">
-{% endif %}
-    {% csrf_token %}
-    <table class="properties">
-        {% property_table form "[['supplier', 'supply_method'], ['name', 'code'], ['purchase_price', 'purchase_currency'], ['max_purchase_discount', 'purchase_tax'], ['minimal_quantity', 'lead_time'], ['warranty_period', 'end_of_life']]" %}
-    </table>
-    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
-</form>
+{% block editform %}
+<table class="properties">
+    {% property_table form "[['supplier', 'supply_method'], ['name', 'code'], ['purchase_price', 'purchase_currency'], ['max_purchase_discount', 'purchase_tax'], ['minimal_quantity', 'lead_time'], ['warranty_period', 'end_of_life']]" %}
+</table>
 {% endblock %}

@@ -44,8 +44,11 @@ class ModelNameNode(template.Node):
         self.var_name = var_name
 
     def render(self, context):
-        instance = self.instance.resolve(context)
-        context[self.var_name] = u"%s" % (instance._meta.verbose_name or _(instance.__class__.__name__.lower()))
+        try:
+            instance = self.instance.resolve(context)
+            context[self.var_name] = u"%s" % (instance._meta.verbose_name or _(instance.__class__.__name__.lower()))
+        except:
+            pass
         return ''
 
 @register.tag
@@ -332,6 +335,16 @@ def property_table(parser, token):
 
 @register.filter
 def default_empty(obj):
+    """Returns the default empty value representation if obj is invalid.
+    """
     if not obj:
         return value_to_string(obj)
     return obj
+
+@register.filter
+def split(string, sep):
+    """Returns the string splitted by sep.
+
+    Example tag usage: {% request.path|split:"/" %}
+    """
+    return string.split(sep)

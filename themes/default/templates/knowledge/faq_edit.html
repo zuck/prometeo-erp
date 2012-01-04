@@ -1,10 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_edit.html" %}
 
-{% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
-
-{% block meta_title %}{% if object.pk %}{% trans 'Edit FAQ' %}{% else %}{% trans 'Add FAQ' %}{% endif %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -17,27 +14,8 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    {% if object.pk %}
-    <h1>{{ object.title|escape|capfirst }}</h1>
-    <h2>{% trans 'Edit FAQ' %}</h2>
-    {% else %}
-    <h1>{% trans 'Add FAQ' %}</h1>
-    {% endif %}
-</div>
-{% endblock %}
-
-{% block main %}
-{% if object.pk %}
-<form method="post" action="{% url faq_edit object.pk %}">
-{% else %}
-<form method="post" action="{% url faq_add %}">
-{% endif %}
-    {% csrf_token %}
-    <table class="properties">
-        {% property_table form "[['title', 'language'], 'question', 'categories', 'tags', 'allow_comments']" %}
-    </table>
-    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
-</form>
+{% block editform %}
+<table class="properties">
+    {% property_table form "[['title', 'language'], 'question', 'categories', 'tags', 'allow_comments']" %}
+</table>
 {% endblock %}

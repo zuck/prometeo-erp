@@ -13,7 +13,8 @@
 
 {% block title %}
 <div class="title">
-    <h1>{% trans "Import" %}</h1>
+    <h1>{% trans "Calendar" %}</h1>
+    <h2>{% trans "Import" %}</h2>
 </div>
 {% endblock %}
 
@@ -22,5 +23,6 @@
     {% csrf_token %}
     {{ form.as_p }}
     <span class="submit"><input type="submit" value="{% trans 'Import' %}"/></span>
+    <span class="cancel"><a title="{% trans 'Cancel' %}" href="{% url event_list %}">{% trans "Cancel" %}</a></span>
 </form>
 {% endblock %}

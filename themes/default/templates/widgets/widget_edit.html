@@ -1,12 +1,8 @@
-{% extends "base.html" %}
+{% extends "base_edit.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
-
-{% block meta_title %}
-{% if object.pk %}{% trans 'Edit widget' %}{% else %}{% trans 'Add widget' %}{% endif %}
-{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -19,27 +15,16 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    {% if object.pk %}
-    <h1>{{ object.title }}</h1>
-    <h2>{% trans 'Edit widget' %}</h2>
-    {% else %}
-    <h1>{% trans 'Add widget' %}</h1>
-    {% endif %}
-</div>
+{% block editform %}
+<table class="properties">
+    {% property_table form "['title', ['template', 'context']]" %}
+</table>
 {% endblock %}
 
-{% block main %}
-{% if object.pk %}
-<form method="post" action="{% url widget_edit object.slug %}?next={{ next }}">
-{% else %}
-<form method="post" action="{% url widget_add object.region.slug %}?next={{ next }}">
-{% endif %}
-    {% csrf_token %}
-    <table class="properties">
-        {% property_table form "['title', ['template', 'context']]" %}
-    </table>
-    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
-</form>
+
+{% block buttons %}
+<span class="submit"><input title="{% trans 'Confirm' %}" type="submit" value="{% trans "Save" %}" /></span>
+{% with index=request.path|slice:':-1'|split:'/'|slice:':-1'|join:'/' absolute_url=object.get_absolute_url %}
+<span class="cancel"><a title="{% trans 'Cancel' %}" href="{{ next|default:absolute_url|default:index }}">{% trans "Cancel" %}</a></span>
+{% endwith %}
 {% endblock %}

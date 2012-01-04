@@ -1,12 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_edit.html" %}
 
-{% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
-
-{% block meta_title %}
-{% if object.pk %}{% trans 'Edit employee' %}{% else %}{% trans 'Add employee' %}{% endif %}
-{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -19,33 +14,14 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
+{% block editform %}
+<table class="properties">
     {% if object.pk %}
-    <h1>{{ object }}</h1>
-    <h2>{% trans 'Edit employee' %}</h2>
+    {% property_table jform "['partner', 'role']" %}
     {% else %}
-    <h1>{% trans 'Add employee' %}</h1>
+    {% property_table jform "[['contact', 'partner'], 'role']" %}
     {% endif %}
-</div>
-{% endblock %}
-
-{% block main %}
-{% if object.pk %}
-<form method="post" action="{% url employee_edit object.pk %}">
-{% else %}
-<form method="post" action="{% url employee_add %}">
-{% endif %}
-    {% csrf_token %}
-    <table class="properties">
-        {% if object.pk %}
-        {% property_table jform "['partner', 'role']" %}
-        {% else %}
-        {% property_table jform "[['contact', 'partner'], 'role']" %}
-        {% endif %}
-        {% property_table form "['type', ['start', 'end']]" %}
-        {% property_table jform "['notes']" %}
-    </table>
-    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
-</form>
+    {% property_table form "['type', ['start', 'end']]" %}
+    {% property_table jform "['notes']" %}
+</table>
 {% endblock %}

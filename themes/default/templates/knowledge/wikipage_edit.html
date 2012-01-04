@@ -1,10 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_edit.html" %}
 
-{% load i18n %}
 {% load breadcrumbs %}
 {% load details %}
-
-{% block meta_title %}{% if object.slug and object.pk %}{% trans 'Edit page' %}{% else %}{% trans 'Add page' %}{% endif %}{% endblock %}
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
@@ -19,22 +16,8 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}
-<div class="title">
-    <h1>{% if object.slug and object.pk %}{% trans 'Edit page' %}{% else %}{% trans 'Add page' %}{% endif %}</h1>
-</div>
-{% endblock %}
-
-{% block main %}
-{% if object.slug %}
-<form method="post" action="{% url wikipage_edit object.slug %}">
-{% else %}
-<form method="post" action="{% url wikipage_add %}">
-{% endif %}
-    {% csrf_token %}
-    <table class="properties">
-        {% property_table form "[['slug', 'language'], 'body', 'categories', 'tags', 'allow_comments']" %}
-    </table>
-    <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
-</form>
+{% block editform %}
+<table class="properties">
+    {% property_table form "[['slug', 'language'], 'body', 'categories', 'tags', 'allow_comments']" %}
+</table>
 {% endblock %}

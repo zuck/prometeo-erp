@@ -27,10 +27,10 @@
         <li class="add"><a title="{% trans 'Add' %}" href="{% url letter_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.partners.change_letter %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url letter_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url letter_edit object.content_object.pk %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.partners.delete_letter %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url letter_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url letter_delete object.content_object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.partners.change_letter %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url letter_list %}">{% trans 'All' %}</a></li>

@@ -65,7 +65,8 @@ def contact_add(request, **kwargs):
     return create_update.create_object(
         request,
         form_class=ContactForm,
-        template_name='partners/contact_edit.html'
+        template_name='partners/contact_edit.html',
+        extra_context={'object': Contact()},
     )
 
 @permission_required('partners.view_contact', _get_contact)     

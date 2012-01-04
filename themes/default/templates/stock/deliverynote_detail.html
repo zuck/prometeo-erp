@@ -27,10 +27,10 @@
         <li class="add"><a title="{% trans 'Add' %}" href="{% url deliverynote_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
         {% if perms.stock.change_deliverynote %}
-        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url deliverynote_edit object.pk %}">{% trans 'Edit' %}</a></li>
+        <li class="edit"><a title="{% trans 'Edit' %}" href="{% url deliverynote_edit object.content_object.pk %}">{% trans 'Edit' %}</a></li>
         {% endif %}
         {% if perms.stock.delete_deliverynote %}
-        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url deliverynote_delete object.pk %}">{% trans 'Delete' %}</a></li>
+        <li class="delete"><a title="{% trans 'Delete' %}" href="{% url deliverynote_delete object.content_object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.stock.change_deliverynote %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url deliverynote_list %}">{% trans 'All' %}</a></li>

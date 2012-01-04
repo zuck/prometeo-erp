@@ -19,6 +19,7 @@
 {% block title %}
 <div class="title">
     <h1>{{ object|escape|capfirst }}</h1>
+    <h2>{% block subtitle %}{% trans "Details" %}{% endblock %}</h2>
 </div>
 {% endblock %}
 

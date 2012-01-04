@@ -257,7 +257,7 @@ def event_import(request, **kwargs):
     """Imports one or more calendar from an .ics file.
     """
     if request.method == 'POST':
-        form = ImportcalendarForm(request.POST, request.FILES)
+        form = ImportEventsForm(request.POST, request.FILES)
         if form.is_valid():
             f = request.FILES['file']
             stream = ""
@@ -281,7 +281,7 @@ def event_import(request, **kwargs):
             except ValueError:
                 messages.error(request, _("Sorry, an error has occurred during importing of calendar."))
     else:
-        form = ImportcalendarForm()
+        form = ImportEventsForm()
 
     return render_to_response('calendar/event_import.html', RequestContext(request, {'form': form}))
 

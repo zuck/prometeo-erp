@@ -1,0 +1,17 @@
+{% extends "base_delete.html" %}
+
+{% load i18n %}
+{% load details %}
+
+{% block meta_title %}
+{% blocktrans with model=object.content_type.name %}Delete {{ model }}{% endblocktrans %}
+{% endblock %}
+
+{% block title %}
+<div class="title">
+    <h1>{{ object|striptags|capfirst }}</h1>
+    <h2>{% blocktrans with model=object.content_type.name %}Delete {{ model }}{% endblocktrans %}</h2>
+</div>
+{% endblock %}
+
+{% block message %}<p>{% blocktrans with model=object.content_type.name %}Are you sure you want to delete this {{ model }}?{% endblocktrans %}</p>{% endblock %}
