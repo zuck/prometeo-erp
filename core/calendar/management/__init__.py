@@ -39,12 +39,12 @@ def install(sender, **kwargs):
 
     # Menus.
     calendar_menu, is_new = Menu.objects.get_or_create(
-        slug="calendar_menu",
+        slug="calendar-menu",
         description=_("Main menu for calendar")
     )
 
     event_menu, is_new = Menu.objects.get_or_create(
-        slug="event_menu",
+        slug="event-menu",
         description=_("Main menu for event")
     )
     
@@ -60,49 +60,49 @@ def install(sender, **kwargs):
 
     events_agenda_link, is_new = Link.objects.get_or_create(
         title=_("Agenda"),
-        slug="events_agenda",
+        slug="events-agenda",
         url="{% url event_list %}",
         menu=calendar_menu
     )
 
     events_day_link, is_new = Link.objects.get_or_create(
         title=_("Day"),
-        slug="events_day",
+        slug="events-day",
         url="{% url event_day current_day.year|default:today.year current_day.month|default:today.month current_day.day|default:today.day %}",
         menu=calendar_menu
     )
 
     events_week_link, is_new = Link.objects.get_or_create(
         title=_("Week"),
-        slug="events_week",
+        slug="events-week",
         url="{% url event_week current_day.year|default:today.year current_day|default:today|date:'W' %}",
         menu=calendar_menu
     )
 
     events_month_link, is_new = Link.objects.get_or_create(
         title=_("Month"),
-        slug="events_month",
+        slug="events-month",
         url="{% url event_month current_day.year|default:today.year current_day.month|default:today.month %}",
         menu=calendar_menu
     )
 
     events_year_link, is_new = Link.objects.get_or_create(
         title=_("Year"),
-        slug="events_year",
+        slug="events-year",
         url="{% url event_year current_day.year|default:today.year %}",
         menu=calendar_menu
     )
 
-    event_dashboard_link, is_new = Link.objects.get_or_create(
-        title=_("Dashboard"),
-        slug="event_dashboard",
+    event_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="event-details",
         url="{{ object.get_absolute_url }}",
         menu=event_menu
     )
 
     event_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
-        slug="event_timeline",
+        slug="event-timeline",
         url="{% url event_timeline object.pk %}",
         menu=event_menu
     )

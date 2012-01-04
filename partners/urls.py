@@ -68,6 +68,7 @@ urlpatterns = patterns('partners.views',
     url(r'^contacts/(?P<id>\d+)/jobs/add/$', view='contacts.contact_add_job', name='contact_add_job'),
     url(r'^contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/edit/$', view='contacts.contact_edit_job', name='contact_edit_job'),
     url(r'^contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/delete/$', view='contacts.contact_delete_job', name='contact_delete_job'),
+    url(r'^contacts/(?P<id>\d+)/timeline/$', 'contacts.contact_detail', {"template_name": "partners/contact_timeline.html"}, 'contact_timeline'),
 
     # Letters.
     url(r'^letters/$', view='letters.letter_list', name='letter_list'),

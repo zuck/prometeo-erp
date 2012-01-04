@@ -39,17 +39,17 @@ def install(sender, **kwargs):
 
     # Menus.
     project_menu, is_new = Menu.objects.get_or_create(
-        slug="project_menu",
+        slug="project-menu",
         description=_("Main menu for projects")
     )
 
     milestone_menu, is_new = Menu.objects.get_or_create(
-        slug="milestone_menu",
+        slug="milestone-menu",
         description=_("Main menu for milestones")
     )
 
     ticket_menu, is_new = Menu.objects.get_or_create(
-        slug="ticket_menu",
+        slug="ticket-menu",
         description=_("Main menu for tickets")
     )
     
@@ -62,72 +62,72 @@ def install(sender, **kwargs):
         menu=main_menu
     )
 
-    project_dashboard_link, is_new = Link.objects.get_or_create(
-        title=_("Dashboard"),
-        slug="project_dashboard",
+    project_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="project-details",
         url="{{ object.get_absolute_url }}",
         menu=project_menu
     )
 
     project_milestones_link, is_new = Link.objects.get_or_create(
         title=_("Milestones"),
-        slug="project_milestones",
+        slug="project-milestones",
         url="{% url milestone_list object.code %}",
         menu=project_menu
     )
 
     project_tickets_link, is_new = Link.objects.get_or_create(
         title=_("Tickets"),
-        slug="project_tickets",
+        slug="project-tickets",
         url="{% url ticket_list object.code %}",
         menu=project_menu
     )
 
     project_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
-        slug="project_timeline",
+        slug="project-timeline",
         url="{% url project_timeline object.code %}",
         menu=project_menu
     )
 
-    milestone_dashboard_link, is_new = Link.objects.get_or_create(
-        title=_("Dashboard"),
-        slug="milestone_dashboard",
+    milestone_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="milestone-details",
         url="{{ object.get_absolute_url }}",
         menu=milestone_menu
     )
 
     milestone_tickets_link, is_new = Link.objects.get_or_create(
         title=_("Tickets"),
-        slug="milestone_tickets",
+        slug="milestone-tickets",
         url="{% url milestone_tickets object.project.code object.code %}",
         menu=milestone_menu
     )
 
     milestone_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
-        slug="milestone_timeline",
+        slug="milestone-timeline",
         url="{% url milestone_timeline object.project.code object.code %}",
         menu=milestone_menu
     )
 
     ticket_details_link, is_new = Link.objects.get_or_create(
         title=_("Details"),
-        slug="ticket_details",
+        slug="ticket-details",
         url="{{ object.get_absolute_url }}",
         menu=ticket_menu
     )
 
     ticket_tasks_link, is_new = Link.objects.get_or_create(
         title=_("Tasks"),
-        slug="ticket_tasks",
+        slug="ticket-tasks",
         url="{% url ticket_tasks object.project.code object.code %}",
         menu=ticket_menu
     )
 
     ticket_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
-        slug="ticket_timeline",
+        slug="ticket-timeline",
         url="{% url ticket_timeline object.project.code object.code %}",
         menu=ticket_menu
     )

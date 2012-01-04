@@ -92,9 +92,9 @@ def install(sender, created_models, **kwargs):
         menu=partners_menu
     )
 
-    partner_dashboard_link, is_new = Link.objects.get_or_create(
-        title=_("Dashboard"),
-        slug="partner-dashboard",
+    partner_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="partner-details",
         url="{% url partner_detail object.pk %}",
         menu=partner_menu
     )
@@ -134,9 +134,9 @@ def install(sender, created_models, **kwargs):
         menu=partner_menu
     )
 
-    contact_dashboard_link, is_new = Link.objects.get_or_create(
-        title=_("Dashboard"),
-        slug="contact-dashboard",
+    contact_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="contact-details",
         url="{% url contact_detail object.pk %}",
         menu=contact_menu
     )
@@ -166,6 +166,13 @@ def install(sender, created_models, **kwargs):
         title=_("Jobs"),
         slug="contact-jobs",
         url="{% url contact_jobs object.pk %}",
+        menu=contact_menu
+    )
+
+    contact_timeline_link, is_new = Link.objects.get_or_create(
+        title=_("Timeline"),
+        slug="contact-timeline",
+        url="{% url contact_timeline object.pk %}",
         menu=contact_menu
     )
 

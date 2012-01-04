@@ -92,8 +92,8 @@ def install(sender, created_models, **kwargs):
     )
 
     warehouse_dashboard_link, is_new = Link.objects.get_or_create(
-        title=_("Dashboard"),
-        slug="warehouse-dashboard",
+        title=_("Details"),
+        slug="warehouse-details",
         url="{% url warehouse_detail object.pk %}",
         menu=warehouse_menu
     )
