@@ -32,7 +32,11 @@
         <li class="delete"><a title="{% trans 'Delete' %}" href="{% url task_delete object.pk %}">{% trans 'Delete' %}</a></li>
         {% endif %}
         {% if perms.todo.change_task %}
+        {% if object.start %}
         <li class="all"><a title="{% trans 'All' %}" href="{% url task_list %}">{% trans 'All' %}</a></li>
+        {% else %}
+        <li class="all"><a title="{% trans 'All' %}" href="{% url unplanned_task_list %}">{% trans 'All' %}</a></li>
+        {% endif %}
         {% endif %}
         {% if perms.todo.change_task %}
         {% if not object.closed %}
