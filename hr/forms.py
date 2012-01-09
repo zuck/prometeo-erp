@@ -51,7 +51,7 @@ class EmployeeForm(forms.ModelForm):
     """
     class Meta:
         model = Employee
-        exclude = {'job'}
+        exclude = ('job',)
         widgets = {
             'start': DateWidget(),
             'end': DateWidget(),
