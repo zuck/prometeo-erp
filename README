@@ -55,7 +55,9 @@ INSTALLATION
  
  2. Edit the settings/base.py content.
  
- 3. python manage.py syncdb
+ 3. It's time to create the DB schema (you need to use the --all option if you're using South):
+
+    python manage.py syncdb (--all)
    
  4. To test the installation, run:
  
