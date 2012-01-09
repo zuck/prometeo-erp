@@ -1322,7 +1322,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 #main #comments li, #main #answers li {
     padding: 10px; 
     background: none;
-    min-height: 47px;
+    min-height: 37px;
 }
 
 #main #comments li.altrow, #main #answers li.altrow { background: #f8f8f8; }
@@ -1338,7 +1338,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 #main #comments li .actions, #main #answers li .actions {
     clear: none;
     float: right;
-    margin: -10px -25px 0 0;
+    margin: -10px -5px 0 0;
 }
 
 #main #comments li .actions li, #main #answers li .actions li { padding: 0; }
@@ -1354,6 +1354,8 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     border-top: 1px solid #c0c0c0;
     color: #60625d;
 }
+
+#main #answers ul { margin-bottom: 20px; }
 
 #footer {
     height: 200px;
