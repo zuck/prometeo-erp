@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-25 14:57+0100\n"
+"POT-Creation-Date: 2012-01-09 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: models.py:40 models.py:74
+#: models.py:42 models.py:76
 msgid "slug"
 msgstr ""
 
-#: models.py:41
+#: models.py:43
 msgid ""
 "Use <a href=\"http://daringfireball.net/projects/markdown/syntax\">MarkDown "
 "syntax</a>."
@@ -30,278 +30,245 @@ msgstr ""
 "Usare la <a href=\"http://daringfireball.net/projects/markdown/syntax"
 "\">sintassi MarkDown</a>."
 
-#: models.py:41 models.py:75
+#: models.py:43 models.py:77
 msgid "body"
 msgstr "corpo"
 
-#: models.py:42 models.py:99 models.py:133
+#: models.py:44 models.py:105 models.py:157
 msgid "language"
 msgstr "lingua"
 
-#: models.py:43 models.py:76 models.py:101 models.py:134
+#: models.py:45 models.py:78 models.py:106 models.py:139 models.py:158
 msgid "created by"
 msgstr "creato da"
 
-#: models.py:44 models.py:77 models.py:102 models.py:135
+#: models.py:46 models.py:79 models.py:107 models.py:140 models.py:159
 msgid "created on"
 msgstr "creato il"
 
-#: models.py:45 models.py:103 models.py:137
+#: models.py:47 models.py:108 models.py:161
 msgid "categories"
 msgstr "categorie"
 
-#: models.py:46 models.py:104 models.py:138
+#: models.py:48 models.py:109 models.py:162
 msgid "tags"
 msgstr ""
 
-#: models.py:47 models.py:105 models.py:139
+#: models.py:49 models.py:110 models.py:163
 msgid "stream"
 msgstr ""
 
-#: models.py:52
+#: models.py:54
 msgid "wiki page"
 msgstr "pagina wiki"
 
-#: models.py:53
+#: models.py:55
 msgid "wiki pages"
 msgstr "pagine wiki"
 
-#: models.py:73
+#: models.py:75
 msgid "page"
 msgstr "pagina"
 
-#: models.py:84
+#: models.py:86
 msgid "wiki page revision"
 msgstr "revisione pagina wiki"
 
-#: models.py:85
+#: models.py:87
 msgid "wiki page revisions"
 msgstr "revisioni pagina wiki"
 
-#: models.py:88
+#: models.py:90
 #, python-format
 msgid "Rev # %(created)s"
 msgstr ""
 
-#: models.py:97 models.py:131
+#: models.py:103 models.py:155
 msgid "title"
 msgstr "titolo"
 
-#: models.py:98
+#: models.py:104 models.py:137
 msgid "question"
 msgstr "domanda"
 
-#: models.py:100
-msgid "best answer"
-msgstr "miglior risposta"
-
-#: models.py:110
+#: models.py:116
 msgid "FAQ"
 msgstr ""
 
-#: models.py:111 management/__init__.py:72
+#: models.py:117 management/__init__.py:79
 msgid "FAQs"
 msgstr ""
 
-#: models.py:132 models.py:174
+#: models.py:138 models.py:146
+msgid "answer"
+msgstr "risposta"
+
+#: models.py:147
+msgid "answers"
+msgstr "risposte"
+
+#: models.py:156 models.py:198
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:136
+#: models.py:160
 msgid "due date"
 msgstr "scadenza"
 
-#: models.py:144 models.py:173
+#: models.py:168 models.py:197
 msgid "poll"
 msgstr "sondaggio"
 
-#: models.py:145
+#: models.py:169
 msgid "polls"
 msgstr "sondaggi"
 
-#: models.py:167
+#: models.py:191
 msgid "vote count"
 msgstr "conteggio voti"
 
-#: models.py:178 models.py:199
+#: models.py:203
 msgid "choice"
 msgstr "scelta"
 
-#: models.py:179
+#: models.py:204
 msgid "choices"
 msgstr "scelte"
 
-#: models.py:193
+#: models.py:222
 msgid "index"
 msgstr "indice"
 
-#: models.py:200
-msgid "owner"
-msgstr "proprietario"
-
-#: models.py:201
-msgid "created"
-msgstr "creato"
-
-#: models.py:204
-msgid "vote"
-msgstr "voto"
-
-#: models.py:205
-msgid "votes"
-msgstr "voti"
-
-#: signals.py:117
-#, python-format
-msgid "%(class)s %(name)s created by %(author)s"
-msgstr "%(class)s %(name)s creato da %(author)s"
-
-#: signals.py:138
-#, python-format
-msgid "%(class)s %(name)s changed"
-msgstr "%(class)s %(name)s modificato"
-
-#: signals.py:156
-#, python-format
-msgid "%(class)s %(name)s deleted"
-msgstr "%(class)s %(name)s eliminato"
-
-#: signals.py:175
-#, python-format
-msgid "%(author)s commented %(class)s %(name)s"
-msgstr "%(author)s ha commentato %(class)s %(name)s"
-
-#: signals.py:196
-msgid "comment deleted"
-msgstr "commento eliminato"
-
-#: signals.py:217
-#, python-format
-msgid "%(author)s answered to the %(class)s %(name)s"
-msgstr "%(author)s ha risposto alla %(class)s %(name)s"
-
-#: signals.py:239
-msgid "answer deleted"
-msgstr "risposta eliminata"
-
-#: management/__init__.py:36
+#: management/__init__.py:42
 msgid "Main menu for knowledge app"
 msgstr "Menu principale per la gestione della conoscenza"
 
-#: management/__init__.py:41
+#: management/__init__.py:47
 msgid "Main menu for a wiki page"
 msgstr "Menu principale per una pagina Wiki"
 
-#: management/__init__.py:46
+#: management/__init__.py:52
 msgid "Main menu for a FAQ"
 msgstr "Menu principale per una FAQ"
 
-#: management/__init__.py:51
+#: management/__init__.py:57
 msgid "Main menu for a poll"
 msgstr "Menu principale per un sondaggio"
 
-#: management/__init__.py:56
+#: management/__init__.py:62
 msgid "Knowledge"
 msgstr "Conoscenza"
 
-#: management/__init__.py:58
+#: management/__init__.py:64
 msgid "Knowledge management"
 msgstr "Gestione conoscenza"
 
-#: management/__init__.py:64
+#: management/__init__.py:71
 msgid "Wiki"
 msgstr ""
 
-#: management/__init__.py:66
+#: management/__init__.py:73
 msgid "Wiki home"
 msgstr ""
 
-#: management/__init__.py:74
+#: management/__init__.py:81
 msgid "Frequently Asked Questions"
 msgstr ""
 
-#: management/__init__.py:80 management/__init__.py:82
+#: management/__init__.py:87 management/__init__.py:89
 msgid "Polls"
 msgstr "Sondaggi"
 
-#: management/__init__.py:88 management/__init__.py:109
-#: management/__init__.py:123
+#: management/__init__.py:95 management/__init__.py:116
+#: management/__init__.py:130
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:95
+#: management/__init__.py:102
 msgid "Revisions"
 msgstr "Revisioni"
 
-#: management/__init__.py:102 management/__init__.py:116
-#: management/__init__.py:130
+#: management/__init__.py:109 management/__init__.py:123
+#: management/__init__.py:137
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:138
+#: management/__init__.py:145
 msgid "Wiki page created"
 msgstr "Creazione pagina Wiki"
 
-#: management/__init__.py:143
+#: management/__init__.py:150
 msgid "Wiki page changed"
 msgstr "Modifica pagina Wiki"
 
-#: management/__init__.py:148
+#: management/__init__.py:155
 msgid "Wiki page deleted"
 msgstr "Eliminazione pagina Wiki"
 
-#: management/__init__.py:153
+#: management/__init__.py:160
 msgid "FAQ created"
 msgstr "Creazione FAQ"
 
-#: management/__init__.py:158
+#: management/__init__.py:165
 msgid "FAQ deleted"
 msgstr "Eliminazione FAQ"
 
-#: management/__init__.py:163
+#: management/__init__.py:170
 msgid "Answer created"
 msgstr "Aggiunta risposta"
 
-#: management/__init__.py:168
+#: management/__init__.py:175
 msgid "Answer deleted"
 msgstr "Eliminazione risposta"
 
-#: management/__init__.py:173
+#: management/__init__.py:180
 msgid "Poll created"
 msgstr "Creazione sondaggio"
 
-#: management/__init__.py:178
+#: management/__init__.py:185
 msgid "Poll deleted"
 msgstr "Eliminazione sondaggio"
 
-#: management/__init__.py:183
+#: management/__init__.py:190
 msgid "Poll closed"
 msgstr "Chiusura sondaggio"
 
-#: views/faq.py:65
-msgid "The FAQ has been saved."
+#: views/faq.py:71
+msgid "The FAQ was created successfully."
 msgstr "La FAQ è stata salvata."
 
-#: views/polls.py:67 views/polls.py:125
-msgid "The poll has been saved."
+#: views/faq.py:89
+msgid "Thank you. Your answer was created successfully."
+msgstr "Grazie. Il tuo voto è stato aggiornato."
+
+#: views/polls.py:68
+msgid "The poll was created successfully."
 msgstr "Il sondaggio è stato salvato."
 
-#: views/polls.py:93
+#: views/polls.py:94
 msgid "Sorry, this poll is already closed."
 msgstr "Spiacenti, questo sondaggio è già chiuso."
 
-#: views/polls.py:101
+#: views/polls.py:103
 msgid "Thank you for your vote."
 msgstr "Grazie per il tuo voto."
 
-#: views/polls.py:104
-msgid "Thank you. Your vote has been updated."
+#: views/polls.py:106
+msgid "Thank you. Your vote was updated successfully."
 msgstr "Grazie. Il tuo voto è stato aggiornato."
 
-#: views/polls.py:109
-msgid "Sorry, you've selected an invalid choice."
+#: views/polls.py:110
+msgid "Sorry, you selected an invalid choice."
 msgstr "Spiacenti, hai selezionato una scelta invalida."
 
-#: views/wiki.py:87
-msgid "The page has been saved."
+#: views/polls.py:126
+msgid "The poll was updated successfully."
+msgstr "Il sondaggio è stato aggiornato."
+
+#: views/wiki.py:89
+msgid "The page was created successfully."
 msgstr "La pagina è stata salvata."
+
+#: views/wiki.py:91
+msgid "The page was updated successfully."
+msgstr "La pagina è stata aggiornata."

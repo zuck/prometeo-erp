@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-14 12:26+0100\n"
+"POT-Creation-Date: 2012-01-09 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "job"
 msgstr "impiego"
 
-#: models.py:38 models.py:163
+#: models.py:38 models.py:164
 msgid "type"
 msgstr "tipologia"
 
@@ -34,7 +34,7 @@ msgstr "dal"
 msgid "ended on"
 msgstr "al"
 
-#: models.py:45 models.py:67 models.py:127
+#: models.py:45 models.py:67 models.py:128
 msgid "employee"
 msgstr "dipendente"
 
@@ -42,181 +42,193 @@ msgstr "dipendente"
 msgid "employees"
 msgstr "dipendenti"
 
-#: models.py:66 models.py:126 models.py:162
+#: models.py:66 models.py:127 models.py:163
 msgid "date"
 msgstr "data"
 
-#: models.py:72 models.py:99
+#: models.py:73 models.py:100
 msgid "timesheet"
 msgstr "foglio ore"
 
-#: models.py:73
+#: models.py:74
 msgid "timesheets"
 msgstr "fogli ore"
 
-#: models.py:76
+#: models.py:77
 msgid "TS"
 msgstr "FO"
 
-#: models.py:100
+#: models.py:101
 msgid "start time"
 msgstr "orario inizio"
 
-#: models.py:101
+#: models.py:102
 msgid "end time"
 msgstr "orario fine"
 
-#: models.py:102
+#: models.py:103
 msgid "related to"
 msgstr "relativo a"
 
-#: models.py:103 models.py:164
+#: models.py:104 models.py:165
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:107
+#: models.py:108
 msgid "timesheet entry"
 msgstr "voce"
 
-#: models.py:108
+#: models.py:109
 msgid "timesheet entries"
 msgstr "voci"
 
-#: models.py:111
+#: models.py:112
 #, python-format
 msgid "%(start_time)s ~ %(end_time)s on %(date)s of %(user)s"
 msgstr "%(start_time)s ~ %(end_time)s il %(date)s di %(user)s"
 
-#: models.py:132
+#: models.py:133
 msgid "expense voucher"
 msgstr "nota spese"
 
-#: models.py:133
+#: models.py:134
 msgid "expense vouchers"
 msgstr "note spese"
 
-#: models.py:136
+#: models.py:137
 msgid "EV"
 msgstr "NS"
 
-#: models.py:155
+#: models.py:156
 msgid "total amount"
 msgstr "Totale"
 
-#: models.py:161
+#: models.py:162
 msgid "voucher"
 msgstr "nota"
 
-#: models.py:165
+#: models.py:166
 msgid "amount"
 msgstr "importo"
 
-#: models.py:169
+#: models.py:170
 msgid "expense entry"
 msgstr "voce di spesa"
 
-#: models.py:170
+#: models.py:171
 msgid "expense entries"
 msgstr "voci di spesa"
 
-#: models.py:173
+#: models.py:174
 #, python-format
 msgid "%(type)s ~ %(amount)s on %(date)s"
 msgstr "%(type)s ~ %(amount)s il %(date)s"
 
-#: management/__init__.py:35
+#: management/__init__.py:43
 msgid "Main menu for human resources"
 msgstr "Menu principale per le risorse umane"
 
-#: management/__init__.py:40
+#: management/__init__.py:48
 msgid "Main menu for employee"
 msgstr "Menu principale per i dipendenti"
 
-#: management/__init__.py:45
+#: management/__init__.py:53
 msgid "Main menu for timesheet"
 msgstr "Menu principale per i fogli ore"
 
-#: management/__init__.py:50
+#: management/__init__.py:58
 msgid "Main menu for expense voucher"
 msgstr "Menu principale per le note spese"
 
-#: management/__init__.py:55
+#: management/__init__.py:63
 msgid "Human resources"
 msgstr "Risorse umane"
 
-#: management/__init__.py:57
+#: management/__init__.py:65
 msgid "Human resources management"
 msgstr "Gestione risorse umane"
 
-#: management/__init__.py:64
+#: management/__init__.py:72
 msgid "Employees"
 msgstr "Dipendenti"
 
-#: management/__init__.py:71
+#: management/__init__.py:79
 msgid "Timesheets"
 msgstr "Fogli ore"
 
-#: management/__init__.py:78
+#: management/__init__.py:86
 msgid "Expense vouchers"
 msgstr "Note spese"
 
-#: management/__init__.py:85 management/__init__.py:92
-#: management/__init__.py:113
+#: management/__init__.py:93 management/__init__.py:100
+#: management/__init__.py:121
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:99 management/__init__.py:120
+#: management/__init__.py:107 management/__init__.py:128
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:106 management/__init__.py:127
+#: management/__init__.py:114 management/__init__.py:135
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:135
+#: management/__init__.py:143
+msgid "Employee created"
+msgstr "Creazione dipendente"
+
+#: management/__init__.py:148
+msgid "Employee changed"
+msgstr "Modifica dipendente"
+
+#: management/__init__.py:153
+msgid "Employee deleted"
+msgstr "Eliminazione dipendente"
+
+#: management/__init__.py:158
 msgid "Timesheet created"
 msgstr "Creazione foglio ore"
 
-#: management/__init__.py:140
+#: management/__init__.py:163
 msgid "Timesheet changed"
 msgstr "Modifica foglio ore"
 
-#: management/__init__.py:145
+#: management/__init__.py:168
 msgid "Timesheet deleted"
 msgstr "Eliminazione foglio ore"
 
-#: management/__init__.py:150
+#: management/__init__.py:173
 msgid "Expense voucher created"
 msgstr "Creazione nota spese"
 
-#: management/__init__.py:155
+#: management/__init__.py:178
 msgid "Expense voucher changed"
 msgstr "Modifica nota spese"
 
-#: management/__init__.py:160
+#: management/__init__.py:183
 msgid "Expense voucher deleted"
 msgstr "Eliminazione nota spese"
 
-#: views/employees.py:83
-msgid "The employee has been saved."
+#: views/employees.py:84
+msgid "The employee was created successfully."
 msgstr "Il dipendente è stato salvato."
 
-#: views/employees.py:108
-msgid "The employee has been updated."
+#: views/employees.py:109
+msgid "The employee was updated successfully."
 msgstr "Il dipendente è stato aggiornato."
 
 #: views/expensevouchers.py:93
-msgid "The expense voucher has been saved."
+msgid "The expense voucher was created successfully."
 msgstr "La nota spese è stata salvata."
 
-#: views/expensevouchers.py:116
-msgid "The expense voucher has been updated."
+#: views/expensevouchers.py:117
+msgid "The expense voucher was updated successfully."
 msgstr "La nota spese è stata aggiornata."
 
 #: views/timesheets.py:93
-msgid "The timesheet has been saved."
+msgid "The timesheet was created successfully."
 msgstr "Il foglio ore è stato salvato."
 
-#: views/timesheets.py:116
-msgid "The timesheet has been updated."
+#: views/timesheets.py:117
+msgid "The timesheet was updated successfully."
 msgstr "Il foglio ore è stato aggiornato."

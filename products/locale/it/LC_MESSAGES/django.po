@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-09 11:56+0100\n"
+"POT-Creation-Date: 2012-01-09 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr "bacheca"
 msgid "stream"
 msgstr "cronologia"
 
-#: models.py:55 models.py:76 models.py:96
+#: models.py:55 models.py:76 models.py:103
 msgid "product"
 msgstr "prodotto"
 
@@ -138,133 +138,114 @@ msgstr "voce prodotto"
 msgid "product entries"
 msgstr "voci prodotto"
 
-#: models.py:97
+#: models.py:104
 msgid "supplier"
 msgstr "fornitore"
 
-#: models.py:98
+#: models.py:105
 msgid "supply method"
 msgstr "metodo di fornitura"
 
-#: models.py:99
+#: models.py:106
 msgid "Product name used by the supplier"
 msgstr "Nome del prodotto usato dal fornitore"
 
-#: models.py:99
+#: models.py:106
 msgid "ref. name"
 msgstr "rif. nome."
 
-#: models.py:100
+#: models.py:107
 msgid "Product code used by the supplier"
 msgstr "Codice del prodotto usato dal fornitore"
 
-#: models.py:100
+#: models.py:107
 msgid "ref. code"
 msgstr "rif. codice"
 
-#: models.py:101
+#: models.py:108
 msgid "purchase price"
 msgstr "prezzo d'acquisto"
 
-#: models.py:102
+#: models.py:109
 msgid "purchase currency"
 msgstr "valuta d'acquisto"
 
-#: models.py:103
+#: models.py:110
 msgid "max purchase discount (%)"
 msgstr "max sconto d'acquisto (%)"
 
-#: models.py:104
+#: models.py:111
 msgid "purchase tax (%)"
 msgstr "tasse d'acquisto (%)"
 
-#: models.py:105
+#: models.py:112
 msgid "lead time (days)"
 msgstr "tempo di consegna (gg)"
 
-#: models.py:106
+#: models.py:113
 msgid "minimal quantity"
 msgstr "quantità minima"
 
-#: models.py:107
+#: models.py:114
 msgid "warranty period (days)"
 msgstr "periodo di garanzia (gg)"
 
-#: models.py:108
+#: models.py:115
 msgid "end of life"
 msgstr "fine ciclo di vita"
 
-#: models.py:112
+#: models.py:119
 msgid "supply"
 msgstr "fornitura"
 
-#: models.py:113
+#: models.py:120
 msgid "supplies"
 msgstr "forniture"
 
-#: signals.py:71
-#, python-format
-msgid "%(class)s %(name)s created"
-msgstr "%(class)s %(name)s creato"
-
-#: signals.py:94
-#, python-format
-msgid "%(class)s %(name)s deleted"
-msgstr "%(class)s %(name)s eliminato"
-
-#: signals.py:118
-#, python-format
-msgid "%(author)s commented %(class)s %(name)s"
-msgstr "%(author)s ha commentato %(class)s %(name)s"
-
-#: signals.py:139
-msgid "comment deleted"
-msgstr "commento eliminato"
-
 #: views.py:70
-msgid "The product has been saved."
+msgid "The product was created successfully."
 msgstr "Il prodotto è stato salvato."
 
 #: views.py:144
-msgid "The supply has been saved."
+msgid "The supply was created successfully."
 msgstr "La fornitura è stata salvata."
 
-#: management/__init__.py:38
+#: management/__init__.py:45
 msgid "Main menu for product model"
 msgstr "Menu principale per un prodotto"
 
-#: management/__init__.py:43
+#: management/__init__.py:50
 msgid "Products"
 msgstr "Prodotti"
 
-#: management/__init__.py:45
+#: management/__init__.py:52
 msgid "Products management"
 msgstr "Gestione prodotti"
 
-#: management/__init__.py:51
+#: management/__init__.py:58
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:58
+#: management/__init__.py:65
 msgid "Supplies"
 msgstr "Forniture"
 
-#: management/__init__.py:65
+#: management/__init__.py:72
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:73
+#: management/__init__.py:80
 msgid "Product created"
 msgstr "Creazione prodotto"
 
-#: management/__init__.py:78
+#: management/__init__.py:85
 msgid "Product deleted"
 msgstr "Eliminazione prodotto"
 
-#: management/__init__.py:83
+#: management/__init__.py:90
 msgid "Product supply created"
 msgstr "Creazione fornitura"
 
-#: management/__init__.py:88
+#: management/__init__.py:95
 msgid "Product supply deleted"
 msgstr "Eliminazione fornitura"

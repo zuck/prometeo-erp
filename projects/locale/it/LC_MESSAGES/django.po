@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-25 11:54+0100\n"
+"POT-Creation-Date: 2012-01-09 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,8 +95,8 @@ msgid ""
 "Use <a href=\"http://daringfireball.net/projects/markdown/syntax\">MarkDown "
 "syntax</a>."
 msgstr ""
-"Usare la <a href=\"http://daringfireball.net/projects/markdown/syntax\">sintassi "
-"MarkDown</a>."
+"Usare la <a href=\"http://daringfireball.net/projects/markdown/syntax"
+"\">sintassi MarkDown</a>."
 
 #: models.py:164
 msgid "type"
@@ -126,114 +126,91 @@ msgstr ""
 msgid "tickets"
 msgstr ""
 
-#: signals.py:114
-#, python-format
-msgid "%(class)s %(name)s created by %(author)s"
-msgstr "%(class)s %(name)s creato da %(author)s"
-
-#: signals.py:135
-#, python-format
-msgid "%(class)s %(name)s changed"
-msgstr "%(class)s %(name)s modificato"
-
-#: signals.py:153
-#, python-format
-msgid "%(class)s %(name)s deleted"
-msgstr "%(class)s %(name)s eliminato"
-
-#: signals.py:172
-#, python-format
-msgid "%(author)s commented %(class)s %(name)s"
-msgstr "%(author)s ha commentato %(class)s %(name)s"
-
-#: signals.py:193
-msgid "comment deleted"
-msgstr "commento eliminato"
-
-#: management/__init__.py:36
+#: management/__init__.py:43
 msgid "Main menu for projects"
 msgstr "Menu principale per i progetti"
 
-#: management/__init__.py:41
+#: management/__init__.py:48
 msgid "Main menu for milestones"
 msgstr "Menu principale per le milestones"
 
-#: management/__init__.py:46
+#: management/__init__.py:53
 msgid "Main menu for tickets"
 msgstr "Menu principale per i tickets"
 
-#: management/__init__.py:51
+#: management/__init__.py:58
 msgid "Projects"
 msgstr "Progetti"
 
-#: management/__init__.py:53
+#: management/__init__.py:60
 msgid "Project management"
 msgstr "Gestione progetti"
 
-#: management/__init__.py:59 management/__init__.py:87
-msgid "Dashboard"
-msgstr "Bacheca"
-
-#: management/__init__.py:66
-msgid "Milestones"
-msgstr ""
-
-#: management/__init__.py:73 management/__init__.py:94
-msgid "Tickets"
-msgstr ""
-
-#: management/__init__.py:80 management/__init__.py:101
-#: management/__init__.py:122
-msgid "Timeline"
-msgstr "Cronologia"
-
-#: management/__init__.py:108
+#: management/__init__.py:66 management/__init__.py:94
+#: management/__init__.py:115
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:115
+#: management/__init__.py:73
+msgid "Milestones"
+msgstr ""
+
+#: management/__init__.py:80 management/__init__.py:101
+msgid "Tickets"
+msgstr ""
+
+#: management/__init__.py:87 management/__init__.py:108
+#: management/__init__.py:129
+msgid "Timeline"
+msgstr "Cronologia"
+
+#: management/__init__.py:122
 msgid "Tasks"
 msgstr "Attività"
 
-#: management/__init__.py:130
+#: management/__init__.py:137
 msgid "Project created"
 msgstr "Creazione progetto"
 
-#: management/__init__.py:135
+#: management/__init__.py:142
 msgid "Project changed"
 msgstr "Modifica progetto"
 
-#: management/__init__.py:140
+#: management/__init__.py:147
 msgid "Project deleted"
 msgstr "Eliminazione progetto"
 
-#: management/__init__.py:145
+#: management/__init__.py:152
 msgid "Milestone created"
 msgstr "Creazione milestone"
 
-#: management/__init__.py:150
+#: management/__init__.py:157
 msgid "Milestone changed"
 msgstr "Modifica milestone"
 
-#: management/__init__.py:155
+#: management/__init__.py:162
 msgid "Milestone deleted"
 msgstr "Eliminazione milestone"
 
-#: management/__init__.py:160
+#: management/__init__.py:167
 msgid "Ticket created"
 msgstr "Creazione ticket"
 
-#: management/__init__.py:165
+#: management/__init__.py:172
 msgid "Ticket changed"
 msgstr "Modifica ticket"
 
-#: management/__init__.py:170
+#: management/__init__.py:177
 msgid "Ticket deleted"
 msgstr "Eliminazione ticket"
 
-#: views/milestones.py:81 views/milestones.py:98
-msgid "The milestone has been saved."
+#: views/milestones.py:81
+msgid "The milestone was created successfully."
 msgstr "La milestone è stata salvata."
+
+#: views/milestones.py:98
+msgid "The milestone was updated successfully."
+msgstr "La milestone è stata aggiornata."
 
 #: views/milestones.py:129
 msgid "The milestone has been closed."
@@ -243,14 +220,18 @@ msgstr "La milestone è stata chiusa."
 msgid "The milestone has been reopened."
 msgstr "La milestone è stata riaperta."
 
-#: views/projects.py:74 views/projects.py:90
-msgid "The project has been saved."
+#: views/projects.py:74
+msgid "The project was created successfully."
 msgstr "Il progetto è stato salvato."
+
+#: views/projects.py:90
+msgid "The project was updated successfully."
+msgstr "Il progetto è stato aggiornato."
 
 #: views/tickets.py:90
 msgid "Your ticket has been registered."
 msgstr "Il tuo ticket è stato registrato."
 
 #: views/tickets.py:113
-msgid "The ticket has been updated."
+msgid "The ticket was updated successfully."
 msgstr "Il ticket è stato aggiornato."

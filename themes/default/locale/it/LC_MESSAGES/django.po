@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-14 12:29+0100\n"
+"POT-Creation-Date: 2012-01-09 12:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,182 +26,67 @@ msgstr "Errore 404: pagina non trovata"
 msgid "Sorry, the requested page was not found on this site."
 msgstr "Spiacenti, la pagina richiesta non è stata trovata su questo sito."
 
-#: templates/index.html:8
-msgid "My dashboard"
-msgstr "Bacheca personale"
+#: templates/base_delete.html:8 templates/base_delete.html.py:15
+#: templates/documents/document_delete.html:7
+#: templates/documents/document_delete.html:13
+#, python-format
+msgid "Delete %(model)s"
+msgstr "Elimina %(model)s"
 
-#: templates/index.html:15 templates/auth/user_detail.html:29
-#: templates/auth/user_list.html:25 templates/elements/month_calendar.html:28
-#: templates/events/event_detail.html:29 templates/events/event_list.html:26
-#: templates/hr/employee_detail.html:25 templates/hr/employee_list.html:21
-#: templates/hr/expensevoucher_detail.html:25
-#: templates/hr/expensevoucher_hardcopies.html:24
-#: templates/hr/expensevoucher_list.html:21
-#: templates/hr/timesheet_detail.html:25
-#: templates/hr/timesheet_hardcopies.html:24
-#: templates/hr/timesheet_list.html:21 templates/knowledge/faq_detail.html:30
-#: templates/knowledge/faq_list.html:21
-#: templates/knowledge/poll_detail.html:28
-#: templates/knowledge/poll_list.html:21
-#: templates/knowledge/wikipage_404.html:23
-#: templates/knowledge/wikipage_detail.html:28
-#: templates/knowledge/wikipage_list.html:21
-#: templates/menus/bookmark_list.html:22
-#: templates/partners/contact_addresses.html:22
-#: templates/partners/contact_detail.html:29
-#: templates/partners/contact_jobs.html:23
-#: templates/partners/contact_list.html:21
-#: templates/partners/contact_phones.html:22
-#: templates/partners/contact_profiles.html:22
-#: templates/partners/letter_detail.html:27
-#: templates/partners/letter_hardcopies.html:24
-#: templates/partners/letter_list.html:21
-#: templates/partners/partner_addresses.html:22
-#: templates/partners/partner_contacts.html:23
-#: templates/partners/partner_detail.html:29
-#: templates/partners/partner_list.html:19
-#: templates/partners/partner_phones.html:22
-#: templates/partners/partner_profiles.html:22
-#: templates/products/product_detail.html:29
-#: templates/products/product_list.html:26
-#: templates/products/product_supplies.html:23
-#: templates/products/product_supply_detail.html:28
-#: templates/projects/milestone_detail.html:32
-#: templates/projects/milestone_list.html:23
-#: templates/projects/milestone_tickets.html:25
-#: templates/projects/project_detail.html:29
-#: templates/projects/project_list.html:26
-#: templates/projects/ticket_detail.html:30
-#: templates/projects/ticket_list.html:28
-#: templates/projects/widgets/latest_tickets.html:13
-#: templates/projects/widgets/latest_tickets.html:17
-#: templates/projects/widgets/latest_tickets.html:21
-#: templates/sales/bankaccount_detail.html:29
-#: templates/sales/bankaccount_list.html:21
-#: templates/sales/salesinvoice_detail.html:27
-#: templates/sales/salesinvoice_hardcopies.html:24
-#: templates/sales/salesinvoice_list.html:21
-#: templates/stock/deliverynote_detail.html:27
-#: templates/stock/deliverynote_hardcopies.html:24
-#: templates/stock/deliverynote_list.html:21
-#: templates/stock/movement_detail.html:26
-#: templates/stock/movement_list.html:21
-#: templates/stock/warehouse_detail.html:29
-#: templates/stock/warehouse_list.html:21
-#: templates/taxonomy/category_detail.html:24
-#: templates/taxonomy/category_list.html:24
-#: templates/taxonomy/tag_detail.html:24 templates/taxonomy/tag_list.html:25
-#: templates/todo/task_detail.html:26 templates/todo/task_list.html:33
-#: templates/todo/unplanned_task_list.html:20
-#: templates/todo/widgets/latest_tasks.html:26
-msgid "Add"
-msgstr "Aggiungi"
+#: templates/base_delete.html:23 templates/documents/document_delete.html:17
+#, python-format
+msgid "Are you sure you want to delete this %(model)s?"
+msgstr "Sei sicuro di voler eliminare questo/a %(model)s?"
 
-#: templates/index.html:21
-msgid "No widgets found."
-msgstr "Nessun widget trovato."
+#: templates/base_delete.html:25 templates/base_edit.html:38
+#: templates/widgets/widget_edit.html:26
+msgid "Confirm"
+msgstr "Conferma"
 
-#: templates/auth/comment_delete.html:17 templates/auth/user_delete.html:18
-#: templates/auth/user_detail.html:35
-#: templates/documents/hardcopy_delete.html:10
-#: templates/elements/comments.html:25 templates/events/event_delete.html:18
-#: templates/events/event_detail.html:35 templates/filebrowser/delete.html:17
-#: templates/hr/employee_delete.html:18 templates/hr/employee_detail.html:31
-#: templates/hr/expensevoucher_delete.html:18
-#: templates/hr/expensevoucher_detail.html:31
-#: templates/hr/timesheet_delete.html:18 templates/hr/timesheet_detail.html:31
-#: templates/knowledge/faq_delete.html:18
-#: templates/knowledge/faq_detail.html:36
-#: templates/knowledge/faq_detail.html:85
-#: templates/knowledge/poll_delete.html:18
-#: templates/knowledge/poll_detail.html:34
-#: templates/knowledge/wikipage_delete.html:18
-#: templates/knowledge/wikipage_detail.html:34
-#: templates/menus/bookmark_delete.html:20
-#: templates/notifications/notification_delete.html:20
-#: templates/notifications/notification_detail.html:28
-#: templates/partners/address_delete.html:26
-#: templates/partners/contact_addresses.html:42
-#: templates/partners/contact_delete.html:18
-#: templates/partners/contact_detail.html:35
-#: templates/partners/contact_phones.html:42
-#: templates/partners/contact_profiles.html:42
-#: templates/partners/job_delete.html:20
-#: templates/partners/letter_delete.html:18
-#: templates/partners/letter_detail.html:33
-#: templates/partners/partner_addresses.html:42
-#: templates/partners/partner_delete.html:18
-#: templates/partners/partner_detail.html:35
-#: templates/partners/partner_phones.html:42
-#: templates/partners/partner_profiles.html:42
-#: templates/partners/phone_delete.html:26
-#: templates/partners/profile_delete.html:26
-#: templates/products/product_delete.html:18
-#: templates/products/product_delete_supply.html:20
-#: templates/products/product_detail.html:35
-#: templates/products/product_supply_detail.html:34
-#: templates/projects/milestone.html:18
-#: templates/projects/milestone_delete.html:20
-#: templates/projects/milestone_detail.html:38
-#: templates/projects/project_delete.html:18
-#: templates/projects/project_detail.html:35
-#: templates/projects/ticket_delete.html:20
-#: templates/projects/ticket_detail.html:36
-#: templates/sales/bankaccount_delete.html:18
-#: templates/sales/bankaccount_detail.html:35
-#: templates/sales/salesinvoice_delete.html:18
-#: templates/sales/salesinvoice_detail.html:33
-#: templates/stock/deliverynote_delete.html:18
-#: templates/stock/deliverynote_detail.html:33
-#: templates/stock/movement_delete.html:18
-#: templates/stock/movement_detail.html:32
-#: templates/stock/warehouse_delete.html:18
-#: templates/stock/warehouse_detail.html:35
-#: templates/taxonomy/category_delete.html:18
-#: templates/taxonomy/category_detail.html:30
-#: templates/taxonomy/tag_delete.html:18 templates/taxonomy/tag_detail.html:30
-#: templates/todo/task_delete.html:18 templates/todo/task_detail.html:32
-#: templates/widgets/widget.html:14 templates/widgets/widget_delete.html:20
-msgid "Delete"
-msgstr "Elimina"
-
-#: templates/auth/comment_delete.html:24
-msgid "Are you sure you want to delete this comment?"
-msgstr "Sei sicuro di voler eliminare questo commento?"
-
-#: templates/auth/comment_delete.html:25 templates/auth/user_delete.html:26
-#: templates/documents/hardcopy_delete.html:18
-#: templates/events/event_delete.html:26 templates/filebrowser/delete.html:32
-#: templates/hr/employee_delete.html:26
-#: templates/hr/expensevoucher_delete.html:26
-#: templates/hr/timesheet_delete.html:26
-#: templates/knowledge/faq_delete.html:26
-#: templates/knowledge/poll_delete.html:26
-#: templates/knowledge/wikipage_delete.html:26
-#: templates/menus/bookmark_delete.html:28
-#: templates/notifications/notification_delete.html:28
-#: templates/partners/address_delete.html:34
-#: templates/partners/contact_delete.html:26
-#: templates/partners/job_delete.html:30
-#: templates/partners/letter_delete.html:26
-#: templates/partners/partner_delete.html:26
-#: templates/partners/phone_delete.html:34
+#: templates/base_delete.html:25 templates/filebrowser/delete.html:32
 #: templates/partners/profile_delete.html:34
-#: templates/products/product_delete.html:26
-#: templates/products/product_delete_supply.html:28
-#: templates/projects/milestone_delete.html:28
-#: templates/projects/project_delete.html:26
-#: templates/projects/ticket_delete.html:28
-#: templates/sales/bankaccount_delete.html:26
-#: templates/sales/salesinvoice_delete.html:26
-#: templates/stock/deliverynote_delete.html:26
-#: templates/stock/movement_delete.html:26
-#: templates/stock/warehouse_delete.html:26
-#: templates/taxonomy/category_delete.html:26
-#: templates/taxonomy/tag_delete.html:26 templates/todo/task_delete.html:26
-#: templates/widgets/widget_delete.html:28
 msgid "Yes, I'm sure."
 msgstr "Sì, sono sicuro."
+
+#: templates/base_delete.html:28 templates/base_delete.html.py:30
+#: templates/base_edit.html:41 templates/base_edit.html.py:43
+#: templates/calendar/event_import.html:26
+#: templates/widgets/widget_edit.html:28
+msgid "Cancel"
+msgstr "Annulla"
+
+#: templates/base_detail.html:12 templates/knowledge/poll_detail.html:18
+#: templates/projects/ticket_detail.html:20
+#: templates/stock/warehouse_detail.html:21
+msgid "Details"
+msgstr "Dettagli"
+
+#: templates/base_edit.html:9 templates/base_edit.html.py:20
+#: templates/documents/document_edit.html:9
+#: templates/documents/document_edit.html:21
+#, python-format
+msgid "Edit %(model)s"
+msgstr "Modifica %(model)s"
+
+#: templates/base_edit.html:11 templates/base_edit.html.py:22
+#: templates/documents/document_edit.html:11
+#: templates/documents/document_edit.html:23
+#, python-format
+msgid "Add %(model)s"
+msgstr "Aggiungi %(model)s"
+
+#: templates/base_edit.html:38 templates/filebrowser/copy.html:26
+#: templates/filebrowser/mkdir.html:26 templates/filebrowser/mkln.html:26
+#: templates/filebrowser/move.html:26 templates/filebrowser/rename.html:26
+#: templates/filebrowser/upload.html:26
+#: templates/notifications/notification_list.html:51
+#: templates/widgets/widget_edit.html:26
+msgid "Save"
+msgstr "Salva"
+
+#: templates/index.html:7
+msgid "My dashboard"
+msgstr "Bacheca personale"
 
 #: templates/auth/login.html:6 templates/auth/login.html.py:16
 #: templates/auth/login.html:26
@@ -215,115 +100,170 @@ msgstr ""
 "Effettua il login usando il tuo <strong>username</strong> e "
 "<strong>password</strong>."
 
-#: templates/auth/user_delete.html:25
-msgid "Are you sure you want to delete this user?"
-msgstr "Sei sicuro di voler eliminare questo utente?"
+#: templates/auth/user_detail.html:17 templates/auth/user_list.html:25
+#: templates/calendar/base.html:19 templates/calendar/event_detail.html:17
+#: templates/elements/dashboard.html:7
+#: templates/elements/month_calendar.html:28
+#: templates/hr/employee_detail.html:16 templates/hr/employee_list.html:21
+#: templates/hr/expensevoucher_detail.html:16
+#: templates/hr/expensevoucher_hardcopies.html:24
+#: templates/hr/expensevoucher_list.html:21
+#: templates/hr/timesheet_detail.html:16
+#: templates/hr/timesheet_hardcopies.html:24
+#: templates/hr/timesheet_list.html:21 templates/knowledge/faq_detail.html:18
+#: templates/knowledge/faq_list.html:21
+#: templates/knowledge/poll_detail.html:24
+#: templates/knowledge/poll_list.html:21
+#: templates/knowledge/wikipage_404.html:23
+#: templates/knowledge/wikipage_detail.html:16
+#: templates/knowledge/wikipage_list.html:21
+#: templates/menus/bookmark_list.html:22
+#: templates/partners/contact_addresses.html:22
+#: templates/partners/contact_detail.html:17
+#: templates/partners/contact_jobs.html:23
+#: templates/partners/contact_list.html:21
+#: templates/partners/contact_phones.html:22
+#: templates/partners/contact_profiles.html:22
+#: templates/partners/letter_detail.html:16
+#: templates/partners/letter_hardcopies.html:24
+#: templates/partners/letter_list.html:21
+#: templates/partners/partner_addresses.html:22
+#: templates/partners/partner_contacts.html:23
+#: templates/partners/partner_detail.html:17
+#: templates/partners/partner_list.html:19
+#: templates/partners/partner_phones.html:22
+#: templates/partners/partner_profiles.html:22
+#: templates/products/product_detail.html:17
+#: templates/products/product_list.html:26
+#: templates/products/product_supplies.html:23
+#: templates/products/product_supply_detail.html:17
+#: templates/projects/milestone_detail.html:20
+#: templates/projects/milestone_list.html:23
+#: templates/projects/milestone_tickets.html:25
+#: templates/projects/project_detail.html:17
+#: templates/projects/project_list.html:26
+#: templates/projects/ticket_detail.html:26
+#: templates/projects/ticket_list.html:28
+#: templates/projects/widgets/latest_tickets.html:13
+#: templates/projects/widgets/latest_tickets.html:17
+#: templates/projects/widgets/latest_tickets.html:21
+#: templates/sales/bankaccount_detail.html:17
+#: templates/sales/bankaccount_list.html:21
+#: templates/sales/salesinvoice_detail.html:16
+#: templates/sales/salesinvoice_hardcopies.html:24
+#: templates/sales/salesinvoice_list.html:21
+#: templates/stock/deliverynote_detail.html:16
+#: templates/stock/deliverynote_hardcopies.html:24
+#: templates/stock/deliverynote_list.html:21
+#: templates/stock/movement_detail.html:15
+#: templates/stock/movement_list.html:21
+#: templates/stock/warehouse_detail.html:29
+#: templates/stock/warehouse_list.html:21
+#: templates/taxonomy/category_detail.html:16
+#: templates/taxonomy/category_list.html:24
+#: templates/taxonomy/tag_detail.html:16 templates/taxonomy/tag_list.html:25
+#: templates/todo/task_detail.html:18 templates/todo/task_list.html:33
+#: templates/todo/unplanned_task_list.html:20
+#: templates/todo/widgets/latest_tasks.html:26
+msgid "Add"
+msgstr "Aggiungi"
 
-#: templates/auth/user_detail.html:21
-#: templates/auth/widgets/user_profile.html:12
-msgid "Profile"
-msgstr "Profilo"
-
-#: templates/auth/user_detail.html:32 templates/events/event_detail.html:32
-#: templates/hr/employee_detail.html:28
-#: templates/hr/expensevoucher_detail.html:28
-#: templates/hr/timesheet_detail.html:28
-#: templates/knowledge/faq_detail.html:33
-#: templates/knowledge/poll_detail.html:31
-#: templates/knowledge/wikipage_detail.html:31
+#: templates/auth/user_detail.html:20 templates/calendar/event_detail.html:20
+#: templates/hr/employee_detail.html:19
+#: templates/hr/expensevoucher_detail.html:19
+#: templates/hr/timesheet_detail.html:19
+#: templates/knowledge/faq_detail.html:21
+#: templates/knowledge/poll_detail.html:27
+#: templates/knowledge/wikipage_detail.html:19
 #: templates/partners/contact_addresses.html:41
-#: templates/partners/contact_detail.html:32
+#: templates/partners/contact_detail.html:20
 #: templates/partners/contact_phones.html:41
 #: templates/partners/contact_profiles.html:41
-#: templates/partners/letter_detail.html:30
+#: templates/partners/letter_detail.html:19
 #: templates/partners/partner_addresses.html:41
-#: templates/partners/partner_detail.html:32
+#: templates/partners/partner_detail.html:20
 #: templates/partners/partner_phones.html:41
 #: templates/partners/partner_profiles.html:41
-#: templates/products/product_detail.html:32
-#: templates/products/product_supply_detail.html:31
+#: templates/products/product_detail.html:20
+#: templates/products/product_supply_detail.html:20
 #: templates/projects/milestone.html:15
-#: templates/projects/milestone_detail.html:35
-#: templates/projects/project_detail.html:32
-#: templates/projects/ticket_detail.html:33
-#: templates/sales/bankaccount_detail.html:32
-#: templates/sales/salesinvoice_detail.html:30
-#: templates/stock/deliverynote_detail.html:30
-#: templates/stock/movement_detail.html:29
+#: templates/projects/milestone_detail.html:23
+#: templates/projects/project_detail.html:20
+#: templates/projects/ticket_detail.html:29
+#: templates/sales/bankaccount_detail.html:20
+#: templates/sales/salesinvoice_detail.html:19
+#: templates/stock/deliverynote_detail.html:19
+#: templates/stock/movement_detail.html:18
 #: templates/stock/warehouse_detail.html:32
-#: templates/taxonomy/category_detail.html:27
-#: templates/taxonomy/tag_detail.html:27 templates/todo/task_detail.html:29
-#: templates/widgets/widget.html:13
+#: templates/taxonomy/category_detail.html:19
+#: templates/taxonomy/tag_detail.html:19 templates/todo/task_detail.html:21
+#: templates/widgets/widget.html:12
 msgid "Edit"
 msgstr "Modifica"
 
-#: templates/auth/user_detail.html:38 templates/events/event_detail.html:38
-#: templates/hr/employee_detail.html:34
-#: templates/hr/expensevoucher_detail.html:34
-#: templates/hr/timesheet_detail.html:34
-#: templates/knowledge/faq_detail.html:39
-#: templates/knowledge/poll_detail.html:37
-#: templates/knowledge/wikipage_detail.html:37
-#: templates/notifications/notification_detail.html:31
-#: templates/partners/contact_detail.html:38
-#: templates/partners/letter_detail.html:36
-#: templates/partners/partner_detail.html:38
-#: templates/products/product_detail.html:38
-#: templates/products/product_supply_detail.html:37
-#: templates/projects/milestone_detail.html:41
-#: templates/projects/project_detail.html:38
-#: templates/projects/ticket_detail.html:39
-#: templates/sales/bankaccount_detail.html:38
-#: templates/sales/salesinvoice_detail.html:36
-#: templates/stock/deliverynote_detail.html:36
-#: templates/stock/movement_detail.html:35
+#: templates/auth/user_detail.html:23 templates/calendar/event_detail.html:23
+#: templates/elements/comments.html:25 templates/filebrowser/delete.html:17
+#: templates/hr/employee_detail.html:22
+#: templates/hr/expensevoucher_detail.html:22
+#: templates/hr/timesheet_detail.html:22
+#: templates/knowledge/faq_detail.html:24
+#: templates/knowledge/faq_detail.html:62
+#: templates/knowledge/poll_detail.html:30
+#: templates/knowledge/wikipage_detail.html:22
+#: templates/notifications/notification_detail.html:23
+#: templates/partners/contact_addresses.html:42
+#: templates/partners/contact_detail.html:23
+#: templates/partners/contact_phones.html:42
+#: templates/partners/contact_profiles.html:42
+#: templates/partners/letter_detail.html:22
+#: templates/partners/partner_addresses.html:42
+#: templates/partners/partner_detail.html:23
+#: templates/partners/partner_phones.html:42
+#: templates/partners/partner_profiles.html:42
+#: templates/partners/profile_delete.html:26
+#: templates/products/product_detail.html:23
+#: templates/products/product_supply_detail.html:23
+#: templates/projects/milestone.html:18
+#: templates/projects/milestone_detail.html:26
+#: templates/projects/project_detail.html:23
+#: templates/projects/ticket_detail.html:32
+#: templates/sales/bankaccount_detail.html:23
+#: templates/sales/salesinvoice_detail.html:22
+#: templates/stock/deliverynote_detail.html:22
+#: templates/stock/movement_detail.html:21
+#: templates/stock/warehouse_detail.html:35
+#: templates/taxonomy/category_detail.html:22
+#: templates/taxonomy/tag_detail.html:22 templates/todo/task_detail.html:24
+#: templates/widgets/widget.html:13
+msgid "Delete"
+msgstr "Elimina"
+
+#: templates/auth/user_detail.html:26 templates/calendar/event_detail.html:26
+#: templates/hr/employee_detail.html:25
+#: templates/hr/expensevoucher_detail.html:25
+#: templates/hr/timesheet_detail.html:25
+#: templates/knowledge/faq_detail.html:27
+#: templates/knowledge/poll_detail.html:33
+#: templates/knowledge/wikipage_detail.html:25
+#: templates/notifications/notification_detail.html:26
+#: templates/partners/contact_detail.html:26
+#: templates/partners/letter_detail.html:25
+#: templates/partners/partner_detail.html:26
+#: templates/products/product_detail.html:26
+#: templates/products/product_supply_detail.html:26
+#: templates/projects/milestone_detail.html:29
+#: templates/projects/project_detail.html:26
+#: templates/projects/ticket_detail.html:35
+#: templates/sales/bankaccount_detail.html:26
+#: templates/sales/salesinvoice_detail.html:25
+#: templates/stock/deliverynote_detail.html:25
+#: templates/stock/movement_detail.html:24
 #: templates/stock/warehouse_detail.html:38
-#: templates/taxonomy/category_detail.html:33
-#: templates/taxonomy/tag_detail.html:33 templates/todo/task_detail.html:35
+#: templates/taxonomy/category_detail.html:25
+#: templates/taxonomy/tag_detail.html:25 templates/todo/task_detail.html:28
+#: templates/todo/task_detail.html.py:30
 msgid "All"
 msgstr "Tutti"
-
-#: templates/auth/user_edit.html:8 templates/auth/user_edit.html.py:26
-msgid "Edit user"
-msgstr "Modifica utente"
-
-#: templates/auth/user_edit.html:8 templates/auth/user_edit.html.py:28
-msgid "Add user"
-msgstr "Aggiungi utente"
-
-#: templates/auth/user_edit.html:47 templates/documents/hardcopy_edit.html:27
-#: templates/events/event_edit.html:39 templates/filebrowser/copy.html:26
-#: templates/filebrowser/mkdir.html:26 templates/filebrowser/mkln.html:26
-#: templates/filebrowser/move.html:26 templates/filebrowser/rename.html:26
-#: templates/filebrowser/upload.html:26 templates/hr/employee_edit.html:45
-#: templates/hr/expensevoucher_edit.html:73
-#: templates/hr/timesheet_edit.html:73 templates/knowledge/faq_edit.html:41
-#: templates/knowledge/poll_edit.html:69
-#: templates/knowledge/wikipage_edit.html:38
-#: templates/menus/bookmark_edit.html:45
-#: templates/notifications/notification_list.html:51
-#: templates/partners/address_edit.html:45
-#: templates/partners/contact_edit.html:47 templates/partners/job_edit.html:59
-#: templates/partners/letter_edit.html:45
-#: templates/partners/partner_edit.html:47
-#: templates/partners/phone_edit.html:45
-#: templates/partners/profile_edit.html:45
-#: templates/products/product_edit.html:43
-#: templates/products/product_edit_supply.html:45
-#: templates/projects/milestone_edit.html:45
-#: templates/projects/project_edit.html:43
-#: templates/projects/ticket_edit.html:45
-#: templates/sales/bankaccount_edit.html:43
-#: templates/sales/salesinvoice_edit.html:73
-#: templates/stock/deliverynote_edit.html:73
-#: templates/stock/movement_edit.html:44
-#: templates/stock/warehouse_edit.html:43
-#: templates/stock/warehouse_edit_movement.html:39
-#: templates/taxonomy/category_edit.html:40
-#: templates/taxonomy/tag_edit.html:40 templates/todo/task_edit.html:43
-#: templates/widgets/widget_edit.html:45
-msgid "Save"
-msgstr "Salva"
 
 #: templates/auth/user_list.html:7 templates/auth/user_list.html.py:16
 msgid "Users"
@@ -334,19 +274,186 @@ msgstr "Utenti"
 msgid "%(notification_count)s unread notification(s)"
 msgstr "%(notification_count)s notifiche non lette"
 
-#: templates/documents/hardcopy_delete.html:17
-msgid "Are you sure you want to delete this hard copy?"
-msgstr "Sei sicuro di voler eliminare questa copia cartacea?"
+#: templates/auth/widgets/user_profile.html:12
+msgid "Profile"
+msgstr "Profilo"
 
-#: templates/documents/hardcopy_edit.html:7
-#: templates/documents/hardcopy_edit.html:14
-msgid "Edit hard copy"
-msgstr "Modifica copia cartacea"
+#: templates/calendar/base.html:6 templates/calendar/base.html.py:10
+#: templates/calendar/event_import.html:16
+msgid "Calendar"
+msgstr "Calendario"
 
-#: templates/documents/hardcopy_edit.html:7
-#: templates/documents/hardcopy_edit.html:16
-msgid "Add hard copy"
-msgstr "Aggiungi copia cartacea"
+#: templates/calendar/base.html:22 templates/calendar/event_detail.html:29
+msgid "Import events from an .ics file"
+msgstr "Importa eventi da un file .ics"
+
+#: templates/calendar/base.html:22 templates/calendar/event_detail.html:29
+#: templates/calendar/event_import.html:6
+#: templates/calendar/event_import.html:17
+#: templates/calendar/event_import.html:25
+msgid "Import"
+msgstr "Importa"
+
+#: templates/calendar/base.html:25
+msgid "Export events as an .ics file"
+msgstr "Esporta eventi come file .ics"
+
+#: templates/calendar/base.html:25 templates/calendar/event_detail.html:32
+msgid "Export"
+msgstr "Esporta"
+
+#: templates/calendar/event_day.html:12
+msgid "Day"
+msgstr "Giorno"
+
+#: templates/calendar/event_detail.html:32
+msgid "Export event to an .ics file"
+msgstr "Esporta evento in un file .ics"
+
+#: templates/calendar/event_detail.html:36
+#: templates/hr/expensevoucher_detail.html:32
+#: templates/hr/timesheet_detail.html:32
+#: templates/knowledge/faq_detail.html:31
+#: templates/knowledge/poll_detail.html:37
+#: templates/knowledge/wikipage_detail.html:29
+#: templates/partners/letter_detail.html:32
+#: templates/partners/partner_detail.html:30
+#: templates/products/product_detail.html:30
+#: templates/projects/milestone_detail.html:40
+#: templates/projects/project_detail.html:30
+#: templates/projects/ticket_detail.html:39
+#: templates/sales/salesinvoice_detail.html:32
+#: templates/stock/deliverynote_detail.html:32
+#: templates/stock/warehouse_detail.html:42
+msgid "Follow"
+msgstr "Segui"
+
+#: templates/calendar/event_detail.html:38
+#: templates/hr/expensevoucher_detail.html:34
+#: templates/hr/timesheet_detail.html:34
+#: templates/knowledge/faq_detail.html:33
+#: templates/knowledge/poll_detail.html:39
+#: templates/knowledge/wikipage_detail.html:31
+#: templates/partners/letter_detail.html:34
+#: templates/partners/partner_detail.html:32
+#: templates/products/product_detail.html:32
+#: templates/projects/milestone_detail.html:42
+#: templates/projects/project_detail.html:32
+#: templates/projects/ticket_detail.html:41
+#: templates/sales/salesinvoice_detail.html:34
+#: templates/stock/deliverynote_detail.html:34
+#: templates/stock/warehouse_detail.html:44
+msgid "Leave"
+msgstr "Lascia"
+
+#: templates/calendar/event_list.html:12
+msgid "Agenda"
+msgstr ""
+
+#: templates/calendar/event_list.html:35
+#: templates/calendar/event_timeline.html:50
+#: templates/hr/expensevoucher_timeline.html:51
+#: templates/hr/timesheet_timeline.html:51
+#: templates/knowledge/faq_timeline.html:51
+#: templates/knowledge/poll_timeline.html:51
+#: templates/knowledge/wikipage_timeline.html:51
+#: templates/notifications/notification_list.html:32
+#: templates/partners/contact_addresses.html:52
+#: templates/partners/contact_phones.html:52
+#: templates/partners/contact_profiles.html:52
+#: templates/partners/contact_timeline.html:51
+#: templates/partners/letter_timeline.html:51
+#: templates/partners/partner_addresses.html:52
+#: templates/partners/partner_phones.html:52
+#: templates/partners/partner_profiles.html:52
+#: templates/partners/partner_timeline.html:51
+#: templates/products/product_timeline.html:51
+#: templates/projects/milestone_list.html:37
+#: templates/projects/milestone_timeline.html:53
+#: templates/projects/project_timeline.html:51
+#: templates/projects/ticket_timeline.html:53
+#: templates/projects/widgets/latest_tickets.html:10
+#: templates/projects/widgets/my_projects.html:10
+#: templates/sales/salesinvoice_timeline.html:51
+#: templates/stock/deliverynote_timeline.html:51
+#: templates/stock/warehouse_timeline.html:51
+#: templates/taxonomy/category_list.html:36 templates/taxonomy/results.html:22
+#: templates/todo/task_list.html:63 templates/todo/unplanned_task_list.html:34
+#: templates/todo/widgets/latest_tasks.html:24
+msgid "No results found."
+msgstr "Nessun risultato trovato."
+
+#: templates/calendar/event_month.html:12
+msgid "Month"
+msgstr "Mese"
+
+#: templates/calendar/event_timeline.html:7
+#: templates/calendar/event_timeline.html:16
+#: templates/hr/expensevoucher_timeline.html:8
+#: templates/hr/expensevoucher_timeline.html:17
+#: templates/hr/timesheet_timeline.html:8
+#: templates/hr/timesheet_timeline.html:17
+#: templates/knowledge/faq_timeline.html:8
+#: templates/knowledge/faq_timeline.html:17
+#: templates/knowledge/poll_timeline.html:8
+#: templates/knowledge/poll_timeline.html:17
+#: templates/knowledge/wikipage_timeline.html:8
+#: templates/knowledge/wikipage_timeline.html:17
+#: templates/partners/contact_timeline.html:8
+#: templates/partners/contact_timeline.html:17
+#: templates/partners/letter_timeline.html:8
+#: templates/partners/letter_timeline.html:17
+#: templates/partners/partner_timeline.html:8
+#: templates/partners/partner_timeline.html:17
+#: templates/products/product_timeline.html:8
+#: templates/products/product_timeline.html:17
+#: templates/projects/milestone_timeline.html:8
+#: templates/projects/milestone_timeline.html:19
+#: templates/projects/project_timeline.html:8
+#: templates/projects/project_timeline.html:10
+#: templates/projects/ticket_timeline.html:8
+#: templates/projects/ticket_timeline.html:19
+#: templates/sales/salesinvoice_timeline.html:8
+#: templates/sales/salesinvoice_timeline.html:17
+#: templates/stock/deliverynote_timeline.html:8
+#: templates/stock/deliverynote_timeline.html:17
+#: templates/stock/warehouse_timeline.html:8
+#: templates/stock/warehouse_timeline.html:17
+msgid "Timeline"
+msgstr "Cronologia"
+
+#: templates/calendar/event_timeline.html:38
+#: templates/hr/expensevoucher_timeline.html:39
+#: templates/hr/timesheet_timeline.html:39
+#: templates/knowledge/faq_timeline.html:39
+#: templates/knowledge/poll_timeline.html:39
+#: templates/knowledge/wikipage_timeline.html:39
+#: templates/partners/contact_timeline.html:39
+#: templates/partners/letter_timeline.html:39
+#: templates/partners/partner_timeline.html:39
+#: templates/products/product_timeline.html:39
+#: templates/projects/milestone_timeline.html:41
+#: templates/projects/project_timeline.html:39
+#: templates/projects/ticket_timeline.html:41
+#: templates/sales/salesinvoice_timeline.html:39
+#: templates/stock/deliverynote_timeline.html:39
+#: templates/stock/warehouse_timeline.html:39
+#, python-format
+msgid "%(timesince)s ago"
+msgstr "%(timesince)s fa"
+
+#: templates/calendar/event_week.html:12
+msgid "Week"
+msgstr "Settimana"
+
+#: templates/calendar/event_week.html:20
+#, python-format
+msgid "Week %(week_number)s, %(week_year)s"
+msgstr "Settimana %(week_number)s, %(week_year)s"
+
+#: templates/calendar/event_year.html:12
+msgid "Year"
+msgstr "Anno"
 
 #: templates/elements/bookmarks.html:5
 msgid "+"
@@ -360,12 +467,12 @@ msgstr "Pubblicato in"
 msgid "Comments"
 msgstr "Commenti"
 
-#: templates/elements/comments.html:19 templates/knowledge/faq_detail.html:79
+#: templates/elements/comments.html:19 templates/knowledge/faq_detail.html:58
 #, python-format
 msgid "Posted on %(submit_date)s"
 msgstr "Pubblicato il %(submit_date)s"
 
-#: templates/elements/comments.html:19 templates/knowledge/faq_detail.html:79
+#: templates/elements/comments.html:19 templates/knowledge/faq_detail.html:58
 #, python-format
 msgid " by <a href=\"%(user_link)s\">%(user_name)s</a>"
 msgstr " di <a href=\"%(user_link)s\">%(user_name)s</a>"
@@ -383,7 +490,7 @@ msgstr "Nessun commento."
 msgid "Add comment"
 msgstr "Aggiungi commento"
 
-#: templates/elements/comments.html:49 templates/knowledge/faq_detail.html:109
+#: templates/elements/comments.html:49
 msgid ""
 "Use <a href=\"http://daringfireball.net/projects/markdown/syntax\">MarkDown "
 "syntax</a>."
@@ -391,17 +498,24 @@ msgstr ""
 "Usare la <a href=\"http://daringfireball.net/projects/markdown/syntax"
 "\">sintassi MarkDown</a>."
 
-#: templates/elements/comments.html:51 templates/knowledge/faq_detail.html:111
+#: templates/elements/comments.html:51 templates/knowledge/faq_detail.html:86
 msgid "Post"
 msgstr "Pubblica"
+
+#: templates/elements/dashboard.html:7
+msgid "Add widget"
+msgstr "Aggiungi widget"
+
+#: templates/elements/dashboard.html:14
+msgid "No widgets found."
+msgstr "Nessun widget trovato."
 
 #: templates/elements/day_calendar.html:5
 #: templates/elements/week_calendar.html:5
 msgid "Hour"
 msgstr "Orario"
 
-#: templates/elements/day_calendar.html:6 templates/events/event_list.html:8
-#: templates/events/event_list.html:17
+#: templates/elements/day_calendar.html:6
 msgid "Events"
 msgstr "Eventi"
 
@@ -431,193 +545,6 @@ msgstr "Cerca"
 #: templates/elements/tags.html:5
 msgid "Tagged as"
 msgstr "Taggato come"
-
-#: templates/events/event_day.html:6
-msgid "Day"
-msgstr "Giorno"
-
-#: templates/events/event_delete.html:25
-msgid "Are you sure you want to delete this event?"
-msgstr "Sei sicuro di voler eliminare questo evento?"
-
-#: templates/events/event_detail.html:21
-#: templates/knowledge/wikipage_detail.html:19
-#: templates/products/product_detail.html:21
-#: templates/projects/ticket_detail.html:22
-#: templates/sales/bankaccount_detail.html:21
-#: templates/stock/warehouse_detail.html:21
-msgid "Details"
-msgstr "Dettagli"
-
-#: templates/events/event_detail.html:41 templates/events/event_list.html:29
-msgid "Import events from an .ics file"
-msgstr "Importa eventi da un file .ics"
-
-#: templates/events/event_detail.html:41 templates/events/event_import.html:6
-#: templates/events/event_import.html:16 templates/events/event_import.html:24
-#: templates/events/event_list.html:29
-msgid "Import"
-msgstr "Importa"
-
-#: templates/events/event_detail.html:44
-msgid "Export event to an .ics file"
-msgstr "Esporta evento in un file .ics"
-
-#: templates/events/event_detail.html:44 templates/events/event_list.html:32
-msgid "Export"
-msgstr "Esporta"
-
-#: templates/events/event_detail.html:48
-#: templates/hr/expensevoucher_detail.html:41
-#: templates/hr/timesheet_detail.html:41
-#: templates/knowledge/faq_detail.html:43
-#: templates/knowledge/poll_detail.html:41
-#: templates/knowledge/wikipage_detail.html:41
-#: templates/partners/letter_detail.html:43
-#: templates/partners/partner_detail.html:42
-#: templates/products/product_detail.html:42
-#: templates/projects/milestone_detail.html:52
-#: templates/projects/project_detail.html:42
-#: templates/projects/ticket_detail.html:43
-#: templates/sales/salesinvoice_detail.html:43
-#: templates/stock/deliverynote_detail.html:43
-#: templates/stock/warehouse_detail.html:42
-msgid "Follow"
-msgstr "Segui"
-
-#: templates/events/event_detail.html:50
-#: templates/hr/expensevoucher_detail.html:43
-#: templates/hr/timesheet_detail.html:43
-#: templates/knowledge/faq_detail.html:45
-#: templates/knowledge/poll_detail.html:43
-#: templates/knowledge/wikipage_detail.html:43
-#: templates/partners/letter_detail.html:45
-#: templates/partners/partner_detail.html:44
-#: templates/products/product_detail.html:44
-#: templates/projects/milestone_detail.html:54
-#: templates/projects/project_detail.html:44
-#: templates/projects/ticket_detail.html:45
-#: templates/sales/salesinvoice_detail.html:45
-#: templates/stock/deliverynote_detail.html:45
-#: templates/stock/warehouse_detail.html:44
-msgid "Leave"
-msgstr "Lascia"
-
-#: templates/events/event_edit.html:8 templates/events/event_edit.html:26
-msgid "Edit event"
-msgstr "Modifica evento"
-
-#: templates/events/event_edit.html:8 templates/events/event_edit.html:28
-msgid "Add event"
-msgstr "Aggiungi evento"
-
-#: templates/events/event_list.html:18
-msgid "Agenda"
-msgstr ""
-
-#: templates/events/event_list.html:32
-msgid "Export events as an .ics file"
-msgstr "Esporta eventi come file .ics"
-
-#: templates/events/event_list.html:62 templates/events/event_timeline.html:50
-#: templates/hr/expensevoucher_timeline.html:51
-#: templates/hr/timesheet_timeline.html:51
-#: templates/knowledge/faq_timeline.html:51
-#: templates/knowledge/poll_timeline.html:51
-#: templates/knowledge/wikipage_timeline.html:51
-#: templates/notifications/notification_list.html:32
-#: templates/partners/contact_addresses.html:52
-#: templates/partners/contact_phones.html:52
-#: templates/partners/contact_profiles.html:52
-#: templates/partners/letter_timeline.html:51
-#: templates/partners/partner_addresses.html:52
-#: templates/partners/partner_phones.html:52
-#: templates/partners/partner_profiles.html:52
-#: templates/partners/partner_timeline.html:51
-#: templates/products/product_timeline.html:51
-#: templates/projects/milestone_list.html:37
-#: templates/projects/milestone_timeline.html:53
-#: templates/projects/project_timeline.html:51
-#: templates/projects/ticket_timeline.html:53
-#: templates/projects/widgets/latest_tickets.html:10
-#: templates/projects/widgets/my_projects.html:10
-#: templates/sales/salesinvoice_timeline.html:51
-#: templates/stock/deliverynote_timeline.html:51
-#: templates/stock/warehouse_timeline.html:51
-#: templates/taxonomy/category_list.html:36 templates/taxonomy/results.html:22
-#: templates/todo/task_list.html:63 templates/todo/unplanned_task_list.html:34
-#: templates/todo/widgets/latest_tasks.html:24
-msgid "No results found."
-msgstr "Nessun risultato trovato."
-
-#: templates/events/event_month.html:6
-msgid "Month"
-msgstr "Mese"
-
-#: templates/events/event_timeline.html:7
-#: templates/events/event_timeline.html:16
-#: templates/hr/expensevoucher_timeline.html:8
-#: templates/hr/expensevoucher_timeline.html:17
-#: templates/hr/timesheet_timeline.html:8
-#: templates/hr/timesheet_timeline.html:17
-#: templates/knowledge/faq_timeline.html:8
-#: templates/knowledge/faq_timeline.html:17
-#: templates/knowledge/poll_timeline.html:8
-#: templates/knowledge/poll_timeline.html:17
-#: templates/knowledge/wikipage_timeline.html:8
-#: templates/knowledge/wikipage_timeline.html:17
-#: templates/partners/letter_timeline.html:8
-#: templates/partners/letter_timeline.html:17
-#: templates/partners/partner_timeline.html:8
-#: templates/partners/partner_timeline.html:17
-#: templates/products/product_timeline.html:8
-#: templates/products/product_timeline.html:17
-#: templates/projects/milestone_timeline.html:8
-#: templates/projects/milestone_timeline.html:19
-#: templates/projects/project_timeline.html:8
-#: templates/projects/project_timeline.html:10
-#: templates/projects/ticket_timeline.html:8
-#: templates/projects/ticket_timeline.html:19
-#: templates/sales/salesinvoice_timeline.html:8
-#: templates/sales/salesinvoice_timeline.html:17
-#: templates/stock/deliverynote_timeline.html:8
-#: templates/stock/deliverynote_timeline.html:17
-#: templates/stock/warehouse_timeline.html:8
-#: templates/stock/warehouse_timeline.html:17
-msgid "Timeline"
-msgstr "Cronologia"
-
-#: templates/events/event_timeline.html:38
-#: templates/hr/expensevoucher_timeline.html:39
-#: templates/hr/timesheet_timeline.html:39
-#: templates/knowledge/faq_timeline.html:39
-#: templates/knowledge/poll_timeline.html:39
-#: templates/knowledge/wikipage_timeline.html:39
-#: templates/partners/letter_timeline.html:39
-#: templates/partners/partner_timeline.html:39
-#: templates/products/product_timeline.html:39
-#: templates/projects/milestone_timeline.html:41
-#: templates/projects/project_timeline.html:39
-#: templates/projects/ticket_timeline.html:41
-#: templates/sales/salesinvoice_timeline.html:39
-#: templates/stock/deliverynote_timeline.html:39
-#: templates/stock/warehouse_timeline.html:39
-#, python-format
-msgid "%(timesince)s ago"
-msgstr "%(timesince)s fa"
-
-#: templates/events/event_week.html:6
-msgid "Week"
-msgstr "Settimana"
-
-#: templates/events/event_week.html:14
-#, python-format
-msgid "Week %(week_number)s, %(week_year)s"
-msgstr "Settimana %(week_number)s, %(week_year)s"
-
-#: templates/events/event_year.html:6
-msgid "Year"
-msgstr "Anno"
 
 #: templates/filebrowser/copy.html:17
 msgid "Copy"
@@ -667,48 +594,22 @@ msgstr "Carica file"
 msgid "Human resources"
 msgstr "Risorse umane"
 
-#: templates/hr/employee_delete.html:25
-msgid "Are you sure you want to delete this employee?"
-msgstr "Sei sicuro di voler eliminare questo dipendente?"
-
-#: templates/hr/employee_edit.html:8 templates/hr/employee_edit.html.py:26
-msgid "Edit employee"
-msgstr "Modifica dipendente"
-
-#: templates/hr/employee_edit.html:8 templates/hr/employee_edit.html.py:28
-msgid "Add employee"
-msgstr "Aggiungi dipendente"
-
 #: templates/hr/employee_list.html:7 templates/hr/employee_list.html.py:14
 msgid "Employees"
 msgstr "Dipendenti"
 
-#: templates/hr/expensevoucher_delete.html:25
-msgid "Are you sure you want to delete this expense voucher?"
-msgstr "Sei sicuro di voler eliminare questa nota spese?"
-
-#: templates/hr/expensevoucher_detail.html:37
-#: templates/hr/timesheet_detail.html:37
-#: templates/partners/letter_detail.html:39
-#: templates/sales/salesinvoice_detail.html:39
-#: templates/stock/deliverynote_detail.html:39
+#: templates/hr/expensevoucher_detail.html:28
+#: templates/hr/timesheet_detail.html:28
+#: templates/partners/letter_detail.html:28
+#: templates/sales/salesinvoice_detail.html:28
+#: templates/stock/deliverynote_detail.html:28
 msgid "Print"
 msgstr "Stampa"
 
-#: templates/hr/expensevoucher_edit.html:8
-#: templates/hr/expensevoucher_edit.html:26
-msgid "Edit expense voucher"
-msgstr "Modifica nota spese"
-
-#: templates/hr/expensevoucher_edit.html:8
-#: templates/hr/expensevoucher_edit.html:28
-msgid "Add expense voucher"
-msgstr "Aggiungi nota spese"
-
-#: templates/hr/expensevoucher_edit.html:55
-#: templates/hr/timesheet_edit.html:55 templates/knowledge/poll_edit.html:51
-#: templates/sales/salesinvoice_edit.html:55
-#: templates/stock/deliverynote_edit.html:55
+#: templates/hr/expensevoucher_edit.html:34
+#: templates/hr/timesheet_edit.html:34 templates/knowledge/poll_edit.html:32
+#: templates/sales/salesinvoice_edit.html:34
+#: templates/stock/deliverynote_edit.html:34
 msgid "Delete?"
 msgstr "Cancellare?"
 
@@ -730,18 +631,6 @@ msgstr "Copie cartacee"
 msgid "Expense vouchers"
 msgstr "Note spese"
 
-#: templates/hr/timesheet_delete.html:25
-msgid "Are you sure you want to delete this timesheet?"
-msgstr "Sei sicuro di voler eliminare questo foglio ore?"
-
-#: templates/hr/timesheet_edit.html:8 templates/hr/timesheet_edit.html:26
-msgid "Edit timesheet"
-msgstr "Modifica foglio ore"
-
-#: templates/hr/timesheet_edit.html:8 templates/hr/timesheet_edit.html:28
-msgid "Add timesheet"
-msgstr "Aggiungi foglio ore"
-
 #: templates/hr/timesheet_list.html:7 templates/hr/timesheet_list.html:14
 msgid "Timesheets"
 msgstr "Fogli ore"
@@ -750,64 +639,41 @@ msgstr "Fogli ore"
 msgid "Knowledge"
 msgstr "Conoscenza"
 
-#: templates/knowledge/faq_delete.html:25
-msgid "Are you sure you want to delete this FAQ?"
-msgstr "Sei sicuro di voler eliminare questa FAQ?"
-
-#: templates/knowledge/faq_detail.html:69
+#: templates/knowledge/faq_detail.html:49
 msgid "Answers"
 msgstr "Risposte"
 
-#: templates/knowledge/faq_detail.html:94
+#: templates/knowledge/faq_detail.html:73
 #, python-format
-msgid "<strong>%(comment_count)s</strong> answer(s)"
-msgstr "<strong>%(comment_count)s</strong> risposta/e"
+msgid "<strong>%(answer_count)s</strong> answer(s)"
+msgstr "<strong>%(answer_count)s</strong> risposta/e"
 
-#: templates/knowledge/faq_detail.html:96
+#: templates/knowledge/faq_detail.html:76
 msgid "No answers."
 msgstr "Nessuna risposta."
 
-#: templates/knowledge/faq_detail.html:99
+#: templates/knowledge/faq_detail.html:80
 msgid "Add answer"
 msgstr "Aggiungi risposta"
-
-#: templates/knowledge/faq_edit.html:7 templates/knowledge/faq_edit.html:24
-msgid "Edit FAQ"
-msgstr "Modifica FAQ"
-
-#: templates/knowledge/faq_edit.html:7 templates/knowledge/faq_edit.html:26
-msgid "Add FAQ"
-msgstr "Aggiungi FAQ"
 
 #: templates/knowledge/faq_list.html:7 templates/knowledge/faq_list.html:14
 msgid "FAQs"
 msgstr ""
 
-#: templates/knowledge/poll_delete.html:25
-msgid "Are you sure you want to delete this poll?"
-msgstr "Sei sicuro di voler eliminare questo sondaggio?"
+#: templates/knowledge/poll_detail.html:16
+#: templates/projects/ticket_detail.html:18
+#, python-format
+msgid "Closed on %(closed)s"
+msgstr "Chiuso il %(closed)s"
 
-#: templates/knowledge/poll_detail.html:19 templates/projects/milestone.html:4
-#: templates/projects/milestone.html:45
-msgid "Closed"
-msgstr "Chiusa"
-
-#: templates/knowledge/poll_detail.html:61
+#: templates/knowledge/poll_detail.html:51
 msgid "No description."
 msgstr "Nessuna descrizione."
 
-#: templates/knowledge/poll_detail.html:71
+#: templates/knowledge/poll_detail.html:61
 #, python-format
 msgid "<strong>%(vote_count)s</strong> vote(s)"
 msgstr "<strong>%(vote_count)s</strong> voto/i"
-
-#: templates/knowledge/poll_edit.html:7 templates/knowledge/poll_edit.html:24
-msgid "Edit poll"
-msgstr "Modifica sondaggio"
-
-#: templates/knowledge/poll_edit.html:7 templates/knowledge/poll_edit.html:26
-msgid "Add poll"
-msgstr "Aggiungi sondaggio"
 
 #: templates/knowledge/poll_list.html:7 templates/knowledge/poll_list.html:14
 msgid "Polls"
@@ -816,20 +682,6 @@ msgstr "Sondaggi"
 #: templates/knowledge/wikipage_404.html:22
 msgid "This wiki page does not exist."
 msgstr "Questa pagina wiki non esiste."
-
-#: templates/knowledge/wikipage_delete.html:25
-msgid "Are you sure you want to delete this page?"
-msgstr "Sei sicuro di voler eliminare questa pagina?"
-
-#: templates/knowledge/wikipage_edit.html:7
-#: templates/knowledge/wikipage_edit.html:24
-msgid "Edit page"
-msgstr "Modifica pagina"
-
-#: templates/knowledge/wikipage_edit.html:7
-#: templates/knowledge/wikipage_edit.html:24
-msgid "Add page"
-msgstr "Aggiungi pagina"
 
 #: templates/knowledge/wikipage_list.html:7
 #: templates/knowledge/wikipage_list.html:14
@@ -845,8 +697,8 @@ msgstr "Revisioni"
 #, python-format
 msgid ""
 "\n"
-"<p><a href=\"%(author_link)s\">%(author)s</a> has answered to the %(class)s "
-"<a href=\"%(link)s\">%(name)s</a>:</p>\n"
+"<p><a href=\"%(author_link)s\">%(author)s</a> answered to the %(class)s <a "
+"href=\"%(link)s\">%(name)s</a>:</p>\n"
 "<blockquote>%(answer)s</blockquote>\n"
 msgstr ""
 "\n"
@@ -858,32 +710,16 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"<p>An answer of <a href=\"%(author_link)s\">%(author)s</a> has been deleted "
-"from %(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
+"<p>An answer of <a href=\"%(author_link)s\">%(author)s</a> was deleted from "
+"%(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
 msgstr ""
 "\n"
 "<p>Una risposta di <a href=\"%(author_link)s\">%(author)s</a> è stata "
 "eliminata da %(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
 
-#: templates/menus/bookmark_delete.html:27
-msgid "Are you sure you want to delete this bookmark?"
-msgstr "Sei sicuro di voler eliminare questo segnalibro?"
-
-#: templates/menus/bookmark_edit.html:8 templates/menus/bookmark_edit.html:28
-msgid "Edit bookmark"
-msgstr "Modifica segnalibro"
-
-#: templates/menus/bookmark_edit.html:8 templates/menus/bookmark_edit.html:30
-msgid "Add bookmark"
-msgstr "Aggiungi segnalibro"
-
 #: templates/menus/bookmark_list.html:7 templates/menus/bookmark_list.html:9
 msgid "Bookmarks"
 msgstr "Segnalibri"
-
-#: templates/notifications/notification_delete.html:27
-msgid "Are you sure you want to delete this notification?"
-msgstr "Sei sicuro di voler eliminare questa notifica?"
 
 #: templates/notifications/notification_list.html:7
 #: templates/notifications/notification_list.html:9
@@ -902,23 +738,95 @@ msgstr "Sottoscrivi?"
 msgid "Email?"
 msgstr ""
 
-#: templates/partners/address_delete.html:6
-msgid "Delete address"
-msgstr "Elimina indirizzo"
+#: templates/notifications/activities/comment-created.html:4
+#, python-format
+msgid ""
+"\n"
+"<p><a href=\"%(author_link)s\">%(author)s</a> posted a comment to %(class)s "
+"<a href=\"%(link)s\">%(name)s</a>:</p>\n"
+"<blockquote>%(comment)s</blockquote>\n"
+msgstr ""
+"\n"
+"<p><a href=\"%(author_link)s\">%(author)s</a> ha pubblicato un commento su "
+"%(class)s <a href=\"%(link)s\">%(name)s</a>:</p>\n"
+"<blockquote>%(comment)s</blockquote>\n"
 
-#: templates/partners/address_delete.html:33
-msgid "Are you sure you want to delete this address?"
-msgstr "Sei sicuro di voler eliminare questo indirizzo?"
+#: templates/notifications/activities/comment-deleted.html:3
+#, python-format
+msgid ""
+"\n"
+"<p>A comment was deleted from %(class)s <a href=\"%(link)s\">%(name)s</a> by "
+"<a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
+msgstr ""
+"\n"
+"<p>Un commento è stato eliminato da %(class)s <a href=\"%(link)s\">%(name)s</a> da "
+"<a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
 
-#: templates/partners/address_edit.html:7
-#: templates/partners/address_edit.html:32
-msgid "Edit address"
-msgstr "Modifica indirizzo"
+#: templates/notifications/activities/object-changed.html:4
+#, python-format
+msgid ""
+"\n"
+"<p>The following attributes of %(class)s <a href=\"%(link)s\">%(name)s</a> "
+"was changed by <a href=\"%(author_link)s\">%(author)s</a>:</p>\n"
+msgstr ""
+"\n"
+"<p>I seguenti attributi di %(class)s <a href=\"%(link)s\">%(name)s</a> "
+"sono stati modificati da <a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
 
-#: templates/partners/address_edit.html:7
-#: templates/partners/address_edit.html:34
-msgid "Add address"
-msgstr "Aggiungi indirizzo"
+#: templates/notifications/activities/object-changed.html:8
+#, python-format
+msgid ""
+"\n"
+"<p>The following attributes of %(class)s <a href=\"%(link)s\">%(name)s</a> "
+"was changed:</p>\n"
+msgstr ""
+"\n"
+"<p>I seguenti attributi di %(class)s <a href=\"%(link)s\">%(name)s</a> sono "
+"stati modificati:</p>\n"
+
+#: templates/notifications/activities/object-changed.html:18
+#, python-format
+msgid "from <em>%(old_value)s</em> to <em>%(new_value)s</em>"
+msgstr "da <em>%(old_value)s</em> a <em>%(new_value)s</em>"
+
+#: templates/notifications/activities/object-created.html:5
+#, python-format
+msgid ""
+"\n"
+"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> was created by <a href="
+"\"%(author_link)s\">%(author)s</a>.</p>\n"
+msgstr ""
+"\n"
+"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> è stato creato da <a href="
+"\"%(author_link)s\">%(author)s</a>.</p>\n"
+
+#: templates/notifications/activities/object-created.html:9
+#, python-format
+msgid ""
+"\n"
+"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> was created.</p>\n"
+msgstr ""
+"\n"
+"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> è stato creato.</p>\n"
+
+#: templates/notifications/activities/object-deleted.html:5
+#, python-format
+msgid ""
+"\n"
+"<p>%(class)s %(name)s was deleted by <a href=\"%(author_link)s\">%(author)s</"
+"a>.</p>\n"
+msgstr ""
+"\n"
+"<p>%(class)s %(name)s è stato eliminato da <a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
+
+#: templates/notifications/activities/object-deleted.html:9
+#, python-format
+msgid ""
+"\n"
+"<p>%(class)s %(name)s was deleted.</p>\n"
+msgstr ""
+"\n"
+"<p>%(class)s %(name)s è stato eliminato.</p>\n"
 
 #: templates/partners/base.html:8 templates/partners/base.html.py:12
 #: templates/partners/partner_list.html:12
@@ -931,29 +839,6 @@ msgstr "Partners"
 #: templates/partners/partner_addresses.html:15
 msgid "Addresses"
 msgstr "Indirizzi"
-
-#: templates/partners/contact_delete.html:25
-msgid "Are you sure you want to delete this contact?"
-msgstr "Sei sicuro di voler eliminare questo contatto?"
-
-#: templates/partners/contact_detail.html:21
-#: templates/partners/partner_detail.html:21
-#: templates/projects/milestone_detail.html:24
-#: templates/projects/project_detail.html:21
-msgid "Dashboard"
-msgstr "Bacheca"
-
-#: templates/partners/contact_edit.html:8
-#: templates/partners/contact_edit.html:26 templates/partners/job_edit.html:7
-#: templates/partners/job_edit.html:39
-msgid "Edit contact"
-msgstr "Modifica contatto"
-
-#: templates/partners/contact_edit.html:8
-#: templates/partners/contact_edit.html:28 templates/partners/job_edit.html:7
-#: templates/partners/job_edit.html:45
-msgid "Add contact"
-msgstr "Aggiungi contatto"
 
 #: templates/partners/contact_jobs.html:7
 #: templates/partners/contact_jobs.html:16
@@ -981,74 +866,10 @@ msgstr "Numeri telefonici"
 msgid "Social profiles"
 msgstr "Profili social"
 
-#: templates/partners/job_delete.html:6
-msgid "Delete job"
-msgstr "Elimina impiego"
-
-#: templates/partners/job_delete.html:28
-#, python-format
-msgid ""
-"Are you sure you want to remove %(contact)s as %(role)s from %(partner)s?"
-msgstr ""
-"Sei sicuro di voler rimuovere %(contact)s da %(partner)s nel ruolo di "
-"%(role)s?"
-
-#: templates/partners/job_edit.html:41
-msgid "Edit job"
-msgstr "Modifica impiego"
-
-#: templates/partners/job_edit.html:47
-msgid "Add job"
-msgstr "Aggiungi impiego"
-
-#: templates/partners/letter_delete.html:25
-msgid "Are you sure you want to delete this letter?"
-msgstr "Sei sicuro di voler eliminare questa lettera?"
-
-#: templates/partners/letter_edit.html:8
-#: templates/partners/letter_edit.html:26
-msgid "Edit letter"
-msgstr "Modifica lettera"
-
-#: templates/partners/letter_edit.html:8
-#: templates/partners/letter_edit.html:28
-msgid "Add letter"
-msgstr "Aggiungi lettera"
-
 #: templates/partners/letter_list.html:7
 #: templates/partners/letter_list.html:14
 msgid "Letters"
-msgstr ""
-
-#: templates/partners/partner_delete.html:25
-msgid "Are you sure you want to delete this partner?"
-msgstr "Sei sicuro di voler eliminare questo partner?"
-
-#: templates/partners/partner_edit.html:8
-#: templates/partners/partner_edit.html:26
-msgid "Edit partner"
-msgstr "Modifica partner"
-
-#: templates/partners/partner_edit.html:8
-#: templates/partners/partner_edit.html:28
-msgid "Add partner"
-msgstr "Aggiungi partner"
-
-#: templates/partners/phone_delete.html:6
-msgid "Delete phone number"
-msgstr "Elimina numero telefonico"
-
-#: templates/partners/phone_delete.html:33
-msgid "Are you sure you want to delete this phone number?"
-msgstr "Sei sicuro di voler eliminare questo numero telefonico?"
-
-#: templates/partners/phone_edit.html:7 templates/partners/phone_edit.html:32
-msgid "Edit phone number"
-msgstr "Modifica numero telefonico"
-
-#: templates/partners/phone_edit.html:7 templates/partners/phone_edit.html:34
-msgid "Add phone number"
-msgstr "Aggiungi numero telefonico"
+msgstr "Lettere"
 
 #: templates/partners/profile_delete.html:6
 msgid "Delete social profile"
@@ -1057,16 +878,6 @@ msgstr "Elimina profilo social"
 #: templates/partners/profile_delete.html:33
 msgid "Are you sure you want to delete this social profile?"
 msgstr "Sei sicuro di voler eliminare questo profilo social?"
-
-#: templates/partners/profile_edit.html:7
-#: templates/partners/profile_edit.html:32
-msgid "Edit social profile"
-msgstr "Modifica profilo social"
-
-#: templates/partners/profile_edit.html:7
-#: templates/partners/profile_edit.html:34
-msgid "Add social profile"
-msgstr "Aggiungi profilo social"
 
 #: templates/partners/activities/contact-added.html:3
 #, python-format
@@ -1090,34 +901,6 @@ msgstr ""
 "<p>Il contatto <a href=\"%(link)s\">%(name)s</a> è stato rimosso dal partner "
 "<a href=\"%(partner_link)s\">%(partner)s</a> nel ruolo di %(role)s.</p>\n"
 
-#: templates/products/product_delete.html:25
-msgid "Are you sure you want to delete this product?"
-msgstr "Sei sicuro di voler eliminare questo prodotto?"
-
-#: templates/products/product_delete_supply.html:27
-msgid "Are you sure you want to delete this supply?"
-msgstr "Sei sicuro di voler eliminare questa fornitura?"
-
-#: templates/products/product_edit.html:8
-#: templates/products/product_edit.html:26
-msgid "Edit product"
-msgstr "Modifica prodotto"
-
-#: templates/products/product_edit.html:8
-#: templates/products/product_edit.html:28
-msgid "Add product"
-msgstr "Aggiungi prodotto"
-
-#: templates/products/product_edit_supply.html:8
-#: templates/products/product_edit_supply.html:28
-msgid "Edit supply"
-msgstr "Modifica fornitura"
-
-#: templates/products/product_edit_supply.html:8
-#: templates/products/product_edit_supply.html:30
-msgid "Add supply"
-msgstr "Aggiungi fornitura"
-
 #: templates/products/product_list.html:8
 #: templates/products/product_list.html:17
 msgid "Products"
@@ -1128,15 +911,19 @@ msgstr "Prodotti"
 msgid "Supplies"
 msgstr "Forniture"
 
+#: templates/projects/milestone.html:4 templates/projects/milestone.html:45
+msgid "Closed"
+msgstr "Chiusa"
+
 #: templates/projects/milestone.html:9
-#: templates/projects/milestone_detail.html:45
-#: templates/todo/task_detail.html:39
+#: templates/projects/milestone_detail.html:33
+#: templates/todo/task_detail.html:35
 msgid "Close"
 msgstr "Chiudi"
 
 #: templates/projects/milestone.html:11
-#: templates/projects/milestone_detail.html:47
-#: templates/todo/task_detail.html:41
+#: templates/projects/milestone_detail.html:35
+#: templates/todo/task_detail.html:37
 msgid "Reopen"
 msgstr "Riapri"
 
@@ -1160,62 +947,15 @@ msgstr "vuoto"
 msgid "Tickets"
 msgstr ""
 
-#: templates/projects/milestone_delete.html:27
-msgid "Are you sure you want to delete this milestone?"
-msgstr "Sei sicuro di voler eliminare questa milestone?"
-
-#: templates/projects/milestone_edit.html:8
-#: templates/projects/milestone_edit.html:28
-msgid "Edit milestone"
-msgstr "Modifica milestone"
-
-#: templates/projects/milestone_edit.html:8
-#: templates/projects/milestone_edit.html:30
-msgid "Add milestone"
-msgstr "Aggiungi milestone"
-
 #: templates/projects/milestone_list.html:7
 #: templates/projects/milestone_list.html:16
 msgid "Milestones"
 msgstr ""
 
-#: templates/projects/project_delete.html:25
-msgid "Are you sure you want to delete this project?"
-msgstr "Sei sicuro di voler eliminare questo progetto?"
-
-#: templates/projects/project_edit.html:8
-#: templates/projects/project_edit.html:26
-msgid "Edit project"
-msgstr "Modifica progetto"
-
-#: templates/projects/project_edit.html:8
-#: templates/projects/project_edit.html:28
-msgid "Add project"
-msgstr "Aggiungi progetto"
-
 #: templates/projects/project_list.html:7
 #: templates/projects/project_list.html:16
 msgid "Projects"
 msgstr "Progetti"
-
-#: templates/projects/ticket_delete.html:27
-msgid "Are you sure you want to delete this ticket?"
-msgstr "Sei sicuro di voler eliminare questo ticket?"
-
-#: templates/projects/ticket_detail.html:20
-#, python-format
-msgid "Closed on %(closed)s"
-msgstr "Chiuso il %(closed)s"
-
-#: templates/projects/ticket_edit.html:8
-#: templates/projects/ticket_edit.html:28
-msgid "Edit ticket"
-msgstr "Modifica ticket"
-
-#: templates/projects/ticket_edit.html:8
-#: templates/projects/ticket_edit.html:30
-msgid "Add ticket"
-msgstr "Aggiungi ticket"
 
 #: templates/projects/ticket_tasks.html:9
 #: templates/projects/ticket_tasks.html:20 templates/todo/task_list.html:8
@@ -1256,20 +996,6 @@ msgstr ""
 "%(expiration_time)s giorno/i</strong>:</p>\n"
 "<p><a href=\"%(activation_link)s\">%(activation_link)s</a></p>\n"
 
-#: templates/sales/bankaccount_delete.html:25
-msgid "Are you sure you want to delete this bank account?"
-msgstr "Sei sicuro di voler eliminare questo conto bancario?"
-
-#: templates/sales/bankaccount_edit.html:8
-#: templates/sales/bankaccount_edit.html:26
-msgid "Edit bank account"
-msgstr "Modifica conto bancario"
-
-#: templates/sales/bankaccount_edit.html:8
-#: templates/sales/bankaccount_edit.html:28
-msgid "Add bank account"
-msgstr "Aggiungi conto bancario"
-
 #: templates/sales/bankaccount_list.html:7
 #: templates/sales/bankaccount_list.html:14
 msgid "Bank accounts"
@@ -1278,20 +1004,6 @@ msgstr "Conti bancari"
 #: templates/sales/base.html:6 templates/sales/base.html.py:10
 msgid "Sales"
 msgstr "Vendite"
-
-#: templates/sales/salesinvoice_delete.html:25
-msgid "Are you sure you want to delete this sales invoice?"
-msgstr "Sei sicuro di voler eliminare questa fattura di vendita?"
-
-#: templates/sales/salesinvoice_edit.html:8
-#: templates/sales/salesinvoice_edit.html:26
-msgid "Edit sales invoice"
-msgstr "Modifica fattura di vendita"
-
-#: templates/sales/salesinvoice_edit.html:8
-#: templates/sales/salesinvoice_edit.html:28
-msgid "Add sales invoice"
-msgstr "Aggiungi fattura di vendita"
 
 #: templates/sales/salesinvoice_list.html:7
 #: templates/sales/salesinvoice_list.html:14
@@ -1302,60 +1014,16 @@ msgstr "Fatture di vendita"
 msgid "Stock"
 msgstr "Scorte"
 
-#: templates/stock/deliverynote_delete.html:25
-msgid "Are you sure you want to delete this delivery note?"
-msgstr "Sei sicuro di voler eliminare questo documento di trasporto?"
-
-#: templates/stock/deliverynote_edit.html:8
-#: templates/stock/deliverynote_edit.html:26
-msgid "Edit delivery note"
-msgstr "Modifica documento di trasporto"
-
-#: templates/stock/deliverynote_edit.html:8
-#: templates/stock/deliverynote_edit.html:28
-msgid "Add delivery note"
-msgstr "Aggiungi documento di trasporto"
-
 #: templates/stock/deliverynote_list.html:7
 #: templates/stock/deliverynote_list.html:14
 msgid "Delivery notes"
 msgstr "Documenti di trasporto"
-
-#: templates/stock/movement_delete.html:25
-msgid "Are you sure you want to delete this movement?"
-msgstr "Sei sicuro di voler eliminare questo movimento?"
-
-#: templates/stock/movement_edit.html:8 templates/stock/movement_edit.html:26
-#: templates/stock/warehouse_edit_movement.html:8
-#: templates/stock/warehouse_edit_movement.html:25
-msgid "Edit movement"
-msgstr "Modifica movimento"
-
-#: templates/stock/movement_edit.html:8 templates/stock/movement_edit.html:28
-#: templates/stock/warehouse_edit_movement.html:8
-#: templates/stock/warehouse_edit_movement.html:27
-msgid "Add movement"
-msgstr "Aggiungi movimento"
 
 #: templates/stock/movement_list.html:7 templates/stock/movement_list.html:14
 #: templates/stock/warehouse_movements.html:7
 #: templates/stock/warehouse_movements.html:16
 msgid "Movements"
 msgstr "Movimenti"
-
-#: templates/stock/warehouse_delete.html:25
-msgid "Are you sure you want to delete this warehouse?"
-msgstr "Sei sicuro di voler eliminare questo magazzino?"
-
-#: templates/stock/warehouse_edit.html:8
-#: templates/stock/warehouse_edit.html:26
-msgid "Edit warehouse"
-msgstr "Modifica magazzino"
-
-#: templates/stock/warehouse_edit.html:8
-#: templates/stock/warehouse_edit.html:28
-msgid "Add warehouse"
-msgstr "Aggiungi magazzino"
 
 #: templates/stock/warehouse_list.html:7
 #: templates/stock/warehouse_list.html:14
@@ -1370,88 +1038,10 @@ msgstr "Aggiungi in ingresso"
 msgid "Add outgoing"
 msgstr "Aggiungi in uscita"
 
-#: templates/streams/activities/comment-created.html:4
-#, python-format
-msgid ""
-"\n"
-"<p><a href=\"%(author_link)s\">%(author)s</a> has posted a comment to "
-"%(class)s <a href=\"%(link)s\">%(name)s</a>:</p>\n"
-"<blockquote>%(comment)s</blockquote>\n"
-msgstr ""
-"\n"
-"<p><a href=\"%(author_link)s\">%(author)s</a> ha pubblicato un commento su "
-"%(class)s <a href=\"%(link)s\">%(name)s</a>:</p>\n"
-"<blockquote>%(comment)s</blockquote>\n"
-
-#: templates/streams/activities/comment-deleted.html:3
-#, python-format
-msgid ""
-"\n"
-"<p>A comment of <a href=\"%(author_link)s\">%(author)s</a> has been deleted "
-"from %(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
-msgstr ""
-"\n"
-"<p>Un commento di <a href=\"%(author_link)s\">%(author)s</a> è stato "
-"eliminato da %(class)s <a href=\"%(link)s\">%(name)s</a>.</p>\n"
-
-#: templates/streams/activities/object-changed.html:3
-#, python-format
-msgid ""
-"\n"
-"<p>The following attributes of %(class)s <a href=\"%(link)s\">%(name)s</a> "
-"has been changed:</p>\n"
-msgstr ""
-"\n"
-"<p>I seguenti attributi di %(class)s <a href=\"%(link)s\">%(name)s</a> sono "
-"stati modificati:</p>\n"
-
-#: templates/streams/activities/object-changed.html:12
-#, python-format
-msgid "from <em>%(old_value)s</em> to <em>%(new_value)s</em>"
-msgstr "da <em>%(old_value)s</em> a <em>%(new_value)s</em>"
-
-#: templates/streams/activities/object-created.html:5
-#, python-format
-msgid ""
-"\n"
-"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> has been created by <a href="
-"\"%(author_link)s\">%(author)s</a>.</p>\n"
-msgstr ""
-"\n"
-"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> è stato creato da <a href="
-"\"%(author_link)s\">%(author)s</a>.</p>\n"
-
-#: templates/streams/activities/object-created.html:9
-#, python-format
-msgid ""
-"\n"
-"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> has been created.</p>\n"
-msgstr ""
-"\n"
-"<p>%(class)s <a href=\"%(link)s\">%(name)s</a> è stato creato.</p>\n"
-
-#: templates/streams/activities/object-deleted.html:4
-#, python-format
-msgid ""
-"\n"
-"<p>%(class)s %(name)s has been deleted.</p>\n"
-msgstr ""
-"\n"
-"<p>%(class)s %(name)s è stato eliminato.</p>\n"
-
-#: templates/taxonomy/category_delete.html:25
-msgid "Are you sure you want to delete this category?"
-msgstr "Sei sicuro di voler eliminare questa categoria?"
-
-#: templates/taxonomy/category_edit.html:7
-#: templates/taxonomy/category_edit.html:25
-msgid "Edit category"
-msgstr "Modifica categoria"
-
-#: templates/taxonomy/category_edit.html:7
-#: templates/taxonomy/category_edit.html:27
-msgid "Add category"
-msgstr "Aggiungi categoria"
+#: templates/taxonomy/category_detail.html:12
+#: templates/taxonomy/search.html:18 templates/taxonomy/tag_detail.html:12
+msgid "Search results"
+msgstr "Risultati della ricerca"
 
 #: templates/taxonomy/category_list.html:6
 #: templates/taxonomy/category_list.html:15
@@ -1468,22 +1058,6 @@ msgstr "Risultati della ricerca per %(query)s"
 msgid "Search results for &laquo;%(query)s&raquo;"
 msgstr "Risultati della ricerca per &laquo;%(query)s&raquo;"
 
-#: templates/taxonomy/search.html:18
-msgid "Search results"
-msgstr "Risultati della ricerca"
-
-#: templates/taxonomy/tag_delete.html:25
-msgid "Are you sure you want to delete this tag?"
-msgstr "Sei sicuro di voler eliminare questo tag?"
-
-#: templates/taxonomy/tag_edit.html:7 templates/taxonomy/tag_edit.html:25
-msgid "Edit tag"
-msgstr "Modifica tag"
-
-#: templates/taxonomy/tag_edit.html:7 templates/taxonomy/tag_edit.html:27
-msgid "Add tag"
-msgstr "Aggiungi tag"
-
 #: templates/taxonomy/tag_list.html:7 templates/taxonomy/tag_list.html:16
 msgid "Tags"
 msgstr ""
@@ -1491,18 +1065,6 @@ msgstr ""
 #: templates/taxonomy/widgets/tag_cloud.html:9
 msgid "occurence/s"
 msgstr "occorrenza/e"
-
-#: templates/todo/task_delete.html:25
-msgid "Are you sure you want to delete this task?"
-msgstr "Sei sicuro di voler eliminare questa attività?"
-
-#: templates/todo/task_edit.html:8 templates/todo/task_edit.html.py:26
-msgid "Edit task"
-msgstr "Modifica attività"
-
-#: templates/todo/task_edit.html:8 templates/todo/task_edit.html.py:28
-msgid "Add task"
-msgstr "Aggiungi attività"
 
 #: templates/todo/task_list.html:18
 msgid "Planned"
@@ -1516,15 +1078,3 @@ msgstr "Non pianificate"
 #, python-format
 msgid "Powered by <a href=\"%(url)s\">%(text)s</a>"
 msgstr "Basato su <a href=\"%(url)s\">%(text)s</a>"
-
-#: templates/widgets/widget_delete.html:27
-msgid "Are you sure you want to delete this widget?"
-msgstr "Sei sicuro di voler eliminare questo widget?"
-
-#: templates/widgets/widget_edit.html:8 templates/widgets/widget_edit.html:28
-msgid "Edit widget"
-msgstr "Modifica widget"
-
-#: templates/widgets/widget_edit.html:8 templates/widgets/widget_edit.html:30
-msgid "Add widget"
-msgstr "Aggiungi widget"

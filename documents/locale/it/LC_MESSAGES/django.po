@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 17:39+0100\n"
+"POT-Creation-Date: 2012-01-09 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,11 @@ msgstr "propietario"
 msgid "status"
 msgstr "stato"
 
-#: models.py:56
+#: models.py:56 models.py:97
 msgid "created by"
 msgstr "creato da"
 
-#: models.py:57 models.py:99
+#: models.py:57 models.py:98
 msgid "created on"
 msgstr "creato il"
 
@@ -50,7 +50,7 @@ msgstr ""
 msgid "stream"
 msgstr "cronologia"
 
-#: models.py:66 models.py:96
+#: models.py:66 models.py:94
 msgid "document"
 msgstr "documento"
 
@@ -58,46 +58,26 @@ msgstr "documento"
 msgid "documents"
 msgstr "documenti"
 
-#: models.py:97
+#: models.py:88
+msgid "filename"
+msgstr ""
+
+#: models.py:95
 msgid "file"
 msgstr "file"
 
-#: models.py:98
+#: models.py:96
 msgid "language"
 msgstr "lingua"
 
-#: models.py:103
+#: models.py:102
 msgid "hard copy"
 msgstr "copia cartacea"
 
-#: models.py:104
+#: models.py:103
 msgid "hard copies"
 msgstr "copie cartacee"
 
-#: signals.py:71
-#, python-format
-msgid "%(class)s %(name)s created by %(author)s"
-msgstr "%(class)s %(name)s creato da %(author)s"
-
-#: signals.py:99
-#, python-format
-msgid "%(class)s %(name)s changed"
-msgstr "%(class)s %(name)s modificato"
-
-#: signals.py:116
-#, python-format
-msgid "%(class)s %(name)s deleted"
-msgstr "%(class)s %(name)s eliminato"
-
-#: signals.py:140
-#, python-format
-msgid "%(author)s commented %(class)s %(name)s"
-msgstr "%(author)s ha commentato %(class)s %(name)s"
-
-#: signals.py:161
-msgid "comment deleted"
-msgstr "commento eliminato"
-
-#: views.py:80
-msgid "The hard copy has been saved."
+#: views.py:95
+msgid "The hard copy was created successfully."
 msgstr "La copia cartacea è stata salvata."

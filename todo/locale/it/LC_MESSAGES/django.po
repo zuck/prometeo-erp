@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-07 16:58+0100\n"
+"POT-Creation-Date: 2012-01-09 12:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,37 +63,49 @@ msgid "tasks"
 msgstr "attività"
 
 #: views.py:94
-msgid "The task has been saved."
+msgid "The task was created successfully."
 msgstr "L'attività è stata salvata."
 
 #: views.py:111
-msgid "The task has been updated."
+msgid "The task was updated successfully."
 msgstr "L'attività è stata aggiornata."
 
 #: views.py:139
-msgid "The task has been closed."
+msgid "The task was closed succesfully."
 msgstr "L'attività è stata chiusa."
 
 #: views.py:151
-msgid "The task has been reopened."
+msgid "The task was reopened succesfully."
 msgstr "L'attività è stata riaperta."
 
-#: management/__init__.py:34
+#: management/__init__.py:41
 msgid "Main menu for tasks"
 msgstr "Menu principale per le attività"
 
-#: management/__init__.py:39
+#: management/__init__.py:46
 msgid "Tasks"
 msgstr "Attività"
 
-#: management/__init__.py:41
+#: management/__init__.py:48
 msgid "List of tasks"
 msgstr "Elenco delle attività"
 
-#: management/__init__.py:48
+#: management/__init__.py:55
 msgid "Planned"
 msgstr "Pianificate"
 
-#: management/__init__.py:55
+#: management/__init__.py:62
 msgid "Unplanned"
 msgstr "Non pianificate"
+
+#: management/__init__.py:70
+msgid "Task created"
+msgstr "Creazione attività"
+
+#: management/__init__.py:75
+msgid "Task changed"
+msgstr "Modifica attività"
+
+#: management/__init__.py:80
+msgid "Task deleted"
+msgstr "Eliminazione attività"

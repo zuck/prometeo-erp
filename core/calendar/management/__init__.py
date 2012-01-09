@@ -52,7 +52,7 @@ def install(sender, **kwargs):
     calendar_link, is_new = Link.objects.get_or_create(
         title=_("Calendar"),
         slug="calendar",
-        description=_("Events and tasks planning"),
+        description=_("Events planning"),
         url="{% url event_list %}",
         menu=main_menu,
         submenu=calendar_menu

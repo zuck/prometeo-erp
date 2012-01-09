@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-14 12:29+0100\n"
+"POT-Creation-Date: 2012-01-09 12:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,25 +62,25 @@ msgstr ""
 msgid "google+"
 msgstr ""
 
+#: calendar.py:28
+msgid "tentative"
+msgstr "tentativo"
+
+#: calendar.py:29 documents.py:27
+msgid "confirmed"
+msgstr "confermato"
+
+#: calendar.py:30
+msgid "cancelled"
+msgstr "cancellato"
+
 #: documents.py:26
 msgid "draft"
 msgstr "bozza"
 
-#: documents.py:27 events.py:27
-msgid "confirmed"
-msgstr "confermato"
-
 #: documents.py:28
 msgid "reviewed"
 msgstr "revisionato"
-
-#: events.py:26
-msgid "tentative"
-msgstr "tentativo"
-
-#: events.py:28
-msgid "cancelled"
-msgstr "cancellato"
 
 #: hr.py:28
 msgid "fixed-term"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 16:38+0100\n"
+"POT-Creation-Date: 2012-01-09 12:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,182 +87,166 @@ msgstr "movimento"
 msgid "movements"
 msgstr "movimenti"
 
-#: models.py:111
+#: models.py:115
 msgid "bill to"
 msgstr "fatturato a"
 
-#: models.py:112
+#: models.py:116
 msgid "Keep it blank to use the same as invoicing"
 msgstr "Lasciare bianco per usare lo stesso della fatturazione"
 
-#: models.py:112
+#: models.py:116
 msgid "delivered to"
 msgstr "consegnato a"
 
-#: models.py:113
+#: models.py:117
 msgid "order ref. no."
 msgstr "rif. ordine #"
 
-#: models.py:114
+#: models.py:118
 msgid "on"
 msgstr "del"
 
-#: models.py:115
+#: models.py:119
 msgid "means of delivery"
 msgstr "a mezzo"
 
-#: models.py:116
+#: models.py:120
 msgid "reason of shipping"
 msgstr "causale"
 
-#: models.py:117
+#: models.py:121
 msgid "terms of shipping"
 msgstr "termini di spedizione"
 
-#: models.py:118
+#: models.py:122
 msgid "delivery date"
 msgstr "data di consegna"
 
-#: models.py:119
+#: models.py:123
 msgid "good appearance"
 msgstr "aspetto dei beni"
 
-#: models.py:120
+#: models.py:124
 msgid "entries"
 msgstr "voci"
 
-#: models.py:121
+#: models.py:125
 msgid "notes"
 msgstr "note"
 
-#: models.py:124
+#: models.py:128
 msgid "delivery note"
 msgstr "documento di trasporto"
 
-#: models.py:125
+#: models.py:129
 msgid "delivery notes"
 msgstr "documenti di trasporto"
 
-#: models.py:128
+#: models.py:132
 msgid "DN"
 msgstr "DDT"
 
-#: signals.py:91
-#, python-format
-msgid "%(class)s %(name)s created"
-msgstr "%(class)s %(name)s creato"
-
-#: signals.py:116
-#, python-format
-msgid "%(class)s %(name)s deleted"
-msgstr "%(class)s %(name)s eliminato"
-
-#: signals.py:140
-#, python-format
-msgid "%(author)s commented %(class)s %(name)s"
-msgstr "%(author)s ha commentato %(class)s %(name)s"
-
-#: signals.py:161
-msgid "comment deleted"
-msgstr "commento eliminato"
-
-#: management/__init__.py:38
+#: management/__init__.py:47
 msgid "Main menu for stock management"
 msgstr "Menu principale per gestione delle scorte"
 
-#: management/__init__.py:43
+#: management/__init__.py:52
 msgid "Main menu for warehouse model"
 msgstr "Menu principale per un magazzino"
 
-#: management/__init__.py:48
+#: management/__init__.py:57
 msgid "Main menu for delivery note model"
 msgstr "Menu principale per un documento di trasporto"
 
-#: management/__init__.py:53
+#: management/__init__.py:62
 msgid "Stock"
 msgstr "Scorte"
 
-#: management/__init__.py:55
+#: management/__init__.py:64
 msgid "Stock management"
 msgstr "Gestione scorte"
 
-#: management/__init__.py:61
+#: management/__init__.py:71
 msgid "Warehouses"
 msgstr "Magazzini"
 
-#: management/__init__.py:63
+#: management/__init__.py:73
 msgid "Warehouses management"
 msgstr "Gestione magazzini"
 
-#: management/__init__.py:69 management/__init__.py:92
+#: management/__init__.py:79 management/__init__.py:102
 msgid "Movements"
 msgstr "Movimenti"
 
-#: management/__init__.py:71
+#: management/__init__.py:81
 msgid "Movements management"
 msgstr "Gestione movimenti"
 
-#: management/__init__.py:77
+#: management/__init__.py:87
 msgid "Delivery notes"
 msgstr "Documenti di trasporto"
 
-#: management/__init__.py:79
+#: management/__init__.py:89
 msgid "Delivery notes management"
 msgstr "Gestione documenti di trasporto"
 
-#: management/__init__.py:85
-msgid "Dashboard"
-msgstr "Bacheca"
-
-#: management/__init__.py:99 management/__init__.py:120
-msgid "Timeline"
-msgstr "Cronologia"
-
-#: management/__init__.py:106
+#: management/__init__.py:95 management/__init__.py:116
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:113
+#: management/__init__.py:109 management/__init__.py:130
+msgid "Timeline"
+msgstr "Cronologia"
+
+#: management/__init__.py:123
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:128
+#: management/__init__.py:138
 msgid "Warehouse created"
 msgstr "Creazione magazzino"
 
-#: management/__init__.py:133
+#: management/__init__.py:143
 msgid "Warehouse deleted"
 msgstr "Eliminazione magazzino"
 
-#: management/__init__.py:138
+#: management/__init__.py:148
 msgid "Movement created"
 msgstr "Creazione movimento"
 
-#: management/__init__.py:143
+#: management/__init__.py:153
 msgid "Movement deleted"
 msgstr "Eliminazione movimento"
 
-#: management/__init__.py:148
+#: management/__init__.py:158
 msgid "Delivery note created"
 msgstr "Creazione documento di trasporto"
 
-#: management/__init__.py:153
+#: management/__init__.py:163
 msgid "Delivery note changed"
 msgstr "Modifica documento di trasporto"
 
-#: management/__init__.py:158
+#: management/__init__.py:168
 msgid "Delivery note deleted"
 msgstr "Eliminazione documento di trasporto"
 
-#: views/deliverynotes.py:81 views/deliverynotes.py:123
-msgid "The delivery note has been saved."
+#: views/deliverynotes.py:81
+msgid "The delivery note was created successfully."
 msgstr "Il documento di trasporto è stato salvato."
 
-#: views/movements.py:71 views/movements.py:108 views/warehouses.py:148
-#: views/warehouses.py:169
-msgid "The movement has been saved."
+#: views/deliverynotes.py:123
+msgid "The delivery note was updated successfully."
+msgstr "Il documento di trasporto è stato aggiornato."
+
+#: views/movements.py:71 views/warehouses.py:149 views/warehouses.py:171
+msgid "The movement was created successfully."
 msgstr "Il movimento è stato salvato."
 
+#: views/movements.py:108
+msgid "The movement was updated successfully."
+msgstr "Il movimento è stato aggiornato."
+
 #: views/warehouses.py:71
-msgid "The warehouse has been saved."
+msgid "The warehouse was created successfully."
 msgstr "Il magazzino è stato salvato."
