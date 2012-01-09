@@ -294,7 +294,7 @@ def forward_activity(sender, instance, action, reverse, model, pk_set, **kwargs)
         for stream_id in pk_set:
             stream = Stream.objects.get(id=stream_id)
             for s in stream.linked_streams.all():
-                s.activity_set.add(instance)            
+                s.activity_set.add(instance)       
 
 def notify_activity(sender, instance, action, *args, **kwargs):
     """Notifies a new activity to all the followers of the related streams.
@@ -376,7 +376,7 @@ stream_attach = django.dispatch.Signal(providing_args=["instance", "stream"])
 ## CONNECTIONS ##
 
 models.signals.m2m_changed.connect(forward_activity, sender=Activity.streams.through, dispatch_uid="forward_activities")
-models.signals.m2m_changed.connect(notify_activity, sender=Activity.streams.through, dispatch_uid="change_activities")
+models.signals.m2m_changed.connect(notify_activity, sender=Activity.streams.through, dispatch_uid="notify_activities")
 models.signals.pre_delete.connect(clear_orphans, sender=Stream, dispatch_uid="clear_orphans")
 
 models.signals.post_save.connect(notify_comment_created, Comment, dispatch_uid="comment_created")

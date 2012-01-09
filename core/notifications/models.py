@@ -129,7 +129,7 @@ class Activity(models.Model):
             return {}
 
     def get_content(self):
-        template_name = "streams/activities/%s.html" % self.signature
+        template_name = "notifications/activities/%s.html" % self.signature
         if self.template:
             template_name = self.template
         return render_to_string(template_name, self.get_context())
