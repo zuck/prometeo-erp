@@ -32,6 +32,7 @@ from django.template import Node, NodeList, Variable, Library
 from django.template import TemplateSyntaxError, VariableDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
+from django.contrib.contenttypes.models import ContentType
 
 from prometeo.core.templatetags import parse_args_kwargs
 from prometeo.core.utils import is_visible, value_to_string, field_to_value, field_to_string
@@ -46,7 +47,8 @@ class ModelNameNode(template.Node):
     def render(self, context):
         try:
             instance = self.instance.resolve(context)
-            context[self.var_name] = u"%s" % (instance._meta.verbose_name or _(instance.__class__.__name__.lower()))
+            ct = ContentType.objects.get_for_model(instance)
+            context[self.var_name] = u"%s" % _(ct.name)
         except:
             pass
         return ''
