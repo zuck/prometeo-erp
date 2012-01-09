@@ -64,7 +64,7 @@ class TimesheetForm(forms.ModelForm):
         model = Timesheet
         widgets = {
             'date': DateWidget(),
-            'employee': SelectAndAddWidget(add_url='employees/add'),
+            'employee': SelectAndAddWidget(add_url='/employees/add'),
         }
 
 class TimesheetEntryForm(forms.ModelForm):

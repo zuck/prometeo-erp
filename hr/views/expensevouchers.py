@@ -109,18 +109,19 @@ def expensevoucher_edit(request, id, **kwargs):
     if request.method == 'POST':
         dform = DocumentForm(request.POST, instance=doc)
         form = ExpenseVoucherForm(request.POST, instance=expensevoucher)
-        formset = ExpenseEntryFormset(request.POST, instance=expensevoucher, queryset=expensevoucher.entries.all())
-        if form.is_valid() and formset.is_valid():
+        formset = ExpenseEntryFormset(request.POST, instance=expensevoucher)
+        if form.is_valid() and dform.is_valid() and formset.is_valid():
             form.save()
+            dform.save()
             formset.save()
             messages.success(request, _("The expense voucher was updated successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
         form = ExpenseVoucherForm(instance=expensevoucher)
-        formset = ExpenseEntryFormset(instance=expensevoucher, queryset=expensevoucher.entries.all())
+        formset = ExpenseEntryFormset(instance=expensevoucher)
 
-    return render_to_response('hr/expensevoucher_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': expensevoucher}))
+    return render_to_response('hr/expensevoucher_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
 @permission_required('hr.delete_expensevoucher', _get_expensevoucher) 
 def expensevoucher_delete(request, id, **kwargs):

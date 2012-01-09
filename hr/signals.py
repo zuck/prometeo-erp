@@ -46,16 +46,22 @@ def delete_employee(sender, instance, *args, **kwargs):
 def update_employee_permissions(sender, instance, *args, **kwargs):
     """Updates the permissions assigned to the employee associated with the given document.
     """
-    doc = get_object_or_404(Document.objects.get_for_content(sender), object_id=instance.pk)
+    # WARNING: Currently this code doesn't work because the related "Document" instance is saved
+    #          AFTER the content object, so when the "post_save" signal is emitted, the document
+    #          isn't saved in the database yet:
+    """
+    doc = Document.objects.get_for_content(sender).get(object_id=instance.pk)
 
     can_view_this_doc, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_document", "documents", "document", doc.pk)
     can_change_this_doc, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_document", "documents", "document", doc.pk)
     can_delete_this_doc, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_document", "documents", "document", doc.pk)
 
-    if instance.employee.user:
-        can_view_this_doc.users.add(instance.employee.user)
-        can_change_this_doc.users.add(instance.employee.user)
-        can_delete_this_doc.users.add(instance.employee.user)
+    if instance.employee.job.contact.user:
+        can_view_this_doc.users.add(instance.employee.job.contact.user)
+        can_change_this_doc.users.add(instance.employee.job.contact.user)
+        can_delete_this_doc.users.add(instance.employee.job.contact.user)
+    """
+    pass
 
 ## CONNECTIONS ##
 

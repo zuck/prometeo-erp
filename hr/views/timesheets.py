@@ -78,7 +78,7 @@ def timesheet_detail(request, id, **kwargs):
 def timesheet_add(request, **kwargs):
     """Adds a new timesheet.
     """
-    timesheet = Timesheet(date=datetime.now().date())  
+    timesheet = Timesheet(date=datetime.now().date())
     doc = Document(author=request.user, content_object=timesheet)
       
     if request.method == 'POST':
@@ -109,18 +109,19 @@ def timesheet_edit(request, id, **kwargs):
     if request.method == 'POST':
         dform = DocumentForm(request.POST, instance=doc)
         form = TimesheetForm(request.POST, instance=timesheet)
-        formset = TimesheetEntryFormset(request.POST, instance=timesheet, queryset=timesheet.entries.all())
-        if form.is_valid() and formset.is_valid():
+        formset = TimesheetEntryFormset(request.POST, instance=timesheet)
+        if form.is_valid() and dform.is_valid() and formset.is_valid():
             form.save()
+            dform.save()
             formset.save()
             messages.success(request, _("The timesheet was updated successfully."))
             return redirect_to(request, url=doc.get_absolute_url())
     else:
         dform = DocumentForm(instance=doc)
         form = TimesheetForm(instance=timesheet)
-        formset = TimesheetEntryFormset(instance=timesheet, queryset=timesheet.entries.all())
+        formset = TimesheetEntryFormset(instance=timesheet)
 
-    return render_to_response('hr/timesheet_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': timesheet}))
+    return render_to_response('hr/timesheet_edit.html', RequestContext(request, {'form': form, 'dform': dform, 'formset': formset, 'object': doc}))
 
 @permission_required('hr.delete_timesheet', _get_timesheet) 
 def timesheet_delete(request, id, **kwargs):
