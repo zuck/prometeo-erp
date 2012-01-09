@@ -45,7 +45,8 @@ def install(sender, **kwargs):
         description=_("It renders a menu."),
         source="prometeo.core.widgets.base.dummy",
         template_name="menus/widgets/menu.html",
-        context="{\"name\": \"\"}"
+        context="{\"name\": \"\"}",
+        public=False
     )
 
     main_menu_widget, is_new = Widget.objects.get_or_create(
