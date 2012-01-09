@@ -39,11 +39,11 @@ PHONE_TYPES = (
 
 DEFAULT_PHONE_TYPE = '0'
 
-SOCIAL_NETWORKS = {
+SOCIAL_NETWORKS = (
     ('TW', _('twitter')),
     ('LI', _('linkedin')),
     ('FB', _('facebook')),
     ('G+', _('google+'))
-}
+)
 
 DEFAULT_SOCIAL_NETWORK = 'TW'
