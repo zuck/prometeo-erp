@@ -47,7 +47,7 @@ class Observable(object):
             if self.pk and name in self.__field_cache:
                 field = self.__field_cache[name]
                 label = u"%s" % field.verbose_name
-                if label not in self.__change_exclude:
+                if name not in self.__change_exclude:
                     old_value = field_to_string(field, self)
                     if label in self.__changes:
                         old_value = self.__changes[label][0]

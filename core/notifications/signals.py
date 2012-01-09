@@ -58,7 +58,7 @@ def manage_stream(cls):
     models.signals.post_save.connect(create_stream, cls, dispatch_uid="%s_stream_creation" % cls.__name__)
     models.signals.post_delete.connect(delete_stream, cls, dispatch_uid="%s_stream_deletion" % cls.__name__)
 
-def make_observable(cls, exclude=['stream', 'dashboard', 'modified']):
+def make_observable(cls, exclude=['stream_id', 'dashboard_id', 'modified']):
     """Adds Observable mix-in to the given class.
     """
     if Observable not in cls.__bases__:
