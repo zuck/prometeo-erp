@@ -42,9 +42,8 @@ class MenuNode(template.Node):
             menu = Menu.objects.get(slug=slug)
             user = context['user']
             links = menu.links.all()
-            user_perms = user.user_permissions.all()
             for link in links:
-                perms = link.only_with_perms.all()
+                perms = ["%s.%s" % (p.content_type.app_label, p.codename) for p in link.only_with_perms.all()]
                 link.authorized = True
                 link.title = template.Template(link.title).render(context)
                 if link.description:
@@ -56,10 +55,7 @@ class MenuNode(template.Node):
                     elif link.only_staff and not (user.is_staff or user.is_superuser):
                         link.authorized = False
                     elif link.only_with_perms:
-                        for perm in perms:
-                            if perm not in user_perms:
-                                link.authorized = False
-                                break
+                        link.authorized = user.has_perms(perms)
         except Menu.DoesNotExist:
             links = None
         if isinstance(self.html_template, template.Variable):
