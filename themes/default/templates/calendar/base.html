@@ -15,13 +15,13 @@
 {% block main %}
 <div class="actions">
     <ul>
-        {% if perms.events.add_event %}
+        {% if perms.calendar.add_event %}
         <li class="add"><a title="{% trans 'Add' %}" href="{% url event_add %}">{% trans 'Add' %}</a></li>
         {% endif %}
-        {% if perms.events.add_event %}
+        {% if perms.calendar.add_event %}
         <li class="import"><a title="{% trans 'Import events from an .ics file' %}" href="{% url event_import %}">{% trans 'Import' %}</a></li>
         {% endif %}
-        {% if perms.events.change_event %}
+        {% if perms.calendar.view_calendar %}
         <li class="export"><a title="{% trans 'Export events as an .ics file' %}" href="{% url event_export_all %}">{% trans 'Export' %}</a></li>
         {% endif %}
     </ul>

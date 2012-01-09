@@ -72,7 +72,7 @@ def _current_day(year=None, month=None, day=None, week=None):
 
     return result
 
-@permission_required('calendar.view_event') 
+@permission_required('calendar.view_calendar') 
 def event_list(request, year=None, month=None, day=None, page=0, paginate_by=10, **kwargs):
     """Displays the list of all calendar for the request user.
     """
@@ -88,7 +88,7 @@ def event_list(request, year=None, month=None, day=None, page=0, paginate_by=10,
         **kwargs
     )
 
-@permission_required('calendar.view_event') 
+@permission_required('calendar.view_calendar') 
 def event_day(request, year=None, month=None, day=None, **kwargs):
     """Displays the list of calendar for the given day.
     """
@@ -115,7 +115,7 @@ def event_day(request, year=None, month=None, day=None, **kwargs):
         **kwargs
     )
 
-@permission_required('calendar.view_event') 
+@permission_required('calendar.view_calendar') 
 def event_week(request, year=None, week=None, **kwargs):
     """Displays the list of calendar for the given week.
     """
@@ -140,7 +140,7 @@ def event_week(request, year=None, week=None, **kwargs):
         **kwargs
     )
 
-@permission_required('calendar.view_event') 
+@permission_required('calendar.view_calendar') 
 def event_month(request, year=None, month=None, **kwargs):
     """Displays the list of calendar for the given month.
     """
@@ -166,7 +166,7 @@ def event_month(request, year=None, month=None, **kwargs):
         **kwargs
     )
 
-@permission_required('calendar.view_event') 
+@permission_required('calendar.view_calendar') 
 def event_year(request, year=None, **kwargs):
     """Displays the list of calendar for the given year.
     """
@@ -280,7 +280,7 @@ def event_import(request, **kwargs):
 
     return render_to_response('calendar/event_import.html', RequestContext(request, {'form': form}))
 
-@permission_required('calendar.view_event', _get_event)
+@permission_required('calendar.view_calendar')
 def event_export(request, id=None, **kwargs):
     """Exports one or more calendar as an .ics file.
     """

@@ -44,7 +44,15 @@ class MyUser(User):
     
     @models.permalink
     def get_delete_url(self):
-        return ('user_delete', (), {"username": self.username})   
+        return ('user_delete', (), {"username": self.username})
+
+class MyPermission(Permission):
+    """A Prometeo's permission.
+    """ 
+    class Meta:
+        proxy = True
+
+    objects = MyPermissionManager()
  
 class UserProfile(models.Model):
     """User profile.

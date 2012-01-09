@@ -24,7 +24,6 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb, post_save
 from django.utils.translation import ugettext_noop as _
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import Permission
 
 from prometeo.core.utils import check_dependency
 from prometeo.core.widgets.models import *
@@ -140,6 +139,14 @@ def install(sender, **kwargs):
     users_group, is_new = Group.objects.get_or_create(
         name=_('Users')
     )
+
+    can_view_link, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
+    can_add_link, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
+    can_view_notification, is_new = MyPermission.objects.get_or_create_by_natural_key("view_notification", "notifications", "notification")
+    can_view_calendar, is_new = MyPermission.objects.get_or_create_by_natural_key("view_calendar", "calendar", "calendar")
+    can_add_event, is_new = MyPermission.objects.get_or_create_by_natural_key("add_event", "calendar", "event")
+
+    users_group.permissions = [can_view_link, can_add_link, can_view_notification, can_view_calendar, can_add_event]
 
     # Widgets.
     profile_widget_template, is_new = WidgetTemplate.objects.get_or_create(

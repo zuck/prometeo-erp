@@ -76,7 +76,7 @@ def notification_list(request, username, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('auth.change_user', _get_user)
+@permission_required('auth.view_user', _get_user)
 @permission_required('notifications.view_notification', _get_notification)
 def notification_detail(request, username, id, **kwargs):
     """Displays the details of the selected notification.
@@ -99,7 +99,7 @@ def notification_detail(request, username, id, **kwargs):
         **kwargs
     )
 
-@permission_required('auth.change_user', _get_user)
+@permission_required('auth.view_user', _get_user)
 @permission_required('notifications.delete_notification', _get_notification)
 def notification_delete(request, username, id, **kwargs):
     """Deletes an existing notification for the current user.
