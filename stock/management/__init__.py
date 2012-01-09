@@ -23,7 +23,9 @@ __version__ = '0.0.5'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -40,6 +42,7 @@ check_dependency('prometeo.documents')
 
 def install(sender, created_models, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    administrative_employees_group, is_new = Group.objects.get_or_create(name=_('Administrative Employees'))
 
     # Menus.
     stock_menu, is_new = Menu.objects.get_or_create(
@@ -67,7 +70,7 @@ def install(sender, created_models, **kwargs):
         menu=main_menu
     )
 
-    stock_warehouses_link, is_new = Link.objects.get_or_create(
+    warehouses_link, is_new = Link.objects.get_or_create(
         title=_("Warehouses"),
         slug="warehouse-list",
         description=_("Warehouses management"),
@@ -75,7 +78,7 @@ def install(sender, created_models, **kwargs):
         menu=stock_menu
     )
 
-    stock_movements_link, is_new = Link.objects.get_or_create(
+    movements_link, is_new = Link.objects.get_or_create(
         title=_("Movements"),
         slug="movement-list",
         description=_("Movements management"),
@@ -83,7 +86,7 @@ def install(sender, created_models, **kwargs):
         menu=stock_menu
     )
 
-    stock_deliverynotes_link, is_new = Link.objects.get_or_create(
+    deliverynotes_link, is_new = Link.objects.get_or_create(
         title=_("Delivery notes"),
         slug="delivery-note-list",
         description=_("Delivery notes management"),
@@ -168,5 +171,20 @@ def install(sender, created_models, **kwargs):
         title=_("Delivery note deleted"),
         slug="deliverynote-deleted"
     )
+
+    # Permissions.
+    can_view_warehouse, is_new = MyPermission.objects.get_or_create_by_natural_key("view_warehouse", "stock", "warehouse")
+    can_add_warehouse, is_new = MyPermission.objects.get_or_create_by_natural_key("add_warehouse", "stock", "warehouse")
+    can_view_movement, is_new = MyPermission.objects.get_or_create_by_natural_key("view_movement", "stock", "movement")
+    can_add_movement, is_new = MyPermission.objects.get_or_create_by_natural_key("add_movement", "stock", "movement")
+    can_view_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("view_deliverynote", "stock", "deliverynote")
+    can_add_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("add_deliverynote", "stock", "deliverynote")
+
+    stock_link.only_with_perms.add(can_view_warehouse)
+    warehouses_link.only_with_perms.add(can_view_warehouse)
+    movements_link.only_with_perms.add(can_view_movement)
+    deliverynotes_link.only_with_perms.add(can_view_deliverynote)
+
+    administrative_employees_group.permissions.add(can_view_warehouse, can_add_warehouse, can_view_movement, can_add_movement, can_view_deliverynote, can_add_deliverynote)
 
 post_syncdb.connect(install, dispatch_uid="install_stock")

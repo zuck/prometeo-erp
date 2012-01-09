@@ -23,7 +23,9 @@ __version__ = '0.0.5'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -35,6 +37,7 @@ check_dependency('prometeo.core.auth')
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    users_group, is_new = Group.objects.get_or_create(name=_('Users'))
 
     # Menus.
     knowledge_menu, is_new = Menu.objects.get_or_create(
@@ -75,7 +78,7 @@ def install(sender, **kwargs):
         menu=knowledge_menu
     )
 
-    faq_link, is_new = Link.objects.get_or_create(
+    faqs_link, is_new = Link.objects.get_or_create(
         title=_("FAQs"),
         slug="faq",
         description=_("Frequently Asked Questions"),
@@ -190,5 +193,20 @@ def install(sender, **kwargs):
         title=_("Poll closed"),
         slug="poll-closed"
     )
+
+    # Permissions.
+    can_view_wikipage, is_new = MyPermission.objects.get_or_create_by_natural_key("view_wikipage", "knowledge", "wikipage")
+    can_add_wikipage, is_new = MyPermission.objects.get_or_create_by_natural_key("add_wikipage", "knowledge", "wikipage")
+    can_view_faq, is_new = MyPermission.objects.get_or_create_by_natural_key("view_faq", "knowledge", "faq")
+    can_add_faq, is_new = MyPermission.objects.get_or_create_by_natural_key("add_faq", "knowledge", "faq")
+    can_view_poll, is_new = MyPermission.objects.get_or_create_by_natural_key("view_poll", "knowledge", "poll")
+    can_add_poll, is_new = MyPermission.objects.get_or_create_by_natural_key("add_poll", "knowledge", "poll")
+
+    knowledge_link.only_with_perms.add(can_view_wikipage)
+    wiki_link.only_with_perms.add(can_view_wikipage)
+    faqs_link.only_with_perms.add(can_view_faq)
+    polls_link.only_with_perms.add(can_view_poll)
+
+    users_group.permissions.add(can_view_wikipage, can_add_wikipage, can_view_faq, can_add_faq, can_view_poll, can_add_poll)
 
 post_syncdb.connect(install, dispatch_uid="install_knowledge")

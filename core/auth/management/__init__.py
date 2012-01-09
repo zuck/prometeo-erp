@@ -116,13 +116,6 @@ def install(sender, **kwargs):
         url="{% url bookmark_list object.username %}",
         menu=user_profile_menu
     )
-    
-    user_profile_notifications_link, is_new = Link.objects.get_or_create(
-        title=_("Notifications"),
-        slug="user_profile_notifications",
-        url="{% url notification_list object.username %}",
-        menu=user_profile_menu
-    )
 
     # Signatures.
     comment_created_signature, is_new = Signature.objects.get_or_create(
@@ -139,14 +132,6 @@ def install(sender, **kwargs):
     users_group, is_new = Group.objects.get_or_create(
         name=_('Users')
     )
-
-    can_view_link, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
-    can_add_link, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
-    can_view_notification, is_new = MyPermission.objects.get_or_create_by_natural_key("view_notification", "notifications", "notification")
-    can_view_calendar, is_new = MyPermission.objects.get_or_create_by_natural_key("view_calendar", "calendar", "calendar")
-    can_add_event, is_new = MyPermission.objects.get_or_create_by_natural_key("add_event", "calendar", "event")
-
-    users_group.permissions = [can_view_link, can_add_link, can_view_notification, can_view_calendar, can_add_event]
 
     # Widgets.
     profile_widget_template, is_new = WidgetTemplate.objects.get_or_create(
@@ -165,6 +150,16 @@ def install(sender, **kwargs):
         show_title=False,
         region=sidebar_region
     )
+
+    # Permissions.
+    can_view_user, is_new = MyPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user")
+    can_view_link, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
+    can_add_link, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
+
+    users_group.permissions.add(can_view_link, can_add_link)
+
+    users_link.only_with_perms.add(can_view_user)
+    user_profile_bookmarks_link.only_with_perms.add(can_add_link)
 
 def add_view_permission(sender, instance, **kwargs):
     """Adds a view permission for each new ContentType instance.

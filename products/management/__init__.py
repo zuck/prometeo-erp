@@ -23,7 +23,9 @@ __version__ = '0.0.5'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -38,6 +40,7 @@ check_dependency('prometeo.partners')
 
 def install(sender, created_models, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    administrative_employees_group, is_new = Group.objects.get_or_create(name=_('Administrative Employees'))
 
     # Menus.
     product_menu, is_new = Menu.objects.get_or_create(
@@ -95,5 +98,15 @@ def install(sender, created_models, **kwargs):
         title=_("Product supply deleted"),
         slug="supply-deleted"
     )
+
+    # Permissions.
+    can_view_product, is_new = MyPermission.objects.get_or_create_by_natural_key("view_product", "products", "product")
+    can_add_product, is_new = MyPermission.objects.get_or_create_by_natural_key("add_product", "products", "product")
+    can_view_supply, is_new = MyPermission.objects.get_or_create_by_natural_key("view_supply", "products", "supply")
+    can_add_supply, is_new = MyPermission.objects.get_or_create_by_natural_key("add_supply", "products", "supply")
+
+    products_link.only_with_perms.add(can_view_product)
+
+    administrative_employees_group.permissions.add(can_view_product, can_add_product, can_view_supply, can_add_supply)
 
 post_syncdb.connect(install, dispatch_uid="install_products")

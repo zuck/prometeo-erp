@@ -23,7 +23,9 @@ __version__ = '0.0.5'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -36,6 +38,8 @@ check_dependency('prometeo.todo')
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    users_group, is_new = Group.objects.get_or_create(name=_('Users'))
+    employees_group, is_new = Group.objects.get_or_create(name=_('Employees'))
 
     # Menus.
     project_menu, is_new = Menu.objects.get_or_create(
@@ -177,5 +181,18 @@ def install(sender, **kwargs):
         title=_("Ticket deleted"),
         slug="ticket-deleted"
     )
+
+    # Permissions.
+    can_view_project, is_new = MyPermission.objects.get_or_create_by_natural_key("view_project", "projects", "project")
+    can_add_project, is_new = MyPermission.objects.get_or_create_by_natural_key("add_project", "projects", "project")
+    can_view_milestone, is_new = MyPermission.objects.get_or_create_by_natural_key("view_milestone", "projects", "milestone")
+    can_add_milestone, is_new = MyPermission.objects.get_or_create_by_natural_key("add_milestone", "projects", "milestone")
+    can_view_ticket, is_new = MyPermission.objects.get_or_create_by_natural_key("view_ticket", "projects", "ticket")
+    can_add_ticket, is_new = MyPermission.objects.get_or_create_by_natural_key("add_ticket", "projects", "ticket")
+
+    projects_link.only_with_perms.add(can_view_project)
+
+    employees_group.permissions.add(can_add_project, can_add_milestone)
+    users_group.permissions.add(can_view_project, can_view_milestone, can_view_ticket, can_add_ticket)
 
 post_syncdb.connect(install, dispatch_uid="install_projects")

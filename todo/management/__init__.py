@@ -22,7 +22,9 @@ __version__ = '0.0.5'
 
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -34,6 +36,7 @@ check_dependency('prometeo.core.auth')
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    users_group, is_new = Group.objects.get_or_create(name=_('Users'))
 
     # Menus.
     todo_menu, is_new = Menu.objects.get_or_create(
@@ -80,5 +83,13 @@ def install(sender, **kwargs):
         title=_("Task deleted"),
         slug="task-deleted"
     )
+
+    # Permissions.
+    can_view_task, is_new = MyPermission.objects.get_or_create_by_natural_key("view_task", "todo", "task")
+    can_add_task, is_new = MyPermission.objects.get_or_create_by_natural_key("add_task", "todo", "task")
+
+    users_group.permissions.add(can_view_task, can_add_task)
+
+    tasks_link.only_with_perms.add(can_view_task)
 
 post_syncdb.connect(install, dispatch_uid="install_todo")

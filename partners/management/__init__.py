@@ -23,8 +23,9 @@ __version__ = '0.0.5'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group #, User
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -242,6 +243,26 @@ def install(sender, created_models, **kwargs):
         title=_("Letter deleted"),
         slug="letter-deleted"
     )
+
+    # Groups.
+    administrative_employees_group, is_new = Group.objects.get_or_create(
+        name=_('Administrative Employees')
+    )
+
+    # Permissions.
+    can_view_partner, is_new = MyPermission.objects.get_or_create_by_natural_key("view_partner", "partners", "partner")
+    can_add_partner, is_new = MyPermission.objects.get_or_create_by_natural_key("add_partner", "partners", "partner")
+    can_view_contact, is_new = MyPermission.objects.get_or_create_by_natural_key("view_contact", "partners", "contact")
+    can_add_contact, is_new = MyPermission.objects.get_or_create_by_natural_key("add_contact", "partners", "contact")
+    can_view_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("view_letter", "partners", "letter")
+    can_add_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("add_letter", "partners", "letter")
+
+    partners_link.only_with_perms.add(can_view_partner)
+    partner_list_link.only_with_perms.add(can_view_partner)
+    contact_list_link.only_with_perms.add(can_view_contact)
+    letter_list_link.only_with_perms.add(can_view_letter)
+
+    administrative_employees_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_letter, can_add_letter)
 
     # Creates first managed company.
     """if Partner in created_models \

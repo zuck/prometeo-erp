@@ -113,9 +113,22 @@ def user_edit(request, username, **kwargs):
     """Edits a user's profile.
     """
     user = get_object_or_404(User, username=username)
+
+    def adapt_form(request, form):
+        if not request.user.has_perm('auth.change_group'):
+            del form.fields['groups']
+
+        if not request.user.has_perm('auth.change_permission'):
+            del form.fields['user_permissions']
+            
+        if not request.user.is_superuser:
+            del form.fields['is_staff']
+            del form.fields['is_active']
+            del form.fields['is_superuser']
         
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
+        adapt_form(request, form)
         pform = UserProfileForm(request.POST, instance=user.get_profile())
         if form.is_valid() and pform.is_valid():
             user = form.save()
@@ -125,18 +138,8 @@ def user_edit(request, username, **kwargs):
             return redirect_to(request, url=user.get_absolute_url())
     else:
         form = UserEditForm(instance=user)
+        adapt_form(request, form)
         pform = UserProfileForm(instance=user.get_profile())
-    
-    if not request.user.has_perm('auth.change_group'):
-        del form.fields['groups']
-
-    if not request.user.has_perm('auth.change_permission'):
-        del form.fields['user_permissions']
-        
-    if not request.user.is_superuser:
-        del form.fields['is_staff']
-        del form.fields['is_active']
-        del form.fields['is_superuser']
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'pform': pform, 'object': user}))
 

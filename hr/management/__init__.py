@@ -22,7 +22,9 @@ __version__ = '0.0.5'
 
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -183,5 +185,30 @@ def install(sender, **kwargs):
         title=_("Expense voucher deleted"),
         slug="expensevoucher-deleted"
     )
+
+    # Groups.
+    employees_group, is_new = Group.objects.get_or_create(
+        name=_('Employees')
+    )
+
+    hr_managers_group, is_new = Group.objects.get_or_create(
+        name=_('HR Managers')
+    )
+
+    # Permissions.
+    can_view_employee, is_new = MyPermission.objects.get_or_create_by_natural_key("view_employee", "hr", "employee")
+    can_add_employee, is_new = MyPermission.objects.get_or_create_by_natural_key("add_employee", "hr", "employee")
+    can_view_timesheet, is_new = MyPermission.objects.get_or_create_by_natural_key("view_timesheet", "hr", "timesheet")
+    can_add_timesheet, is_new = MyPermission.objects.get_or_create_by_natural_key("add_timesheet", "hr", "timesheet")
+    can_view_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("view_expensevoucher", "hr", "expensevoucher")
+    can_add_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("add_expensevoucher", "hr", "expensevoucher")
+
+    hr_link.only_with_perms.add(can_view_timesheet)
+    employees_link.only_with_perms.add(can_view_employee)
+    timesheets_link.only_with_perms.add(can_view_timesheet)
+    expensevouchers_link.only_with_perms.add(can_view_expensevoucher)
+
+    employees_group.permissions.add(can_view_timesheet, can_add_timesheet, can_view_expensevoucher, can_add_expensevoucher)
+    hr_managers_group.permissions.add(can_view_employee, can_add_employee)
 
 post_syncdb.connect(install, dispatch_uid="install_hr")

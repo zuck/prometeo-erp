@@ -24,12 +24,12 @@ import django.dispatch
 from django.db import models
 from django.utils.translation import ugettext_noop as _
 from django.core.mail import EmailMessage
+from django.contrib.auth.models import User
 from django.contrib.comments.models import Comment
 from django.conf import settings
 
-from prometeo.core.auth.models import ObjectPermission
+from prometeo.core.auth.models import MyPermission, ObjectPermission
 from prometeo.core.auth.cache import LoggedInUserCache
-from prometeo.core.notifications.models import *
 
 from models import *
 
@@ -68,6 +68,13 @@ def make_observable(cls, exclude=['stream_id', 'dashboard_id', 'modified']):
     models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
 
 ## HANDLERS ##
+
+def update_user_permissions(sender, instance, *args, **kwargs):
+    """Sets permissions for notifications management.
+    """
+    if kwargs['created']:
+        can_view_notification, is_new = MyPermission.objects.get_or_create_by_natural_key("view_notification", "notifications", "notification")
+        instance.user_permissions.add(can_view_notification)
 
 def notify_object_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new object.
@@ -375,6 +382,7 @@ stream_attach = django.dispatch.Signal(providing_args=["instance", "stream"])
 
 ## CONNECTIONS ##
 
+models.signals.post_save.connect(update_user_permissions, sender=User, dispatch_uid="update_user_permissions")
 models.signals.m2m_changed.connect(forward_activity, sender=Activity.streams.through, dispatch_uid="forward_activities")
 models.signals.m2m_changed.connect(notify_activity, sender=Activity.streams.through, dispatch_uid="notify_activities")
 models.signals.pre_delete.connect(clear_orphans, sender=Stream, dispatch_uid="clear_orphans")

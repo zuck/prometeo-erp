@@ -4,9 +4,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Users' 'user_list' %}
-    {% add_crumb user user.get_absolute_url %}
-    {% add_crumb 'Widgets' '/' %}
-    {% add_crumb object.title object.get_absolute_url %}
+    {% add_crumb 'Widgets' %}
+    {% add_crumb object.title %}
     {% add_crumb 'Delete' %}
 {% endblock %}

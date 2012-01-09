@@ -23,7 +23,9 @@ __version__ = '0.0.5'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -123,5 +125,22 @@ def install(sender, created_models, **kwargs):
         title=_("Sales invoice deleted"),
         slug="salesinvoice-deleted"
     )
+
+    # Groups.
+    sales_team_group, is_new = Group.objects.get_or_create(
+        name=_('Sales Team')
+    )
+
+    # Permissions.
+    can_view_bankaccount, is_new = MyPermission.objects.get_or_create_by_natural_key("view_bankaccount", "sales", "bankaccount")
+    can_add_bankaccount, is_new = MyPermission.objects.get_or_create_by_natural_key("add_bankaccount", "sales", "bankaccount")
+    can_view_salesinvoice, is_new = MyPermission.objects.get_or_create_by_natural_key("view_salesinvoice", "sales", "salesinvoice")
+    can_add_salesinvoice, is_new = MyPermission.objects.get_or_create_by_natural_key("add_salesinvoice", "sales", "salesinvoice")
+
+    sales_link.only_with_perms.add(can_view_bankaccount)
+    bankaccounts_link.only_with_perms.add(can_view_bankaccount)
+    salesinvoices_link.only_with_perms.add(can_view_salesinvoice)
+
+    sales_team_group.permissions.add(can_view_bankaccount, can_add_bankaccount, can_view_salesinvoice, can_add_salesinvoice)
 
 post_syncdb.connect(install, dispatch_uid="install_sales")

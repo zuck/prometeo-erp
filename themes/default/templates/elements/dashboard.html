@@ -4,7 +4,9 @@
 <div class="dashboard">
     <div class="actions">
         <ul>
+            {% if perms.widgets.add_widget %}
             <li class="add"><a title="{% trans 'Add widget' %}" href="{% url widget_add dashboard.slug %}">{% trans 'Add' %}</a></li>
+            {% endif %}
         </ul>
     </div>
     <div class="region">

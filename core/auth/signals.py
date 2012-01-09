@@ -21,10 +21,13 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
+from prometeo.core.menus.models import Link
 from prometeo.core.menus.signals import manage_bookmarks
+from prometeo.core.widgets.models import Widget
 from prometeo.core.widgets.signals import manage_dashboard
 
 from cache import LoggedInUserCache
@@ -40,10 +43,21 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
         can_view_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user", instance.pk)
         can_change_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_user", "auth", "user", instance.pk)
         can_delete_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_user", "auth", "user", instance.pk)
+        can_change_user_bookmarks, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_menu", "menus", "menu", profile.bookmarks.pk)
+        can_change_user_dashboard, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_region", "widgets", "region", profile.dashboard.pk)
+
+        can_view_bookmark, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
+        can_add_bookmark, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
+        can_view_widget, is_new = MyPermission.objects.get_or_create_by_natural_key("view_widget", "widgets", "widget")
+        can_add_widget, is_new = MyPermission.objects.get_or_create_by_natural_key("add_widget", "widgets", "widget")
 
         can_view_this_user.users.add(instance)
         can_change_this_user.users.add(instance)
         can_delete_this_user.users.add(instance)
+        can_change_user_bookmarks.users.add(instance)
+        can_change_user_dashboard.users.add(instance)
+
+        instance.user_permissions.add(can_view_bookmark, can_add_bookmark, can_view_widget, can_add_widget)
 
 def update_author_permissions(sender, instance, *args, **kwargs):
     """Updates the permissions assigned to the author of the given object.
@@ -65,6 +79,9 @@ def update_author_permissions(sender, instance, *args, **kwargs):
 ## CONNECTIONS ##
 
 models.signals.post_save.connect(user_post_save, User)
+
+post_save.connect(update_author_permissions, Link, dispatch_uid="update_link_permissions")
+post_save.connect(update_author_permissions, Widget, dispatch_uid="update_widget_permissions")
 
 manage_bookmarks(UserProfile)
 manage_dashboard(UserProfile)

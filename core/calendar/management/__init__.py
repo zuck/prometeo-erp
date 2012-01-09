@@ -23,7 +23,9 @@ __version__ = '0.0.5'
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_syncdb
 from django.utils.translation import ugettext_noop as _
+from django.contrib.auth.models import Group
 
+from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
@@ -36,6 +38,7 @@ check_dependency('prometeo.core.notifications')
 
 def install(sender, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    users_group, is_new = Group.objects.get_or_create(name=_('Users'))
 
     # Menus.
     calendar_menu, is_new = Menu.objects.get_or_create(
@@ -122,5 +125,13 @@ def install(sender, **kwargs):
         title=_("Event deleted"),
         slug="event-deleted"
     )
+
+    # Permissions.
+    can_view_calendar, is_new = MyPermission.objects.get_or_create_by_natural_key("view_calendar", "calendar", "calendar")
+    can_add_event, is_new = MyPermission.objects.get_or_create_by_natural_key("add_event", "calendar", "event")
+
+    users_group.permissions.add(can_view_calendar, can_add_event)
+
+    calendar_link.only_with_perms.add(can_view_calendar)
 
 post_syncdb.connect(install, dispatch_uid="install_calendar")
