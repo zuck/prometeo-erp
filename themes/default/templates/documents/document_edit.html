@@ -4,7 +4,7 @@
 {% load details %}
 
 {% block meta_title %}
-{% model_name object.content_type.model as model %}
+{% model_name object.content_type.model_class as model %}
 {% if object.pk %}
 {% blocktrans %}Edit {{ model }}{% endblocktrans %}
 {% else %}
