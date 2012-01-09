@@ -40,9 +40,9 @@
 {% endif %}
 {% endblock %}
 
-{% block objectmenu %}{% menu "event_menu" %}{% endblock %}
+{% block objectmenu %}{% menu "event-menu" %}{% endblock %}
 
-{% block sections %}
+{% block section %}
 <div class="details">
     <table class="properties">
         {% property_table object "[['author', 'created'], ['start', 'end'], 'status', 'location', 'description', 'attendees', 'categories', 'tags']" %}
