@@ -16,10 +16,10 @@
 <li class="add"><a title="{% trans 'Add' %}" href="{% url timesheet_add %}">{% trans 'Add' %}</a></li>
 {% endif %}
 {% if perms.hr.change_timesheet %}
-<li class="edit"><a title="{% trans 'Edit' %}" href="{% url timesheet_edit object.pk %}">{% trans 'Edit' %}</a></li>
+<li class="edit"><a title="{% trans 'Edit' %}" href="{% url timesheet_edit object.content_object.pk %}">{% trans 'Edit' %}</a></li>
 {% endif %}
 {% if perms.hr.delete_timesheet %}
-<li class="delete"><a title="{% trans 'Delete' %}" href="{% url timesheet_delete object.pk %}">{% trans 'Delete' %}</a></li>
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url timesheet_delete object.content_object.pk %}">{% trans 'Delete' %}</a></li>
 {% endif %}
 {% if perms.hr.change_timesheet %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url timesheet_list %}">{% trans 'All' %}</a></li>
