@@ -69,6 +69,7 @@ class Timesheet(models.Model):
     class Meta:
         ordering = ('-date',)
         get_latest_by = '-date'
+        unique_together = (('employee', 'date'),)
         verbose_name = _('timesheet')
         verbose_name_plural = _('timesheets')
 
