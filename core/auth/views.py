@@ -37,6 +37,18 @@ from prometeo.core.views import filtered_list_detail, set_language
 from models import *
 from forms import *
 
+def _adapt_form(request, form):
+    if not request.user.has_perm('auth.change_group'):
+        del form.fields['groups']
+
+    if not request.user.has_perm('auth.change_permission'):
+        del form.fields['user_permissions']
+        
+    if not request.user.is_superuser:
+        del form.fields['is_staff']
+        del form.fields['is_active']
+        del form.fields['is_superuser']
+
 def _get_user(request, *args, **kwargs):
     username = kwargs.get('username', None)
     return get_object_or_404(User, username=username)
@@ -88,23 +100,14 @@ def user_add(request, **kwargs):
       
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
+        _adapt_form(request, form)
         if form.is_valid():
             form.save()
             messages.success(request, _("The user was created successfully."))
             return redirect_to(request, url=user.get_absolute_url())
     else:
         form = UserEditForm(instance=user)
-    
-    if not request.user.has_perm('auth.change_group'):
-        del form.fields['groups']
-
-    if not request.user.has_perm('auth.change_user_permission'):
-        del form.fields['user_permissions']
-        
-    if not request.user.is_superuser:
-        del form.fields['is_staff']
-        del form.fields['is_active']
-        del form.fields['is_superuser']
+        _adapt_form(request, form)
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'object': user}))
 
@@ -113,32 +116,21 @@ def user_edit(request, username, **kwargs):
     """Edits a user's profile.
     """
     user = get_object_or_404(User, username=username)
-
-    def adapt_form(request, form):
-        if not request.user.has_perm('auth.change_group'):
-            del form.fields['groups']
-
-        if not request.user.has_perm('auth.change_permission'):
-            del form.fields['user_permissions']
-            
-        if not request.user.is_superuser:
-            del form.fields['is_staff']
-            del form.fields['is_active']
-            del form.fields['is_superuser']
         
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
-        adapt_form(request, form)
+        _adapt_form(request, form)
         pform = UserProfileForm(request.POST, instance=user.get_profile())
         if form.is_valid() and pform.is_valid():
             user = form.save()
             profile = pform.save()
-            set_language(request, profile.language)
+            if request.user == user:
+                set_language(request, profile.language)
             messages.success(request, _("The user was updated successfully."))
             return redirect_to(request, url=user.get_absolute_url())
     else:
         form = UserEditForm(instance=user)
-        adapt_form(request, form)
+        _adapt_form(request, form)
         pform = UserProfileForm(instance=user.get_profile())
 
     return render_to_response('auth/user_edit.html', RequestContext(request, {'form': form, 'pform': pform, 'object': user}))
