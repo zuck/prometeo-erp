@@ -80,7 +80,8 @@ class UserEditForm(forms.ModelForm):
         if self.cleaned_data['password1'] or not user.password:
             user.set_password(self.cleaned_data["password1"])
         if commit:
-            user.save()     
+            user.save()
+            self.save_m2m()   
         return user
 
 class UserProfileForm(forms.ModelForm):
