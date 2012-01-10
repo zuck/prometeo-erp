@@ -553,7 +553,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
  * Layout.
  */
 
-#header, #logo, #nav, #breadcrumbs, #content, #footer {
+#header, #branding, #nav, #breadcrumbs, #content, #footer {
     clear: both;
     float: left;
     padding: 0;
@@ -567,14 +567,14 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     border-top: 1px solid #ec7672;
 }
 
-#logo {
+#branding {
     height: 60px;
     background: url(images/logo.png) no-repeat 20px center;
     border-bottom: 1px solid #1f1f1f;
     color: #fff;
 }
 
-#logo h1, #logo h2 { display: none; }
+#branding h1, #branding h2 { display: none; }
 
 #nav {
     position: absolute;
