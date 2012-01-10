@@ -23,6 +23,7 @@ __version__ = '0.0.5'
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 admin.autodiscover()
 
@@ -31,9 +32,6 @@ urlpatterns = patterns('',
     # Home page.
     (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
     
-    # Static files.
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
-    
     # Admin.
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
@@ -41,6 +39,8 @@ urlpatterns = patterns('',
     # Comments framework.
     (r'^comments/', include('django.contrib.comments.urls')),
 )
+
+urlpatterns += staticfiles_urlpatterns()
 
 LOADING = False
 

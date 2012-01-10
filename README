@@ -58,13 +58,11 @@ INSTALLATION
  3. It's time to create the DB schema (you need to use the --all option if you're using South):
 
     python manage.py syncdb (--all)
-
- 4. python manage.py collectstatic
    
- 5. To test the installation, run:
+ 4. To test the installation, run:
  
    python manage.py runserver
    
    Then open the <127.0.0.1:8000> address in your browser.
  
- 6. To use Apache + mod_wsgi, follow the instructions in <core/apache/README>.
+ 5. To use Apache + mod_wsgi, follow the instructions in <core/apache/README>.
