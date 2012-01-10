@@ -1360,7 +1360,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 #footer {
     height: 200px;
     border-top: 1px solid #111;
-    background: url(images/footer.jpg) repeat-x top;
+    background: #1f1f1f url(images/footer.jpg) repeat-x top;
     color: #fff;
 }
 

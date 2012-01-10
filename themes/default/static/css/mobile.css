@@ -16,3 +16,5 @@ body {
     float: none;
     width: 440px;
 }
+
+#user-profile-widget { display: none; }
