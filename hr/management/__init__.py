@@ -65,7 +65,7 @@ def install(sender, **kwargs):
         title=_("Human resources"),
         slug="hr",
         description=_("Human resources management"),
-        url="{% url employee_list %}",
+        url="{% if perms.hr.view_employee %}{% url employee_list %}{% else %}{% url timesheet_list %}{% endif %}",
         submenu=hr_menu,
         menu=main_menu
     )
