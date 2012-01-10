@@ -1,4 +1,5 @@
-body {    
+body {
+    width: 800px;
     min-width: 800px;
     -webkit-text-size-adjust: none;
 }
