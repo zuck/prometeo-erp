@@ -1,5 +1,14 @@
 body {
-    width: 800px;
     min-width: 800px;
     -webkit-text-size-adjust: none;
+}
+
+#header, #branding, #nav, #breadcrumbs, #content, #footer {
+    float: none;
+    min-width: 800px;
+}
+
+#sidebar, #main {
+    float: none;
+    width: 100%;
 }
