@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load menu %}
 
-<ul class="menu">
+<ul id="{{ slug }}-menu" class="menu">
 {% for link in links %}
     {% if link.authorized and link.url %}
     {% block menulink %}

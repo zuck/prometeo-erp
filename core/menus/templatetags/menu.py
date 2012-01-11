@@ -64,7 +64,7 @@ class MenuNode(template.Node):
             html_template = self.html_template
         html_template = ("%s" % html_template).replace('"', '').replace("'", "")
         if links:
-            output += render_to_string(html_template, { 'links': links }, context)
+            output += render_to_string(html_template, {'slug': slug, 'links': links}, context)
         return output
 
 @register.tag
