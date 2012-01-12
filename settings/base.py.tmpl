@@ -155,6 +155,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+
+    'prometeo.core.forms.middleware.AjaxRedirectMiddleware',
 )
 
 # Root for URL dispatcher.

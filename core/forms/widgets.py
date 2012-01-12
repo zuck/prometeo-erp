@@ -123,106 +123,48 @@ class DateTimeWidget(forms.SplitDateTimeWidget):
     def format_output(self, rendered_widgets):
         return '%s<br/>%s' % (rendered_widgets[0], rendered_widgets[1])
 
-class SelectAndAddWidget(forms.Select):
+class AddLinkMixin(object):
+    class Media:
+        css = {
+            "screen": ("css/blitzer/jquery-ui.custom.css",)
+        }
+        js = (
+            "js/jquery.min.js",
+            "js/jquery-ui.custom.min.js",
+            "js/addlink.js",
+        )
+    def add_link_decorator(self, render_func):
+        def _wrapped_render(name, *args, **kwargs):
+            output = render_func(name, *args, **kwargs)
+            if self.add_url:
+                tokens = {
+                    'name': name,
+                    'add_url': self.add_url,
+                    'label': _('Add'),
+                }
+                output += '<a id="add-%(name)s-link" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>\n' % tokens
+            return mark_safe('<span id="add-%(name)s" class="add">\n%(output)s\n<br/>\n</span>' % {'name': name, 'output': output})
+        return _wrapped_render
+
+class SelectAndAddWidget(forms.Select, AddLinkMixin):
     """A select widget with an optional "add" link.
 
     add_url -- link to the "add" action.    
     """
-    class Media:
-        css = {
-            "screen": ("css/blitzer/jquery-ui.custom.css",)
-        }
-        js = (
-            "js/jquery.min.js",
-            "js/jquery-ui.custom.min.js"
-        )
-
     def __init__(self, *args, **kwargs):
-        self.add_url = ""
-        if kwargs.has_key('add_url'):
-            self.add_url = kwargs['add_url']
-            del kwargs['add_url']
+        self.add_url = kwargs.pop('add_url', None)
         super(SelectAndAddWidget, self).__init__(*args, **kwargs)
+        self.render = self.add_link_decorator(self.render)
 
-    def render(self, name, value, attrs=None, choices=()):
-        output = super(SelectAndAddWidget, self).render(name, value, attrs, choices)
-        if self.add_url:
-            tokens = {
-                'name': name,
-                'add_url': self.add_url,
-                'label': _('Add')
-            }
-            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>\n'      \
-                      '<script type="text/javascript">\n'                                                                   \
-                      '    $("#add-link-%(name)s")\n'                                                                       \
-                      '    .click(\n'                                                                                       \
-                      '        function(e) {\n'                                                                             \
-                      '            e.preventDefault();\n'                                                                   \
-                      '            $("#add-%(name)s")\n'                                                                    \
-                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')\n'                  \
-                      '            .children("#add-dialog-%(name)s")\n'                                                     \
-                      '            .load("%(add_url)s #main")\n'                                                            \
-                      '            .dialog({\n'                                                                             \
-                      '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },\n'               \
-                      '                modal: true,\n'                                                                      \
-                      '                width: 800\n'                                                                        \
-                      '             });\n'                                                                                  \
-                      '         }\n'                                                                                        \
-                      '    );\n'                                                                                            \
-                      '</script>\n' % tokens
-            output += '<br/>\n'
-        return mark_safe('<span id="add-%(name)s" class="add">%(output)s</span>' % {'name': name, 'output': output})
-
-
-class SelectMultipleAndAddWidget(forms.SelectMultiple):
+class SelectMultipleAndAddWidget(forms.SelectMultiple, AddLinkMixin):
     """A multiple-select widget with an optional "add" link.
 
     add_url -- link to the "add" action.    
     """
-    class Media:
-        css = {
-            "screen": ("css/blitzer/jquery-ui.custom.css",)
-        }
-        js = (
-            "js/jquery.min.js",
-            "js/jquery-ui.custom.min.js"
-        )
-
     def __init__(self, *args, **kwargs):
-        self.add_url = ""
-        if kwargs.has_key('add_url'):
-            self.add_url = kwargs['add_url']
-            del kwargs['add_url']
+        self.add_url = kwargs.pop('add_url', None)
         super(SelectMultipleAndAddWidget, self).__init__(*args, **kwargs)
-
-    def render(self, name, value, attrs=None, choices=()):
-        output = super(SelectMultipleAndAddWidget, self).render(name, value, attrs, choices)
-        if self.add_url:
-            tokens = {
-                'name': name,
-                'add_url': self.add_url,
-                'label': _('Add')
-            }
-            output += '<a id="add-link-%(name)s" title="%(label)s" target="_blank" href="%(add_url)s">%(label)s</a>\n'      \
-                      '<script type="text/javascript">\n'                                                                   \
-                      '    $("#add-link-%(name)s")\n'                                                                       \
-                      '    .click(\n'                                                                                       \
-                      '        function(e) {\n'                                                                             \
-                      '            e.preventDefault();\n'                                                                   \
-                      '            $("#add-%(name)s")\n'                                                                    \
-                      '            .append(\'<div class="add-dialog" id="add-dialog-%(name)s"></div>\')\n'                  \
-                      '            .children("#add-dialog-%(name)s")\n'                                                     \
-                      '            .load("%(add_url)s #main")\n'                                                            \
-                      '            .dialog({\n'                                                                             \
-                      '                close: function(event, ui) { $("#add-dialog-%(name)s").remove(); },\n'               \
-                      '                modal: true,\n'                                                                      \
-                      '                width: 800\n'                                                                        \
-                      '             });\n'                                                                                  \
-                      '         }\n'                                                                                        \
-                      '    );\n'                                                                                            \
-                      '</script>\n' % tokens
-            output += '<br/>\n'
-        return mark_safe('<span id="add-%(name)s" class="add"><span class="multiple">%(output)s</span></span>' % {'name': name, 'output': output})
+        self.render = self.add_link_decorator(self.render)
 
 class JsonPairWidget(forms.Widget):
     """A widget that displays a list of text key/value pairs.

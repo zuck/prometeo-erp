@@ -731,47 +731,6 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     background-image: url(images/right.png)
 }
 
-#content .messages {
-    width: 100%;
-    border: 1px solid #ffda88;
-    background-color: #fffecc;
-    margin-bottom: 30px;
-}
-
-#content .messages ul {
-    margin: 0;
-    padding: 5px;
-}
-
-#content .messages li {
-    padding-left: 40px;
-    background-repeat: no-repeat;
-    background-position: 10px 5px;
-}
-
-#content form .errorlist,
-#content form .properties .errorlist { margin: 0; }
-
-#content form .errorlist li,
-#content form .properties .errorlist li {
-    padding: 5px 0 5px 25px;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-position: 0 5px;
-    border: none;
-    color: #d21717;
-}
-
-#content .messages li.error,
-#content form .errorlist li,
-#content form .properties .errorlist li { background-image: url(images/error.png); }
-
-#content .messages li.info { background-image: url(images/info.png); }
-
-#content .messages li.warning { background-image: url(images/warning.png); }
-
-#content .messages li.success { background-image: url(images/success.png); }
-
 #content .notifications { border-top: 2px solid #c0c0c0; }
 
 #content .notifications li {
@@ -1136,6 +1095,47 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     padding: 20px;
     overflow: auto;
 }
+
+#main .messages {
+    width: 100%;
+    border: 1px solid #ffda88;
+    background-color: #fffecc;
+    margin-bottom: 30px;
+}
+
+#main .messages ul {
+    margin: 0;
+    padding: 5px;
+}
+
+#main .messages li {
+    padding-left: 40px;
+    background-repeat: no-repeat;
+    background-position: 10px 5px;
+}
+
+#main .messages li.info { background-image: url(images/info.png); }
+
+#main .messages li.warning { background-image: url(images/warning.png); }
+
+#main .messages li.success { background-image: url(images/success.png); }
+
+#main form .errorlist,
+#main form .properties .errorlist { margin: 0; }
+
+#main form .errorlist li,
+#main form .properties .errorlist li {
+    padding: 5px 0 5px 25px;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-position: 0 5px;
+    border: none;
+    color: #d21717;
+}
+
+#main .messages li.error,
+#main form .errorlist li,
+#main form .properties .errorlist li { background-image: url(images/error.png); }
 
 #main .title {
     float: left;
