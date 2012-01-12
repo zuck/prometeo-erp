@@ -24,7 +24,7 @@ $(document).ready(function() {
                 if (parent_id)
                     root = "#" + parent_id + " #main";
                 
-                $(root).load(current_url + " #main > *");
+                $(root + " #" + widget_id).load(current_url + " #main #" + widget_id + " > *");
                 $("#" + dialog_id).remove();
             }
         });
