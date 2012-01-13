@@ -4,7 +4,11 @@
 {% load details %}
 
 {% block meta_title %}
+{% if object %}
 {% model_name object as model %}
+{% else %}
+{% model_name form.instance as model %}
+{% endif %}
 {% if object.pk %}
 {% blocktrans %}Edit {{ model }}{% endblocktrans %}
 {% else %}
@@ -14,7 +18,11 @@
 
 {% block title %}
 <div class="title">
+    {% if object %}
     {% model_name object as model %}
+    {% else %}
+    {% model_name form.instance as model %}
+    {% endif %}
     {% if object.pk %}
     <h1>{{ object|striptags|capfirst }}</h1>
     <h2>{% blocktrans %}Edit {{ model }}{% endblocktrans %}</h2>
