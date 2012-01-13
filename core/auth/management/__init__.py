@@ -153,10 +153,14 @@ def install(sender, **kwargs):
 
     # Permissions.
     can_view_user, is_new = MyPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user")
+    can_view_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("view_tag", "taxonomy", "tag")
+    can_add_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("add_tag", "taxonomy", "tag")
+    can_view_category, is_new = MyPermission.objects.get_or_create_by_natural_key("view_category", "taxonomy", "category")
+    can_add_category, is_new = MyPermission.objects.get_or_create_by_natural_key("add_category", "taxonomy", "category")
     can_view_link, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
     can_add_link, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
 
-    users_group.permissions.add(can_view_link, can_add_link)
+    users_group.permissions.add(can_view_category, can_add_category, can_view_tag, can_add_tag, can_view_link, can_add_link)
 
     users_link.only_with_perms.add(can_view_user)
     user_profile_bookmarks_link.only_with_perms.add(can_add_link)
