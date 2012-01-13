@@ -31,6 +31,13 @@ class LinkForm(forms.ModelForm):
     """
     class Meta:
         model = Link
+
+class BookmarkForm(forms.ModelForm):
+    """Form for bookmark data.
+    """
+    class Meta:
+        model = Bookmark
         exclude = ['menu', 'slug', 'submenu', 'sort_order', 'only_authenticated', 'only_staff', 'only_with_perms']
 
 enrich_form(LinkForm)
+enrich_form(BookmarkForm)

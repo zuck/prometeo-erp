@@ -41,7 +41,7 @@ from forms import *
 def _get_bookmark(request, *args, **kwargs):
     username = kwargs.get('username', None)
     slug = kwargs.get('slug', None)
-    return get_object_or_404(Link, menu__userprofile__user__username=username, slug=slug)
+    return get_object_or_404(Bookmark, menu__userprofile__user__username=username, slug=slug)
 
 @permission_required('auth.view_user', _get_user)
 @permission_required('menus.view_link')
@@ -52,8 +52,8 @@ def bookmark_list(request, username, page=0, paginate_by=10, **kwargs):
 
     return filtered_list_detail(
         request,
-        user.get_profile().bookmarks.links.all(),
-        fields=['title', 'url'],
+        Bookmark.objects.filter(menu=user.get_profile().bookmarks),
+        fields=['title', 'new_window', 'url'],
         paginate_by=paginate_by,
         page=page,
         extra_context={
@@ -71,23 +71,23 @@ def bookmark_add(request, username, **kwargs):
     user = get_object_or_404(User, username=username)
 
     bookmarks = user.get_profile().bookmarks
-    link = Link(menu=bookmarks, sort_order=bookmarks.links.count())
+    bookmark = Bookmark(menu=bookmarks, sort_order=bookmarks.links.count())
 
     if request.method == 'POST':
-        form = LinkForm(request.POST, instance=link)
+        form = BookmarkForm(request.POST, instance=bookmark)
         if form.is_valid():
-            link.slug = slugify("%s_%s" % (link.title, user.pk))
-            link = form.save()
-            messages.success(request, _("The link was created successfully."))
+            bookmark.slug = slugify("%s_%s" % (bookmark.title, user.pk))
+            bookmark = form.save()
+            messages.success(request, _("The bookmark was created successfully."))
             return redirect_to(request, url=reverse('bookmark_list', args=[user.username]))
     else:
         url = clean_referer(request)
         if url == reverse('bookmark_list', args=[user.username]):
             url = ""
-        link.url = url
-        form = LinkForm(instance=link)
+        bookmark.url = url
+        form = BookmarkForm(instance=bookmark)
 
-    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link, 'object_user': user}))
+    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': bookmark, 'object_user': user}))
 
 @permission_required('auth.change_user', _get_user)
 @permission_required('menus.change_link', _get_bookmark)
@@ -97,18 +97,18 @@ def bookmark_edit(request, username, slug, **kwargs):
     user = get_object_or_404(User, username=username)
 
     bookmarks = user.get_profile().bookmarks
-    link = get_object_or_404(Link, menu=bookmarks, slug=slug)
+    bookmark = get_object_or_404(Bookmark, menu=bookmarks, slug=slug)
 
     if request.method == 'POST':
-        form = LinkForm(request.POST, instance=link)
+        form = BookmarkForm(request.POST, instance=bookmark)
         if form.is_valid():
-            link = form.save()
-            messages.success(request, _("The link was updated successfully."))
+            bookmark = form.save()
+            messages.success(request, _("The bookmark was updated successfully."))
             return redirect_to(request, url=reverse('bookmark_list', args=[user.username]))
     else:
-        form = LinkForm(instance=link)
+        form = BookmarkForm(instance=bookmark)
 
-    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': link, 'object_user': user}))
+    return render_to_response('menus/bookmark_edit.html', RequestContext(request, {'form': form, 'object': bookmark, 'object_user': user}))
 
 @permission_required('auth.change_user', _get_user)
 @permission_required('menus.delete_link', _get_bookmark)
@@ -118,11 +118,11 @@ def bookmark_delete(request, username, slug, **kwargs):
     user = get_object_or_404(User, username=username)
 
     bookmarks = user.get_profile().bookmarks
-    link = get_object_or_404(Link, menu=bookmarks, slug=slug)
+    bookmark = get_object_or_404(Bookmark, menu=bookmarks, slug=slug)
 
     return create_update.delete_object(
         request,
-        model=Link,
+        model=Bookmark,
         slug=slug,
         post_delete_redirect=reverse('bookmark_list', args=[user.username]),
         template_name='menus/bookmark_delete.html',

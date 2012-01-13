@@ -24,7 +24,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User, Permission
-from django.db.models import permalink 
+from django.db.models import permalink
         
 class Menu(models.Model):
     """Menu model.
@@ -43,14 +43,15 @@ class Link(models.Model):
     """A generic menu entry.
     """
     menu = models.ForeignKey(Menu, db_column='menu_id', related_name='links', verbose_name=_('menu'))
-    title = models.CharField(_('title'), max_length=100)
-    slug = models.SlugField(_('slug'), unique=True)
-    description = models.TextField(_('description'), blank=True, null=True)
-    url = models.CharField(_('url'), max_length=200)
-    sort_order = models.PositiveIntegerField(_('sort order'), default=0)
+    title = models.CharField(max_length=100, verbose_name=_('title'))
+    slug = models.SlugField(unique=True, verbose_name=_('slug'))
+    description = models.TextField(blank=True, null=True, verbose_name=_('description'))
+    new_window = models.BooleanField(default=False, verbose_name=_('New window?'))
+    url = models.CharField(max_length=200, verbose_name=_('url'))
+    sort_order = models.PositiveIntegerField(default=0, verbose_name=_('sort order'))
     submenu = models.ForeignKey(Menu, db_column='submenu_id', related_name='parent_links', blank=True, null=True, verbose_name=_('sub-menu'))
-    only_authenticated = models.BooleanField(_('Only for authenticated users'), default=True)
-    only_staff = models.BooleanField(_('Only for staff users'), default=False)
+    only_authenticated = models.BooleanField(default=True, verbose_name=_('Only for authenticated users'))
+    only_staff = models.BooleanField(default=False, verbose_name=_('Only for staff users'))
     only_with_perms = models.ManyToManyField(Permission, blank=True, null=True, verbose_name=_('Only with following permissions'))
 
     class Meta:
@@ -64,6 +65,17 @@ class Link(models.Model):
     def get_absolute_url(self):
         return self.url
 
+class Bookmark(Link):
+    """A proxy model for bookmark links.
+    """
+    class Meta:
+        proxy = True
+        verbose_name = _('bookmark')
+        verbose_name_plural = _('bookmarks')
+
+    def __unicode__(self):
+        return '%s' % self.title
+        
     @models.permalink
     def get_edit_url(self):
         user = get_object_or_404(User, pk=self.slug.split('_')[1])

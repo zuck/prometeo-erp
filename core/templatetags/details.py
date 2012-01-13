@@ -47,8 +47,11 @@ class ModelNameNode(template.Node):
     def render(self, context):
         try:
             instance = self.instance.resolve(context)
-            ct = ContentType.objects.get_for_model(instance)
-            context[self.var_name] = u"%s" % _(ct.name)
+            try:
+                name = instance._meta.verbose_name
+            except:
+                name = u"%s" % _(ContentType.objects.get_for_model(instance).name)
+            context[self.var_name] = name
         except:
             pass
         return ''
