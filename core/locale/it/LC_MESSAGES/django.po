@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 13:47+0100\n"
+"POT-Creation-Date: 2012-01-13 14:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,123 +45,120 @@ msgstr ""
 msgid "full name"
 msgstr "nome completo"
 
-#: auth/models.py:53
+#: auth/models.py:61
 msgid "language"
 msgstr "lingua"
 
-#: auth/models.py:54
+#: auth/models.py:62
 msgid "timezone"
 msgstr "fuso orario"
 
-#: auth/models.py:55
+#: auth/models.py:63
 msgid "dashboard"
 msgstr "bacheca"
 
-#: auth/models.py:56
+#: auth/models.py:64 menus/models.py:74
 msgid "bookmarks"
 msgstr "segnalibri"
 
-#: auth/models.py:57
+#: auth/models.py:65
 msgid "calendar"
 msgstr "calendario"
 
-#: auth/models.py:66
+#: auth/models.py:74
 msgid "permission"
 msgstr "permesso"
 
-#: auth/models.py:67
+#: auth/models.py:75
 msgid "users"
 msgstr "utenti"
 
-#: auth/models.py:68
+#: auth/models.py:76
 msgid "groups"
 msgstr "gruppi"
 
-#: auth/models.py:73
+#: auth/models.py:81
 msgid "object permission"
 msgstr "permesso per singolo oggetto"
 
-#: auth/models.py:74
+#: auth/models.py:82
 msgid "object permissions"
 msgstr "permessi per singolo oggetto"
 
-#: auth/views.py:93
+#: auth/views.py:106
 msgid "The user was created successfully."
 msgstr ""
 
-#: auth/views.py:124 notifications/views/notifications.py:59
+#: auth/views.py:129 notifications/views/notifications.py:59
 msgid "The user was updated successfully."
 msgstr ""
 
-#: auth/management/__init__.py:51
+#: auth/management/__init__.py:50
 msgid "User area for anonymous users"
 msgstr "Area utente per utenti anonimi"
 
-#: auth/management/__init__.py:56
+#: auth/management/__init__.py:55
 msgid "User area for logged users"
 msgstr "Area utente per utenti autenticati"
 
-#: auth/management/__init__.py:61
+#: auth/management/__init__.py:60 notifications/management/__init__.py:35
 msgid "Main menu for user profiles"
 msgstr "Menu principale per profili utente"
 
-#: auth/management/__init__.py:66 widgets/signals.py:42
+#: auth/management/__init__.py:65 widgets/signals.py:42
 msgid "Dashboard"
 msgstr "Bacheca"
 
-#: auth/management/__init__.py:68
+#: auth/management/__init__.py:67
 msgid "Personal dashboard"
 msgstr "Bacheca personale"
 
-#: auth/management/__init__.py:74 auth/management/__init__.py:141
+#: auth/management/__init__.py:73 auth/management/__init__.py:133
+#: calendar/management/__init__.py:41
 msgid "Users"
 msgstr "Utenti"
 
-#: auth/management/__init__.py:76
+#: auth/management/__init__.py:75
 msgid "Users management"
 msgstr "Gestione utenti"
 
-#: auth/management/__init__.py:82 auth/management/__init__.py:84
+#: auth/management/__init__.py:81 auth/management/__init__.py:83
 msgid "Login"
 msgstr ""
 
-#: auth/management/__init__.py:91
+#: auth/management/__init__.py:90
 msgid "Administration"
 msgstr "Amministrazione"
 
-#: auth/management/__init__.py:93
+#: auth/management/__init__.py:92
 msgid "Administration panel"
 msgstr "Pannello di amministrazione"
 
-#: auth/management/__init__.py:100 auth/management/__init__.py:102
+#: auth/management/__init__.py:99 auth/management/__init__.py:101
 msgid "Logout"
 msgstr ""
 
-#: auth/management/__init__.py:108 calendar/management/__init__.py:97
+#: auth/management/__init__.py:107 calendar/management/__init__.py:100
 msgid "Details"
 msgstr "Dettagli"
 
-#: auth/management/__init__.py:115 menus/signals.py:41
+#: auth/management/__init__.py:114 menus/signals.py:41
 msgid "Bookmarks"
 msgstr "Segnalibri"
 
 #: auth/management/__init__.py:122
-msgid "Notifications"
-msgstr "Notifiche"
-
-#: auth/management/__init__.py:130
 msgid "Comment posted"
 msgstr "Pubblicazione commento"
 
-#: auth/management/__init__.py:135
+#: auth/management/__init__.py:127
 msgid "Comment deleted"
 msgstr "Eliminazione commento"
 
-#: auth/management/__init__.py:146 auth/management/__init__.py:155
+#: auth/management/__init__.py:138 auth/management/__init__.py:147
 msgid "User profile"
 msgstr "Profilo utente"
 
-#: auth/management/__init__.py:148
+#: auth/management/__init__.py:140
 msgid "It renders the current user's profile."
 msgstr "Visualizza il profilo utente corrente."
 
@@ -169,7 +166,7 @@ msgstr "Visualizza il profilo utente corrente."
 msgid "Select an .ics file"
 msgstr "Selezione un file .ics"
 
-#: calendar/models.py:37 calendar/management/__init__.py:53
+#: calendar/models.py:37 calendar/management/__init__.py:56
 msgid "Calendar"
 msgstr "Calendario"
 
@@ -265,53 +262,54 @@ msgstr "L'evento \"%s\" è stato importato."
 
 #: calendar/views.py:277
 msgid "Sorry, an error has occurred during importing of calendar."
-msgstr "Spiacenti, si è verificato un errore durante l'importazione del calendario."
+msgstr ""
+"Spiacenti, si è verificato un errore durante l'importazione del calendario."
 
-#: calendar/management/__init__.py:43
+#: calendar/management/__init__.py:46
 msgid "Main menu for calendar"
 msgstr "Menu principale per i calendari"
 
-#: calendar/management/__init__.py:48
+#: calendar/management/__init__.py:51
 msgid "Main menu for event"
 msgstr "Menu principale per gli eventi"
 
-#: calendar/management/__init__.py:55
+#: calendar/management/__init__.py:58
 msgid "Events planning"
 msgstr "Pianificazione degli eventi"
 
-#: calendar/management/__init__.py:62
+#: calendar/management/__init__.py:65
 msgid "Agenda"
 msgstr ""
 
-#: calendar/management/__init__.py:69
+#: calendar/management/__init__.py:72
 msgid "Day"
 msgstr "Giorno"
 
-#: calendar/management/__init__.py:76
+#: calendar/management/__init__.py:79
 msgid "Week"
 msgstr "Settimana"
 
-#: calendar/management/__init__.py:83
+#: calendar/management/__init__.py:86
 msgid "Month"
 msgstr "Mese"
 
-#: calendar/management/__init__.py:90
+#: calendar/management/__init__.py:93
 msgid "Year"
 msgstr "Anno"
 
-#: calendar/management/__init__.py:104
+#: calendar/management/__init__.py:107
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: calendar/management/__init__.py:112
+#: calendar/management/__init__.py:115
 msgid "Event created"
 msgstr "Creazione evento"
 
-#: calendar/management/__init__.py:117
+#: calendar/management/__init__.py:120
 msgid "Event changed"
 msgstr "Modifica evento"
 
-#: calendar/management/__init__.py:122
+#: calendar/management/__init__.py:125
 msgid "Event deleted"
 msgstr "Eliminazione evento"
 
@@ -400,7 +398,7 @@ msgstr "Crea collegamento"
 msgid "Rename"
 msgstr "Rinomina"
 
-#: filebrowser/templatetags/filebrowser.py:80 templatetags/details.py:132
+#: filebrowser/templatetags/filebrowser.py:80 templatetags/details.py:137
 msgid "Delete"
 msgstr "Elimina"
 
@@ -465,7 +463,7 @@ msgstr ""
 msgid "PM"
 msgstr ""
 
-#: forms/widgets.py:153 forms/widgets.py:204
+#: forms/widgets.py:143
 msgid "Add"
 msgstr "Aggiungi"
 
@@ -486,46 +484,54 @@ msgid "menus"
 msgstr "menu"
 
 #: menus/models.py:49
+msgid "New window?"
+msgstr "Nuova finestra?"
+
+#: menus/models.py:50
 msgid "url"
 msgstr ""
 
-#: menus/models.py:50 widgets/models.py:70
+#: menus/models.py:51 widgets/models.py:70
 msgid "sort order"
 msgstr "ordinamento"
 
-#: menus/models.py:51
+#: menus/models.py:52
 msgid "sub-menu"
 msgstr "sotto-menu"
 
-#: menus/models.py:52
+#: menus/models.py:53
 msgid "Only for authenticated users"
 msgstr "Solo per utenti autenticati"
 
-#: menus/models.py:53
+#: menus/models.py:54
 msgid "Only for staff users"
 msgstr "Solo per lo staff"
 
-#: menus/models.py:54
+#: menus/models.py:55
 msgid "Only with following permissions"
 msgstr "Solo con i seguenti permessi"
 
-#: menus/models.py:58
+#: menus/models.py:59
 msgid "link"
 msgstr "collegamento"
 
-#: menus/models.py:59
+#: menus/models.py:60
 msgid "links"
 msgstr "collegamenti"
 
-#: menus/views.py:80
-msgid "The link was created successfully."
-msgstr "Il collegamento è stato salvato"
+#: menus/models.py:73
+msgid "bookmark"
+msgstr "segnalibro"
 
-#: menus/views.py:105
-msgid "The link was updated successfully."
-msgstr "Il collegamento è stato aggiornato"
+#: menus/views.py:81
+msgid "The bookmark was created successfully."
+msgstr "Il segnalibro è stato salvato"
 
-#: menus/management/__init__.py:38 menus/management/__init__.py:52
+#: menus/views.py:106
+msgid "The bookmark was updated successfully."
+msgstr "Il segnalibro è stato aggiornato"
+
+#: menus/management/__init__.py:38 menus/management/__init__.py:53
 msgid "Main menu"
 msgstr "Menu principale"
 
@@ -634,45 +640,49 @@ msgstr "notifica"
 msgid "notifications"
 msgstr "notifiche"
 
-#: notifications/signals.py:82
+#: notifications/signals.py:89
 #, python-format
 msgid "%(class)s %(name)s created"
 msgstr "%(class)s %(name)s creato/a"
 
-#: notifications/signals.py:92
+#: notifications/signals.py:99
 #, python-format
 msgid "%(class)s %(name)s created by %(author)s"
 msgstr "%(class)s %(name)s creato/a da %(author)s"
 
-#: notifications/signals.py:120
+#: notifications/signals.py:127
 #, python-format
 msgid "%(class)s %(name)s changed"
 msgstr "%(class)s %(name)s modificato/a"
 
-#: notifications/signals.py:131
+#: notifications/signals.py:138
 #, python-format
 msgid "%(class)s %(name)s changed by %(author)s"
 msgstr "%(class)s %(name)s modificato/a da %(author)s"
 
-#: notifications/signals.py:159
+#: notifications/signals.py:166
 #, python-format
 msgid "%(class)s %(name)s deleted"
 msgstr "%(class)s %(name)s eliminato/a"
 
-#: notifications/signals.py:168
+#: notifications/signals.py:175
 #, python-format
 msgid "%(class)s %(name)s deleted by %(author)s"
 msgstr "%(class)s %(name)s eliminato/a da %(author)s"
 
-#: notifications/signals.py:221
+#: notifications/signals.py:228
 #, python-format
 msgid "%(author)s commented %(class)s %(name)s"
 msgstr "%(author)s ha commentato %(class)s %(name)s"
 
-#: notifications/signals.py:254
+#: notifications/signals.py:261
 #, python-format
 msgid "comment deleted by %(author)s"
 msgstr "commento eliminato da %(author)s"
+
+#: notifications/management/__init__.py:39
+msgid "Notifications"
+msgstr "Notifiche"
 
 #: notifications/views/streams.py:40
 msgid "You're now following the stream."
@@ -794,11 +804,11 @@ msgstr "Nuvola di tags"
 msgid "It renders the tags cloud."
 msgstr "Visualizza la nuvola dei tags."
 
-#: templatetags/details.py:125
+#: templatetags/details.py:130
 msgid "Edit"
 msgstr "Modifica"
 
-#: templatetags/details.py:170
+#: templatetags/details.py:175
 msgid "No results found."
 msgstr "Nessun risultato trovato."
 

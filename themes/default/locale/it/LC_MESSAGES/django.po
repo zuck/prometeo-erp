@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 12:23+0100\n"
+"POT-Creation-Date: 2012-01-13 14:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,14 +63,14 @@ msgstr "Dettagli"
 
 #: templates/base_edit.html:9 templates/base_edit.html.py:20
 #: templates/documents/document_edit.html:9
-#: templates/documents/document_edit.html:21
+#: templates/documents/document_edit.html:20
 #, python-format
 msgid "Edit %(model)s"
 msgstr "Modifica %(model)s"
 
 #: templates/base_edit.html:11 templates/base_edit.html.py:22
 #: templates/documents/document_edit.html:11
-#: templates/documents/document_edit.html:23
+#: templates/documents/document_edit.html:22
 #, python-format
 msgid "Add %(model)s"
 msgstr "Aggiungi %(model)s"
@@ -102,7 +102,7 @@ msgstr ""
 
 #: templates/auth/user_detail.html:17 templates/auth/user_list.html:25
 #: templates/calendar/base.html:19 templates/calendar/event_detail.html:17
-#: templates/elements/dashboard.html:7
+#: templates/elements/dashboard.html:8
 #: templates/elements/month_calendar.html:28
 #: templates/hr/employee_detail.html:16 templates/hr/employee_list.html:21
 #: templates/hr/expensevoucher_detail.html:16
@@ -456,6 +456,10 @@ msgid "Year"
 msgstr "Anno"
 
 #: templates/elements/bookmarks.html:5
+msgid "Bookmark this page"
+msgstr "Aggiungi questa pagina ai segnalibri"
+
+#: templates/elements/bookmarks.html:5
 msgid "+"
 msgstr ""
 
@@ -502,11 +506,11 @@ msgstr ""
 msgid "Post"
 msgstr "Pubblica"
 
-#: templates/elements/dashboard.html:7
+#: templates/elements/dashboard.html:8
 msgid "Add widget"
 msgstr "Aggiungi widget"
 
-#: templates/elements/dashboard.html:14
+#: templates/elements/dashboard.html:16
 msgid "No widgets found."
 msgstr "Nessun widget trovato."
 
@@ -759,8 +763,8 @@ msgid ""
 "<a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
 msgstr ""
 "\n"
-"<p>Un commento è stato eliminato da %(class)s <a href=\"%(link)s\">%(name)s</a> da "
-"<a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
+"<p>Un commento è stato eliminato da %(class)s <a href=\"%(link)s\">%(name)s</"
+"a> da <a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
 
 #: templates/notifications/activities/object-changed.html:4
 #, python-format
@@ -770,8 +774,8 @@ msgid ""
 "was changed by <a href=\"%(author_link)s\">%(author)s</a>:</p>\n"
 msgstr ""
 "\n"
-"<p>I seguenti attributi di %(class)s <a href=\"%(link)s\">%(name)s</a> "
-"sono stati modificati da <a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
+"<p>I seguenti attributi di %(class)s <a href=\"%(link)s\">%(name)s</a> sono "
+"stati modificati da <a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
 
 #: templates/notifications/activities/object-changed.html:8
 #, python-format
@@ -817,7 +821,8 @@ msgid ""
 "a>.</p>\n"
 msgstr ""
 "\n"
-"<p>%(class)s %(name)s è stato eliminato da <a href=\"%(author_link)s\">%(author)s</a>.</p>\n"
+"<p>%(class)s %(name)s è stato eliminato da <a href=\"%(author_link)s\">"
+"%(author)s</a>.</p>\n"
 
 #: templates/notifications/activities/object-deleted.html:9
 #, python-format
