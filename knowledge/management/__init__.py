@@ -197,6 +197,7 @@ def install(sender, **kwargs):
     # Permissions.
     can_view_wikipage, is_new = MyPermission.objects.get_or_create_by_natural_key("view_wikipage", "knowledge", "wikipage")
     can_add_wikipage, is_new = MyPermission.objects.get_or_create_by_natural_key("add_wikipage", "knowledge", "wikipage")
+    can_change_wikipage, is_new = MyPermission.objects.get_or_create_by_natural_key("change_wikipage", "knowledge", "wikipage")
     can_view_faq, is_new = MyPermission.objects.get_or_create_by_natural_key("view_faq", "knowledge", "faq")
     can_add_faq, is_new = MyPermission.objects.get_or_create_by_natural_key("add_faq", "knowledge", "faq")
     can_view_poll, is_new = MyPermission.objects.get_or_create_by_natural_key("view_poll", "knowledge", "poll")
@@ -207,6 +208,6 @@ def install(sender, **kwargs):
     faqs_link.only_with_perms.add(can_view_faq)
     polls_link.only_with_perms.add(can_view_poll)
 
-    users_group.permissions.add(can_view_wikipage, can_add_wikipage, can_view_faq, can_add_faq, can_view_poll, can_add_poll)
+    users_group.permissions.add(can_view_wikipage, can_add_wikipage, can_change_wikipage, can_view_faq, can_add_faq, can_view_poll, can_add_poll)
 
 post_syncdb.connect(install, dispatch_uid="install_knowledge")

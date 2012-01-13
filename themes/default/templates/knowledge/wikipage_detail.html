@@ -12,19 +12,19 @@
 {% endblock %}
 
 {% block objectactions %}
-{% if perms.knoweldge.add_wikipage %}
+{% if perms.knowledge.add_wikipage %}
 <li class="add"><a title="{% trans 'Add' %}" href="{% url wikipage_add %}">{% trans 'Add' %}</a></li>
 {% endif %}
-{% if perms.knoweldge.change_wikipage %}
+{% if perms.knowledge.change_wikipage %}
 <li class="edit"><a title="{% trans 'Edit' %}" href="{% url wikipage_edit object.slug %}">{% trans 'Edit' %}</a></li>
 {% endif %}
-{% if perms.knoweldge.delete_wikipage %}
+{% if perms.knowledge.delete_wikipage %}
 <li class="delete"><a title="{% trans 'Delete' %}" href="{% url wikipage_delete object.slug %}">{% trans 'Delete' %}</a></li>
 {% endif %}
-{% if perms.knoweldge.change_wikipage %}
+{% if perms.knowledge.view_wikipage %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url wikipage_home %}">{% trans 'All' %}</a></li>
 {% endif %}
-{% if perms.knoweldge.change_wikipage %}
+{% if perms.knowledge.view_wikipage %}
 {% if user not in object.stream.followers.all %}
 <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
 {% else %}
