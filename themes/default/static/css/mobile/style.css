@@ -12,7 +12,7 @@ body {
 
 #content { background-image: none; }
 
-#sidebar, #main {
+#main {
     float: none;
     width: 440px;
 }
@@ -22,3 +22,7 @@ body {
 #main .region { width: 407px; }
 
 #main .widget { float: none; }
+
+#main-menu ul.menu { display: none; }
+
+#main-menu li.active ul.menu { display: block; }
