@@ -45,6 +45,9 @@ class UserEditForm(forms.ModelForm):
         self.fields['password2'].required = (self.instance.pk is None)
         self.fields['email'].required = True
 
+        if (self.instance.pk is None):
+            del self.fields['user_permissions']
+
     def clean_password1(self):
         """Checks for a valid password1.
         """
