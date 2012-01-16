@@ -40,8 +40,6 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
     """
     profile, is_new = UserProfile.objects.get_or_create(user=instance)
     if is_new:
-        print "is new"
-
         can_view_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user", instance.pk)
         can_change_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("change_user", "auth", "user", instance.pk)
         can_delete_this_user, is_new = ObjectPermission.objects.get_or_create_by_natural_key("delete_user", "auth", "user", instance.pk)
@@ -60,8 +58,6 @@ def user_post_save(sender, instance, signal, *args, **kwargs):
         can_add_widget, is_new = MyPermission.objects.get_or_create_by_natural_key("add_widget", "widgets", "widget")
 
         instance.user_permissions.add(can_view_bookmark, can_add_bookmark, can_view_widget, can_add_widget)
-
-        print "user permissions of %s: %s" % (instance, instance.user_permissions.all())
 
 def update_author_permissions(sender, instance, *args, **kwargs):
     """Updates the permissions assigned to the author of the given object.
