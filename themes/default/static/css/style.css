@@ -1094,7 +1094,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 
 #main {
     min-width: 300px;
-    padding: 20px !important;
+    padding: 20px;
     overflow: auto;
 }
 
