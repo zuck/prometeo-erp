@@ -11,10 +11,11 @@ $(document).ready(function() {
         $(this).attr('disabled', true);
 
         $("#" + widget_id)
-        .append('<div class="add-dialog" id="' + dialog_id +'"></div>')
+        .append('<div class="page" id="' + dialog_id +'"></div>')
         .children("#" + dialog_id)
-        .load($(this).attr("href") + " #main")
+        .load($(this).attr("href") + " #main > *")
         .dialog({
+            resizable: false,
             position: ["center", "top"],
             modal: true,
             width: 800,
@@ -28,6 +29,8 @@ $(document).ready(function() {
                 $("#" + dialog_id).remove();
             }
         });
+
+        $(".ui-dialog").find('.ui-dialog-titlebar').hide();
 
         $(this).attr("disabled", false);
 
