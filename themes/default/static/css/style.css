@@ -879,6 +879,8 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     font-weight: normal;
 }
 
+#content .calendar .events .daynr a:hover { font-weight: bold; }
+
 #content .calendar .events .daynr .weekend, #content .calendar .events .daynr .weekend a { color: #d21717; }
 
 #content .calendar .events .daynr .weekend .disabled { color: #ffc0c0; }
