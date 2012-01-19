@@ -1,3 +1,10 @@
+function fixUrl(url) {
+    var tokens = $.grep(url.split('/'), function(n) {
+        return(n);
+    });
+    return '/' + tokens.join('/') + '/';
+}
+
 $(document).ready(function() {
 
     $('form span.add a').live('click', function(e) {
@@ -13,7 +20,7 @@ $(document).ready(function() {
         $("#" + widget_id)
         .append('<div class="add-dialog" id="' + dialog_id +'"></div>')
         .children("#" + dialog_id)
-        .load($(this).attr("href") + " #main")
+        .load(fixUrl($(this).attr("href")) + " #main")
         .dialog({
             resizable: false,
             position: ["center", "top"],
@@ -25,7 +32,7 @@ $(document).ready(function() {
                 if (parent_id)
                     root = "#" + parent_id + " #main";
                 
-                $(root + " #" + widget_id).load(current_url + " #main #" + widget_id + " > *");
+                $(root + " #" + widget_id).load(fixUrl(current_url) + " #main #" + widget_id + " > *");
                 $("#" + dialog_id).remove();
             }
         });
