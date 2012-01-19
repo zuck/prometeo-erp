@@ -315,7 +315,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 .paginator .previous, .navigator .previous,
 .paginator .next, .navigator .next,
 .paginator .last, .navigator .last,
-.paginator .page_number,
+.paginator #main_number,
 .paginator .current, .navigator .current {
     clear: none;
     float: left;
@@ -1090,41 +1090,41 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     margin-bottom: 0;
 }
 
-.page {
+#main {
     min-width: 300px;
     padding: 20px !important;
     overflow: auto;
 }
 
-.page .messages {
+#main .messages {
     width: 100%;
     border: 1px solid #ffda88;
     background-color: #fffecc;
     margin-bottom: 30px;
 }
 
-.page .messages ul, .ui-dialog-content .messages ul {
+#main .messages ul, .ui-dialog-content .messages ul {
     margin: 0;
     padding: 5px;
 }
 
-.page .messages li, .ui-dialog-content .messages li {
+#main .messages li, .ui-dialog-content .messages li {
     padding-left: 40px;
     background-repeat: no-repeat;
     background-position: 10px 5px;
 }
 
-.page .messages li.info { background-image: url(images/info.png); }
+#main .messages li.info { background-image: url(images/info.png); }
 
-.page .messages li.warning { background-image: url(images/warning.png); }
+#main .messages li.warning { background-image: url(images/warning.png); }
 
-.page .messages li.success { background-image: url(images/success.png); }
+#main .messages li.success { background-image: url(images/success.png); }
 
-.page form .errorlist,
-.page form .properties .errorlist { margin: 0; }
+#main form .errorlist,
+#main form .properties .errorlist { margin: 0; }
 
-.page form .errorlist li,
-.page form .properties .errorlist li {
+#main form .errorlist li,
+#main form .properties .errorlist li {
     padding: 5px 0 5px 25px;
     margin: 0;
     background-repeat: no-repeat;
@@ -1133,41 +1133,41 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     color: #d21717;
 }
 
-.page .messages li.error,
-.page form .errorlist li,
-.page form .properties .errorlist li { background-image: url(images/error.png); }
+#main .messages li.error,
+#main form .errorlist li,
+#main form .properties .errorlist li { background-image: url(images/error.png); }
 
-.page .title {
+#main .title {
     float: left;
     width: 100%;
     margin-bottom: 10px;
 }
 
-.page .title h2 { color: #1f1f1f; }
+#main .title h2 { color: #1f1f1f; }
 
-.page .title .meta {
+#main .title .meta {
     float: right;
     margin-bottom: -20px;
 }
 
-.page .sections .menu {
+#main .sections .menu {
     border-bottom: 1px solid #c0c0c0;
 }
 
-.page .sections .menu ul {
+#main .sections .menu ul {
     float: left;
     width: auto;
     margin-bottom: -1px;
     border-left: 1px solid #c0c0c0;
 }
 
-.page .sections .menu li {
+#main .sections .menu li {
     clear: none;
     float: left;
     width: auto;
 }
 
-.page .sections .menu li a, .page .sections .menu li span {
+#main .sections .menu li a, #main .sections .menu li span {
     display: block;
     background: #f8f8f8 url(images/menu.jpg) repeat-x bottom;
     border: none;
@@ -1177,13 +1177,13 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     font-weight: bold;
 }
 
-.page .sections .menu li.active a {
+#main .sections .menu li.active a {
     background: #fff;
     border-bottom: 1px solid #fff;
     margin-bottom: -1px;
 }
 
-.page .sections .section {
+#main .sections .section {
     clear: both;
     width: 100%;
     float: left;
@@ -1191,9 +1191,9 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     margin-bottom: 10px;
 }
 
-.page .actions ul { float: left; }
+#main .actions ul { float: left; }
 
-.page .actions li {
+#main .actions li {
     clear: none;
     float: left;
     padding: 0;
@@ -1201,33 +1201,33 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     background: none;
 }
 
-.page .details { clear: both; }
+#main .details { clear: both; }
 
-.page .details .actions { width: 40px; }
+#main .details .actions { width: 40px; }
 
-.page .details .actions .delete a { margin: 0; }
+#main .details .actions .delete a { margin: 0; }
 
-.page .details .avatar {
+#main .details .avatar {
     display: block;
     float: none;
     margin-left: auto;
     margin-right: auto;
 }
 
-.page .details .avatar img {
+#main .details .avatar img {
     padding: 5px;
     border: 1px solid #c0c0c0;
     background: #fff;
 }
 
-.page .properties {
+#main .properties {
     margin-top: 5px;
     border-top: 1px solid #c0c0c0;
 }
 
-.page .properties tr { border-bottom: 1px solid #c0c0c0; }
+#main .properties tr { border-bottom: 1px solid #c0c0c0; }
 
-.page .properties th {
+#main .properties th {
     width: 18%;
     padding: 10px;
     background: none;
@@ -1236,63 +1236,63 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     text-align: right;
 }
 
-.page .properties td {
+#main .properties td {
     width: 32%;
     border: none;
 }
 
-.page .properties .altrow td { background-color: transparent; }
+#main .properties .altrow td { background-color: transparent; }
 
-.page .properties td ul { margin: 0 0 -1px; }
+#main .properties td ul { margin: 0 0 -1px; }
 
-.page .properties td ul li {
+#main .properties td ul li {
     background: none;
     padding: 10px;
     border-bottom: 1px solid #c0c0c0;
 }
 
-.page .properties td ul li .type { float: right; }
+#main .properties td ul li .type { float: right; }
 
-.page .properties td .yes, .page .properties td .no { margin: 0; }
+#main .properties td .yes, #main .properties td .no { margin: 0; }
 
-.page .region {
+#main .region {
     clear: both;
     float: left;
     width: 808px;
 }
 
-.page .region p.disabled {
+#main .region p.disabled {
     padding: 10px;
     border: 1px dashed #c0c0c0;
     margin-bottom: 20px;
 }
 
-.page .widget {
+#main .widget {
     float: left;
     width: 387px;
     margin: 0 15px 10px 0;
     border: 1px solid #c0c0c0;
 }
 
-.page .altwidget { float: right; }
+#main .altwidget { float: right; }
 
-.page .widget .title {
+#main .widget .title {
     width: 367px;
     padding: 5px 10px;
     background: #f8f8f8 url(images/menu.jpg) repeat-x bottom;
     border-bottom: 1px solid #c0c0c0;
 }
 
-.page .widget .title h1,
-.page .widget .title h2,
-.page .widget .title h3,
-.page .widget .title h4,
-.page .widget .title h5,
-.page .widget .title h6 { margin-bottom: 0; }
+#main .widget .title h1,
+#main .widget .title h2,
+#main .widget .title h3,
+#main .widget .title h4,
+#main .widget .title h5,
+#main .widget .title h6 { margin-bottom: 0; }
 
-.page .widget .title h2 { color: #c0c0c0; }
+#main .widget .title h2 { color: #c0c0c0; }
 
-.page .widget .actions {
+#main .widget .actions {
     position: relative;
     float: right;
     top: -32px;
@@ -1300,13 +1300,13 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     margin-right: 5px;
 }
 
-.page .text-widget-template .body,
-.page .categories-widget-template .body,
-.page .tag-cloud-widget-template .body { padding: 10px; }
+#main .text-widget-template .body,
+#main .categories-widget-template .body,
+#main .tag-cloud-widget-template .body { padding: 10px; }
 
-.page .categories-widget-template ul { margin-bottom: 0; }
+#main .categories-widget-template ul { margin-bottom: 0; }
 
-.page .milestones .actions {
+#main .milestones .actions {
     position: relative;
     float: right;
     width: auto;
@@ -1314,40 +1314,40 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     margin-bottom: -22px;
 }
 
-.page #comments, .page #answers {
+#main #comments, #main #answers {
     float: left;
     width: 100%;
 }
 
-.page #comments li, .page #answers li {
+#main #comments li, #main #answers li {
     padding: 10px; 
     background: none;
     min-height: 37px;
 }
 
-.page #comments li.altrow, .page #answers li.altrow { background: #f8f8f8; }
+#main #comments li.altrow, #main #answers li.altrow { background: #f8f8f8; }
 
-.page #comments li .meta p, .page #answers li .meta p { margin: 0 0 -10px; }
+#main #comments li .meta p, #main #answers li .meta p { margin: 0 0 -10px; }
 
-.page #comments li .meta .avatar, .page #answers li .meta .avatar {
+#main #comments li .meta .avatar, #main #answers li .meta .avatar {
     float: left;
     margin-right: 10px;
     margin-bottom: 0;
 }
 
-.page #comments li .actions, .page #answers li .actions {
+#main #comments li .actions, #main #answers li .actions {
     clear: none;
     float: right;
     margin: -10px -5px 0 0;
 }
 
-.page #comments li .actions li, .page #answers li .actions li { padding: 0; }
+#main #comments li .actions li, #main #answers li .actions li { padding: 0; }
 
-.page #comments li .body, .page #answers li .body { overflow: auto; }
+#main #comments li .body, #main #answers li .body { overflow: auto; }
 
-.page #comments li .body p, .page #answers li .body p { margin: 10px 0 0; }
+#main #comments li .body p, #main #answers li .body p { margin: 10px 0 0; }
 
-.page #comments .comment-counter, .page #answers .answer-counter {
+#main #comments .comment-counter, #main #answers .answer-counter {
     float: right;
     width: 100%;
     text-align: right;
@@ -1355,7 +1355,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     color: #60625d;
 }
 
-.page #answers ul { margin-bottom: 20px; }
+#main #answers ul { margin-bottom: 20px; }
 
 #footer {
     height: 200px;

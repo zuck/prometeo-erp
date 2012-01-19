@@ -13,7 +13,7 @@ $(document).ready(function() {
         $("#" + widget_id)
         .append('<div class="page" id="' + dialog_id +'"></div>')
         .children("#" + dialog_id)
-        .load($(this).attr("href") + " #main > *")
+        .load($(this).attr("href") + " #main")
         .dialog({
             resizable: false,
             position: ["center", "top"],
