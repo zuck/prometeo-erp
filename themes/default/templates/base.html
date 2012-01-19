@@ -22,10 +22,6 @@
     
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" media="all"/>
 
-    <link media="handheld, only screen and (max-device-width: 320px)" href="{{ STATIC_URL }}css/mobile.css" type="text/css" rel="stylesheet" />
-    <link media="only screen and (-webkit-min-device-pixel-ratio: 2)" href="{{ STATIC_URL }}css/mobile.css" type="text/css" rel="stylesheet" />
-    <link media="only screen and (max-device-width: 480px)" href="{{ STATIC_URL }}css/mobile.css" type="text/css" rel="stylesheet" />
-
     {% block extrahead %}
     {% if form %}
     {{ form.media }}
