@@ -11,7 +11,7 @@ $(document).ready(function() {
         $(this).attr('disabled', true);
 
         $("#" + widget_id)
-        .append('<div class="page" id="' + dialog_id +'"></div>')
+        .append('<div class="add-dialog" id="' + dialog_id +'"></div>')
         .children("#" + dialog_id)
         .load($(this).attr("href") + " #main")
         .dialog({
