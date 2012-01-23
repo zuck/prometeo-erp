@@ -205,10 +205,10 @@ def event_detail(request, id, **kwargs):
 def event_add(request, year=None, month=None, day=None, **kwargs):
     """Adds a new event.
     """
-    event = Event(author=request.user)
+    event = Event(author=request.user, start=datetime.datetime.now())
 
     if year and month and day:
-        event.start = datetime.date(int(year), int(month), int(day))
+        event.start.replace(int(year), int(month), int(day))
 
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)

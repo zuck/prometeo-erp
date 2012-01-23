@@ -35,7 +35,9 @@ class DateTimeField(fields.SplitDateTimeField):
 
     def compress(self, data_list):
         if data_list and data_list[0]:
-            input_time = data_list[1] or localtime()
+            input_time = localtime()
+            if len(data_list) > 1:
+                input_time = data_list[1]
             datetime_string = "%s %s" % (data_list[0], input_time)
             return datetime_string
         return None
