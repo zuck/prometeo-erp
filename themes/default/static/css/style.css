@@ -1263,7 +1263,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     width: 808px;
 }
 
-#main .region p.disabled {
+#main .region > p.disabled {
     padding: 10px;
     border: 1px dashed #c0c0c0;
     margin-bottom: 20px;
@@ -1304,7 +1304,13 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 
 #main .text-widget-template .body,
 #main .categories-widget-template .body,
-#main .tag-cloud-widget-template .body { padding: 10px; }
+#main .tag-cloud-widget-template .body,
+#main .events-widget-template .body,
+#main .today-events-widget-template .body,
+#main .tasks-widget-template .body,
+#main .planned-tasks-widget-template .body,
+#main .unplanned-tasks-widget-template .body,
+#main .today-tasks-widget-template .body { padding: 10px; }
 
 #main .categories-widget-template ul { margin-bottom: 0; }
 

@@ -59,5 +59,5 @@ def today_tasks(context):
     """The list of tasks planned for the current day.
     """
     request = context['request']
-    context['object_list'] = Task.objects.filter(user=request.user, start__date=date.today())
+    context['object_list'] = Task.objects.filter(user=request.user, start__startswith=date.today())
     return context

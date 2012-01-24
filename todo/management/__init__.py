@@ -28,6 +28,7 @@ from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
+from prometeo.core.widgets.models import *
 
 check_dependency('prometeo.core.widgets')
 check_dependency('prometeo.core.menus')
@@ -91,5 +92,38 @@ def install(sender, **kwargs):
     users_group.permissions.add(can_view_task, can_add_task)
 
     tasks_link.only_with_perms.add(can_view_task)
+
+    # Widgets.
+    latest_tasks_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Latest tasks"),
+        slug="tasks-widget-template",
+        description=_("It renders the list of the latest tasks."),
+        source="prometeo.todo.widgets.latest_tasks",
+        template_name="todo/widgets/latest_tasks.html",
+    )
+
+    latest_planned_tasks_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Latest planned tasks"),
+        slug="planned-tasks-widget-template",
+        description=_("It renders the list of the latest planned tasks."),
+        source="prometeo.todo.widgets.latest_planned_tasks",
+        template_name="todo/widgets/latest_tasks.html",
+    )
+
+    latest_unplanned_tasks_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Latest unplanned tasks"),
+        slug="unplanned-tasks-widget-template",
+        description=_("It renders the list of the latest unplanned tasks."),
+        source="prometeo.todo.widgets.latest_unplanned_tasks",
+        template_name="todo/widgets/latest_tasks.html",
+    )
+
+    today_tasks_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Today tasks"),
+        slug="today-tasks-widget-template",
+        description=_("It renders the list of the today tasks."),
+        source="prometeo.todo.widgets.today_tasks",
+        template_name="todo/widgets/latest_tasks.html",
+    )
 
 post_syncdb.connect(install, dispatch_uid="install_todo")

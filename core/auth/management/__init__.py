@@ -133,6 +133,23 @@ def install(sender, **kwargs):
         name=_('Users')
     )
 
+    # Permissions.
+    can_view_user, is_new = MyPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user")
+    can_view_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("view_tag", "taxonomy", "tag")
+    can_add_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("add_tag", "taxonomy", "tag")
+    can_view_category, is_new = MyPermission.objects.get_or_create_by_natural_key("view_category", "taxonomy", "category")
+    can_add_category, is_new = MyPermission.objects.get_or_create_by_natural_key("add_category", "taxonomy", "category")
+    can_view_link, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
+    can_add_link, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
+    can_view_address, is_new = MyPermission.objects.get_or_create_by_natural_key("view_address", "addressing", "address")
+    can_view_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("view_phonenumber", "addressing", "phonenumber")
+    can_view_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("view_socialprofile", "addressing", "socialprofile")
+
+    users_group.permissions.add(can_view_category, can_add_category, can_view_tag, can_add_tag, can_view_link, can_add_link, can_view_address, can_view_phonenumber, can_view_socialprofile)
+
+    users_link.only_with_perms.add(can_view_user)
+    user_profile_bookmarks_link.only_with_perms.add(can_add_link)
+
     # Widgets.
     profile_widget_template, is_new = WidgetTemplate.objects.get_or_create(
         title=_("User profile"),
@@ -150,23 +167,6 @@ def install(sender, **kwargs):
         show_title=False,
         region=sidebar_region
     )
-
-    # Permissions.
-    can_view_user, is_new = MyPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user")
-    can_view_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("view_tag", "taxonomy", "tag")
-    can_add_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("add_tag", "taxonomy", "tag")
-    can_view_category, is_new = MyPermission.objects.get_or_create_by_natural_key("view_category", "taxonomy", "category")
-    can_add_category, is_new = MyPermission.objects.get_or_create_by_natural_key("add_category", "taxonomy", "category")
-    can_view_link, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
-    can_add_link, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
-    can_view_address, is_new = MyPermission.objects.get_or_create_by_natural_key("view_address", "addressing", "address")
-    can_view_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("view_phonenumber", "addressing", "phonenumber")
-    can_view_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("view_socialprofile", "addressing", "socialprofile")
-
-    users_group.permissions.add(can_view_category, can_add_category, can_view_tag, can_add_tag, can_view_link, can_add_link, can_view_address, can_view_phonenumber, can_view_socialprofile)
-
-    users_link.only_with_perms.add(can_view_user)
-    user_profile_bookmarks_link.only_with_perms.add(can_add_link)
 
 def add_view_permission(sender, instance, **kwargs):
     """Adds a view permission for each new ContentType instance.

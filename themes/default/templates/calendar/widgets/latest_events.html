@@ -3,10 +3,10 @@
 {% load i18n %}
 
 {% block widget-content %}
-{% regroup object_list by start as tasks_by_date %}
-{% if tasks_by_date %}
-<dl class="tasks">
-    {% for date in tasks_by_date %}
+{% regroup object_list by start as events_by_date %}
+{% if events_by_date %}
+<dl class="events">
+    {% for date in events_by_date %}
     <dt><h5>{{ date.grouper.date }}</h5></dt>
     <dd>
         <ul>
@@ -23,6 +23,6 @@
 {% else %}
 <p class="disabled">{% trans "No results found." %}</p>
 {% endif %}
-<p class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans "Add" %}</a></p>
-<p><a title="{% trans 'See all' %}" href="{% url task_list %}">{% trans "See all" %}</a></p>
+<p class="add"><a title="{% trans 'Add' %}" href="{% url event_add %}">{% trans "Add" %}</a></p>
+<p><a title="{% trans 'See all' %}" href="{% url event_list %}">{% trans "See all" %}</a></p>
 {% endblock %}

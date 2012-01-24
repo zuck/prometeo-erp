@@ -19,3 +19,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
+
+from datetime import date
+
+def latest_events(context):
+    """The list of latest events.
+    """
+    try:
+        count = context['count']
+    except KeyError:
+        count = 5
+    request = context['request']
+    context['object_list'] = request.user.get_profile().calendar.event_set.all()[:count]
+    return context
+
+def today_events(context):
+    """The list of events planned for the current day.
+    """
+    request = context['request']
+    context['object_list'] = request.user.get_profile().calendar.event_set.filter(start__startswith=date.today())
+    return context

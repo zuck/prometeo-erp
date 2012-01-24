@@ -29,6 +29,7 @@ from prometeo.core.auth.models import MyPermission
 from prometeo.core.utils import check_dependency
 from prometeo.core.menus.models import *
 from prometeo.core.notifications.models import Signature
+from prometeo.core.widgets.models import *
 
 check_dependency('prometeo.core.widgets')
 check_dependency('prometeo.core.menus')
@@ -133,5 +134,22 @@ def install(sender, **kwargs):
     users_group.permissions.add(can_view_calendar, can_add_event)
 
     calendar_link.only_with_perms.add(can_view_calendar)
+
+    # Widgets.
+    latest_events_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Latest events"),
+        slug="events-widget-template",
+        description=_("It renders the list of the latest events."),
+        source="prometeo.core.calendar.widgets.latest_events",
+        template_name="calendar/widgets/latest_events.html",
+    )
+
+    today_events_widget_template, is_new = WidgetTemplate.objects.get_or_create(
+        title=_("Today events"),
+        slug="today-events-widget-template",
+        description=_("It renders the list of the today events."),
+        source="prometeo.core.calendar.widgets.today_events",
+        template_name="calendar/widgets/latest_events.html",
+    )
 
 post_syncdb.connect(install, dispatch_uid="install_calendar")
