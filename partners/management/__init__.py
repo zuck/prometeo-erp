@@ -36,10 +36,12 @@ check_dependency('prometeo.core.widgets')
 check_dependency('prometeo.core.menus')
 check_dependency('prometeo.core.taxonomy')
 check_dependency('prometeo.core.auth')
+check_dependency('prometeo.addressing')
 check_dependency('prometeo.documents')
 
 def install(sender, created_models, **kwargs):
     main_menu, is_new = Menu.objects.get_or_create(slug="main")
+    administrative_employees_group, is_new = Group.objects.get_or_create(name=_('Administrative Employees'))
 
     # Menus.
     partners_menu, is_new = Menu.objects.get_or_create(
@@ -242,11 +244,6 @@ def install(sender, created_models, **kwargs):
     letter_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Letter deleted"),
         slug="letter-deleted"
-    )
-
-    # Groups.
-    administrative_employees_group, is_new = Group.objects.get_or_create(
-        name=_('Administrative Employees')
     )
 
     # Permissions.
