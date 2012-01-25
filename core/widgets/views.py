@@ -44,7 +44,6 @@ def _get_widget(request, *args, **kwargs):
     return get_object_or_404(Widget, slug=slug)
 
 @permission_required('widgets.add_widget')
-@permission_required('widgets.change_region', _get_region)
 def widget_add(request, slug, **kwargs):
     """Adds a new widget to the given region.
     """
