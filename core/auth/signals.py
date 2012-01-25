@@ -23,6 +23,7 @@ __version__ = '0.0.5'
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 
 from prometeo.core.menus.models import Link
@@ -82,6 +83,7 @@ models.signals.post_save.connect(user_post_save, User)
 
 post_save.connect(update_author_permissions, Link, dispatch_uid="update_link_permissions")
 post_save.connect(update_author_permissions, Widget, dispatch_uid="update_widget_permissions")
+post_save.connect(update_author_permissions, Comment, dispatch_uid="update_comment_permissions")
 
 manage_bookmarks(UserProfile)
 manage_dashboard(UserProfile)

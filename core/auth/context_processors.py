@@ -36,7 +36,8 @@ class ObjPermLookupDict(object):
 
     def __getitem__(self, perm_name):
         if self.user.is_superuser:
-            return [obj.pk for p in Permission.objects.filter(content_type__app_label=self.module_name, codename=perm_name) for obj in p.content_type.model_class().objects.all()]
+            perms = Permission.objects.filter(content_type__app_label=self.module_name, codename=perm_name)
+            return [obj.pk for p in perms for obj in p.content_type.model_class().objects.all()]
         return [p.object_id for p in self.user.objectpermissions.filter(perm__content_type__app_label=self.module_name, perm__codename=perm_name)]
 
     def __nonzero__(self):
