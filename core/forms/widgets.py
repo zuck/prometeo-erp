@@ -80,9 +80,14 @@ class TimeWidget(forms.MultiWidget):
         super(TimeWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
-        if isinstance(value, basestring):
-            t, sep1, meridian = value.rpartition(' ')
-            hour, sep2, minute = t.rpartition(':')
+        if isinstance(value, time):
+             hour = int(value.strftime("%I"))
+             minute = int(value.strftime("%M"))
+             meridian = value.strftime("%p")
+             return (hour, minute, meridian)
+        elif isinstance(value, basestring):
+            t, sep, meridian = value.rpartition(' ')
+            hour, minute, garbage = t.split(':', 2)
             return (int(hour), int(minute), meridian)
         return (None, None, None)
 
