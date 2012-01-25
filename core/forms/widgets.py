@@ -20,7 +20,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from datetime import time
+from datetime import time, datetime
 from time import strptime, strftime
 import json
 
@@ -80,15 +80,20 @@ class TimeWidget(forms.MultiWidget):
         super(TimeWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
+        # Convert string to time.
+        if isinstance(value, basestring):
+            try:
+                value = datetime.strptime(value, "%I:%M %p").time()
+            except:
+                value = datetime.strptime(value, "%I:%M:%S").time()
+
+        # Convert time to tuple.
         if isinstance(value, time):
-             hour = int(value.strftime("%I"))
-             minute = int(value.strftime("%M"))
-             meridian = value.strftime("%p")
-             return (hour, minute, meridian)
-        elif isinstance(value, basestring):
-            t, sep, meridian = value.rpartition(' ')
-            hour, minute, garbage = t.split(':', 2)
-            return (int(hour), int(minute), meridian)
+            hour = int(value.strftime("%I"))
+            minute = int(value.strftime("%M"))
+            meridian = value.strftime("%p")
+            return (hour, minute, meridian)
+
         return (None, None, None)
 
     def value_from_datadict(self, data, files, name):
