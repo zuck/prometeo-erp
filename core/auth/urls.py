@@ -32,5 +32,6 @@ urlpatterns = patterns('',
     url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/$', view='prometeo.core.auth.views.user_detail', name='user_detail'),
     url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/edit/$', view='prometeo.core.auth.views.user_edit', name='user_edit'),
     url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/delete/$', view='prometeo.core.auth.views.user_delete', name='user_delete'),
+
     url(r'^comments/(?P<id>\d+)/delete/$', view='prometeo.core.auth.views.comment_delete', name='comment_delete'),
 )

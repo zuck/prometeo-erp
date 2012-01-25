@@ -22,7 +22,7 @@
                 {% endwith %}
                 <ul class="actions">
                     {% if comment.pk in obj_perms.comments.can_delete %}
-                    <li class="delete"><a title="{% trans 'Delete' %}" href="{% url comment_delete comment.id %}">{% trans "Delete" %}</a></li>
+                    <li class="delete"><a title="{% trans 'Delete' %}" href="{% url comment_delete comment.pk %}">{% trans "Delete" %}</a></li>
                     {% endif %}
                 </ul>
             </div>
