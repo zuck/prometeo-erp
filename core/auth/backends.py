@@ -56,7 +56,7 @@ class ObjectPermissionBackend(object):
         if not user_obj.is_authenticated():
             user_obj = User.objects.get(pk=settings.ANONYMOUS_USER_ID)
 
-        if user_obj.is_superuser():
+        if user_obj.is_superuser:
             return True
 
         if not user_obj.is_active:
