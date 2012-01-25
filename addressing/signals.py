@@ -20,7 +20,15 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from django.conf import settings
+from django.utils.translation import ugettext_noop as _
+from django.db.models.signals import post_save
 
-if __name__ in settings.INSTALLED_APPS:
-    from signals import *
+from prometeo.core.auth.signals import *
+
+from models import *
+
+## CONNECTIONS ##
+
+post_save.connect(update_author_permissions, Address, dispatch_uid="update_address_permissions")
+post_save.connect(update_author_permissions, PhoneNumber, dispatch_uid="update_phonenumber_permissions")
+post_save.connect(update_author_permissions, SocialProfile, dispatch_uid="update_socialprofile_permissions")

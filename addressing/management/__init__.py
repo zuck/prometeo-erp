@@ -30,16 +30,34 @@ from prometeo.core.utils import check_dependency
 check_dependency('prometeo.core.auth')
 
 def install(sender, **kwargs):
+    employees_group, is_new = Group.objects.get_or_create(
+        name=_('Employees')
+    )
+
     # Groups.
     administrative_employees_group, is_new = Group.objects.get_or_create(
         name=_('Administrative Employees')
     )
 
     # Permissions.
+    can_view_address, is_new = MyPermission.objects.get_or_create_by_natural_key("view_address", "addressing", "address")
     can_add_address, is_new = MyPermission.objects.get_or_create_by_natural_key("add_address", "addressing", "address")
-    can_add_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("add_phonenumber", "addressing", "phonenumber")
-    can_add_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("add_socialprofile", "addressing", "socialprofile")
+    can_change_address, is_new = MyPermission.objects.get_or_create_by_natural_key("change_address", "addressing", "address")
+    can_delete_address, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_address", "addressing", "address")
 
-    administrative_employees_group.permissions.add(can_add_address, can_add_phonenumber, can_add_socialprofile)
+    can_view_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("view_phonenumber", "addressing", "phonenumber")
+    can_add_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("add_phonenumber", "addressing", "phonenumber")
+    can_change_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("change_phonenumber", "addressing", "phonenumber")
+    can_delete_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_phonenumber", "addressing", "phonenumber")
+
+    can_view_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("view_socialprofile", "addressing", "socialprofile")
+    can_add_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("add_socialprofile", "addressing", "socialprofile")
+    can_change_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("change_socialprofile", "addressing", "socialprofile")
+    can_delete_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_socialprofile", "addressing", "socialprofile")
+
+    employees_group.permissions.add(can_view_address, can_view_phonenumber, can_view_socialprofile)
+    administrative_employees_group.permissions.add(can_add_address, can_change_address, can_delete_address)
+    administrative_employees_group.permissions.add(can_add_phonenumber, can_change_phonenumber, can_delete_phonenumber)
+    administrative_employees_group.permissions.add(can_add_socialprofile, can_change_socialprofile, can_delete_socialprofile)
 
 post_syncdb.connect(install, dispatch_uid="install_addressing")
