@@ -35,10 +35,6 @@ from prometeo.core.auth.decorators import obj_permission_required as permission_
 from models import *
 from forms import *
 
-def _get_region(request, *args, **kwargs):
-    slug = kwargs.get('slug', None)
-    return get_object_or_404(Region, slug=slug)
-
 def _get_widget(request, *args, **kwargs):
     slug = kwargs.get('slug', None)
     return get_object_or_404(Widget, slug=slug)
