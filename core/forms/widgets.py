@@ -62,18 +62,20 @@ class DateWidget(forms.DateInput):
 class TimeWidget(forms.MultiWidget):
     """A more-friendly time widget.
     """
-    def __init__(self, attrs=None):
-        self.time_class = 'timepicker'
+    def __init__(self, attrs=None, only_quarters=False):
         if not attrs:
             attrs = {}
-        if 'time_class' in attrs:
-            self.time_class = attrs.pop('time_class')
         if 'class' not in attrs:
             attrs['class'] = 'time'
+        self.time_class = attrs.pop('time_class', 'timepicker')
+        
+        minutes = range(0, 60)
+        if only_quarters:
+            minutes = (0, 15, 30, 45)
 
         widgets = (
             forms.Select(attrs=attrs, choices=[(i+1, "%02d" % (i+1)) for i in range(0, 12)]),
-            forms.Select(attrs=attrs, choices=[(i, "%02d" % i) for i in range(0, 60)]),
+            forms.Select(attrs=attrs, choices=[(i, "%02d" % i) for i in minutes]),
             forms.Select(attrs=attrs, choices=[('AM', _('AM')),('PM', _('PM'))])
         )
 
@@ -114,11 +116,11 @@ class DateTimeWidget(forms.SplitDateTimeWidget):
 
     http://copiesofcopies.org/webl/2010/04/26/a-better-datetime-widget-for-django/
     """
-    def __init__(self, attrs=None, date_format=None, time_format=None):
+    def __init__(self, attrs=None, date_format=None, time_format=None, only_quarters=False):
         super(DateTimeWidget, self).__init__(attrs, date_format, time_format)
         self.widgets = (
             DateWidget(attrs=attrs),
-            TimeWidget(attrs=attrs),
+            TimeWidget(attrs=attrs, only_quarters=only_quarters),
         )
 
     def decompress(self, value):
