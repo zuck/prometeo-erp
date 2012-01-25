@@ -1,13 +1,13 @@
-function fixUrl(url) {
-    var tokens = $.grep(url.split('/'), function(n) {
-        return(n);
-    });
-    return '/' + tokens.join('/') + '/';
-}
-
 $(document).ready(function() {
 
     $('form span.add a').live('click', function(e) {
+
+        function fixUrl(url) {
+            var tokens = $.grep(url.split('/'), function(n) {
+                return(n);
+            });
+            return '/' + tokens.join('/') + '/';
+        }
 
         var link_id = $(this).attr("id");
         var widget_id = $(this).parent().attr("id");
@@ -26,6 +26,10 @@ $(document).ready(function() {
             position: ["center", "top"],
             modal: true,
             width: 800,
+            open: function(event, ui) { 
+
+                $('.ui-dialog-titlebar').hide();
+            },
             close: function(event, ui) {
 
                 var root = "#main";
@@ -36,8 +40,6 @@ $(document).ready(function() {
                 $("#" + dialog_id).remove();
             }
         });
-
-        $(".ui-dialog").find('.ui-dialog-titlebar').hide();
 
         $(this).attr("disabled", false);
 
