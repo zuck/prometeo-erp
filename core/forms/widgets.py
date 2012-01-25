@@ -130,6 +130,7 @@ class AddLinkMixin(object):
         js = (
             "js/jquery.min.js",
             "js/jquery-ui.custom.min.js",
+            "js/dialogform.js",
             "js/addlink.js",
         )
     def add_link_decorator(self, render_func):
