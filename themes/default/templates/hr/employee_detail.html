@@ -15,13 +15,13 @@
 {% if perms.hr.add_employee %}
 <li class="add"><a title="{% trans 'Add' %}" href="{% url employee_add %}">{% trans 'Add' %}</a></li>
 {% endif %}
-{% if perms.hr.change_employee %}
+{% if object.pk in obj_perms.hr.change_employee %}
 <li class="edit"><a title="{% trans 'Edit' %}" href="{% url employee_edit object.pk %}">{% trans 'Edit' %}</a></li>
 {% endif %}
-{% if perms.hr.delete_employee %}
+{% if object.pk in obj_perms.hr.delete_employee %}
 <li class="delete"><a title="{% trans 'Delete' %}" href="{% url employee_delete object.pk %}">{% trans 'Delete' %}</a></li>
 {% endif %}
-{% if perms.hr.change_employee %}
+{% if perms.hr.view_employee %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url employee_list %}">{% trans 'All' %}</a></li>
 {% endif %}
 {% endblock %}

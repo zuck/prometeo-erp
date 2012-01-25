@@ -14,13 +14,13 @@
 {% if perms.stock.add_movement %}
 <li class="add"><a title="{% trans 'Add' %}" href="{% url movement_add %}">{% trans 'Add' %}</a></li>
 {% endif %}
-{% if perms.stock.change_movement %}
+{% if object.pk in obj_perms.stock.change_movement %}
 <li class="edit"><a title="{% trans 'Edit' %}" href="{% url movement_edit object.pk %}">{% trans 'Edit' %}</a></li>
 {% endif %}
-{% if perms.stock.delete_movement %}
+{% if object.pk in obj_perms.stock.delete_movement %}
 <li class="delete"><a title="{% trans 'Delete' %}" href="{% url movement_delete object.pk %}">{% trans 'Delete' %}</a></li>
 {% endif %}
-{% if perms.stock.change_movement %}
+{% if perms.stock.view_movement %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url movement_list %}">{% trans 'All' %}</a></li>
 {% endif %}
 {% endblock %}

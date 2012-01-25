@@ -15,16 +15,16 @@
 {% if perms.stock.add_deliverynote %}
 <li class="add"><a title="{% trans 'Add' %}" href="{% url deliverynote_add %}">{% trans 'Add' %}</a></li>
 {% endif %}
-{% if perms.stock.change_deliverynote %}
+{% if object.pk in obj_perms.stock.change_deliverynote %}
 <li class="edit"><a title="{% trans 'Edit' %}" href="{% url deliverynote_edit object.content_object.pk %}">{% trans 'Edit' %}</a></li>
 {% endif %}
-{% if perms.stock.delete_deliverynote %}
+{% if object.pk in obj_perms.stock.delete_deliverynote %}
 <li class="delete"><a title="{% trans 'Delete' %}" href="{% url deliverynote_delete object.content_object.pk %}">{% trans 'Delete' %}</a></li>
 {% endif %}
-{% if perms.stock.change_deliverynote %}
+{% if perms.stock.view_deliverynote %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url deliverynote_list %}">{% trans 'All' %}</a></li>
 {% endif %}
-{% if perms.stock.change_deliverynote %}
+{% if object.pk in obj_perms.stock.view_deliverynote %}
 <li class="print"><a title="{% trans 'Print' %}" href="{% url document_print object.pk object.content_object.invoice_addressee.language %}">{% trans 'Print' %}</a></li>
 {% endif %}
 {% if perms.stock.change_deliverynote %}

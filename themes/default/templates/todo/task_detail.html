@@ -17,20 +17,20 @@
 {% if perms.todo.add_task %}
 <li class="add"><a title="{% trans 'Add' %}" href="{% url task_add %}">{% trans 'Add' %}</a></li>
 {% endif %}
-{% if perms.todo.change_task %}
+{% if object.pk in obj_perms.todo.change_task %}
 <li class="edit"><a title="{% trans 'Edit' %}" href="{% url task_edit object.pk %}">{% trans 'Edit' %}</a></li>
 {% endif %}
-{% if perms.todo.delete_task %}
+{% if object.pk in obj_perms.todo.delete_task %}
 <li class="delete"><a title="{% trans 'Delete' %}" href="{% url task_delete object.pk %}">{% trans 'Delete' %}</a></li>
 {% endif %}
-{% if perms.todo.change_task %}
+{% if perms.todo.view_task %}
 {% if object.start %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url task_list %}">{% trans 'All' %}</a></li>
 {% else %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url unplanned_task_list %}">{% trans 'All' %}</a></li>
 {% endif %}
 {% endif %}
-{% if perms.todo.change_task %}
+{% if object.pk in obj_perms.todo.change_task %}
 {% if not object.closed %}
 <li class="close"><a title="{% trans 'Close' %}" href="{% url task_close object.pk %}">{% trans 'Close' %}</a></li>
 {% else %}

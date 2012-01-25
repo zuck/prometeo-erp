@@ -19,23 +19,23 @@
 {% if perms.projects.add_milestone %}
 <li class="add"><a title="{% trans 'Add' %}" href="{% url milestone_add object.project.code %}">{% trans 'Add' %}</a></li>
 {% endif %}
-{% if perms.projects.change_milestone %}
+{% if object.pk in obj_perms.projects.change_milestone %}
 <li class="edit"><a title="{% trans 'Edit' %}" href="{% url milestone_edit object.project.code object.code %}">{% trans 'Edit' %}</a></li>
 {% endif %}
-{% if perms.projects.delete_milestone %}
+{% if object.pk in obj_perms.projects.delete_milestone %}
 <li class="delete"><a title="{% trans 'Delete' %}" href="{% url milestone_delete object.project.code object.code %}">{% trans 'Delete' %}</a></li>
 {% endif %}
-{% if perms.projects.change_milestone %}
+{% if perms.projects.view_milestone %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url milestone_list object.project.code %}">{% trans 'All' %}</a></li>
 {% endif %}
-{% if perms.projects.change_milestone %}
+{% if object.pk in obj_perms.projects.change_milestone %}
 {% if not object.closed %}
 <li class="close"><a title="{% trans 'Close' %}" href="{% url milestone_close object.project.code object.code %}">{% trans 'Close' %}</a></li>
 {% else %}
 <li class="reopen"><a title="{% trans 'Reopen' %}" href="{% url milestone_reopen object.project.code object.code %}">{% trans 'Reopen' %}</a></li>
 {% endif %}
 {% endif %}
-{% if perms.projects.change_milestone %}
+{% if object.pk in obj_perms.projects.view_milestone %}
 {% if user not in object.stream.followers.all %}
 <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
 {% else %}
