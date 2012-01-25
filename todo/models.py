@@ -86,5 +86,9 @@ class Task(models.Model):
             for entry in self.timesheetentry_set.all():
                 count += entry.working_hours()
         elif self.planned():
-            count = (self.end - self.start).total_seconds() / 3600 
+            td = self.end - self.start
+            count = (td.seconds + td.days * 24 * 3600) / 3600
+        elif self.closed:
+            td = self.closed - self.created
+            count = (td.seconds + td.days * 24 * 3600) / 3600
         return count
