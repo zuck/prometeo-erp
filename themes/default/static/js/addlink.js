@@ -1,11 +1,11 @@
-$(document).ready(function() {
+function fixUrl(url) {
+    var tokens = $.grep(url.split('/'), function(n) {
+        return(n);
+    });
+    return '/' + tokens.join('/') + '/';
+}
 
-    function fixUrl(url) {
-        var tokens = $.grep(url.split('/'), function(n) {
-            return(n);
-        });
-        return '/' + tokens.join('/') + '/';
-    }
+$(document).ready(function() {
 
     $('form span.add a').live('click', function(e) {
 
@@ -13,15 +13,14 @@ $(document).ready(function() {
         var widget_id = $(this).parent().attr("id");
         var dialog_id = widget_id + "-dialog";
         var parent_id = $(this).closest(".ui-dialog-content").attr("id");
-        var current_url = fixUrl($(this).closest("form").attr("action"));
-        var add_url = fixUrl($(this).attr("href"));
+        var current_url = $(this).closest("form").attr("action");
 
-        $(link_id).attr('disabled', true);
+        $(this).attr('disabled', true);
 
         $("#" + widget_id)
-        .append('<div class="add-dialog" id="' + dialog_id +'"></div>')
+        .append('<div id="' + dialog_id +'"></div>')
         .children("#" + dialog_id)
-        .load(add_url + " #main")
+        .load(fixUrl($(this).attr("href")) + " #main")
         .dialog({
             resizable: false,
             position: ["center", "top"],
@@ -29,17 +28,19 @@ $(document).ready(function() {
             width: 800,
             open: function(event, ui) { 
 
-                $('.ui-dialog-titlebar').hide();
+                $(this).find('.ui-dialog-titlebar').hide();
             },
             close: function(event, ui) {
 
                 var root = "#main";
                 if (parent_id)
                     root = "#" + parent_id + " #main";
+                
+                $(root + " #" + widget_id).load(fixUrl(current_url) + " #main #" + widget_id + " > *");
 
-                $(root + " #" + widget_id).load(current_url + " #" + widget_id + " > *");
                 $("#" + dialog_id).remove();
-                $(link_id).attr("disabled", false);
+
+                $(this).attr("disabled", false);
             }
         });
 
@@ -55,7 +56,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: $(this).attr("method"),
-            url: fixUrl($(this).attr("action")),
+            url: $(this).attr("action"),
             data: $(this).serialize(),
             success: function(data, status, xhr) {
 
