@@ -20,7 +20,7 @@
 {% include "elements/filterbox.html" %}
 <div class="actions">
     <ul>
-        {% if perms.documents.add_hard_copy %}
+        {% if object.object_id in obj_perms.hr.change_timesheet %}
         <li class="add"><a title="{% trans 'Add' %}" href="{% url timesheet_add_hardcopy object.object_id %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>

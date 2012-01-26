@@ -37,10 +37,9 @@ from models import *
 from forms import *
 
 def _get_document(request, *args, **kwargs):
-    document_id = kwargs.get('document_id', None)
-    if document_id:
-        return get_object_or_404(Document, id=document_id)
-    id = kwargs.get('id', None)
+    id = kwargs.get('document_id', kwargs.get('id', None))
+    if not id and len(args) > 0:
+        id = args[0]
     if id:
         return get_object_or_404(Document, id=id)
     return None
@@ -78,7 +77,7 @@ def hardcopy_list(request, id, page=0, paginate_by=10, **kwargs):
         **kwargs
     )
 
-@permission_required('documents.change_document', _get_document) 
+@permission_required('documents.change_document', _get_document)
 def hardcopy_add(request, id, **kwargs):
     """Deletes a delivery note.
     """
