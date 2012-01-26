@@ -1070,7 +1070,10 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     padding: 20px;
 }
 
-#sidebar ul.menu ul.menu { display: none; }
+#sidebar ul.menu ul.menu {
+    display: none;
+    margin-left: 15px;
+}
 
 #sidebar ul.menu li.active ul.menu { display: block; }
 
