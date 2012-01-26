@@ -89,6 +89,7 @@ def row_template(index, path, f, url_prefix):
         output += '\t\t\t<td class="number"></td>\n'
         output += '\t\t\t<td></td>\n'
         output += '\t\t\t<td></td>\n'
+        output += '\t\t\t<td></td>\n'
     else:
         output += '\t\t\t<td>\n'
         if f.is_folder():
@@ -136,7 +137,7 @@ def filebrowser(context, path=settings.MEDIA_ROOT, root_path=settings.MEDIA_ROOT
     """Renders a file browser.
     """
     request = context['request']
-    url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
+    url = '%s/?' % request.path.rstrip('/') + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
     order_by = request.GET.get('order_by', None)
     fi = FileInfo(path or settings.MEDIA_ROOT)
     root = FileInfo(root_path or settings.MEDIA_ROOT)

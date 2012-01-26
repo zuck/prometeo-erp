@@ -23,7 +23,8 @@
         <table class="properties">
             {{ form }}
         </table>
-        <span class="submit"><input type="submit" value="{% trans 'Save' %}"/></span>
+        {% include "elements/save_button.html" %}
+        {% with fileinfo.parent.url as next %}{% include "elements/cancel_button.html" %}{% endwith %}
     </form>
 </div>
 {% endblock %}

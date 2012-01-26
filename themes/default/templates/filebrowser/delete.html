@@ -30,7 +30,7 @@
         {% endif %}
         {% endif %}
         {% include "elements/submit_button.html" %}
-        {% include "elements/cancel_button.html" %}
+        {% with fileinfo.parent.url as next %}{% include "elements/cancel_button.html" %}{% endwith %}
     </form>
 </div>
 {% endblock %}
