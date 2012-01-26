@@ -29,3 +29,4 @@ from models import *
 ## CONNECTIONS ##
 
 post_save.connect(update_author_permissions, BankAccount, dispatch_uid="update_bankaccount_permissions")
+post_save.connect(update_author_permissions, SalesInvoice, dispatch_uid="update_salesinvoice_permissions")

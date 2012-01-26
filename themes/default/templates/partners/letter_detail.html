@@ -15,19 +15,19 @@
 {% if perms.partners.add_letter %}
 <li class="add"><a title="{% trans 'Add' %}" href="{% url letter_add %}">{% trans 'Add' %}</a></li>
 {% endif %}
-{% if object.pk in obj_perms.partners.change_letter %}
+{% if object.content_object.pk in obj_perms.partners.change_letter %}
 <li class="edit"><a title="{% trans 'Edit' %}" href="{% url letter_edit object.content_object.pk %}">{% trans 'Edit' %}</a></li>
 {% endif %}
-{% if object.pk in obj_perms.partners.delete_letter %}
+{% if object.content_object.pk in obj_perms.partners.delete_letter %}
 <li class="delete"><a title="{% trans 'Delete' %}" href="{% url letter_delete object.content_object.pk %}">{% trans 'Delete' %}</a></li>
 {% endif %}
 {% if perms.partners.view_letter %}
 <li class="all"><a title="{% trans 'All' %}" href="{% url letter_list %}">{% trans 'All' %}</a></li>
 {% endif %}
-{% if object.pk in obj_perms.partners.view_letter %}
+{% if object.content_object.pk in obj_perms.partners.view_letter %}
 <li class="print"><a title="{% trans 'Print' %}" href="{% url document_print object.pk object.content_object.target.language %}">{% trans 'Print' %}</a></li>
 {% endif %}
-{% if object.pk in obj_perms.partners.view_letter %}
+{% if object.content_object.pk in obj_perms.partners.view_letter %}
 {% if user not in object.stream.followers.all %}
 <li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
 {% else %}

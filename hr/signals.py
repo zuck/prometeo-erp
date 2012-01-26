@@ -26,6 +26,7 @@ from django.db.models.signals import post_save, pre_delete
 from prometeo.core.auth.models import ObjectPermission
 from prometeo.documents.models import Document
 from prometeo.partners.models import Job
+from prometeo.core.auth.signals import *
 
 from models import *
 
@@ -65,8 +66,10 @@ def update_employee_permissions(sender, instance, *args, **kwargs):
 
 ## CONNECTIONS ##
 
-post_save.connect(update_employee_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
-post_save.connect(update_employee_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_permissions")
+post_save.connect(update_author_permissions, Timesheet, dispatch_uid="update_timesheet_permissions")
+post_save.connect(update_employee_permissions, Timesheet, dispatch_uid="update_timesheet_employee_permissions")
+post_save.connect(update_author_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_permissions")
+post_save.connect(update_employee_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_employee_permissions")
 
 post_save.connect(create_employee, Job, dispatch_uid="create_employee")
 pre_delete.connect(delete_employee, Job, dispatch_uid="delete_employee")

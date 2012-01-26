@@ -51,6 +51,7 @@ def update_manager_permissions(sender, instance, *args, **kwargs):
 post_save.connect(update_author_permissions, Warehouse, dispatch_uid="update_warehouse_permissions")
 post_save.connect(update_manager_permissions, Warehouse, dispatch_uid="update_warehouse_permissions")
 post_save.connect(update_author_permissions, Movement, dispatch_uid="update_movement_permissions")
+post_save.connect(update_author_permissions, DeliveryNote, dispatch_uid="update_deliverynote_permissions")
 
 post_save.connect(notify_object_created, Warehouse, dispatch_uid="warehouse_created")
 post_delete.connect(notify_object_deleted, Warehouse, dispatch_uid="warehouse_deleted")

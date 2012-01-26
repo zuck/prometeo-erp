@@ -49,8 +49,9 @@ def update_assignee_permissions(sender, instance, *args, **kwargs):
 ## CONNECTIONS ##
 
 post_save.connect(update_author_permissions, Partner, dispatch_uid="update_partner_permissions")
-post_save.connect(update_assignee_permissions, Partner, dispatch_uid="update_partner_permissions")
+post_save.connect(update_assignee_permissions, Partner, dispatch_uid="update_partner_assignee_permissions")
 post_save.connect(update_author_permissions, Contact, dispatch_uid="update_contact_permissions")
+post_save.connect(update_author_permissions, Letter, dispatch_uid="update_letter_permissions")
 
 post_save.connect(notify_object_created, Partner, dispatch_uid="partner_created")
 post_change.connect(notify_object_changed, Partner, dispatch_uid="partner_changed")
