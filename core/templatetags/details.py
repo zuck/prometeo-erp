@@ -131,10 +131,10 @@ class DetailTableNode(Node):
 
     def render_with_args(self, context, object_list, fields=[], exclude=[], *args, **kwargs):
         self.object_list = object_list
-        request = context['request']
-        url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in request.GET.items() if key != "order_by"])
+        self.request = context['request']
+        url = './?' + ''.join(['%s=%s&' % (key, value) for key, value in self.request.GET.items() if key != "order_by"])
         try:
-            order_by = request.GET['order_by']
+            order_by = self.request.GET['order_by']
         except:
             order_by = []
         output = u'<p class="disabled">%s</p>' % _('No results.')
@@ -159,7 +159,7 @@ class DetailTableNode(Node):
                     output += u'\t\t<th class="%s"><a class="%s" href="%sorder_by=%s%s">%s</a></th>\n' % (field_type, aclass, url, verse, f.name, verbose_name)
                 else:
                     output += u'\t\t<th class="%s"><a href="%sorder_by=%s">%s</a></th>\n' % (field_type, url, f.name, verbose_name)
-            if 'actions' not in exclude:
+            if 'actions' not in exclude and self.actions_template(self.object_list[0]):
                 output += u'\t\t<th class="actions"></td>'
             output += u'\t</tr>\n'
             for i, instance in enumerate(self.object_list):
@@ -167,7 +167,7 @@ class DetailTableNode(Node):
                 for j, f in enumerate(self.field_list):
                     output += self.column_template(instance, j)
                 if 'actions' not in exclude:
-                    output += self.actions_template(instance, request)                    
+                    output += self.actions_template(instance)                    
                 output += u'\t</tr>\n'
             output += u'</table>\n'
         return mark_safe(output)
@@ -199,29 +199,27 @@ class DetailTableNode(Node):
             value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), value)
         return u'\t\t<td%s>%s</td>\n' % (css, value)
 
-    def actions_template(self, instance, request):
+    def actions_template(self, instance):
         actions = []
         ct = ContentType.objects.get_for_model(instance)
         try:
-            if request.user.has_perm("%s.change_%s" % (ct.app_label, ct.name), instance):
-                actions.append(u'<span class="edit"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
-                    "link": instance.get_edit_url(),
-                    "label": _('Edit')
-                })
+            actions.append(u'<span class="edit"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
+                "link": instance.get_edit_url(),
+                "label": _('Edit')
+            })
         except AttributeError:
             pass
         try:
-            if request.user.has_perm("%s.delete_%s" % (ct.app_label, ct.name), instance):
-                actions.append(u'<span class="delete"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
-                    "link": instance.get_delete_url(),
-                    "label": _('Delete')
-                })
+            actions.append(u'<span class="delete"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
+                "link": instance.get_delete_url(),
+                "label": _('Delete')
+            })
         except AttributeError:
             pass
         output = ' '.join(actions)
         if output:
-            output = u'<span class="actions">%s</span>' % output
-        return u'\t\t<td>%s</td>\n' % output
+            output = u'<td><span class="actions">%s</span></td>' % output
+        return output
 
 @register.tag
 def detail_table(parser, token):
