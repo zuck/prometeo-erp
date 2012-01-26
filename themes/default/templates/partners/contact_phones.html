@@ -49,8 +49,8 @@
         {% endfor %}
     </dl>
     {% else %}
-    <p class="disabled">{% trans "No results found." %}</p>
+    {% include "elements/empty.html" %}
     {% endif %}
-    {% include 'elements/paginator.html' %}
+    {% include "elements/paginator.html" %}
 </div>
 {% endblock %}

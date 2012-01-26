@@ -29,7 +29,8 @@
         <p>{% trans "Are you sure you want to delete this file?" %}</p>
         {% endif %}
         {% endif %}
-        <span class="submit"><input type="submit" value="{% trans "Yes, I'm sure." %}" /></span>
+        {% include "elements/submit_button.html" %}
+        {% include "elements/cancel_button.html" %}
     </form>
 </div>
 {% endblock %}

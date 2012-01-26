@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load details %}
+
+{% with index=request.path|slice:':-1'|split:'/'|slice:':-1'|join:'/' %}
+{% if object.pk and object.get_absolute_url %}
+<span class="cancel"><a title="{% trans 'Cancel' %}" href="{{ next|default:object.get_absolute_url|default:index|default:'/' }}">{% trans "Cancel" %}</a></span>
+{% else %}
+<span class="cancel"><a title="{% trans 'Cancel' %}" href="{{ next|default:index|default:'/' }}">{% trans "Cancel" %}</a></span>
+{% endif %}
+{% endwith %}

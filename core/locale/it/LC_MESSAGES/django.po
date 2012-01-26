@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-13 14:34+0100\n"
+"POT-Creation-Date: 2012-01-26 15:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,15 +26,15 @@ msgstr ""
 msgid "Password confirmation"
 msgstr "Conferma password"
 
-#: auth/forms.py:54 auth/forms.py:67
+#: auth/forms.py:57 auth/forms.py:70
 msgid "This field is required."
 msgstr "Questo campo è richiesto."
 
-#: auth/forms.py:64
+#: auth/forms.py:67
 msgid "The two password fields didn't match."
 msgstr "Le due password non combaciano."
 
-#: auth/forms.py:75
+#: auth/forms.py:78
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
@@ -114,7 +114,7 @@ msgid "Personal dashboard"
 msgstr "Bacheca personale"
 
 #: auth/management/__init__.py:73 auth/management/__init__.py:133
-#: calendar/management/__init__.py:41
+#: calendar/management/__init__.py:42
 msgid "Users"
 msgstr "Utenti"
 
@@ -138,7 +138,7 @@ msgstr "Pannello di amministrazione"
 msgid "Logout"
 msgstr ""
 
-#: auth/management/__init__.py:107 calendar/management/__init__.py:100
+#: auth/management/__init__.py:107 calendar/management/__init__.py:101
 msgid "Details"
 msgstr "Dettagli"
 
@@ -154,11 +154,11 @@ msgstr "Pubblicazione commento"
 msgid "Comment deleted"
 msgstr "Eliminazione commento"
 
-#: auth/management/__init__.py:138 auth/management/__init__.py:147
+#: auth/management/__init__.py:155 auth/management/__init__.py:164
 msgid "User profile"
 msgstr "Profilo utente"
 
-#: auth/management/__init__.py:140
+#: auth/management/__init__.py:157
 msgid "It renders the current user's profile."
 msgstr "Visualizza il profilo utente corrente."
 
@@ -166,7 +166,7 @@ msgstr "Visualizza il profilo utente corrente."
 msgid "Select an .ics file"
 msgstr "Selezione un file .ics"
 
-#: calendar/models.py:37 calendar/management/__init__.py:56
+#: calendar/models.py:37 calendar/management/__init__.py:57
 msgid "Calendar"
 msgstr "Calendario"
 
@@ -247,71 +247,91 @@ msgstr "eventi"
 msgid "Calendar for %s"
 msgstr "Calendario per %s"
 
-#: calendar/views.py:218
+#: calendar/views.py:219
 msgid "The event was created successfully."
 msgstr "L'evento è stato salvato."
 
-#: calendar/views.py:266
+#: calendar/views.py:267
 msgid "Empty event"
 msgstr "Evento vuoto"
 
-#: calendar/views.py:274
+#: calendar/views.py:275
 #, python-format
 msgid "Event \"%s\" has been imported."
 msgstr "L'evento \"%s\" è stato importato."
 
-#: calendar/views.py:277
+#: calendar/views.py:278
 msgid "Sorry, an error has occurred during importing of calendar."
 msgstr ""
 "Spiacenti, si è verificato un errore durante l'importazione del calendario."
 
-#: calendar/management/__init__.py:46
+#: calendar/management/__init__.py:47
 msgid "Main menu for calendar"
 msgstr "Menu principale per i calendari"
 
-#: calendar/management/__init__.py:51
+#: calendar/management/__init__.py:52
 msgid "Main menu for event"
 msgstr "Menu principale per gli eventi"
 
-#: calendar/management/__init__.py:58
+#: calendar/management/__init__.py:59
 msgid "Events planning"
 msgstr "Pianificazione degli eventi"
 
-#: calendar/management/__init__.py:65
+#: calendar/management/__init__.py:66
 msgid "Agenda"
 msgstr ""
 
-#: calendar/management/__init__.py:72
+#: calendar/management/__init__.py:73
 msgid "Day"
 msgstr "Giorno"
 
-#: calendar/management/__init__.py:79
+#: calendar/management/__init__.py:80
 msgid "Week"
 msgstr "Settimana"
 
-#: calendar/management/__init__.py:86
+#: calendar/management/__init__.py:87
 msgid "Month"
 msgstr "Mese"
 
-#: calendar/management/__init__.py:93
+#: calendar/management/__init__.py:94
 msgid "Year"
 msgstr "Anno"
 
-#: calendar/management/__init__.py:107
+#: calendar/management/__init__.py:108
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: calendar/management/__init__.py:115
+#: calendar/management/__init__.py:116
 msgid "Event created"
 msgstr "Creazione evento"
 
-#: calendar/management/__init__.py:120
+#: calendar/management/__init__.py:121
 msgid "Event changed"
 msgstr "Modifica evento"
 
-#: calendar/management/__init__.py:125
+#: calendar/management/__init__.py:126
 msgid "Event deleted"
 msgstr "Eliminazione evento"
+
+#: calendar/management/__init__.py:140
+#, fuzzy
+msgid "Latest events"
+msgstr "eventi"
+
+#: calendar/management/__init__.py:142
+#, fuzzy
+msgid "It renders the list of the latest events."
+msgstr "Visualizza l'albero delle categorie."
+
+#: calendar/management/__init__.py:148
+#, fuzzy
+msgid "Today events"
+msgstr "eventi"
+
+#: calendar/management/__init__.py:150
+#, fuzzy
+msgid "It renders the list of the today events."
+msgstr "Visualizza l'albero delle categorie."
 
 #: filebrowser/forms.py:64 filebrowser/forms.py:113 filebrowser/forms.py:132
 msgid "The name already exists."
@@ -455,15 +475,15 @@ msgstr "Modificato"
 msgid "element(s)"
 msgstr "elemento/i"
 
-#: forms/widgets.py:77
+#: forms/widgets.py:79
 msgid "AM"
 msgstr ""
 
-#: forms/widgets.py:77
+#: forms/widgets.py:79
 msgid "PM"
 msgstr ""
 
-#: forms/widgets.py:143
+#: forms/widgets.py:154
 msgid "Add"
 msgstr "Aggiungi"
 
@@ -809,8 +829,8 @@ msgid "Edit"
 msgstr "Modifica"
 
 #: templatetags/details.py:175
-msgid "No results found."
-msgstr "Nessun risultato trovato."
+msgid "No results."
+msgstr "Nessun risultato."
 
 #: utils/__init__.py:61
 msgid "No"
@@ -872,11 +892,11 @@ msgstr ""
 msgid "widgets"
 msgstr ""
 
-#: widgets/views.py:61
+#: widgets/views.py:56
 msgid "The widget was created successfully."
 msgstr "Il widget è stato salvato."
 
-#: widgets/views.py:80
+#: widgets/views.py:75
 msgid "The widget was updated successfully."
 msgstr "Il widget è stato aggiornato."
 

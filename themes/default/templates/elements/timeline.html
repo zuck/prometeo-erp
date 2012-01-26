@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load paginator %}
+
+<div class="details">
+    {% with object.stream.activity_set.all as object_list %}
+    {% paginate object_list %}
+    {% regroup object_list by created.date as activities_by_date %}
+    {% if activities_by_date %}
+    <dl class="activities">
+    {% for date in activities_by_date %}
+        <dt><h3>{{ date.grouper }}</h3></dt>
+        <dd>
+            <ul>
+            {% for item in date.list %}
+                <li class="{{ item.signature }}">
+                    <strong>{{ item.created.time }}</strong>
+                    {% if item.get_absolute_url %}
+                    <a href="{{ item.get_absolute_url }}">{{ item|capfirst }}</a>
+                    {% else %}
+                    {{ item|capfirst }}
+                    {% endif %}
+                    {% with item.created|timesince as timesince %}
+                    <span class="timesince">({% blocktrans %}{{ timesince }} ago{% endblocktrans %})</span>
+                    {% endwith %}
+                    <div class="description">
+                        {{ item.get_content|safe }}
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        </dd>
+    {% endfor %}
+    </dl>
+    {% else %}
+    {% include "elements/empty.html" %}
+    {% endif %}
+    {% include "elements/paginator.html" %}
+    {% endwith %}
+</div>

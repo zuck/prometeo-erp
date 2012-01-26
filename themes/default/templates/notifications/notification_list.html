@@ -29,9 +29,9 @@
         {% endfor %}
     </ul>
     {% else %}
-    <p class="disabled">{% trans "No results found." %}</p>
+    {% include "elements/empty.html" %}
     {% endif %}
-    {% include 'elements/paginator.html' %}
+    {% include "elements/paginator.html" %}
     {% if form %}
     <form class="subscription-form" method="post" action=".">
         {% csrf_token %}

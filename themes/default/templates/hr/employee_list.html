@@ -14,7 +14,7 @@
 {% block subtitle %}{% trans "Employees" %}{% endblock %}
 
 {% block section %}
-{% include 'elements/filterbox.html' %}
+{% include "elements/filterbox.html" %}
 <div class="actions">
     <ul>
         {% if perms.hr.add_employee %}
@@ -24,6 +24,6 @@
 </div>
 <div class="details">
     {% detail_table object_list field_names %}
-    {% include 'elements/paginator.html' %}
+    {% include "elements/paginator.html" %}
 </div>
 {% endblock %}

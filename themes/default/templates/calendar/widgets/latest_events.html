@@ -21,7 +21,7 @@
     {% endfor %}
 </dl>
 {% else %}
-<p class="disabled">{% trans "No results found." %}</p>
+{% include "elements/empty.html" %}
 {% endif %}
 <p class="add"><a title="{% trans 'Add' %}" href="{% url event_add %}">{% trans "Add" %}</a></p>
 <p><a title="{% trans 'See all' %}" href="{% url event_list %}">{% trans "See all" %}</a></p>

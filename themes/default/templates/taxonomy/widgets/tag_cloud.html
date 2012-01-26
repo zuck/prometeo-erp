@@ -4,10 +4,14 @@
 
 {% block widget-body %}
 <div class="body">
+    {% if tags %}
     <div class="tags">
         {% for tag in tags %}
         <span class="tag"><a style="font-size: 1.{% widthratio tag.occurences|length tag_max_occurences 9 %}em" href="{{ tag.get_absolute_url }}" title="{{ tag.occurences|length }} {% trans 'occurence/s' %}">{{ tag }}</a></span>
         {% endfor %}
     </div>
+    {% else %}
+    {% include "elements/empty.html" %}
+    {% endif %}
 </div>
 {% endblock %}

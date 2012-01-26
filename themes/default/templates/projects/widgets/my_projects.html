@@ -7,6 +7,6 @@
 {% if project_list %}
 {% detail_table project_list "['id', 'title', 'status']" "['actions']" %}
 {% else %}
-<p class="disabled">{% trans "No results found." %}</p>
+{% include "elements/empty.html" %}
 {% endif %}
 {% endblock %}

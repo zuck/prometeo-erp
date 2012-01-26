@@ -17,7 +17,7 @@
 {% block subtitle %}{% trans "Hard copies" %}{% endblock %}
 
 {% block section %}
-{% include 'elements/filterbox.html' %}
+{% include "elements/filterbox.html" %}
 <div class="actions">
     <ul>
         {% if perms.documents.add_hard_copy %}

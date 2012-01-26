@@ -19,5 +19,5 @@
     {% endfor %}
 </dl>
 {% else %}
-<span class="disabled">{% trans "No results found." %}</span>
+{% include "elements/empty.html" %}
 {% endif %}
