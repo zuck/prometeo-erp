@@ -48,7 +48,7 @@ def clean_referer(request, default_referer='/'):
     If the HTTP referer is not recognizable, <default_referer> is returned.
     """
     referer = request.META.get('HTTP_REFERER', default_referer)
-    return referer.replace("http://", "").replace(request.META['HTTP_HOST'], "")
+    return referer.replace("http://", "").replace("https://", "").replace(request.META['HTTP_HOST'], "")
 
 def value_to_string(value):
     """Tries to return a smart string representation of the given <value>.
