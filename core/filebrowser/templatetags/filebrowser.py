@@ -107,7 +107,8 @@ def row_template(index, path, f, url_prefix):
         output += '\n\t\t\t</td>\n'
         output += '\t\t\t<td class="number">%s</td>\n' % filesizeformat(f.size)
         output += '\t\t\t<td>%s</td>\n' % value_to_string(f.created)
-        output += '\t\t\t<td>%s %s</td>\n' % (value_to_string(f.modified), actions_template(f, url_prefix))
+        output += '\t\t\t<td>%s</td>\n' % value_to_string(f.modified)
+        output += '\t\t\t<td>%s</td>\n' % actions_template(f, url_prefix)
     return output
 
 @register.simple_tag(takes_context=True)
@@ -150,6 +151,7 @@ def filebrowser(context, path=settings.MEDIA_ROOT, root_path=settings.MEDIA_ROOT
         output += header_template('size', 'size', order_by, url, _('Size'))
         output += header_template('created', None, order_by, url, _('Created'))
         output += header_template('modified', None, order_by, url, _('Modified'))
+        output += '\t\t<th class="actions"></th>\n'
         output += '\t</tr>\n'
         for i, f in enumerate(files):
             output += row_template(i, fi, f, url_prefix)

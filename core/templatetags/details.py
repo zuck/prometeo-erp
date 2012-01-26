@@ -122,41 +122,6 @@ def field_template(name, field, form_or_model, attrs={}, suffix=""):
 
     return output
 
-def actions_template(instance):
-    actions = []
-    try:
-        actions.append(u'<span class="edit"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
-            "link": instance.get_edit_url(),
-            "label": _('Edit')
-        })
-    except AttributeError:
-        pass
-    try:
-        actions.append(u'<span class="delete"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
-            "link": instance.get_delete_url(),
-            "label": _('Delete')
-        })
-    except AttributeError:
-        pass
-    output = ' '.join(actions)
-    if output:
-        output = u'<span class="actions">%s</span>' % output
-    return output
-
-def has_actions(instance):
-    actions = 0
-    try:
-        instance.get_edit_url()
-        actions += 1
-    except AttributeError:
-        pass
-    try:
-        instance.get_delete_url()
-        actions += 1
-    except AttributeError:
-        pass
-    return (actions > 0)
-
 class DetailTableNode(Node):
     def __init__(self, *args, **kwargs):
         self.args = [Variable(arg) for arg in args]
@@ -177,7 +142,7 @@ class DetailTableNode(Node):
             instance = self.object_list[0]
             meta = instance._meta
             self.field_list = [f for f in meta.fields if is_visible(f.name, fields, exclude)]
-            output = u'<table>\n'
+            output = u'<table class="%s-detail-table">\n' % instance.__class__.__name__.lower()
             output += u'\t<tr>\n'
             for f in self.field_list:
                 verbose_name = _(f.verbose_name)
@@ -194,11 +159,15 @@ class DetailTableNode(Node):
                     output += u'\t\t<th class="%s"><a class="%s" href="%sorder_by=%s%s">%s</a></th>\n' % (field_type, aclass, url, verse, f.name, verbose_name)
                 else:
                     output += u'\t\t<th class="%s"><a href="%sorder_by=%s">%s</a></th>\n' % (field_type, url, f.name, verbose_name)
+            if 'actions' not in exclude:
+                output += u'\t\t<th class="actions"></td>'
             output += u'\t</tr>\n'
             for i, instance in enumerate(self.object_list):
                 output += row_template(i)
                 for j, f in enumerate(self.field_list):
-                    output += self.column_template(instance, j, ('actions' not in exclude))
+                    output += self.column_template(instance, j)
+                if 'actions' not in exclude:
+                    output += self.actions_template(instance, request)                    
                 output += u'\t</tr>\n'
             output += u'</table>\n'
         return mark_safe(output)
@@ -220,7 +189,7 @@ class DetailTableNode(Node):
         
         return self.render_with_args(context, *args, **kwargs)
         
-    def column_template(self, instance, index, with_actions=True):
+    def column_template(self, instance, index):
         css = ''
         value = field_to_value(self.field_list[index], instance)
         if isinstance(value, (int, float)) and not isinstance(value, bool):
@@ -228,9 +197,31 @@ class DetailTableNode(Node):
         value = value_to_string(value)
         if index == 0 and hasattr(instance, 'get_absolute_url'):
             value = u'<a href="%s">%s</a>' % (instance.get_absolute_url(), value)
-        elif index == len(self.field_list)-1 and with_actions:
-            value += " " + actions_template(instance)
         return u'\t\t<td%s>%s</td>\n' % (css, value)
+
+    def actions_template(self, instance, request):
+        actions = []
+        ct = ContentType.objects.get_for_model(instance)
+        try:
+            if request.user.has_perm("%s.change_%s" % (ct.app_label, ct.name), instance):
+                actions.append(u'<span class="edit"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
+                    "link": instance.get_edit_url(),
+                    "label": _('Edit')
+                })
+        except AttributeError:
+            pass
+        try:
+            if request.user.has_perm("%s.delete_%s" % (ct.app_label, ct.name), instance):
+                actions.append(u'<span class="delete"><a title="%(label)s" href="%(link)s">%(label)s</a></span>' % {
+                    "link": instance.get_delete_url(),
+                    "label": _('Delete')
+                })
+        except AttributeError:
+            pass
+        output = ' '.join(actions)
+        if output:
+            output = u'<span class="actions">%s</span>' % output
+        return u'\t\t<td>%s</td>\n' % output
 
 @register.tag
 def detail_table(parser, token):
