@@ -24,6 +24,8 @@ from django.utils.translation import ugettext_lazy as _
 
 LEAD_STATUS_CHOICES = (
     ('FIRST', _('first contact')),
+    ('HOT', _('hot contact')),
+    ('COLD', _('cold contact')),
 )
 
 LEAD_DEFAULT_STATUS = 'FIRST'

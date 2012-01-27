@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 12:16+0100\n"
+"POT-Creation-Date: 2012-01-27 12:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,723 +118,731 @@ msgstr "altro"
 msgid "first contact"
 msgstr "primo contatto"
 
-#: partners.py:32
+#: partners.py:27
+msgid "hot contact"
+msgstr "contatto caldo"
+
+#: partners.py:28
+msgid "cold contact"
+msgstr "contatto freddo"
+
+#: partners.py:34
 msgid "AED"
 msgstr ""
 
-#: partners.py:33
+#: partners.py:35
 msgid "AFN"
 msgstr ""
 
-#: partners.py:34
+#: partners.py:36
 msgid "ALL"
 msgstr ""
 
-#: partners.py:35
+#: partners.py:37
 msgid "AMD"
 msgstr ""
 
-#: partners.py:36
+#: partners.py:38
 msgid "ANG"
 msgstr ""
 
-#: partners.py:37
+#: partners.py:39
 msgid "AOA"
 msgstr ""
 
-#: partners.py:38
+#: partners.py:40
 msgid "ARS"
 msgstr ""
 
-#: partners.py:39
+#: partners.py:41
 msgid "AUD"
 msgstr ""
 
-#: partners.py:40
+#: partners.py:42
 msgid "AZN"
 msgstr ""
 
-#: partners.py:41
+#: partners.py:43
 msgid "BAM"
 msgstr ""
 
-#: partners.py:42
+#: partners.py:44
 msgid "BBD"
 msgstr ""
 
-#: partners.py:43
+#: partners.py:45
 msgid "BDT"
 msgstr ""
 
-#: partners.py:44
+#: partners.py:46
 msgid "BGN"
 msgstr ""
 
-#: partners.py:45
+#: partners.py:47
 msgid "BHD"
 msgstr ""
 
-#: partners.py:46
+#: partners.py:48
 msgid "BIF"
 msgstr ""
 
-#: partners.py:47
+#: partners.py:49
 msgid "BMD"
 msgstr ""
 
-#: partners.py:48
+#: partners.py:50
 msgid "BND"
 msgstr ""
 
-#: partners.py:49
+#: partners.py:51
 msgid "BOB"
 msgstr ""
 
-#: partners.py:50
+#: partners.py:52
 msgid "BRL"
 msgstr ""
 
-#: partners.py:51
+#: partners.py:53
 msgid "BSD"
 msgstr ""
 
-#: partners.py:52
+#: partners.py:54
 msgid "BTN"
 msgstr ""
 
-#: partners.py:53
+#: partners.py:55
 msgid "BWP"
 msgstr ""
 
-#: partners.py:54
+#: partners.py:56
 msgid "BYR"
 msgstr ""
 
-#: partners.py:55
+#: partners.py:57
 msgid "BZD"
 msgstr ""
 
-#: partners.py:56
+#: partners.py:58
 msgid "CAD"
 msgstr ""
 
-#: partners.py:57
+#: partners.py:59
 msgid "CDF"
 msgstr ""
 
-#: partners.py:58
+#: partners.py:60
 msgid "CFA"
 msgstr ""
 
-#: partners.py:59
+#: partners.py:61
 msgid "CFP"
 msgstr ""
 
-#: partners.py:60
+#: partners.py:62
 msgid "CHF"
 msgstr ""
 
-#: partners.py:61
+#: partners.py:63
 msgid "CLP"
 msgstr ""
 
-#: partners.py:62
+#: partners.py:64
 msgid "CNY"
 msgstr ""
 
-#: partners.py:63
+#: partners.py:65
 msgid "COP"
 msgstr ""
 
-#: partners.py:64
+#: partners.py:66
 msgid "CRC"
 msgstr ""
 
-#: partners.py:65
+#: partners.py:67
 msgid "CUC"
 msgstr ""
 
-#: partners.py:66
+#: partners.py:68
 msgid "CZK"
 msgstr ""
 
-#: partners.py:67
+#: partners.py:69
 msgid "DJF"
 msgstr ""
 
-#: partners.py:68
+#: partners.py:70
 msgid "DKK"
 msgstr ""
 
-#: partners.py:69
+#: partners.py:71
 msgid "DOP"
 msgstr ""
 
-#: partners.py:70
+#: partners.py:72
 msgid "DZD"
 msgstr ""
 
-#: partners.py:71
+#: partners.py:73
 msgid "EEK"
 msgstr ""
 
-#: partners.py:72
+#: partners.py:74
 msgid "EGP"
 msgstr ""
 
-#: partners.py:73
+#: partners.py:75
 msgid "ERN"
 msgstr ""
 
-#: partners.py:74
+#: partners.py:76
 msgid "ETB"
 msgstr ""
 
-#: partners.py:75
+#: partners.py:77
 msgid "EUR"
 msgstr ""
 
-#: partners.py:76
+#: partners.py:78
 msgid "FJD"
 msgstr ""
 
-#: partners.py:77
+#: partners.py:79
 msgid "FKP"
 msgstr ""
 
-#: partners.py:78
+#: partners.py:80
 msgid "FMG"
 msgstr ""
 
-#: partners.py:79
+#: partners.py:81
 msgid "GBP"
 msgstr ""
 
-#: partners.py:80
+#: partners.py:82
 msgid "GEL"
 msgstr ""
 
-#: partners.py:81
+#: partners.py:83
 msgid "GHS"
 msgstr ""
 
-#: partners.py:82
+#: partners.py:84
 msgid "GIP"
 msgstr ""
 
-#: partners.py:83
+#: partners.py:85
 msgid "GMD"
 msgstr ""
 
-#: partners.py:84
+#: partners.py:86
 msgid "GNF"
 msgstr ""
 
-#: partners.py:85
+#: partners.py:87
 msgid "GQE"
 msgstr ""
 
-#: partners.py:86
+#: partners.py:88
 msgid "GTQ"
 msgstr ""
 
-#: partners.py:87
+#: partners.py:89
 msgid "GYD"
 msgstr ""
 
-#: partners.py:88
+#: partners.py:90
 msgid "HKD"
 msgstr ""
 
-#: partners.py:89
+#: partners.py:91
 msgid "HNL"
 msgstr ""
 
-#: partners.py:90
+#: partners.py:92
 msgid "HRK"
 msgstr ""
 
-#: partners.py:91
+#: partners.py:93
 msgid "HTG"
 msgstr ""
 
-#: partners.py:92
+#: partners.py:94
 msgid "HUF"
 msgstr ""
 
-#: partners.py:93
+#: partners.py:95
 msgid "IDR"
 msgstr ""
 
-#: partners.py:94
+#: partners.py:96
 msgid "ILS"
 msgstr ""
 
-#: partners.py:95
+#: partners.py:97
 msgid "INR"
 msgstr ""
 
-#: partners.py:96
+#: partners.py:98
 msgid "IQD"
 msgstr ""
 
-#: partners.py:97
+#: partners.py:99
 msgid "IRR"
 msgstr ""
 
-#: partners.py:98
+#: partners.py:100
 msgid "ISK"
 msgstr ""
 
-#: partners.py:99
+#: partners.py:101
 msgid "JMD"
 msgstr ""
 
-#: partners.py:100
+#: partners.py:102
 msgid "JOD"
 msgstr ""
 
-#: partners.py:101
+#: partners.py:103
 msgid "JPY"
 msgstr ""
 
-#: partners.py:102
+#: partners.py:104
 msgid "KES"
 msgstr ""
 
-#: partners.py:103
+#: partners.py:105
 msgid "KGS"
 msgstr ""
 
-#: partners.py:104
+#: partners.py:106
 msgid "KHR"
 msgstr ""
 
-#: partners.py:105
+#: partners.py:107
 msgid "KMF"
 msgstr ""
 
-#: partners.py:106
+#: partners.py:108
 msgid "KPW"
 msgstr ""
 
-#: partners.py:107
+#: partners.py:109
 msgid "KRW"
 msgstr ""
 
-#: partners.py:108
+#: partners.py:110
 msgid "KWD"
 msgstr ""
 
-#: partners.py:109
+#: partners.py:111
 msgid "KYD"
 msgstr ""
 
-#: partners.py:110
+#: partners.py:112
 msgid "KZT"
 msgstr ""
 
-#: partners.py:111
+#: partners.py:113
 msgid "LAK"
 msgstr ""
 
-#: partners.py:112
+#: partners.py:114
 msgid "LBP"
 msgstr ""
 
-#: partners.py:113
+#: partners.py:115
 msgid "LKR"
 msgstr ""
 
-#: partners.py:114
+#: partners.py:116
 msgid "LRD"
 msgstr ""
 
-#: partners.py:115
+#: partners.py:117
 msgid "LSL"
 msgstr ""
 
-#: partners.py:116
+#: partners.py:118
 msgid "LTL"
 msgstr ""
 
-#: partners.py:117
+#: partners.py:119
 msgid "LVL"
 msgstr ""
 
-#: partners.py:118
+#: partners.py:120
 msgid "LYD"
 msgstr ""
 
-#: partners.py:119
+#: partners.py:121
 msgid "MAD"
 msgstr ""
 
-#: partners.py:120
+#: partners.py:122
 msgid "MDL"
 msgstr ""
 
-#: partners.py:121
+#: partners.py:123
 msgid "MGA"
 msgstr ""
 
-#: partners.py:122
+#: partners.py:124
 msgid "MKD"
 msgstr ""
 
-#: partners.py:123
+#: partners.py:125
 msgid "MMK"
 msgstr ""
 
-#: partners.py:124
+#: partners.py:126
 msgid "MNT"
 msgstr ""
 
-#: partners.py:125
+#: partners.py:127
 msgid "MOP"
 msgstr ""
 
-#: partners.py:126
+#: partners.py:128
 msgid "MRO"
 msgstr ""
 
-#: partners.py:127
+#: partners.py:129
 msgid "MUR"
 msgstr ""
 
-#: partners.py:128
+#: partners.py:130
 msgid "MVR"
 msgstr ""
 
-#: partners.py:129
+#: partners.py:131
 msgid "MWK"
 msgstr ""
 
-#: partners.py:130
+#: partners.py:132
 msgid "MXN"
 msgstr ""
 
-#: partners.py:131
+#: partners.py:133
 msgid "MYR"
 msgstr ""
 
-#: partners.py:132
+#: partners.py:134
 msgid "MZM"
 msgstr ""
 
-#: partners.py:133
+#: partners.py:135
 msgid "NAD"
 msgstr ""
 
-#: partners.py:134
+#: partners.py:136
 msgid "NGN"
 msgstr ""
 
-#: partners.py:135
+#: partners.py:137
 msgid "NIO"
 msgstr ""
 
-#: partners.py:136
+#: partners.py:138
 msgid "NOK"
 msgstr ""
 
-#: partners.py:137
+#: partners.py:139
 msgid "NPR"
 msgstr ""
 
-#: partners.py:138
+#: partners.py:140
 msgid "NRs"
 msgstr ""
 
-#: partners.py:139
+#: partners.py:141
 msgid "NZD"
 msgstr ""
 
-#: partners.py:140
+#: partners.py:142
 msgid "OMR"
 msgstr ""
 
-#: partners.py:141
+#: partners.py:143
 msgid "PAB"
 msgstr ""
 
-#: partners.py:142
+#: partners.py:144
 msgid "PEN"
 msgstr ""
 
-#: partners.py:143
+#: partners.py:145
 msgid "PGK"
 msgstr ""
 
-#: partners.py:144
+#: partners.py:146
 msgid "PHP"
 msgstr ""
 
-#: partners.py:145
+#: partners.py:147
 msgid "PKR"
 msgstr ""
 
-#: partners.py:146
+#: partners.py:148
 msgid "PLN"
 msgstr ""
 
-#: partners.py:147
+#: partners.py:149
 msgid "PYG"
 msgstr ""
 
-#: partners.py:148
+#: partners.py:150
 msgid "QAR"
 msgstr ""
 
-#: partners.py:149
+#: partners.py:151
 msgid "RMB"
 msgstr ""
 
-#: partners.py:150
+#: partners.py:152
 msgid "RON"
 msgstr ""
 
-#: partners.py:151
+#: partners.py:153
 msgid "RSD"
 msgstr ""
 
-#: partners.py:152
+#: partners.py:154
 msgid "RUB"
 msgstr ""
 
-#: partners.py:153
+#: partners.py:155
 msgid "RWF"
 msgstr ""
 
-#: partners.py:154
+#: partners.py:156
 msgid "SAR"
 msgstr ""
 
-#: partners.py:155
+#: partners.py:157
 msgid "SCR"
 msgstr ""
 
-#: partners.py:156
+#: partners.py:158
 msgid "SDG"
 msgstr ""
 
-#: partners.py:157
+#: partners.py:159
 msgid "SDR"
 msgstr ""
 
-#: partners.py:158
+#: partners.py:160
 msgid "SEK"
 msgstr ""
 
-#: partners.py:159
+#: partners.py:161
 msgid "SGD"
 msgstr ""
 
-#: partners.py:160
+#: partners.py:162
 msgid "SHP"
 msgstr ""
 
-#: partners.py:161
+#: partners.py:163
 msgid "SOS"
 msgstr ""
 
-#: partners.py:162
+#: partners.py:164
 msgid "SRD"
 msgstr ""
 
-#: partners.py:163
+#: partners.py:165
 msgid "STD"
 msgstr ""
 
-#: partners.py:164
+#: partners.py:166
 msgid "SYP"
 msgstr ""
 
-#: partners.py:165
+#: partners.py:167
 msgid "SZL"
 msgstr ""
 
-#: partners.py:166
+#: partners.py:168
 msgid "THB"
 msgstr ""
 
-#: partners.py:167
+#: partners.py:169
 msgid "TJS"
 msgstr ""
 
-#: partners.py:168
+#: partners.py:170
 msgid "TMT"
 msgstr ""
 
-#: partners.py:169
+#: partners.py:171
 msgid "TND"
 msgstr ""
 
-#: partners.py:170
+#: partners.py:172
 msgid "TRY"
 msgstr ""
 
-#: partners.py:171
+#: partners.py:173
 msgid "TTD"
 msgstr ""
 
-#: partners.py:172
+#: partners.py:174
 msgid "TWD"
 msgstr ""
 
-#: partners.py:173
+#: partners.py:175
 msgid "TZS"
 msgstr ""
 
-#: partners.py:174
+#: partners.py:176
 msgid "UAE"
 msgstr ""
 
-#: partners.py:175
+#: partners.py:177
 msgid "UAH"
 msgstr ""
 
-#: partners.py:176
+#: partners.py:178
 msgid "UGX"
 msgstr ""
 
-#: partners.py:177
+#: partners.py:179
 msgid "USD"
 msgstr ""
 
-#: partners.py:178
+#: partners.py:180
 msgid "UYU"
 msgstr ""
 
-#: partners.py:179
+#: partners.py:181
 msgid "UZS"
 msgstr ""
 
-#: partners.py:180
+#: partners.py:182
 msgid "VEB"
 msgstr ""
 
-#: partners.py:181
+#: partners.py:183
 msgid "VND"
 msgstr ""
 
-#: partners.py:182
+#: partners.py:184
 msgid "VUV"
 msgstr ""
 
-#: partners.py:183
+#: partners.py:185
 msgid "WST"
 msgstr ""
 
-#: partners.py:184
+#: partners.py:186
 msgid "XAF"
 msgstr ""
 
-#: partners.py:185
+#: partners.py:187
 msgid "XCD"
 msgstr ""
 
-#: partners.py:186
+#: partners.py:188
 msgid "XDR"
 msgstr ""
 
-#: partners.py:187
+#: partners.py:189
 msgid "XOF"
 msgstr ""
 
-#: partners.py:188
+#: partners.py:190
 msgid "XPF"
 msgstr ""
 
-#: partners.py:189
+#: partners.py:191
 msgid "YEN"
 msgstr ""
 
-#: partners.py:190
+#: partners.py:192
 msgid "YER"
 msgstr ""
 
-#: partners.py:191
+#: partners.py:193
 msgid "YTL"
 msgstr ""
 
-#: partners.py:192
+#: partners.py:194
 msgid "ZAR"
 msgstr ""
 
-#: partners.py:193
+#: partners.py:195
 msgid "ZMK"
 msgstr ""
 
-#: partners.py:194
+#: partners.py:196
 msgid "ZWR"
 msgstr ""
 
-#: partners.py:200
+#: partners.py:202
 msgid "30 days"
 msgstr "30 gg"
 
-#: partners.py:201
+#: partners.py:203
 msgid "60 days"
 msgstr "60 gg"
 
-#: partners.py:202
+#: partners.py:204
 msgid "90 days"
 msgstr "90 gg"
 
-#: partners.py:203
+#: partners.py:205
 msgid "120 days"
 msgstr "120 gg"
 
-#: partners.py:204
+#: partners.py:206
 msgid "cash in advance"
 msgstr "pagamento anticipato"
 
-#: partners.py:205
+#: partners.py:207
 msgid "cash on delivery"
 msgstr "pagamento alla consegna"
 
-#: partners.py:211
+#: partners.py:213
 msgid "Chairman"
 msgstr "Presidente"
 
-#: partners.py:212
+#: partners.py:214
 msgid "CEO"
 msgstr "Amm. delegato"
 
-#: partners.py:213
+#: partners.py:215
 msgid "COO"
 msgstr "Dir. operativo"
 
-#: partners.py:214
+#: partners.py:216
 msgid "CFO"
 msgstr "Dir. finanziario"
 
-#: partners.py:215
+#: partners.py:217
 msgid "CTO"
 msgstr "Dir. tecnico"
 
-#: partners.py:216
+#: partners.py:218
 msgid "Project Manager"
 msgstr "Resp. progetto"
 
-#: partners.py:217
+#: partners.py:219
 msgid "Sales Manager"
 msgstr "Resp. vendite"
 
-#: partners.py:218
+#: partners.py:220
 msgid "Salesman"
 msgstr "Commerciale"
 
-#: partners.py:219
+#: partners.py:221
 msgid "Employee"
 msgstr "Impiegato"
 
-#: partners.py:225
+#: partners.py:227
 msgid "Male"
 msgstr "Maschio"
 
-#: partners.py:226
+#: partners.py:228
 msgid "Female"
 msgstr "Femmina"
 
