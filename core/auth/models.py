@@ -33,6 +33,12 @@ class MyUser(User):
     class Meta:
         proxy = True
 
+    def __init__(self, *args, **kwargs):
+        super(MyUser, self).__init__(*args, **kwargs)
+        self._meta.get_field('is_active').verbose_name = _('active?')
+        self._meta.get_field('is_staff').verbose_name = _('staff?')
+        self._meta.get_field('is_superuser').verbose_name = _('admin?')
+
     def _full_name(self):
         return self.get_full_name()
     _full_name.short_description = _('full name')

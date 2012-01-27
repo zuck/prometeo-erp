@@ -70,7 +70,7 @@ def user_list(request, page=0, paginate_by=10, **kwargs):
     return filtered_list_detail(
         request,
         MyUser.objects.all(),
-        fields=['username', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login'],
+        fields=['username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'last_login'],
         paginate_by=paginate_by,
         page=page,
         template_name='auth/user_list.html',

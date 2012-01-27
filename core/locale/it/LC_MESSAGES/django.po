@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-27 12:49+0100\n"
+"POT-Creation-Date: 2012-01-27 16:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,46 +42,58 @@ msgstr ""
 "Questo indirizzo email è già in uso. Prego specificarne uno differente."
 
 #: auth/models.py:38
+msgid "active?"
+msgstr "attivo?"
+
+#: auth/models.py:39
+msgid "staff?"
+msgstr ""
+
+#: auth/models.py:40
+msgid "admin?"
+msgstr ""
+
+#: auth/models.py:44
 msgid "full name"
 msgstr "nome completo"
 
-#: auth/models.py:61
+#: auth/models.py:67
 msgid "language"
 msgstr "lingua"
 
-#: auth/models.py:62
+#: auth/models.py:68
 msgid "timezone"
 msgstr "fuso orario"
 
-#: auth/models.py:63
+#: auth/models.py:69
 msgid "dashboard"
 msgstr "bacheca"
 
-#: auth/models.py:64 menus/models.py:74
+#: auth/models.py:70 menus/models.py:74
 msgid "bookmarks"
 msgstr "segnalibri"
 
-#: auth/models.py:65
+#: auth/models.py:71
 msgid "calendar"
 msgstr "calendario"
 
-#: auth/models.py:74
+#: auth/models.py:80
 msgid "permission"
 msgstr "permesso"
 
-#: auth/models.py:75
+#: auth/models.py:81
 msgid "users"
 msgstr "utenti"
 
-#: auth/models.py:76
+#: auth/models.py:82
 msgid "groups"
 msgstr "gruppi"
 
-#: auth/models.py:81
+#: auth/models.py:87
 msgid "object permission"
 msgstr "permesso per singolo oggetto"
 
-#: auth/models.py:82
+#: auth/models.py:88
 msgid "object permissions"
 msgstr "permessi per singolo oggetto"
 
