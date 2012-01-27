@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-26 15:15+0100\n"
+"POT-Creation-Date: 2012-01-27 12:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -418,7 +418,7 @@ msgstr "Crea collegamento"
 msgid "Rename"
 msgstr "Rinomina"
 
-#: filebrowser/templatetags/filebrowser.py:80 templatetags/details.py:137
+#: filebrowser/templatetags/filebrowser.py:80 templatetags/details.py:215
 msgid "Delete"
 msgstr "Elimina"
 
@@ -426,52 +426,52 @@ msgstr "Elimina"
 msgid "Parent folder"
 msgstr "Cartella genitore"
 
-#: filebrowser/templatetags/filebrowser.py:95
+#: filebrowser/templatetags/filebrowser.py:96
 msgid "Folder"
 msgstr "Cartella"
 
-#: filebrowser/templatetags/filebrowser.py:97
-#: filebrowser/templatetags/filebrowser.py:99
+#: filebrowser/templatetags/filebrowser.py:98
+#: filebrowser/templatetags/filebrowser.py:100
 msgid "File"
 msgstr "File"
 
-#: filebrowser/templatetags/filebrowser.py:102
+#: filebrowser/templatetags/filebrowser.py:103
 msgid "Broken link"
 msgstr "Collegamento interrotto"
 
-#: filebrowser/templatetags/filebrowser.py:106
+#: filebrowser/templatetags/filebrowser.py:107
 msgid "Link"
 msgstr "Collegamento"
 
-#: filebrowser/templatetags/filebrowser.py:120
+#: filebrowser/templatetags/filebrowser.py:122
 msgid "Add folder"
 msgstr "Aggiungi cartella"
 
-#: filebrowser/templatetags/filebrowser.py:125
+#: filebrowser/templatetags/filebrowser.py:127
 msgid "Upload file"
 msgstr "Carica file"
 
-#: filebrowser/templatetags/filebrowser.py:129
+#: filebrowser/templatetags/filebrowser.py:131
 msgid "Refresh"
 msgstr "Aggiorna"
 
-#: filebrowser/templatetags/filebrowser.py:149
+#: filebrowser/templatetags/filebrowser.py:151
 msgid "Name"
 msgstr "Nome"
 
-#: filebrowser/templatetags/filebrowser.py:150
+#: filebrowser/templatetags/filebrowser.py:152
 msgid "Size"
 msgstr "Dimensione"
 
-#: filebrowser/templatetags/filebrowser.py:151
+#: filebrowser/templatetags/filebrowser.py:153
 msgid "Created"
 msgstr "Creato"
 
-#: filebrowser/templatetags/filebrowser.py:152
+#: filebrowser/templatetags/filebrowser.py:154
 msgid "Modified"
 msgstr "Modificato"
 
-#: filebrowser/templatetags/filebrowser.py:157
+#: filebrowser/templatetags/filebrowser.py:160
 msgid "element(s)"
 msgstr "elemento/i"
 
@@ -824,13 +824,13 @@ msgstr "Nuvola di tags"
 msgid "It renders the tags cloud."
 msgstr "Visualizza la nuvola dei tags."
 
-#: templatetags/details.py:130
-msgid "Edit"
-msgstr "Modifica"
-
-#: templatetags/details.py:175
+#: templatetags/details.py:140
 msgid "No results."
 msgstr "Nessun risultato."
+
+#: templatetags/details.py:208
+msgid "Edit"
+msgstr "Modifica"
 
 #: utils/__init__.py:61
 msgid "No"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 12:10+0100\n"
+"POT-Creation-Date: 2012-01-27 12:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,3 +109,11 @@ msgstr "Profilo social aggiunto a %(owner)s"
 #: views.py:255
 msgid "Social profile updated"
 msgstr "Profilo social aggiornato"
+
+#: management/__init__.py:34
+msgid "Employees"
+msgstr "Impiegati"
+
+#: management/__init__.py:39
+msgid "Administrative Employees"
+msgstr "Amministrazione"
