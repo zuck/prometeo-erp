@@ -33,7 +33,7 @@ urlpatterns = patterns('sales.views',
 
     # Sales invoices.
     url(r'^sales-invoices/$', view='salesinvoices.salesinvoice_list', name='salesinvoice_list'),
-    url(r'^sales-invoices/add$', view='salesinvoices.salesinvoice_add', name='salesinvoice_add'),
+    url(r'^sales-invoices/add/$', view='salesinvoices.salesinvoice_add', name='salesinvoice_add'),
     url(r'^sales-invoices/(?P<id>\d+)/$', view='salesinvoices.salesinvoice_detail', name='salesinvoice_detail'),
     url(r'^sales-invoices/(?P<id>\d+)/edit/$', view='salesinvoices.salesinvoice_edit', name='salesinvoice_edit'),
     url(r'^sales-invoices/(?P<id>\d+)/delete/$', view='salesinvoices.salesinvoice_delete', name='salesinvoice_delete'),
