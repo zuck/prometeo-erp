@@ -237,13 +237,11 @@ th.auto { width: 6%; }
 th.boolean { width: 8%; }
 th.char, th.email, th.url { width: 20%; }
 th.char_choices { width: 10%; }
-th.actions { width: auto; }
+th.actions { max-width: 16px; }
 
 td.number { text-align: right; }
 
-td .actions {
-    float: right;
-}
+td .actions { float: right; }
 
 td .yes, td .no {
     display: block;

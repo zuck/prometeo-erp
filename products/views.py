@@ -50,7 +50,7 @@ def product_list(request, page=0, paginate_by=10, **kwargs):
     return filtered_list_detail(
         request,
         Product,
-        fields=['name', 'code', 'ean13'],
+        fields=['name', 'code', 'ean13', 'description', 'is_consumable', 'is_service'],
         page=page,
         paginate_by=paginate_by,
         template_name='products/product_list.html',
