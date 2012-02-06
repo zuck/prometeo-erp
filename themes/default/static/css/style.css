@@ -234,9 +234,9 @@ table a.desc { background-image: url(images/down.png); }
 tr.altrow td { background-color: #f8f8f8; }
 
 th.auto { width: 6%; }
-th.boolean { width: 6%; }
-th.char, th.email, th.url { width: 20%; }
-th.char_choices { width: 10%; }
+th.boolean { width: 9%; }
+th.char, th.email, th.url { max-width: 20%; }
+th.char_choices { max-width: 10%; }
 th.actions { max-width: 16px; }
 
 td.number { text-align: right; }

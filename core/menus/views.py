@@ -53,7 +53,7 @@ def bookmark_list(request, username, page=0, paginate_by=10, **kwargs):
     return filtered_list_detail(
         request,
         Bookmark.objects.filter(menu=user.get_profile().bookmarks),
-        fields=['title', 'new_window', 'url'],
+        fields=['title', 'url', 'description', 'new_window'],
         paginate_by=paginate_by,
         page=page,
         extra_context={
