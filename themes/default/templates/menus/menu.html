@@ -3,11 +3,11 @@
 
 <ul id="{{ slug }}-menu" class="menu">
 {% for link in links %}
-    {% if link.authorized and link.url %}
+    {% if link.authorized and link.get_absolute_url %}
     {% block menulink %}
     <li{% matchlink link request.get_full_path %} id="{{ link.slug|escape }}-link">
         {% with link.description|default:link.title|striptags as link_title %}
-        <a{% if link.new_window %} target="_blank"{% endif %} title="{% trans link_title %}" href="{{ link.url|escape }}">
+        <a{% if link.new_window %} target="_blank"{% endif %} title="{% trans link_title %}" href="{{ link.get_absolute_url|escape }}">
             {% trans link.title|escape %}
         </a>
         {% endwith %}

@@ -63,6 +63,8 @@ class Link(models.Model):
         return '%s | %s' % (self.menu, self.title)
 
     def get_absolute_url(self):
+        if self.url.startswith('www.'):
+            return "http://" + self.url
         return self.url
 
 class Bookmark(Link):
