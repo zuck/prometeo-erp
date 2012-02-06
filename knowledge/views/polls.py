@@ -20,6 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
+from datetime import datetime
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
@@ -91,7 +93,7 @@ def poll_vote(request, id, choice, **kwargs):
     """
     poll = get_object_or_404(Poll, id=id)
 
-    if poll.due_date is not None:
+    if poll.due_date is not None and poll.due_date < datetime.now():
         messages.warning(request, _("Sorry, this poll is already closed."))
         return redirect_to(request, permanent=False, url=poll.get_absolute_url())
 
