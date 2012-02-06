@@ -32,6 +32,8 @@ from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.db import models
 
+from prometeo.core.auth.cache import LoggedInUserCache
+
 class DateWidget(forms.DateInput):
     """A more-friendly date widget with a pop-up calendar.
     """
@@ -143,11 +145,14 @@ class AddLinkMixin(object):
             "js/jquery.min.js",
             "js/jquery-ui.custom.min.js",
             "js/addlink.js",
-        )
-    def add_link_decorator(self, render_func):
+        )    
+
+    def _add_link_decorator(self, render_func):
         def _wrapped_render(name, *args, **kwargs):
             output = render_func(name, *args, **kwargs)
-            if self.add_url:
+            user = LoggedInUserCache().current_user
+            print user, user.has_perms(self.with_perms)
+            if self.add_url and (not self.with_perms or user.has_perms(self.with_perms)):
                 tokens = {
                     'name': name,
                     'add_url': self.add_url,
@@ -164,8 +169,9 @@ class SelectAndAddWidget(forms.Select, AddLinkMixin):
     """
     def __init__(self, *args, **kwargs):
         self.add_url = kwargs.pop('add_url', None)
+        self.with_perms = kwargs.pop('with_perms', []) 
         super(SelectAndAddWidget, self).__init__(*args, **kwargs)
-        self.render = self.add_link_decorator(self.render)
+        self.render = self._add_link_decorator(self.render)
 
 class SelectMultipleAndAddWidget(forms.SelectMultiple, AddLinkMixin):
     """A multiple-select widget with an optional "add" link.
@@ -174,8 +180,9 @@ class SelectMultipleAndAddWidget(forms.SelectMultiple, AddLinkMixin):
     """
     def __init__(self, *args, **kwargs):
         self.add_url = kwargs.pop('add_url', None)
+        self.with_perms = kwargs.pop('with_perms', []) 
         super(SelectMultipleAndAddWidget, self).__init__(*args, **kwargs)
-        self.render = self.add_link_decorator(self.render)
+        self.render = self._add_link_decorator(self.render)
 
 class JsonPairWidget(forms.Widget):
     """A widget that displays a list of text key/value pairs.

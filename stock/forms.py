@@ -36,8 +36,8 @@ class WarehouseForm(forms.ModelForm):
         model = Warehouse
         exclude = ['author', 'stream', 'dashboard']
         widgets = {
-            'owner': SelectAndAddWidget(add_url='/partners/add'),
-            'address': SelectAndAddWidget(add_url='/addresses/add')
+            'owner': SelectAndAddWidget(add_url='/partners/add', with_perms=['partners.add_partner']),
+            'address': SelectAndAddWidget(add_url='/addresses/add', with_perms=['addressing.add_address'])
         }
         
 class MovementForm(forms.ModelForm):
@@ -47,8 +47,8 @@ class MovementForm(forms.ModelForm):
         model = Movement
         exclude = ['product_entry', 'author']
         widgets = {
-            'origin': SelectAndAddWidget(add_url='/warehouses/add'),
-            'destination': SelectAndAddWidget(add_url='/warehouses/add')
+            'origin': SelectAndAddWidget(add_url='/warehouses/add', with_perms=['stock.add_warehouse']),
+            'destination': SelectAndAddWidget(add_url='/warehouses/add', with_perms=['stock.add_warehouse'])
         }
 
     def clean_destination(self):
@@ -94,8 +94,8 @@ class DeliveryNoteForm(forms.ModelForm):
         model = DeliveryNote
         exclude = ['document', 'entries']
         widgets = {
-            'invoice_addressee': SelectAndAddWidget(add_url='/partners/add'),
-            'delivery_addressee': SelectAndAddWidget(add_url='/partners/add'),
+            'invoice_addressee': SelectAndAddWidget(add_url='/partners/add', with_perms=['partners.add_partner']),
+            'delivery_addressee': SelectAndAddWidget(add_url='/partners/add', with_perms=['partners.add_partner']),
             'order_ref_date': DateWidget(),
             'delivery_date': DateWidget()
         }

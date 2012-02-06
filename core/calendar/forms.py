@@ -45,8 +45,8 @@ class EventForm(forms.ModelForm):
         exclude = ('author', 'stream', 'calendars')
         widgets = {
             'description': CKEditor(),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
 enrich_form(EventForm)

@@ -28,6 +28,7 @@ from django.conf import settings
 from prometeo.core.forms import enrich_form
 from prometeo.core.forms.fields import *
 from prometeo.core.forms.widgets import *
+from prometeo.core.auth.models import MyPermission
 from prometeo.partners.models import Job, Partner
 
 from models import *
@@ -38,8 +39,8 @@ class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         widgets = {
-            'contact': SelectAndAddWidget(add_url='/contacts/add'),
-            'partner': SelectAndAddWidget(add_url='/partners/add'),
+            'contact': SelectAndAddWidget(add_url='/contacts/add', with_perms=["partners.add_contact"]),
+            'partner': SelectAndAddWidget(add_url='/partners/add', with_perms=["partners.add_partner"]),
         }
 
     def __init__(self, *args, **kwargs):
@@ -64,7 +65,7 @@ class TimesheetForm(forms.ModelForm):
         model = Timesheet
         widgets = {
             'date': DateWidget(),
-            'employee': SelectAndAddWidget(add_url='/employees/add'),
+            'employee': SelectAndAddWidget(add_url='/employees/add', with_perms=["employee.add_employee"]),
         }
 
 class TimesheetEntryForm(forms.ModelForm):
@@ -103,7 +104,7 @@ class ExpenseVoucherForm(forms.ModelForm):
         model = ExpenseVoucher
         widgets = {
             'date': DateWidget(),
-            'employee': SelectAndAddWidget(add_url='contacts/add'),
+            'employee': SelectAndAddWidget(add_url='contacts/add', with_perms=["partners.add_contact"]),
         }
 
 class ExpenseEntryForm(forms.ModelForm):
@@ -133,7 +134,7 @@ class LeaveRequestForm(forms.ModelForm):
     class Meta:
         model = LeaveRequest
         widgets = {
-            'employee': SelectAndAddWidget(add_url='contacts/add'),
+            'employee': SelectAndAddWidget(add_url='contacts/add', with_perms=["partners.add_contact"]),
             'start': DateTimeWidget(),
             'end': DateTimeWidget(),
         }

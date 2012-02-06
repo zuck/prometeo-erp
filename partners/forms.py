@@ -35,11 +35,11 @@ class ContactForm(forms.ModelForm):
         exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'created', 'stream']
         widgets = {
             'date_of_birth': DateWidget(),
-            'main_address': SelectAndAddWidget(add_url='/addresses/add/'),
-            'main_phone_number': SelectAndAddWidget(add_url='/addresses/add/'),
-            'user': SelectAndAddWidget(add_url='/users/add/'),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'main_address': SelectAndAddWidget(add_url='/addresses/add/', with_perms=['addressing.add_address']),
+            'main_phone_number': SelectAndAddWidget(add_url='/phones/add/', with_perms=['addressing.add_phonenumber']),
+            'user': SelectAndAddWidget(add_url='/users/add/', with_perms=['auth.add_user']),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
     def __init__(self, *args, **kwargs):
@@ -60,7 +60,7 @@ class ContactJobForm(forms.ModelForm):
         widgets = {
             'started': DateWidget(),
             'ended': DateWidget(),
-            'partner': SelectAndAddWidget(add_url='/partners/add/'),
+            'partner': SelectAndAddWidget(add_url='/partners/add/', with_perms=['partners.add_partner']),
         }
 
 class PartnerForm(forms.ModelForm):
@@ -70,9 +70,9 @@ class PartnerForm(forms.ModelForm):
         model = Partner
         exclude = ['id', 'addresses', 'phone_numbers', 'social_profiles', 'contacts', 'dashboard', 'stream', 'author', 'created']
         widgets = {
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
             'description': CKEditor(),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
     def __init__(self, *args, **kwargs):
@@ -101,7 +101,7 @@ class PartnerJobForm(forms.ModelForm):
         widgets = {
             'started': DateWidget(),
             'ended': DateWidget(),
-            'contact': SelectAndAddWidget(add_url='/contacts/add/'),
+            'contact': SelectAndAddWidget(add_url='/contacts/add/', with_perms=['partners.add_contact']),
         }     
         
 class LetterForm(forms.ModelForm):
@@ -112,8 +112,8 @@ class LetterForm(forms.ModelForm):
         widgets = {
             'date': DateWidget(),
             'target_ref_date': DateWidget(),
-            'target': SelectAndAddWidget(add_url='/partners/add/'),
-            'to': SelectAndAddWidget(add_url='/contacts/add/'),
+            'target': SelectAndAddWidget(add_url='/partners/add/', with_perms=['partners.add_partner']),
+            'to': SelectAndAddWidget(add_url='/contacts/add/', with_perms=['partners.add_contact']),
             'body': CKEditor(),
         }
 

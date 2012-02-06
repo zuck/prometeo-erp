@@ -37,8 +37,8 @@ class ProjectForm(forms.ModelForm):
         exclude = ('author', 'closed', 'dashboard', 'stream')
         widgets = {
             'description': CKEditor(),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
 class MilestoneForm(forms.ModelForm):
@@ -51,8 +51,8 @@ class MilestoneForm(forms.ModelForm):
         exclude = ('project', 'author', 'closed', 'dashboard', 'stream')
         widgets = {
             'description': CKEditor(),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
         
 class TicketForm(forms.ModelForm):
@@ -62,9 +62,9 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         exclude = ('project', 'code', 'author', 'closed', 'stream')
         widgets = {
-            'tasks': SelectMultipleAndAddWidget(add_url='/tasks/add/'),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'tasks': SelectMultipleAndAddWidget(add_url='/tasks/add/', with_perms=['todo.add_task']),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
         
     def __init__(self, *args, **kwargs):

@@ -40,8 +40,8 @@ class TaskForm(forms.ModelForm):
         exclude = ('user', 'closed')
         widgets = {
             'description': CKEditor(),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
 enrich_form(TaskForm)

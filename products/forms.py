@@ -37,8 +37,8 @@ class ProductForm(forms.ModelForm):
         model = Product
         exclude = ['suppliers', 'dashboard', 'stream']
         widgets = {
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add'),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
 class ProductEntryForm(forms.ModelForm):
@@ -46,7 +46,9 @@ class ProductEntryForm(forms.ModelForm):
     """
     class Meta:
         model = ProductEntry
-        widgets = {'product': SelectAndAddWidget(add_url='/products/add')}
+        widgets = {
+            'product': SelectAndAddWidget(add_url='/products/add', with_perms=['products.add_product'])
+        }
         
 class SupplyForm(forms.ModelForm):
     """Form for supply data.
@@ -55,7 +57,7 @@ class SupplyForm(forms.ModelForm):
         model = Supply
         exclude = ['product']
         widgets = {
-            'supplier': SelectAndAddWidget(add_url='/partners/add'),
+            'supplier': SelectAndAddWidget(add_url='/partners/add', with_perms=['partners.add_partner']),
             'end_of_life': DateWidget()
         }
 

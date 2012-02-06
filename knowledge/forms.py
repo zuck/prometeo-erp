@@ -37,8 +37,8 @@ class WikiPageForm(forms.ModelForm):
         model = WikiPage
         exclude = ('author', 'stream')
         widgets = {
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
 class FaqForm(forms.ModelForm):
@@ -48,8 +48,8 @@ class FaqForm(forms.ModelForm):
         model = Faq
         exclude = ['author', 'created', 'stream']
         widgets = {
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
 class AnswerForm(forms.ModelForm):
@@ -67,8 +67,8 @@ class PollForm(forms.ModelForm):
         exclude = ['author', 'created', 'stream']
         widgets = {
             'due_date': DateWidget(),
-            'tags': SelectMultipleAndAddWidget(add_url='/tags/add/'),
-            'categories': SelectMultipleAndAddWidget(add_url='/categories/add/'),
+            'categories': SelectMultipleAndAddWidget(add_url='/categories/add', with_perms=['taxonomy.add_category']),
+            'tags': SelectMultipleAndAddWidget(add_url='/tags/add', with_perms=['taxonomy.add_tag'])
         }
 
 class ChoiceForm(forms.ModelForm):

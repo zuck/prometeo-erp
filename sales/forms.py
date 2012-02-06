@@ -35,7 +35,7 @@ class BankAccountForm(forms.ModelForm):
     class Meta:
         model = BankAccount
         widgets = {
-            'owner': SelectAndAddWidget(add_url='/partners/add'),
+            'owner': SelectAndAddWidget(add_url='/partners/add', with_perms=['partners.add_partner']),
         }
         
 class SalesInvoiceForm(forms.ModelForm):
@@ -45,11 +45,11 @@ class SalesInvoiceForm(forms.ModelForm):
         model = SalesInvoice
         exclude = ['document', 'entries']
         widgets = {
-            'invoice_addressee': SelectAndAddWidget(add_url='/partners/add'),
-            'shipping_addressee': SelectAndAddWidget(add_url='/partners/add'),
+            'invoice_addressee': SelectAndAddWidget(add_url='/partners/add', with_perms=['partners.add_partner']),
+            'shipping_addressee': SelectAndAddWidget(add_url='/partners/add', with_perms=['partners.add_partner']),
             'order_ref_date': DateWidget(),
             'due_date': DateWidget(),
-            'bank_account': SelectAndAddWidget(add_url='/bankaccounts/add')
+            'bank_account': SelectAndAddWidget(add_url='/bankaccounts/add', with_perms=['sales.add_bankaccount'])
         }
 
     def clean_terms_of_payment(self):
