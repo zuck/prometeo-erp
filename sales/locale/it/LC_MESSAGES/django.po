@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 12:15+0100\n"
+"POT-Creation-Date: 2012-02-06 15:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,69 +102,77 @@ msgstr "fatture di vendita"
 msgid "INV"
 msgstr "FAT"
 
-#: management/__init__.py:46
+#: management/__init__.py:48
 msgid "Main menu for sales management"
 msgstr "Menu principale per gestione vendite"
 
-#: management/__init__.py:51
+#: management/__init__.py:53
 msgid "Main menu for sales invoice model"
 msgstr "Menu principale per le fatture di vendita"
 
-#: management/__init__.py:56
+#: management/__init__.py:58
 msgid "Sales"
 msgstr "Vendite"
 
-#: management/__init__.py:58
+#: management/__init__.py:60
 msgid "Sales management"
 msgstr "Gestione vendite"
 
-#: management/__init__.py:65
+#: management/__init__.py:67
 msgid "Bank accounts"
 msgstr "Conti bancari"
 
-#: management/__init__.py:67
+#: management/__init__.py:69
 msgid "Bank accounts management"
 msgstr "Gestione conti bancari"
 
-#: management/__init__.py:73
+#: management/__init__.py:75
 msgid "Sales invoices"
 msgstr "Fatture di vendita"
 
-#: management/__init__.py:75
+#: management/__init__.py:77
 msgid "Sales invoices management"
 msgstr "Gestione fatture di vendita"
 
-#: management/__init__.py:81
+#: management/__init__.py:83
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:88
+#: management/__init__.py:90
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:95
+#: management/__init__.py:97
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:103
+#: management/__init__.py:105
 msgid "Bank account created"
 msgstr "Creazione conto bancario"
 
-#: management/__init__.py:108
+#: management/__init__.py:110
 msgid "Bank account deleted"
 msgstr "Eliminazione conto bancario"
 
-#: management/__init__.py:113
+#: management/__init__.py:115
 msgid "Sales invoice created"
 msgstr "Creazione fattura di vendita"
 
-#: management/__init__.py:118
+#: management/__init__.py:120
 msgid "Sales invoice changed"
 msgstr "Modifica fattura di vendita"
 
-#: management/__init__.py:123
+#: management/__init__.py:125
 msgid "Sales invoice deleted"
 msgstr "Eliminazione fattura di vendita"
+
+#: management/__init__.py:131
+msgid "Sales Team"
+msgstr "Ufficio Vendite"
+
+#: management/__init__.py:135
+msgid "Sales Managers"
+msgstr "Responsabili Vendite"
 
 #: views/salesinvoices.py:81
 msgid "The sales invoice was created successfully."
