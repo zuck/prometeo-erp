@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 12:16+0100\n"
+"POT-Creation-Date: 2012-02-06 16:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,89 +147,101 @@ msgstr "documenti di trasporto"
 msgid "DN"
 msgstr "DDT"
 
-#: management/__init__.py:47
+#: management/__init__.py:45
+msgid "Administrative Employees"
+msgstr ""
+
+#: management/__init__.py:50
 msgid "Main menu for stock management"
 msgstr "Menu principale per gestione delle scorte"
 
-#: management/__init__.py:52
+#: management/__init__.py:55
 msgid "Main menu for warehouse model"
 msgstr "Menu principale per un magazzino"
 
-#: management/__init__.py:57
+#: management/__init__.py:60
 msgid "Main menu for delivery note model"
 msgstr "Menu principale per un documento di trasporto"
 
-#: management/__init__.py:62
+#: management/__init__.py:65
 msgid "Stock"
 msgstr "Scorte"
 
-#: management/__init__.py:64
+#: management/__init__.py:67
 msgid "Stock management"
 msgstr "Gestione scorte"
 
-#: management/__init__.py:71
+#: management/__init__.py:74
 msgid "Warehouses"
 msgstr "Magazzini"
 
-#: management/__init__.py:73
+#: management/__init__.py:76
 msgid "Warehouses management"
 msgstr "Gestione magazzini"
 
-#: management/__init__.py:79 management/__init__.py:102
+#: management/__init__.py:82 management/__init__.py:105
 msgid "Movements"
 msgstr "Movimenti"
 
-#: management/__init__.py:81
+#: management/__init__.py:84
 msgid "Movements management"
 msgstr "Gestione movimenti"
 
-#: management/__init__.py:87
+#: management/__init__.py:90
 msgid "Delivery notes"
 msgstr "Documenti di trasporto"
 
-#: management/__init__.py:89
+#: management/__init__.py:92
 msgid "Delivery notes management"
 msgstr "Gestione documenti di trasporto"
 
-#: management/__init__.py:95 management/__init__.py:116
+#: management/__init__.py:98 management/__init__.py:119
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:109 management/__init__.py:130
+#: management/__init__.py:112 management/__init__.py:133
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:123
+#: management/__init__.py:126
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:138
+#: management/__init__.py:141
 msgid "Warehouse created"
 msgstr "Creazione magazzino"
 
-#: management/__init__.py:143
+#: management/__init__.py:146
 msgid "Warehouse deleted"
 msgstr "Eliminazione magazzino"
 
-#: management/__init__.py:148
+#: management/__init__.py:151
 msgid "Movement created"
 msgstr "Creazione movimento"
 
-#: management/__init__.py:153
+#: management/__init__.py:156
 msgid "Movement deleted"
 msgstr "Eliminazione movimento"
 
-#: management/__init__.py:158
+#: management/__init__.py:161
 msgid "Delivery note created"
 msgstr "Creazione documento di trasporto"
 
-#: management/__init__.py:163
+#: management/__init__.py:166
 msgid "Delivery note changed"
 msgstr "Modifica documento di trasporto"
 
-#: management/__init__.py:168
+#: management/__init__.py:171
 msgid "Delivery note deleted"
 msgstr "Eliminazione documento di trasporto"
+
+#: management/__init__.py:177
+msgid "Purchase Team"
+msgstr "Ufficio Acquisti"
+
+#: management/__init__.py:181
+msgid "Purchase Managers"
+msgstr "Responsabili Acquisti"
 
 #: views/deliverynotes.py:81
 msgid "The delivery note was created successfully."

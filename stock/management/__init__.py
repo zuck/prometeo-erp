@@ -173,6 +173,10 @@ def install(sender, created_models, **kwargs):
     )
 
     # Groups.
+    purchase_team_group, is_new = Group.objects.get_or_create(
+        name=_('Purchase Team')
+    )
+
     purchase_managers_group, is_new = Group.objects.get_or_create(
         name=_('Purchase Managers')
     )
@@ -196,7 +200,8 @@ def install(sender, created_models, **kwargs):
     movements_link.only_with_perms.add(can_view_movement)
     deliverynotes_link.only_with_perms.add(can_view_deliverynote)
 
-    administrative_employees_group.permissions.add(can_view_warehouse, can_add_warehouse, can_view_movement, can_add_movement, can_view_deliverynote, can_add_deliverynote)
+    administrative_employees_group.permissions.add(can_view_deliverynote, can_add_deliverynote)
+    purchase_team_group.permissions.add(can_view_warehouse, can_add_warehouse, can_view_movement, can_add_movement, can_view_deliverynote, can_add_deliverynote)
     purchase_managers_group.permissions.add(can_view_warehouse, can_add_warehouse, can_change_warehouse, can_delete_warehouse, can_view_movement, can_add_movement, can_change_movement, can_delete_movement, can_view_deliverynote, can_add_deliverynote, can_change_deliverynote, can_delete_deliverynote)
 
 post_syncdb.connect(install, dispatch_uid="install_stock")
