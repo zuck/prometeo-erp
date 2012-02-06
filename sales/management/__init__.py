@@ -131,16 +131,25 @@ def install(sender, created_models, **kwargs):
         name=_('Sales Team')
     )
 
+    sales_managers_group, is_new = Group.objects.get_or_create(
+        name=_('Sales Managers')
+    )
+
     # Permissions.
     can_view_bankaccount, is_new = MyPermission.objects.get_or_create_by_natural_key("view_bankaccount", "sales", "bankaccount")
     can_add_bankaccount, is_new = MyPermission.objects.get_or_create_by_natural_key("add_bankaccount", "sales", "bankaccount")
+    can_change_bankaccount, is_new = MyPermission.objects.get_or_create_by_natural_key("change_bankaccount", "sales", "bankaccount")
+    can_delete_bankaccount, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_bankaccount", "sales", "bankaccount")
     can_view_salesinvoice, is_new = MyPermission.objects.get_or_create_by_natural_key("view_salesinvoice", "sales", "salesinvoice")
     can_add_salesinvoice, is_new = MyPermission.objects.get_or_create_by_natural_key("add_salesinvoice", "sales", "salesinvoice")
+    can_change_salesinvoice, is_new = MyPermission.objects.get_or_create_by_natural_key("change_salesinvoice", "sales", "salesinvoice")
+    can_delete_salesinvoice, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_salesinvoice", "sales", "salesinvoice")
 
     sales_link.only_with_perms.add(can_view_bankaccount)
     bankaccounts_link.only_with_perms.add(can_view_bankaccount)
     salesinvoices_link.only_with_perms.add(can_view_salesinvoice)
 
     sales_team_group.permissions.add(can_view_bankaccount, can_add_bankaccount, can_view_salesinvoice, can_add_salesinvoice)
+    sales_managers_group.permissions.add(can_view_bankaccount, can_add_bankaccount, can_change_bankaccount, can_delete_bankaccount, can_view_salesinvoice, can_add_salesinvoice, can_change_salesinvoice, can_delete_salesinvoice)
 
 post_syncdb.connect(install, dispatch_uid="install_sales")
