@@ -172,13 +172,24 @@ def install(sender, created_models, **kwargs):
         slug="deliverynote-deleted"
     )
 
+    # Groups.
+    purchase_managers_group, is_new = Group.objects.get_or_create(
+        name=_('Purchase Managers')
+    )
+
     # Permissions.
     can_view_warehouse, is_new = MyPermission.objects.get_or_create_by_natural_key("view_warehouse", "stock", "warehouse")
     can_add_warehouse, is_new = MyPermission.objects.get_or_create_by_natural_key("add_warehouse", "stock", "warehouse")
+    can_change_warehouse, is_new = MyPermission.objects.get_or_create_by_natural_key("change_warehouse", "stock", "warehouse")
+    can_delete_warehouse, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_warehouse", "stock", "warehouse")
     can_view_movement, is_new = MyPermission.objects.get_or_create_by_natural_key("view_movement", "stock", "movement")
     can_add_movement, is_new = MyPermission.objects.get_or_create_by_natural_key("add_movement", "stock", "movement")
+    can_change_movement, is_new = MyPermission.objects.get_or_create_by_natural_key("change_movement", "stock", "movement")
+    can_delete_movement, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_movement", "stock", "movement")
     can_view_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("view_deliverynote", "stock", "deliverynote")
     can_add_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("add_deliverynote", "stock", "deliverynote")
+    can_change_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("change_deliverynote", "stock", "deliverynote")
+    can_delete_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_deliverynote", "stock", "deliverynote")
 
     stock_link.only_with_perms.add(can_view_warehouse)
     warehouses_link.only_with_perms.add(can_view_warehouse)
@@ -186,5 +197,6 @@ def install(sender, created_models, **kwargs):
     deliverynotes_link.only_with_perms.add(can_view_deliverynote)
 
     administrative_employees_group.permissions.add(can_view_warehouse, can_add_warehouse, can_view_movement, can_add_movement, can_view_deliverynote, can_add_deliverynote)
+    purchase_managers_group.permissions.add(can_view_warehouse, can_add_warehouse, can_change_warehouse, can_delete_warehouse, can_view_movement, can_add_movement, can_change_movement, can_delete_movement, can_view_deliverynote, can_add_deliverynote, can_change_deliverynote, can_delete_deliverynote)
 
 post_syncdb.connect(install, dispatch_uid="install_stock")
