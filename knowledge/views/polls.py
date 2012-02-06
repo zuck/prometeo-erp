@@ -20,8 +20,6 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from datetime import datetime
-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import list_detail, create_update
@@ -91,6 +89,8 @@ def poll_detail(request, id, **kwargs):
 def poll_vote(request, id, choice, **kwargs):
     """Votes the selected choice.
     """
+    from datetime import datetime
+
     poll = get_object_or_404(Poll, id=id)
 
     if poll.due_date is not None and poll.due_date < datetime.now():
