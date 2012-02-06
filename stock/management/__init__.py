@@ -65,7 +65,7 @@ def install(sender, created_models, **kwargs):
         title=_("Stock"),
         slug="stock",
         description=_("Stock management"),
-        url=reverse("warehouse_list"),
+        url="{% if perms.stock.view_warehouse %}{% url warehouse_list %}{% else %}{% url deliverynote_list %}{% endif %}",
         submenu=stock_menu,
         menu=main_menu
     )
@@ -195,7 +195,7 @@ def install(sender, created_models, **kwargs):
     can_change_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("change_deliverynote", "stock", "deliverynote")
     can_delete_deliverynote, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_deliverynote", "stock", "deliverynote")
 
-    stock_link.only_with_perms.add(can_view_warehouse)
+    stock_link.only_with_perms.add(can_view_deliverynote)
     warehouses_link.only_with_perms.add(can_view_warehouse)
     movements_link.only_with_perms.add(can_view_movement)
     deliverynotes_link.only_with_perms.add(can_view_deliverynote)
