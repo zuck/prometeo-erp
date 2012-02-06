@@ -1,0 +1,78 @@
+{% extends "report_base.html" %}
+
+{% load i18n %}
+{% load details %}
+
+{% block meta_title %}{{ document|striptags|capfirst }}{% endblock %}
+
+{% block style %}
+@page {
+  margin: 1cm 2cm;
+}
+
+body {
+    color: #1f1f1f;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    text-size: 10px;
+}
+
+a {
+    text-decoration: normal;
+    color: #1f1f1f;
+}
+
+.disabled { display: none; }
+
+hr { display: none; }
+
+table { margin: 20px 0; }
+
+td, th {
+    border: 1px solid #1f1f1f;
+    padding: 5px 5px 0;
+    text-align: left;
+}
+
+#header td, #header th { border: none; }
+
+#header th { font-size: 26px; }
+ 
+#header td { text-align: right; }
+
+#header h2 { font-size: 1.5em; }
+
+.entry-list table {
+    margin-top: 40px;
+}
+
+.entry-list table th {
+    background-color: #ce0600;
+    text-align: center;
+    color: #fff;
+}
+
+.entry-list table th a { color: #fff; }
+{% endblock %}
+
+{% block main %}
+<div class="details">
+    <p>
+        {% trans "Code" %}: {{ document.code }}
+        <br/>
+        {% trans "Start" %}: {{ document.content_object.start }}
+        <br/>
+        {% trans "End" %}: {{ document.content_object.end }}
+        <br/>
+        {% trans "Employee" %}: {{ document.content_object.employee }}
+        <br/>
+        {% trans "Reason" %}: {{ document.content_object.get_type_display }}
+        <br/>
+        {% trans "Status" %}: {{ document.get_status_display }}
+    </p>
+    {% if document.content_object.notes %}
+    <p>
+        {% trans "Notes" %}: {{ document.content_object.notes }}
+    </p>
+    {% endif %}
+</div>
+{% endblock %}
