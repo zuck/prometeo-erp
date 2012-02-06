@@ -26,7 +26,7 @@ from django.contrib.auth.models import User
 from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 
-from prometeo.core.menus.models import Link
+from prometeo.core.menus.models import Link, Bookmark
 from prometeo.core.menus.signals import manage_bookmarks
 from prometeo.core.widgets.models import Widget
 from prometeo.core.widgets.signals import manage_dashboard
@@ -82,6 +82,7 @@ def update_author_permissions(sender, instance, *args, **kwargs):
 models.signals.post_save.connect(user_post_save, User)
 
 post_save.connect(update_author_permissions, Link, dispatch_uid="update_link_permissions")
+post_save.connect(update_author_permissions, Bookmark, dispatch_uid="update_bookmark_permissions")
 post_save.connect(update_author_permissions, Widget, dispatch_uid="update_widget_permissions")
 post_save.connect(update_author_permissions, Comment, dispatch_uid="update_comment_permissions")
 
