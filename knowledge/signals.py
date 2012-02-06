@@ -35,7 +35,7 @@ def save_wiki_revision(sender, instance, *args, **kwargs):
     """Saves a revision of the given wiki page.
     """
     if isinstance(instance, WikiPage):
-        revision = WikiRevision.objects.create_from_page(instance)
+        WikiRevision.objects.create_from_page(instance)
 
 ## CONNECTIONS ##
 

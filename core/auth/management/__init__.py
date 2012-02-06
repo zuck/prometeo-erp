@@ -134,6 +134,7 @@ def install(sender, **kwargs):
     )
 
     # Permissions.
+    can_add_vote, is_new = MyPermission.objects.get_or_create_by_natural_key("add_vote", "taxonomy", "vote")
     can_view_user, is_new = MyPermission.objects.get_or_create_by_natural_key("view_user", "auth", "user")
     can_view_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("view_tag", "taxonomy", "tag")
     can_add_tag, is_new = MyPermission.objects.get_or_create_by_natural_key("add_tag", "taxonomy", "tag")
@@ -145,7 +146,7 @@ def install(sender, **kwargs):
     can_view_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("view_phonenumber", "addressing", "phonenumber")
     can_view_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("view_socialprofile", "addressing", "socialprofile")
 
-    users_group.permissions.add(can_view_category, can_add_category, can_view_tag, can_add_tag, can_view_link, can_add_link, can_view_address, can_view_phonenumber, can_view_socialprofile)
+    users_group.permissions.add(can_add_vote, can_view_category, can_add_category, can_view_tag, can_add_tag, can_view_link, can_add_link, can_view_address, can_view_phonenumber, can_view_socialprofile)
 
     users_link.only_with_perms.add(can_view_user)
     user_profile_bookmarks_link.only_with_perms.add(can_add_link)

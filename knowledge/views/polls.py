@@ -84,7 +84,8 @@ def poll_detail(request, id, **kwargs):
         **kwargs
     ) 
 
-@permission_required('knowledge.vote_poll', _get_poll)   
+@permission_required('knowledge.view_poll', _get_poll)
+@permission_required('taxonomy.add_vote')   
 def poll_vote(request, id, choice, **kwargs):
     """Votes the selected choice.
     """
