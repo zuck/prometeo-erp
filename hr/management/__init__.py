@@ -246,12 +246,20 @@ def install(sender, **kwargs):
     # Permissions.
     can_view_employee, is_new = MyPermission.objects.get_or_create_by_natural_key("view_employee", "hr", "employee")
     can_add_employee, is_new = MyPermission.objects.get_or_create_by_natural_key("add_employee", "hr", "employee")
+    can_change_employee, is_new = MyPermission.objects.get_or_create_by_natural_key("change_employee", "hr", "employee")
+    can_delete_employee, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_employee", "hr", "employee")
     can_view_timesheet, is_new = MyPermission.objects.get_or_create_by_natural_key("view_timesheet", "hr", "timesheet")
     can_add_timesheet, is_new = MyPermission.objects.get_or_create_by_natural_key("add_timesheet", "hr", "timesheet")
+    can_change_timesheet, is_new = MyPermission.objects.get_or_create_by_natural_key("change_timesheet", "hr", "timesheet")
+    can_delete_timesheet, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_timesheet", "hr", "timesheet")
     can_view_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("view_expensevoucher", "hr", "expensevoucher")
     can_add_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("add_expensevoucher", "hr", "expensevoucher")
+    can_change_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("change_expensevoucher", "hr", "expensevoucher")
+    can_delete_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_expensevoucher", "hr", "expensevoucher")
     can_view_leaverequest, is_new = MyPermission.objects.get_or_create_by_natural_key("view_leaverequest", "hr", "leaverequest")
     can_add_leaverequest, is_new = MyPermission.objects.get_or_create_by_natural_key("add_leaverequest", "hr", "leaverequest")
+    can_change_leaverequest, is_new = MyPermission.objects.get_or_create_by_natural_key("change_leaverequest", "hr", "leaverequest")
+    can_delete_leaverequest, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_leaverequest", "hr", "leaverequest")
 
     hr_link.only_with_perms.add(can_view_timesheet)
     employees_link.only_with_perms.add(can_view_employee)
@@ -260,6 +268,9 @@ def install(sender, **kwargs):
     leaverequests_link.only_with_perms.add(can_view_leaverequest)
 
     employees_group.permissions.add(can_view_timesheet, can_add_timesheet, can_view_expensevoucher, can_add_expensevoucher, can_view_leaverequest, can_add_leaverequest)
-    hr_managers_group.permissions.add(can_view_employee, can_add_employee)
+    hr_managers_group.permissions.add(can_view_employee, can_add_employee, can_change_employee, can_delete_employee)
+    hr_managers_group.permissions.add(can_change_timesheet, can_delete_timesheet)
+    hr_managers_group.permissions.add(can_change_expensevoucher, can_delete_expensevoucher)
+    hr_managers_group.permissions.add(can_change_leaverequest, can_delete_leaverequest)
 
 post_syncdb.connect(install, dispatch_uid="install_hr")
