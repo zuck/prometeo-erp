@@ -127,9 +127,21 @@ class ExpenseEntryFormset(_ExpenseEntryFormset):
                     field.required = False
                 self.forms[i+count].fields['DELETE'].initial = True
 
+class LeaveRequestForm(forms.ModelForm):
+    """Form for LeaveRequest data.
+    """
+    class Meta:
+        model = LeaveRequest
+        widgets = {
+            'employee': SelectAndAddWidget(add_url='contacts/add'),
+            'start': DateTimeWidget(),
+            'end': DateTimeWidget(),
+        }
+
 enrich_form(JobForm)
 enrich_form(EmployeeForm)
 enrich_form(TimesheetForm)
 enrich_form(TimesheetEntryForm)
 enrich_form(ExpenseVoucherForm)
 enrich_form(ExpenseEntryForm)
+enrich_form(LeaveRequestForm)

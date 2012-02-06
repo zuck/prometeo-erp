@@ -50,4 +50,14 @@ urlpatterns = patterns('hr.views',
     url(r'^expensevouchers/(?P<id>\d+)/timeline/$', 'expensevouchers.expensevoucher_detail', {'template_name': 'hr/expensevoucher_timeline.html'}, 'expensevoucher_timeline'),
     url(r'^expensevouchers/(?P<id>\d+)/hard-copies/$', view='expensevouchers.expensevoucher_hardcopies', name='expensevoucher_hardcopies'),
     url(r'^expensevouchers/(?P<id>\d+)/hard-copies/add/$', view='expensevouchers.expensevoucher_add_hardcopy', name='expensevoucher_add_hardcopy'),
+
+    # Leave requests.
+    url(r'^leaverequests/$', view='leaverequests.leaverequest_list', name='leaverequest_list'),
+    url(r'^leaverequests/add/$', view='leaverequests.leaverequest_add', name='leaverequest_add'),
+    url(r'^leaverequests/(?P<id>\d+)/$', view='leaverequests.leaverequest_detail', name='leaverequest_detail'),
+    url(r'^leaverequests/(?P<id>\d+)/edit/$', view='leaverequests.leaverequest_edit', name='leaverequest_edit'),
+    url(r'^leaverequests/(?P<id>\d+)/delete/$', view='leaverequests.leaverequest_delete', name='leaverequest_delete'),
+    url(r'^leaverequests/(?P<id>\d+)/timeline/$', 'leaverequests.leaverequest_detail', {'template_name': 'hr/leaverequest_timeline.html'}, 'leaverequest_timeline'),
+    url(r'^leaverequests/(?P<id>\d+)/hard-copies/$', view='leaverequests.leaverequest_hardcopies', name='leaverequest_hardcopies'),
+    url(r'^leaverequests/(?P<id>\d+)/hard-copies/add/$', view='leaverequests.leaverequest_add_hardcopy', name='leaverequest_add_hardcopy'),
 )

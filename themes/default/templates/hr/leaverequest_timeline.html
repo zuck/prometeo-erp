@@ -1,0 +1,21 @@
+{% extends "hr/leaverequest_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load paginator %}
+{% load details %}
+
+{% block meta_title %}{% trans "Timeline" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Sales invoices' 'salesinvoice_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Timeline' %}
+{% endblock %}
+
+{% block subtitle %}{% trans "Timeline" %}{% endblock %}
+
+{% block section %}
+{% include "elements/timeline.html" %}
+{% endblock %}

@@ -53,11 +53,22 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('voucher', self.gf('django.db.models.fields.related.ForeignKey')(related_name='entries', to=orm['hr.ExpenseVoucher'])),
             ('date', self.gf('django.db.models.fields.DateField')()),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length=10)),
+            ('type', self.gf('django.db.models.fields.CharField')(default='TRV', max_length=10)),
             ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('amount', self.gf('django.db.models.fields.FloatField')(default=0.0)),
         ))
         db.send_create_signal('hr', ['ExpenseEntry'])
+
+        # Adding model 'LeaveRequest'
+        db.create_table('hr_leaverequest', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('employee', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['hr.Employee'])),
+            ('start', self.gf('django.db.models.fields.DateTimeField')()),
+            ('end', self.gf('django.db.models.fields.DateTimeField')()),
+            ('notes', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('type', self.gf('django.db.models.fields.CharField')(default='CSL', max_length=10)),
+        ))
+        db.send_create_signal('hr', ['LeaveRequest'])
 
 
     def backwards(self, orm):
@@ -79,6 +90,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'ExpenseEntry'
         db.delete_table('hr_expenseentry')
+
+        # Deleting model 'LeaveRequest'
+        db.delete_table('hr_leaverequest')
 
 
     models = {
@@ -155,7 +169,7 @@ class Migration(SchemaMigration):
             'date': ('django.db.models.fields.DateField', [], {}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'type': ('django.db.models.fields.CharField', [], {'default': "'TRV'", 'max_length': '10'}),
             'voucher': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'entries'", 'to': "orm['hr.ExpenseVoucher']"})
         },
         'hr.expensevoucher': {
@@ -163,6 +177,15 @@ class Migration(SchemaMigration):
             'date': ('django.db.models.fields.DateField', [], {}),
             'employee': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['hr.Employee']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'hr.leaverequest': {
+            'Meta': {'ordering': "('start', 'type')", 'object_name': 'LeaveRequest'},
+            'employee': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['hr.Employee']"}),
+            'end': ('django.db.models.fields.DateTimeField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'notes': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'start': ('django.db.models.fields.DateTimeField', [], {}),
+            'type': ('django.db.models.fields.CharField', [], {'default': "'CSL'", 'max_length': '10'})
         },
         'hr.timesheet': {
             'Meta': {'ordering': "('-date',)", 'unique_together': "(('employee', 'date'),)", 'object_name': 'Timesheet'},

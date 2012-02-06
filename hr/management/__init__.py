@@ -59,6 +59,11 @@ def install(sender, **kwargs):
         slug="expensevoucher_menu",
         description=_("Main menu for expense voucher")
     )
+
+    leaverequest_menu, is_new = Menu.objects.get_or_create(
+        slug="leaverequest_menu",
+        description=_("Main menu for leave request")
+    )
     
     # Links.
     hr_link, is_new = Link.objects.get_or_create(
@@ -88,6 +93,13 @@ def install(sender, **kwargs):
         title=_("Expense vouchers"),
         slug="expensevouchers",
         url="{% url expensevoucher_list %}",
+        menu=hr_menu
+    )
+
+    leaverequests_link, is_new = Link.objects.get_or_create(
+        title=_("Leave requests"),
+        slug="leaverequests",
+        url="{% url leaverequest_list %}",
         menu=hr_menu
     )
 
@@ -140,6 +152,27 @@ def install(sender, **kwargs):
         menu=expensevoucher_menu
     )
 
+    leaverequest_details_link, is_new = Link.objects.get_or_create(
+        title=_("Details"),
+        slug="leaverequest-details",
+        url="{% url leaverequest_detail object.object_id %}",
+        menu=leaverequest_menu
+    )
+
+    leaverequest_hard_copies_link, is_new = Link.objects.get_or_create(
+        title=_("Hard copies"),
+        slug="leaverequest-hard-copies",
+        url="{% url leaverequest_hardcopies object.object_id %}",
+        menu=leaverequest_menu
+    )
+
+    leaverequest_timeline_link, is_new = Link.objects.get_or_create(
+        title=_("Timeline"),
+        slug="leaverequest-timeline",
+        url="{% url leaverequest_timeline object.object_id %}",
+        menu=leaverequest_menu
+    )
+
     # Signatures.
     employee_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Employee created"),
@@ -186,6 +219,21 @@ def install(sender, **kwargs):
         slug="expensevoucher-deleted"
     )
 
+    leaverequest_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Leave request created"),
+        slug="leaverequest-created"
+    )
+
+    leaverequest_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Leave request changed"),
+        slug="leaverequest-changed"
+    )
+
+    leaverequest_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Leave request deleted"),
+        slug="leaverequest-deleted"
+    )
+
     # Groups.
     employees_group, is_new = Group.objects.get_or_create(
         name=_('Employees')
@@ -202,13 +250,16 @@ def install(sender, **kwargs):
     can_add_timesheet, is_new = MyPermission.objects.get_or_create_by_natural_key("add_timesheet", "hr", "timesheet")
     can_view_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("view_expensevoucher", "hr", "expensevoucher")
     can_add_expensevoucher, is_new = MyPermission.objects.get_or_create_by_natural_key("add_expensevoucher", "hr", "expensevoucher")
+    can_view_leaverequest, is_new = MyPermission.objects.get_or_create_by_natural_key("view_leaverequest", "hr", "leaverequest")
+    can_add_leaverequest, is_new = MyPermission.objects.get_or_create_by_natural_key("add_leaverequest", "hr", "leaverequest")
 
     hr_link.only_with_perms.add(can_view_timesheet)
     employees_link.only_with_perms.add(can_view_employee)
     timesheets_link.only_with_perms.add(can_view_timesheet)
     expensevouchers_link.only_with_perms.add(can_view_expensevoucher)
+    leaverequests_link.only_with_perms.add(can_view_leaverequest)
 
-    employees_group.permissions.add(can_view_timesheet, can_add_timesheet, can_view_expensevoucher, can_add_expensevoucher)
+    employees_group.permissions.add(can_view_timesheet, can_add_timesheet, can_view_expensevoucher, can_add_expensevoucher, can_view_leaverequest, can_add_leaverequest)
     hr_managers_group.permissions.add(can_view_employee, can_add_employee)
 
 post_syncdb.connect(install, dispatch_uid="install_hr")

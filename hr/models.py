@@ -161,7 +161,7 @@ class ExpenseEntry(models.Model):
     """
     voucher = models.ForeignKey(ExpenseVoucher, related_name='entries', verbose_name=_('voucher'))
     date = models.DateField(verbose_name=_('date'))
-    type = models.CharField(max_length=10, choices=settings.EXPENSE_TYPE_CHOICES, verbose_name=_('type'))
+    type = models.CharField(max_length=10, choices=settings.EXPENSE_TYPE_CHOICES, default=settings.DEFAULT_EXPENSE_TYPE, verbose_name=_('type'))
     description = models.TextField(null=True, blank=True, verbose_name=_('description'))
     amount = models.FloatField(default=0.0, verbose_name=_('amount'))
     
@@ -176,3 +176,33 @@ class ExpenseEntry(models.Model):
             'amount': field_to_string(self._meta.get_field_by_name('amount')[0], self),
             'date': field_to_string(self._meta.get_field_by_name('date')[0], self),
         }
+
+class LeaveRequest(models.Model):
+    """Leave request model.
+    """
+    employee = models.ForeignKey(Employee, verbose_name=_('employee'))
+    start = models.DateTimeField(verbose_name=_('start date'))
+    end = models.DateTimeField(verbose_name=_('end date'))
+    notes = models.TextField(null=True, blank=True, verbose_name=_('notes'))
+    type = models.CharField(max_length=10, choices=settings.LEAVE_TYPE_CHOICES, default=settings.DEFAULT_LEAVE_TYPE, verbose_name=_('type'))
+    
+    class Meta:
+        ordering = ('start', 'type')
+        verbose_name = _('leave request')
+        verbose_name_plural = _('leave requests')
+
+    def __unicode__(self):
+        return u"%s" % _('LR')
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('leaverequest_detail', (), {"id": self.pk})
+
+    @models.permalink
+    def get_edit_url(self):
+        return ('leaverequest_edit', (), {"id": self.pk})
+
+    @models.permalink
+    def get_delete_url(self):
+        return ('leaverequest_delete', (), {"id": self.pk})
+    

@@ -43,3 +43,13 @@ EXPENSE_TYPE_CHOICES = (
     ('CAL', _('call')),
     ('OTH', _('others')),
 )
+
+DEFAULT_EXPENSE_TYPE = 'TRV'
+
+LEAVE_TYPE_CHOICES = (
+    ('CSL', _('casual')),
+    ('MDC', _('medical')),
+    ('SCK', _('sick')),
+)
+
+DEFAULT_LEAVE_TYPE = 'CSL'

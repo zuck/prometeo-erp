@@ -1,0 +1,10 @@
+{% extends "documents/document_delete.html" %}
+
+{% load breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Leave requests' 'leaverequest_list' %}
+    {% add_crumb object object.get_absolute_url %}
+    {% add_crumb 'Delete' %}
+{% endblock %}

@@ -70,6 +70,8 @@ post_save.connect(update_author_permissions, Timesheet, dispatch_uid="update_tim
 post_save.connect(update_employee_permissions, Timesheet, dispatch_uid="update_timesheet_employee_permissions")
 post_save.connect(update_author_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_permissions")
 post_save.connect(update_employee_permissions, ExpenseVoucher, dispatch_uid="update_expensevoucher_employee_permissions")
+post_save.connect(update_author_permissions, LeaveRequest, dispatch_uid="update_leaverequest_permissions")
+post_save.connect(update_employee_permissions, LeaveRequest, dispatch_uid="update_leaverequest_employee_permissions")
 
 post_save.connect(create_employee, Job, dispatch_uid="create_employee")
 pre_delete.connect(delete_employee, Job, dispatch_uid="delete_employee")

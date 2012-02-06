@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 12:10+0100\n"
+"POT-Creation-Date: 2012-02-06 11:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "job"
 msgstr "impiego"
 
-#: models.py:38 models.py:164
+#: models.py:38 models.py:164 models.py:187
 msgid "type"
 msgstr "tipologia"
 
@@ -34,7 +34,7 @@ msgstr "dal"
 msgid "ended on"
 msgstr "al"
 
-#: models.py:45 models.py:67 models.py:128
+#: models.py:45 models.py:67 models.py:128 models.py:183
 msgid "employee"
 msgstr "dipendente"
 
@@ -124,90 +124,140 @@ msgstr "voci di spesa"
 msgid "%(type)s ~ %(amount)s on %(date)s"
 msgstr "%(type)s ~ %(amount)s il %(date)s"
 
-#: management/__init__.py:43
+#: models.py:184
+msgid "start date"
+msgstr "data inizio"
+
+#: models.py:185
+msgid "end date"
+msgstr "data fine"
+
+#: models.py:186
+msgid "notes"
+msgstr "note"
+
+#: models.py:191
+msgid "leave request"
+msgstr "richiesta di permesso"
+
+#: models.py:192
+msgid "leave requests"
+msgstr "richieste di permesso"
+
+#: models.py:195
+msgid "LR"
+msgstr "RP"
+
+#: management/__init__.py:45
 msgid "Main menu for human resources"
 msgstr "Menu principale per le risorse umane"
 
-#: management/__init__.py:48
+#: management/__init__.py:50
 msgid "Main menu for employee"
 msgstr "Menu principale per i dipendenti"
 
-#: management/__init__.py:53
+#: management/__init__.py:55
 msgid "Main menu for timesheet"
 msgstr "Menu principale per i fogli ore"
 
-#: management/__init__.py:58
+#: management/__init__.py:60
 msgid "Main menu for expense voucher"
 msgstr "Menu principale per le note spese"
 
-#: management/__init__.py:63
+#: management/__init__.py:65
+msgid "Main menu for leave request"
+msgstr "Menu principale per le richieste di permesso"
+
+#: management/__init__.py:70
 msgid "Human resources"
 msgstr "Risorse umane"
 
-#: management/__init__.py:65
+#: management/__init__.py:72
 msgid "Human resources management"
 msgstr "Gestione risorse umane"
 
-#: management/__init__.py:72
+#: management/__init__.py:79 management/__init__.py:239
 msgid "Employees"
 msgstr "Dipendenti"
 
-#: management/__init__.py:79
+#: management/__init__.py:86
 msgid "Timesheets"
 msgstr "Fogli ore"
 
-#: management/__init__.py:86
+#: management/__init__.py:93
 msgid "Expense vouchers"
 msgstr "Note spese"
 
-#: management/__init__.py:93 management/__init__.py:100
-#: management/__init__.py:121
+#: management/__init__.py:100
+msgid "Leave requests"
+msgstr "Richieste di permesso"
+
+#: management/__init__.py:107 management/__init__.py:114
+#: management/__init__.py:135 management/__init__.py:156
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:107 management/__init__.py:128
+#: management/__init__.py:121 management/__init__.py:142
+#: management/__init__.py:163
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:114 management/__init__.py:135
+#: management/__init__.py:128 management/__init__.py:149
+#: management/__init__.py:170
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:143
+#: management/__init__.py:178
 msgid "Employee created"
 msgstr "Creazione dipendente"
 
-#: management/__init__.py:148
+#: management/__init__.py:183
 msgid "Employee changed"
 msgstr "Modifica dipendente"
 
-#: management/__init__.py:153
+#: management/__init__.py:188
 msgid "Employee deleted"
 msgstr "Eliminazione dipendente"
 
-#: management/__init__.py:158
+#: management/__init__.py:193
 msgid "Timesheet created"
 msgstr "Creazione foglio ore"
 
-#: management/__init__.py:163
+#: management/__init__.py:198
 msgid "Timesheet changed"
 msgstr "Modifica foglio ore"
 
-#: management/__init__.py:168
+#: management/__init__.py:203
 msgid "Timesheet deleted"
 msgstr "Eliminazione foglio ore"
 
-#: management/__init__.py:173
+#: management/__init__.py:208
 msgid "Expense voucher created"
 msgstr "Creazione nota spese"
 
-#: management/__init__.py:178
+#: management/__init__.py:213
 msgid "Expense voucher changed"
 msgstr "Modifica nota spese"
 
-#: management/__init__.py:183
+#: management/__init__.py:218
 msgid "Expense voucher deleted"
 msgstr "Eliminazione nota spese"
+
+#: management/__init__.py:223
+msgid "Leave request created"
+msgstr "Creazione richiesta di permesso"
+
+#: management/__init__.py:228
+msgid "Leave request changed"
+msgstr "Modifica richiesta di permesso"
+
+#: management/__init__.py:233
+msgid "Leave request deleted"
+msgstr "Eliminazione richiesta di permesso"
+
+#: management/__init__.py:243
+msgid "HR Managers"
+msgstr "Responsabili Risorse Umane"
 
 #: views/employees.py:84
 msgid "The employee was created successfully."
@@ -225,6 +275,14 @@ msgstr "La nota spese è stata salvata."
 msgid "The expense voucher was updated successfully."
 msgstr "La nota spese è stata aggiornata."
 
+#: views/leaverequests.py:88
+msgid "The leave request was created successfully."
+msgstr "La richiesta di permesso è stata salvata."
+
+#: views/leaverequests.py:109
+msgid "The leave request was updated successfully."
+msgstr "La richiesta di permesso è stata aggiornata."
+
 #: views/timesheets.py:93
 msgid "The timesheet was created successfully."
 msgstr "Il foglio ore è stato salvato."
@@ -232,3 +290,6 @@ msgstr "Il foglio ore è stato salvato."
 #: views/timesheets.py:117
 msgid "The timesheet was updated successfully."
 msgstr "Il foglio ore è stato aggiornato."
+
+#~ msgid "%(employee)s ~ %(start)s / %(end)s (%(type)s)"
+#~ msgstr "%(employee)s ~ %(start)s / %(end)s (%(type)s)"
