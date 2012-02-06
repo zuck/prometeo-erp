@@ -188,7 +188,7 @@ def install(sender, created_models, **kwargs):
 
     letter_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
-        slug="letter-hard-copies",
+        slug="letter-hardcopies",
         url="{% url letter_hardcopies object.object_id %}",
         menu=letter_menu
     )

@@ -65,7 +65,7 @@ def install(sender, created_models, **kwargs):
 
     bankaccounts_link, is_new = Link.objects.get_or_create(
         title=_("Bank accounts"),
-        slug="bank-account-list",
+        slug="bankaccount-list",
         description=_("Bank accounts management"),
         url=reverse("bankaccount_list"),
         menu=sales_menu
@@ -73,7 +73,7 @@ def install(sender, created_models, **kwargs):
 
     salesinvoices_link, is_new = Link.objects.get_or_create(
         title=_("Sales invoices"),
-        slug="sales-invoice-list",
+        slug="salesinvoice-list",
         description=_("Sales invoices management"),
         url=reverse("salesinvoice_list"),
         menu=sales_menu
@@ -81,21 +81,21 @@ def install(sender, created_models, **kwargs):
 
     salesinvoice_details_link, is_new = Link.objects.get_or_create(
         title=_("Details"),
-        slug="sales-invoice-details",
+        slug="salesinvoice-details",
         url="{% url salesinvoice_detail object.object_id %}",
         menu=salesinvoice_menu
     )
 
     salesinvoice_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
-        slug="sales-invoice-hard-copies",
+        slug="salesinvoice-hardcopies",
         url="{% url salesinvoice_hardcopies object.object_id %}",
         menu=salesinvoice_menu
     )
 
     salesinvoice_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
-        slug="sales-invoice-timeline",
+        slug="salesinvoice-timeline",
         url="{% url salesinvoice_timeline object.object_id %}",
         menu=salesinvoice_menu
     )
@@ -103,12 +103,12 @@ def install(sender, created_models, **kwargs):
     # Signatures.
     bankaccount_created_signature, is_new = Signature.objects.get_or_create(
         title=_("Bank account created"),
-        slug="bank-account-created"
+        slug="bankaccount-created"
     )
 
     bankaccount_deleted_signature, is_new = Signature.objects.get_or_create(
         title=_("Bank account deleted"),
-        slug="bank-account-deleted"
+        slug="bankaccount-deleted"
     )
 
     salesinvoice_created_signature, is_new = Signature.objects.get_or_create(

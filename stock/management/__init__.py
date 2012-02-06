@@ -88,7 +88,7 @@ def install(sender, created_models, **kwargs):
 
     deliverynotes_link, is_new = Link.objects.get_or_create(
         title=_("Delivery notes"),
-        slug="delivery-note-list",
+        slug="deliverynote-list",
         description=_("Delivery notes management"),
         url=reverse("deliverynote_list"),
         menu=stock_menu
@@ -117,21 +117,21 @@ def install(sender, created_models, **kwargs):
 
     deliverynote_details_link, is_new = Link.objects.get_or_create(
         title=_("Details"),
-        slug="delivery-note-details",
+        slug="deliverynote-details",
         url="{% url deliverynote_detail object.object_id %}",
         menu=deliverynote_menu
     )
 
     deliverynote_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
-        slug="delivery-note-hard-copies",
+        slug="deliverynote-hardcopies",
         url="{% url deliverynote_hardcopies object.object_id %}",
         menu=deliverynote_menu
     )
 
     deliverynote_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
-        slug="delivery-note-timeline",
+        slug="deliverynote-timeline",
         url="{% url deliverynote_timeline object.object_id %}",
         menu=deliverynote_menu
     )

@@ -119,7 +119,7 @@ def install(sender, **kwargs):
 
     timesheet_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
-        slug="timesheet-hard-copies",
+        slug="timesheet-hardcopies",
         url="{% url timesheet_hardcopies object.object_id %}",
         menu=timesheet_menu
     )
@@ -140,7 +140,7 @@ def install(sender, **kwargs):
 
     expensevoucher_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
-        slug="expensevoucher-hard-copies",
+        slug="expensevoucher-hardcopies",
         url="{% url expensevoucher_hardcopies object.object_id %}",
         menu=expensevoucher_menu
     )
@@ -161,7 +161,7 @@ def install(sender, **kwargs):
 
     leaverequest_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
-        slug="leaverequest-hard-copies",
+        slug="leaverequest-hardcopies",
         url="{% url leaverequest_hardcopies object.object_id %}",
         menu=leaverequest_menu
     )

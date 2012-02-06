@@ -26,5 +26,5 @@ urlpatterns = patterns('documents.views',
 
     # Documents.
     url(r'^documents/(?P<id>\d+)/(?P<lang>[-\w]+)/$', view='document_print', name='document_print'),
-    url(r'^documents/(?P<document_id>\d+)/hard-copies/(?P<id>\d+)/delete$', view='hardcopy_delete', name='hardcopy_delete'),
+    url(r'^documents/(?P<document_id>\d+)/hardcopies/(?P<id>\d+)/delete$', view='hardcopy_delete', name='hardcopy_delete'),
 )

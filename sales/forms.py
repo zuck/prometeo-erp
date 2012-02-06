@@ -49,7 +49,7 @@ class SalesInvoiceForm(forms.ModelForm):
             'shipping_addressee': SelectAndAddWidget(add_url='/partners/add'),
             'order_ref_date': DateWidget(),
             'due_date': DateWidget(),
-            'bank_account': SelectAndAddWidget(add_url='/bank-accounts/add')
+            'bank_account': SelectAndAddWidget(add_url='/bankaccounts/add')
         }
 
     def clean_terms_of_payment(self):
