@@ -3,6 +3,11 @@
 {% load breadcrumbs %}
 {% load details %}
 
+{% block extrahead %}
+{{ pform.media }}
+{{ form.media }}
+{% endblock %}
+
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Movements' 'movement_list' %}

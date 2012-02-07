@@ -4,6 +4,11 @@
 {% load breadcrumbs %}
 {% load details %}
 
+{% block extrahead %}
+{{ dform.media }}
+{{ form.media }}
+{% endblock %}
+
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Leave requests' 'leaverequest_list' %}

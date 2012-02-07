@@ -4,6 +4,12 @@
 {% load breadcrumbs %}
 {% load details %}
 
+{% block extrahead %}
+{{ dform.media }}
+{{ form.media }}
+{{ formset.media }}
+{% endblock %}
+
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Delivery notes' 'deliverynote_list' %}
