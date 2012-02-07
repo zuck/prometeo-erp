@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 12:10+0100\n"
+"POT-Creation-Date: 2012-02-07 09:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,8 +23,8 @@ msgid "code"
 msgstr "codice"
 
 #: models.py:51
-msgid "owner"
-msgstr "propietario"
+msgid "company"
+msgstr "azienda"
 
 #: models.py:52
 msgid "status"
@@ -78,6 +78,6 @@ msgstr "copia cartacea"
 msgid "hard copies"
 msgstr "copie cartacee"
 
-#: views.py:95
+#: views.py:94
 msgid "The hard copy was created successfully."
 msgstr "La copia cartacea è stata salvata."

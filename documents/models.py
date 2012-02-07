@@ -48,7 +48,7 @@ class Document(Commentable):
     """Document model.
     """
     code = models.SlugField(max_length=100, verbose_name=_('code'))
-    owner = models.ForeignKey('partners.Partner', verbose_name=_('owner'))
+    owner = models.ForeignKey('partners.Partner', verbose_name=_('company'))
     status = models.CharField(max_length=20, choices=settings.DOCUMENT_STATUS_CHOICES, default=settings.DOCUMENT_DEFAULT_STATUS, verbose_name=_('status'))
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
