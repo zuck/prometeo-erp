@@ -151,7 +151,6 @@ class AddLinkMixin(object):
         def _wrapped_render(name, *args, **kwargs):
             output = render_func(name, *args, **kwargs)
             user = LoggedInUserCache().current_user
-            print user, user.has_perms(self.with_perms)
             if self.add_url and (not self.with_perms or user.has_perms(self.with_perms)):
                 tokens = {
                     'name': name,
