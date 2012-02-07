@@ -49,12 +49,12 @@ class Document(Commentable):
     """
     code = models.SlugField(max_length=100, verbose_name=_('code'))
     owner = models.ForeignKey('partners.Partner', verbose_name=_('company'))
-    status = models.CharField(max_length=20, choices=settings.DOCUMENT_STATUS_CHOICES, default=settings.DOCUMENT_DEFAULT_STATUS, verbose_name=_('status'))
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     author = models.ForeignKey('auth.User', verbose_name=_('created by'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    status = models.CharField(max_length=20, choices=settings.DOCUMENT_STATUS_CHOICES, default=settings.DOCUMENT_DEFAULT_STATUS, verbose_name=_('status'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))

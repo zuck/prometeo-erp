@@ -50,7 +50,7 @@ def leaverequest_list(request, page=0, paginate_by=10, **kwargs):
     return filtered_list_detail(
         request,
         Document.objects.get_for_content(LeaveRequest),
-        fields=['code', 'author', 'created', 'owner'],
+        fields=['code', 'author', 'created', 'owner', 'status'],
         paginate_by=paginate_by,
         page=page,
         template_name='hr/leaverequest_list.html',
