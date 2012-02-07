@@ -65,7 +65,7 @@ class TimesheetForm(forms.ModelForm):
         model = Timesheet
         widgets = {
             'date': DateWidget(),
-            'employee': SelectAndAddWidget(add_url='/employees/add', with_perms=["employee.add_employee"]),
+            'employee': SelectAndAddWidget(add_url='/employees/add', with_perms=["hr.add_employee"]),
         }
 
 class TimesheetEntryForm(forms.ModelForm):
@@ -76,6 +76,7 @@ class TimesheetEntryForm(forms.ModelForm):
         widgets = {
             'start_time': TimeWidget(),
             'end_time': TimeWidget(),
+            'task': SelectAndAddWidget(add_url='/tasks/add', with_perms=["todo.add_task"]),
         }
 
 _TimesheetEntryFormset = inlineformset_factory(Timesheet, TimesheetEntry, form=TimesheetEntryForm, extra=2)
@@ -104,7 +105,7 @@ class ExpenseVoucherForm(forms.ModelForm):
         model = ExpenseVoucher
         widgets = {
             'date': DateWidget(),
-            'employee': SelectAndAddWidget(add_url='contacts/add', with_perms=["partners.add_contact"]),
+            'employee': SelectAndAddWidget(add_url='/contacts/add', with_perms=["partners.add_contact"]),
         }
 
 class ExpenseEntryForm(forms.ModelForm):
@@ -134,7 +135,7 @@ class LeaveRequestForm(forms.ModelForm):
     class Meta:
         model = LeaveRequest
         widgets = {
-            'employee': SelectAndAddWidget(add_url='contacts/add', with_perms=["partners.add_contact"]),
+            'employee': SelectAndAddWidget(add_url='/contacts/add', with_perms=["partners.add_contact"]),
             'start': DateTimeWidget(),
             'end': DateTimeWidget(),
         }
