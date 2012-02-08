@@ -251,6 +251,8 @@ def install(sender, created_models, **kwargs):
     can_add_partner, is_new = MyPermission.objects.get_or_create_by_natural_key("add_partner", "partners", "partner")
     can_view_contact, is_new = MyPermission.objects.get_or_create_by_natural_key("view_contact", "partners", "contact")
     can_add_contact, is_new = MyPermission.objects.get_or_create_by_natural_key("add_contact", "partners", "contact")
+    can_view_job, is_new = MyPermission.objects.get_or_create_by_natural_key("view_job", "partners", "job")
+    can_add_job, is_new = MyPermission.objects.get_or_create_by_natural_key("add_job", "partners", "job")
     can_view_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("view_letter", "partners", "letter")
     can_add_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("add_letter", "partners", "letter")
 
@@ -259,7 +261,7 @@ def install(sender, created_models, **kwargs):
     contact_list_link.only_with_perms.add(can_view_contact)
     letter_list_link.only_with_perms.add(can_view_letter)
 
-    administrative_employees_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_letter, can_add_letter)
+    administrative_employees_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_job, can_add_job, can_view_letter, can_add_letter)
 
     # Creates first managed company.
     """if Partner in created_models \
