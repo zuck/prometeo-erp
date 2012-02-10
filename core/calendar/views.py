@@ -20,7 +20,8 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-from datetime import datetime
+import simplejson
+from datetime import datetime, timedelta
 
 import icalendar
 
@@ -40,6 +41,7 @@ from django.conf import settings
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
+from prometeo.core.utils import clean_referer
 
 from models import *
 from forms import *
@@ -323,3 +325,34 @@ def event_export(request, id=None, **kwargs):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
     return response
+
+@permission_required('calendar.change_event', _get_event) 
+def event_move(request, id, days, minutes, **kwargs):
+    """Move an event forward or backward.
+    """
+    evt = Event.objects.get(pk=id)
+    
+    evt.start = evt.start + timedelta(int(days)) + timedelta(0, 0, 0, 0, int(minutes))
+    evt.end = evt.end + timedelta(int(days)) + timedelta(0, 0, 0, 0, int(minutes))
+    evt.save()
+
+    if request.is_ajax():
+        resp = {"status": "OK"}
+        return HttpResponse(simplejson.dumps(resp))
+    else:
+        return redirect_to(request, permanent=False, url=clean_referer(request, reverse("event_list")))
+
+@permission_required('calendar.change_event', _get_event) 
+def event_resize(request, id, days, minutes, **kwargs):
+    """Resize an event duration.
+    """
+    evt = Event.objects.get(pk=id)
+    
+    evt.end = evt.end + timedelta(int(days)) + timedelta(0, 0, 0, 0, int(minutes))
+    evt.save()
+
+    if request.is_ajax():
+        resp = {"status": "OK"}
+        return HttpResponse(simplejson.dumps(resp))
+    else:
+        return redirect_to(request, permanent=False, url=clean_referer(request, reverse("event_list")))

@@ -1,0 +1,273 @@
+/**
+ *
+ * This file is part of the prometeo project.
+ *
+ * Copyright (c) 2011 Adam Shaw
+ * Copyright (C) 2012 Emanuele Bertoldi.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/* Calendar without JS */
+
+#content .calendar .navigator {
+    width: 100%;
+    text-align: center;
+}
+
+#content .calendar .today { background-color: #fffecc; }
+#content .calendar .today_with_events { background-color: #fffecc; }
+
+#content .calendar .navigator .current { float: none; }
+
+#content .calendar .navigator .current h3 {
+    float: none;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+#content .calendar .navigator .previous {
+    float: left;
+    margin: 0;
+}
+
+#content .calendar .navigator .next {
+    float: right;
+    margin: 0;
+}
+
+#content .calendar .events .daynr,
+#content .calendar .events .monthnr {
+    float: left;
+    margin-bottom: 5px;
+}
+
+#content .calendar .events .weeknr,
+#content .calendar .events .quarternr {
+    float: right;
+    color: #c0c0c0;
+}
+
+#content .calendar .events .daynr a {
+    color: #1f1f1f;
+    font-weight: normal;
+}
+
+#content .calendar .events .daynr a:hover { font-weight: bold; }
+
+#content .calendar .events .daynr .weekend, #content .calendar .events .daynr .weekend a { color: #d21717; }
+
+#content .calendar .events .daynr .weekend .disabled { color: #ffc0c0; }
+
+#content .calendar .events dd .actions { float: right; }
+
+#content .calendar .events dt {
+    border: none;
+    margin-bottom: -10px;
+}
+
+#content .calendar .events dd { border-bottom: 2px solid #c0c0c0; }
+
+#content .calendar .events ul { margin-bottom: 0; }
+
+#content .calendar .events li strong { width: 25px; }
+
+#content .calendar .events td, #content .calendar .events th { border: 1px solid #c0c0c0; }
+
+#content .calendar .events td { vertical-align: top; }
+
+#content .calendar .year .events { border-top: 2px solid #c0c0c0; }
+
+#content .calendar .month td,
+#content .calendar .year td { height: 130px; }
+
+#content .calendar .day th.hour,
+#content .calendar .week th.hour { width: 4.5%; }
+
+#content .calendar .week th { width: 95.5%; }
+
+#content .calendar .week th { width: 13.5%; }
+
+#content .calendar .month th { width: 14.28%; }
+
+#content .calendar .year td { width: 33.33%; }
+
+/* Calendar with JS (FullCalendar) */
+
+.fc-view td { 
+	cursor: pointer;
+}
+
+.fc-view td:hover {
+	font-weight: bold;
+}
+	
+.fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
+	background: #fffecc;
+}
+	
+.fc-cell-overlay { /* semi-transparent rectangle while dragging */
+	background: #ffc0c0;
+	opacity: .2;
+	filter: alpha(opacity=20); /* for IE */
+}
+	 
+.fc-event {
+	border-style: solid;
+	border-width: 0;
+	font-size: .85em;
+	cursor: default;
+}
+	
+a.fc-event,
+.fc-event-draggable {
+	cursor: pointer;
+}
+	
+a.fc-event {
+	text-decoration: none;
+}
+	
+.fc-event-skin {
+    background: #ce0600 url(images/button.jpg) repeat-x bottom;
+    border: 1px solid #1f1f1f;
+    color: #fff;
+}
+	
+.fc-event-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-style: solid;
+	border-width: 0;
+	overflow: hidden;
+}
+	
+.fc-event-time,
+.fc-event-title {
+	padding: 0 5px;
+}
+	
+.fc .ui-resizable-handle { /*** TODO: don't use ui-resizable anymore, change class ***/
+	display: block;
+	position: absolute;
+	z-index: 99999;
+	overflow: hidden; /* hacky spaces (IE6/7) */
+	font-size: 300%;  /* */
+	line-height: 50%; /* */
+}
+
+.fc-event-hori {
+	border-width: 1px 0;
+	margin-bottom: 1px;
+}
+	
+.fc-event-hori .ui-resizable-e {
+	top: 0           !important; /* importants override pre jquery ui 1.7 styles */
+	right: -3px      !important;
+	width: 7px       !important;
+	height: 100%     !important;
+	cursor: e-resize;
+}
+	
+.fc-event-hori .ui-resizable-w {
+	top: 0           !important;
+	left: -3px       !important;
+	width: 7px       !important;
+	height: 100%     !important;
+	cursor: w-resize;
+}
+	
+.fc-event-hori .ui-resizable-handle {
+	_padding-bottom: 14px; /* IE6 had 0 height */
+}
+	
+.fc-corner-left {
+	margin-left: 1px;
+}
+	
+.fc-corner-left .fc-button-inner,
+.fc-corner-left .fc-event-inner {
+	margin-left: -1px;
+}
+	
+.fc-corner-right {
+	margin-right: 1px;
+}
+	
+.fc-corner-right .fc-button-inner,
+.fc-corner-right .fc-event-inner {
+	margin-right: -1px;
+}
+	
+.fc-corner-top {
+	margin-top: 1px;
+}
+	
+.fc-corner-top .fc-event-inner {
+	margin-top: -1px;
+}
+	
+.fc-corner-bottom {
+	margin-bottom: 1px;
+}
+	
+.fc-corner-bottom .fc-event-inner {
+	margin-bottom: -1px;
+}
+	
+.fc-corner-left .fc-event-inner {
+	border-left-width: 1px;
+}
+	
+.fc-corner-right .fc-event-inner {
+	border-right-width: 1px;
+}
+	
+.fc-corner-top .fc-event-inner {
+	border-top-width: 1px;
+}
+	
+.fc-corner-bottom .fc-event-inner {
+	border-bottom-width: 1px;
+}
+	
+.fc-grid .fc-other-month .fc-day-number {
+	opacity: 0.3;
+	filter: alpha(opacity=30); /* for IE */
+	/* opacity with small font can sometimes look too faded
+	   might want to set the 'color' property instead
+	   making day-numbers bold also fixes the problem */
+}
+	
+.fc-grid .fc-day-content {
+	clear: both;
+}
+
+.fc-sat .fc-day-number, .fc-sun .fc-day-number {
+    color: #d21717;
+}
+	
+.fc-grid .fc-event-time {
+	font-weight: bold;
+}
+	
+.fc-rtl .fc-grid .fc-day-number {
+	float: left;
+}
+	
+.fc-rtl .fc-grid .fc-event-time {
+	float: right;
+}

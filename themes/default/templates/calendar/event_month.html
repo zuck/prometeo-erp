@@ -11,6 +11,60 @@
 
 {% block subtitle %}{% trans "Month" %}{% endblock %}
 
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/calendar.css" type="text/css" media="all"/>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		
+		$('.calendar .events')
+        .empty()
+        .fullCalendar({
+			editable: true,
+            header: false,
+            firstDay: 1,
+            weekMode: 'variable',
+            year: {{ current_day.year }},
+            month: {{ current_day.month }}-1,
+            day: {{ current_day.day }},
+            dayClick: function(date, allDay, jsEvent, view) {
+
+                window.location = "{% url event_add %}" + date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate() + "/";
+            },
+            eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
+
+                $.get("/events/" +  event.id + "/move/" + dayDelta + "/" + minuteDelta + "/");
+            },
+            eventResize: function(event, dayDelta, minuteDelta, revertFunc) {
+
+                $.get("/events/" +  event.id + "/resize/" + dayDelta + "/" + minuteDelta + "/");
+            },
+			events: [
+            {% for event in object_list %}
+			    {
+                    id: {{ event.pk }},
+				    title: "{{ event.title }}",
+				    start: new Date({{ event.start.year }}, {{ event.start.month }}-1, {{ event.start.day }}),
+                    {% if event.end %}
+				    end: new Date({{ event.end.year }}, {{ event.end.month }}-1, {{ event.end.day }}),
+                    {% endif %}
+                    url: "{{ event.get_absolute_url }}"
+			    }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+			]
+		})
+        .find(".fc-border-separate")
+        .addClass("events");	
+	});
+
+</script>
+{% endblock %}
+
 {% block section %}
 <div class="calendar">
     <div class="month">
@@ -24,4 +78,5 @@
         {% endwith %}
     </div>
 </div>
+<div id="calendar"></div>
 {% endblock %}

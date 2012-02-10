@@ -11,6 +11,11 @@
 
 {% block subtitle %}{% trans "Agenda" %}{% endblock %}
 
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/calendar.css" type="text/css" media="all"/>
+{% endblock %}
+
 {% block section %}
 {% include 'elements/filterbox.html' %}
 <div class="details">

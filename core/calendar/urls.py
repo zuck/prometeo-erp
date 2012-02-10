@@ -37,5 +37,7 @@ urlpatterns = patterns('prometeo.core.calendar.views',
     url(r'^events/(?P<id>\d+)/export/$', view='event_export', name='event_export'),
     url(r'^events/(?P<id>\d+)/edit/$', view='event_edit', name='event_edit'),
     url(r'^events/(?P<id>\d+)/delete/$', view='event_delete', name='event_delete'),
+    url(r'^events/(?P<id>\d+)/move/(?P<days>[\d\-]+)/(?P<minutes>[\d\-]+)/$', view='event_move', name='event_move'),
+    url(r'^events/(?P<id>\d+)/resize/(?P<days>[\d\-]+)/(?P<minutes>[\d\-]+)/$', view='event_resize', name='event_resize'),
     url(r'^events/(?P<id>\d+)/timeline/$', 'event_detail', {'template_name': 'calendar/event_timeline.html'}, 'event_timeline'),
 )

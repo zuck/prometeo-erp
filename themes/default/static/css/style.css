@@ -1,3 +1,23 @@
+/**
+ *
+ * This file is part of the prometeo project.
+ *
+ * Copyright (C) 2011 Emanuele Bertoldi.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
 html { background: #1f1f1f; }
 
 body {
@@ -829,92 +849,6 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
     margin-right: 20px;
     text-align: right;
 }
-
-#content .calendar .navigator {
-    width: 100%;
-    text-align: center;
-}
-
-#content .calendar .today { background-color: #ffc0c0; }
-#content .calendar .with_events { background-color: #fffecc; }
-#content .calendar .today_with_events { background-color: #ffc0c0; }
-
-#content .calendar .navigator .current { float: none; }
-
-#content .calendar .navigator .current h3 {
-    float: none;
-    display: inline;
-    margin: 0;
-    padding: 0;
-}
-
-#content .calendar .navigator .previous {
-    float: left;
-    margin: 0;
-}
-
-#content .calendar .navigator .next {
-    float: right;
-    margin: 0;
-}
-
-#content .calendar .events .daynr,
-#content .calendar .events .monthnr {
-    float: left;
-    margin-bottom: 5px;
-}
-
-#content .calendar .events .weeknr,
-#content .calendar .events .quarternr {
-    float: right;
-    color: #c0c0c0;
-}
-
-#content .calendar .events .daynr a {
-    color: #1f1f1f;
-    font-weight: normal;
-}
-
-#content .calendar .events .daynr a:hover { font-weight: bold; }
-
-#content .calendar .events .daynr .weekend, #content .calendar .events .daynr .weekend a { color: #d21717; }
-
-#content .calendar .events .daynr .weekend .disabled { color: #ffc0c0; }
-
-#content .calendar .events dd .actions { float: right; }
-
-#content .calendar .events dt {
-    border: none;
-    margin-bottom: -10px;
-}
-
-#content .calendar .events dd { border-bottom: 2px solid #c0c0c0; }
-
-#content .calendar .events ul { margin-bottom: 0; }
-
-#content .calendar .events li strong { width: 25px; }
-
-#content .calendar .events td {
-    vertical-align: top;
-    border-left: 1px solid #c0c0c0;
-    border-right: 1px solid #c0c0c0;
-}
-
-#content .calendar .year .events { border-top: 2px solid #c0c0c0; }
-
-#content .calendar .month td,
-#content .calendar .year td { height: 80px; }
-
-#content .calendar .day th.hour,
-#content .calendar .week th.hour { width: 4.5%; }
-
-#content .calendar .week th { width: 95.5%; }
-
-#content .calendar .week th { width: 13.5%; }
-
-#content .calendar .month th { width: 14.28%; }
-
-#content .calendar .year td { width: 33.33%; }
 
 #content .tasks dt {
     border-bottom: 2px solid #c0c0c0;
