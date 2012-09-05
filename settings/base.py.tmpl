@@ -234,7 +234,7 @@ INSTALLED_APPS = (
 for app in INSTALLED_APPS:
     try:
         prefix, sep, app_name = app.rpartition('.')
-        settings = __import__(app_name, globals(), locals(), ['*'], -1)
+        settings = __import__(app_name, globals(), locals(), ['*'], 1)
         for attr in dir(settings):
             if not attr.startswith('_'):
                 globals()[attr] = getattr(settings, attr)
