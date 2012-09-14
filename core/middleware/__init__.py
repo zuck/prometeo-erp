@@ -100,7 +100,17 @@ class MobileDetectionMiddleware(object):
 
         request.is_mobile = is_mobile
 
+        mobile_template_dir = os.path.join(
+            settings.THEME_PATH,
+            "templates",
+            "mobile"
+            )
         if is_mobile:
-            mobile_template_dir = os.path.join(settings.THEME_PATH, "templates", "mobile")
             if (mobile_template_dir) not in settings.TEMPLATE_DIRS:
-                settings.TEMPLATE_DIRS = ([(mobile_template_dir)] + list(settings.TEMPLATE_DIRS))
+                settings.TEMPLATE_DIRS = (
+                    [(mobile_template_dir)] + list(settings.TEMPLATE_DIRS)
+                    )
+        elif mobile_template_dir in settings.TEMPLATE_DIRS:
+            t_dirs = list(settings.TEMPLATE_DIRS)
+            t_dirs.remove(mobile_template_dir)
+            settings.TEMPLATE_DIRS = tuple(t_dirs)
