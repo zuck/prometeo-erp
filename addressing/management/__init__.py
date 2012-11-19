@@ -30,6 +30,10 @@ from prometeo.core.utils import check_dependency
 check_dependency('prometeo.core.auth')
 
 def install(sender, **kwargs):
+    users_group, is_new = Group.objects.get_or_create(
+        name=_('Users')
+    )
+
     employees_group, is_new = Group.objects.get_or_create(
         name=_('Employees')
     )
@@ -55,7 +59,10 @@ def install(sender, **kwargs):
     can_change_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("change_socialprofile", "addressing", "socialprofile")
     can_delete_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("delete_socialprofile", "addressing", "socialprofile")
 
+    users_group.permissions.add(can_view_address, can_view_phonenumber, can_view_socialprofile)
+
     employees_group.permissions.add(can_view_address, can_view_phonenumber, can_view_socialprofile)
+
     administrative_employees_group.permissions.add(can_add_address, can_change_address, can_delete_address)
     administrative_employees_group.permissions.add(can_add_phonenumber, can_change_phonenumber, can_delete_phonenumber)
     administrative_employees_group.permissions.add(can_add_socialprofile, can_change_socialprofile, can_delete_socialprofile)

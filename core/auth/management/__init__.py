@@ -142,11 +142,8 @@ def install(sender, **kwargs):
     can_add_category, is_new = MyPermission.objects.get_or_create_by_natural_key("add_category", "taxonomy", "category")
     can_view_link, is_new = MyPermission.objects.get_or_create_by_natural_key("view_link", "menus", "link")
     can_add_link, is_new = MyPermission.objects.get_or_create_by_natural_key("add_link", "menus", "link")
-    can_view_address, is_new = MyPermission.objects.get_or_create_by_natural_key("view_address", "addressing", "address")
-    can_view_phonenumber, is_new = MyPermission.objects.get_or_create_by_natural_key("view_phonenumber", "addressing", "phonenumber")
-    can_view_socialprofile, is_new = MyPermission.objects.get_or_create_by_natural_key("view_socialprofile", "addressing", "socialprofile")
 
-    users_group.permissions.add(can_add_vote, can_view_category, can_add_category, can_view_tag, can_add_tag, can_view_link, can_add_link, can_view_address, can_view_phonenumber, can_view_socialprofile)
+    users_group.permissions.add(can_add_vote, can_view_category, can_add_category, can_view_tag, can_add_tag, can_view_link, can_add_link)
 
     users_link.only_with_perms.add(can_view_user)
     user_profile_bookmarks_link.only_with_perms.add(can_add_link)
