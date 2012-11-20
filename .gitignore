@@ -1,2 +1,4 @@
 *~
 *.pyc
+*.db
+settings/base.py
