@@ -1,4 +1,4 @@
-{% extends "partners/letter_detail.html" %}
+{% extends "partners/communication_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -7,7 +7,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Letters' 'letter_list' %}
+    {% add_crumb 'Communications' 'communication_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Timeline' %}
 {% endblock %}

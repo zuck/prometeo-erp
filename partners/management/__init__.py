@@ -59,9 +59,9 @@ def install(sender, created_models, **kwargs):
         description=_("Main menu for contact model")
     )
 
-    letter_menu, is_new = Menu.objects.get_or_create(
-        slug="letter_menu",
-        description=_("Main menu for letter model")
+    communication_menu, is_new = Menu.objects.get_or_create(
+        slug="communication_menu",
+        description=_("Main menu for communication model")
     )
     
     # Links.
@@ -88,10 +88,10 @@ def install(sender, created_models, **kwargs):
         menu=partners_menu
     )
 
-    letter_list_link, is_new = Link.objects.get_or_create(
-        title=_("Letters"),
-        slug="letter-list",
-        url=reverse("letter_list"),
+    communication_list_link, is_new = Link.objects.get_or_create(
+        title=_("Communications"),
+        slug="communication-list",
+        url=reverse("communication_list"),
         menu=partners_menu
     )
 
@@ -127,6 +127,13 @@ def install(sender, created_models, **kwargs):
         title=_("Contacts"),
         slug="partner-contacts",
         url="{% url partner_contacts object.pk %}",
+        menu=partner_menu
+    )
+
+    partner_communications_link, is_new = Link.objects.get_or_create(
+        title=_("Communications"),
+        slug="partner-communications",
+        url="{% url partner_communications object.pk %}",
         menu=partner_menu
     )
 
@@ -179,25 +186,25 @@ def install(sender, created_models, **kwargs):
         menu=contact_menu
     )
 
-    letter_details_link, is_new = Link.objects.get_or_create(
+    communication_details_link, is_new = Link.objects.get_or_create(
         title=_("Details"),
-        slug="letter-details",
-        url="{% url letter_detail object.object_id %}",
-        menu=letter_menu
+        slug="communication-details",
+        url="{% url communication_detail object.object_id %}",
+        menu=communication_menu
     )
 
-    letter_hard_copies_link, is_new = Link.objects.get_or_create(
+    communication_hard_copies_link, is_new = Link.objects.get_or_create(
         title=_("Hard copies"),
-        slug="letter-hardcopies",
-        url="{% url letter_hardcopies object.object_id %}",
-        menu=letter_menu
+        slug="communication-hardcopies",
+        url="{% url communication_hardcopies object.object_id %}",
+        menu=communication_menu
     )
 
-    letter_timeline_link, is_new = Link.objects.get_or_create(
+    communication_timeline_link, is_new = Link.objects.get_or_create(
         title=_("Timeline"),
-        slug="letter-timeline",
-        url="{% url letter_timeline object.object_id %}",
-        menu=letter_menu
+        slug="communication-timeline",
+        url="{% url communication_timeline object.object_id %}",
+        menu=communication_menu
     )
     
     # Signatures.
@@ -231,19 +238,19 @@ def install(sender, created_models, **kwargs):
         slug="contact-deleted"
     )
 
-    letter_created_signature, is_new = Signature.objects.get_or_create(
-        title=_("Letter created"),
-        slug="letter-created"
+    communication_created_signature, is_new = Signature.objects.get_or_create(
+        title=_("Communication created"),
+        slug="communication-created"
     )
 
-    letter_changed_signature, is_new = Signature.objects.get_or_create(
-        title=_("Letter changed"),
-        slug="letter-changed"
+    communication_changed_signature, is_new = Signature.objects.get_or_create(
+        title=_("Communication changed"),
+        slug="communication-changed"
     )
 
-    letter_deleted_signature, is_new = Signature.objects.get_or_create(
-        title=_("Letter deleted"),
-        slug="letter-deleted"
+    communication_deleted_signature, is_new = Signature.objects.get_or_create(
+        title=_("Communication deleted"),
+        slug="communication-deleted"
     )
 
     # Permissions.
@@ -253,15 +260,15 @@ def install(sender, created_models, **kwargs):
     can_add_contact, is_new = MyPermission.objects.get_or_create_by_natural_key("add_contact", "partners", "contact")
     can_view_job, is_new = MyPermission.objects.get_or_create_by_natural_key("view_job", "partners", "job")
     can_add_job, is_new = MyPermission.objects.get_or_create_by_natural_key("add_job", "partners", "job")
-    can_view_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("view_letter", "partners", "letter")
-    can_add_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("add_letter", "partners", "letter")
+    can_view_communication, is_new = MyPermission.objects.get_or_create_by_natural_key("view_communication", "partners", "communication")
+    can_add_communication, is_new = MyPermission.objects.get_or_create_by_natural_key("add_communication", "partners", "communication")
 
     partners_link.only_with_perms.add(can_view_partner)
     partner_list_link.only_with_perms.add(can_view_partner)
     contact_list_link.only_with_perms.add(can_view_contact)
-    letter_list_link.only_with_perms.add(can_view_letter)
+    communication_list_link.only_with_perms.add(can_view_communication)
 
-    administrative_employees_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_job, can_add_job, can_view_letter, can_add_letter)
+    administrative_employees_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_job, can_add_job, can_view_communication, can_add_communication)
 
     # Creates first managed company.
     """if Partner in created_models \

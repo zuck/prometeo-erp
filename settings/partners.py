@@ -227,3 +227,12 @@ GENDERS = (
     ('M', _("Male")),
     ('F', _("Female")),
 )
+
+COMMUNICATION_TYPE_CHOICES = (
+    ('LT', _('Letter')),
+    ('CLL', _('Call')),
+    ('EML', _('Email')),
+    ('MTG', _('Meeting')),
+)
+
+COMMUNICATION_DEFAULT_TYPE = 'EML'

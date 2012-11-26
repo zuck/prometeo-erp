@@ -164,11 +164,12 @@ class Job(models.Model):
         return [self.contact.stream, self.partner.stream]
     stream = property(_stream)
 
-class Letter(models.Model):
-    """Letter model.
+class Communication(models.Model):
+    """Communication model.
     """
+    type = models.CharField(max_length=20, choices=settings.COMMUNICATION_TYPE_CHOICES, default=settings.COMMUNICATION_DEFAULT_TYPE, verbose_name=_('type'))
     target = models.ForeignKey(Partner, verbose_name=_('target'))
-    to = models.ForeignKey(Contact, null=True, blank=True, related_name='target_of_letters', verbose_name=_('to the attention of'))
+    to = models.ForeignKey(Contact, null=True, blank=True, related_name='target_of_communications', verbose_name=_('to the attention of'))
     location = models.CharField(max_length=100, verbose_name=_('location'))
     date = models.DateField(verbose_name=_('date'))
     target_ref_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('your ref'))
@@ -177,20 +178,20 @@ class Letter(models.Model):
     body = models.TextField(verbose_name=_('body'))
     
     class Meta:
-        verbose_name = _('letter')
-        verbose_name_plural = _('letters')
+        verbose_name = _('communication')
+        verbose_name_plural = _('communication')
         
     def __unicode__(self):
-        return u'%s' % _('LT')
+        return self.type
 
     @models.permalink
     def get_absolute_url(self):
-        return ('letter_detail', (), {"id": self.pk})
+        return ('communication_detail', (), {"id": self.pk})
 
     @models.permalink
     def get_edit_url(self):
-        return ('letter_edit', (), {"id": self.pk})
+        return ('communication_edit', (), {"id": self.pk})
 
     @models.permalink
     def get_delete_url(self):
-        return ('letter_delete', (), {"id": self.pk})
+        return ('communication_delete', (), {"id": self.pk})
