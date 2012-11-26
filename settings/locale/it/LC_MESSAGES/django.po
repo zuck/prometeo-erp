@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-27 12:09+0100\n"
+"POT-Creation-Date: 2012-11-26 22:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr "tempo indeterminato"
 msgid "travel"
 msgstr "viaggio"
 
-#: hr.py:41
+#: hr.py:41 hr.py:51
 msgid "medical"
 msgstr "mediche"
 
@@ -113,6 +113,14 @@ msgstr "chiamata"
 #: hr.py:44
 msgid "others"
 msgstr "altro"
+
+#: hr.py:50
+msgid "casual"
+msgstr ""
+
+#: hr.py:52
+msgid "sick"
+msgstr ""
 
 #: partners.py:26
 msgid "first contact"
@@ -845,6 +853,22 @@ msgstr "Maschio"
 #: partners.py:228
 msgid "Female"
 msgstr "Femmina"
+
+#: partners.py:232
+msgid "Letter"
+msgstr "Lettera"
+
+#: partners.py:233
+msgid "Call"
+msgstr "Chiamata"
+
+#: partners.py:234
+msgid "Email"
+msgstr ""
+
+#: partners.py:235
+msgid "Meeting"
+msgstr "Incontro"
 
 #: products.py:26
 msgid "Bag"

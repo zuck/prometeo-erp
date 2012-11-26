@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-27 12:45+0100\n"
+"POT-Creation-Date: 2012-11-26 22:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -184,48 +184,44 @@ msgid "%(contact)s as %(role)s"
 msgstr "%(contact)s come %(role)s"
 
 #: models.py:170
+msgid "type"
+msgstr "tipologia"
+
+#: models.py:171
 msgid "target"
 msgstr "destinatario"
 
-#: models.py:171
+#: models.py:172
 msgid "to the attention of"
 msgstr "alla cortese attenzione di"
 
-#: models.py:172
+#: models.py:173
 msgid "location"
 msgstr "luogo"
 
-#: models.py:173
+#: models.py:174
 msgid "date"
 msgstr "data"
 
-#: models.py:174
+#: models.py:175
 msgid "your ref"
 msgstr "vs rif."
 
-#: models.py:175
+#: models.py:176
 msgid "on"
 msgstr "del"
 
-#: models.py:176
+#: models.py:177
 msgid "subject"
 msgstr "oggetto"
 
-#: models.py:177
+#: models.py:178
 msgid "body"
 msgstr "corpo"
 
-#: models.py:180
-msgid "letter"
-msgstr "lettera"
-
-#: models.py:181
-msgid "letters"
-msgstr "lettere"
-
-#: models.py:184
-msgid "LT"
-msgstr ""
+#: models.py:181 models.py:182
+msgid "communication"
+msgstr "comunicazione"
 
 #: management/__init__.py:44
 msgid "Administrative Employees"
@@ -244,8 +240,8 @@ msgid "Main menu for contact model"
 msgstr "Menu principale per un contatto"
 
 #: management/__init__.py:64
-msgid "Main menu for letter model"
-msgstr "Menu principale per una lettera"
+msgid "Main menu for communication model"
+msgstr "Menu principale per una comunicazione"
 
 #: management/__init__.py:69 management/__init__.py:78
 msgid "Partners"
@@ -259,77 +255,85 @@ msgstr "Gestione relazioni con clienti & fornitori"
 msgid "Contacts"
 msgstr "Contatti"
 
-#: management/__init__.py:92
-msgid "Letters"
-msgstr "Lettere"
+#: management/__init__.py:92 management/__init__.py:134
+msgid "Communications"
+msgstr "Comunicazioni"
 
-#: management/__init__.py:99 management/__init__.py:141
-#: management/__init__.py:183
+#: management/__init__.py:99 management/__init__.py:148
+#: management/__init__.py:190
 msgid "Details"
 msgstr "Dettagli"
 
-#: management/__init__.py:106 management/__init__.py:148
+#: management/__init__.py:106 management/__init__.py:155
 msgid "Addresses"
 msgstr "Indirizzi"
 
-#: management/__init__.py:113 management/__init__.py:155
+#: management/__init__.py:113 management/__init__.py:162
 msgid "Phone numbers"
 msgstr "Numeri telefonici"
 
-#: management/__init__.py:120 management/__init__.py:162
+#: management/__init__.py:120 management/__init__.py:169
 msgid "Social profiles"
 msgstr "Profili social"
 
-#: management/__init__.py:134 management/__init__.py:176
-#: management/__init__.py:197
+#: management/__init__.py:141 management/__init__.py:183
+#: management/__init__.py:204
 msgid "Timeline"
 msgstr "Cronologia"
 
-#: management/__init__.py:169
+#: management/__init__.py:176
 msgid "Jobs"
 msgstr "Impieghi"
 
-#: management/__init__.py:190
+#: management/__init__.py:197
 msgid "Hard copies"
 msgstr "Copie cartacee"
 
-#: management/__init__.py:205
+#: management/__init__.py:212
 msgid "Partner created"
 msgstr "Creazione partner"
 
-#: management/__init__.py:210
+#: management/__init__.py:217
 msgid "Partner deleted"
 msgstr "Eliminazione partner"
 
-#: management/__init__.py:215
+#: management/__init__.py:222
 msgid "Contact created"
 msgstr "Creazione contatto"
 
-#: management/__init__.py:220
+#: management/__init__.py:227
 msgid "Contact added to partner"
 msgstr "Aggiunta contatto a partner"
 
-#: management/__init__.py:225
+#: management/__init__.py:232
 msgid "Contact removed from partner"
 msgstr "Rimozione contatto da partner"
 
-#: management/__init__.py:230
+#: management/__init__.py:237
 msgid "Contact deleted"
 msgstr "Eliminazione contatto"
 
-#: management/__init__.py:235
-msgid "Letter created"
-msgstr "Creazione lettera"
+#: management/__init__.py:242
+msgid "Communication created"
+msgstr "Creazione comunicazione"
 
-#: management/__init__.py:240
-msgid "Letter changed"
-msgstr "Modifica lettera"
+#: management/__init__.py:247
+msgid "Communication changed"
+msgstr "Modifica comunicazione"
 
-#: management/__init__.py:245
-msgid "Letter deleted"
-msgstr "Eliminazione lettera"
+#: management/__init__.py:252
+msgid "Communication deleted"
+msgstr "Eliminazione comunicazione"
 
-#: views/contacts.py:305 views/partners.py:317
+#: views/communications.py:77
+msgid "The communication was created successfully."
+msgstr "La comunicazione è stata salvata."
+
+#: views/communications.py:115
+msgid "The communication was updated successfully."
+msgstr "La comunicazione è stata aggiornata."
+
+#: views/contacts.py:305 views/partners.py:319
 #, python-format
 msgid "Contact added to %s"
 msgstr "Contatto aggiunto a %s"
@@ -338,14 +342,10 @@ msgstr "Contatto aggiunto a %s"
 msgid "Contact updated"
 msgstr "Contatto aggiornato"
 
-#: views/letters.py:78
-msgid "The letter was created successfully."
-msgstr "La lettera è stata salvata."
-
-#: views/letters.py:116
-msgid "The letter was updated successfully."
-msgstr "La lettera è stata aggiornata."
-
-#: views/partners.py:76
+#: views/partners.py:78
 msgid "The partner was created successfully."
 msgstr "Il partner è stato salvato."
+
+#: views/partners.py:357
+msgid "Communication added to %s"
+msgstr "Comunicazione aggiunta a %s"
