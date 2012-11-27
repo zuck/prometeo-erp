@@ -1,4 +1,4 @@
-{% extends "partners/letter_detail.html" %}
+{% extends "partners/communication_detail.html" %}
 
 {% load i18n %}
 {% load breadcrumbs %}
@@ -9,7 +9,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Letters' 'letter_list' %}
+    {% add_crumb 'Communications' 'communication_list' %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Hard copies' %}
 {% endblock %}
@@ -20,8 +20,8 @@
 {% include 'elements/filterbox.html' %}
 <div class="actions">
     <ul>
-        {% if object.object_id in obj_perms.partners.change_letter %}
-        <li class="add"><a title="{% trans 'Add' %}" href="{% url letter_add_hardcopy object.object_id %}">{% trans 'Add' %}</a></li>
+        {% if object.object_id in obj_perms.partners.change_communication %}
+        <li class="add"><a title="{% trans 'Add' %}" href="{% url communication_add_hardcopy object.object_id %}">{% trans 'Add' %}</a></li>
         {% endif %}
     </ul>
 </div>

@@ -10,7 +10,7 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Letters' 'letter_list' %}
+    {% add_crumb 'Communications' 'communication_list' %}
     {% if object.pk %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Edit' %}
@@ -22,7 +22,7 @@
 {% block editform %}
 <table class="properties">
     {% property_table dform "['code', ['owner', 'status']]" %}
-    {% property_table form "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], 'subject', 'body']" %}
+    {% property_table form "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], ['subject', 'type'], 'body']" %}
     {% property_table dform "['categories', 'tags']" %}
 </table>
 {% endblock %}

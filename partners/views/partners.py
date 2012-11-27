@@ -27,10 +27,12 @@ from django.views.generic.simple import redirect_to
 from django.views.generic import list_detail, create_update
 from django.template import RequestContext
 from django.contrib import messages
+from django.db.models import Q
 
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
 from prometeo.addressing.views import *
+from prometeo.documents.models import Document
 
 from ..models import *
 from ..forms import *
@@ -320,3 +322,41 @@ def partner_add_contact(request, id, **kwargs):
         form = PartnerJobForm(instance=instance)
 
     return render_to_response('partners/job_edit.html', RequestContext(request, {'form': form, 'object': instance}))
+
+@permission_required('partners.view_partner', _get_partner)
+@permission_required('partners.view_communication')    
+def partner_communications(request, id, page=0, paginate_by=10, **kwargs):
+    """Shows the partner's communications.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    coms = Communication.objects.filter(target=partner)
+    coms_id = [c.id for c in coms]
+
+    return filtered_list_detail(
+        request,
+        Document.objects.get_for_content(Communication).filter(Q(owner=partner) | Q(object_id__in=coms_id)),
+        fields=['code', 'author', 'created', 'owner'],
+        paginate_by=paginate_by,
+        page=page,
+        extra_context={'object': partner},
+        template_name='partners/partner_communications.html'
+    )
+
+@permission_required('partners.change_partner', _get_partner)
+@permission_required('partners.add_communication')    
+def partner_add_communication(request, id, **kwargs):
+    """Adds a new communication to the given partner.
+    """
+    partner = get_object_or_404(Partner, pk=id)
+    instance = Communication(target=partner)
+
+    if request.method == 'POST':
+        form = CommunicationForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Communication added to %s") % partner)
+            return redirect_to(request, url=reverse("partner_communications", args=[id]))
+    else:
+        form = CommunicationForm(instance=instance)
+
+    return render_to_response('partners/communication_edit.html', RequestContext(request, {'form': form, 'object': instance}))

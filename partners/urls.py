@@ -44,6 +44,8 @@ urlpatterns = patterns('partners.views',
     url(r'^partners/(?P<partner_id>\d+)/profiles/(?P<id>\d+)/delete/$', view='partners.partner_delete_profile', name='partner_delete_profile'),
     url(r'^partners/(?P<id>\d+)/contacts/$', view='partners.partner_contacts', name='partner_contacts'),
     url(r'^partners/(?P<id>\d+)/contacts/add/$', view='partners.partner_add_contact', name='partner_add_contact'),
+    url(r'^partners/(?P<id>\d+)/communications/$', view='partners.partner_communications', name='partner_communications'),
+    url(r'^partners/(?P<id>\d+)/communications/add/$', view='partners.partner_add_communication', name='partner_add_communication'),
     url(r'^partners/(?P<id>\d+)/timeline/$', 'partners.partner_detail', {"template_name": "partners/partner_timeline.html"}, 'partner_timeline'),
 
     # Contacts.
@@ -70,13 +72,13 @@ urlpatterns = patterns('partners.views',
     url(r'^contacts/(?P<contact_id>\d+)/jobs/(?P<id>\d+)/delete/$', view='contacts.contact_delete_job', name='contact_delete_job'),
     url(r'^contacts/(?P<id>\d+)/timeline/$', 'contacts.contact_detail', {"template_name": "partners/contact_timeline.html"}, 'contact_timeline'),
 
-    # Letters.
-    url(r'^letters/$', view='letters.letter_list', name='letter_list'),
-    url(r'^letters/add/$', view='letters.letter_add', name='letter_add'),
-    url(r'^letters/(?P<id>\d+)/$', view='letters.letter_detail', name='letter_detail'),
-    url(r'^letters/(?P<id>\d+)/edit/$', view='letters.letter_edit', name='letter_edit'),
-    url(r'^letters/(?P<id>\d+)/delete/$', view='letters.letter_delete', name='letter_delete'),
-    url(r'^letters/(?P<id>\d+)/hardcopies/$', view='letters.letter_hardcopies', name='letter_hardcopies'),
-    url(r'^letters/(?P<id>\d+)/hardcopies/add/$', view='letters.letter_add_hardcopy', name='letter_add_hardcopy'),
-    url(r'^letters/(?P<id>\d+)/timeline/$', 'letters.letter_detail', {'template_name': 'partners/letter_timeline.html'}, 'letter_timeline'),
+    # Communications.
+    url(r'^communications/$', view='communications.communication_list', name='communication_list'),
+    url(r'^communications/add/$', view='communications.communication_add', name='communication_add'),
+    url(r'^communications/(?P<id>\d+)/$', view='communications.communication_detail', name='communication_detail'),
+    url(r'^communications/(?P<id>\d+)/edit/$', view='communications.communication_edit', name='communication_edit'),
+    url(r'^communications/(?P<id>\d+)/delete/$', view='communications.communication_delete', name='communication_delete'),
+    url(r'^communications/(?P<id>\d+)/hardcopies/$', view='communications.communication_hardcopies', name='communication_hardcopies'),
+    url(r'^communications/(?P<id>\d+)/hardcopies/add/$', view='communications.communication_add_hardcopy', name='communication_add_hardcopy'),
+    url(r'^communications/(?P<id>\d+)/timeline/$', 'communications.communication_detail', {'template_name': 'partners/communication_timeline.html'}, 'communication_timeline'),
 )

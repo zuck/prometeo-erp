@@ -1,0 +1,50 @@
+{% extends "documents/document_detail.html" %}
+
+{% load i18n %}
+{% load breadcrumbs %}
+{% load details %}
+{% load menu %}
+
+{% block breadcrumbs %}
+    {% add_crumb 'Home' '/' %}
+    {% add_crumb 'Communications' 'communication_list' %}
+    {% add_crumb object %}
+{% endblock %}
+
+{% block objectactions %}
+{% if perms.partners.add_communication %}
+<li class="add"><a title="{% trans 'Add' %}" href="{% url communication_add %}">{% trans 'Add' %}</a></li>
+{% endif %}
+{% if object.content_object.pk in obj_perms.partners.change_communication %}
+<li class="edit"><a title="{% trans 'Edit' %}" href="{% url communication_edit object.content_object.pk %}">{% trans 'Edit' %}</a></li>
+{% endif %}
+{% if object.content_object.pk in obj_perms.partners.delete_communication %}
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url communication_delete object.content_object.pk %}">{% trans 'Delete' %}</a></li>
+{% endif %}
+{% if perms.partners.view_communication %}
+<li class="all"><a title="{% trans 'All' %}" href="{% url communication_list %}">{% trans 'All' %}</a></li>
+{% endif %}
+{% if object.content_object.pk in obj_perms.partners.view_communication %}
+<li class="print"><a title="{% trans 'Print' %}" href="{% url document_print object.pk object.content_object.target.language %}">{% trans 'Print' %}</a></li>
+{% endif %}
+{% if object.content_object.pk in obj_perms.partners.view_communication %}
+{% if user not in object.stream.followers.all %}
+<li class="follow"><a title="{% trans 'Follow' %}" href="{% url stream_follow object.stream request.path %}">{% trans 'Follow' %}</a></li>
+{% else %}
+<li class="leave"><a title="{% trans 'Leave' %}" href="{% url stream_leave object.stream request.path %}">{% trans 'Leave' %}</a></li>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block objectmenu %}{% menu "communication_menu" %}{% endblock %}
+
+{% block section %}
+<div class="details">
+    <table class="properties">
+        {% property_table object "[['owner', 'status'], ['author', 'created']]" %}
+        {% property_table object.content_object "[['target', 'to'], ['location', 'date'], ['target_ref_number', 'target_ref_date'], ['subject', 'type'], 'body']" %}
+        {% property_table object "['categories', 'tags']" %}
+    </table>
+</div>
+{% include "elements/comments.html" %}
+{% endblock %}

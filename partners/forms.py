@@ -104,15 +104,16 @@ class PartnerJobForm(forms.ModelForm):
             'contact': SelectAndAddWidget(add_url='/contacts/add/', with_perms=['partners.add_contact']),
         }     
         
-class LetterForm(forms.ModelForm):
-    """Form for letter data.
+class CommunicationForm(forms.ModelForm):
+    """Form for communication data.
     """
     class Meta:
-        model = Letter
+        model = Communication
         widgets = {
             'date': DateWidget(),
             'target_ref_date': DateWidget(),
             'target': SelectAndAddWidget(add_url='/partners/add/', with_perms=['partners.add_partner']),
+            'speaker': SelectAndAddWidget(add_url='/contacts/add/', with_perms=['partners.add_contact']),
             'to': SelectAndAddWidget(add_url='/contacts/add/', with_perms=['partners.add_contact']),
             'body': CKEditor(),
         }
@@ -121,4 +122,4 @@ enrich_form(ContactForm)
 enrich_form(ContactJobForm)
 enrich_form(PartnerForm)
 enrich_form(PartnerJobForm)
-enrich_form(LetterForm)
+enrich_form(CommunicationForm)

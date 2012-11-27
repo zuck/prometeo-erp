@@ -1,20 +1,20 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
         # Adding model 'Contact'
         db.create_table('partners_contact', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('allow_comments', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('firstname', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('lastname', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('nickname', self.gf('django.db.models.fields.SlugField')(db_index=True, max_length=50, null=True, blank=True)),
+            ('nickname', self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True)),
             ('gender', self.gf('django.db.models.fields.CharField')(max_length=2, null=True, blank=True)),
             ('date_of_birth', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
             ('ssn', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
@@ -149,11 +149,12 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('partners', ['Job'])
 
-        # Adding model 'Letter'
-        db.create_table('partners_letter', (
+        # Adding model 'Communication'
+        db.create_table('partners_communication', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('type', self.gf('django.db.models.fields.CharField')(default='EML', max_length=20)),
             ('target', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['partners.Partner'])),
-            ('to', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='target_of_letters', null=True, to=orm['partners.Contact'])),
+            ('to', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='target_of_communications', null=True, to=orm['partners.Contact'])),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('date', self.gf('django.db.models.fields.DateField')()),
             ('target_ref_number', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
@@ -161,11 +162,10 @@ class Migration(SchemaMigration):
             ('subject', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('body', self.gf('django.db.models.fields.TextField')()),
         ))
-        db.send_create_signal('partners', ['Letter'])
+        db.send_create_signal('partners', ['Communication'])
 
 
     def backwards(self, orm):
-        
         # Deleting model 'Contact'
         db.delete_table('partners_contact')
 
@@ -205,8 +205,8 @@ class Migration(SchemaMigration):
         # Deleting model 'Job'
         db.delete_table('partners_job')
 
-        # Deleting model 'Letter'
-        db.delete_table('partners_letter')
+        # Deleting model 'Communication'
+        db.delete_table('partners_communication')
 
 
     models = {
@@ -274,7 +274,20 @@ class Migration(SchemaMigration):
             'followers': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'null': 'True', 'symmetrical': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'linked_streams': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['notifications.Stream']", 'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
+        },
+        'partners.communication': {
+            'Meta': {'object_name': 'Communication'},
+            'body': ('django.db.models.fields.TextField', [], {}),
+            'date': ('django.db.models.fields.DateField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'subject': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'target': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['partners.Partner']"}),
+            'target_ref_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'target_ref_number': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
+            'to': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'target_of_communications'", 'null': 'True', 'to': "orm['partners.Contact']"}),
+            'type': ('django.db.models.fields.CharField', [], {'default': "'EML'", 'max_length': '20'})
         },
         'partners.contact': {
             'Meta': {'object_name': 'Contact'},
@@ -291,7 +304,7 @@ class Migration(SchemaMigration):
             'lastname': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'main_address': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'main_of_contact'", 'null': 'True', 'to': "orm['addressing.Address']"}),
             'main_phone_number': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'main_of_contact'", 'null': 'True', 'to': "orm['addressing.PhoneNumber']"}),
-            'nickname': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'nickname': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'phone_numbers': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['addressing.PhoneNumber']", 'null': 'True', 'blank': 'True'}),
             'social_profiles': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['addressing.SocialProfile']", 'null': 'True', 'blank': 'True'}),
             'ssn': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
@@ -309,18 +322,6 @@ class Migration(SchemaMigration):
             'notes': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'partner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['partners.Partner']"}),
             'role': ('django.db.models.fields.CharField', [], {'default': "'EMPLOYEE'", 'max_length': '30'})
-        },
-        'partners.letter': {
-            'Meta': {'object_name': 'Letter'},
-            'body': ('django.db.models.fields.TextField', [], {}),
-            'date': ('django.db.models.fields.DateField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'subject': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'target': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['partners.Partner']"}),
-            'target_ref_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'target_ref_number': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
-            'to': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'target_of_letters'", 'null': 'True', 'to': "orm['partners.Contact']"})
         },
         'partners.partner': {
             'Meta': {'object_name': 'Partner'},
@@ -358,20 +359,20 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "('title',)", 'object_name': 'Category'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'children'", 'null': 'True', 'to': "orm['taxonomy.Category']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
         },
         'taxonomy.tag': {
             'Meta': {'ordering': "('title',)", 'object_name': 'Tag'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
         },
         'widgets.region': {
             'Meta': {'object_name': 'Region'},
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
         }
     }
 

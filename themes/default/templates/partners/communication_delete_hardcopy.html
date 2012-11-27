@@ -4,9 +4,9 @@
 
 {% block breadcrumbs %}
     {% add_crumb 'Home' '/' %}
-    {% add_crumb 'Letters' 'letter_list' %}
+    {% add_crumb 'Communications' 'communication_list' %}
     {% add_crumb object.document object.document.get_absolute_url %}
-    {% add_crumb 'Hard copies' 'letter_hardcopies' object.document.object_id %}
+    {% add_crumb 'Hard copies' 'communication_hardcopies' object.document.object_id %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Delete' %}
 {% endblock %}
