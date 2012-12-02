@@ -48,8 +48,8 @@ def install(sender, created_models, **kwargs):
     can_add_contact, is_new = MyPermission.objects.get_or_create_by_natural_key("add_contact", "partners", "contact")
     can_view_job, is_new = MyPermission.objects.get_or_create_by_natural_key("view_job", "partners", "job")
     can_add_job, is_new = MyPermission.objects.get_or_create_by_natural_key("add_job", "partners", "job")
-    can_view_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("view_letter", "partners", "letter")
-    can_add_letter, is_new = MyPermission.objects.get_or_create_by_natural_key("add_letter", "partners", "letter")
+    can_view_communication, is_new = MyPermission.objects.get_or_create_by_natural_key("view_communication", "partners", "communication")
+    can_add_communication, is_new = MyPermission.objects.get_or_create_by_natural_key("add_communication", "partners", "communication")
 
     # Menus.
     sales_menu, is_new = Menu.objects.get_or_create(
@@ -159,8 +159,8 @@ def install(sender, created_models, **kwargs):
     salesinvoices_link.only_with_perms.add(can_view_salesinvoice)
 
     sales_team_group.permissions.add(can_view_bankaccount, can_add_bankaccount, can_view_salesinvoice, can_add_salesinvoice)
-    sales_team_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_job, can_add_job, can_view_letter, can_add_letter)
+    sales_team_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_job, can_add_job, can_view_communication, can_add_communication)
     sales_managers_group.permissions.add(can_view_bankaccount, can_add_bankaccount, can_change_bankaccount, can_delete_bankaccount, can_view_salesinvoice, can_add_salesinvoice, can_change_salesinvoice, can_delete_salesinvoice)
-    sales_managers_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_job, can_add_job, can_view_letter, can_add_letter)
+    sales_managers_group.permissions.add(can_view_partner, can_add_partner, can_view_contact, can_add_contact, can_view_job, can_add_job, can_view_communication, can_add_communication)
 
 post_syncdb.connect(install, dispatch_uid="install_sales")
