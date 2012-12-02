@@ -48,7 +48,6 @@ class Project(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_('dashboard'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering = ['code']
@@ -103,7 +102,6 @@ class Milestone(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_('dashboard'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering = ['project', 'deadline', 'code']
@@ -171,7 +169,6 @@ class Ticket(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     tasks = models.ManyToManyField('todo.Task', null=True, blank=True, verbose_name=_('related tasks'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     objects = TicketManager()     
 

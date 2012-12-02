@@ -29,14 +29,6 @@ from prometeo.core.notifications.signals import *
 
 from models import *
 
-## UTILS ##
-
-def manage_calendar(cls):
-    """Connects handlers for calendar management.
-    """
-    models.signals.post_save.connect(create_calendar, cls)
-    models.signals.post_delete.connect(delete_calendar, cls)
-
 ## HANDLERS ##
 
 def update_attendees_event_permissions(sender, instance, *args, **kwargs):
@@ -72,6 +64,14 @@ def delete_calendar(sender, instance, *args, **kwargs):
         calendar.delete()
         instance.calendar = None
 
+## UTILS ##
+
+def manage_calendar(cls):
+    """Connects handlers for calendar management.
+    """
+    models.signals.post_save.connect(create_calendar, cls)
+    models.signals.post_delete.connect(delete_calendar, cls)
+
 ## CONNECTIONS ##
 
 post_save.connect(update_author_permissions, Event, dispatch_uid="update_event_permissions")
@@ -83,7 +83,6 @@ post_delete.connect(notify_object_deleted, Event, dispatch_uid="event_deleted")
 
 m2m_changed.connect(notify_m2m_changed, Event.attendees.through, dispatch_uid="attendees_changed")
 
-manage_stream(Event)
 make_observable(Event)
 
 manage_calendar(UserProfile)

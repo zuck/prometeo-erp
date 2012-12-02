@@ -59,6 +59,6 @@ post_delete.connect(notify_object_deleted, Warehouse, dispatch_uid="warehouse_de
 post_save.connect(notify_object_created, Movement, dispatch_uid="movement_created")
 post_delete.connect(notify_object_deleted, Movement, dispatch_uid="movement_deleted")
 
-manage_stream(Warehouse)
+make_observable(Warehouse)
 
 manage_dashboard(Warehouse)

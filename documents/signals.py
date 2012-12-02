@@ -50,5 +50,4 @@ post_save.connect(notify_object_created, HardCopy, dispatch_uid="hardcopy_create
 post_delete.connect(notify_object_deleted, HardCopy, dispatch_uid="hardcopy_deleted")
 pre_delete.connect(delete_hard_copy, HardCopy, dispatch_uid="delete_hardcopy")
 
-manage_stream(Document)
 make_observable(Document)

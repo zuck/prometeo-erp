@@ -51,7 +51,6 @@ class Contact(Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         verbose_name = _('contact')
@@ -106,7 +105,6 @@ class Partner(Commentable):
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_("dashboard"))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         verbose_name = _('partner')
@@ -159,10 +157,6 @@ class Job(models.Model):
     @models.permalink
     def get_delete_url(self):
         return ('contact_delete_job', (), {"contact_id": self.contact.pk, "id": self.pk})
-
-    def _stream(self):
-        return [self.contact.stream, self.partner.stream]
-    stream = property(_stream)
 
 class Communication(models.Model):
     """Communication model.

@@ -57,7 +57,6 @@ class Document(Commentable):
     status = models.CharField(max_length=20, choices=settings.DOCUMENT_STATUS_CHOICES, default=settings.DOCUMENT_DEFAULT_STATUS, verbose_name=_('status'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     objects = DocumentManager()
 
@@ -110,7 +109,3 @@ class HardCopy(models.Model):
 
     def get_delete_url(self):
         return reverse('hardcopy_delete', args=[self.document.pk, self.pk])
-
-    def _stream(self):
-        return self.document.stream
-    stream = property(_stream)

@@ -98,10 +98,6 @@ post_save.connect(notify_object_created, Ticket, dispatch_uid="ticket_created")
 post_change.connect(notify_object_changed, Ticket, dispatch_uid="ticket_changed")
 post_delete.connect(notify_object_deleted, Ticket, dispatch_uid="ticket_deleted")
 
-manage_stream(Project)
-manage_stream(Milestone)
-manage_stream(Ticket)
-
 make_observable(Project)
 make_observable(Milestone)
 make_observable(Ticket)

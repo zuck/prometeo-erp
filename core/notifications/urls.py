@@ -24,12 +24,10 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('prometeo.core.notifications.views',
 
-    # Streams.
-    url(r'^streams/follow/(?P<slug>[-\w]+)/?next=(?P<path>[\d\w\-\_\/]+)$', view='streams.stream_follow', name='stream_follow'),
-    url(r'^streams/leave/(?P<slug>[-\w]+)/?next=(?P<path>[\d\w\-\_\/]+)$', view='streams.stream_leave', name='stream_leave'),
-
     # Notifications.
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/notifications/$', view='notifications.notification_list', name='notification_list'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/notifications/(?P<id>\d+)/$', view='notifications.notification_detail', name='notification_detail'),
-    url(r'^users/(?P<username>[\w\d\@\.\+\-\_]+)/notifications/(?P<id>\d+)/delete/$', view='notifications.notification_delete', name='notification_delete'),
+    url(r'^notifications/follow/(?P<ct_id>\d+)/(?P<id>\d+)/?next=(?P<path>[\d\w\-\_\/]+)$', view='object_follow', name='object_follow'),
+    url(r'^notifications/leave/(?P<ct_id>\d+)/(?P<id>\d+)/?next=(?P<path>[\d\w\-\_\/]+)$', view='object_unfollow', name='object_leave'),
+    url(r'^notifications/(?P<ct_id>\d+)/(?P<id>\d+)/$', view='notification_list', name='notification_list'),
+    url(r'^notifications/(?P<id>\d+)/$', view='notification_detail', name='notification_detail'),
+    url(r'^notifications/(?P<id>\d+)/delete/$', view='notification_delete', name='notification_delete'),
 )

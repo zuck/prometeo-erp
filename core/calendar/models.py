@@ -55,7 +55,6 @@ class Event(Commentable):
     author = models.ForeignKey('auth.User', related_name='created_events', null=True, blank=True, verbose_name=_('created by'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
     calendars = models.ManyToManyField(Calendar, null=True, verbose_name=_('calendars'))
 
     objects = EventManager()

@@ -58,8 +58,6 @@ post_delete.connect(notify_object_deleted, Poll, dispatch_uid="poll_deleted")
 #post_save.connect(notify_answer_created, Comment, dispatch_uid="knowledge_answer_created")
 #post_delete.connect(notify_answer_deleted, Comment, dispatch_uid="knowledge_answer_deleted")
 
-manage_stream(WikiPage)
-manage_stream(Faq)
-manage_stream(Poll)
-
 make_observable(WikiPage)
+make_observable(Poll)
+make_observable(Faq)

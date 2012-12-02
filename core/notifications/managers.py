@@ -21,8 +21,27 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 from django.db import models
+from django.db.models.query import QuerySet
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.generic import GenericForeignKey
 
-class NotificationManager(models.Manager):
+class GFKQuerySet(QuerySet):
+    def filter(self, **kwargs):
+        gfk_fields = [g for g in self.model._meta.virtual_fields if isinstance(g, GenericForeignKey)]
+
+        for gfk in gfk_fields:
+            if kwargs.has_key(gfk.name):
+                param = kwargs.pop(gfk.name)
+                kwargs[gfk.fk_field.name] = gfk.fk_field.value
+                kwargs[gfk.ct_field.name] = gfk.ct_field.value
+
+        return super(GFKQuerySet, self).filter(**kwargs)
+
+class GFKManager(models.Manager):
+    def get_query_set(self):
+        return GFKQuerySet(self.model)
+
+class NotificationManager(GFKManager):
     """Manager for notifications.
     """
     def read(self):

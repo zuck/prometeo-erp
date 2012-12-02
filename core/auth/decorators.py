@@ -21,10 +21,7 @@ __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
 import urlparse
-try:
-    from functools import wraps
-except ImportError:
-    from django.utils.functional import wraps  # Python 2.4 fallback.
+from functools import wraps
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -37,11 +34,16 @@ def obj_permission_required(perm, get_obj_func=None, login_url=None, redirect_fi
     permissions are found, the decorator checks if the user has permissions
     specific for the obj returned invoking "get_obj_func" with the arguments
     of the decorated view function.
+
+    Also "perm" could be a function which returns a permission name (it's invoked
+    passing the arguments of the decorated view).
     """
     def decorator(view_func):
         @wraps(view_func, assigned=available_attrs(view_func))
         def _wrapped_view(request, *args, **kwargs):
             obj = None
+            if callable(perm):
+                perm = perm(request, *args, **kwargs)
             if callable(get_obj_func):
                 obj = get_obj_func(request, *args, **kwargs)
             if request.user.has_perm(perm, obj):

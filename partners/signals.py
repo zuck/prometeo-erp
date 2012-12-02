@@ -64,8 +64,6 @@ post_delete.connect(notify_object_deleted, Contact, dispatch_uid="contact_delete
 post_save.connect(notify_object_created, Job, dispatch_uid="contact_added")
 post_delete.connect(notify_object_deleted, Job, dispatch_uid="contact_removed")
 
-manage_stream(Partner)
-
 make_observable(Partner)
 make_observable(Contact)
 

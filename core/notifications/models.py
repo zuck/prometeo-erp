@@ -20,14 +20,15 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
 
-import hashlib
+import hashlib, json
 from datetime import datetime
 
 from django.db import models
-import django.utils.simplejson as json
 from django.utils.translation import ugettext_lazy as _
-from django.template.loader import render_to_string
 from django.core.exceptions import ValidationError
+from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
+from django.template.loader import render_to_string
 
 from prometeo.core.models import validate_json
 from prometeo.core.utils import field_to_string
@@ -47,6 +48,11 @@ class Observable(object):
             if self.pk and name in self.__field_cache:
                 field = self.__field_cache[name]
                 label = u"%s" % field.verbose_name
+                if name in self.__subscriber_fields:
+                    old_value = self.__getattr__(name)
+                    if old_value != value:
+                        self.unfollow(old_value)
+                        self.follow(value)
                 if name not in self.__change_exclude:
                     old_value = field_to_string(field, self)
                     if label in self.__changes:
@@ -55,18 +61,47 @@ class Observable(object):
                     value = field_to_string(field, self)
                     if value != old_value:
                         self.__changes[label] = (u"%s" % old_value, u"%s" % value)
-                    return
         except AttributeError:
-            pass
+            super(Observable, self).__setattr__(name, value)
 
-        super(Observable, self).__setattr__(name, value)
+    def follow(self, follower):
+        """Registers the given follower.
+        """
+        if not isinstance(follower, models.Model):
+            return
+
+        FollowRelation.objects.get_or_create(follower=follower, followed=self)
+
+    def unfollow(self, follower):
+        """Unregisters the given follower.
+        """
+        if not isinstance(follower, models.Model):
+            return
+
+        FollowRelation.objects.filter(follower=follower, followed=self).delete()
+
+class FollowRelation(models.Model):
+    """FollowRelation model.
+    """
+    followed_content_type = models.ForeignKey(ContentType, related_name="+")
+    followed_id = models.PositiveIntegerField()
+    followed = generic.GenericForeignKey('followed_content_type', 'followed_id')
+    follower_content_type = models.ForeignKey(ContentType, related_name="+")
+    follower_id = models.PositiveIntegerField()
+    follower = generic.GenericForeignKey('follower_content_type', 'follower_id')
+    
+    class Meta:
+        verbose_name = _('follow relation')
+        verbose_name_plural = _('follow relations')
+
+    def __unicode__(self):
+        return _("%s followed by %s", self.followed, self.follower)
 
 class Signature(models.Model):
     """Signature model.
     """
     title = models.CharField(_('title'), max_length=100)
     slug = models.SlugField(_('slug'), max_length=100, unique=True)
-    subscribers = models.ManyToManyField('auth.User', null=True, blank=True, through='Subscription', verbose_name=_('subscribers'))
 
     class Meta:
         verbose_name = _('signature')
@@ -78,27 +113,15 @@ class Signature(models.Model):
 class Subscription(models.Model):
     """Subscription model.
     """
-    user = models.ForeignKey('auth.User')
+    subscriber_content_type = models.ForeignKey(ContentType, related_name="+")
+    subscriber_id = models.PositiveIntegerField()
+    subscriber = generic.GenericForeignKey('subscriber_content_type', 'subscriber_id')
     signature = models.ForeignKey(Signature)
     send_email = models.BooleanField(default=True, verbose_name=_('send email'))
 
     class Meta:
         verbose_name = _('subscription')
         verbose_name_plural = _('subscriptions')
-
-class Stream(models.Model):
-    """Stream model.
-    """
-    slug = models.SlugField(_('slug'), max_length=100, unique=True)
-    linked_streams = models.ManyToManyField('self', null=True, blank=True, symmetrical=False, verbose_name=_('linked streams'))
-    followers = models.ManyToManyField('auth.User', null=True, verbose_name=_('followers'))
-    
-    class Meta:
-        verbose_name = _('stream')
-        verbose_name_plural = _('streams')
-
-    def __unicode__(self):
-        return self.slug
 
 class Activity(models.Model):
     """Activity model.
@@ -108,8 +131,10 @@ class Activity(models.Model):
     template = models.CharField(_('template'), blank=True, null=True, max_length=200, default=None)
     context = models.TextField(_('context'), blank=True, null=True, validators=[validate_json], help_text=_('Use the JSON syntax.'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created'))
-    streams = models.ManyToManyField(Stream, null=True, verbose_name=_('streams'))
     backlink = models.CharField(_('backlink'), blank=True, null=True, max_length=200)
+    source_content_type = models.ForeignKey(ContentType, related_name="+")
+    source_id = models.PositiveIntegerField()
+    source = generic.GenericForeignKey('source_content_type', 'source_id')
     
     class Meta:
         verbose_name = _('activity')
@@ -144,7 +169,9 @@ class Notification(models.Model):
     """
     title = models.CharField(max_length=100, verbose_name=_('title'))
     description = models.TextField(blank=True, null=True, verbose_name=_('description'))
-    user = models.ForeignKey('auth.User', verbose_name=_('user'))
+    target_content_type = models.ForeignKey(ContentType, related_name="+")
+    target_id = models.PositiveIntegerField()
+    target = generic.GenericForeignKey('target_content_type', 'target_id')
     signature = models.ForeignKey(Signature, verbose_name=_('signature'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     read = models.DateTimeField(blank=True, null=True, verbose_name=_('read on'))
@@ -163,15 +190,15 @@ class Notification(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('notification_detail', (), {"username": self.user.username, "id": self.pk})
+        return ('notification_detail', (), {"target": self.target, "id": self.pk})
 
     @models.permalink
     def get_delete_url(self):
-        return ('notification_delete', (), {"username": self.user.username, "id": self.pk})
+        return ('notification_delete', (), {"id": self.pk})
 
     def clean(self):
-        if self.user.subscription_set.filter(signature=self.signature).count() == 0:
-            raise ValidationError('The user is not subscribed for this kind of notification.')
+        if not Subscription.objects.filter(subscriber=self.target, signature=signature):
+            raise ValidationError('The target is not subscribed for this kind of notification.')
         super(Notification, self).clean()
 
     def save(self, *args, **kwargs):

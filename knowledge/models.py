@@ -46,7 +46,6 @@ class WikiPage(Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering  = ('-created',)
@@ -93,10 +92,6 @@ class WikiRevision(models.Model):
     def get_absolute_url(self):
         return ("wikipage_revision_detail", (), {"slug": self.page.slug, "created": self.created})
 
-    def _stream(self):
-        return self.page.stream
-    stream = property(_stream)
-
 class Faq(Commentable):
     """Frequently Asked Question model.
     """
@@ -107,7 +102,6 @@ class Faq(Commentable):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
     votes = generic.GenericRelation('taxonomy.Vote')
 
     class Meta:
@@ -160,7 +154,6 @@ class Poll(Commentable):
     due_date = models.DateTimeField(null=True, blank=True, verbose_name=_('due date'))
     categories = models.ManyToManyField('taxonomy.Category', null=True, blank=True, verbose_name=_('categories'))
     tags = models.ManyToManyField('taxonomy.Tag', null=True, blank=True, verbose_name=_('tags'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
 
     class Meta:
         ordering  = ('-created',)
@@ -209,10 +202,6 @@ class Choice(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ("poll_vote", (), {"id": self.poll.pk, "choice": self.index})
-
-    def _stream(self):
-        return self.poll.stream
-    stream = property(_stream)
 
     def _index(self):
         for i, choice in enumerate(self.poll.choices.all()):

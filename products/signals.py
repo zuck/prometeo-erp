@@ -42,8 +42,6 @@ post_save.connect(notify_object_created, Supply, dispatch_uid="supply_created")
 post_change.connect(notify_object_changed, Supply, dispatch_uid="supply_changed")
 post_delete.connect(notify_object_deleted, Supply, dispatch_uid="supply_deleted")
 
-manage_stream(Product)
-
 make_observable(Product)
 make_observable(Supply)
 

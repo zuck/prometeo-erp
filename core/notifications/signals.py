@@ -33,40 +33,6 @@ from prometeo.core.auth.cache import LoggedInUserCache
 
 from models import *
 
-## UTILS ##
-
-def register_follower_to_stream(follower, stream):
-    """Registers the given follower to the given stream(s).
-    """
-    if follower:
-        try:
-            [s.followers.add(follower) for s in stream]
-        except:
-            stream.followers.add(follower)
-
-def register_activity_to_stream(activity, stream):
-    """Registers the given activity to the given stream(s).
-    """
-    try:
-        [activity.streams.add(s) for s in stream]
-    except:
-        activity.streams.add(stream)
-
-def manage_stream(cls):
-    """Connects handlers for stream management.
-    """
-    models.signals.post_save.connect(create_stream, cls, dispatch_uid="%s_stream_creation" % cls.__name__)
-    models.signals.post_delete.connect(delete_stream, cls, dispatch_uid="%s_stream_deletion" % cls.__name__)
-
-def make_observable(cls, exclude=['stream_id', 'dashboard_id', 'modified']):
-    """Adds Observable mix-in to the given class.
-    """
-    if Observable not in cls.__bases__:
-        class _Observable(Observable):
-            __change_exclude = exclude
-        cls.__bases__ += (_Observable,)
-    models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
-
 ## HANDLERS ##
 
 def update_user_permissions(sender, instance, *args, **kwargs):
@@ -80,11 +46,7 @@ def notify_object_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new object.
     """
     if kwargs['created']:
-        create_stream(sender, instance)
-
-        try:            
-            stream = kwargs.get('stream', instance.stream)
-
+        try:
             author = LoggedInUserCache().current_user
             title = _("%(class)s %(name)s created")
             context = {
@@ -92,8 +54,6 @@ def notify_object_created(sender, instance, *args, **kwargs):
                 "name": "%s" % instance,
                 "link": instance.get_absolute_url(),
             }
-
-            register_follower_to_stream(author, stream)
 
             if author:
                 title = _("%(class)s %(name)s created by %(author)s")
@@ -107,10 +67,9 @@ def notify_object_created(sender, instance, *args, **kwargs):
                 signature="%s-created" % sender.__name__.lower(),
                 template="notifications/activities/object-created.html",
                 context=json.dumps(context),
-                backlink=instance.get_absolute_url()
+                backlink=instance.get_absolute_url(),
+                source=instance
             )
-
-            register_activity_to_stream(activity, stream)
 
         except:
             pass
@@ -118,11 +77,7 @@ def notify_object_created(sender, instance, *args, **kwargs):
 def notify_object_changed(sender, instance, changes, *args, **kwargs):
     """Generates an activity related to the change of an existing object.
     """
-    create_stream(sender, instance)
-
-    try:            
-        stream = kwargs.get('stream', instance.stream)
-
+    try:
         author = LoggedInUserCache().current_user
         title = _("%(class)s %(name)s changed")
         context = {
@@ -131,8 +86,6 @@ def notify_object_changed(sender, instance, changes, *args, **kwargs):
             "link": instance.get_absolute_url(),
             "changes": changes
         }
-
-        register_follower_to_stream(author, stream)
 
         if author:
             title = _("%(class)s %(name)s changed by %(author)s")
@@ -146,10 +99,9 @@ def notify_object_changed(sender, instance, changes, *args, **kwargs):
             signature="%s-changed" % sender.__name__.lower(),
             template="notifications/activities/object-changed.html",
             context=json.dumps(context),
-            backlink=instance.get_absolute_url()
+            backlink=instance.get_absolute_url(),
+            source=instance
         )
-
-        register_activity_to_stream(activity, stream)
 
     except:
         pass
@@ -157,19 +109,13 @@ def notify_object_changed(sender, instance, changes, *args, **kwargs):
 def notify_object_deleted(sender, instance, *args, **kwargs):
     """Generates an activity related to the deletion of an existing object.
     """
-    create_stream(sender, instance)
-
-    try:            
-        stream = kwargs.get('stream', instance.stream)
-
+    try:
         author = LoggedInUserCache().current_user
         title = _("%(class)s %(name)s deleted")
         context = {
             "class": sender.__name__.lower(),
             "name": "%s" % instance
         }
-
-        register_follower_to_stream(author, stream)
 
         if author:
             title = _("%(class)s %(name)s deleted by %(author)s")
@@ -182,10 +128,9 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
             title=title,
             signature="%s-deleted" % sender.__name__.lower(),
             template="notifications/activities/object-deleted.html",
-            context=json.dumps(context)
+            context=json.dumps(context),
+            source=instance
         )
-
-        register_activity_to_stream(activity, stream)
 
     except:
         pass
@@ -193,11 +138,7 @@ def notify_object_deleted(sender, instance, *args, **kwargs):
 def notify_m2m_changed(sender, instance, action, reverse, model, pk_set, *args, **kwargs):
     """Generates one or more activities related to the change of an existing many-to-many relationship.
     """
-    create_stream(sender, instance)
-
-    try:            
-        stream = kwargs.get('stream', instance.stream)
-
+    try:
         if action == "post_add":
             for pk in pk_set:
                 notify_object_created(sender=model, instance=model.objects.get(pk=pk), stream=stream)
@@ -215,14 +156,8 @@ def notify_comment_created(sender, instance, *args, **kwargs):
     if kwargs['created']:
         obj = instance.content_object
 
-        create_stream(obj.__class__, obj)
-
-        try:            
-            stream = obj.stream
-
+        try:
             author = instance.user or LoggedInUserCache().current_user
-
-            register_follower_to_stream(author, stream)
 
             activity = Activity.objects.create(
                 title=_("%(author)s commented %(class)s %(name)s"),
@@ -235,10 +170,9 @@ def notify_comment_created(sender, instance, *args, **kwargs):
                     "author_link": author.get_absolute_url(),
                     "comment": instance.comment
                 }),
-                backlink=obj.get_absolute_url()
+                backlink=obj.get_absolute_url(),
+                source=obj
             )
-
-            register_activity_to_stream(activity, stream)
 
         except:
             pass
@@ -248,14 +182,8 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
     """
     obj = instance.content_object
 
-    create_stream(obj.__class__, obj)
-
-    try:            
-        stream = obj.stream
-
+    try:
         author = LoggedInUserCache().current_user or instance.user
-
-        register_follower_to_stream(author, stream)
 
         activity = Activity.objects.create(
             title=_("comment deleted by %(author)s"),
@@ -266,10 +194,9 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
                 "link": instance.get_absolute_url(),
                 "author": "%s" % author,
                 "author_link": author.get_absolute_url()
-            })
+            }),
+            source=obj
         )
-
-        register_activity_to_stream(activity, stream)
 
     except:
         pass
@@ -289,105 +216,73 @@ def notify_changes(sender, instance, **kwargs):
             if changes:
                 post_change.send(sender=sender, instance=instance, changes=changes)
         except AttributeError:
-            pass
-
-def forward_activity(sender, instance, action, reverse, model, pk_set, **kwargs):
-    """Forwards a new activity to all the linked streams.
-    """
-    if not isinstance(instance, Activity):
-        return
-
-    if action == "post_add":
-        for stream_id in pk_set:
-            stream = Stream.objects.get(id=stream_id)
-            for s in stream.linked_streams.all():
-                s.activity_set.add(instance)       
+            pass     
 
 def notify_activity(sender, instance, action, *args, **kwargs):
-    """Notifies a new activity to all the followers of the related streams.
+    """Notifies a new activity to all the followers of the related object.
     """
     if not isinstance(instance, Activity):
         return
 
-    activity = instance
-    content = activity.get_content()
+    content = instance.get_content()
 
     # Notifies an activity to all the followers.
     if action == "post_add":
-        subscriptions = Subscription.objects.filter(signature__slug=activity.signature).distinct()
-        streams = activity.streams.all()
+        subscriptions = Subscription.objects.filter(signature__slug=instance.signature).distinct()
+        followers = [r.followed for r in FollowRelation.objects.filter(followed=instance.source).distinct()]
         for subscription in subscriptions:
-            for stream in streams:
-                if subscription.user in stream.followers.all():
+            for follow in followers:
+                if subscription.follower in followers:
                     notification, is_new = Notification.objects.get_or_create(
                         signature=subscription.signature,
-                        user=subscription.user,
+                        target=subscription.follower,
                         description=content,
                         title=u"%s" % activity,
                         dispatch_uid="%d" % activity.id,
                     )
                     break
 
-    # Deletes orphans.
-    elif action in ["post_remove", "post_clear"]:
-        streams = activity.streams.all()
-        if len(streams) == 0:
-            activity.delete()
-
-def clear_orphans(sender, instance, *args, **kwargs):
-    """Clears all orphan activites.
-    """
-    if not isinstance(instance, Stream):
-        return
-
-    # Deletes orphans.
-    for activity in instance.activity_set.all():
-        streams = activity.streams.all()
-        if len(streams) == 1 and streams[0] == instance:
-            activity.delete()
-
-def create_stream(sender, instance, *args, **kwargs):
-    """Creates a new stream for the given object.
-    """
-    if hasattr(instance, "stream") and not instance.stream:
-        stream, is_new = Stream.objects.get_or_create(slug="%s_%d_stream" % (sender.__name__.lower(), instance.pk))
-        if not is_new:
-            for a in stream.activities.all():
-                a.delete()
-        stream_attach.send(sender=sender, instance=instance, stream=stream)
-        instance.stream = stream
-        instance.save()
-
-def delete_stream(sender, instance, *args, **kwargs):
-    """Deletes the stream of the given object.
-    """
-    stream = instance.stream
-    if stream:
-        stream.delete()
-        instance.stream = None
-
 def send_notification_email(sender, instance, signal, *args, **kwargs):
-    if Subscription.objects.filter(signature=instance.signature, user=instance.user, send_email=True).count() > 0:
+    """Sends an email related to the notification.
+    """
+    if Subscription.objects.filter(signature=instance.signature, follower=instance.target, send_email=True).count() > 0:
         email_subject = instance.title
         email_body = instance.description
         email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
-        email = EmailMessage(email_subject, email_body, email_from, [instance.user.email,])
-        email.content_subtype = "html"
-        email.send()
+        try:
+            email = EmailMessage(email_subject, email_body, email_from, [instance.target.email,])
+            email.content_subtype = "html"
+            email.send()
+        except:
+            pass
 
 ## SIGNALS ##
 
 post_change = django.dispatch.Signal(providing_args=["instance", "changes"])
-stream_attach = django.dispatch.Signal(providing_args=["instance", "stream"])
+
+## UTILS ##
+
+def make_observable(cls, exclude=['stream_id', 'dashboard_id', 'modified'], subscriber_fields=['parent']):
+    """Adds Observable mix-in to the given class.
+
+    @param cls The object class which needs to be observed.
+    @param exclude The list of fields to not track in changes.
+    @param subscriber_fields The list of fields which represent subscribers models.
+    """
+    if not issubclass(cls, Observable):
+        class _Observable(Observable):
+            __change_exclude = exclude
+            __subscriber_fields = subscriber_fields
+        cls.__bases__ += (_Observable,)
+
+    models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
 
 ## CONNECTIONS ##
 
+models.signals.post_save.connect(notify_activity, sender=Activity, dispatch_uid="notify_activity")
+models.signals.post_save.connect(send_notification_email, Notification)
+
 models.signals.post_save.connect(update_user_permissions, sender=User, dispatch_uid="update_user_permissions")
-models.signals.m2m_changed.connect(forward_activity, sender=Activity.streams.through, dispatch_uid="forward_activities")
-models.signals.m2m_changed.connect(notify_activity, sender=Activity.streams.through, dispatch_uid="notify_activities")
-models.signals.pre_delete.connect(clear_orphans, sender=Stream, dispatch_uid="clear_orphans")
 
 models.signals.post_save.connect(notify_comment_created, Comment, dispatch_uid="comment_created")
 models.signals.post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="comment_deleted")
-
-models.signals.post_save.connect(send_notification_email, Notification)

@@ -38,8 +38,7 @@ class Warehouse(models.Model):
     manager = models.ForeignKey('auth.User', null=True, blank=True, related_name='managed_warehouses', verbose_name=_('manager'))
     author = models.ForeignKey('auth.User', verbose_name=_('Created by'))
     dashboard = models.OneToOneField('widgets.Region', null=True, verbose_name=_('dashboard'))
-    stream = models.OneToOneField('notifications.Stream', null=True, verbose_name=_('stream'))
-    
+
     class Meta:
         ordering = ['owner', 'name']
         verbose_name = _('warehouse')
@@ -104,10 +103,6 @@ class Movement(models.Model):
     def _value(self):
         return self.product_entry.quantity * self.product_entry.unit_price
     value = property(_value)
-
-    def _stream(self):
-        return [self.origin.stream, self.destination.stream]
-    stream = property(_stream)
 
 class DeliveryNote(models.Model):
     """Delivery note model.

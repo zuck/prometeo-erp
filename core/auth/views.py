@@ -50,7 +50,7 @@ def _adapt_form(request, form):
         del form.fields['is_superuser']
 
 def _get_user(request, *args, **kwargs):
-    username = kwargs.get('username', None)
+    username = kwargs.get('username', request.user.username)
     return get_object_or_404(User, username=username)
 
 def _get_comment(request, *args, **kwargs):
