@@ -241,7 +241,6 @@ def notify_activity(sender, instance, created, raw, using, **kwargs):
         signature = Signature.objects.get(slug=instance.signature)
         followers = source.followers()
         subscribers = [s.subscriber for s in Subscription.objects.filter(signature=signature).distinct()]
-        print followers # REMOVE ME!
         for follower in followers:
             # NOTE: Don't change "==" to "is".
             if (follower == source) or (follower in subscribers):
