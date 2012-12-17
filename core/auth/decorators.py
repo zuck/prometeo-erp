@@ -42,13 +42,14 @@ def obj_permission_required(perm, get_obj_func=None, login_url=None, redirect_fi
         @wraps(view_func, assigned=available_attrs(view_func))
         def _wrapped_view(request, *args, **kwargs):
             obj = None
+            perm_name = perm
             if callable(perm):
-                perm = perm(request, *args, **kwargs)
+                perm_name = perm(request, *args, **kwargs)
             if callable(get_obj_func):
                 obj = get_obj_func(request, *args, **kwargs)
-            if request.user.has_perm(perm, obj):
+            if request.user.has_perm(perm_name, obj):
                 return view_func(request, *args, **kwargs)
-            if request.user.has_perm(perm):
+            if request.user.has_perm(perm_name):
                 return view_func(request, *args, **kwargs)
             path = request.build_absolute_uri()
             # If the login url is the same scheme and net location then just
