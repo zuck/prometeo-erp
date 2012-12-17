@@ -35,51 +35,6 @@ from prometeo.core.utils import field_to_string
 
 from managers import *
 
-class Observable(object):
-    """Mix-in that sends a special signal when a field is changed.
-    """
-    def __init__(self, *args, **kwargs):
-        super(Observable, self).__init__(*args, **kwargs)
-        self.__changes = {}
-        self.__field_cache = dict([(f.attname, f) for f in (self._meta.fields)])
-
-    def __setattr__(self, name, value):
-        try:
-            if self.pk and name in self.__field_cache:
-                field = self.__field_cache[name]
-                label = u"%s" % field.verbose_name
-                if name in self.__subscriber_fields:
-                    old_value = self.__getattr__(name)
-                    if old_value != value:
-                        self.unfollow(old_value)
-                        self.follow(value)
-                if name not in self.__change_exclude:
-                    old_value = field_to_string(field, self)
-                    if label in self.__changes:
-                        old_value = self.__changes[label][0]
-                    super(Observable, self).__setattr__(name, value)
-                    value = field_to_string(field, self)
-                    if value != old_value:
-                        self.__changes[label] = (u"%s" % old_value, u"%s" % value)
-        except AttributeError:
-            super(Observable, self).__setattr__(name, value)
-
-    def follow(self, follower):
-        """Registers the given follower.
-        """
-        if not isinstance(follower, models.Model):
-            return
-
-        FollowRelation.objects.get_or_create(follower=follower, followed=self)
-
-    def unfollow(self, follower):
-        """Unregisters the given follower.
-        """
-        if not isinstance(follower, models.Model):
-            return
-
-        FollowRelation.objects.filter(follower=follower, followed=self).delete()
-
 class FollowRelation(models.Model):
     """FollowRelation model.
     """
@@ -89,13 +44,15 @@ class FollowRelation(models.Model):
     follower_content_type = models.ForeignKey(ContentType, related_name="+")
     follower_id = models.PositiveIntegerField()
     follower = generic.GenericForeignKey('follower_content_type', 'follower_id')
+
+    objects = GFKManager()
     
     class Meta:
         verbose_name = _('follow relation')
         verbose_name_plural = _('follow relations')
 
     def __unicode__(self):
-        return _("%s followed by %s", self.followed, self.follower)
+        return _("%s followed by %s") % (self.followed, self.follower)
 
 class Signature(models.Model):
     """Signature model.
@@ -119,9 +76,14 @@ class Subscription(models.Model):
     signature = models.ForeignKey(Signature)
     send_email = models.BooleanField(default=True, verbose_name=_('send email'))
 
+    objects = GFKManager()
+
     class Meta:
         verbose_name = _('subscription')
         verbose_name_plural = _('subscriptions')
+
+    def __unicode__(self):
+        return "%s | %s" % (self.subscriber, self.signature)
 
 class Activity(models.Model):
     """Activity model.
@@ -135,6 +97,8 @@ class Activity(models.Model):
     source_content_type = models.ForeignKey(ContentType, related_name="+")
     source_id = models.PositiveIntegerField()
     source = generic.GenericForeignKey('source_content_type', 'source_id')
+
+    objects = GFKManager()
     
     class Meta:
         verbose_name = _('activity')
@@ -190,14 +154,14 @@ class Notification(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('notification_detail', (), {"target": self.target, "id": self.pk})
+        return ('notification_detail', (), {"object_model": self.target._meta.verbose_name_plural, "object_id": self.target.pk, "id": self.pk})
 
     @models.permalink
     def get_delete_url(self):
-        return ('notification_delete', (), {"id": self.pk})
+        return ('notification_delete', (), {"object_model": self.target._meta.verbose_name_plural, "object_id": self.target.pk, "id": self.pk})
 
     def clean(self):
-        if not Subscription.objects.filter(subscriber=self.target, signature=signature):
+        if not Subscription.objects.filter(subscriber=self.target, signature=self.signature):
             raise ValidationError('The target is not subscribed for this kind of notification.')
         super(Notification, self).clean()
 
@@ -205,3 +169,67 @@ class Notification(models.Model):
         if self.dispatch_uid is None:
             self.dispatch_uid = hashlib.md5(self.title + self.description + datetime.now()).hexdigest()
         super(Notification, self).save(*args, **kwargs)
+
+class Observable(object):
+    """Mix-in that sends a special signal when a field is changed.
+    """
+    def __init__(self, *args, **kwargs):
+        super(Observable, self).__init__(*args, **kwargs)
+        self.__changes = {}
+        self.__field_cache = dict([(f.attname, f) for f in (self._meta.fields)])
+
+    def __setattr__(self, name, value):
+        try:
+            if self.pk and name in self.__field_cache:
+                field = self.__field_cache[name]
+                label = u"%s" % field.verbose_name
+                if name not in self.__change_exclude:
+                    old_value = field_to_string(field, self)
+                    if label in self.__changes:
+                        old_value = self.__changes[label][0]
+                    super(Observable, self).__setattr__(name, value)
+                    value = field_to_string(field, self)
+                    if value != old_value:
+                        self.__changes[label] = (u"%s" % old_value, u"%s" % value)
+                return
+
+        except:
+            pass
+        
+        super(Observable, self).__setattr__(name, value)
+
+    def followers(self):
+        """Returns the list of the current followers.
+        """
+        return [r.follower for r in FollowRelation.objects.filter(followed=self)]
+
+    def follow(self, followers):
+        """Registers the given followers.
+        """
+        if not isinstance(followers, (tuple, list)):
+            followers = [followers]
+
+        for f in followers:
+            if not isinstance(f, models.Model):
+                continue
+
+            r = FollowRelation.objects.get_or_create(follower=f, followed=self)
+
+    def unfollow(self, followers):
+        """Unregisters the given followers.
+        """
+        if not isinstance(followers, (tuple, list)):
+            followers = [followers]
+
+        for f in followers:
+            if not isinstance(f, models.Model):
+                continue
+
+            FollowRelation.objects.filter(follower=f, followed=self).delete()
+
+class NotificationTarget(object):
+    """Mix-in that adds some useful methods to retrieve related notifications.
+    """
+    def _notification_set(self):
+        return Notification.objects.for_object(self)
+    notification_set = property(_notification_set)

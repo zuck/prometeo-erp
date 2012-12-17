@@ -40,30 +40,20 @@ from prometeo.core.utils import is_visible, value_to_string, field_to_value, fie
 register = template.Library()
 
 class ModelNameNode(template.Node):
-    def __init__(self, instance, var_name):
+    def __init__(self, instance, var_name, plural):
         self.instance = instance
         self.var_name = var_name
+        self.plural = plural
 
     def render(self, context):
-        try:
-            instance = self.instance.resolve(context)
-            try:
-                name = instance._meta.verbose_name
-            except:
-                name = u"%s" % _(ContentType.objects.get_for_model(instance).name)
-            context[self.var_name] = name
-        except:
-            pass
+        instance = self.instance.resolve(context)
+        name = instance._meta.verbose_name
+        if self.plural:
+            name = instance._meta.verbose_name_plural
+        context[self.var_name] = name
         return ''
 
-@register.tag
-def model_name(parser, token):
-    """This templatetag can be rewritten for Django 1.4 as:
-
-    @register.assignment_tag
-    def model_name(instance):
-         return instance._meta.verbose_name or _(instance.__class__.__name__)
-    """
+def base_verbose_name(parser, token, plural):
     try:
         tag_name, arg = token.contents.split(None, 1)
     except ValueError:
@@ -72,7 +62,15 @@ def model_name(parser, token):
     if not m:
         raise template.TemplateSyntaxError("%r tag had invalid arguments" % tag_name)
     instance, var_name = m.groups()
-    return ModelNameNode(Variable(instance), var_name)
+    return ModelNameNode(Variable(instance), var_name, plural)
+
+@register.tag
+def verbose_name(parser, token):
+    return base_verbose_name(parser, token, False)
+
+@register.tag
+def verbose_name_plural(parser, token):
+    return base_verbose_name(parser, token, True)
         
 def row_template(index):
     if (index % 2) == 1:

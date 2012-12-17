@@ -25,9 +25,9 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('prometeo.core.notifications.views',
 
     # Notifications.
-    url(r'^notifications/follow/(?P<ct_id>\d+)/(?P<id>\d+)/?next=(?P<path>[\d\w\-\_\/]+)$', view='object_follow', name='object_follow'),
-    url(r'^notifications/leave/(?P<ct_id>\d+)/(?P<id>\d+)/?next=(?P<path>[\d\w\-\_\/]+)$', view='object_unfollow', name='object_leave'),
-    url(r'^notifications/(?P<ct_id>\d+)/(?P<id>\d+)/$', view='notification_list', name='notification_list'),
-    url(r'^notifications/(?P<id>\d+)/$', view='notification_detail', name='notification_detail'),
-    url(r'^notifications/(?P<id>\d+)/delete/$', view='notification_delete', name='notification_delete'),
+    url(r'^(?P<object_model>[\w\d\_]+)/(?P<object_id>\d+)/notifications/follow/?next=(?P<path>[\d\w\-\_\/]+)$', view='object_follow', name='object_follow'),
+    url(r'^(?P<object_model>[\w\d\_]+)/(?P<object_id>\d+)/notifications/unfollow/?next=(?P<path>[\d\w\-\_\/]+)$', view='object_unfollow', name='object_unfollow'),
+    url(r'^(?P<object_model>[\w\d\_]+)/(?P<object_id>\d+)/notifications/$', view='notification_list', name='notification_list'),
+    url(r'^(?P<object_model>[\w\d\_]+)/(?P<object_id>\d+)/notifications/(?P<id>\d+)/$', view='notification_detail', name='notification_detail'),
+    url(r'^(?P<object_model>[\w\d\_]+)/(?P<object_id>\d+)/notifications/(?P<id>\d+)/delete/$', view='notification_delete', name='notification_delete'),
 )

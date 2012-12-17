@@ -206,46 +206,57 @@ def notify_changes(sender, instance, **kwargs):
     
     Changes are notified sending a "post_change" signal.
     """
-    if not kwargs['created']:
-        try:
+    if issubclass(sender, Observable):
+
+        if kwargs['created']:
+            print "Created! %s %d" % (instance, instance.pk)
+            instance.follow(instance)
+            for sf in instance._Observable__subscriber_fields:
+                if hasattr(instance, sf):
+                    follower = getattr(instance, sf)
+                    instance.follow(follower)
+
+        else:
             changes = {}
             for name, (old_value, value) in instance._Observable__changes.items():
                 if value != old_value:
-                    changes[name] = (old_value, value)  
+                    changes[name] = (old_value, value)
+                    if name in instance._Observable__subscriber_fields:
+                        instance.unfollow(old_value)
+                        instance.follow(value)
             instance._Observable__changes = {}
             if changes:
                 post_change.send(sender=sender, instance=instance, changes=changes)
-        except AttributeError:
-            pass     
 
-def notify_activity(sender, instance, action, *args, **kwargs):
+def notify_activity(sender, instance, created, raw, using, **kwargs):
     """Notifies a new activity to all the followers of the related object.
     """
     if not isinstance(instance, Activity):
         return
 
-    content = instance.get_content()
-
     # Notifies an activity to all the followers.
-    if action == "post_add":
-        subscriptions = Subscription.objects.filter(signature__slug=instance.signature).distinct()
-        followers = [r.followed for r in FollowRelation.objects.filter(followed=instance.source).distinct()]
-        for subscription in subscriptions:
-            for follow in followers:
-                if subscription.follower in followers:
-                    notification, is_new = Notification.objects.get_or_create(
-                        signature=subscription.signature,
-                        target=subscription.follower,
-                        description=content,
-                        title=u"%s" % activity,
-                        dispatch_uid="%d" % activity.id,
-                    )
-                    break
+    if created:
+        source = instance.source
+        content = instance.get_content()
+        signature = Signature.objects.get(slug=instance.signature)
+        followers = source.followers()
+        subscribers = [s.subscriber for s in Subscription.objects.filter(signature=signature).distinct()]
+        print followers # REMOVE ME!
+        for follower in followers:
+            # NOTE: Don't change "==" to "is".
+            if (follower == source) or (follower in subscribers):
+                notification, is_new = Notification.objects.get_or_create(
+                    title=u"%s" % instance,
+                    description=content,
+                    target=follower,
+                    signature=signature,
+                    dispatch_uid="%d" % instance.pk,
+                )
 
 def send_notification_email(sender, instance, signal, *args, **kwargs):
     """Sends an email related to the notification.
     """
-    if Subscription.objects.filter(signature=instance.signature, follower=instance.target, send_email=True).count() > 0:
+    if Subscription.objects.filter(signature=instance.signature, subscriber=instance.target, send_email=True).count() > 0:
         email_subject = instance.title
         email_body = instance.description
         email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
@@ -262,27 +273,41 @@ post_change = django.dispatch.Signal(providing_args=["instance", "changes"])
 
 ## UTILS ##
 
-def make_observable(cls, exclude=['stream_id', 'dashboard_id', 'modified'], subscriber_fields=['parent']):
+def make_observable(cls, exclude=['stream_id', 'dashboard_id', 'modified'], subscriber_fields=['parent', 'author']):
     """Adds Observable mix-in to the given class.
+
+    Should be placed before every other signal connection for the given class.
 
     @param cls The object class which needs to be observed.
     @param exclude The list of fields to not track in changes.
     @param subscriber_fields The list of fields which represent subscribers models.
     """
     if not issubclass(cls, Observable):
+
         class _Observable(Observable):
             __change_exclude = exclude
             __subscriber_fields = subscriber_fields
+
         cls.__bases__ += (_Observable,)
 
-    models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
+        models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
+
+def make_notification_target(cls):
+    """Adds NotificationTarget mix-in to the given class.
+
+    @param cls The object class.
+    """
+    if not issubclass(cls, NotificationTarget):
+        cls.__bases__ += (NotificationTarget,)
 
 ## CONNECTIONS ##
 
 models.signals.post_save.connect(notify_activity, sender=Activity, dispatch_uid="notify_activity")
-models.signals.post_save.connect(send_notification_email, Notification)
+models.signals.post_save.connect(send_notification_email, Notification, dispatch_uid="send_notification_email")
 
 models.signals.post_save.connect(update_user_permissions, sender=User, dispatch_uid="update_user_permissions")
 
 models.signals.post_save.connect(notify_comment_created, Comment, dispatch_uid="comment_created")
 models.signals.post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="comment_deleted")
+
+make_notification_target(User)

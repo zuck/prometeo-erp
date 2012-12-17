@@ -387,7 +387,7 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 .no { background-image: url(images/error.png); }
 
 .add a, .edit a, .delete a, .all a, .import a, .export a,
-.open a, .reopen a, .close a, .view a, .exit a, .follow a, .leave a,
+.open a, .reopen a, .close a, .view a, .exit a, .follow a, .unfollow a,
 .move a, .copy a, .add_link a, .refresh a, .print a {
     float: left;
     width: 16px;
@@ -447,9 +447,9 @@ form .submit input:hover, .submit a:hover, .cancel a:hover {
 
 .follow a:hover { background-image: url(images/view_hover.png); }
 
-.leave a { background-image: url(images/exit.png); }
+.unfollow a { background-image: url(images/exit.png); }
 
-.leave a:hover { background-image: url(images/exit_hover.png); }
+.unfollow a:hover { background-image: url(images/exit_hover.png); }
 
 .move a { background-image: url(images/reopen.png); }
 

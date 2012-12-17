@@ -70,15 +70,15 @@ class SubscriptionsForm(forms.Form):
     """
     def __init__(self, *args, **kwargs):
         try:
-            self.user = kwargs.pop('user')
+            self.subscriber = kwargs.pop('subscriber')
         except KeyError:
-            self.user = None
+            self.subscriber = None
         super(SubscriptionsForm, self).__init__(*args, **kwargs)
         signatures = Signature.objects.all()
         for signature in signatures:
             name = signature.slug
-            is_subscriber = (Subscription.objects.filter(signature=signature, user=self.user).count() > 0)
-            send_email = (Subscription.objects.filter(signature=signature, user=self.user, send_email=True).count() > 0)
+            is_subscriber = (Subscription.objects.filter(signature=signature, subscriber=self.subscriber).count() > 0)
+            send_email = (Subscription.objects.filter(signature=signature, subscriber=self.subscriber, send_email=True).count() > 0)
             field = SubscriptionField(label=_(signature.title), initial={'subscribe': is_subscriber, 'email': send_email})
             self.fields[name] = field
             
@@ -86,13 +86,13 @@ class SubscriptionsForm(forms.Form):
         data = self.cleaned_data
         for key, (subscribe, email) in data.iteritems():
             signature = Signature.objects.get(slug=key)
-            is_subscriber = (self.user in signature.subscribers.all())
+            is_subscriber = (Subscription.objects.filter(subscriber=self.subscriber, signature=signature).count() > 0)
             if subscribe:
-                subscription = Subscription.objects.get_or_create(user=self.user, signature=signature)[0]
+                subscription = Subscription.objects.get_or_create(subscriber=self.subscriber, signature=signature)[0]
                 subscription.send_email = email
                 subscription.save()
-            elif is_subscriber and not subscribe:
-                Subscription.objects.filter(user=self.user, signature=signature).delete()
+            elif is_subscriber:
+                Subscription.objects.filter(subscriber=self.subscriber, signature=signature).delete()
                 self.fields[key].initial = (False, False)
                  
 enrich_form(SubscriptionsForm)

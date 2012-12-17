@@ -5,10 +5,11 @@
 {% load details %}
 
 {% block breadcrumbs %}
+    {% verbose_name_plural object.target as object_target_model %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
-    {% add_crumb object.user object.user.get_absolute_url %}
-    {% add_crumb 'Notifications' 'notification_list' object.user.username %}
+    {% add_crumb object.target object.target.get_absolute_url %}
+    {% add_crumb 'Notifications' 'notification_list' object_target_model object.target.pk %}
     {% add_crumb object %}
 {% endblock %}
 
@@ -19,11 +20,12 @@
 {% endblock %}
 
 {% block objectactions %}
+{% verbose_name_plural object.target as object_target_model %}
 {% if object.pk in obj_perms.notifications.delete_notification %}
-<li class="delete"><a title="{% trans 'Delete' %}" href="{% url notification_delete object.user.username object.pk %}">{% trans 'Delete' %}</a></li>
+<li class="delete"><a title="{% trans 'Delete' %}" href="{% url notification_delete object_target_model object.target.pk object.pk %}">{% trans 'Delete' %}</a></li>
 {% endif %}
 {% if perms.notifications.view_notification %}
-<li class="all"><a title="{% trans 'All' %}" href="{% url notification_list object.user.username %}">{% trans 'All' %}</a></li>
+<li class="all"><a title="{% trans 'All' %}" href="{% url notification_list object_target_model object.target.pk %}">{% trans 'All' %}</a></li>
 {% endif %}
 {% endblock %}
 

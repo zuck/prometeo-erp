@@ -1,13 +1,14 @@
 {% load i18n %}
 {% load paginator %}
+{% load notifications %}
 
 <div class="details">
-    {% with object.stream.activity_set.all as object_list %}
+    {% notification_for object as object_list %}
     {% paginate object_list %}
-    {% regroup object_list by created.date as activities_by_date %}
-    {% if activities_by_date %}
+    {% regroup object_list by created.date as notifications_by_date %}
+    {% if notifications_by_date %}
     <dl class="activities">
-    {% for date in activities_by_date %}
+    {% for date in notifications_by_date %}
         <dt><h3>{{ date.grouper }}</h3></dt>
         <dd>
             <ul>
@@ -35,5 +36,4 @@
     {% include "elements/empty.html" %}
     {% endif %}
     {% include "elements/paginator.html" %}
-    {% endwith %}
 </div>

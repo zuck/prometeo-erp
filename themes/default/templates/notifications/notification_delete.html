@@ -1,12 +1,14 @@
 {% extends "base_delete.html" %}
 
 {% load breadcrumbs %}
+{% load details %}
 
 {% block breadcrumbs %}
+    {% verbose_name_plural object.target as object_target_model %}
     {% add_crumb 'Home' '/' %}
     {% add_crumb 'Users' 'user_list' %}
-    {% add_crumb object.user object.user.get_absolute_url %}
-    {% add_crumb 'Notifications' 'notification_list' object.user.username %}
+    {% add_crumb object.target object.target.get_absolute_url %}
+    {% add_crumb 'Notifications' 'notification_list' object_target_model object.target.pk %}
     {% add_crumb object object.get_absolute_url %}
     {% add_crumb 'Delete' %}
 {% endblock %}

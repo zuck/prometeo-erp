@@ -74,15 +74,14 @@ def manage_calendar(cls):
 
 ## CONNECTIONS ##
 
+make_observable(Event)
+
 post_save.connect(update_author_permissions, Event, dispatch_uid="update_event_permissions")
 m2m_changed.connect(update_attendees_event_permissions, Event.attendees.through, dispatch_uid="update_event_permissions")
 
 post_save.connect(notify_object_created, Event, dispatch_uid="event_created")
 post_change.connect(notify_object_changed, Event, dispatch_uid="event_changed")
 post_delete.connect(notify_object_deleted, Event, dispatch_uid="event_deleted")
-
 m2m_changed.connect(notify_m2m_changed, Event.attendees.through, dispatch_uid="attendees_changed")
-
-make_observable(Event)
 
 manage_calendar(UserProfile)

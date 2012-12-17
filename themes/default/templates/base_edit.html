@@ -5,9 +5,9 @@
 
 {% block meta_title %}
 {% if object %}
-{% model_name object as model %}
+{% verbose_name object as model %}
 {% else %}
-{% model_name form.instance as model %}
+{% verbose_name form.instance as model %}
 {% endif %}
 {% if object.pk %}
 {% blocktrans %}Edit {{ model }}{% endblocktrans %}
@@ -19,9 +19,9 @@
 {% block title %}
 <div class="title">
     {% if object %}
-    {% model_name object as model %}
+    {% verbose_name object as model %}
     {% else %}
-    {% model_name form.instance as model %}
+    {% verbose_name form.instance as model %}
     {% endif %}
     {% if object.pk %}
     <h1>{{ object|striptags|capfirst }}</h1>

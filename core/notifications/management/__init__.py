@@ -38,7 +38,7 @@ def install(sender, **kwargs):
     user_profile_notifications_link, is_new = Link.objects.get_or_create(
         title=_("Notifications"),
         slug="user_profile_notifications",
-        url="{% url notification_list object.username %}",
+        url="{% url notification_list 'users' object.pk %}",
         menu=user_profile_menu
     )
 

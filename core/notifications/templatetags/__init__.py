@@ -19,23 +19,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2011 Emanuele Bertoldi'
 __version__ = '0.0.5'
-
-from django.contrib import admin
-
-from models import *
-
-class SignatureAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug')
-    prepopulated_fields = {'slug': ('title',)}
-
-class SubscriptionAdmin(admin.ModelAdmin):
-    pass
-
-class FollowRelationAdmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Signature, SignatureAdmin)
-admin.site.register(Subscription, SubscriptionAdmin)
-admin.site.register(FollowRelation, FollowRelationAdmin)
-admin.site.register(Activity)
-admin.site.register(Notification)

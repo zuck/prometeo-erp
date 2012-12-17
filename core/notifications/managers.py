@@ -32,8 +32,8 @@ class GFKQuerySet(QuerySet):
         for gfk in gfk_fields:
             if kwargs.has_key(gfk.name):
                 param = kwargs.pop(gfk.name)
-                kwargs[gfk.fk_field.name] = gfk.fk_field.value
-                kwargs[gfk.ct_field.name] = gfk.ct_field.value
+                kwargs[gfk.fk_field] = param.pk
+                kwargs[gfk.ct_field] = ContentType.objects.get_for_model(param)
 
         return super(GFKQuerySet, self).filter(**kwargs)
 
@@ -41,11 +41,39 @@ class GFKManager(models.Manager):
     def get_query_set(self):
         return GFKQuerySet(self.model)
 
-class NotificationManager(GFKManager):
-    """Manager for notifications.
-    """
+class NotificationQuerySet(GFKQuerySet):
     def read(self):
         return self.filter(read__isnull=False)
 
     def unread(self):
         return self.filter(read__isnull=True)
+
+    def for_object(self, instance):
+        return self.filter(target=instance)
+        
+    def read_for_object(self, instance):
+        return self.for_object(instance).filter(read__isnull=False)
+
+    def unread_for_object(self, instance):
+        return self.for_object(instance).filter(read__isnull=True)
+
+class NotificationManager(GFKManager):
+    """Manager for notifications.
+    """
+    def get_query_set(self):
+        return NotificationQuerySet(self.model)
+
+    def read(self):
+        return self.get_query_set().read()
+
+    def unread(self):
+        return self.get_query_set().unread()
+
+    def for_object(self, instance):
+        return self.get_query_set().for_object(instance)
+        
+    def read_for_object(self, instance):
+        return self.get_query_set().read_for_object(instance)
+
+    def unread_for_object(self, instance):
+        return self.get_query_set().unread_for_object(instance)

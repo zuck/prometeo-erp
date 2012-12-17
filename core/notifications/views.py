@@ -28,6 +28,7 @@ from django.views.generic import list_detail, create_update
 from django.views.generic.simple import redirect_to
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.conf import settings
@@ -35,30 +36,41 @@ from django.conf import settings
 from prometeo.core.auth.decorators import obj_permission_required as permission_required
 from prometeo.core.views import filtered_list_detail
 
-from ..models import *
-from ..forms import *
+from models import *
+from forms import *
+
+def _get_content_type_by(name):
+    model_name = name
+    if name[-1] == 's':
+        model_name = name[:-1]
+    return ContentType.objects.get(model=model_name)
+
+def _get_object_by(object_model, object_id):
+    content_type = _get_content_type_by(object_model)
+    model_class = content_type.model_class()
+    return get_object_or_404(model_class, pk=object_id)  
 
 def _get_object_view_perm(request, *args, **kwargs):
-    object_type = kwargs.get('object_type', None)
-    content_type = ContentType.objects.get_for_id(object_type)
+    object_model = kwargs.get('object_model', None)
+    content_type = _get_content_type_by(object_model)
     app_label = content_type.app_label
     model_name = content_type.model
     return "%s.view_%s" % (app_label, model_name)
 
 def _get_object(request, *args, **kwargs):
-    object_type = kwargs.get('object_type', None)
+    object_model = kwargs.get('object_model', None)
     object_id = kwargs.get('object_id', None)
-    return get_object_or_404(ContentType.objects.get_for_id(object_type), object_id)
+    return _get_object_by(object_model, object_id)
 
 def _get_notification(request, *args, **kwargs):
     id = kwargs.get('id', None)
-    return get_object_or_404(Notification, id=id)
+    return get_object_or_404(Notification, pk=id)
 
 @permission_required(_get_object_view_perm, _get_object)
-def object_follow(request, object_type, object_id, path='/', **kwargs):
+def object_follow(request, object_model, object_id, path='/', **kwargs):
     """The current user starts to follow object's activies.
     """
-    obj = get_object_or_404(ContentType.objects.get_for_id(object_type), object_id)
+    obj = _get_object_by(object_model, object_id)
     follower = request.user
     
     if isinstance(obj, Observable):
@@ -68,10 +80,10 @@ def object_follow(request, object_type, object_id, path='/', **kwargs):
     return redirect_to(request, permanent=False, url=path)
 
 @permission_required(_get_object_view_perm, _get_object)
-def object_unfollow(request, object_type, object_id, path='/', **kwargs):
+def object_unfollow(request, object_model, object_id, path='/', **kwargs):
     """The current user stops to follow object's activies.
     """
-    obj = get_object_or_404(ContentType.objects.get_for_id(object_type), object_id)
+    obj = _get_object_by(object_model, object_id)
     follower = request.user
 
     if isinstance(obj, Observable):
@@ -82,10 +94,10 @@ def object_unfollow(request, object_type, object_id, path='/', **kwargs):
 
 @permission_required(_get_object_view_perm, _get_object)
 @permission_required('notifications.view_notification')
-def notification_list(request, object_type, object_id, page=0, paginate_by=10, **kwargs):
+def notification_list(request, object_model, object_id, page=0, paginate_by=10, **kwargs):
     """Displays the list of all filtered notifications.
     """
-    obj = get_object_or_404(ContentType.objects.get_for_id(object_type), object_id)
+    obj = _get_object_by(object_model, object_id)
     
     if request.method == 'POST':
         form = SubscriptionsForm(request.POST, subscriber=obj)
@@ -114,10 +126,11 @@ def notification_list(request, object_type, object_id, page=0, paginate_by=10, *
 
 @permission_required(_get_object_view_perm, _get_object)
 @permission_required('notifications.view_notification', _get_notification)
-def notification_detail(request, id, **kwargs):
+def notification_detail(request, object_model, object_id, id, **kwargs):
     """Displays the details of the selected notification.
     """
-    notification = get_object_or_404(Notification, pk=id)
+    obj = _get_object_by(object_model, object_id)
+    notification = get_object_or_404(Notification, target=obj, pk=id)
     
     notification.read = datetime.now()
     notification.save()
@@ -134,16 +147,17 @@ def notification_detail(request, id, **kwargs):
     )
 
 @permission_required('notifications.delete_notification', _get_notification)
-def notification_delete(request, id, **kwargs):
+def notification_delete(request, object_model, object_id, id, **kwargs):
     """Deletes an existing notification for the current user.
     """
-    notification = get_object_or_404(Notification, pk=id)
+    obj = _get_object_by(object_model, object_id)
+    notification = get_object_or_404(Notification, target=obj, pk=id)
 
     return create_update.delete_object(
         request,
         model=Notification,
         object_id=id,
-        post_delete_redirect=reverse('notification_list', args=[notification.target_content_type, notification.target_id]),
+        post_delete_redirect=reverse('notification_list', args=[notification.target._meta.verbose_name_plural, notification.target_id]),
         template_name='notifications/notification_delete.html',
         **kwargs
      )

@@ -4,14 +4,14 @@
 {% load details %}
 
 {% block meta_title %}
-{% model_name object as model %}
+{% verbose_name object as model %}
 {% blocktrans %}Delete {{ model }}{% endblocktrans %}
 {% endblock %}
 
 {% block title %}
 <div class="title">
     <h1>{{ object|striptags|capfirst }}</h1>
-    {% model_name object as model %}
+    {% verbose_name object as model %}
     <h2>{% blocktrans %}Delete {{ model }}{% endblocktrans %}</h2>
 </div>
 {% endblock %}
@@ -19,7 +19,7 @@
 {% block main %}
 <form method="post" action="{{ request.path }}{% if next and next != object.get_absolute_url %}?next={{ next }}{% endif %}">
     {% csrf_token %}
-    {% model_name object as model %}
+    {% verbose_name object as model %}
     {% block message %}<p>{% blocktrans %}Are you sure you want to delete this {{ model }}?{% endblocktrans %}</p>{% endblock %}
     {% block buttons %}
     {% include "elements/submit_button.html" %}
