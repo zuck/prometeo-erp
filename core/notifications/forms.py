@@ -89,6 +89,7 @@ class SubscriptionsForm(forms.Form):
             is_subscriber = (Subscription.objects.filter(subscriber=self.subscriber, signature=signature).count() > 0)
             if subscribe:
                 subscription = Subscription.objects.get_or_create(subscriber=self.subscriber, signature=signature)[0]
+                subscription.email = self.subscriber.email
                 subscription.send_email = email
                 subscription.save()
             elif is_subscriber:

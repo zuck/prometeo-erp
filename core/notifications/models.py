@@ -75,6 +75,7 @@ class Subscription(models.Model):
     subscriber = generic.GenericForeignKey('subscriber_content_type', 'subscriber_id')
     signature = models.ForeignKey(Signature)
     send_email = models.BooleanField(default=True, verbose_name=_('send email'))
+    email = models.EmailField(null=True, blank=True, verbose_name=_('email'))
 
     objects = GFKManager()
 

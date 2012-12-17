@@ -42,6 +42,13 @@ def update_user_permissions(sender, instance, *args, **kwargs):
         can_view_notification, is_new = MyPermission.objects.get_or_create_by_natural_key("view_notification", "notifications", "notification")
         instance.user_permissions.add(can_view_notification)
 
+def update_user_subscription_email(sender, instance, *args, **kwargs):
+    """Updates the email address for all the subscription related to this user.
+    """
+    for s in Subscription.objects.filter(subscriber=instance):
+        s.email = instance.email
+        s.save()
+
 def notify_object_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new object.
     """
@@ -209,7 +216,6 @@ def notify_changes(sender, instance, **kwargs):
     if issubclass(sender, Observable):
 
         if kwargs['created']:
-            print "Created! %s %d" % (instance, instance.pk)
             instance.follow(instance)
             for sf in instance._Observable__subscriber_fields:
                 if hasattr(instance, sf):
@@ -243,7 +249,7 @@ def notify_activity(sender, instance, created, raw, using, **kwargs):
         subscribers = [s.subscriber for s in Subscription.objects.filter(signature=signature).distinct()]
         for follower in followers:
             # NOTE: Don't change "==" to "is".
-            if (follower == source) or (follower in subscribers):
+            if follower == source or follower in subscribers:
                 notification, is_new = Notification.objects.get_or_create(
                     title=u"%s" % instance,
                     description=content,
@@ -255,15 +261,17 @@ def notify_activity(sender, instance, created, raw, using, **kwargs):
 def send_notification_email(sender, instance, signal, *args, **kwargs):
     """Sends an email related to the notification.
     """
-    if Subscription.objects.filter(signature=instance.signature, subscriber=instance.target, send_email=True).count() > 0:
-        email_subject = instance.title
-        email_body = instance.description
-        email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
+    if kwargs['created']:
         try:
-            email = EmailMessage(email_subject, email_body, email_from, [instance.target.email,])
-            email.content_subtype = "html"
-            email.send()
-        except:
+            subscription = Subscription.objects.get(signature=instance.signature, subscriber=instance.target, send_email=True)
+            email_subject = instance.title
+            email_body = instance.description
+            email_from = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost.com')
+            if subscription.email:
+                email = EmailMessage(email_subject, email_body, email_from, [subscription.email,])
+                email.content_subtype = "html"
+                email.send()
+        except Subscription.DoesNotExist:
             pass
 
 ## SIGNALS ##
@@ -301,12 +309,13 @@ def make_notification_target(cls):
 
 ## CONNECTIONS ##
 
-models.signals.post_save.connect(notify_activity, sender=Activity, dispatch_uid="notify_activity")
-models.signals.post_save.connect(send_notification_email, Notification, dispatch_uid="send_notification_email")
-
+models.signals.post_save.connect(update_user_subscription_email, sender=User, dispatch_uid="update_user_subscription_email")
 models.signals.post_save.connect(update_user_permissions, sender=User, dispatch_uid="update_user_permissions")
 
-models.signals.post_save.connect(notify_comment_created, Comment, dispatch_uid="comment_created")
-models.signals.post_delete.connect(notify_comment_deleted, Comment, dispatch_uid="comment_deleted")
+models.signals.post_save.connect(notify_activity, sender=Activity, dispatch_uid="notify_activity")
+models.signals.post_save.connect(send_notification_email, sender=Notification, dispatch_uid="send_notification_email")
+
+models.signals.post_save.connect(notify_comment_created, sender=Comment, dispatch_uid="comment_created")
+models.signals.post_delete.connect(notify_comment_deleted, sender=Comment, dispatch_uid="comment_deleted")
 
 make_notification_target(User)
