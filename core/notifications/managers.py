@@ -41,6 +41,35 @@ class GFKManager(models.Manager):
     def get_query_set(self):
         return GFKQuerySet(self.model)
 
+class ActivityManager(GFKManager):
+    """Manager for activities.
+    """
+    def create(self, *args, **kwargs):
+        """Create and notifies the activity to all the followers.
+        """
+        from models import Signature, Subscription, Notification
+
+        source = kwargs.get("source", None)
+
+        instance = super(ActivityManager, self).create(*args, **kwargs)
+
+        content = instance.get_content()
+        signature = Signature.objects.get(slug=instance.signature)
+        followers = source.followers()
+        subscribers = [s.subscriber for s in Subscription.objects.filter(signature=signature).distinct()]
+        for follower in followers:
+            # NOTE: Don't change "==" to "is".
+            if (follower == source and instance.source) or (follower in subscribers):
+                notification, is_new = Notification.objects.get_or_create(
+                    title=u"%s" % instance,
+                    description=content,
+                    target=follower,
+                    signature=signature,
+                    dispatch_uid="%d" % instance.pk,
+                )
+
+        return instance
+
 class NotificationQuerySet(GFKQuerySet):
     def read(self):
         return self.filter(read__isnull=False)

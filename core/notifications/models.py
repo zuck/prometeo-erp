@@ -99,7 +99,7 @@ class Activity(models.Model):
     source_id = models.PositiveIntegerField()
     source = generic.GenericForeignKey('source_content_type', 'source_id')
 
-    objects = GFKManager()
+    objects = ActivityManager()
     
     class Meta:
         verbose_name = _('activity')
@@ -155,11 +155,15 @@ class Notification(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('notification_detail', (), {"object_model": self.target._meta.verbose_name_plural, "object_id": self.target.pk, "id": self.pk})
+        if self.target:
+            return ('notification_detail', (), {"object_model": self.target._meta.verbose_name_plural, "object_id": self.target.pk, "id": self.pk})
+        return None
 
     @models.permalink
     def get_delete_url(self):
-        return ('notification_delete', (), {"object_model": self.target._meta.verbose_name_plural, "object_id": self.target.pk, "id": self.pk})
+        if self.target:
+            return ('notification_delete', (), {"object_model": self.target._meta.verbose_name_plural, "object_id": self.target.pk, "id": self.pk})
+        return None
 
     def clean(self):
         if not Subscription.objects.filter(subscriber=self.target, signature=self.signature):
@@ -178,6 +182,7 @@ class Observable(object):
         super(Observable, self).__init__(*args, **kwargs)
         self.__changes = {}
         self.__field_cache = dict([(f.attname, f) for f in (self._meta.fields)])
+        self.__followers_cache = None
 
     def __setattr__(self, name, value):
         try:
@@ -202,6 +207,8 @@ class Observable(object):
     def followers(self):
         """Returns the list of the current followers.
         """
+        if self.__followers_cache:
+            return self.__followers_cache
         return [r.follower for r in FollowRelation.objects.filter(followed=self)]
 
     def follow(self, followers):

@@ -53,49 +53,16 @@ def notify_object_created(sender, instance, *args, **kwargs):
     """Generates an activity related to the creation of a new object.
     """
     if kwargs['created']:
-        try:
-            author = LoggedInUserCache().current_user
-            title = _("%(class)s %(name)s created")
-            context = {
-                "class": sender.__name__.lower(),
-                "name": "%s" % instance,
-                "link": instance.get_absolute_url(),
-            }
-
-            if author:
-                title = _("%(class)s %(name)s created by %(author)s")
-                context.update({
-                    "author": "%s" % author,
-                    "author_link": author.get_absolute_url()
-                })
-
-            activity = Activity.objects.create(
-                title=title,
-                signature="%s-created" % sender.__name__.lower(),
-                template="notifications/activities/object-created.html",
-                context=json.dumps(context),
-                backlink=instance.get_absolute_url(),
-                source=instance
-            )
-
-        except:
-            pass
-
-def notify_object_changed(sender, instance, changes, *args, **kwargs):
-    """Generates an activity related to the change of an existing object.
-    """
-    try:
         author = LoggedInUserCache().current_user
-        title = _("%(class)s %(name)s changed")
+        title = _("%(class)s %(name)s created")
         context = {
             "class": sender.__name__.lower(),
             "name": "%s" % instance,
             "link": instance.get_absolute_url(),
-            "changes": changes
         }
 
         if author:
-            title = _("%(class)s %(name)s changed by %(author)s")
+            title = _("%(class)s %(name)s created by %(author)s")
             context.update({
                 "author": "%s" % author,
                 "author_link": author.get_absolute_url()
@@ -103,44 +70,65 @@ def notify_object_changed(sender, instance, changes, *args, **kwargs):
 
         activity = Activity.objects.create(
             title=title,
-            signature="%s-changed" % sender.__name__.lower(),
-            template="notifications/activities/object-changed.html",
+            signature="%s-created" % sender.__name__.lower(),
+            template="notifications/activities/object-created.html",
             context=json.dumps(context),
             backlink=instance.get_absolute_url(),
             source=instance
         )
 
-    except:
-        pass
+def notify_object_changed(sender, instance, changes, *args, **kwargs):
+    """Generates an activity related to the change of an existing object.
+    """
+    author = LoggedInUserCache().current_user
+    title = _("%(class)s %(name)s changed")
+    context = {
+        "class": sender.__name__.lower(),
+        "name": "%s" % instance,
+        "link": instance.get_absolute_url(),
+        "changes": changes
+    }
+
+    if author:
+        title = _("%(class)s %(name)s changed by %(author)s")
+        context.update({
+            "author": "%s" % author,
+            "author_link": author.get_absolute_url()
+        })
+
+    activity = Activity.objects.create(
+        title=title,
+        signature="%s-changed" % sender.__name__.lower(),
+        template="notifications/activities/object-changed.html",
+        context=json.dumps(context),
+        backlink=instance.get_absolute_url(),
+        source=instance
+    )
 
 def notify_object_deleted(sender, instance, *args, **kwargs):
     """Generates an activity related to the deletion of an existing object.
     """
-    try:
-        author = LoggedInUserCache().current_user
-        title = _("%(class)s %(name)s deleted")
-        context = {
-            "class": sender.__name__.lower(),
-            "name": "%s" % instance
-        }
+    author = LoggedInUserCache().current_user
+    title = _("%(class)s %(name)s deleted")
+    context = {
+        "class": sender.__name__.lower(),
+        "name": "%s" % instance
+    }
 
-        if author:
-            title = _("%(class)s %(name)s deleted by %(author)s")
-            context.update({
-                "author": "%s" % author,
-                "author_link": author.get_absolute_url()
-            })
+    if author:
+        title = _("%(class)s %(name)s deleted by %(author)s")
+        context.update({
+            "author": "%s" % author,
+            "author_link": author.get_absolute_url()
+        })
 
-        activity = Activity.objects.create(
-            title=title,
-            signature="%s-deleted" % sender.__name__.lower(),
-            template="notifications/activities/object-deleted.html",
-            context=json.dumps(context),
-            source=instance
-        )
-
-    except:
-        pass
+    activity = Activity.objects.create(
+        title=title,
+        signature="%s-deleted" % sender.__name__.lower(),
+        template="notifications/activities/object-deleted.html",
+        context=json.dumps(context),
+        source=instance
+    )
 
 def notify_m2m_changed(sender, instance, action, reverse, model, pk_set, *args, **kwargs):
     """Generates one or more activities related to the change of an existing many-to-many relationship.
@@ -208,6 +196,15 @@ def notify_comment_deleted(sender, instance, *args, **kwargs):
     except:
         pass
 
+def cache_followers(sender, instance, **kwargs):
+    """Save the follower list in a cache variable.
+    """
+    if issubclass(sender, Observable):
+        if instance._Observable__followers_cache:
+            instance._Observable__followers_cache = None
+        followers = instance.followers()
+        instance._Observable__followers_cache = followers        
+
 def notify_changes(sender, instance, **kwargs):
     """Notifies one or more changes in an Observable-derived model.
     
@@ -234,34 +231,10 @@ def notify_changes(sender, instance, **kwargs):
             if changes:
                 post_change.send(sender=sender, instance=instance, changes=changes)
 
-def notify_activity(sender, instance, created, raw, using, **kwargs):
-    """Notifies a new activity to all the followers of the related object.
-    """
-    if not isinstance(instance, Activity):
-        return
-
-    # Notifies an activity to all the followers.
-    if created:
-        source = instance.source
-        content = instance.get_content()
-        signature = Signature.objects.get(slug=instance.signature)
-        followers = source.followers()
-        subscribers = [s.subscriber for s in Subscription.objects.filter(signature=signature).distinct()]
-        for follower in followers:
-            # NOTE: Don't change "==" to "is".
-            if follower == source or follower in subscribers:
-                notification, is_new = Notification.objects.get_or_create(
-                    title=u"%s" % instance,
-                    description=content,
-                    target=follower,
-                    signature=signature,
-                    dispatch_uid="%d" % instance.pk,
-                )
-
 def send_notification_email(sender, instance, signal, *args, **kwargs):
     """Sends an email related to the notification.
     """
-    if kwargs['created']:
+    if kwargs['created'] and instance.target:
         try:
             subscription = Subscription.objects.get(signature=instance.signature, subscriber=instance.target, send_email=True)
             email_subject = instance.title
@@ -297,6 +270,7 @@ def make_observable(cls, exclude=['stream_id', 'dashboard_id', 'modified'], subs
 
         cls.__bases__ += (_Observable,)
 
+        models.signals.pre_delete.connect(cache_followers, sender=cls, dispatch_uid="%s_cache_followers" % cls.__name__)
         models.signals.post_save.connect(notify_changes, sender=cls, dispatch_uid="%s_notify_changes" % cls.__name__)
 
 def make_notification_target(cls):
@@ -312,7 +286,6 @@ def make_notification_target(cls):
 models.signals.post_save.connect(update_user_subscription_email, sender=User, dispatch_uid="update_user_subscription_email")
 models.signals.post_save.connect(update_user_permissions, sender=User, dispatch_uid="update_user_permissions")
 
-models.signals.post_save.connect(notify_activity, sender=Activity, dispatch_uid="notify_activity")
 models.signals.post_save.connect(send_notification_email, sender=Notification, dispatch_uid="send_notification_email")
 
 models.signals.post_save.connect(notify_comment_created, sender=Comment, dispatch_uid="comment_created")
